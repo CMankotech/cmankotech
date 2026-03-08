@@ -3,238 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carlin MANKOTO | AI Product Manager Portfolio</title>
+    <title>Carlin MANKOTO | AI Product Manager</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;600&display=swap');
-        :root { --bg: #0a0a0c; --accent: #3b82f6; --glass: rgba(255, 255, 255, 0.03); }
-        body { background-color: var(--bg); color: #f1f5f9; font-family: 'Inter', sans-serif; }
-        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
-        .glass-card { background: var(--glass); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s ease; }
-        .glass-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.2); }
-        .text-gradient { background: linear-gradient(to right, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .badge-cert { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); font-size: 0.65rem; font-weight: 700; color: #93c5fd; padding: 2px 8px; border-radius: 99px; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030712; color: #f3f4f6; }
+        .glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .text-gradient { background: linear-gradient(135deg, #60a5fa 0%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .timeline-dot { box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+        .hover-card:hover { transform: translateY(-5px); border-color: #60a5fa; transition: all 0.3s ease; }
     </style>
 </head>
 <body class="antialiased">
 
-    <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-black/50 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-xl font-bold tracking-tighter">C<span class="text-blue-500">M</span>.</div>
-            <div class="hidden md:flex space-x-8 text-xs font-semibold uppercase tracking-widest text-gray-400">
-                <a href="#about" class="hover:text-white transition">Profil</a>
-                <a href="#experience" class="hover:text-white transition">Parcours</a>
+    <nav class="fixed w-full z-50 p-6 flex justify-center">
+        <div class="max-w-5xl w-full glass rounded-2xl px-6 py-3 flex justify-between items-center">
+            <span class="font-extrabold text-xl tracking-tighter">CM<span class="text-blue-500">.</span></span>
+            <div class="hidden md:flex space-x-6 text-xs font-bold uppercase tracking-widest text-gray-400">
+                <a href="#exp" class="hover:text-white transition">Expériences</a>
                 <a href="#certs" class="hover:text-white transition">Certifications</a>
-                <a href="#education" class="hover:text-white transition">Formation</a>
+                <a href="#edu" class="hover:text-white transition">Formation</a>
             </div>
-            <a href="mailto:carlinmankoto@proton.me" class="px-5 py-2 bg-blue-600 rounded-lg text-xs font-bold hover:bg-blue-500 transition">Contact</a>
+            <a href="mailto:carlinmankoto@proton.me" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition">Contact</a>
         </div>
     </nav>
 
-    <section id="about" class="pt-40 pb-20 px-6 max-w-7xl mx-auto">
+    <section class="pt-40 pb-20 px-6 max-w-6xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-                <h1 class="text-6xl md:text-8xl font-bold leading-none mb-6">Product <br><span class="text-gradient">Manager AI</span></h1>
-                <p class="text-xl text-gray-400 font-light max-w-xl leading-relaxed">
-                    Expert en <span class="text-white font-medium">Agentic AI & Discovery</span>. 3 ans d'expérience à transformer des problématiques complexes en solutions scalables chez Airbus, AXA et Infotel.
+                <span class="text-blue-500 font-bold tracking-[0.2em] text-xs uppercase mb-4 block">Product Management & AI Architecture</span>
+                <h1 class="text-6xl md:text-7xl font-extrabold leading-tight mb-6">Carlin <br><span class="text-gradient">MANKOTO</span></h1>
+                <p class="text-lg text-gray-400 leading-relaxed mb-8">
+                    Inspiré par Marty Cagan [cite: 7], j'orchestre des produits IA de la discovery stratégique au déploiement opérationnel[cite: 6]. Expert en **Agentic AI** et **Continuous Discovery**[cite: 8, 56].
                 </p>
-                <div class="mt-8 flex flex-wrap gap-4">
-                    <div class="flex items-center gap-2 text-sm text-gray-400"><i class="fas fa-location-dot text-blue-500"></i> Noisy-le-Grand</div>
-                    <div class="flex items-center gap-2 text-sm text-gray-400"><i class="fas fa-phone text-blue-500"></i> 06.18.40.42.14</div>
+                <div class="flex flex-wrap gap-3">
+                    <span class="glass px-3 py-1 rounded-full text-[10px] font-bold text-blue-300">#AI_ORCHESTRATION</span>
+                    <span class="glass px-3 py-1 rounded-full text-[10px] font-bold text-purple-300">#PRODUCT_DISCOVERY</span>
+                    <span class="glass px-3 py-1 rounded-full text-[10px] font-bold text-emerald-300">#AGILE_SAFE</span>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="glass-card p-6 rounded-3xl">
-                    <h4 class="text-blue-400 font-bold">Marty Cagan</h4>
-                    <p class="text-[10px] uppercase text-gray-500 tracking-widest mt-1">Inspiration Discovery</p>
+            <div class="space-y-4">
+                <div class="glass p-6 rounded-3xl hover-card">
+                    <h4 class="text-sm font-bold text-blue-400 uppercase tracking-widest mb-2">Agentic AI Stack</h4>
+                    <p class="text-xs text-gray-400">CrewAI, n8n, Flowise, Claude Code, Lovable, RAG, RLHF[cite: 9, 56].</p>
                 </div>
-                <div class="glass-card p-6 rounded-3xl">
-                    <h4 class="text-purple-400 font-bold">Outcome > Output</h4>
-                    <p class="text-[10px] uppercase text-gray-500 tracking-widest mt-1">Philosophie Produit</p>
-                </div>
-                <div class="glass-card p-6 rounded-3xl col-span-2">
-                    <h4 class="text-white font-bold">Agentic AI Orchestration</h4>
-                    <p class="text-xs text-gray-400 mt-2">Maîtrise de CrewAI, n8n, Flowise et Vibe Coding (Claude Code/Lovable).</p>
+                <div class="glass p-6 rounded-3xl hover-card">
+                    <h4 class="text-sm font-bold text-purple-400 uppercase tracking-widest mb-2">Product Core</h4>
+                    <p class="text-xs text-gray-400">Outcome over Output, Backlog (MoSCoW/RICE), User Research[cite: 7, 56].</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="experience" class="py-20 px-6 max-w-5xl mx-auto">
-        <h2 class="text-3xl font-bold mb-16 flex items-center gap-4"><span class="w-12 h-[1px] bg-blue-500"></span> Expériences</h2>
+    <section id="exp" class="py-20 px-6 max-w-5xl mx-auto">
+        <h2 class="text-3xl font-extrabold mb-12 flex items-center gap-4">Expériences <span class="h-[1px] w-20 bg-blue-500/30"></span></h2>
         
-        <div class="space-y-16">
+        <div class="space-y-12">
             <div class="relative pl-8 border-l border-gray-800">
-                <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-blue-500 rounded-full shadow-[0_0_10px_#3b82f6]"></div>
-                <div class="flex justify-between items-start flex-wrap gap-2 mb-4">
-                    <div>
-                        <h3 class="text-xl font-bold">Product Manager CDI</h3>
-                        <p class="text-blue-400 font-medium">OAIO (Groupe Infotel)</p>
-                    </div>
-                    <span class="text-xs font-bold text-gray-500 py-1 px-3 glass-card rounded-full">JAN 2026 — PRÉSENT</span>
+                <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-blue-500 rounded-full timeline-dot"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-xl font-bold">Product Manager CDI</h3>
+                    <span class="text-[10px] font-bold text-gray-500 bg-white/5 px-2 py-1 rounded">JAN 2026 — PRÉSENT</span>
                 </div>
-                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
-                    Pilotage de la stratégie produit LMS pour 3 500+ collaborateurs. Benchmark de 44 outils IA et prototypage en vibe coding pour valider les hypothèses UX.
-                </p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="badge-cert">LOVABLE</span> <span class="badge-cert">CLAUDE CODE</span> <span class="badge-cert">ROI ANALYSIS</span>
+                <p class="text-blue-400 font-semibold mb-3">OAIO (Groupe Infotel)</p>
+                <ul class="text-sm text-gray-400 space-y-2 mb-4">
+                    <li>• Benchmark de **44 outils IA** et **17 solutions LMS**[cite: 18].</li>
+                    <li>• Prototypage rapide via **Vibe Coding** (Claude Code/Lovable) pour validation UX[cite: 18].</li>
+                    <li>• Définition de la roadmap en 3 phases et analyse ROI[cite: 18].</li>
+                </ul>
+                <div class="flex gap-2 flex-wrap text-[9px] font-bold text-gray-500 uppercase">
+                    <span>#Lovable</span> <span>#ClaudeCode</span> <span>#Strategy</span>
                 </div>
             </div>
 
             <div class="relative pl-8 border-l border-gray-800">
                 <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-purple-500 rounded-full"></div>
-                <div class="flex justify-between items-start flex-wrap gap-2 mb-4">
-                    <div>
-                        <h3 class="text-xl font-bold">AI Trainer & Data Annotator</h3>
-                        <p class="text-purple-400 font-medium italic text-sm">Outlier / Alignerr (Freelance)</p>
-                    </div>
-                    <span class="text-xs font-bold text-gray-500 py-1 px-3 glass-card rounded-full">2024 — 2025</span>
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-xl font-bold">AI Trainer & Data Annotator</h3>
+                    <span class="text-[10px] font-bold text-gray-500 bg-white/5 px-2 py-1 rounded">2024 — 2025</span>
                 </div>
-                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
-                    Entraînement de LLMs via RLHF. Création de datasets structurés (Labelbox) et contrôle qualité rigoureux pour optimiser l'apprentissage des modèles.
+                <p class="text-purple-400 font-semibold mb-3 italic text-sm">Outlier / Alignerr (Freelance)</p>
+                <p class="text-sm text-gray-400 leading-relaxed mb-4">
+                    Entraînement de modèles via **RLHF**. Création de datasets structurés et contrôle qualité rigoureux[cite: 22, 24].
                 </p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="badge-cert">RLHF</span> <span class="badge-cert">LABELBOX</span> <span class="badge-cert">SQL</span>
+                <div class="flex gap-2 flex-wrap text-[9px] font-bold text-gray-500 uppercase">
+                    <span>#SQL</span> <span>#Labelbox</span> <span>#RLHF</span>
                 </div>
             </div>
 
             <div class="relative pl-8 border-l border-gray-800">
                 <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-gray-700 rounded-full"></div>
-                <div class="flex justify-between items-start flex-wrap gap-2 mb-4">
-                    <div>
-                        <h3 class="text-xl font-bold text-white/90">AI Product Owner (Alternance)</h3>
-                        <p class="text-blue-400 font-medium">AXA - SecureGPT & Copilot</p>
-                    </div>
-                    <span class="text-xs font-bold text-gray-500 py-1 px-3 glass-card rounded-full">OCT 2023 — DÉC 2024</span>
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-xl font-bold">AI Product Owner (Alternance)</h3>
+                    <span class="text-[10px] font-bold text-gray-500 bg-white/5 px-2 py-1 rounded">2023 — 2024</span>
                 </div>
-                <ul class="text-sm text-gray-400 space-y-2 list-disc ml-4">
-                    <li>Gestion du backlog SecureGPT (RAG interne) et automatisation via AI Builder.</li>
-                    <li>Rôle d'AI Evangelist et accompagnement au changement (SAFe).</li>
+                <p class="text-blue-400 font-semibold mb-3 italic text-sm">AXA - SecureGPT & Copilot</p>
+                <ul class="text-sm text-gray-400 space-y-2 mb-4">
+                    <li>• Prioritisation MoSCoW du backlog SecureGPT et RAG[cite: 29, 36].</li>
+                    <li>• Automatisation via **Power Automate** & **AI Builder**.</li>
+                    <li>• Rôle d'AI Evangelist et animation des cérémonies agiles[cite: 33, 34].</li>
                 </ul>
             </div>
 
             <div class="relative pl-8 border-l border-gray-800">
                 <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-gray-700 rounded-full"></div>
-                <div class="flex justify-between items-start flex-wrap gap-2 mb-4">
-                    <div>
-                        <h3 class="text-xl font-bold text-white/90">Product Owner (Alternance)</h3>
-                        <p class="text-blue-400 font-medium">Airbus Defence and Space</p>
-                    </div>
-                    <span class="text-xs font-bold text-gray-500 py-1 px-3 glass-card rounded-full">SEPT 2022 — SEPT 2023</span>
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-xl font-bold">Product Owner (Alternance)</h3>
+                    <span class="text-[10px] font-bold text-gray-500 bg-white/5 px-2 py-1 rounded">2022 — 2023</span>
                 </div>
-                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
-                    Messagerie sécurisée pour les JO Paris 2024. Transition Waterfall vers SAFe et interopérabilité TETRA/Broadband.
+                <p class="text-blue-400 font-semibold mb-3 italic text-sm">Airbus Defence and Space</p>
+                <ul class="text-sm text-gray-400 space-y-2 mb-4">
+                    <li>• Application messagerie pour les **JO Paris 2024**[cite: 38, 39].</li>
+                    <li>• Interopérabilité **TETRA/Broadband** et contribution au **DevOps**[cite: 41, 45].</li>
+                    <li>• Transition Waterfall vers SAFe[cite: 38].</li>
+                </ul>
+            </div>
+
+            <div class="relative pl-8 border-l border-gray-800">
+                <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-gray-800 rounded-full"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-xl font-bold text-gray-400">Chargé de Projet Change Management</h3>
+                    <span class="text-[10px] font-bold text-gray-500 bg-white/5 px-2 py-1 rounded">JAN — JUIN 2022</span>
+                </div>
+                <p class="text-gray-500 font-semibold mb-3 italic text-sm">Groupe Casino</p>
+                <p class="text-sm text-gray-500">Implémentation de Scrum et accompagnement à la transformation digitale.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="certs" class="py-20 px-6 bg-slate-900/40">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl font-extrabold mb-4">Certifications Officielles</h2>
+            <p class="text-gray-500 text-sm mb-12 uppercase tracking-widest">15+ accréditations vérifiables sur Credly</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                <div class="glass p-4 rounded-2xl flex flex-col items-center justify-center">
+                    <i class="fas fa-certificate text-blue-500 mb-2"></i>
+                    <span class="text-[9px] font-bold uppercase">PSPO I</span>
+                </div>
+                <div class="glass p-4 rounded-2xl flex flex-col items-center justify-center">
+                    <i class="fas fa-shield-halved text-orange-500 mb-2"></i>
+                    <span class="text-[9px] font-bold uppercase">SAFe 6 POPM</span>
+                </div>
+                <div class="glass p-4 rounded-2xl flex flex-col items-center justify-center">
+                    <i class="fas fa-brain text-purple-500 mb-2"></i>
+                    <span class="text-[9px] font-bold uppercase">AI Certification</span>
+                </div>
+                <div class="glass p-4 rounded-2xl flex flex-col items-center justify-center">
+                    <i class="fas fa-search text-yellow-500 mb-2"></i>
+                    <span class="text-[9px] font-bold uppercase">Discovery</span>
+                </div>
+                <div class="glass p-4 rounded-2xl flex flex-col items-center justify-center">
+                    <i class="fas fa-map text-emerald-500 mb-2"></i>
+                    <span class="text-[9px] font-bold uppercase">Roadmapping</span>
+                </div>
+                <div class="glass p-4 rounded-2xl flex flex-col items-center justify-center">
+                    <i class="fas fa-vial text-red-500 mb-2"></i>
+                    <span class="text-[9px] font-bold uppercase">Experimentation</span>
+                </div>
+            </div>
+            <a href="https://www.credly.com/users/carlin-mankoto" target="_blank" class="inline-block mt-8 text-xs font-bold text-blue-400 hover:underline">Voir mon profil Credly complet →</a>
+        </div>
+    </section>
+
+    <section id="edu" class="py-20 px-6 max-w-5xl mx-auto">
+        <h2 class="text-3xl font-extrabold mb-12">Formation</h2>
+        <div class="space-y-8">
+            <div class="glass p-6 rounded-3xl">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold">Master 2 Économie & Management de l'Innovation</h3>
+                    <span class="text-[10px] font-bold text-blue-500">2024</span>
+                </div>
+                <p class="text-sm text-gray-500 mb-4 italic">Université Paris-Saclay [cite: 60]</p>
+                <p class="text-xs text-gray-400 border-l border-blue-500/30 pl-4">
+                    **Mémoire :** "Les avantages de l'agilité sur la performance opérationnelle en environnement VUCA." [cite: 61]
                 </p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="badge-cert">KUBERNETES</span> <span class="badge-cert">JIRA</span> <span class="badge-cert">MISSION CRITICAL</span>
+            </div>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="glass p-6 rounded-3xl">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase mb-2">Master 1 • 2023</p>
+                    <h4 class="text-sm font-bold mb-2 uppercase">Stratégie & Change</h4>
+                    <p class="text-[10px] text-gray-500 italic">Mémoire sur les rapports de domination économique[cite: 69].</p>
+                </div>
+                <div class="glass p-6 rounded-3xl">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase mb-2">Licence • 2022</p>
+                    <h4 class="text-sm font-bold mb-2 uppercase">Science Politique</h4>
+                    <p class="text-[10px] text-gray-500 italic">Mémoire sur la régulation des données personnelles[cite: 72].</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="certs" class="py-20 px-6 bg-blue-600/5">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex justify-between items-end mb-12">
-                <div>
-                    <h2 class="text-3xl font-bold">Certifications & Badges</h2>
-                    <p class="text-gray-500 text-sm mt-2">Vérifiables officiellement sur Credly.</p>
-                </div>
-                <a href="https://www.credly.com/users/carlin-mankoto" target="_blank" class="text-blue-400 font-bold text-xs uppercase tracking-widest hover:underline">Voir mon Credly <i class="fas fa-external-link-alt ml-1"></i></a>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                <div class="glass-card p-6 rounded-2xl text-center">
-                    <i class="fas fa-shield-halved text-orange-500 text-2xl mb-3"></i>
-                    <p class="text-[10px] font-bold">SAFe 6 POPM</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl text-center">
-                    <i class="fas fa-check-double text-blue-500 text-2xl mb-3"></i>
-                    <p class="text-[10px] font-bold">PSPO I (Scrum.org)</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl text-center">
-                    <i class="fas fa-robot text-purple-500 text-2xl mb-3"></i>
-                    <p class="text-[10px] font-bold text-gradient">AI CERTIFICATION</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl text-center border-blue-500/30">
-                    <i class="fas fa-magnifying-glass text-yellow-500 text-2xl mb-3"></i>
-                    <p class="text-[10px] font-bold">PRODUCT DISCOVERY</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl text-center">
-                    <i class="fas fa-chart-line text-green-500 text-2xl mb-3"></i>
-                    <p class="text-[10px] font-bold">PRODUCT STRATEGY</p>
-                </div>
-            </div>
-            
-            <div class="mt-8 flex flex-wrap gap-3 justify-center text-[10px] font-bold uppercase tracking-widest text-gray-500">
-                <span>SAFe Scrum Master (SSM)</span> • <span>Product Roadmapping</span> • <span>Product Experimentation</span> • <span>Product Launches</span> • <span>Elements of AI</span> • <span>Lean Six Sigma</span>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-20 px-6 max-w-7xl mx-auto">
-        <h2 class="text-3xl font-bold mb-12">Projets & Innovation</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-            <div class="glass-card p-8 rounded-[2rem]">
-                <span class="text-blue-500 text-xs font-bold tracking-widest uppercase">Consulting</span>
-                <h4 class="text-xl font-bold mt-2 mb-4">BNP Paribas Design Sprint</h4>
-                <p class="text-xs text-gray-400 leading-relaxed">Design Sprint sur la Sustainable Innovation pour co-construire des solutions à impact.</p>
-            </div>
-            <div class="glass-card p-8 rounded-[2rem]">
-                <span class="text-blue-500 text-xs font-bold tracking-widest uppercase">E-Commerce AI</span>
-                <h4 class="text-xl font-bold mt-2 mb-4">Shopify Chatbot</h4>
-                <p class="text-xs text-gray-400 leading-relaxed">Développement complet d'un chatbot IA intégré à Shopify (JS, Node.js).</p>
-            </div>
-            <div class="glass-card p-8 rounded-[2rem]">
-                <span class="text-blue-500 text-xs font-bold tracking-widest uppercase">Low-Code</span>
-                <h4 class="text-xl font-bold mt-2 mb-4">PowerApps Geoloc</h4>
-                <p class="text-xs text-gray-400 leading-relaxed">Application mobile de géolocalisation pour la maintenance terrain.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="education" class="py-20 px-6 max-w-5xl mx-auto">
-        <h2 class="text-3xl font-bold mb-12 italic">Le Savoir</h2>
-        <div class="space-y-12">
-            <div>
-                <div class="flex items-center gap-4 mb-2">
-                    <span class="text-blue-500 font-bold">2024</span>
-                    <h3 class="font-bold">Master 2 Économie & Management de l'Innovation Digitale</h3>
-                </div>
-                <p class="text-xs text-gray-500 ml-14">Université Paris-Saclay</p>
-                <div class="mt-4 p-4 border-l-2 border-blue-500/20 bg-blue-500/5 ml-14 rounded-r-xl">
-                    <p class="text-[10px] font-bold uppercase text-blue-400 mb-1">Mémoire de Recherche</p>
-                    <p class="text-sm italic text-gray-300">"Du hardware au software, du Waterfall au SAFe : Les avantages de l'agilité sur la performance opérationnelle en environnement VUCA."</p>
-                </div>
-            </div>
-            
-            <div class="ml-14 border-t border-white/5 pt-8">
-                <div class="flex items-center gap-4 mb-2">
-                    <span class="text-gray-500 font-bold">2023</span>
-                    <h3 class="font-bold">Master 1 Management Stratégique & Change</h3>
-                </div>
-                <p class="text-xs text-gray-500 ml-14">Université Paris-Saclay</p>
-                <p class="text-xs italic text-gray-400 mt-2 ml-14">Mémoire : L'accompagnement au changement sous le prisme des rapports de domination économique.</p>
-            </div>
-
-            <div class="ml-14 border-t border-white/5 pt-8">
-                <div class="flex items-center gap-4 mb-2">
-                    <span class="text-gray-500 font-bold">2022</span>
-                    <h3 class="font-bold">Licence Science Politique (Éco Numérique)</h3>
-                </div>
-                <p class="text-xs text-gray-500 ml-14">Université Paris VIII</p>
-                <p class="text-xs italic text-gray-400 mt-2 ml-14">Mémoire : Histoire et enjeux de la régulation des données personnelles.</p>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-20 border-t border-white/5 text-center">
-        <p class="text-3xl font-bold text-gradient mb-8">On construit demain ?</p>
-        <div class="flex justify-center gap-8 mb-12">
-            <a href="https://linkedin.com/in/carlinmankoto" class="text-2xl text-gray-500 hover:text-white transition"><i class="fab fa-linkedin"></i></a>
+    <footer class="py-20 border-t border-white/5 text-center px-6">
+        <h2 class="text-2xl font-bold mb-4">Prêt à hacker le futur ?</h2>
+        <p class="text-gray-500 text-sm mb-8">06.18.40.42.14 • carlinmankoto@proton.me [cite: 3, 4]</p>
+        <div class="flex justify-center gap-6 mb-12">
+            <a href="https://linkedin.com/in/carlinmankoto" target="_blank" class="text-2xl text-gray-500 hover:text-white transition"><i class="fab fa-linkedin"></i></a>
             <a href="mailto:carlinmankoto@proton.me" class="text-2xl text-gray-500 hover:text-white transition"><i class="fas fa-envelope"></i></a>
         </div>
-        <p class="text-[10px] text-gray-700 tracking-[0.4em] uppercase">© 2026 Carlin Mankoto — Product Mindset & Agentic AI</p>
+        <p class="text-[9px] text-gray-700 tracking-[0.3em] uppercase">Built with Vibe Coding | © 2026 Carlin Mankoto</p>
     </footer>
 
 </body>
