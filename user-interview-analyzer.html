@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Interview Analyzer — by Carlin Mankoto</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070e;--surface:#0e0e1a;--surface2:#11111e;
+  --border:rgba(255,255,255,0.07);--line:rgba(255,255,255,0.04);
+  --text:#e2e8f0;--dim:#718096;--muted:#4a5568;
+  --blue:#60a5fa;--violet:#a78bfa;--cyan:#22d3ee;
+  --green:#4ade80;--orange:#fb923c;--red:#f87171;--yellow:#fbbf24;
+}
+html{font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 15% 0%,rgba(167,139,250,0.07) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 85% 90%,rgba(34,211,238,0.05) 0%,transparent 60%);pointer-events:none;z-index:0}
+.container{max-width:860px;margin:0 auto;padding:3rem 1.5rem;position:relative;z-index:1}
+
+/* HEADER */
+header{text-align:center;margin-bottom:3rem}
+.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--cyan);background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.2);padding:0.4rem 1rem;border-radius:99px;margin-bottom:1.25rem}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
+h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.75rem}
+.grad{background:linear-gradient(135deg,#22d3ee,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{font-size:0.85rem;color:var(--dim);max-width:520px;margin:0 auto}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem}
+.card-title{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.6rem}
+.card-title::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* PROVIDER ROW */
+.provider-row{display:flex;gap:0.4rem;margin-bottom:0.9rem}
+.provider-btn{flex:1;padding:0.55rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.35rem}
+.provider-btn.active{background:rgba(34,211,238,0.1);border-color:rgba(34,211,238,0.35);color:var(--cyan)}
+.provider-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
+.provider-tag{font-size:0.52rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.1rem 0.4rem;background:rgba(255,255,255,0.06);border-radius:3px}
+.key-row{display:flex;gap:0.75rem}
+.key-row input{flex:1;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;outline:none;transition:border-color 0.2s}
+.key-row input:focus{border-color:rgba(34,211,238,0.4)}
+.key-row input::placeholder{color:var(--muted)}
+.btn-save{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.65rem 1rem;border-radius:8px;border:1px solid rgba(34,211,238,0.3);background:rgba(34,211,238,0.08);color:var(--cyan);cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all 0.2s}
+.btn-save:hover{background:rgba(34,211,238,0.18)}
+.note{font-size:0.66rem;color:var(--muted);margin-top:0.6rem}
+.note a{color:var(--cyan);text-decoration:none}
+.saved-msg{display:none;font-size:0.68rem;color:var(--green);align-items:center;gap:0.4rem;margin-top:0.5rem}
+.saved-msg.show{display:flex}
+
+/* INPUT MODE TABS */
+.input-tabs{display:flex;gap:0.25rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:0.2rem;margin-bottom:1.25rem;width:fit-content}
+.input-tab{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.35rem 0.9rem;border-radius:6px;border:none;cursor:pointer;background:transparent;color:var(--muted);transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.input-tab.active{background:rgba(255,255,255,0.07);color:var(--text)}
+
+/* SINGLE MODE */
+.field-label{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--dim);display:block;margin-bottom:0.45rem}
+textarea{width:100%;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:300;outline:none;resize:none;line-height:1.7;transition:border-color 0.2s}
+textarea:focus{border-color:rgba(34,211,238,0.35)}
+textarea::placeholder{color:var(--muted)}
+.hint{font-size:0.63rem;color:var(--muted);margin-top:0.45rem}
+
+/* MULTI MODE */
+#multiMode{display:none}
+.interview-block{background:rgba(0,0,0,0.15);border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:0.75rem}
+.interview-block-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem}
+.interview-num{font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:800;color:var(--dim);text-transform:uppercase;letter-spacing:0.12em}
+.btn-remove-block{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;padding:0.15rem 0.4rem;border-radius:4px;transition:color 0.2s}
+.btn-remove-block:hover{color:var(--red)}
+.interview-block input{width:100%;background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:7px;padding:0.55rem 0.85rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.78rem;outline:none;margin-bottom:0.6rem;transition:border-color 0.2s}
+.interview-block input:focus{border-color:rgba(34,211,238,0.35)}
+.interview-block input::placeholder{color:var(--muted)}
+.interview-block textarea{min-height:90px}
+.btn-add-interview{display:flex;align-items:center;gap:0.4rem;font-size:0.67rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.1);border-radius:10px;padding:0.65rem 1rem;cursor:pointer;width:100%;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-top:0.25rem}
+.btn-add-interview:hover{border-color:rgba(34,211,238,0.3);color:var(--cyan)}
+
+/* CONTEXT */
+.context-input{width:100%;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:10px;padding:0.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:300;outline:none;transition:border-color 0.2s}
+.context-input:focus{border-color:rgba(34,211,238,0.35)}
+.context-input::placeholder{color:var(--muted)}
+
+/* EXAMPLES BTN */
+.btn-examples{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.28rem 0.7rem;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.2);color:var(--cyan);border-radius:5px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:0.5rem}
+.btn-examples:hover{background:rgba(34,211,238,0.16)}
+
+/* SUBMIT */
+.btn-launch{width:100%;padding:1rem;background:linear-gradient(135deg,#0e7490,#6d28d9);border:none;border-radius:10px;color:white;font-family:'Syne',sans-serif;font-size:0.83rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;cursor:pointer;transition:all 0.25s;margin-top:1.25rem}
+.btn-launch:hover:not(:disabled){opacity:0.88;transform:translateY(-1px);box-shadow:0 8px 30px -8px rgba(34,211,238,0.3)}
+.btn-launch:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+.error-box{display:none;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);border-radius:10px;padding:0.85rem 1rem;font-size:0.78rem;color:#fca5a5}
+.error-box.show{display:block}
+
+/* LOADING */
+.loading{display:none;text-align:center;padding:3rem 0}
+.loading.show{display:block}
+.spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:0.75rem;color:var(--muted)}
+
+/* RESULTS */
+.results{display:none}
+.results.show{display:block;animation:fadeUp 0.4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.results-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem}
+.results-info{display:flex;flex-direction:column;gap:0.2rem}
+.results-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700}
+.results-sub{font-size:0.68rem;color:var(--dim)}
+.btn-reset{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.9rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.btn-reset:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+
+/* PERSONA */
+.persona-card{background:linear-gradient(135deg,rgba(167,139,250,0.08),rgba(34,211,238,0.06));border:1px solid rgba(167,139,250,0.2);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem;display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:start}
+.persona-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#22d3ee);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.persona-name{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:0.2rem}
+.persona-desc{font-size:0.78rem;color:var(--dim);margin-bottom:0.75rem;line-height:1.5}
+.persona-tags{display:flex;flex-wrap:wrap;gap:0.35rem}
+.persona-tag{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;padding:0.2rem 0.6rem;border-radius:5px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--dim)}
+
+/* SECTION TITLES */
+.section-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem}
+.section-label::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* PAIN POINTS */
+.pain-group{margin-bottom:1.25rem}
+.pain-group-title{font-size:0.75rem;font-weight:600;color:var(--text);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.5rem}
+.pain-count{font-family:'Syne',sans-serif;font-size:0.62rem;font-weight:800;background:rgba(248,113,113,0.15);color:#fca5a5;border:1px solid rgba(248,113,113,0.2);padding:0.1rem 0.5rem;border-radius:99px}
+.pain-items{display:flex;flex-direction:column;gap:0.4rem}
+.pain-item{display:flex;align-items:flex-start;gap:0.65rem;font-size:0.78rem;color:var(--dim);line-height:1.5;padding:0.6rem 0.75rem;background:rgba(248,113,113,0.04);border:1px solid rgba(248,113,113,0.1);border-radius:8px}
+.pain-icon{font-size:0.75rem;flex-shrink:0;margin-top:0.1rem}
+
+/* QUOTES */
+.quotes-grid{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.25rem}
+.quote-item{border-left:2px solid var(--cyan);padding:0.75rem 1rem;background:rgba(34,211,238,0.03);border-radius:0 8px 8px 0}
+.quote-text{font-size:0.82rem;color:var(--text);font-style:italic;line-height:1.65;margin-bottom:0.4rem}
+.quote-meta{font-size:0.62rem;color:var(--muted)}
+
+/* OPPORTUNITIES */
+.opps-grid{display:flex;flex-direction:column;gap:0.65rem;margin-bottom:1.25rem}
+.opp-item{display:grid;grid-template-columns:auto 1fr auto;gap:0.75rem 1rem;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem}
+.opp-num{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--muted)}
+.opp-num.top{color:var(--violet)}
+.opp-body{}
+.opp-title{font-size:0.85rem;font-weight:500;color:var(--text);margin-bottom:0.3rem}
+.opp-desc{font-size:0.73rem;color:var(--dim);line-height:1.55}
+.opp-impact{display:flex;flex-direction:column;align-items:flex-end;gap:0.25rem;flex-shrink:0}
+.impact-badge{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.2rem 0.55rem;border-radius:5px}
+.impact-high{background:rgba(74,222,128,0.12);color:#86efac;border:1px solid rgba(74,222,128,0.2)}
+.impact-medium{background:rgba(251,191,36,0.1);color:#fcd34d;border:1px solid rgba(251,191,36,0.2)}
+.impact-low{background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.2)}
+
+/* FOOTER */
+footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line);font-size:0.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em}
+footer a{color:var(--cyan);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media(max-width:600px){
+  .persona-card{grid-template-columns:1fr}
+  .opp-item{grid-template-columns:auto 1fr}
+  .opp-impact{grid-column:2;flex-direction:row}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="header-tag"><span class="dot"></span> Discovery &amp; Research</div>
+    <h1>User Interview<br><span class="grad">Analyzer</span></h1>
+    <p class="subtitle">Colle tes notes d'entretien brutes. L'IA extrait les pain points, les citations clés, les opportunités produit et génère un persona synthétique.</p>
+  </header>
+
+  <!-- CONFIG -->
+  <div class="card">
+    <div class="card-title">&#128273; Configuration</div>
+    <div class="provider-row">
+      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag">Gratuit</span></button>
+      <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
+    </div>
+    <div class="key-row">
+      <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
+      <button class="btn-save" onclick="saveKey()">Enregistrer</button>
+    </div>
+    <p class="note" id="providerNote">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La clé reste dans ton navigateur.</p>
+    <div class="saved-msg" id="savedMsg">&#10003; Clé enregistrée.</div>
+  </div>
+
+  <!-- INTERVIEWS -->
+  <div class="card">
+    <div class="card-title">
+      Entretiens utilisateurs
+      <button class="btn-examples" onclick="loadExamples()">&#127922; Exemples</button>
+    </div>
+
+    <div class="input-tabs">
+      <button class="input-tab active" id="tabSingle" onclick="setMode('single')">1 entretien</button>
+      <button class="input-tab" id="tabMulti" onclick="setMode('multi')">Plusieurs (2-5)</button>
+    </div>
+
+    <!-- SINGLE -->
+    <div id="singleMode">
+      <label class="field-label">Notes brutes de l'entretien</label>
+      <textarea id="singleText" rows="9" placeholder="Colle ici tes notes, verbatims, ou une retranscription partielle de l'entretien.&#10;&#10;Ex : Utilisateur 32 ans, chef de projet, utilise l'outil depuis 3 mois. Se plaint du temps passé à faire des reportings manuels. Cite Excel comme outil principal. A essayé l'export mais ne sait pas où trouver le bouton. Frustré par le manque de notifications. Souhaite un récap hebdomadaire auto..."></textarea>
+      <p class="hint">Pas besoin de format particulier : des notes brutes suffisent.</p>
+    </div>
+
+    <!-- MULTI -->
+    <div id="multiMode">
+      <div id="interviewBlocks"></div>
+      <button class="btn-add-interview" onclick="addInterview()">+ Ajouter un entretien</button>
+    </div>
+
+    <!-- CONTEXT -->
+    <div style="margin-top:1.5rem">
+      <div class="card-title">Contexte produit <span style="font-size:0.57rem;color:var(--muted);text-transform:none;letter-spacing:0">(optionnel)</span></div>
+      <input class="context-input" type="text" id="context" placeholder="Ex : SaaS de gestion de projet B2B, cible PME, phase de rétention">
+    </div>
+  </div>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <button class="btn-launch" id="launchBtn" onclick="launch()">
+    &#9654; Analyser les entretiens
+  </button>
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">Analyse des entretiens en cours...</div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+    <div class="results-topbar">
+      <div class="results-info">
+        <div class="results-title">Synthèse des entretiens</div>
+        <div class="results-sub" id="resultsSub"></div>
+      </div>
+      <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
+    </div>
+
+    <!-- PERSONA -->
+    <div class="section-label">Persona synthétique</div>
+    <div class="persona-card" id="personaCard"></div>
+
+    <!-- PAIN POINTS -->
+    <div class="section-label">Pain points groupés</div>
+    <div id="painContainer" style="margin-bottom:1.25rem"></div>
+
+    <!-- QUOTES -->
+    <div class="section-label">Citations marquantes</div>
+    <div class="quotes-grid" id="quotesContainer"></div>
+
+    <!-- OPPORTUNITIES -->
+    <div class="section-label">Opportunités produit</div>
+    <div class="opps-grid" id="oppsContainer"></div>
+  </div>
+
+  <footer>
+    Construit par <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager
+  </footer>
+
+</div>
+
+<script>
+var apiKey = '';
+var provider = 'groq';
+var inputMode = 'single';
+var interviewCount = 0;
+
+// ---- EXAMPLES ----
+var SINGLE_EXAMPLE = `Profil : Marie, 34 ans, responsable marketing dans une PME de 45 personnes. Utilise l'outil depuis 4 mois.
+
+Douleurs principales :
+- Passe environ 2h par semaine à exporter des données et refaire des graphiques dans Excel pour ses reportings.
+- Ne sait pas quelle fonctionnalité utiliser pour partager des rapports avec son équipe sans leur donner accès à tout l'outil.
+- S'est plainte plusieurs fois que l'interface mobile ne fonctionne pas bien : "Sur mon téléphone je ne peux rien faire, c'est inutilisable".
+- A raté une deadline parce qu'elle n'a pas reçu de notification quand un collègue a modifié son document.
+
+Ce qui fonctionne bien :
+- Apprécie la simplicité des tableaux de bord sur desktop.
+- Utilise les tags tous les jours, trouve ça "super pratique pour retrouver les trucs".
+
+Verbatim clé : "J'adorerais un bouton 'partager rapport' qui envoie juste un PDF par email, sans que les gens aient besoin d'un compte".
+
+Demandes futures : notifications configurables, meilleure app mobile, export PDF direct.`;
+
+var MULTI_EXAMPLES = [
+  {
+    label: "Entretien 1 — Thomas, dev freelance",
+    text: `Thomas, 28 ans, développeur freelance. Utilise l'outil pour gérer ses missions clients.
+
+- Crée en moyenne 3-4 projets par mois. Trouve la duplication de projet trop lente : "Je fais toujours la même config, j'aimerais des templates".
+- Se plaint que l'historique des modifications n'est pas accessible : a perdu une semaine de travail suite à une suppression accidentelle.
+- Utilise l'API mais trouve la documentation incomplète, notamment sur l'authentification OAuth.
+- Citation : "Si j'avais des templates de projets, je gagnerais au moins une heure par mission".`
+  },
+  {
+    label: "Entretien 2 — Camille, product manager",
+    text: `Camille, 31 ans, PM dans une scale-up. Utilise l'outil en équipe de 8 personnes.
+
+- Principale frustration : impossible de voir d'un coup d'œil qui travaille sur quoi. "On a besoin d'une vraie vue équipe".
+- A essayé d'intégrer avec Slack mais l'intégration est "cassée" selon elle, les notifications arrivent en double.
+- Apprécie beaucoup le backlog mais voudrait pouvoir le filtrer par sprint directement.
+- Citation : "Le plus gros problème c'est la visibilité. Je ne sais jamais où en sont mes collègues sans les relancer".`
+  },
+  {
+    label: "Entretien 3 — Romain, directeur opérations",
+    text: `Romain, 43 ans, directeur des opérations dans une ETI. Utilisateur occasionnel, décideur d'achat.
+
+- Utilise principalement les rapports générés par son équipe, pas l'outil en direct.
+- Veut pouvoir recevoir un récapitulatif hebdomadaire automatique par email.
+- Trouve l'outil "trop technique" pour des non-initiés dans son équipe.
+- Citation : "Si je dois former chaque nouvelle recrue pendant 2 jours, ça ne scale pas".
+- Envisage de résilier si l'onboarding n'est pas simplifié d'ici 3 mois.`
+  }
+];
+
+function loadExamples() {
+  document.getElementById('context').value = 'SaaS de gestion de projet B2B, cible PME et scale-ups, phase de rétention';
+  if (inputMode === 'single') {
+    document.getElementById('singleText').value = SINGLE_EXAMPLE;
+  } else {
+    document.getElementById('interviewBlocks').innerHTML = '';
+    interviewCount = 0;
+    MULTI_EXAMPLES.forEach(function(ex) { addInterview(ex.label, ex.text); });
+  }
+}
+
+// ---- PROVIDER ----
+function setProvider(p) {
+  provider = p;
+  document.getElementById('pbGroq').classList.toggle('active', p === 'groq');
+  document.getElementById('pbOpenai').classList.toggle('active', p === 'openai');
+  var note = document.getElementById('providerNote');
+  var inp = document.getElementById('apiKeyInput');
+  if (p === 'groq') {
+    inp.placeholder = 'gsk_...';
+    note.innerHTML = 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La clé reste dans ton navigateur.';
+  } else {
+    inp.placeholder = 'sk-...';
+    note.innerHTML = 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>. GPT-4o mini est très peu coûteux.';
+  }
+  apiKey = '';
+  document.getElementById('savedMsg').classList.remove('show');
+}
+
+function saveKey() {
+  var v = document.getElementById('apiKeyInput').value.trim();
+  if (provider === 'groq' && (!v.startsWith('gsk_') || v.length < 20)) { showError('Clé Groq invalide. Elle doit commencer par "gsk_".'); return; }
+  if (provider === 'openai' && (!v.startsWith('sk-') || v.length < 20)) { showError('Clé OpenAI invalide. Elle doit commencer par "sk-".'); return; }
+  apiKey = v;
+  document.getElementById('savedMsg').classList.add('show');
+  hideError();
+}
+
+// ---- INPUT MODE ----
+function setMode(m) {
+  inputMode = m;
+  document.getElementById('tabSingle').classList.toggle('active', m === 'single');
+  document.getElementById('tabMulti').classList.toggle('active', m === 'multi');
+  document.getElementById('singleMode').style.display = m === 'single' ? 'block' : 'none';
+  document.getElementById('multiMode').style.display = m === 'multi' ? 'block' : 'none';
+  if (m === 'multi' && document.getElementById('interviewBlocks').children.length === 0) {
+    addInterview(); addInterview();
+  }
+}
+
+function addInterview(label, text) {
+  interviewCount++;
+  var c = document.getElementById('interviewBlocks');
+  var div = document.createElement('div');
+  div.className = 'interview-block';
+  div.innerHTML =
+    '<div class="interview-block-header">' +
+      '<span class="interview-num">Entretien ' + String(interviewCount).padStart(2,'0') + '</span>' +
+      (interviewCount > 2 ? '<button class="btn-remove-block" onclick="removeBlock(this)">&#215;</button>' : '<span></span>') +
+    '</div>' +
+    '<input type="text" placeholder="Profil bref (ex : Marie, 34 ans, responsable marketing)" value="' + esc(label||'') + '">' +
+    '<textarea rows="5" placeholder="Notes brutes, verbatims, observations...">' + esc(text||'') + '</textarea>';
+  c.appendChild(div);
+}
+
+function removeBlock(btn) {
+  var blocks = document.getElementById('interviewBlocks');
+  if (blocks.children.length <= 2) return;
+  btn.closest('.interview-block').remove();
+  Array.from(blocks.querySelectorAll('.interview-num')).forEach(function(el, i) {
+    el.textContent = 'Entretien ' + String(i+1).padStart(2,'0');
+  });
+}
+
+// ---- COLLECT ----
+function getInterviewsText() {
+  if (inputMode === 'single') {
+    return document.getElementById('singleText').value.trim();
+  } else {
+    var blocks = document.querySelectorAll('#interviewBlocks .interview-block');
+    var parts = [];
+    blocks.forEach(function(b, i) {
+      var label = b.querySelector('input').value.trim();
+      var notes = b.querySelector('textarea').value.trim();
+      if (notes) parts.push('=== Entretien ' + (i+1) + (label ? ' — ' + label : '') + ' ===\n' + notes);
+    });
+    return parts.join('\n\n');
+  }
+}
+
+// ---- LAUNCH ----
+async function launch() {
+  hideError();
+  var text = getInterviewsText();
+  var context = document.getElementById('context').value.trim();
+  if (!apiKey) { showError('Entre et enregistre ta clé API avant de lancer.'); return; }
+  if (!text || text.length < 80) { showError('Ajoute des notes d\'entretien plus détaillées (minimum ~80 caractères).'); return; }
+
+  document.getElementById('launchBtn').disabled = true;
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('loading').classList.add('show');
+
+  try {
+    var raw = await callAI(buildPrompt(text, context), 3000);
+    var clean = raw.replace(/```json/gi,'').replace(/```/g,'').trim();
+    var m = clean.match(/\{[\s\S]*\}/);
+    if (!m) throw new Error('Réponse invalide, réessaie.');
+    var data = JSON.parse(m[0]);
+    renderResults(data, context);
+  } catch(e) {
+    showError('Erreur : ' + e.message);
+  }
+  document.getElementById('loading').classList.remove('show');
+  document.getElementById('launchBtn').disabled = false;
+}
+
+function buildPrompt(text, context) {
+  var ctx = context ? '\nContexte produit : ' + context : '';
+  return 'Tu es un UX researcher et Product Manager expert. Analyse ces notes d\'entretiens utilisateur.\n\nNotes :\n' + text + ctx + '\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ni après :\n{\n  "interview_count": 1,\n  "persona": {\n    "name": "Marie",\n    "emoji": "👩‍💼",\n    "description": "Responsable marketing, 34 ans, utilise l\'outil au quotidien pour gérer ses reportings et suivre ses projets d\'équipe.",\n    "tags": ["Marketing", "PME", "Power user", "Mobile first"]\n  },\n  "pain_groups": [\n    {\n      "group": "Partage et collaboration",\n      "count": 3,\n      "items": [\n        "Impossible de partager un rapport sans donner accès complet à l\'outil",\n        "Pas de notification lors de modifications par un collègue"\n      ]\n    }\n  ],\n  "quotes": [\n    {\n      "text": "Citation exacte ou reformulée fidèlement depuis les notes",\n      "profile": "Marie, responsable marketing"\n    }\n  ],\n  "opportunities": [\n    {\n      "title": "Export PDF en un clic",\n      "description": "Permettre le partage de rapports sans compte requis, via un lien ou un email avec PDF généré automatiquement.",\n      "impact": "high"\n    }\n  ]\n}\n\nRègles :\n- pain_groups : 2-4 groupes, chacun avec 2-3 items\n- quotes : 3-4 citations marquantes\n- opportunities : 3-4 opportunités, impact parmi high/medium/low\n- Si plusieurs entretiens : synthétise les patterns communs\n- Sois précis, actionnable, ancré dans les notes fournies.';
+}
+
+async function callAI(prompt, maxTokens) {
+  var endpoint = provider === 'groq'
+    ? 'https://api.groq.com/openai/v1/chat/completions'
+    : 'https://api.openai.com/v1/chat/completions';
+  var model = provider === 'groq' ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+  var res = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model, temperature: 0.4, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
+  });
+  if (!res.ok) { var e = await res.json(); throw new Error(e.error?.message || 'Erreur API ' + res.status); }
+  var data = await res.json();
+  return data.choices[0].message.content;
+}
+
+// ---- RENDER ----
+function renderResults(d, context) {
+  var count = d.interview_count || 1;
+  var sub = count + ' entretien' + (count > 1 ? 's' : '') + ' analysé' + (count > 1 ? 's' : '');
+  if (context) sub += ' · ' + context.substring(0,45) + (context.length > 45 ? '…' : '');
+  document.getElementById('resultsSub').textContent = sub;
+
+  // PERSONA
+  var p = d.persona || {};
+  var tagsHtml = (p.tags||[]).map(function(t){ return '<span class="persona-tag">' + esc(t) + '</span>'; }).join('');
+  document.getElementById('personaCard').innerHTML =
+    '<div class="persona-avatar">' + (p.emoji||'👤') + '</div>' +
+    '<div><div class="persona-name">' + esc(p.name||'Utilisateur type') + '</div>' +
+    '<div class="persona-desc">' + esc(p.description||'') + '</div>' +
+    '<div class="persona-tags">' + tagsHtml + '</div></div>';
+
+  // PAIN POINTS
+  var painHtml = '';
+  (d.pain_groups||[]).forEach(function(g) {
+    var itemsHtml = (g.items||[]).map(function(it) {
+      return '<div class="pain-item"><span class="pain-icon">&#9642;</span>' + esc(it) + '</div>';
+    }).join('');
+    painHtml += '<div class="pain-group">' +
+      '<div class="pain-group-title">' + esc(g.group||'') + ' <span class="pain-count">' + (g.count||g.items?.length||0) + '</span></div>' +
+      '<div class="pain-items">' + itemsHtml + '</div></div>';
+  });
+  document.getElementById('painContainer').innerHTML = painHtml;
+
+  // QUOTES
+  var quotesHtml = (d.quotes||[]).map(function(q) {
+    return '<div class="quote-item">' +
+      '<div class="quote-text">&laquo;&nbsp;' + esc(q.text||'') + '&nbsp;&raquo;</div>' +
+      (q.profile ? '<div class="quote-meta">' + esc(q.profile) + '</div>' : '') +
+      '</div>';
+  }).join('');
+  document.getElementById('quotesContainer').innerHTML = quotesHtml;
+
+  // OPPORTUNITIES
+  var oppsHtml = (d.opportunities||[]).map(function(o, i) {
+    var impactLabel = o.impact === 'high' ? 'Impact fort' : o.impact === 'medium' ? 'Impact moyen' : 'Impact faible';
+    var impactCls = 'impact-' + (o.impact||'medium');
+    return '<div class="opp-item">' +
+      '<div class="opp-num' + (i < 2 ? ' top' : '') + '">' + (i+1) + '</div>' +
+      '<div class="opp-body"><div class="opp-title">' + esc(o.title||'') + '</div><div class="opp-desc">' + esc(o.description||'') + '</div></div>' +
+      '<div class="opp-impact"><span class="impact-badge ' + impactCls + '">' + impactLabel + '</span></div>' +
+      '</div>';
+  }).join('');
+  document.getElementById('oppsContainer').innerHTML = oppsHtml;
+
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function reset() {
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('singleText').value = '';
+  document.getElementById('context').value = '';
+  document.getElementById('interviewBlocks').innerHTML = '';
+  interviewCount = 0;
+  if (inputMode === 'multi') { addInterview(); addInterview(); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function showError(m) { var el = document.getElementById('errorBox'); el.textContent = m; el.classList.add('show'); }
+function hideError() { document.getElementById('errorBox').classList.remove('show'); }
+
+setMode('single');
+</script>
+</body>
+</html>
