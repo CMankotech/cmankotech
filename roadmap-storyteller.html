@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap Storyteller — by Carlin Mankoto</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070e;--surface:#0e0e1a;--surface2:#11111e;
+  --border:rgba(255,255,255,0.07);--line:rgba(255,255,255,0.04);
+  --text:#e2e8f0;--dim:#718096;--muted:#4a5568;
+  --blue:#60a5fa;--violet:#a78bfa;--cyan:#22d3ee;
+  --green:#4ade80;--orange:#fb923c;--red:#f87171;
+  --accent:#a78bfa;--accent2:#7c3aed;
+}
+html{font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
+h1,h2,h3{font-family:'Syne',sans-serif}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 80% 0%,rgba(167,139,250,0.07) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 10% 90%,rgba(124,58,237,0.05) 0%,transparent 60%);pointer-events:none;z-index:0}
+.container{max-width:900px;margin:0 auto;padding:3rem 1.5rem;position:relative;z-index:1}
+
+/* HEADER */
+header{text-align:center;margin-bottom:3rem}
+.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--accent);background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);padding:0.4rem 1rem;border-radius:99px;margin-bottom:1.25rem}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
+h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.75rem}
+.grad{background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{font-size:0.85rem;color:var(--dim);max-width:520px;margin:0 auto}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem}
+.card-title{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.6rem}
+.card-title::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* PROVIDER */
+.provider-row{display:flex;gap:0.4rem;margin-bottom:0.9rem}
+.provider-btn{flex:1;padding:0.55rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.35rem}
+.provider-btn.active{background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.35);color:var(--accent)}
+.provider-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
+.provider-tag{font-size:0.52rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.1rem 0.4rem;background:rgba(255,255,255,0.06);border-radius:3px}
+.key-row{display:flex;gap:0.75rem}
+.key-row input{flex:1;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;outline:none;transition:border-color 0.2s}
+.key-row input:focus{border-color:rgba(167,139,250,0.4)}
+.key-row input::placeholder{color:var(--muted)}
+.btn-save{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.65rem 1rem;border-radius:8px;border:1px solid rgba(167,139,250,0.3);background:rgba(167,139,250,0.08);color:var(--accent);cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all 0.2s}
+.btn-save:hover{background:rgba(167,139,250,0.18)}
+.note{font-size:0.66rem;color:var(--muted);margin-top:0.6rem}
+.note a{color:var(--accent);text-decoration:none}
+.saved-msg{display:none;font-size:0.68rem;color:var(--green);align-items:center;gap:0.4rem;margin-top:0.5rem}
+.saved-msg.show{display:flex}
+
+/* FORM */
+.field{margin-bottom:1.1rem}
+.field label{display:block;font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--dim);margin-bottom:0.45rem}
+.field input,.field select,.field textarea{width:100%;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:10px;padding:0.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:300;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(167,139,250,0.35)}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+.field select option{background:#0e0e1a}
+.field textarea{resize:none;line-height:1.7}
+.field-hint{font-size:0.63rem;color:var(--muted);margin-top:0.4rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* AUDIENCE TOGGLE */
+.audience-toggle{display:flex;gap:0.4rem;flex-wrap:wrap}
+.aud-btn{padding:0.45rem 0.85rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s}
+.aud-btn.active{background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.3);color:var(--accent)}
+.aud-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
+
+/* FEATURES INPUT */
+.features-list{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:0.75rem}
+.feature-row{display:flex;gap:0.5rem;align-items:center}
+.feature-row input{flex:1;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:8px;padding:0.6rem 0.9rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:300;outline:none;transition:border-color 0.2s}
+.feature-row input:focus{border-color:rgba(167,139,250,0.35)}
+.feature-row input::placeholder{color:var(--muted)}
+.feature-period{width:130px;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:8px;padding:0.6rem 0.75rem;color:var(--dim);font-family:'DM Sans',sans-serif;font-size:0.72rem;outline:none;-webkit-appearance:none;cursor:pointer}
+.feature-period:focus{border-color:rgba(167,139,250,0.35)}
+.feature-period option{background:#0e0e1a}
+.btn-remove-feat{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0}
+.btn-remove-feat:hover{border-color:rgba(248,113,113,0.4);color:#f87171}
+.btn-add-feat{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.45rem 1rem;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.15);color:var(--accent);border-radius:7px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.btn-add-feat:hover{background:rgba(167,139,250,0.14)}
+.btn-examples{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.28rem 0.7rem;background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);color:var(--accent);border-radius:5px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:0.5rem}
+.btn-examples:hover{background:rgba(167,139,250,0.16)}
+
+/* SUBMIT */
+.btn-launch{width:100%;padding:1rem;background:linear-gradient(135deg,#4c1d95,#6d28d9);border:none;border-radius:10px;color:white;font-family:'Syne',sans-serif;font-size:0.83rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;cursor:pointer;transition:all 0.25s;margin-top:1.25rem}
+.btn-launch:hover:not(:disabled){opacity:0.88;transform:translateY(-1px);box-shadow:0 8px 30px -12px rgba(167,139,250,0.5)}
+.btn-launch:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+.error-box{display:none;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);border-radius:10px;padding:0.85rem 1rem;font-size:0.78rem;color:#fca5a5;margin-top:0.75rem}
+.error-box.show{display:block}
+
+/* LOADING */
+.loading{display:none;text-align:center;padding:3rem 0}
+.loading.show{display:block}
+.spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:0.75rem;color:var(--muted)}
+
+/* RESULTS */
+.results{display:none}
+.results.show{display:block;animation:fadeUp 0.4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.results-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem}
+.results-info .results-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700}
+.results-info .results-sub{font-size:0.68rem;color:var(--dim);margin-top:0.2rem}
+.btn-reset{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.9rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.btn-reset:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+
+/* NARRATIVE CARD */
+.narrative-card{background:linear-gradient(135deg,rgba(167,139,250,0.07),rgba(96,165,250,0.04));border:1px solid rgba(167,139,250,0.2);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem}
+.narrative-label{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+.narrative-text{font-size:0.9rem;color:var(--text);line-height:1.8;font-style:italic;border-left:3px solid rgba(167,139,250,0.4);padding-left:1.25rem}
+
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:1rem;margin-bottom:1.25rem}
+.period-block{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.period-header{padding:0.9rem 1.25rem;background:rgba(255,255,255,0.02);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:0.75rem}
+.period-label{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent)}
+.period-theme{font-size:0.8rem;color:var(--text);font-weight:500}
+.period-items{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:0.65rem}
+.feature-item{display:flex;align-items:flex-start;gap:0.75rem}
+.feature-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:0.45rem;opacity:0.7}
+.feature-body{}
+.feature-title{font-size:0.83rem;color:var(--text);font-weight:500;margin-bottom:0.2rem}
+.feature-why{font-size:0.73rem;color:var(--dim);line-height:1.5}
+
+/* TALKING POINTS */
+.talking-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem}
+.talking-header{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+.talking-header::after{content:'';flex:1;height:1px;background:var(--line)}
+.talking-list{display:flex;flex-direction:column;gap:0.5rem}
+.talking-item{font-size:0.8rem;color:#a0aec0;line-height:1.6;display:flex;align-items:flex-start;gap:0.6rem;padding:0.6rem 0.75rem;background:rgba(255,255,255,0.02);border-radius:8px}
+.talking-bullet{color:var(--accent);flex-shrink:0;font-size:0.9rem;margin-top:0.05rem}
+
+/* COPY BTN */
+.btn-copy{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.5rem 1rem;border-radius:7px;border:1px solid rgba(167,139,250,0.25);background:rgba(167,139,250,0.07);color:var(--accent);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;margin-top:1rem}
+.btn-copy:hover{background:rgba(167,139,250,0.16)}
+.btn-copy.copied{color:var(--green);border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.06)}
+
+footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line);font-size:0.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media(max-width:600px){
+  .form-grid{grid-template-columns:1fr}
+  .feature-period{width:100px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="header-tag"><span class="dot"></span> Communication &amp; Alignement</div>
+    <h1>Roadmap <span class="grad">Storyteller</span></h1>
+    <p class="subtitle">Transforme tes features brutes en roadmap narrative claire et convaincante pour tes stakeholders.</p>
+  </header>
+
+  <!-- CONFIG -->
+  <div class="card">
+    <div class="card-title">&#128273; Configuration</div>
+    <div class="provider-row">
+      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag">Gratuit</span></button>
+      <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
+    </div>
+    <div class="key-row">
+      <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
+      <button class="btn-save" onclick="saveKey()">Enregistrer</button>
+    </div>
+    <p class="note" id="providerNote">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl&eacute; reste dans ton navigateur.</p>
+    <div class="saved-msg" id="savedMsg">&#10003; Cl&eacute; enregistr&eacute;e.</div>
+  </div>
+
+  <!-- FORM -->
+  <div class="card">
+    <div class="card-title">
+      Contexte produit
+      <button class="btn-examples" onclick="loadExample()">&#127922; Exemple</button>
+    </div>
+
+    <div class="form-grid">
+      <div class="field">
+        <label>Nom du produit</label>
+        <input type="text" id="productName" placeholder="Ex : Kira, Notion, Doctolib...">
+      </div>
+      <div class="field">
+        <label>Horizon</label>
+        <select id="horizon">
+          <option value="trimestre">Ce trimestre (3 mois)</option>
+          <option value="semestre">Ce semestre (6 mois)</option>
+          <option value="annee">Cette ann&eacute;e (12 mois)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Audience cible</label>
+      <div class="audience-toggle">
+        <button class="aud-btn active" id="aud-dirigeants" onclick="toggleAud('dirigeants')">Dirigeants / C-level</button>
+        <button class="aud-btn" id="aud-metier" onclick="toggleAud('metier')">Equipes m&eacute;tier</button>
+        <button class="aud-btn" id="aud-tech" onclick="toggleAud('tech')">Equipe tech</button>
+        <button class="aud-btn" id="aud-client" onclick="toggleAud('client')">Clients</button>
+      </div>
+      <p class="field-hint">Plusieurs audiences possibles.</p>
+    </div>
+
+    <div class="field">
+      <label>Vision / objectif strat&eacute;gique</label>
+      <input type="text" id="vision" placeholder="Ex : Devenir la r&eacute;f&eacute;rence RH pour les PME en Europe">
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="card">
+    <div class="card-title">
+      Features &amp; initiatives
+      <button class="btn-examples" onclick="loadFeaturesExample()">&#127922; Exemple</button>
+    </div>
+    <p style="font-size:0.75rem;color:var(--dim);margin-bottom:1rem">Ajoute tes features ou initiatives. Assigne-leur une p&eacute;riode de livraison.</p>
+    <div class="features-list" id="featuresList"></div>
+    <button class="btn-add-feat" onclick="addFeature()">+ Ajouter une feature</button>
+    <p class="field-hint" style="margin-top:0.5rem">Entre 3 et 10 features recommand&eacute;es.</p>
+  </div>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <button class="btn-launch" id="launchBtn" onclick="launch()">
+    &#9654; G&eacute;n&eacute;rer ma roadmap narrative
+  </button>
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">Construction de ta roadmap en cours...</div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+    <div class="results-topbar">
+      <div class="results-info">
+        <div class="results-title">Roadmap g&eacute;n&eacute;r&eacute;e</div>
+        <div class="results-sub" id="resultsSub"></div>
+      </div>
+      <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
+    </div>
+
+    <!-- Narrative pitch -->
+    <div class="narrative-card" id="narrativeCard">
+      <div class="narrative-label">&#128172; Pitch narratif</div>
+      <div class="narrative-text" id="narrativeText"></div>
+      <button class="btn-copy" id="copyBtn" onclick="copyNarrative()">&#128203; Copier le pitch</button>
+    </div>
+
+    <!-- Timeline -->
+    <div id="timeline"></div>
+
+    <!-- Talking points -->
+    <div class="talking-card" id="talkingCard" style="display:none">
+      <div class="talking-header">&#127919; Messages cl&eacute;s pour cette audience</div>
+      <div class="talking-list" id="talkingList"></div>
+    </div>
+  </div>
+
+  <footer>
+    Construit par <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager
+  </footer>
+
+</div>
+
+<script>
+var apiKey = '';
+var provider = 'groq';
+var audiences = ['dirigeants'];
+var featureCount = 0;
+
+// Init with 4 empty feature rows
+window.onload = function() {
+  for(var i = 0; i < 4; i++) addFeature();
+};
+
+var EXAMPLE_PRODUCT = 'Flowly';
+var EXAMPLE_VISION = 'Devenir l\'outil de gestion de projet incontournable pour les \u00e9quipes hybrides';
+var EXAMPLE_FEATURES = [
+  {text: 'Module de reporting avanc\u00e9 pour managers', period: 'now'},
+  {text: 'Refonte de l\'onboarding utilisateur', period: 'now'},
+  {text: 'Int\u00e9gration native Slack et Teams', period: 'next'},
+  {text: 'Tableau de bord temps r\u00e9el des performances \u00e9quipe', period: 'next'},
+  {text: 'Application mobile iOS/Android', period: 'later'},
+  {text: 'API publique pour int\u00e9grations partenaires', period: 'later'}
+];
+
+function loadExample() {
+  document.getElementById('productName').value = EXAMPLE_PRODUCT;
+  document.getElementById('vision').value = EXAMPLE_VISION;
+}
+
+function loadFeaturesExample() {
+  document.getElementById('featuresList').innerHTML = '';
+  featureCount = 0;
+  EXAMPLE_FEATURES.forEach(function(f) { addFeature(f.text, f.period); });
+}
+
+function addFeature(text, period) {
+  featureCount++;
+  var id = featureCount;
+  var row = document.createElement('div');
+  row.className = 'feature-row';
+  row.id = 'feat-' + id;
+  row.innerHTML = '<input type="text" placeholder="Ex : Refonte onboarding, Module analytics..." value="' + esc(text||'') + '">' +
+    '<select class="feature-period">' +
+    '<option value="now"' + (period==='now'?' selected':'') + '>Maintenant</option>' +
+    '<option value="next"' + (period==='next'?' selected':'') + '>Ensuite</option>' +
+    '<option value="later"' + (period==='later'?' selected':'') + '>Plus tard</option>' +
+    '</select>' +
+    '<button class="btn-remove-feat" onclick="removeFeat(' + id + ')" title="Supprimer">&times;</button>';
+  document.getElementById('featuresList').appendChild(row);
+}
+
+function removeFeat(id) {
+  var el = document.getElementById('feat-' + id);
+  if(el) el.remove();
+}
+
+function toggleAud(a) {
+  var idx = audiences.indexOf(a);
+  if(idx > -1) { if(audiences.length > 1) audiences.splice(idx,1); }
+  else audiences.push(a);
+  ['dirigeants','metier','tech','client'].forEach(function(k) {
+    document.getElementById('aud-'+k).classList.toggle('active', audiences.indexOf(k) > -1);
+  });
+}
+
+function setProvider(p) {
+  provider = p;
+  document.getElementById('pbGroq').classList.toggle('active', p==='groq');
+  document.getElementById('pbOpenai').classList.toggle('active', p==='openai');
+  var inp = document.getElementById('apiKeyInput');
+  var note = document.getElementById('providerNote');
+  if(p==='groq') {
+    inp.placeholder='gsk_...';
+    note.innerHTML='Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl\u00e9 reste dans ton navigateur.';
+  } else {
+    inp.placeholder='sk-...';
+    note.innerHTML='Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>. GPT-4o mini est tr\u00e8s peu co\u00fbteux.';
+  }
+  apiKey='';
+  document.getElementById('savedMsg').classList.remove('show');
+}
+
+function saveKey() {
+  var v = document.getElementById('apiKeyInput').value.trim();
+  if(provider==='groq' && (!v.startsWith('gsk_')||v.length<20)){showError('Cl\u00e9 Groq invalide (doit commencer par "gsk_").');return;}
+  if(provider==='openai' && (!v.startsWith('sk-')||v.length<20)){showError('Cl\u00e9 OpenAI invalide (doit commencer par "sk-").');return;}
+  apiKey=v;
+  document.getElementById('savedMsg').classList.add('show');
+  hideError();
+}
+
+function getFeatures() {
+  var rows = document.querySelectorAll('.feature-row');
+  var features = [];
+  rows.forEach(function(row) {
+    var inp = row.querySelector('input');
+    var sel = row.querySelector('select');
+    if(inp && inp.value.trim()) features.push({text: inp.value.trim(), period: sel.value});
+  });
+  return features;
+}
+
+async function launch() {
+  hideError();
+  var name = document.getElementById('productName').value.trim();
+  var vision = document.getElementById('vision').value.trim();
+  var horizon = document.getElementById('horizon').value;
+  var features = getFeatures();
+
+  if(!apiKey){showError('Entre et enregistre ta cl\u00e9 API avant de lancer.');return;}
+  if(!name){showError('Donne un nom au produit.');return;}
+  if(features.length < 2){showError('Ajoute au moins 2 features.');return;}
+
+  document.getElementById('launchBtn').disabled = true;
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('loading').classList.add('show');
+
+  try {
+    var raw = await callAI(buildPrompt(name, vision, horizon, features), 3500);
+    var clean = raw.replace(/```json/gi,'').replace(/```/g,'').trim();
+    var m = clean.match(/\{[\s\S]*\}/);
+    if(!m) throw new Error('R\u00e9ponse invalide, r\u00e9essaie.');
+    var data = JSON.parse(m[0]);
+    renderResults(data, name, horizon);
+  } catch(e) {
+    showError('Erreur : ' + e.message);
+  }
+  document.getElementById('loading').classList.remove('show');
+  document.getElementById('launchBtn').disabled = false;
+}
+
+function buildPrompt(name, vision, horizon, features) {
+  var audLabels = {'dirigeants':'Dirigeants / C-level','metier':'Equipes m\u00e9tier','tech':'Equipe tech','client':'Clients'};
+  var audStr = audiences.map(function(a){return audLabels[a]||a;}).join(', ');
+  var horizonStr = {'trimestre':'ce trimestre (3 mois)','semestre':'ce semestre (6 mois)','annee':'cette ann\u00e9e (12 mois)'}[horizon];
+  var featStr = features.map(function(f){ return '- [' + f.period.toUpperCase() + '] ' + f.text; }).join('\n');
+
+  return 'Tu es un expert en Product Management et communication produit. G\u00e9n\u00e8re une roadmap narrative pour les stakeholders.\n\nProduit : "' + name + '"\nVision : ' + (vision||'Non pr\u00e9cis\u00e9e') + '\nHorizon : ' + horizonStr + '\nAudience(s) : ' + audStr + '\n\nFeatures (NOW = maintenant, NEXT = ensuite, LATER = plus tard) :\n' + featStr + '\n\nG\u00e9n\u00e8re une roadmap narrative avec :\n1. Un pitch narratif de 3-4 phrases qui raconte l\'histoire du produit (inspir\u00e9, orient\u00e9 impact, pas technique)\n2. La timeline organis\u00e9e en p\u00e9riodes NOW/NEXT/LATER avec pour chaque feature : un titre clair et court (pas celui donn\u00e9 en input, reformule-le) + une phrase "Pourquoi" orient\u00e9e valeur pour l\'audience cible\n3. 3 messages cl\u00e9s adapt\u00e9s \u00e0 l\'audience pour convaincre et aligner\n\nR\u00e9ponds UNIQUEMENT avec un JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "narrative": "Pitch narratif de 3-4 phrases qui raconte l\'histoire...",\n  "periods": [\n    {\n      "key": "now",\n      "label": "Maintenant",\n      "theme": "Un mot-cl\u00e9 ou th\u00e8me de cette p\u00e9riode",\n      "features": [\n        {"title": "Titre reformul\u00e9 de la feature", "why": "Valeur concr\u00e8te pour l\'audience"}\n      ]\n    }\n  ],\n  "talking_points": [\n    "Message cl\u00e9 court et percutant pour cette audience"\n  ]\n}';
+}
+
+async function callAI(prompt, maxTokens) {
+  var endpoint = provider==='groq' ? 'https://api.groq.com/openai/v1/chat/completions' : 'https://api.openai.com/v1/chat/completions';
+  var model = provider==='groq' ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+  var res = await fetch(endpoint, {
+    method:'POST',
+    headers:{'Authorization':'Bearer '+apiKey,'Content-Type':'application/json'},
+    body:JSON.stringify({model,temperature:0.55,max_tokens:maxTokens,messages:[{role:'user',content:prompt}]})
+  });
+  if(!res.ok){var e=await res.json();throw new Error(e.error?.message||'Erreur API '+res.status);}
+  var data = await res.json();
+  return data.choices[0].message.content;
+}
+
+function renderResults(d, name, horizon) {
+  var hMap = {'trimestre':'Trimestrielle','semestre':'Semestrielle','annee':'Annuelle'};
+  document.getElementById('resultsSub').textContent = name + ' \u00b7 Roadmap ' + (hMap[horizon]||horizon) + ' \u00b7 ' + audiences.join(', ');
+
+  // Narrative
+  document.getElementById('narrativeText').textContent = d.narrative || '';
+  window._narrativeText = d.narrative || '';
+
+  // Timeline
+  var periodColors = {now:'rgba(74,222,128,0.15)', next:'rgba(167,139,250,0.15)', later:'rgba(96,165,250,0.15)'};
+  var periodBorder = {now:'rgba(74,222,128,0.3)', next:'rgba(167,139,250,0.3)', later:'rgba(96,165,250,0.3)'};
+  var periodTextColor = {now:'#86efac', next:'#c4b5fd', later:'#93c5fd'};
+  var timelineHtml = '';
+  (d.periods||[]).forEach(function(period) {
+    if(!period.features || !period.features.length) return;
+    var col = periodColors[period.key] || periodColors.later;
+    var bord = periodBorder[period.key] || periodBorder.later;
+    var txtCol = periodTextColor[period.key] || periodTextColor.later;
+    var featsHtml = period.features.map(function(f) {
+      return '<div class="feature-item"><div class="feature-dot" style="background:'+txtCol+'"></div><div class="feature-body"><div class="feature-title">'+esc(f.title)+'</div><div class="feature-why">'+esc(f.why)+'</div></div></div>';
+    }).join('');
+    timelineHtml += '<div class="period-block"><div class="period-header" style="background:'+col+';border-bottom:1px solid '+bord+'"><span class="period-label" style="color:'+txtCol+'">'+esc(period.label)+'</span><span style="color:var(--muted);font-size:0.65rem;margin:0 0.5rem">/</span><span class="period-theme">'+esc(period.theme||'')+'</span></div><div class="period-items">'+featsHtml+'</div></div>';
+  });
+  document.getElementById('timeline').innerHTML = timelineHtml;
+
+  // Talking points
+  var pts = d.talking_points || [];
+  if(pts.length) {
+    var html = pts.map(function(p){ return '<div class="talking-item"><span class="talking-bullet">&#8227;</span>'+esc(p)+'</div>'; }).join('');
+    document.getElementById('talkingList').innerHTML = html;
+    document.getElementById('talkingCard').style.display = 'block';
+  }
+
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function copyNarrative() {
+  var text = window._narrativeText || '';
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.getElementById('copyBtn');
+    btn.textContent = '\u2713 Copi\u00e9 !';
+    btn.classList.add('copied');
+    setTimeout(function(){ btn.textContent = '\u{1F4CB} Copier le pitch'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function reset() {
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('talkingCard').style.display = 'none';
+  document.getElementById('productName').value = '';
+  document.getElementById('vision').value = '';
+  document.getElementById('featuresList').innerHTML = '';
+  featureCount = 0;
+  for(var i=0;i<4;i++) addFeature();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function showError(m){var el=document.getElementById('errorBox');el.textContent=m;el.classList.add('show');}
+function hideError(){document.getElementById('errorBox').classList.remove('show');}
+</script>
+</body>
+</html>
