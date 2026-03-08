@@ -3,123 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carlin MANKOTO | AI Product Manager</title>
+    <title>Carlin MANKOTO | AI Product Manager Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { background-color: #050505; color: #e5e7eb; font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;600&display=swap');
+        :root { --bg: #0a0a0c; --accent: #3b82f6; --glass: rgba(255, 255, 255, 0.03); }
+        body { background-color: var(--bg); color: #f1f5f9; font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+        .glass-card { background: var(--glass); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s ease; }
+        .glass-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.2); }
         .text-gradient { background: linear-gradient(to right, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .bento-card:hover { border-color: #60a5fa; transform: translateY(-2px); transition: all 0.3s ease; }
+        .badge-cert { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); font-size: 0.65rem; font-weight: 700; color: #93c5fd; padding: 2px 8px; border-radius: 99px; }
     </style>
 </head>
 <body class="antialiased">
 
-    <nav class="fixed w-full z-50 glass py-4 px-8 flex justify-between items-center">
-        <div class="text-xl font-bold tracking-tighter tracking-widest text-gradient">CM.</div>
-        <div class="space-x-8 hidden md:flex text-sm uppercase tracking-widest font-medium">
-            <a href="#about" class="hover:text-blue-400 transition">Profil</a>
-            <a href="#experience" class="hover:text-blue-400 transition">Expérience</a>
-            <a href="#skills" class="hover:text-blue-400 transition">Stack IA</a>
-            <a href="mailto:carlinmankoto@proton.me" class="px-4 py-2 bg-blue-600 rounded-full hover:bg-blue-500 transition">Contact</a>
+    <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-black/50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold tracking-tighter">C<span class="text-blue-500">M</span>.</div>
+            <div class="hidden md:flex space-x-8 text-xs font-semibold uppercase tracking-widest text-gray-400">
+                <a href="#about" class="hover:text-white transition">Profil</a>
+                <a href="#experience" class="hover:text-white transition">Parcours</a>
+                <a href="#certs" class="hover:text-white transition">Certifications</a>
+                <a href="#education" class="hover:text-white transition">Formation</a>
+            </div>
+            <a href="mailto:carlinmankoto@proton.me" class="px-5 py-2 bg-blue-600 rounded-lg text-xs font-bold hover:bg-blue-500 transition">Contact</a>
         </div>
     </nav>
 
-    <section id="about" class="pt-32 pb-20 px-6 max-w-6xl mx-auto text-center">
-        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-            Carlin <span class="text-gradient">MANKOTO</span>
-        </h1>
-        <p class="text-xl md:text-2xl text-gray-400 mb-8 font-light max-w-3xl mx-auto">
-            Product Manager spécialisé en <span class="text-white font-medium italic">Agentic AI & Orchestration</span>. 
-            3 ans d'expérience à transformer des problèmes complexes en produits scalables[cite: 1, 6].
-        </p>
-        <div class="flex justify-center gap-4 flex-wrap text-sm">
-            <span class="px-4 py-2 glass rounded-full">🚀 PSPO I [cite: 12]</span>
-            <span class="px-4 py-2 glass rounded-full">🛡️ SAFe 6 POPM [cite: 13]</span>
-            <span class="px-4 py-2 glass rounded-full">🤖 AI Product School Certified [cite: 14]</span>
-        </div>
-    </section>
-
-    <section id="skills" class="py-20 px-6 max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold mb-12 text-center">Expertise AI & Automatisation</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="glass p-8 rounded-3xl bento-card md:col-span-2">
-                <i class="fas fa-brain text-blue-400 text-3xl mb-4"></i>
-                <h3 class="text-xl font-bold mb-2">AI Orchestration & Agents</h3>
-                <p class="text-gray-400 text-sm mb-4">Conception de workflows complexes avec systèmes multi-agents et RAG[cite: 8, 9].</p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="text-xs bg-blue-900/30 text-blue-300 px-2 py-1 rounded">CrewAI</span>
-                    <span class="text-xs bg-blue-900/30 text-blue-300 px-2 py-1 rounded">Flowise</span>
-                    <span class="text-xs bg-blue-900/30 text-blue-300 px-2 py-1 rounded">n8n</span>
-                    <span class="text-xs bg-blue-900/30 text-blue-300 px-2 py-1 rounded">LangChain</span>
+    <section id="about" class="pt-40 pb-20 px-6 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h1 class="text-6xl md:text-8xl font-bold leading-none mb-6">Product <br><span class="text-gradient">Manager AI</span></h1>
+                <p class="text-xl text-gray-400 font-light max-w-xl leading-relaxed">
+                    Expert en <span class="text-white font-medium">Agentic AI & Discovery</span>. 3 ans d'expérience à transformer des problématiques complexes en solutions scalables chez Airbus, AXA et Infotel.
+                </p>
+                <div class="mt-8 flex flex-wrap gap-4">
+                    <div class="flex items-center gap-2 text-sm text-gray-400"><i class="fas fa-location-dot text-blue-500"></i> Noisy-le-Grand</div>
+                    <div class="flex items-center gap-2 text-sm text-gray-400"><i class="fas fa-phone text-blue-500"></i> 06.18.40.42.14</div>
                 </div>
             </div>
-            <div class="glass p-8 rounded-3xl bento-card">
-                <i class="fas fa-code text-purple-400 text-3xl mb-4"></i>
-                <h3 class="text-xl font-bold mb-2">Vibe Coding</h3>
-                <p class="text-gray-400 text-sm mb-4">Prototypage ultra-rapide via Claude Code et Lovable[cite: 9, 18].</p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="text-xs bg-purple-900/30 text-purple-300 px-2 py-1 rounded">Claude 3.5 Sonnet</span>
-                    <span class="text-xs bg-purple-900/30 text-purple-300 px-2 py-1 rounded">Lovable</span>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="glass-card p-6 rounded-3xl">
+                    <h4 class="text-blue-400 font-bold">Marty Cagan</h4>
+                    <p class="text-[10px] uppercase text-gray-500 tracking-widest mt-1">Inspiration Discovery</p>
+                </div>
+                <div class="glass-card p-6 rounded-3xl">
+                    <h4 class="text-purple-400 font-bold">Outcome > Output</h4>
+                    <p class="text-[10px] uppercase text-gray-500 tracking-widest mt-1">Philosophie Produit</p>
+                </div>
+                <div class="glass-card p-6 rounded-3xl col-span-2">
+                    <h4 class="text-white font-bold">Agentic AI Orchestration</h4>
+                    <p class="text-xs text-gray-400 mt-2">Maîtrise de CrewAI, n8n, Flowise et Vibe Coding (Claude Code/Lovable).</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="experience" class="py-20 px-6 max-w-4xl mx-auto">
-        <h2 class="text-3xl font-bold mb-12 flex items-center gap-4">
-            <span class="h-1 w-12 bg-blue-500 rounded"></span> Expériences
-        </h2>
+    <section id="experience" class="py-20 px-6 max-w-5xl mx-auto">
+        <h2 class="text-3xl font-bold mb-16 flex items-center gap-4"><span class="w-12 h-[1px] bg-blue-500"></span> Expériences</h2>
         
-        <div class="space-y-12">
+        <div class="space-y-16">
             <div class="relative pl-8 border-l border-gray-800">
-                <div class="absolute -left-1.5 top-0 w-3 h-3 bg-blue-500 rounded-full"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-xl font-bold">Product Manager CDI</h3>
-                    <span class="text-sm text-gray-500">Jan 2026 - Présent </span>
+                <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-blue-500 rounded-full shadow-[0_0_10px_#3b82f6]"></div>
+                <div class="flex justify-between items-start flex-wrap gap-2 mb-4">
+                    <div>
+                        <h3 class="text-xl font-bold">Product Manager CDI</h3>
+                        <p class="text-blue-400 font-medium">OAIO (Groupe Infotel)</p>
+                    </div>
+                    <span class="text-xs font-bold text-gray-500 py-1 px-3 glass-card rounded-full">JAN 2026 — PRÉSENT</span>
                 </div>
-                <p class="text-blue-400 font-medium mb-2 italic">OAIO (Groupe Infotel)</p>
+                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                    Pilotage de la stratégie produit LMS pour 3 500+ collaborateurs. Benchmark de 44 outils IA et prototypage en vibe coding pour valider les hypothèses UX.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="badge-cert">LOVABLE</span> <span class="badge-cert">CLAUDE CODE</span> <span class="badge-cert">ROI ANALYSIS</span>
+                </div>
+            </div>
+
+            <div class="relative pl-8 border-l border-gray-800">
+                <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-purple-500 rounded-full"></div>
+                <div class="flex justify-between items-start flex-wrap gap-2 mb-4">
+                    <div>
+                        <h3 class="text-xl font-bold">AI Trainer & Data Annotator</h3>
+                        <p class="text-purple-400 font-medium italic text-sm">Outlier / Alignerr (Freelance)</p>
+                    </div>
+                    <span class="text-xs font-bold text-gray-500 py-1 px-3 glass-card rounded-full">2024 — 2025</span>
+                </div>
+                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                    Entraînement de LLMs via RLHF. Création de datasets structurés (Labelbox) et contrôle qualité rigoureux pour optimiser l'apprentissage des modèles.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="badge-cert">RLHF</span> <span class="badge-cert">LABELBOX</span> <span class="badge-cert">SQL</span>
+                </div>
+            </div>
+
+            <div class="relative pl-8 border-l border-gray-800">
+                <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-gray-700 rounded-full"></div>
+                <div class="flex justify-between items-start flex-wrap gap-2 mb-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-white/90">AI Product Owner (Alternance)</h3>
+                        <p class="text-blue-400 font-medium">AXA - SecureGPT & Copilot</p>
+                    </div>
+                    <span class="text-xs font-bold text-gray-500 py-1 px-3 glass-card rounded-full">OCT 2023 — DÉC 2024</span>
+                </div>
                 <ul class="text-sm text-gray-400 space-y-2 list-disc ml-4">
-                    <li>Pilotage de la stratégie LMS pour 3 500+ collaborateurs.</li>
-                    <li>Benchmark stratégique de 44 outils IA et 17 solutions LMS.</li>
-                    <li>Prototypage en vibe coding pour valider les hypothèses UX.</li>
+                    <li>Gestion du backlog SecureGPT (RAG interne) et automatisation via AI Builder.</li>
+                    <li>Rôle d'AI Evangelist et accompagnement au changement (SAFe).</li>
                 </ul>
             </div>
 
             <div class="relative pl-8 border-l border-gray-800">
-                <div class="absolute -left-1.5 top-0 w-3 h-3 bg-gray-700 rounded-full"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-xl font-bold">AI Product Owner (Alternance)</h3>
-                    <span class="text-sm text-gray-500">Oct 2023 - Déc 2024 [cite: 26, 27]</span>
+                <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-gray-700 rounded-full"></div>
+                <div class="flex justify-between items-start flex-wrap gap-2 mb-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-white/90">Product Owner (Alternance)</h3>
+                        <p class="text-blue-400 font-medium">Airbus Defence and Space</p>
+                    </div>
+                    <span class="text-xs font-bold text-gray-500 py-1 px-3 glass-card rounded-full">SEPT 2022 — SEPT 2023</span>
                 </div>
-                <p class="text-blue-400 font-medium mb-2 italic">AXA - SecureGPT & Copilot</p>
-                <ul class="text-sm text-gray-400 space-y-2 list-disc ml-4">
-                    <li>Gestion du backlog SecureGPT (bibliothèque de prompts, RAG)[cite: 27, 30].</li>
-                    <li>Rôle d'AI Evangelist et automatisation via Power Automate[cite: 32, 33].</li>
-                </ul>
-            </div>
-
-            <div class="relative pl-8 border-l border-gray-800">
-                <div class="absolute -left-1.5 top-0 w-3 h-3 bg-gray-700 rounded-full"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-xl font-bold">Product Owner (Alternance)</h3>
-                    <span class="text-sm text-gray-500">Sept 2022 - Sept 2023 [cite: 37]</span>
+                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                    Messagerie sécurisée pour les JO Paris 2024. Transition Waterfall vers SAFe et interopérabilité TETRA/Broadband.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="badge-cert">KUBERNETES</span> <span class="badge-cert">JIRA</span> <span class="badge-cert">MISSION CRITICAL</span>
                 </div>
-                <p class="text-blue-400 font-medium mb-2 italic">Airbus Defence and Space</p>
-                <ul class="text-sm text-gray-400 space-y-2 list-disc ml-4">
-                    <li>Messagerie sécurisée pour les JO Paris 2024[cite: 38, 39].</li>
-                    <li>Transition Waterfall vers SAFe et interopérabilité legacy[cite: 38, 41, 44].</li>
-                </ul>
             </div>
         </div>
     </section>
 
-    <footer class="py-10 border-t border-gray-900 text-center text-gray-600 text-sm">
-        <div class="flex justify-center space-x-6 mb-4">
-            <a href="https://linkedin.com/in/carlinmankoto" class="hover:text-white transition"><i class="fab fa-linkedin fa-2x"></i></a>
-            <a href="mailto:carlinmankoto@proton.me" class="hover:text-white transition"><i class="fas fa-envelope fa-2x"></i></a>
+    <section id="certs" class="py-20 px-6 bg-blue-600/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold">Certifications & Badges</h2>
+                    <p class="text-gray-500 text-sm mt-2">Vérifiables officiellement sur Credly.</p>
+                </div>
+                <a href="https://www.credly.com/users/carlin-mankoto" target="_blank" class="text-blue-400 font-bold text-xs uppercase tracking-widest hover:underline">Voir mon Credly <i class="fas fa-external-link-alt ml-1"></i></a>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <i class="fas fa-shield-halved text-orange-500 text-2xl mb-3"></i>
+                    <p class="text-[10px] font-bold">SAFe 6 POPM</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <i class="fas fa-check-double text-blue-500 text-2xl mb-3"></i>
+                    <p class="text-[10px] font-bold">PSPO I (Scrum.org)</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <i class="fas fa-robot text-purple-500 text-2xl mb-3"></i>
+                    <p class="text-[10px] font-bold text-gradient">AI CERTIFICATION</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center border-blue-500/30">
+                    <i class="fas fa-magnifying-glass text-yellow-500 text-2xl mb-3"></i>
+                    <p class="text-[10px] font-bold">PRODUCT DISCOVERY</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <i class="fas fa-chart-line text-green-500 text-2xl mb-3"></i>
+                    <p class="text-[10px] font-bold">PRODUCT STRATEGY</p>
+                </div>
+            </div>
+            
+            <div class="mt-8 flex flex-wrap gap-3 justify-center text-[10px] font-bold uppercase tracking-widest text-gray-500">
+                <span>SAFe Scrum Master (SSM)</span> • <span>Product Roadmapping</span> • <span>Product Experimentation</span> • <span>Product Launches</span> • <span>Elements of AI</span> • <span>Lean Six Sigma</span>
+            </div>
         </div>
-        <p>© 2026 - Carlin Mankoto. Fait avec passion et Vibe Coding.</p>
+    </section>
+
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-bold mb-12">Projets & Innovation</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="glass-card p-8 rounded-[2rem]">
+                <span class="text-blue-500 text-xs font-bold tracking-widest uppercase">Consulting</span>
+                <h4 class="text-xl font-bold mt-2 mb-4">BNP Paribas Design Sprint</h4>
+                <p class="text-xs text-gray-400 leading-relaxed">Design Sprint sur la Sustainable Innovation pour co-construire des solutions à impact.</p>
+            </div>
+            <div class="glass-card p-8 rounded-[2rem]">
+                <span class="text-blue-500 text-xs font-bold tracking-widest uppercase">E-Commerce AI</span>
+                <h4 class="text-xl font-bold mt-2 mb-4">Shopify Chatbot</h4>
+                <p class="text-xs text-gray-400 leading-relaxed">Développement complet d'un chatbot IA intégré à Shopify (JS, Node.js).</p>
+            </div>
+            <div class="glass-card p-8 rounded-[2rem]">
+                <span class="text-blue-500 text-xs font-bold tracking-widest uppercase">Low-Code</span>
+                <h4 class="text-xl font-bold mt-2 mb-4">PowerApps Geoloc</h4>
+                <p class="text-xs text-gray-400 leading-relaxed">Application mobile de géolocalisation pour la maintenance terrain.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="py-20 px-6 max-w-5xl mx-auto">
+        <h2 class="text-3xl font-bold mb-12 italic">Le Savoir</h2>
+        <div class="space-y-12">
+            <div>
+                <div class="flex items-center gap-4 mb-2">
+                    <span class="text-blue-500 font-bold">2024</span>
+                    <h3 class="font-bold">Master 2 Économie & Management de l'Innovation Digitale</h3>
+                </div>
+                <p class="text-xs text-gray-500 ml-14">Université Paris-Saclay</p>
+                <div class="mt-4 p-4 border-l-2 border-blue-500/20 bg-blue-500/5 ml-14 rounded-r-xl">
+                    <p class="text-[10px] font-bold uppercase text-blue-400 mb-1">Mémoire de Recherche</p>
+                    <p class="text-sm italic text-gray-300">"Du hardware au software, du Waterfall au SAFe : Les avantages de l'agilité sur la performance opérationnelle en environnement VUCA."</p>
+                </div>
+            </div>
+            
+            <div class="ml-14 border-t border-white/5 pt-8">
+                <div class="flex items-center gap-4 mb-2">
+                    <span class="text-gray-500 font-bold">2023</span>
+                    <h3 class="font-bold">Master 1 Management Stratégique & Change</h3>
+                </div>
+                <p class="text-xs text-gray-500 ml-14">Université Paris-Saclay</p>
+                <p class="text-xs italic text-gray-400 mt-2 ml-14">Mémoire : L'accompagnement au changement sous le prisme des rapports de domination économique.</p>
+            </div>
+
+            <div class="ml-14 border-t border-white/5 pt-8">
+                <div class="flex items-center gap-4 mb-2">
+                    <span class="text-gray-500 font-bold">2022</span>
+                    <h3 class="font-bold">Licence Science Politique (Éco Numérique)</h3>
+                </div>
+                <p class="text-xs text-gray-500 ml-14">Université Paris VIII</p>
+                <p class="text-xs italic text-gray-400 mt-2 ml-14">Mémoire : Histoire et enjeux de la régulation des données personnelles.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 border-t border-white/5 text-center">
+        <p class="text-3xl font-bold text-gradient mb-8">On construit demain ?</p>
+        <div class="flex justify-center gap-8 mb-12">
+            <a href="https://linkedin.com/in/carlinmankoto" class="text-2xl text-gray-500 hover:text-white transition"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:carlinmankoto@proton.me" class="text-2xl text-gray-500 hover:text-white transition"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p class="text-[10px] text-gray-700 tracking-[0.4em] uppercase">© 2026 Carlin Mankoto — Product Mindset & Agentic AI</p>
     </footer>
 
 </body>
