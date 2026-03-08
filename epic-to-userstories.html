@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Epic to User Stories — by Carlin Mankoto</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070e;--surface:#0e0e1a;--surface2:#11111e;
+  --border:rgba(255,255,255,0.07);--line:rgba(255,255,255,0.04);
+  --text:#e2e8f0;--dim:#718096;--muted:#4a5568;
+  --cyan:#22d3ee;--blue:#60a5fa;--violet:#a78bfa;
+  --green:#4ade80;--orange:#fb923c;--red:#f87171;--yellow:#fbbf24;
+  --accent:#22d3ee;
+}
+html{font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
+h1,h2,h3{font-family:'Syne',sans-serif}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 20% 0%,rgba(34,211,238,0.06) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 90% 90%,rgba(96,165,250,0.05) 0%,transparent 60%);pointer-events:none;z-index:0}
+.container{max-width:860px;margin:0 auto;padding:3rem 1.5rem;position:relative;z-index:1}
+
+/* HEADER */
+header{text-align:center;margin-bottom:3rem}
+.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--cyan);background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.2);padding:0.4rem 1rem;border-radius:99px;margin-bottom:1.25rem}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
+h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.75rem}
+.grad{background:linear-gradient(135deg,#22d3ee,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{font-size:0.85rem;color:var(--dim);max-width:520px;margin:0 auto}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem}
+.card-title{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.6rem}
+.card-title::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* PROVIDER */
+.provider-row{display:flex;gap:0.4rem;margin-bottom:0.9rem}
+.provider-btn{flex:1;padding:0.55rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.35rem}
+.provider-btn.active{background:rgba(34,211,238,0.08);border-color:rgba(34,211,238,0.3);color:var(--cyan)}
+.provider-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
+.provider-tag{font-size:0.52rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.1rem 0.4rem;background:rgba(255,255,255,0.06);border-radius:3px}
+.key-row{display:flex;gap:0.75rem}
+.key-row input{flex:1;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;outline:none;transition:border-color 0.2s}
+.key-row input:focus{border-color:rgba(34,211,238,0.4)}
+.key-row input::placeholder{color:var(--muted)}
+.btn-save{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.65rem 1rem;border-radius:8px;border:1px solid rgba(34,211,238,0.3);background:rgba(34,211,238,0.07);color:var(--cyan);cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all 0.2s}
+.btn-save:hover{background:rgba(34,211,238,0.16)}
+.note{font-size:0.66rem;color:var(--muted);margin-top:0.6rem}
+.note a{color:var(--cyan);text-decoration:none}
+.saved-msg{display:none;font-size:0.68rem;color:var(--green);align-items:center;gap:0.4rem;margin-top:0.5rem}
+.saved-msg.show{display:flex}
+
+/* FORM */
+.field{margin-bottom:1.1rem}
+.field label{display:block;font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--dim);margin-bottom:0.45rem}
+.field input,.field select,.field textarea{width:100%;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:10px;padding:0.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:300;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(34,211,238,0.35)}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+.field select option{background:#0e0e1a}
+.field textarea{resize:none;line-height:1.7}
+.field-hint{font-size:0.63rem;color:var(--muted);margin-top:0.4rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* FORMAT TOGGLE */
+.format-toggle{display:flex;gap:0.4rem}
+.fmt-btn{flex:1;padding:0.6rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s;text-align:center}
+.fmt-btn.active{background:rgba(34,211,238,0.08);border-color:rgba(34,211,238,0.3);color:var(--cyan)}
+.fmt-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
+
+/* NB TOGGLE */
+.nb-toggle{display:flex;gap:0.4rem}
+.nb-btn{flex:1;padding:0.55rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:center}
+.nb-btn.active{background:rgba(34,211,238,0.08);border-color:rgba(34,211,238,0.3);color:var(--cyan)}
+.nb-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
+
+.btn-examples{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.28rem 0.7rem;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.2);color:var(--cyan);border-radius:5px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:0.5rem}
+.btn-examples:hover{background:rgba(34,211,238,0.16)}
+
+/* SUBMIT */
+.btn-launch{width:100%;padding:1rem;background:linear-gradient(135deg,#164e63,#0e7490);border:none;border-radius:10px;color:white;font-family:'Syne',sans-serif;font-size:0.83rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;cursor:pointer;transition:all 0.25s;margin-top:1.25rem}
+.btn-launch:hover:not(:disabled){opacity:0.88;transform:translateY(-1px);box-shadow:0 8px 30px -8px rgba(34,211,238,0.3)}
+.btn-launch:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+.error-box{display:none;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);border-radius:10px;padding:0.85rem 1rem;font-size:0.78rem;color:#fca5a5;margin-top:0.75rem}
+.error-box.show{display:block}
+
+/* LOADING */
+.loading{display:none;text-align:center;padding:3rem 0}
+.loading.show{display:block}
+.spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:0.75rem;color:var(--muted)}
+
+/* RESULTS */
+.results{display:none}
+.results.show{display:block;animation:fadeUp 0.4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.results-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem}
+.results-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700}
+.results-sub{font-size:0.68rem;color:var(--dim);margin-top:0.2rem}
+.btn-reset{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.9rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.btn-reset:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+
+/* STATS BAR */
+.stats-bar{display:flex;gap:1.5rem;margin-bottom:1.5rem;padding:1rem 1.5rem;background:rgba(34,211,238,0.04);border:1px solid rgba(34,211,238,0.12);border-radius:12px}
+.stat-item{display:flex;flex-direction:column;gap:0.15rem}
+.stat-num{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--cyan)}
+.stat-lbl{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
+
+/* US CARDS */
+.us-list{display:flex;flex-direction:column;gap:0.85rem;margin-bottom:1.25rem}
+.us-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;border-left:3px solid rgba(34,211,238,0.4);transition:border-color 0.2s}
+.us-card:hover{border-left-color:var(--cyan)}
+.us-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:0.85rem}
+.us-id{font-family:'Syne',sans-serif;font-size:0.58rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--cyan);background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.2);padding:0.18rem 0.6rem;border-radius:99px;white-space:nowrap;flex-shrink:0}
+.us-title{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);flex:1;line-height:1.35}
+.us-story{font-size:0.82rem;color:var(--dim);line-height:1.6;font-style:italic;margin-bottom:0.85rem;padding:0.65rem 0.9rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:2px solid rgba(34,211,238,0.2)}
+.us-meta{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem}
+.us-badge{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.2rem 0.55rem;border-radius:5px}
+.badge-priority-high{background:rgba(248,113,113,0.1);color:#fca5a5;border:1px solid rgba(248,113,113,0.2)}
+.badge-priority-medium{background:rgba(251,191,36,0.1);color:#fde68a;border:1px solid rgba(251,191,36,0.2)}
+.badge-priority-low{background:rgba(74,222,128,0.1);color:#86efac;border:1px solid rgba(74,222,128,0.2)}
+.badge-effort-xs{background:rgba(167,139,250,0.08);color:#c4b5fd;border:1px solid rgba(167,139,250,0.15)}
+.badge-effort-s{background:rgba(167,139,250,0.08);color:#c4b5fd;border:1px solid rgba(167,139,250,0.15)}
+.badge-effort-m{background:rgba(251,191,36,0.08);color:#fde68a;border:1px solid rgba(251,191,36,0.15)}
+.badge-effort-l{background:rgba(248,113,113,0.08);color:#fca5a5;border:1px solid rgba(248,113,113,0.15)}
+.badge-type{background:rgba(96,165,250,0.08);color:#93c5fd;border:1px solid rgba(96,165,250,0.15)}
+.us-ac{margin-top:0.5rem}
+.us-ac-title{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.45rem}
+.us-ac-list{display:flex;flex-direction:column;gap:0.3rem}
+.us-ac-item{font-size:0.75rem;color:#a0aec0;display:flex;gap:0.5rem;align-items:flex-start}
+.ac-bullet{color:var(--cyan);flex-shrink:0;margin-top:0.1rem}
+
+/* COPY ALL */
+.btn-copy-all{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.55rem 1.1rem;border-radius:8px;border:1px solid rgba(34,211,238,0.25);background:rgba(34,211,238,0.06);color:var(--cyan);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-copy-all:hover{background:rgba(34,211,238,0.14)}
+.btn-copy-all.copied{color:var(--green);border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.06)}
+
+footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line);font-size:0.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em}
+footer a{color:var(--cyan);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media(max-width:600px){
+  .form-grid{grid-template-columns:1fr}
+  .stats-bar{flex-wrap:wrap;gap:1rem}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="header-tag"><span class="dot"></span> Backlog &amp; Delivery</div>
+    <h1>Epic to <span class="grad">User Stories</span></h1>
+    <p class="subtitle">D&eacute;cris un epic, l&rsquo;IA g&eacute;n&egrave;re un lot de user stories structur&eacute;es avec crit&egrave;res d&rsquo;acceptance, priorit&eacute; et effort estim&eacute;.</p>
+  </header>
+
+  <!-- CONFIG -->
+  <div class="card">
+    <div class="card-title">&#128273; Configuration</div>
+    <div class="provider-row">
+      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag">Gratuit</span></button>
+      <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
+    </div>
+    <div class="key-row">
+      <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
+      <button class="btn-save" onclick="saveKey()">Enregistrer</button>
+    </div>
+    <p class="note" id="providerNote">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl&eacute; reste dans ton navigateur.</p>
+    <div class="saved-msg" id="savedMsg">&#10003; Cl&eacute; enregistr&eacute;e.</div>
+  </div>
+
+  <!-- FORM -->
+  <div class="card">
+    <div class="card-title">
+      Epic
+      <button class="btn-examples" onclick="loadExample()">&#127922; Exemple</button>
+    </div>
+
+    <div class="field">
+      <label>Titre de l&rsquo;epic</label>
+      <input type="text" id="epicTitle" placeholder="Ex : Refonte de l&rsquo;onboarding utilisateur">
+    </div>
+
+    <div class="field">
+      <label>Description &amp; objectif</label>
+      <textarea id="epicDesc" rows="4" placeholder="D&eacute;cris l&rsquo;epic, le probl&egrave;me qu&rsquo;il r&eacute;sout et la valeur attendue. Ex : Les utilisateurs abandonnent lors de l&rsquo;onboarding faute de guidage. On veut r&eacute;duire le time-to-value de J14 &agrave; J7 en simplifiant les &eacute;tapes et en ajoutant des tooltips contextuels."></textarea>
+    </div>
+
+    <div class="form-grid">
+      <div class="field">
+        <label>Persona principal</label>
+        <input type="text" id="persona" placeholder="Ex : Manager RH, Utilisateur final, Admin...">
+      </div>
+      <div class="field">
+        <label>Contexte technique <span style="font-size:0.57rem;text-transform:none;letter-spacing:0;color:var(--muted)">(optionnel)</span></label>
+        <input type="text" id="techContext" placeholder="Ex : React SPA, mobile-first, API REST...">
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="field">
+        <label>Nombre de user stories</label>
+        <div class="nb-toggle">
+          <button class="nb-btn" id="nb4" onclick="setNb(4)">4</button>
+          <button class="nb-btn active" id="nb6" onclick="setNb(6)">6</button>
+          <button class="nb-btn" id="nb8" onclick="setNb(8)">8</button>
+          <button class="nb-btn" id="nb10" onclick="setNb(10)">10</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Format user story</label>
+        <div class="format-toggle">
+          <button class="fmt-btn active" id="fmtStandard" onclick="setFormat('standard')">En tant que...</button>
+          <button class="fmt-btn" id="fmtJobStory" onclick="setFormat('job')">Job Story</button>
+        </div>
+        <p class="field-hint">Job Story : "Quand... je veux... afin de..."</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <button class="btn-launch" id="launchBtn" onclick="launch()">
+    &#9654; G&eacute;n&eacute;rer les user stories
+  </button>
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">G&eacute;n&eacute;ration des user stories en cours...</div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+    <div class="results-topbar">
+      <div>
+        <div class="results-title">User Stories g&eacute;n&eacute;r&eacute;es</div>
+        <div class="results-sub" id="resultsSub"></div>
+      </div>
+      <div style="display:flex;gap:0.5rem;align-items:center">
+        <button class="btn-copy-all" id="copyAllBtn" onclick="copyAll()">&#128203; Copier tout</button>
+        <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
+      </div>
+    </div>
+
+    <div class="stats-bar" id="statsBar"></div>
+    <div class="us-list" id="usList"></div>
+  </div>
+
+  <footer>
+    Construit par <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager
+  </footer>
+
+</div>
+
+<script>
+var apiKey = '';
+var provider = 'groq';
+var nbStories = 6;
+var format = 'standard';
+
+var EXAMPLE = {
+  title: "Refonte de l'onboarding utilisateur",
+  desc: "Les nouveaux utilisateurs abandonnent en masse lors de l'onboarding : 60% ne completent pas la configuration initiale. On veut reduire le time-to-value de J14 a J7 en simplifiant les etapes, en ajoutant un wizard guide, des tooltips contextuels et un email de relance J+1.",
+  persona: "Nouvel utilisateur (non-technique)",
+  tech: "React SPA, mobile-first"
+};
+
+function loadExample() {
+  document.getElementById('epicTitle').value = EXAMPLE.title;
+  document.getElementById('epicDesc').value = EXAMPLE.desc;
+  document.getElementById('persona').value = EXAMPLE.persona;
+  document.getElementById('techContext').value = EXAMPLE.tech;
+}
+
+function setProvider(p) {
+  provider = p;
+  document.getElementById('pbGroq').classList.toggle('active', p === 'groq');
+  document.getElementById('pbOpenai').classList.toggle('active', p === 'openai');
+  var inp = document.getElementById('apiKeyInput');
+  var note = document.getElementById('providerNote');
+  if (p === 'groq') {
+    inp.placeholder = 'gsk_...';
+    note.innerHTML = 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl\u00e9 reste dans ton navigateur.';
+  } else {
+    inp.placeholder = 'sk-...';
+    note.innerHTML = 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>. GPT-4o mini est tr\u00e8s peu co\u00fbteux.';
+  }
+  apiKey = '';
+  document.getElementById('savedMsg').classList.remove('show');
+}
+
+function saveKey() {
+  var v = document.getElementById('apiKeyInput').value.trim();
+  if (provider === 'groq' && (!v.startsWith('gsk_') || v.length < 20)) { showError('Cl\u00e9 Groq invalide (doit commencer par "gsk_").'); return; }
+  if (provider === 'openai' && (!v.startsWith('sk-') || v.length < 20)) { showError('Cl\u00e9 OpenAI invalide (doit commencer par "sk-").'); return; }
+  apiKey = v;
+  document.getElementById('savedMsg').classList.add('show');
+  hideError();
+}
+
+function setNb(n) {
+  nbStories = n;
+  [4, 6, 8, 10].forEach(function(x) { document.getElementById('nb' + x).classList.toggle('active', x === n); });
+}
+
+function setFormat(f) {
+  format = f;
+  document.getElementById('fmtStandard').classList.toggle('active', f === 'standard');
+  document.getElementById('fmtJobStory').classList.toggle('active', f === 'job');
+}
+
+async function launch() {
+  hideError();
+  var title = document.getElementById('epicTitle').value.trim();
+  var desc = document.getElementById('epicDesc').value.trim();
+  var persona = document.getElementById('persona').value.trim();
+  var tech = document.getElementById('techContext').value.trim();
+
+  if (!apiKey) { showError('Entre et enregistre ta cl\u00e9 API avant de lancer.'); return; }
+  if (!title) { showError('Donne un titre \u00e0 ton epic.'); return; }
+  if (!desc || desc.length < 30) { showError('D\u00e9cris l\u2019epic plus en d\u00e9tail.'); return; }
+
+  document.getElementById('launchBtn').disabled = true;
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('loading').classList.add('show');
+
+  try {
+    var raw = await callAI(buildPrompt(title, desc, persona, tech), 4000);
+    var clean = raw.replace(/```json/gi, '').replace(/```/g, '').trim();
+    var m = clean.match(/\{[\s\S]*\}/);
+    if (!m) throw new Error('R\u00e9ponse invalide, r\u00e9essaie.');
+    var data = JSON.parse(m[0]);
+    renderResults(data, title);
+  } catch(e) {
+    showError('Erreur : ' + e.message);
+  }
+  document.getElementById('loading').classList.remove('show');
+  document.getElementById('launchBtn').disabled = false;
+}
+
+function buildPrompt(title, desc, persona, tech) {
+  var fmtInstruction = format === 'standard'
+    ? 'Format "En tant que [persona], je veux [action] afin de [b\u00e9n\u00e9fice]"'
+    : 'Format Job Story : "Quand [situation], je veux [motivation], afin de [r\u00e9sultat attendu]"';
+  var personaStr = persona ? '\nPersona principal : ' + persona : '';
+  var techStr = tech ? '\nContexte technique : ' + tech : '';
+
+  return 'Tu es un expert Product Owner. D\u00e9compose l\u2019epic suivant en ' + nbStories + ' user stories actionables.\n\nEpic : "' + title + '"\nDescription : ' + desc + personaStr + techStr + '\n\nR\u00e8gles :\n- ' + fmtInstruction + '\n- Chaque user story doit \u00eatre ind\u00e9pendante et livrable seule (principe INVEST)\n- 2 \u00e0 3 crit\u00e8res d\u2019acceptance concrets et v\u00e9rifiables par story\n- Priorit\u00e9 : high / medium / low\n- Effort estim\u00e9 : XS (< 1j), S (1-2j), M (3-5j), L (> 5j)\n- Type : feature / tech / ux / bug-fix\n- Varie les types et priorit\u00e9s de fa\u00e7on r\u00e9aliste\n\nR\u00e9ponds UNIQUEMENT en JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "epic_summary": "R\u00e9sum\u00e9 de l\u2019epic en 1 phrase",\n  "stories": [\n    {\n      "id": "US-01",\n      "title": "Titre court de la story",\n      "story": "En tant que... je veux... afin de...",\n      "type": "feature",\n      "priority": "high",\n      "effort": "M",\n      "acceptance_criteria": [\n        "Crit\u00e8re 1 v\u00e9rifiable",\n        "Crit\u00e8re 2 v\u00e9rifiable"\n      ]\n    }\n  ]\n}';
+}
+
+async function callAI(prompt, maxTokens) {
+  var endpoint = provider === 'groq' ? 'https://api.groq.com/openai/v1/chat/completions' : 'https://api.openai.com/v1/chat/completions';
+  var model = provider === 'groq' ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+  var res = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model, temperature: 0.4, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
+  });
+  if (!res.ok) { var e = await res.json(); throw new Error(e.error?.message || 'Erreur API ' + res.status); }
+  var data = await res.json();
+  return data.choices[0].message.content;
+}
+
+function renderResults(d, epicTitle) {
+  var stories = d.stories || [];
+  document.getElementById('resultsSub').textContent = epicTitle + ' \u00b7 ' + stories.length + ' stories g\u00e9n\u00e9r\u00e9es';
+
+  // Stats
+  var high = stories.filter(function(s) { return s.priority === 'high'; }).length;
+  var med = stories.filter(function(s) { return s.priority === 'medium'; }).length;
+  var low = stories.filter(function(s) { return s.priority === 'low'; }).length;
+  var effortMap = { XS: 0.5, S: 1.5, M: 4, L: 7 };
+  var totalDays = stories.reduce(function(acc, s) { return acc + (effortMap[s.effort] || 2); }, 0);
+  document.getElementById('statsBar').innerHTML =
+    stat(stories.length, 'Stories') +
+    stat(high + ' / ' + med + ' / ' + low, 'High / Med / Low') +
+    stat('~' + Math.round(totalDays) + 'j', 'Effort estim\u00e9') +
+    stat(d.epic_summary ? '\u201c' + d.epic_summary.substring(0, 40) + (d.epic_summary.length > 40 ? '...\u201d' : '\u201d') : epicTitle, 'Epic');
+
+  // Stories
+  var html = stories.map(function(s) {
+    var priCls = 'badge-priority-' + (s.priority || 'medium');
+    var effCls = 'badge-effort-' + (s.effort || 'M').toLowerCase();
+    var acHtml = (s.acceptance_criteria || []).map(function(ac) {
+      return '<div class="us-ac-item"><span class="ac-bullet">&#10003;</span>' + esc(ac) + '</div>';
+    }).join('');
+    return '<div class="us-card">' +
+      '<div class="us-card-top">' +
+        '<div class="us-title">' + esc(s.title) + '</div>' +
+        '<span class="us-id">' + esc(s.id || 'US') + '</span>' +
+      '</div>' +
+      '<div class="us-story">' + esc(s.story) + '</div>' +
+      '<div class="us-meta">' +
+        '<span class="us-badge ' + priCls + '">' + capitalise(s.priority || 'medium') + '</span>' +
+        '<span class="us-badge ' + effCls + '">' + esc(s.effort || 'M') + '</span>' +
+        '<span class="us-badge badge-type">' + esc(s.type || 'feature') + '</span>' +
+      '</div>' +
+      (acHtml ? '<div class="us-ac"><div class="us-ac-title">Crit\u00e8res d\u2019acceptance</div><div class="us-ac-list">' + acHtml + '</div></div>' : '') +
+      '</div>';
+  }).join('');
+  document.getElementById('usList').innerHTML = html;
+
+  // Store for copy
+  window._storiesData = stories;
+  window._epicTitle = epicTitle;
+
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function stat(val, lbl) {
+  return '<div class="stat-item"><div class="stat-num">' + val + '</div><div class="stat-lbl">' + lbl + '</div></div>';
+}
+
+function capitalise(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
+
+function copyAll() {
+  var stories = window._storiesData || [];
+  var lines = ['# Epic : ' + (window._epicTitle || '') + '\n'];
+  stories.forEach(function(s) {
+    lines.push('## ' + s.id + ' \u2014 ' + s.title);
+    lines.push(s.story);
+    lines.push('Priorit\u00e9 : ' + s.priority + ' | Effort : ' + s.effort + ' | Type : ' + s.type);
+    if (s.acceptance_criteria && s.acceptance_criteria.length) {
+      lines.push('Crit\u00e8res d\u2019acceptance :');
+      s.acceptance_criteria.forEach(function(ac) { lines.push('  - ' + ac); });
+    }
+    lines.push('');
+  });
+  navigator.clipboard.writeText(lines.join('\n')).then(function() {
+    var btn = document.getElementById('copyAllBtn');
+    btn.textContent = '\u2713 Copi\u00e9 !';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function reset() {
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('epicTitle').value = '';
+  document.getElementById('epicDesc').value = '';
+  document.getElementById('persona').value = '';
+  document.getElementById('techContext').value = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function showError(m) { var el = document.getElementById('errorBox'); el.textContent = m; el.classList.add('show'); }
+function hideError() { document.getElementById('errorBox').classList.remove('show'); }
+</script>
+</body>
+</html>
