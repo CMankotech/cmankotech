@@ -126,6 +126,24 @@ section{border-bottom:1px solid var(--line);position:relative;z-index:1}
 .footer-link:hover{color:#60a5fa}
 .footer-copy{border-top:1px solid var(--line);padding:1.5rem 3rem;text-align:center;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;position:relative;z-index:1}
 
+
+/* PROJ INTRO */
+.proj-intro{display:flex;flex-direction:column;gap:1.75rem;margin-bottom:3rem}
+.proj-intro-text{font-size:1rem;line-height:1.8;color:var(--dim);max-width:680px;border-left:2px solid #22d3ee;padding-left:1.5rem}
+.proj-intro-stats{display:flex;gap:3rem}
+.proj-stat{display:flex;flex-direction:column;gap:0.2rem}
+.proj-stat-num{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;line-height:1;letter-spacing:-0.04em}
+.proj-stat-lbl{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted)}
+
+
+/* PROJ INTRO */
+.proj-intro{display:flex;flex-direction:column;gap:1.75rem;margin-bottom:3rem}
+.proj-intro-text{font-size:1rem;line-height:1.8;color:var(--dim);max-width:680px;border-left:2px solid #22d3ee;padding-left:1.5rem}
+.proj-intro-stats{display:flex;gap:3rem}
+.proj-stat{display:flex;flex-direction:column;gap:0.2rem}
+.proj-stat-num{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;line-height:1;letter-spacing:-0.04em}
+.proj-stat-lbl{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted)}
+
 /* REVEAL - visible par defaut, anime si JS */
 .rv{opacity:1;transform:none;transition:opacity 0.55s ease,transform 0.55s ease}
 .js-ready .rv{opacity:0;transform:translateY(16px)}
@@ -158,17 +176,16 @@ nav{padding:1rem 1.5rem}
 <nav>
   <div class="nav-logo grad">CARLIN M.</div>
   <div class="nav-links">
-    <a href="#experience" data-i18n="nav.exp">Parcours</a>
+    <a href="#projects" data-i18n="nav.projects">Projets</a>
     <a href="#skills" data-i18n="nav.skills">Comp&eacute;tences</a>
     <a href="#certs" data-i18n="nav.certs">Certifications</a>
-    <a href="#projects" data-i18n="nav.projects">Projets</a>
   </div>
   <div class="nav-right">
     <div class="lang-switcher">
-      <button class="lang-btn active" id="btn-fr" onclick="window.setLang('fr')"><span class="flag">&#127467;&#127479;</span> FR</button>
-      <button class="lang-btn" id="btn-en" onclick="window.setLang('en')"><span class="flag">&#127468;&#127463;</span> EN</button>
+      <button class="lang-btn active" id="btn-fr" onclick="window.setLang('fr')">FR</button>
+      <button class="lang-btn" id="btn-en" onclick="window.setLang('en')">EN</button>
     </div>
-    <a href="/cdn-cgi/l/email-protection#2b484a59474245464a4540445f446b5b59445f444505464e" class="nav-cta" data-i18n="nav.cta">Me contacter &rarr;</a>
+    <a href="https://www.linkedin.com/in/carlinmankoto/" target="_blank" class="nav-cta" data-i18n="nav.cta">Me contacter &rarr;</a>
   </div>
 </nav>
 
@@ -176,11 +193,7 @@ nav{padding:1rem 1.5rem}
   <div class="a1">
     <div class="hero-tag"><span class="dot"></span><span data-i18n="hero.tag">Disponible &middot; &Icirc;le-de-France &middot; CDI / Freelance</span></div>
     <h1 class="hero-title">AI<br>Product<br><span class="grad">Manager</span></h1>
-    <div class="hero-meta a3">
-      <span>&#128205; Noisy-le-Grand (93)</span>
-      <span>&#128222; 06.18.40.42.14</span>
-      <span>&#9993; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="82e1e3f0eeebecefe3ece9edf6edc2f2f0edf6edecacefe7">[email&#160;protected]</a></span>
-    </div>
+    
   </div>
   <div class="a2">
     <p class="hero-intro" data-i18n="hero.intro">PM/PO avec 3 ans d'exp&eacute;rience dans des environnements exigeants (d&eacute;fense, assurance, conseil). Je couvre l'ensemble du spectre produit de la discovery strat&eacute;gique jusqu'&agrave; la livraison, avec une expertise marqu&eacute;e en IA g&eacute;n&eacute;rative, syst&egrave;mes multi-agents et vibe coding.</p>
@@ -196,57 +209,79 @@ nav{padding:1rem 1.5rem}
   </div>
 </section>
 
-<section id="experience">
+
+
+
+
+
+
+
+
+
+
+<!-- PROJECTS (01) -->
+<section id="projects">
   <div class="wrap">
-    <div class="sec-label"><span class="grad-blue" style="font-weight:700">01</span> <span data-i18n="nav.exp">Parcours</span></div>
-    <div class="exp rv">
-      <div class="exp-date" data-i18n="exp.oaio.date">Janv. 2026<br>- Pr&eacute;sent</div>
-      <div>
-        <div class="exp-co">OAIO &middot; Groupe Infotel</div>
-        <div class="exp-role grad-blue" data-i18n="exp.oaio.role">Product Manager &middot; CDI</div>
-        <p class="exp-desc" data-i18n="exp.oaio.desc">Pilotage de la strat&eacute;gie produit pour l'impl&eacute;mentation d'une plateforme LMS et d'outils IA pour 3 500+ collaborateurs. Benchmark de 17 solutions LMS et 44 outils IA avec scoring multicrit&egrave;res. Prototypage en vibe coding (Lovable + Claude Code) pour tester des hypoth&egrave;ses UX. Roadmap en 3 phases align&eacute;e aux objectifs business. Stakeholder management jusqu'&agrave; la direction.</p>
+    <div class="sec-label"><span class="grad-blue" style="font-weight:700">01</span> <span data-i18n="nav.projects">Projets</span></div>
+    <div class="proj-intro rv">
+      <p class="proj-intro-text" data-i18n="proj.intro">Je build des outils PM avec l&rsquo;IA parce que j&rsquo;ai envie de r&eacute;soudre de vrais probl&egrave;mes que je rencontre en tant que PM. Pas des d&eacute;mos, des outils que j&rsquo;utilise vraiment. Stack&nbsp;: HTML&nbsp;/&nbsp;JS&nbsp;/&nbsp;APIs LLM. D&eacute;ploy&eacute;s en statique, accessibles &agrave; tous.</p>
+      <div class="proj-intro-stats">
+        <div class="proj-stat"><span class="proj-stat-num grad">3</span><span class="proj-stat-lbl" data-i18n="proj.stat.tools">Outils live</span></div>
+        <div class="proj-stat"><span class="proj-stat-num grad">100%</span><span class="proj-stat-lbl" data-i18n="proj.stat.open">Open access</span></div>
+        <div class="proj-stat"><span class="proj-stat-num grad">2</span><span class="proj-stat-lbl" data-i18n="proj.stat.llm">LLM providers</span></div>
       </div>
-      <div class="tags"><span class="tag">Lovable</span><span class="tag">Claude Code</span><span class="tag">ROI Analysis</span><span class="tag">LMS Benchmark</span><span class="tag">User Research</span><span class="tag">Roadmapping</span></div>
     </div>
-    <div class="exp rv">
-      <div class="exp-date">Mai 2024<br>- D&eacute;c. 2025</div>
-      <div>
-        <div class="exp-co">Outlier AI &middot; Alignerr</div>
-        <div class="exp-role grad-blue" data-i18n="exp.outlier.role">AI Trainer / Data Annotator &middot; Freelance</div>
-        <p class="exp-desc" data-i18n="exp.outlier.desc">Entra&icirc;nement de mod&egrave;les d'IA g&eacute;n&eacute;rative via RLHF. Annotation de donn&eacute;es (images, textes, audios) pour cr&eacute;er des datasets structur&eacute;s. Contr&ocirc;le qualit&eacute; rigoureux et classification des donn&eacute;es.</p>
+    <div class="proj-grid rv">
+
+      <div class="proj-card" style="border-color:rgba(34,211,238,0.2)">
+        <div class="proj-header">
+          <div class="proj-type" style="color:var(--cyan, #22d3ee)">Projet perso &middot; Agentic AI &middot; 2026</div>
+          <div class="proj-name">Discovery Assistant</div>
+          <a href="https://cmankotech.github.io/cmankotech/discovery-assistant.html" target="_blank" class="proj-link" data-i18n="proj.link">Voir le projet &rarr;</a>
+        </div>
+        <div class="proj-blocks">
+          <div class="proj-block"><span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span><span class="proj-block-text" data-i18n="proj.da.ctx">Outil IA con&ccedil;u et d&eacute;velopp&eacute; en vibe coding pour acc&eacute;l&eacute;rer la phase de discovery produit.</span></div>
+          <div class="proj-block"><span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span><span class="proj-block-text" data-i18n="proj.da.pb">Un PM en d&eacute;but de discovery part souvent sans structure : hypoth&egrave;ses floues, questions d&rsquo;interview non pr&eacute;par&eacute;es, pas de plan de test clair.</span></div>
+          <div class="proj-block"><span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span><span class="proj-block-text" data-i18n="proj.da.ap">Application web autonome (HTML/JS + API Groq/OpenAI). L&rsquo;utilisateur d&eacute;crit son probl&egrave;me, l&rsquo;outil g&eacute;n&egrave;re 3 hypoth&egrave;ses, 5 questions d&rsquo;interview et un plan de test structur&eacute;.</span></div>
+          <div class="proj-block"><span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span><span class="proj-block-text" data-i18n="proj.da.res">Outil live et accessible publiquement, con&ccedil;u de z&eacute;ro en moins d&rsquo;une journ&eacute;e. Illustre la capacit&eacute; &agrave; shipper rapidement des outils IA utiles.</span></div>
+        </div>
       </div>
-      <div class="tags"><span class="tag">RLHF</span><span class="tag">Labelbox</span><span class="tag">SQL</span><span class="tag">Data Annotation</span></div>
-    </div>
-    <div class="exp rv">
-      <div class="exp-date">Oct. 2023<br>- D&eacute;c. 2024</div>
-      <div>
-        <div class="exp-co">AXA Group Operations</div>
-        <div class="exp-role grad-blue" data-i18n="exp.axa.role">AI Product Owner &middot; Alternance</div>
-        <p class="exp-desc" data-i18n="exp.axa.desc">Gestion du backlog SecureGPT (RAG interne) et Microsoft Copilot en environnement SAFe. Priorisation MoSCoW, r&eacute;daction d'user stories et animation des c&eacute;r&eacute;monies agiles. Automatisation via Power Automate et AI Builder. R&ocirc;le d'AI Evangelist et participation au LACE.</p>
+
+      <div class="proj-card" style="border-color:rgba(167,139,250,0.2)">
+        <div class="proj-header">
+          <div class="proj-type" style="color:var(--violet,#a78bfa)">Projet perso &middot; Product Tool &middot; 2026</div>
+          <div class="proj-name">Backlog Prioritizer</div>
+          <a href="https://cmankotech.github.io/cmankotech/backlog-prioritizer.html" target="_blank" class="proj-link" style="color:var(--violet,#a78bfa)" data-i18n="proj.link">Voir le projet &rarr;</a>
+        </div>
+        <div class="proj-blocks">
+          <div class="proj-block"><span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span><span class="proj-block-text" data-i18n="proj.bp.ctx">Outil IA con&ccedil;u pour acc&eacute;l&eacute;rer les sessions de priorisation backlog, souvent chronophages et subjectives.</span></div>
+          <div class="proj-block"><span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span><span class="proj-block-text" data-i18n="proj.bp.pb">Prioriser un backlog de mani&egrave;re rigoureuse prend du temps et manque souvent de justification explicite face aux parties prenantes.</span></div>
+          <div class="proj-block"><span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span><span class="proj-block-text" data-i18n="proj.bp.ap">Application web (HTML/JS + API Groq/OpenAI). L'utilisateur colle ses user stories, choisit RICE ou MoSCoW, et obtient un scoring complet avec justification par item.</span></div>
+          <div class="proj-block"><span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span><span class="proj-block-text" data-i18n="proj.bp.res">Outil live avec double mode de saisie et exemples al&eacute;atoires. R&eacute;duit une session de priorisation de 30 min &agrave; moins de 2 min.</span></div>
+        </div>
       </div>
-      <div class="tags"><span class="tag">RAG</span><span class="tag">SAFe</span><span class="tag">JIRA</span><span class="tag">Power Automate</span><span class="tag">AI Builder</span><span class="tag">Power BI</span></div>
-    </div>
-    <div class="exp rv">
-      <div class="exp-date">Sept. 2022<br>- Sept. 2023</div>
-      <div>
-        <div class="exp-co">Airbus Defence and Space</div>
-        <div class="exp-role grad-blue" data-i18n="exp.airbus.role">Product Owner &middot; Alternance</div>
-        <p class="exp-desc" data-i18n="exp.airbus.desc">Application mobile de messagerie s&eacute;curis&eacute;e mission critique pour les JO Paris 2024. Transition Waterfall vers SAFe, interop&eacute;rabilit&eacute; TETRA/Broadband. Animation des c&eacute;r&eacute;monies agiles et PI Planning.</p>
+
+      <div class="proj-card" style="border-color:rgba(34,211,238,0.15)">
+        <div class="proj-header">
+          <div class="proj-type" style="color:var(--cyan,#22d3ee)">Projet perso &middot; Research Tool &middot; 2026</div>
+          <div class="proj-name">User Interview Analyzer</div>
+          <a href="https://cmankotech.github.io/cmankotech/user-interview-analyzer.html" target="_blank" class="proj-link" data-i18n="proj.link">Voir le projet &rarr;</a>
+        </div>
+        <div class="proj-blocks">
+          <div class="proj-block"><span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span><span class="proj-block-text" data-i18n="proj.uia.ctx">Outil con&ccedil;u pour acc&eacute;l&eacute;rer la synth&egrave;se des entretiens utilisateurs, &eacute;tape souvent chronophage dans la phase de discovery.</span></div>
+          <div class="proj-block"><span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span><span class="proj-block-text" data-i18n="proj.uia.pb">Transformer des notes brutes en insights actionables prend du temps et introduit des biais d&rsquo;interpr&eacute;tation quand c&rsquo;est fait manuellement.</span></div>
+          <div class="proj-block"><span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span><span class="proj-block-text" data-i18n="proj.uia.ap">Application web (HTML/JS + API Groq/OpenAI). L&rsquo;utilisateur colle ses notes (1 ou plusieurs entretiens), l&rsquo;IA extrait pain points group&eacute;s, citations, opportunit&eacute;s et g&eacute;n&egrave;re un persona.</span></div>
+          <div class="proj-block"><span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span><span class="proj-block-text" data-i18n="proj.uia.res">Synth&egrave;se structur&eacute;e en quelques secondes. Compl&egrave;te le Discovery Assistant pour couvrir l&rsquo;int&eacute;gralit&eacute; de la phase de discovery produit.</span></div>
+        </div>
       </div>
-      <div class="tags"><span class="tag">SAFe</span><span class="tag">Kubernetes</span><span class="tag">JIRA</span><span class="tag">Mission Critical</span><span class="tag">JO Paris 2024</span></div>
-    </div>
-    <div class="exp rv">
-      <div class="exp-date">Janv. 2022<br>- Juin 2022</div>
-      <div>
-        <div class="exp-co">Groupe Casino</div>
-        <div class="exp-role grad-blue" data-i18n="exp.casino.role">Charg&eacute; de Projet Change Management &middot; Stage</div>
-        <p class="exp-desc" data-i18n="exp.casino.desc">Accompagnement &agrave; la transformation agile et impl&eacute;mentation Scrum. D&eacute;finition de la strat&eacute;gie de conduite du changement, d&eacute;ploiement du plan de communication et suivi KPI.</p>
-      </div>
-      <div class="tags"><span class="tag">Change Management</span><span class="tag">Scrum</span><span class="tag">JIRA</span><span class="tag">Microsoft 365</span></div>
+
     </div>
   </div>
 </section>
 
+
+
+<!-- SKILLS (03) -->
 <section id="skills">
   <div class="wrap">
     <div class="sec-label"><span class="grad-blue" style="font-weight:700">02</span> <span data-i18n="nav.skills">Comp&eacute;tences</span></div>
@@ -267,6 +302,7 @@ nav{padding:1rem 1.5rem}
   </div>
 </section>
 
+<!-- CERTS (04) -->
 <section id="certs">
   <div class="wrap">
     <div class="sec-label"><span class="grad-blue" style="font-weight:700">03</span> <span data-i18n="nav.certs">Certifications</span> <a href="https://www.credly.com/users/carlin-mankoto" target="_blank" style="color:#60a5fa;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;margin-left:0.5rem" data-i18n="certs.credly">V&eacute;rifier sur Credly &rarr;</a></div>
@@ -303,99 +339,11 @@ nav{padding:1rem 1.5rem}
   </div>
 </section>
 
-<section id="projects">
-  <div class="wrap">
-    <div class="sec-label"><span class="grad-blue" style="font-weight:700">04</span> <span data-i18n="nav.projects">Projets &amp; Innovation</span></div>
-    <div class="proj-grid rv">
-
-      <div class="proj-card" style="border-color:rgba(34,211,238,0.2)">
-        <div class="proj-header">
-          <div class="proj-type" style="color:var(--cyan, #22d3ee)">Projet perso &middot; Agentic AI &middot; 2026</div>
-          <div class="proj-name">Discovery Assistant</div>
-          <a href="https://cmankotech.github.io/cmankotech/discovery-assistant.html" target="_blank" class="proj-link" data-i18n="proj.link">Voir le projet &rarr;</a>
-        </div>
-        <div class="proj-blocks">
-          <div class="proj-block">
-            <span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span>
-            <span class="proj-block-text" data-i18n="proj.da.ctx">Outil IA con&ccedil;u et d&eacute;velopp&eacute; en vibe coding pour acc&eacute;l&eacute;rer la phase de discovery produit.</span>
-          </div>
-          <div class="proj-block">
-            <span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span>
-            <span class="proj-block-text" data-i18n="proj.da.pb">Un PM en d&eacute;but de discovery part souvent sans structure : hypoth&egrave;ses floues, questions d&rsquo;interview non pr&eacute;par&eacute;es, pas de plan de test clair.</span>
-          </div>
-          <div class="proj-block">
-            <span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span>
-            <span class="proj-block-text" data-i18n="proj.da.ap">Application web autonome (HTML/JS + API Groq). L&rsquo;utilisateur d&eacute;crit son probl&egrave;me, l&rsquo;outil g&eacute;n&egrave;re 3 hypoth&egrave;ses, 5 questions d&rsquo;interview et un plan de test structur&eacute;.</span>
-          </div>
-          <div class="proj-block">
-            <span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span>
-            <span class="proj-block-text" data-i18n="proj.da.res">Outil live et accessible publiquement, con&ccedil;u de z&eacute;ro en moins d&rsquo;une journ&eacute;e. Illustre la capacit&eacute; \u00e0 shipper rapidement des outils IA utiles.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="proj-card" style="border-color:rgba(167,139,250,0.2)">
-        <div class="proj-header">
-          <div class="proj-type" style="color:var(--violet,#a78bfa)">Projet perso &middot; Product Tool &middot; 2026</div>
-          <div class="proj-name">Backlog Prioritizer</div>
-          <a href="https://cmankotech.github.io/cmankotech/backlog-prioritizer.html" target="_blank" class="proj-link" style="color:var(--violet,#a78bfa)" data-i18n="proj.link">Voir le projet &rarr;</a>
-        </div>
-        <div class="proj-blocks">
-          <div class="proj-block">
-            <span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span>
-            <span class="proj-block-text" data-i18n="proj.bp.ctx">Outil IA con&ccedil;u pour acc&eacute;l&eacute;rer les sessions de priorisation backlog, souvent chronophages et subjectives.</span>
-          </div>
-          <div class="proj-block">
-            <span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span>
-            <span class="proj-block-text" data-i18n="proj.bp.pb">Prioriser un backlog de mani&egrave;re rigoureuse prend du temps et manque souvent de justification explicite face aux parties prenantes.</span>
-          </div>
-          <div class="proj-block">
-            <span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span>
-            <span class="proj-block-text" data-i18n="proj.bp.ap">Application web (HTML/JS + API Groq). L'utilisateur colle ses user stories, choisit RICE ou MoSCoW, et obtient un scoring complet avec justification par item.</span>
-          </div>
-          <div class="proj-block">
-            <span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span>
-            <span class="proj-block-text" data-i18n="proj.bp.res">Outil live avec double mode de saisie et exemples al&eacute;atoires. R&eacute;duit une session de priorisation de 30 min &agrave; moins de 2 min.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="proj-card" style="border-color:rgba(34,211,238,0.15)">
-        <div class="proj-header">
-          <div class="proj-type" style="color:var(--cyan,#22d3ee)">Projet perso &middot; Research Tool &middot; 2026</div>
-          <div class="proj-name">User Interview Analyzer</div>
-          <a href="https://cmankotech.github.io/cmankotech/user-interview-analyzer.html" target="_blank" class="proj-link" data-i18n="proj.link">Voir le projet &rarr;</a>
-        </div>
-        <div class="proj-blocks">
-          <div class="proj-block">
-            <span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span>
-            <span class="proj-block-text" data-i18n="proj.uia.ctx">Outil con&ccedil;u pour acc&eacute;l&eacute;rer la synth&egrave;se des entretiens utilisateurs, &eacute;tape souvent chronophage dans la phase de discovery.</span>
-          </div>
-          <div class="proj-block">
-            <span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span>
-            <span class="proj-block-text" data-i18n="proj.uia.pb">Transformer des notes brutes en insights actionables prend du temps et introduit des biais d&rsquo;interpr&eacute;tation quand c&rsquo;est fait manuellement.</span>
-          </div>
-          <div class="proj-block">
-            <span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span>
-            <span class="proj-block-text" data-i18n="proj.uia.ap">Application web (HTML/JS + API Groq/OpenAI). L&rsquo;utilisateur colle ses notes (1 ou plusieurs entretiens), l&rsquo;IA extrait pain points group&eacute;s, citations, opportunit&eacute;s et g&eacute;n&egrave;re un persona.</span>
-          </div>
-          <div class="proj-block">
-            <span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span>
-            <span class="proj-block-text" data-i18n="proj.uia.res">Synth&egrave;se structur&eacute;e en quelques secondes. Compl&egrave;te le Discovery Assistant pour couvrir l&rsquo;int&eacute;gralit&eacute; de la phase de discovery produit.</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
 <div style="border-top:1px solid var(--line);position:relative;z-index:1">
   <div class="footer-wrap">
     <div class="footer-hl"><span data-i18n="footer.hl">On construit<br></span><span class="grad" data-i18n="footer.hl2">quelque chose ?</span></div>
     <div class="footer-links">
-      <a href="/cdn-cgi/l/email-protection#64070516080d0a09050a0f0b100b2414160b100b0a4a0901" class="footer-link">&#9993; <span class="__cf_email__" data-cfemail="ef8c8e9d838681828e8184809b80af9f9d809b8081c1828a">[email&#160;protected]</span></a>
+      <a href="https://www.linkedin.com/in/carlinmankoto/"64070516080d0a09050a0f0b100b2414160b100b0a4a0901" class="footer-link">&#9993; <span class="__cf_email__" data-cfemail="ef8c8e9d838681828e8184809b80af9f9d809b8081c1828a">[email&#160;protected]</span></a>
       <a href="https://linkedin.com/in/carlinmankoto" target="_blank" class="footer-link">&#8599; LinkedIn</a>
       <a href="https://www.credly.com/users/carlin-mankoto" target="_blank" class="footer-link">&#8599; Credly</a>
       <div style="font-size:0.72rem;color:var(--muted);margin-top:0.25rem">06.18.40.42.14 &middot; Noisy-le-Grand (93)</div>
@@ -405,7 +353,7 @@ nav{padding:1rem 1.5rem}
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-var T={fr:{'nav.exp':'Parcours','nav.skills':'Comp\u00e9tences','nav.certs':'Certifications','nav.edu':'Formation','nav.cta':'Me contacter \u2192','nav.projects':'Projets & Innovation','hero.tag':'Disponible \u00b7 \u00cele-de-France \u00b7 CDI / Freelance','lbl.ctx':'Contexte','lbl.pb':'Probl\u00e8me','lbl.ap':'Approche','lbl.res':'R\u00e9sultat','proj.bnp.ctx':"Mission consulting en Master 2. BNP Paribas cherchait des pistes d\u2019innovation durable pour l\u2019un de ses m\u00e9tiers.",'proj.bnp.pb':"G\u00e9n\u00e9rer des id\u00e9es actionnables en 5 jours avec des parties prenantes aux profils tr\u00e8s h\u00e9t\u00e9rog\u00e8nes.",'proj.bnp.ap':"Facilitation d\u2019un Design Sprint complet : cadrage, id\u00e9ation, prototypage rapide et test utilisateur. Animation des ateliers et synth\u00e8se des insights.",'proj.bnp.res':"3 concepts pr\u00e9sent\u00e9s \u00e0 l\u2019\u00e9quipe BNP avec une recommandation argument\u00e9e sur le concept \u00e0 prototyper en priorit\u00e9.",'proj.shopify.ctx':"Projet de fin de Master 2 en \u00e9quipe \- construire un produit e-commerce fonctionnel de A \u00e0 Z.",'proj.shopify.pb':"R\u00e9duire le taux d\u2019abandon en aidant les visiteurs \u00e0 trouver le bon produit sans intervention humaine.",'proj.shopify.ap':"R\u00f4le de PO sur le backlog + d\u00e9veloppeur sur l\u2019int\u00e9gration du chatbot (Node.js, API, JS). User stories, priorisation et sprints it\u00e9ratifs.",'proj.shopify.res':"Site livr\u00e9 avec chatbot fonctionnel capable de r\u00e9pondre aux questions produit et de rediriger vers les fiches concern\u00e9es.",'proj.geo.ctx':"Projet pratique du Master 2 pour explorer le d\u00e9veloppement low-code sur Microsoft Power Platform.",'proj.geo.pb':"Les \u00e9quipes terrain n\u2019avaient pas d\u2019outil simple pour signaler leur position et l\u2019\u00e9tat des interventions en temps r\u00e9el.",'proj.geo.ap':"Conception UX, mod\u00e9lisation des donn\u00e9es et d\u00e9veloppement complet sur PowerApps, connect\u00e9 \u00e0 SharePoint comme base de donn\u00e9es.",'proj.geo.res':"Application mobile fonctionnelle livr\u00e9e, test\u00e9e et document\u00e9e \- d\u00e9montrant la capacit\u00e9 \u00e0 produire un outil op\u00e9rationnel sans code traditionnel.",'proj.da.ctx':"Outil IA con\u00e7u et d\u00e9velopp\u00e9 en vibe coding pour acc\u00e9l\u00e9rer la phase de discovery produit.",'proj.da.pb':"Un PM en d\u00e9but de discovery part souvent sans structure : hypoth\u00e8ses floues, questions d\u2019interview non pr\u00e9par\u00e9es, pas de plan de test clair.",'proj.da.ap':"Application web autonome (HTML/JS + API Groq). L\u2019utilisateur d\u00e9crit son probl\u00e8me, l\u2019outil g\u00e9n\u00e8re 3 hypoth\u00e8ses, 5 questions d\u2019interview et un plan de test structur\u00e9.",'proj.uia.ctx':"Outil conçu pour accélérer la synthèse des entretiens utilisateurs, étape souvent chronophage dans la phase de discovery.",'proj.uia.pb':"Transformer des notes brutes en insights actionables prend du temps et introduit des biais d\'interprétation quand c\'est fait manuellement.",'proj.uia.ap':"Application web (HTML/JS + API Groq/OpenAI). L\'utilisateur colle ses notes (1 ou plusieurs entretiens), l\'IA extrait pain points groupés, citations, opportunités et génère un persona.",'proj.uia.res':"Synthèse structurée en quelques secondes. Complète le Discovery Assistant pour couvrir l\'intégralité de la phase de discovery produit.",'proj.bp.ctx':"Outil IA con\u00e7u pour acc\u00e9l\u00e9rer les sessions de priorisation backlog, souvent chronophages et subjectives.",'proj.bp.pb':"Prioriser un backlog de mani\u00e8re rigoureuse prend du temps et manque souvent de justification explicite face aux parties prenantes.",'proj.bp.ap':"Application web (HTML/JS + API Groq). L\u2019utilisateur colle ses user stories, choisit RICE ou MoSCoW, et obtient un scoring complet avec justification par item.",'proj.bp.res':"Outil live avec double mode de saisie et exemples al\u00e9atoires. R\u00e9duit une session de priorisation de 30 min \u00e0 moins de 2 min.",'proj.da.res':"Outil live et accessible publiquement, con\u00e7u de z\u00e9ro en moins d\u2019une journ\u00e9e. Illustre la capacit\u00e9 \u00e0 shipper rapidement des outils IA utiles.",'proj.link':'Voir le projet \u2192','hero.intro':"PM/PO avec 3 ans d\u2019exp\u00e9rience dans des environnements exigeants (d\u00e9fense, assurance, conseil). Je couvre l\u2019ensemble du spectre produit de la discovery strat\u00e9gique jusqu\u2019\u00e0 la livraison, avec une expertise marqu\u00e9e en IA g\u00e9n\u00e9rative, syst\u00e8mes multi-agents et vibe coding.",'exp.oaio.date':'Janv. 2026<br>\- Pr\u00e9sent','exp.oaio.role':'Product Manager \u00b7 CDI','exp.oaio.desc':"Pilotage de la strat\u00e9gie produit pour l\u2019impl\u00e9mentation d\u2019une plateforme LMS et d\u2019outils IA pour 3\u00a0500+ collaborateurs. Benchmark de 17 solutions LMS et 44 outils IA avec scoring multicrit\u00e8res. Prototypage en vibe coding (Lovable + Claude Code) pour tester des hypoth\u00e8ses UX. Roadmap en 3 phases align\u00e9e aux objectifs business. Stakeholder management jusqu\u2019\u00e0 la direction.",'exp.outlier.role':'AI Trainer / Data Annotator \u00b7 Freelance','exp.outlier.desc':"Entra\u00eenement de mod\u00e8les d\u2019IA g\u00e9n\u00e9rative via RLHF. Annotation de donn\u00e9es (images, textes, audios) pour cr\u00e9er des datasets structur\u00e9s. Contr\u00f4le qualit\u00e9 rigoureux et classification des donn\u00e9es.",'exp.axa.role':'AI Product Owner \u00b7 Alternance','exp.axa.desc':"Gestion du backlog SecureGPT (RAG interne) et Microsoft Copilot en environnement SAFe. Priorisation MoSCoW, r\u00e9daction d\u2019user stories et animation des c\u00e9r\u00e9monies agiles. Automatisation via Power Automate et AI Builder. R\u00f4le d\u2019AI Evangelist et participation au LACE.",'exp.airbus.role':'Product Owner \u00b7 Alternance','exp.airbus.desc':"Application mobile de messagerie s\u00e9curis\u00e9e mission critique pour les JO Paris 2024. Transition Waterfall vers SAFe, interop\u00e9rabilit\u00e9 TETRA/Broadband. Animation des c\u00e9r\u00e9monies agiles et PI Planning.",'exp.casino.role':'Charg\u00e9 de Projet Change Management \u00b7 Stage','exp.casino.desc':"Accompagnement \u00e0 la transformation agile et impl\u00e9mentation Scrum. D\u00e9finition de la strat\u00e9gie de conduite du changement, d\u00e9ploiement du plan de communication et suivi KPI.",'skills.product':'Product','skills.ai':'IA & Tech','skills.agile':'Agilit\u00e9 & Outils','certs.credly':'V\u00e9rifier sur Credly \u2192','certs.agile':'Agilit\u00e9','certs.product':'Product Management','certs.ai':'IA & Divers','cert.oriions':'Conduire un projet innovant \u00b7 Lean Six Sigma White Belt','proj.bnp.name':'Design Sprint \- Sustainable Innovation','proj.bnp.desc':"Co-construction de solutions \u00e0 impact dans le cadre d\u2019un Design Sprint anim\u00e9 chez BNP Paribas.",'proj.shopify.desc':"Product Owner et d\u00e9veloppeur sur un site e-commerce Shopify avec chatbot IA int\u00e9gr\u00e9 (JavaScript, Node.js, CSS, HTML, API).",'proj.geo.name':'App G\u00e9olocalisation PowerApps','proj.geo.desc':"Application mobile de g\u00e9olocalisation pour la maintenance terrain, d\u00e9velopp\u00e9e sur Microsoft Power Platform.",'edu.bootcamp.degree':'Bootcamp Product Owner / Product Manager','edu.lbl.cert':'Certification obtenue','edu.lbl.thesis':"M\u00e9moire de fin d'\u00e9tudes",'edu.bootcamp.thesis':'\u00ab\u00a0Conduire et piloter un projet innovant avec des m\u00e9thodes agiles\u00a0\u00bb.','edu.m2.degree':"Master 2 \- \u00c9conomie et Management de l\u2019Innovation Digitale",'edu.m2.thesis':"\u00ab\u00a0Du hardware au software, du Waterfall au SAFe\u00a0: Les avantages de l\u2019agilit\u00e9 sur la performance op\u00e9rationnelle en environnement VUCA.\u00a0\u00bb",'edu.m1.degree':'Master 1 \- Management Strat\u00e9gique et Conduite du Changement','edu.m1.thesis':"\u00ab\u00a0L\u2019accompagnement au changement sous le prisme des rapports de domination \u00e9conomique.\u00a0\u00bb",'edu.licence.degree':'Licence Science Politique \- Sp\u00e9cialisation \u00c9conomie Num\u00e9rique','edu.licence.thesis':"\u00ab\u00a0Manipulations et influence\u00a0: Histoire et enjeux de la r\u00e9gulation des donn\u00e9es personnelles.\u00a0\u00bb",'footer.hl':'On construit<br>','footer.hl2':'quelque chose ?'},en:{'nav.exp':'Experience','nav.skills':'Skills','nav.certs':'Certifications','nav.edu':'Education','nav.cta':'Contact me \u2192','nav.projects':'Projects & Innovation','lbl.ctx':'Context','lbl.pb':'Problem','lbl.ap':'Approach','lbl.res':'Result','hero.tag':'Available \u00b7 \u00cele-de-France \u00b7 Full-time / Freelance','proj.bnp.ctx':"Consulting assignment during Master 2. BNP Paribas was looking for sustainable innovation opportunities in one of its business lines.",'proj.bnp.pb':"Generate actionable ideas in 5 days with a highly diverse group of stakeholders.",'proj.bnp.ap':"Facilitated a full Design Sprint: problem framing, ideation, rapid prototyping and user testing. Led workshops and synthesised insights.",'proj.bnp.res':"3 concepts delivered to the BNP team with a prioritised recommendation on which to prototype first.",'proj.shopify.ctx':"End-of-Master-2 team project \- build a fully functional e-commerce product from scratch.",'proj.shopify.pb':"Reduce cart abandonment by helping visitors find the right product without human support.",'proj.shopify.ap':"PO role on the backlog + developer for chatbot integration (Node.js, API, JS). User stories, prioritisation and iterative sprints.",'proj.shopify.res':"Delivered site with a working chatbot able to answer product questions and redirect to relevant pages.",'proj.geo.ctx':"Practical Master 2 project to explore low-code development on Microsoft Power Platform.",'proj.geo.pb':"Field maintenance teams had no simple tool to report their location and intervention status in real time.",'proj.geo.ap':"UX design, data modelling and full app development in PowerApps, connected to SharePoint as a database.",'proj.geo.res':"Functional mobile app delivered, tested and documented \- proving the ability to ship an operational tool without traditional code.",'proj.da.ctx':"AI tool designed and built via vibe coding to accelerate the product discovery phase.",'proj.da.pb':"PMs starting a discovery often lack structure: vague hypotheses, unprepared interview questions, no clear test plan.",'proj.da.ap':"Standalone web app (HTML/JS + Groq API). The user describes their problem, the tool generates 3 hypotheses, 5 interview questions and a structured test plan.",'proj.uia.ctx':"Tool designed to speed up user interview synthesis, a time-consuming step in the discovery phase.",'proj.uia.pb':"Turning raw notes into actionable insights takes time and introduces interpretation bias when done manually.",'proj.uia.ap':"Web app (HTML/JS + Groq/OpenAI API). The user pastes their notes (1 or multiple interviews), and the AI extracts grouped pain points, quotes, opportunities and generates a persona.",'proj.uia.res':"Structured synthesis in seconds. Completes the Discovery Assistant to cover the full product discovery phase.",'proj.bp.ctx':"AI tool designed to speed up backlog prioritisation sessions, often time-consuming and subjective.",'proj.bp.pb':"Prioritising a backlog rigorously takes time and often lacks explicit justification when presenting to stakeholders.",'proj.bp.ap':"Web app (HTML/JS + Groq API). The user pastes their user stories, picks RICE or MoSCoW, and gets a full scored and justified ranking.",'proj.bp.res':"Live tool with dual input mode and random examples. Reduces a prioritisation session from 30 min to under 2 min.",'proj.da.res':"Live tool publicly accessible, built from scratch in under a day. Demonstrates the ability to ship useful AI tools fast.",'proj.link':'View project \u2192','hero.intro':"PM/PO with 3 years of experience in demanding environments (defence, insurance, consulting). I cover the full product spectrum from strategic discovery to delivery, with strong expertise in generative AI, multi-agent systems and vibe coding.",'exp.oaio.date':'Jan. 2026<br>\- Present','exp.oaio.role':'Product Manager \u00b7 Full-time','exp.oaio.desc':"Led product strategy for the implementation of an LMS platform and AI tools for 3,500+ employees. Benchmarked 17 LMS solutions and 44 AI tools with multi-criteria scoring. Prototyped an in-house platform via vibe coding (Lovable + Claude Code) to test UX hypotheses. Defined a 3-phase roadmap aligned with business goals. Stakeholder management up to executive level.",'exp.outlier.role':'AI Trainer / Data Annotator \u00b7 Freelance','exp.outlier.desc':"Training of generative AI models via RLHF. Data annotation (images, text, audio) to create structured datasets. Rigorous quality control and data classification to optimise model learning.",'exp.axa.role':'AI Product Owner \u00b7 Apprenticeship','exp.axa.desc':"Managed the SecureGPT backlog (internal RAG) and Microsoft Copilot in a SAFe environment. MoSCoW prioritisation, user story writing and agile ceremony facilitation. Process automation via Power Automate and AI Builder. AI Evangelist role and LACE participation.",'exp.airbus.role':'Product Owner \u00b7 Apprenticeship','exp.airbus.desc':"Mission-critical secure mobile messaging app for the Paris 2024 Olympic Games. Waterfall-to-SAFe transition, TETRA/Broadband interoperability. Agile ceremony facilitation and PI Planning.",'exp.casino.role':'Change Management Project Officer \u00b7 Internship','exp.casino.desc':"Support for agile transformation and Scrum implementation. Defined change management strategy, rolled out communication plan and tracked KPIs.",'skills.product':'Product','skills.ai':'AI & Tech','skills.agile':'Agility & Tools','certs.credly':'View on Credly \u2192','certs.agile':'Agility','certs.product':'Product Management','certs.ai':'AI & Other','cert.oriions':'Leading an Innovative Project \u00b7 Lean Six Sigma White Belt','proj.bnp.name':'Design Sprint \- Sustainable Innovation','proj.bnp.desc':"Co-designed impact-driven solutions during a Design Sprint hosted at BNP Paribas.",'proj.shopify.desc':"Product Owner and developer on a Shopify e-commerce site with integrated AI chatbot (JavaScript, Node.js, CSS, HTML, API).",'proj.geo.name':'Geolocation App \- PowerApps','proj.geo.desc':"Mobile geolocation app for field maintenance teams, built on Microsoft Power Platform.",'edu.bootcamp.degree':'Product Owner / Product Manager Bootcamp','edu.lbl.cert':'Certificate','edu.lbl.thesis':'Thesis','edu.bootcamp.thesis':'Certificate: \u201cLeading and managing an innovative project with agile methods\u201d.','edu.m2.degree':"Master's 2 \- Economics & Management of Digital Innovation",'edu.m2.thesis':'\u201cFrom hardware to software, from Waterfall to SAFe: The benefits of agility on operational performance in VUCA environments.\u201d','edu.m1.degree':"Master's 1 \- Strategic Management & Change Leadership",'edu.m1.thesis':'\u201cOrganisational and technological change management through the lens of economic power dynamics.\u201d','edu.licence.degree':"Bachelor's in Political Science \- Digital Economics",'edu.licence.thesis':'\u201cManipulation and influence: History and challenges of personal data regulation.\u201d','footer.hl':"Let's build<br>",'footer.hl2':'something together?'}};
+var T={fr:{'nav.exp':'Parcours','nav.skills':'Comp\u00e9tences','nav.certs':'Certifications','nav.edu':'Formation','nav.cta':'Me contacter \u2192','nav.projects':'Projets','proj.intro':"Je build des outils PM avec l\'IA parce que j\'ai envie de r\u00e9soudre de vrais probl\u00e8mes que je rencontre en tant que PM. Pas des d\u00e9mos, des outils que j\'utilise vraiment. Stack\u00a0: HTML\u00a0/\u00a0JS\u00a0/\u00a0APIs LLM. D\u00e9ploy\u00e9s en statique, accessibles \u00e0 tous.",'proj.stat.tools':'Outils live','proj.stat.open':'Open access','proj.stat.llm':'LLM providers','hero.tag':'Disponible \u00b7 \u00cele-de-France \u00b7 CDI / Freelance','lbl.ctx':'Contexte','lbl.pb':'Probl\u00e8me','lbl.ap':'Approche','lbl.res':'R\u00e9sultat','proj.bnp.ctx':"Mission consulting en Master 2. BNP Paribas cherchait des pistes d\u2019innovation durable pour l\u2019un de ses m\u00e9tiers.",'proj.bnp.pb':"G\u00e9n\u00e9rer des id\u00e9es actionnables en 5 jours avec des parties prenantes aux profils tr\u00e8s h\u00e9t\u00e9rog\u00e8nes.",'proj.bnp.ap':"Facilitation d\u2019un Design Sprint complet : cadrage, id\u00e9ation, prototypage rapide et test utilisateur. Animation des ateliers et synth\u00e8se des insights.",'proj.bnp.res':"3 concepts pr\u00e9sent\u00e9s \u00e0 l\u2019\u00e9quipe BNP avec une recommandation argument\u00e9e sur le concept \u00e0 prototyper en priorit\u00e9.",'proj.shopify.ctx':"Projet de fin de Master 2 en \u00e9quipe \- construire un produit e-commerce fonctionnel de A \u00e0 Z.",'proj.shopify.pb':"R\u00e9duire le taux d\u2019abandon en aidant les visiteurs \u00e0 trouver le bon produit sans intervention humaine.",'proj.shopify.ap':"R\u00f4le de PO sur le backlog + d\u00e9veloppeur sur l\u2019int\u00e9gration du chatbot (Node.js, API, JS). User stories, priorisation et sprints it\u00e9ratifs.",'proj.shopify.res':"Site livr\u00e9 avec chatbot fonctionnel capable de r\u00e9pondre aux questions produit et de rediriger vers les fiches concern\u00e9es.",'proj.geo.ctx':"Projet pratique du Master 2 pour explorer le d\u00e9veloppement low-code sur Microsoft Power Platform.",'proj.geo.pb':"Les \u00e9quipes terrain n\u2019avaient pas d\u2019outil simple pour signaler leur position et l\u2019\u00e9tat des interventions en temps r\u00e9el.",'proj.geo.ap':"Conception UX, mod\u00e9lisation des donn\u00e9es et d\u00e9veloppement complet sur PowerApps, connect\u00e9 \u00e0 SharePoint comme base de donn\u00e9es.",'proj.geo.res':"Application mobile fonctionnelle livr\u00e9e, test\u00e9e et document\u00e9e \- d\u00e9montrant la capacit\u00e9 \u00e0 produire un outil op\u00e9rationnel sans code traditionnel.",'proj.da.ctx':"Outil IA con\u00e7u et d\u00e9velopp\u00e9 en vibe coding pour acc\u00e9l\u00e9rer la phase de discovery produit.",'proj.da.pb':"Un PM en d\u00e9but de discovery part souvent sans structure : hypoth\u00e8ses floues, questions d\u2019interview non pr\u00e9par\u00e9es, pas de plan de test clair.",'proj.da.ap':"Application web autonome (HTML/JS + API Groq). L\u2019utilisateur d\u00e9crit son probl\u00e8me, l\u2019outil g\u00e9n\u00e8re 3 hypoth\u00e8ses, 5 questions d\u2019interview et un plan de test structur\u00e9.",'proj.uia.ctx':"Outil conçu pour accélérer la synthèse des entretiens utilisateurs, étape souvent chronophage dans la phase de discovery.",'proj.uia.pb':"Transformer des notes brutes en insights actionables prend du temps et introduit des biais d\'interprétation quand c\'est fait manuellement.",'proj.uia.ap':"Application web (HTML/JS + API Groq/OpenAI). L\'utilisateur colle ses notes (1 ou plusieurs entretiens), l\'IA extrait pain points groupés, citations, opportunités et génère un persona.",'proj.uia.res':"Synthèse structurée en quelques secondes. Complète le Discovery Assistant pour couvrir l\'intégralité de la phase de discovery produit.",'proj.bp.ctx':"Outil IA con\u00e7u pour acc\u00e9l\u00e9rer les sessions de priorisation backlog, souvent chronophages et subjectives.",'proj.bp.pb':"Prioriser un backlog de mani\u00e8re rigoureuse prend du temps et manque souvent de justification explicite face aux parties prenantes.",'proj.bp.ap':"Application web (HTML/JS + API Groq). L\u2019utilisateur colle ses user stories, choisit RICE ou MoSCoW, et obtient un scoring complet avec justification par item.",'proj.bp.res':"Outil live avec double mode de saisie et exemples al\u00e9atoires. R\u00e9duit une session de priorisation de 30 min \u00e0 moins de 2 min.",'proj.da.res':"Outil live et accessible publiquement, con\u00e7u de z\u00e9ro en moins d\u2019une journ\u00e9e. Illustre la capacit\u00e9 \u00e0 shipper rapidement des outils IA utiles.",'proj.link':'Voir le projet \u2192','hero.intro':"PM/PO avec 3 ans d\u2019exp\u00e9rience dans des environnements exigeants (d\u00e9fense, assurance, conseil). Je couvre l\u2019ensemble du spectre produit de la discovery strat\u00e9gique jusqu\u2019\u00e0 la livraison, avec une expertise marqu\u00e9e en IA g\u00e9n\u00e9rative, syst\u00e8mes multi-agents et vibe coding.",'exp.oaio.date':'Janv. 2026<br>\- Pr\u00e9sent','exp.oaio.role':'Product Manager \u00b7 CDI','exp.oaio.desc':"Pilotage de la strat\u00e9gie produit pour l\u2019impl\u00e9mentation d\u2019une plateforme LMS et d\u2019outils IA pour 3\u00a0500+ collaborateurs. Benchmark de 17 solutions LMS et 44 outils IA avec scoring multicrit\u00e8res. Prototypage en vibe coding (Lovable + Claude Code) pour tester des hypoth\u00e8ses UX. Roadmap en 3 phases align\u00e9e aux objectifs business. Stakeholder management jusqu\u2019\u00e0 la direction.",'exp.outlier.role':'AI Trainer / Data Annotator \u00b7 Freelance','exp.outlier.desc':"Entra\u00eenement de mod\u00e8les d\u2019IA g\u00e9n\u00e9rative via RLHF. Annotation de donn\u00e9es (images, textes, audios) pour cr\u00e9er des datasets structur\u00e9s. Contr\u00f4le qualit\u00e9 rigoureux et classification des donn\u00e9es.",'exp.axa.role':'AI Product Owner \u00b7 Alternance','exp.axa.desc':"Gestion du backlog SecureGPT (RAG interne) et Microsoft Copilot en environnement SAFe. Priorisation MoSCoW, r\u00e9daction d\u2019user stories et animation des c\u00e9r\u00e9monies agiles. Automatisation via Power Automate et AI Builder. R\u00f4le d\u2019AI Evangelist et participation au LACE.",'exp.airbus.role':'Product Owner \u00b7 Alternance','exp.airbus.desc':"Application mobile de messagerie s\u00e9curis\u00e9e mission critique pour les JO Paris 2024. Transition Waterfall vers SAFe, interop\u00e9rabilit\u00e9 TETRA/Broadband. Animation des c\u00e9r\u00e9monies agiles et PI Planning.",'exp.casino.role':'Charg\u00e9 de Projet Change Management \u00b7 Stage','exp.casino.desc':"Accompagnement \u00e0 la transformation agile et impl\u00e9mentation Scrum. D\u00e9finition de la strat\u00e9gie de conduite du changement, d\u00e9ploiement du plan de communication et suivi KPI.",'skills.product':'Product','skills.ai':'IA & Tech','skills.agile':'Agilit\u00e9 & Outils','certs.credly':'V\u00e9rifier sur Credly \u2192','certs.agile':'Agilit\u00e9','certs.product':'Product Management','certs.ai':'IA & Divers','cert.oriions':'Conduire un projet innovant \u00b7 Lean Six Sigma White Belt','proj.bnp.name':'Design Sprint \- Sustainable Innovation','proj.bnp.desc':"Co-construction de solutions \u00e0 impact dans le cadre d\u2019un Design Sprint anim\u00e9 chez BNP Paribas.",'proj.shopify.desc':"Product Owner et d\u00e9veloppeur sur un site e-commerce Shopify avec chatbot IA int\u00e9gr\u00e9 (JavaScript, Node.js, CSS, HTML, API).",'proj.geo.name':'App G\u00e9olocalisation PowerApps','proj.geo.desc':"Application mobile de g\u00e9olocalisation pour la maintenance terrain, d\u00e9velopp\u00e9e sur Microsoft Power Platform.",'edu.bootcamp.degree':'Bootcamp Product Owner / Product Manager','edu.lbl.cert':'Certification obtenue','edu.lbl.thesis':"M\u00e9moire de fin d'\u00e9tudes",'edu.bootcamp.thesis':'\u00ab\u00a0Conduire et piloter un projet innovant avec des m\u00e9thodes agiles\u00a0\u00bb.','edu.m2.degree':"Master 2 \- \u00c9conomie et Management de l\u2019Innovation Digitale",'edu.m2.thesis':"\u00ab\u00a0Du hardware au software, du Waterfall au SAFe\u00a0: Les avantages de l\u2019agilit\u00e9 sur la performance op\u00e9rationnelle en environnement VUCA.\u00a0\u00bb",'edu.m1.degree':'Master 1 \- Management Strat\u00e9gique et Conduite du Changement','edu.m1.thesis':"\u00ab\u00a0L\u2019accompagnement au changement sous le prisme des rapports de domination \u00e9conomique.\u00a0\u00bb",'edu.licence.degree':'Licence Science Politique \- Sp\u00e9cialisation \u00c9conomie Num\u00e9rique','edu.licence.thesis':"\u00ab\u00a0Manipulations et influence\u00a0: Histoire et enjeux de la r\u00e9gulation des donn\u00e9es personnelles.\u00a0\u00bb",'footer.hl':'On construit<br>','footer.hl2':'quelque chose ?'},en:{'nav.exp':'Experience','nav.skills':'Skills','nav.certs':'Certifications','nav.edu':'Education','nav.cta':'Contact me \u2192','nav.projects':'Projects','proj.intro':"I build PM tools with AI to solve real problems I face as a PM. Not demos, tools I actually use. Stack: HTML / JS / LLM APIs. Deployed as static files, open to everyone.",'proj.stat.tools':'Live tools','proj.stat.open':'Open access','proj.stat.llm':'LLM providers','lbl.ctx':'Context','lbl.pb':'Problem','lbl.ap':'Approach','lbl.res':'Result','hero.tag':'Available \u00b7 \u00cele-de-France \u00b7 Full-time / Freelance','proj.bnp.ctx':"Consulting assignment during Master 2. BNP Paribas was looking for sustainable innovation opportunities in one of its business lines.",'proj.bnp.pb':"Generate actionable ideas in 5 days with a highly diverse group of stakeholders.",'proj.bnp.ap':"Facilitated a full Design Sprint: problem framing, ideation, rapid prototyping and user testing. Led workshops and synthesised insights.",'proj.bnp.res':"3 concepts delivered to the BNP team with a prioritised recommendation on which to prototype first.",'proj.shopify.ctx':"End-of-Master-2 team project \- build a fully functional e-commerce product from scratch.",'proj.shopify.pb':"Reduce cart abandonment by helping visitors find the right product without human support.",'proj.shopify.ap':"PO role on the backlog + developer for chatbot integration (Node.js, API, JS). User stories, prioritisation and iterative sprints.",'proj.shopify.res':"Delivered site with a working chatbot able to answer product questions and redirect to relevant pages.",'proj.geo.ctx':"Practical Master 2 project to explore low-code development on Microsoft Power Platform.",'proj.geo.pb':"Field maintenance teams had no simple tool to report their location and intervention status in real time.",'proj.geo.ap':"UX design, data modelling and full app development in PowerApps, connected to SharePoint as a database.",'proj.geo.res':"Functional mobile app delivered, tested and documented \- proving the ability to ship an operational tool without traditional code.",'proj.da.ctx':"AI tool designed and built via vibe coding to accelerate the product discovery phase.",'proj.da.pb':"PMs starting a discovery often lack structure: vague hypotheses, unprepared interview questions, no clear test plan.",'proj.da.ap':"Standalone web app (HTML/JS + Groq API). The user describes their problem, the tool generates 3 hypotheses, 5 interview questions and a structured test plan.",'proj.uia.ctx':"Tool designed to speed up user interview synthesis, a time-consuming step in the discovery phase.",'proj.uia.pb':"Turning raw notes into actionable insights takes time and introduces interpretation bias when done manually.",'proj.uia.ap':"Web app (HTML/JS + Groq/OpenAI API). The user pastes their notes (1 or multiple interviews), and the AI extracts grouped pain points, quotes, opportunities and generates a persona.",'proj.uia.res':"Structured synthesis in seconds. Completes the Discovery Assistant to cover the full product discovery phase.",'proj.bp.ctx':"AI tool designed to speed up backlog prioritisation sessions, often time-consuming and subjective.",'proj.bp.pb':"Prioritising a backlog rigorously takes time and often lacks explicit justification when presenting to stakeholders.",'proj.bp.ap':"Web app (HTML/JS + Groq API). The user pastes their user stories, picks RICE or MoSCoW, and gets a full scored and justified ranking.",'proj.bp.res':"Live tool with dual input mode and random examples. Reduces a prioritisation session from 30 min to under 2 min.",'proj.da.res':"Live tool publicly accessible, built from scratch in under a day. Demonstrates the ability to ship useful AI tools fast.",'proj.link':'View project \u2192','hero.intro':"PM by day, builder by night. I got into the habit of shipping tools I wished I\'d had in my past missions. Generative AI changed the way I work, so I explore, prototype, break things and start over.",'exp.oaio.date':'Jan. 2026<br>\- Present','exp.oaio.role':'Product Manager \u00b7 Full-time','exp.oaio.desc':"Led product strategy for the implementation of an LMS platform and AI tools for 3,500+ employees. Benchmarked 17 LMS solutions and 44 AI tools with multi-criteria scoring. Prototyped an in-house platform via vibe coding (Lovable + Claude Code) to test UX hypotheses. Defined a 3-phase roadmap aligned with business goals. Stakeholder management up to executive level.",'exp.outlier.role':'AI Trainer / Data Annotator \u00b7 Freelance','exp.outlier.desc':"Training of generative AI models via RLHF. Data annotation (images, text, audio) to create structured datasets. Rigorous quality control and data classification to optimise model learning.",'exp.axa.role':'AI Product Owner \u00b7 Apprenticeship','exp.axa.desc':"Managed the SecureGPT backlog (internal RAG) and Microsoft Copilot in a SAFe environment. MoSCoW prioritisation, user story writing and agile ceremony facilitation. Process automation via Power Automate and AI Builder. AI Evangelist role and LACE participation.",'exp.airbus.role':'Product Owner \u00b7 Apprenticeship','exp.airbus.desc':"Mission-critical secure mobile messaging app for the Paris 2024 Olympic Games. Waterfall-to-SAFe transition, TETRA/Broadband interoperability. Agile ceremony facilitation and PI Planning.",'exp.casino.role':'Change Management Project Officer \u00b7 Internship','exp.casino.desc':"Support for agile transformation and Scrum implementation. Defined change management strategy, rolled out communication plan and tracked KPIs.",'skills.product':'Product','skills.ai':'AI & Tech','skills.agile':'Agility & Tools','certs.credly':'View on Credly \u2192','certs.agile':'Agility','certs.product':'Product Management','certs.ai':'AI & Other','cert.oriions':'Leading an Innovative Project \u00b7 Lean Six Sigma White Belt','proj.bnp.name':'Design Sprint \- Sustainable Innovation','proj.bnp.desc':"Co-designed impact-driven solutions during a Design Sprint hosted at BNP Paribas.",'proj.shopify.desc':"Product Owner and developer on a Shopify e-commerce site with integrated AI chatbot (JavaScript, Node.js, CSS, HTML, API).",'proj.geo.name':'Geolocation App \- PowerApps','proj.geo.desc':"Mobile geolocation app for field maintenance teams, built on Microsoft Power Platform.",'edu.bootcamp.degree':'Product Owner / Product Manager Bootcamp','edu.lbl.cert':'Certificate','edu.lbl.thesis':'Thesis','edu.bootcamp.thesis':'Certificate: \u201cLeading and managing an innovative project with agile methods\u201d.','edu.m2.degree':"Master's 2 \- Economics & Management of Digital Innovation",'edu.m2.thesis':'\u201cFrom hardware to software, from Waterfall to SAFe: The benefits of agility on operational performance in VUCA environments.\u201d','edu.m1.degree':"Master's 1 \- Strategic Management & Change Leadership",'edu.m1.thesis':'\u201cOrganisational and technological change management through the lens of economic power dynamics.\u201d','edu.licence.degree':"Bachelor's in Political Science \- Digital Economics",'edu.licence.thesis':'\u201cManipulation and influence: History and challenges of personal data regulation.\u201d','footer.hl':"Let's build<br>",'footer.hl2':'something together?'}};
 
 window.setLang=function(lang){
   document.getElementById('btn-fr').classList.toggle('active',lang==='fr');
@@ -419,7 +367,7 @@ window.setLang=function(lang){
 
 // Active nav on scroll
 (function(){
-  var ids=['hero','experience','skills','certs','projects','education'];
+  var ids=['hero','projects','skills','certs'];
   var links=document.querySelectorAll('.nav-links a');
   function upd(){
     var y=window.scrollY+130,cur='hero';
