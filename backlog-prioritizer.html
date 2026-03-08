@@ -144,6 +144,11 @@ h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-0.03em;line-he
 footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line);font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em}
 footer a{color:var(--violet);text-decoration:none}
 footer a:hover{text-decoration:underline}
+.provider-toggle{display:flex;gap:0.4rem;margin-bottom:0.9rem}
+.provider-btn{flex:1;padding:0.55rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:"DM Sans",sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.4rem}
+.provider-btn.active{background:rgba(167,139,250,0.12);border-color:rgba(167,139,250,0.35);color:#c4b5fd}
+.provider-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
+.provider-tag{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.1rem 0.4rem;background:rgba(255,255,255,0.07);border-radius:3px}
 
 @media(max-width:600px){
   .result-item{grid-template-columns:24px 1fr;grid-template-rows:auto auto}
@@ -166,12 +171,16 @@ footer a:hover{text-decoration:underline}
 
   <!-- API KEY -->
   <div class="card">
-    <div class="card-title">&#128273; Cl&eacute; API Groq</div>
+    <div class="card-title">&#128273; Configuration</div>
+    <div class="provider-toggle">
+      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag">Gratuit</span></button>
+      <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
+    </div>
     <div class="key-row">
       <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
       <button class="btn-sm btn-save" onclick="saveKey()">Enregistrer</button>
     </div>
-    <p class="note">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl&eacute; reste dans ton navigateur uniquement.</p>
+    <p class="note" id="providerNote">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl&eacute; reste dans ton navigateur uniquement.</p>
     <div class="saved-msg" id="savedMsg">&#10003; Cl&eacute; enregistr&eacute;e.</div>
   </div>
 
@@ -242,6 +251,24 @@ footer a:hover{text-decoration:underline}
 
 <script>
 var apiKey = '';
+var provider = 'groq';
+
+function setProvider(p) {
+  provider = p;
+  document.getElementById('pbGroq').classList.toggle('active', p === 'groq');
+  document.getElementById('pbOpenai').classList.toggle('active', p === 'openai');
+  var input = document.getElementById('apiKeyInput');
+  var note = document.getElementById('providerNote');
+  if (p === 'groq') {
+    input.placeholder = 'gsk_...';
+    note.innerHTML = 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl\u00e9 reste dans ton navigateur uniquement.';
+  } else {
+    input.placeholder = 'sk-...';
+    note.innerHTML = 'Cr\u00e9e un compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a> \u2192 API Keys. GPT-4o mini est tr\u00e8s peu co\u00fbteux.';
+  }
+  apiKey = '';
+  document.getElementById('savedMsg').classList.remove('show');
+}
 var currentMethod = 'rice';
 var currentInputMode = 'text';
 var fieldCount = 3;
@@ -329,7 +356,8 @@ function removeField(btn) {
 // ---- API KEY ----
 function saveKey() {
   var v = document.getElementById('apiKeyInput').value.trim();
-  if (!v.startsWith('gsk_') || v.length < 20) { showError('Clé invalide. Elle doit commencer par "gsk_".'); return; }
+  if (provider === 'groq' && (!v.startsWith('gsk_') || v.length < 20)) { showError('Cl\u00e9 Groq invalide. Elle doit commencer par "gsk_".'); return; }
+  if (provider === 'openai' && (!v.startsWith('sk-') || v.length < 20)) { showError('Cl\u00e9 OpenAI invalide. Elle doit commencer par "sk-".'); return; }
   apiKey = v;
   document.getElementById('savedMsg').classList.add('show');
   hideError();
@@ -358,11 +386,16 @@ async function launch() {
   document.getElementById('loading').classList.add('show');
 
   try {
-    var res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    var endpoint = provider === 'groq'
+      ? 'https://api.groq.com/openai/v1/chat/completions'
+      : 'https://api.openai.com/v1/chat/completions';
+    var model = provider === 'groq' ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+
+    var res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
+        model: model,
         temperature: 0.3,
         max_tokens: 3000,
         messages: [{ role: 'user', content: buildPrompt(stories, context) }]
