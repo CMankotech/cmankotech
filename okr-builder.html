@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OKR Builder — by Carlin Mankoto</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070e;--surface:#0e0e1a;--surface2:#11111e;
+  --border:rgba(255,255,255,0.07);--line:rgba(255,255,255,0.04);
+  --text:#e2e8f0;--dim:#718096;--muted:#4a5568;
+  --blue:#60a5fa;--violet:#a78bfa;--cyan:#22d3ee;
+  --green:#4ade80;--orange:#fb923c;--red:#f87171;--yellow:#fbbf24;
+}
+html{font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
+h1,h2,h3{font-family:'Syne',sans-serif}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 80% 0%,rgba(251,191,36,0.06) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 10% 90%,rgba(96,165,250,0.05) 0%,transparent 60%);pointer-events:none;z-index:0}
+.container{max-width:860px;margin:0 auto;padding:3rem 1.5rem;position:relative;z-index:1}
+
+/* HEADER */
+header{text-align:center;margin-bottom:3rem}
+.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--yellow);background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);padding:0.4rem 1rem;border-radius:99px;margin-bottom:1.25rem}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--yellow);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
+h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.75rem}
+.grad{background:linear-gradient(135deg,#fbbf24,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{font-size:0.85rem;color:var(--dim);max-width:520px;margin:0 auto}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem}
+.card-title{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.6rem}
+.card-title::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* PROVIDER */
+.provider-row{display:flex;gap:0.4rem;margin-bottom:0.9rem}
+.provider-btn{flex:1;padding:0.55rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.35rem}
+.provider-btn.active{background:rgba(251,191,36,0.1);border-color:rgba(251,191,36,0.35);color:var(--yellow)}
+.provider-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
+.provider-tag{font-size:0.52rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.1rem 0.4rem;background:rgba(255,255,255,0.06);border-radius:3px}
+.key-row{display:flex;gap:0.75rem}
+.key-row input{flex:1;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;outline:none;transition:border-color 0.2s}
+.key-row input:focus{border-color:rgba(251,191,36,0.4)}
+.key-row input::placeholder{color:var(--muted)}
+.btn-save{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.65rem 1rem;border-radius:8px;border:1px solid rgba(251,191,36,0.3);background:rgba(251,191,36,0.08);color:var(--yellow);cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all 0.2s}
+.btn-save:hover{background:rgba(251,191,36,0.18)}
+.note{font-size:0.66rem;color:var(--muted);margin-top:0.6rem}
+.note a{color:var(--yellow);text-decoration:none}
+.saved-msg{display:none;font-size:0.68rem;color:var(--green);align-items:center;gap:0.4rem;margin-top:0.5rem}
+.saved-msg.show{display:flex}
+
+/* FORM FIELDS */
+.field{margin-bottom:1.1rem}
+.field label{display:block;font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--dim);margin-bottom:0.45rem}
+.field input,.field select,.field textarea{width:100%;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:10px;padding:0.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:300;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(251,191,36,0.35)}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+.field select option{background:#0e0e1a}
+.field textarea{resize:none;line-height:1.7}
+.field-hint{font-size:0.63rem;color:var(--muted);margin-top:0.4rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* PERIOD TOGGLE */
+.period-toggle{display:flex;gap:0.4rem}
+.period-btn{flex:1;padding:0.6rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:center}
+.period-btn.active{background:rgba(251,191,36,0.1);border-color:rgba(251,191,36,0.3);color:var(--yellow)}
+.period-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
+
+/* NB OBJECTIVES */
+.nb-toggle{display:flex;gap:0.4rem}
+.nb-btn{width:42px;height:42px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:center}
+.nb-btn.active{background:rgba(251,191,36,0.1);border-color:rgba(251,191,36,0.3);color:var(--yellow)}
+.nb-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
+
+/* EXAMPLES BTN */
+.btn-examples{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.28rem 0.7rem;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);color:var(--yellow);border-radius:5px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:0.5rem}
+.btn-examples:hover{background:rgba(251,191,36,0.16)}
+
+/* SUBMIT */
+.btn-launch{width:100%;padding:1rem;background:linear-gradient(135deg,#92400e,#b45309);border:none;border-radius:10px;color:white;font-family:'Syne',sans-serif;font-size:0.83rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;cursor:pointer;transition:all 0.25s;margin-top:1.25rem}
+.btn-launch:hover:not(:disabled){opacity:0.88;transform:translateY(-1px);box-shadow:0 8px 30px -8px rgba(251,191,36,0.3)}
+.btn-launch:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+.error-box{display:none;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);border-radius:10px;padding:0.85rem 1rem;font-size:0.78rem;color:#fca5a5}
+.error-box.show{display:block}
+
+/* LOADING */
+.loading{display:none;text-align:center;padding:3rem 0}
+.loading.show{display:block}
+.spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--yellow);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:0.75rem;color:var(--muted)}
+
+/* RESULTS */
+.results{display:none}
+.results.show{display:block;animation:fadeUp 0.4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.results-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem}
+.results-info{display:flex;flex-direction:column;gap:0.2rem}
+.results-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700}
+.results-sub{font-size:0.68rem;color:var(--dim)}
+.btn-reset{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.9rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.btn-reset:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+
+/* OKR CARDS */
+.okr-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.25rem;border-left:3px solid var(--yellow)}
+.okr-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--line)}
+.okr-num{font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;color:var(--yellow);background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);padding:0.2rem 0.65rem;border-radius:99px;white-space:nowrap;flex-shrink:0}
+.okr-objective{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);line-height:1.35;flex:1}
+.kr-list{display:flex;flex-direction:column;gap:0.65rem}
+.kr-item{display:grid;grid-template-columns:auto 1fr auto;gap:0.75rem;align-items:start;padding:0.75rem 0.9rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:10px}
+.kr-num{font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:800;color:var(--muted);padding-top:0.1rem}
+.kr-body{}
+.kr-text{font-size:0.82rem;color:var(--text);line-height:1.45;margin-bottom:0.3rem}
+.kr-baseline{font-size:0.7rem;color:var(--dim)}
+.kr-type-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.18rem 0.5rem;border-radius:4px;white-space:nowrap;flex-shrink:0}
+.kr-metric{background:rgba(96,165,250,0.1);color:#93c5fd;border:1px solid rgba(96,165,250,0.2)}
+.kr-milestone{background:rgba(167,139,250,0.1);color:#c4b5fd;border:1px solid rgba(167,139,250,0.2)}
+.kr-health{background:rgba(74,222,128,0.1);color:#86efac;border:1px solid rgba(74,222,128,0.2)}
+
+/* TIPS */
+.tips-card{background:linear-gradient(135deg,rgba(251,191,36,0.06),rgba(251,146,60,0.04));border:1px solid rgba(251,191,36,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem}
+.tips-header{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem}
+.tips-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--yellow)}
+.tips-list{display:flex;flex-direction:column;gap:0.45rem}
+.tip-item{font-size:0.78rem;color:#a0aec0;line-height:1.6;display:flex;align-items:flex-start;gap:0.5rem}
+.tip-bullet{color:var(--yellow);flex-shrink:0;margin-top:0.1rem}
+
+/* FOOTER */
+footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line);font-size:0.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em}
+footer a{color:var(--yellow);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media(max-width:600px){
+  .form-grid{grid-template-columns:1fr}
+  .kr-item{grid-template-columns:auto 1fr}
+  .kr-type-badge{grid-column:2}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="header-tag"><span class="dot"></span> Strategy &amp; Planning</div>
+    <h1>OKR <span class="grad">Builder</span></h1>
+    <p class="subtitle">D&eacute;cris ton contexte produit et tes ambitions. L&rsquo;IA g&eacute;n&egrave;re des OKRs coh&eacute;rents avec des Key Results mesurables et actionnables.</p>
+  </header>
+
+  <!-- CONFIG -->
+  <div class="card">
+    <div class="card-title">&#128273; Configuration</div>
+    <div class="provider-row">
+      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag">Gratuit</span></button>
+      <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
+    </div>
+    <div class="key-row">
+      <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
+      <button class="btn-save" onclick="saveKey()">Enregistrer</button>
+    </div>
+    <p class="note" id="providerNote">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl&eacute; reste dans ton navigateur.</p>
+    <div class="saved-msg" id="savedMsg">&#10003; Cl&eacute; enregistr&eacute;e.</div>
+  </div>
+
+  <!-- FORM -->
+  <div class="card">
+    <div class="card-title">
+      Contexte produit
+      <button class="btn-examples" onclick="loadExample()">&#127922; Exemple</button>
+    </div>
+
+    <div class="form-grid">
+      <div class="field">
+        <label>Nom du produit</label>
+        <input type="text" id="productName" placeholder="Ex : Kira, Notion, Doctolib...">
+      </div>
+      <div class="field">
+        <label>Type de produit</label>
+        <select id="productType">
+          <option value="">-- Choisir --</option>
+          <option>SaaS B2B</option>
+          <option>SaaS B2C</option>
+          <option>Application mobile</option>
+          <option>Marketplace</option>
+          <option>Plateforme interne</option>
+          <option>Fintech</option>
+          <option>Healthtech</option>
+          <option>EdTech</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Ambitions &amp; contexte strat&eacute;gique</label>
+      <textarea id="ambitions" rows="4" placeholder="D&eacute;cris ce que tu veux accomplir ce trimestre. Ex : On veut r&eacute;duire le churn, am&eacute;liorer l&rsquo;onboarding, et lancer une nouvelle feature d&rsquo;int&eacute;gration. Notre plus gros probl&egrave;me est que les utilisateurs ne reviennent pas apr&egrave;s J7..."></textarea>
+    </div>
+
+    <div class="form-grid">
+      <div class="field">
+        <label>P&eacute;riode</label>
+        <div class="period-toggle">
+          <button class="period-btn active" id="pQ" onclick="setPeriod('trimestre')">Trimestre</button>
+          <button class="period-btn" id="pA" onclick="setPeriod('annee')">Ann&eacute;e</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Nombre d&rsquo;objectifs</label>
+        <div class="nb-toggle">
+          <button class="nb-btn" id="nb2" onclick="setNb(2)">2</button>
+          <button class="nb-btn active" id="nb3" onclick="setNb(3)">3</button>
+          <button class="nb-btn" id="nb4" onclick="setNb(4)">4</button>
+        </div>
+        <p class="field-hint">3 est g&eacute;n&eacute;ralement recommand&eacute; par trimestre.</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>M&eacute;triques actuelles <span style="font-size:0.57rem;color:var(--muted);text-transform:none;letter-spacing:0">(optionnel)</span></label>
+      <input type="text" id="metrics" placeholder="Ex : DAU 8k, churn 4.2%, NPS 32, conversion trial 12%">
+    </div>
+  </div>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <button class="btn-launch" id="launchBtn" onclick="launch()">
+    &#9654; G&eacute;n&eacute;rer mes OKRs
+  </button>
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">G&eacute;n&eacute;ration des OKRs en cours...</div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+    <div class="results-topbar">
+      <div class="results-info">
+        <div class="results-title">OKRs g&eacute;n&eacute;r&eacute;s</div>
+        <div class="results-sub" id="resultsSub"></div>
+      </div>
+      <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
+    </div>
+
+    <div id="okrList"></div>
+
+    <div class="tips-card" id="tipsCard" style="display:none">
+      <div class="tips-header"><span style="font-size:1rem">&#128161;</span><span class="tips-label">Conseils pour utiliser ces OKRs</span></div>
+      <div class="tips-list" id="tipsList"></div>
+    </div>
+  </div>
+
+  <footer>
+    Construit par <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager
+  </footer>
+
+</div>
+
+<script>
+var apiKey = '';
+var provider = 'groq';
+var period = 'trimestre';
+var nbObjectives = 3;
+
+var EXAMPLE = {
+  name: 'Flowly',
+  type: 'SaaS B2B',
+  ambitions: "On veut améliorer la rétention des utilisateurs et réduire le churn qui est notre plus gros problème. On souhaite aussi accélérer l'activation des nouveaux clients et lancer un module de reporting avancé pour les équipes managers.",
+  metrics: 'DAU 6 200, churn mensuel 3.8%, NPS 28, time-to-value J14 pour 60% des nouveaux clients'
+};
+
+function loadExample() {
+  document.getElementById('productName').value = EXAMPLE.name;
+  document.getElementById('productType').value = EXAMPLE.type;
+  document.getElementById('ambitions').value = EXAMPLE.ambitions;
+  document.getElementById('metrics').value = EXAMPLE.metrics;
+}
+
+function setProvider(p) {
+  provider = p;
+  document.getElementById('pbGroq').classList.toggle('active', p === 'groq');
+  document.getElementById('pbOpenai').classList.toggle('active', p === 'openai');
+  var note = document.getElementById('providerNote');
+  var inp = document.getElementById('apiKeyInput');
+  if (p === 'groq') {
+    inp.placeholder = 'gsk_...';
+    note.innerHTML = 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl\u00e9 reste dans ton navigateur.';
+  } else {
+    inp.placeholder = 'sk-...';
+    note.innerHTML = 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>. GPT-4o mini est tr\u00e8s peu co\u00fbteux.';
+  }
+  apiKey = '';
+  document.getElementById('savedMsg').classList.remove('show');
+}
+
+function saveKey() {
+  var v = document.getElementById('apiKeyInput').value.trim();
+  if (provider === 'groq' && (!v.startsWith('gsk_') || v.length < 20)) { showError('Cl\u00e9 Groq invalide. Elle doit commencer par "gsk_".'); return; }
+  if (provider === 'openai' && (!v.startsWith('sk-') || v.length < 20)) { showError('Cl\u00e9 OpenAI invalide. Elle doit commencer par "sk-".'); return; }
+  apiKey = v;
+  document.getElementById('savedMsg').classList.add('show');
+  hideError();
+}
+
+function setPeriod(p) {
+  period = p;
+  document.getElementById('pQ').classList.toggle('active', p === 'trimestre');
+  document.getElementById('pA').classList.toggle('active', p === 'annee');
+}
+
+function setNb(n) {
+  nbObjectives = n;
+  [2,3,4].forEach(function(x){ document.getElementById('nb'+x).classList.toggle('active', x === n); });
+}
+
+async function launch() {
+  hideError();
+  var name = document.getElementById('productName').value.trim();
+  var type = document.getElementById('productType').value;
+  var ambitions = document.getElementById('ambitions').value.trim();
+  var metrics = document.getElementById('metrics').value.trim();
+
+  if (!apiKey) { showError('Entre et enregistre ta cl\u00e9 API avant de lancer.'); return; }
+  if (!name) { showError('Donne un nom au produit.'); return; }
+  if (!ambitions || ambitions.length < 30) { showError('D\u00e9cris tes ambitions plus en d\u00e9tail.'); return; }
+
+  document.getElementById('launchBtn').disabled = true;
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('loading').classList.add('show');
+
+  try {
+    var raw = await callAI(buildPrompt(name, type, ambitions, metrics), 3000);
+    var clean = raw.replace(/```json/gi,'').replace(/```/g,'').trim();
+    var m = clean.match(/\{[\s\S]*\}/);
+    if (!m) throw new Error('R\u00e9ponse invalide, r\u00e9essaie.');
+    var data = JSON.parse(m[0]);
+    renderResults(data, name, type);
+  } catch(e) {
+    showError('Erreur : ' + e.message);
+  }
+  document.getElementById('loading').classList.remove('show');
+  document.getElementById('launchBtn').disabled = false;
+}
+
+function buildPrompt(name, type, ambitions, metrics) {
+  var p = period === 'trimestre' ? 'ce trimestre (Q)' : 'cette ann\u00e9e';
+  var m = metrics ? '\nM\u00e9triques actuelles : ' + metrics : '';
+  var t = type ? ' (' + type + ')' : '';
+  return 'Tu es un expert en Product Management et strat\u00e9gie OKR. G\u00e9n\u00e8re des OKRs pour le produit suivant.\n\nProduit : "' + name + '"' + t + '\nP\u00e9riode : ' + p + '\nNombre d\'objectifs souhait\u00e9 : ' + nbObjectives + '\nAmbitions : ' + ambitions + m + '\n\nR\u00e8gles importantes :\n- Chaque Objective doit \u00eatre qualitatif, inspirant et m\u00e9morable (pas de chiffres dans l\'objectif)\n- Chaque Key Result doit \u00eatre mesurable, avec une valeur cible pr\u00e9cise et r\u00e9aliste\n- 3 Key Results par objectif\n- Varie les types : metric (KPI \u00e0 atteindre), milestone (\u00e9tape cl\u00e9 \u00e0 franchir), health (indicateur \u00e0 maintenir)\n- Ancre les KRs dans les m\u00e9triques fournies si disponibles\n\nR\u00e9ponds UNIQUEMENT avec un JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "okrs": [\n    {\n      "objective": "Faire de l\'onboarding un acc\u00e9l\u00e9rateur de valeur",\n      "key_results": [\n        {"text": "Augmenter le time-to-value de J14 \u00e0 J7 pour 70% des nouveaux clients", "type": "metric", "baseline": "Actuellement J14 pour 60% des clients"},\n        {"text": "Livrer le nouveau flow d\'onboarding interactif en production", "type": "milestone", "baseline": ""},\n        {"text": "Maintenir le NPS onboarding au-dessus de 40", "type": "health", "baseline": "NPS actuel : 28"}\n      ]\n    }\n  ],\n  "tips": [\n    "Conseil court et actionnable sur l\'utilisation de ces OKRs"\n  ]\n}\n\nG\u00e9n\u00e8re exactement ' + nbObjectives + ' objectif(s). Les tips doivent \u00eatre 3 conseils concrets sur comment utiliser ces OKRs en \u00e9quipe produit.';
+}
+
+async function callAI(prompt, maxTokens) {
+  var endpoint = provider === 'groq'
+    ? 'https://api.groq.com/openai/v1/chat/completions'
+    : 'https://api.openai.com/v1/chat/completions';
+  var model = provider === 'groq' ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+  var res = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model, temperature: 0.5, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
+  });
+  if (!res.ok) { var e = await res.json(); throw new Error(e.error?.message || 'Erreur API ' + res.status); }
+  var data = await res.json();
+  return data.choices[0].message.content;
+}
+
+function renderResults(d, name, type) {
+  var sub = nbObjectives + ' objectif' + (nbObjectives > 1 ? 's' : '') + ' \u00b7 ' + (period === 'trimestre' ? 'Trimestriel' : 'Annuel') + ' \u00b7 ' + name + (type ? ' (' + type + ')' : '');
+  document.getElementById('resultsSub').textContent = sub;
+
+  var okrHtml = '';
+  (d.okrs || []).forEach(function(okr, i) {
+    var krsHtml = (okr.key_results || []).map(function(kr, j) {
+      var typeCls = kr.type === 'metric' ? 'kr-metric' : kr.type === 'milestone' ? 'kr-milestone' : 'kr-health';
+      var typeLabel = kr.type === 'metric' ? 'M\u00e9trique' : kr.type === 'milestone' ? 'Milestone' : 'Sant\u00e9';
+      return '<div class="kr-item">' +
+        '<div class="kr-num">KR' + (j+1) + '</div>' +
+        '<div class="kr-body">' +
+          '<div class="kr-text">' + esc(kr.text) + '</div>' +
+          (kr.baseline ? '<div class="kr-baseline">Baseline : ' + esc(kr.baseline) + '</div>' : '') +
+        '</div>' +
+        '<span class="kr-type-badge ' + typeCls + '">' + typeLabel + '</span>' +
+        '</div>';
+    }).join('');
+
+    okrHtml += '<div class="okr-card">' +
+      '<div class="okr-header">' +
+        '<div class="okr-objective">' + esc(okr.objective) + '</div>' +
+        '<span class="okr-num">Objectif ' + (i+1) + '</span>' +
+      '</div>' +
+      '<div class="kr-list">' + krsHtml + '</div>' +
+      '</div>';
+  });
+  document.getElementById('okrList').innerHTML = okrHtml;
+
+  var tips = d.tips || [];
+  if (tips.length) {
+    var tipsHtml = tips.map(function(t) {
+      return '<div class="tip-item"><span class="tip-bullet">&#8227;</span>' + esc(t) + '</div>';
+    }).join('');
+    document.getElementById('tipsList').innerHTML = tipsHtml;
+    document.getElementById('tipsCard').style.display = 'block';
+  }
+
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function reset() {
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('tipsCard').style.display = 'none';
+  document.getElementById('productName').value = '';
+  document.getElementById('ambitions').value = '';
+  document.getElementById('metrics').value = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function showError(m) { var el = document.getElementById('errorBox'); el.textContent = m; el.classList.add('show'); }
+function hideError() { document.getElementById('errorBox').classList.remove('show'); }
+</script>
+</body>
+</html>
