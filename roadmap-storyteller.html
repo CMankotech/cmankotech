@@ -148,10 +148,23 @@ footer a:hover{text-decoration:underline}
   .form-grid{grid-template-columns:1fr}
   .feature-period{width:100px}
 }
+
+/* LANG TOGGLE */
+.lang-bar{display:flex;justify-content:flex-end;margin-bottom:1.5rem}
+.lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
+.lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.lang-btn.active{background:rgba(167,139,250,0.15);color:var(--accent)}
 </style>
 </head>
 <body>
 <div class="container">
+
+  <div class="lang-bar">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lbFr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" id="lbEn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
 
   <header>
     <div class="header-tag"><span class="dot"></span> Communication &amp; Alignement</div>
@@ -482,6 +495,71 @@ function reset() {
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function showError(m){var el=document.getElementById('errorBox');el.textContent=m;el.classList.add('show');}
 function hideError(){document.getElementById('errorBox').classList.remove('show');}
+
+// ---- i18n ----
+var LANG = {
+  fr: {
+    'title': 'Roadmap <span class="grad">Storyteller</span>',
+    'subtitle': 'Transforme tes features brutes en roadmap narrative claire et convaincante pour tes stakeholders.',
+    'btn.launch': '&#9654; Générer ma roadmap narrative',
+    'loading.text': 'Construction de ta roadmap en cours...',
+    'btn.reset': '&#8635; Recommencer',
+    'btn.save': 'Enregistrer',
+    'saved': '&#10003; Clé enregistrée.',
+    'note.groq': 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La clé reste dans ton navigateur.',
+    'note.openai': 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.',
+    'ph.productName': 'Ex : Kira, Notion, Doctolib...',
+    'ph.vision': 'Ex : Devenir la référence RH pour les PME en Europe'
+  },
+  en: {
+    'title': 'Roadmap <span class="grad">Storyteller</span>',
+    'subtitle': 'Transform your raw features into a clear and compelling narrative roadmap for your stakeholders.',
+    'btn.launch': '&#9654; Generate my narrative roadmap',
+    'loading.text': 'Building your roadmap...',
+    'btn.reset': '&#8635; Start over',
+    'btn.save': 'Save',
+    'saved': '&#10003; Key saved.',
+    'note.groq': 'Free at <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. Key stays in your browser.',
+    'note.openai': 'Account at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.',
+    'ph.productName': 'e.g. Kira, Notion, Doctolib...',
+    'ph.vision': 'e.g. Become the go-to HR tool for SMEs in Europe'
+  }
+};
+var currentLang = 'fr';
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('lbFr').classList.toggle('active', lang === 'fr');
+  document.getElementById('lbEn').classList.toggle('active', lang === 'en');
+  var T = LANG[lang];
+  if(T['title'] && document.querySelector('h1')) document.querySelector('h1').innerHTML = T['title'];
+  if(T['subtitle'] && document.querySelector('.subtitle')) document.querySelector('.subtitle').innerHTML = T['subtitle'];
+  var launchBtn = document.getElementById('launchBtn');
+  if(launchBtn && T['btn.launch']) launchBtn.innerHTML = T['btn.launch'];
+  var loadingTxt = document.querySelector('.loading-text');
+  if(loadingTxt && T['loading.text']) loadingTxt.innerHTML = T['loading.text'];
+  var saveBtns = document.querySelectorAll('.btn-save');
+  saveBtns.forEach(function(b) { if(T['btn.save']) b.textContent = T['btn.save']; });
+  var resetBtn = document.querySelector('.btn-reset');
+  if(resetBtn && T['btn.reset']) resetBtn.innerHTML = T['btn.reset'];
+  var savedMsg = document.getElementById('savedMsg');
+  if(savedMsg && T['saved']) savedMsg.innerHTML = T['saved'];
+  // Placeholders
+  Object.keys(T).forEach(function(k) {
+    if(k.startsWith('ph.')) {
+      var el = document.getElementById(k.slice(3));
+      if(el) el.placeholder = T[k];
+    }
+  });
+  // Provider note
+  if(typeof provider !== 'undefined') {
+    if(provider === 'groq' && T['note.groq']) document.getElementById('providerNote').innerHTML = T['note.groq'];
+    else if(provider === 'openai' && T['note.openai']) document.getElementById('providerNote').innerHTML = T['note.openai'];
+  }
+  if(typeof applyLangExtras === 'function') applyLangExtras(lang, T);
+}
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('lang') === 'en') setLang('en');
+})();
+
 </script>
-</body>
-</html>
