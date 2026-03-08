@@ -444,4 +444,9 @@ window.setLang=function(lang){
   setTimeout(function(){
     els.forEach(function(el){
       if(el.getBoundingClientRect().top<window.innerHeight+200)el.classList.add('on');
-    }
+    });
+    window.addEventListener('scroll',showAll,{passive:true});
+  }());
+</script>
+</body>
+</html>
