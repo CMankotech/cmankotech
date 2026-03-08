@@ -434,6 +434,25 @@ window.setLang=function(lang){
     if(T[lang]&&T[lang][k]!==undefined)el.innerHTML=T[lang][k];
   });
   document.documentElement.lang=lang;
+  // Update tool links with ?lang=en or remove it
+  document.querySelectorAll('.proj-link, .proj-card').forEach(function(el){
+    var href = el.getAttribute('href') || el.getAttribute('data-href');
+    if(!href && el.classList.contains('proj-card')){
+      var onclick = el.getAttribute('onclick')||'';
+      var m = onclick.match(/window\.open\('([^']+)'/);
+      if(m){
+        var base = m[1].split('?')[0];
+        var newUrl = lang==='en' ? base+'?lang=en' : base;
+        el.setAttribute('onclick', "window.open('"+newUrl+"','_blank')");
+      }
+    }
+    if(href){
+      var base = href.split('?')[0];
+      if(base.includes('.html')){
+        el.setAttribute('href', lang==='en' ? base+'?lang=en' : base);
+      }
+    }
+  });
 };
 
 // Active nav on scroll
