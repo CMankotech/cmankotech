@@ -1,209 +1,505 @@
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carlin MANKOTO | AI Product Manager</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030712; color: #f3f4f6; }
-        .glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .text-gradient { background: linear-gradient(135deg, #60a5fa 0%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .timeline-dot { box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
-        .hover-card:hover { transform: translateY(-5px); border-color: #60a5fa; transition: all 0.3s ease; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carlin Mankoto — AI Product Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#08080f;--muted:#64748b;--text:#e2e8f0;--dim:#94a3b8;--glass:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.07);--line:rgba(255,255,255,0.06)}
+html{font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+.glow{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
+.g1{width:600px;height:600px;top:-200px;left:-100px;background:rgba(59,130,246,0.08)}
+.g2{width:500px;height:500px;top:40%;right:-150px;background:rgba(167,139,250,0.07)}
+.g3{width:400px;height:400px;bottom:10%;left:20%;background:rgba(34,211,238,0.05)}
+.grad{background:linear-gradient(135deg,#60a5fa 0%,#a78bfa 50%,#22d3ee 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.grad-blue{background:linear-gradient(to right,#60a5fa,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 3rem;background:rgba(8,8,15,0.8);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem}
+.nav-right{display:flex;align-items:center;gap:1.5rem}
+.nav-links{display:flex;gap:2.5rem}
+.nav-links a{font-size:0.7rem;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);text-decoration:none;transition:color 0.25s;position:relative;padding-bottom:0.25rem}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:linear-gradient(to right,#60a5fa,#a78bfa);transform:scaleX(0);transform-origin:left;transition:transform 0.25s ease}
+.nav-links a:hover{color:var(--text)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-links a.active{color:var(--text)}
+.nav-links a.active::after{transform:scaleX(1)}
+.nav-cta{font-size:0.72rem;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;padding:0.6rem 1.4rem;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:white;text-decoration:none;border-radius:4px;transition:opacity 0.2s}
+.nav-cta:hover{opacity:0.85}
+
+/* LANG */
+.lang-switcher{display:flex;align-items:center;gap:0.25rem;background:var(--glass);border:1px solid var(--border);border-radius:99px;padding:0.2rem}
+.lang-btn{display:flex;align-items:center;gap:0.3rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;padding:0.3rem 0.65rem;border-radius:99px;border:none;cursor:pointer;background:transparent;color:var(--muted);transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.lang-btn .flag{font-size:0.95rem;line-height:1}
+.lang-btn.active{background:rgba(59,130,246,0.2);color:#93c5fd}
+.lang-btn:hover:not(.active){color:var(--text)}
+
+/* HERO */
+#hero{min-height:100vh;padding:10rem 3rem 6rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;border-bottom:1px solid var(--line);position:relative;z-index:1}
+.hero-tag{display:inline-flex;align-items:center;gap:0.6rem;font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:#60a5fa;margin-bottom:1.5rem}
+.dot{width:6px;height:6px;border-radius:50%;background:#22d3ee;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero-title{font-size:clamp(3.5rem,7vw,6rem);font-weight:800;line-height:0.95;letter-spacing:-0.04em;margin-bottom:2rem}
+.hero-meta{display:flex;flex-direction:column;gap:0.4rem;font-size:0.78rem;color:var(--muted)}
+.hero-intro{font-size:1rem;line-height:1.75;color:var(--dim);border-left:2px solid #3b82f6;padding-left:1.5rem;margin-bottom:2rem}
+.badges{display:flex;flex-wrap:wrap;gap:0.5rem}
+.badge{font-size:0.62rem;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;padding:0.35rem 0.9rem;border-radius:99px;border:1px solid;transition:all 0.2s}
+.badge:hover{transform:translateY(-1px)}
+.b1{background:rgba(34,211,238,0.10);border-color:rgba(34,211,238,0.3);color:#67e8f9}
+.b2{background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.35);color:#93c5fd}
+.b3{background:rgba(99,102,241,0.12);border-color:rgba(99,102,241,0.35);color:#a5b4fc}
+.b4{background:rgba(139,92,246,0.12);border-color:rgba(139,92,246,0.35);color:#c4b5fd}
+
+/* SECTIONS */
+section{border-bottom:1px solid var(--line);position:relative;z-index:1}
+.wrap{max-width:1200px;margin:0 auto;padding:5rem 3rem}
+.sec-label{display:flex;align-items:center;gap:1rem;font-size:0.62rem;font-weight:500;text-transform:uppercase;letter-spacing:0.2em;color:var(--muted);margin-bottom:4rem}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* EXPERIENCE */
+.exp{display:grid;grid-template-columns:160px 1fr 1fr;gap:2rem;padding:2.5rem 0;border-top:1px solid var(--line);transition:background 0.3s}
+.exp:hover{background:rgba(59,130,246,0.025)}
+.exp-date{font-size:0.7rem;font-weight:500;color:var(--muted);padding-top:0.2rem;line-height:1.6}
+.exp-co{font-size:1.05rem;font-weight:700;margin-bottom:0.2rem}
+.exp-role{font-size:0.75rem;font-weight:500;margin-bottom:0.85rem}
+.exp-desc{font-size:0.83rem;line-height:1.7;color:var(--dim)}
+.tags{display:flex;flex-wrap:wrap;gap:0.4rem;align-content:flex-start;padding-top:0.2rem}
+.tag{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.25rem 0.7rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#94a3b8;border-radius:2px}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
+.skill-block{padding:2.5rem;background:var(--bg);transition:background 0.3s}
+.skill-block:hover{background:rgba(59,130,246,0.03)}
+.skill-title{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem}
+.skill-list{font-size:0.83rem;line-height:2;color:var(--dim)}
+
+/* CERTS */
+.cert-groups{display:flex;flex-direction:column;gap:3rem}
+.cert-group-title{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem}
+.cert-group-title::after{content:'';flex:1;height:1px;background:var(--line)}
+.cg-agile{color:#60a5fa}.cg-product{color:#a78bfa}.cg-ai{color:#22d3ee}
+.cert-row{display:grid;gap:1rem}
+.cert-row-3{grid-template-columns:repeat(3,1fr)}
+.cert-row-4{grid-template-columns:repeat(4,1fr)}
+.cert-row-6{grid-template-columns:repeat(3,1fr)}
+.cert-card{padding:1.5rem;background:var(--glass);border:1px solid var(--border);border-radius:10px;transition:all 0.3s}
+.cert-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px -10px rgba(59,130,246,0.15)}
+.cert-card.ca{border-color:rgba(96,165,250,0.15)}.cert-card.cp{border-color:rgba(167,139,250,0.15)}.cert-card.ci{border-color:rgba(34,211,238,0.15)}
+.cert-provider{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:0.4rem}
+.cert-name{font-size:0.83rem;font-weight:600;line-height:1.35;color:var(--text)}
+
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.proj-card{padding:2rem;background:var(--glass);border:1px solid var(--border);border-radius:16px;transition:all 0.3s;display:flex;flex-direction:column;gap:1.25rem}
+.proj-card:hover{border-color:rgba(167,139,250,0.3);transform:translateY(-3px);box-shadow:0 16px 48px -12px rgba(167,139,250,0.15)}
+.proj-header{display:flex;flex-direction:column;gap:0.4rem;padding-bottom:1.25rem;border-bottom:1px solid var(--line)}
+.proj-type{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:#a78bfa}
+.proj-name{font-size:1.05rem;font-weight:700;line-height:1.2;color:var(--text)}
+.proj-blocks{display:flex;flex-direction:column;gap:0.85rem;flex:1}
+.proj-link{display:inline-block;margin-top:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--cyan,#22d3ee);text-decoration:none;transition:opacity 0.2s}
+.proj-link:hover{opacity:0.7}grid-template-columns:80px 1fr;gap:0.5rem;align-items:baseline}
+.proj-block-label{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;padding:0.2rem 0.5rem;border-radius:3px;text-align:center;line-height:1.6}
+.lbl-ctx{background:rgba(59,130,246,0.12);color:#93c5fd;border:1px solid rgba(59,130,246,0.2)}
+.lbl-pb{background:rgba(239,68,68,0.10);color:#fca5a5;border:1px solid rgba(239,68,68,0.2)}
+.lbl-ap{background:rgba(167,139,250,0.12);color:#c4b5fd;border:1px solid rgba(167,139,250,0.2)}
+.lbl-res{background:rgba(34,211,238,0.10);color:#67e8f9;border:1px solid rgba(34,211,238,0.2)}
+.proj-block-text{font-size:0.78rem;color:var(--dim);line-height:1.6}
+
+/* EDUCATION */
+.edu{display:grid;grid-template-columns:70px 1fr;gap:3rem;padding:2.5rem 0;border-top:1px solid var(--line)}
+.edu-year{font-size:1.4rem;font-weight:800;color:#1e293b;padding-top:0.1rem}
+.edu-school{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.4rem}
+.edu-degree{font-size:0.95rem;font-weight:700;margin-bottom:0.6rem;color:var(--text)}
+.edu-thesis{font-size:0.8rem;font-style:italic;color:var(--dim);line-height:1.55}
+.edu-thesis-label{font-style:normal;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);display:block;margin-bottom:0.25rem}
+
+/* FOOTER */
+.footer-wrap{max-width:1200px;margin:0 auto;padding:6rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:end;position:relative;z-index:1}
+.footer-hl{font-size:clamp(2.5rem,5vw,4rem);font-weight:800;line-height:1;letter-spacing:-0.03em}
+.footer-links{display:flex;flex-direction:column;align-items:flex-end;gap:1rem}
+.footer-link{font-size:0.78rem;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-link:hover{color:#60a5fa}
+.footer-copy{border-top:1px solid var(--line);padding:1.5rem 3rem;text-align:center;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;position:relative;z-index:1}
+
+/* REVEAL - visible par defaut, anime si JS */
+.rv{opacity:1;transform:none;transition:opacity 0.55s ease,transform 0.55s ease}
+.js-ready .rv{opacity:0;transform:translateY(16px)}
+.js-ready .rv.on{opacity:1;transform:translateY(0)}
+
+@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.a1{animation:up 0.7s ease 0.1s both}
+.a2{animation:up 0.7s ease 0.25s both}
+.a3{animation:up 0.7s ease 0.4s both}
+.a4{animation:up 0.7s ease 0.55s both}
+
+@media(max-width:900px){
+nav{padding:1rem 1.5rem}
+.nav-links{display:none}
+#hero{grid-template-columns:1fr;padding:8rem 1.5rem 3rem}
+.wrap{padding:3rem 1.5rem}
+.exp{grid-template-columns:1fr;gap:0.75rem}
+.skills-grid,.proj-grid{grid-template-columns:1fr}
+.cert-row-3,.cert-row-4,.cert-row-6{grid-template-columns:1fr 1fr}
+.footer-wrap{grid-template-columns:1fr}
+.footer-links{align-items:flex-start}
+}
+</style>
 </head>
-<body class="antialiased">
+<body>
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+<div class="glow g3"></div>
 
-    <nav class="fixed w-full z-50 p-6 flex justify-center">
-        <div class="max-w-5xl w-full glass rounded-2xl px-6 py-3 flex justify-between items-center">
-            <span class="font-extrabold text-xl tracking-tighter">CM<span class="text-blue-500">.</span></span>
-            <div class="hidden md:flex space-x-6 text-xs font-bold uppercase tracking-widest text-gray-400">
-                <a href="#exp" class="hover:text-white transition">Expériences</a>
-                <a href="#certs" class="hover:text-white transition">Certifications</a>
-                <a href="#edu" class="hover:text-white transition">Formation</a>
-            </div>
-            <a href="mailto:carlinmankoto@proton.me" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition">Contact</a>
+<nav>
+  <div class="nav-logo grad">CARLIN M.</div>
+  <div class="nav-links">
+    <a href="#experience" data-i18n="nav.exp">Parcours</a>
+    <a href="#skills" data-i18n="nav.skills">Comp&eacute;tences</a>
+    <a href="#certs" data-i18n="nav.certs">Certifications</a>
+    <a href="#education" data-i18n="nav.edu">Formation</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" id="btn-fr" onclick="window.setLang('fr')"><span class="flag">&#127467;&#127479;</span> FR</button>
+      <button class="lang-btn" id="btn-en" onclick="window.setLang('en')"><span class="flag">&#127468;&#127463;</span> EN</button>
+    </div>
+    <a href="/cdn-cgi/l/email-protection#2b484a59474245464a4540445f446b5b59445f444505464e" class="nav-cta" data-i18n="nav.cta">Me contacter &rarr;</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="a1">
+    <div class="hero-tag"><span class="dot"></span><span data-i18n="hero.tag">Disponible &middot; &Icirc;le-de-France &middot; CDI / Freelance</span></div>
+    <h1 class="hero-title">AI<br>Product<br><span class="grad">Manager</span></h1>
+    <div class="hero-meta a3">
+      <span>&#128205; Noisy-le-Grand (93)</span>
+      <span>&#128222; 06.18.40.42.14</span>
+      <span>&#9993; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="82e1e3f0eeebecefe3ece9edf6edc2f2f0edf6edecacefe7">[email&#160;protected]</a></span>
+    </div>
+  </div>
+  <div class="a2">
+    <p class="hero-intro" data-i18n="hero.intro">PM/PO avec 3 ans d'exp&eacute;rience dans des environnements exigeants (d&eacute;fense, assurance, conseil). Je couvre l'ensemble du spectre produit de la discovery strat&eacute;gique jusqu'&agrave; la livraison, avec une expertise marqu&eacute;e en IA g&eacute;n&eacute;rative, syst&egrave;mes multi-agents et vibe coding.</p>
+    <div class="badges a4">
+      <span class="badge b1">Agentic AI</span>
+      <span class="badge b1">SAFe POPM</span>
+      <span class="badge b2">PSPO I</span>
+      <span class="badge b2">Continuous Discovery</span>
+      <span class="badge b3">RAG &middot; LLM</span>
+      <span class="badge b3">Vibe Coding</span>
+      <span class="badge b4">CrewAI &middot; n8n</span>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-label"><span class="grad-blue" style="font-weight:700">01</span> <span data-i18n="nav.exp">Parcours</span></div>
+    <div class="exp rv">
+      <div class="exp-date" data-i18n="exp.oaio.date">Janv. 2026<br>- Pr&eacute;sent</div>
+      <div>
+        <div class="exp-co">OAIO &middot; Groupe Infotel</div>
+        <div class="exp-role grad-blue" data-i18n="exp.oaio.role">Product Manager &middot; CDI</div>
+        <p class="exp-desc" data-i18n="exp.oaio.desc">Pilotage de la strat&eacute;gie produit pour l'impl&eacute;mentation d'une plateforme LMS et d'outils IA pour 3 500+ collaborateurs. Benchmark de 17 solutions LMS et 44 outils IA avec scoring multicrit&egrave;res. Prototypage en vibe coding (Lovable + Claude Code) pour tester des hypoth&egrave;ses UX. Roadmap en 3 phases align&eacute;e aux objectifs business. Stakeholder management jusqu'&agrave; la direction.</p>
+      </div>
+      <div class="tags"><span class="tag">Lovable</span><span class="tag">Claude Code</span><span class="tag">ROI Analysis</span><span class="tag">LMS Benchmark</span><span class="tag">User Research</span><span class="tag">Roadmapping</span></div>
+    </div>
+    <div class="exp rv">
+      <div class="exp-date">Mai 2024<br>- D&eacute;c. 2025</div>
+      <div>
+        <div class="exp-co">Outlier AI &middot; Alignerr</div>
+        <div class="exp-role grad-blue" data-i18n="exp.outlier.role">AI Trainer / Data Annotator &middot; Freelance</div>
+        <p class="exp-desc" data-i18n="exp.outlier.desc">Entra&icirc;nement de mod&egrave;les d'IA g&eacute;n&eacute;rative via RLHF. Annotation de donn&eacute;es (images, textes, audios) pour cr&eacute;er des datasets structur&eacute;s. Contr&ocirc;le qualit&eacute; rigoureux et classification des donn&eacute;es.</p>
+      </div>
+      <div class="tags"><span class="tag">RLHF</span><span class="tag">Labelbox</span><span class="tag">SQL</span><span class="tag">Data Annotation</span></div>
+    </div>
+    <div class="exp rv">
+      <div class="exp-date">Oct. 2023<br>- D&eacute;c. 2024</div>
+      <div>
+        <div class="exp-co">AXA Group Operations</div>
+        <div class="exp-role grad-blue" data-i18n="exp.axa.role">AI Product Owner &middot; Alternance</div>
+        <p class="exp-desc" data-i18n="exp.axa.desc">Gestion du backlog SecureGPT (RAG interne) et Microsoft Copilot en environnement SAFe. Priorisation MoSCoW, r&eacute;daction d'user stories et animation des c&eacute;r&eacute;monies agiles. Automatisation via Power Automate et AI Builder. R&ocirc;le d'AI Evangelist et participation au LACE.</p>
+      </div>
+      <div class="tags"><span class="tag">RAG</span><span class="tag">SAFe</span><span class="tag">JIRA</span><span class="tag">Power Automate</span><span class="tag">AI Builder</span><span class="tag">Power BI</span></div>
+    </div>
+    <div class="exp rv">
+      <div class="exp-date">Sept. 2022<br>- Sept. 2023</div>
+      <div>
+        <div class="exp-co">Airbus Defence and Space</div>
+        <div class="exp-role grad-blue" data-i18n="exp.airbus.role">Product Owner &middot; Alternance</div>
+        <p class="exp-desc" data-i18n="exp.airbus.desc">Application mobile de messagerie s&eacute;curis&eacute;e mission critique pour les JO Paris 2024. Transition Waterfall vers SAFe, interop&eacute;rabilit&eacute; TETRA/Broadband. Animation des c&eacute;r&eacute;monies agiles et PI Planning.</p>
+      </div>
+      <div class="tags"><span class="tag">SAFe</span><span class="tag">Kubernetes</span><span class="tag">JIRA</span><span class="tag">Mission Critical</span><span class="tag">JO Paris 2024</span></div>
+    </div>
+    <div class="exp rv">
+      <div class="exp-date">Janv. 2022<br>- Juin 2022</div>
+      <div>
+        <div class="exp-co">Groupe Casino</div>
+        <div class="exp-role grad-blue" data-i18n="exp.casino.role">Charg&eacute; de Projet Change Management &middot; Stage</div>
+        <p class="exp-desc" data-i18n="exp.casino.desc">Accompagnement &agrave; la transformation agile et impl&eacute;mentation Scrum. D&eacute;finition de la strat&eacute;gie de conduite du changement, d&eacute;ploiement du plan de communication et suivi KPI.</p>
+      </div>
+      <div class="tags"><span class="tag">Change Management</span><span class="tag">Scrum</span><span class="tag">JIRA</span><span class="tag">Microsoft 365</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-label"><span class="grad-blue" style="font-weight:700">02</span> <span data-i18n="nav.skills">Comp&eacute;tences</span></div>
+    <div class="skills-grid rv">
+      <div class="skill-block">
+        <div class="skill-title grad-blue" data-i18n="skills.product">Product</div>
+        <div class="skill-list">Discovery &middot; Roadmapping &middot; Backlog<br>User Stories &middot; MoSCoW / RICE<br>User Research &middot; Stakeholder Mgmt<br>A/B Testing &middot; Go-to-Market<br>PLG &middot; Continuous Discovery<br>Outcome over Output</div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-title" style="background:linear-gradient(to right,#818cf8,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" data-i18n="skills.ai">IA &amp; Tech</div>
+        <div class="skill-list">LLM &middot; RAG &middot; Prompt Engineering<br>Agentic AI &middot; Multi-Agent Systems<br>RLHF &middot; CrewAI &middot; Flowise &middot; Dify<br>Vibe Coding (Claude Code, Lovable)<br>n8n &middot; Make &middot; Zapier &middot; Power Automate<br>SQL &middot; Python &middot; JS &middot; API REST</div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-title" style="background:linear-gradient(to right,#a78bfa,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" data-i18n="skills.agile">Agilit&eacute; &amp; Outils</div>
+        <div class="skill-list">SAFe &middot; Scrum &middot; PI Planning<br>JIRA &middot; Confluence &middot; Azure DevOps<br>Power Platform (BI, Automate, Apps)<br>Figma &middot; Miro &middot; Notion &middot; Klaxoon<br>Lean Six Sigma &middot; LACE<br>Kubernetes &middot; Labelbox</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certs">
+  <div class="wrap">
+    <div class="sec-label"><span class="grad-blue" style="font-weight:700">03</span> <span data-i18n="nav.certs">Certifications</span> <a href="https://www.credly.com/users/carlin-mankoto" target="_blank" style="color:#60a5fa;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;margin-left:0.5rem" data-i18n="certs.credly">V&eacute;rifier sur Credly &rarr;</a></div>
+    <div class="cert-groups">
+      <div class="rv">
+        <div class="cert-group-title cg-agile" data-i18n="certs.agile">Agilit&eacute;</div>
+        <div class="cert-row cert-row-3">
+          <div class="cert-card ca"><div class="cert-provider">Scrum.org</div><div class="cert-name">Professional Scrum Product Owner I (PSPO I)</div></div>
+          <div class="cert-card ca"><div class="cert-provider">Scaled Agile</div><div class="cert-name">SAFe 6 Product Owner / Product Manager (POPM)</div></div>
+          <div class="cert-card ca"><div class="cert-provider">Scaled Agile</div><div class="cert-name">SAFe 6 Scrum Master (SSM)</div></div>
         </div>
-    </nav>
-
-    <section class="pt-40 pb-20 px-6 max-w-6xl mx-auto">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-                <span class="text-blue-500 font-bold tracking-[0.2em] text-xs uppercase mb-4 block">Product Management & AI Architecture</span>
-                <h1 class="text-6xl md:text-7xl font-extrabold leading-tight mb-6">Carlin <br><span class="text-gradient">MANKOTO</span></h1>
-                <p class="text-lg text-gray-400 leading-relaxed mb-8">
-                    Inspiré par Marty Cagan [cite: 7], j'orchestre des produits IA de la discovery stratégique au déploiement opérationnel[cite: 6]. Expert en **Agentic AI** et **Continuous Discovery**[cite: 8, 56].
-                </p>
-                <div class="flex flex-wrap gap-3">
-                    <span class="glass px-3 py-1 rounded-full text-[10px] font-bold text-blue-300">#AI_ORCHESTRATION</span>
-                    <span class="glass px-3 py-1 rounded-full text-[10px] font-bold text-purple-300">#PRODUCT_DISCOVERY</span>
-                    <span class="glass px-3 py-1 rounded-full text-[10px] font-bold text-emerald-300">#AGILE_SAFE</span>
-                </div>
-            </div>
-            <div class="space-y-4">
-                <div class="glass p-6 rounded-3xl hover-card">
-                    <h4 class="text-sm font-bold text-blue-400 uppercase tracking-widest mb-2">Agentic AI Stack</h4>
-                    <p class="text-xs text-gray-400">CrewAI, n8n, Flowise, Claude Code, Lovable, RAG, RLHF[cite: 9, 56].</p>
-                </div>
-                <div class="glass p-6 rounded-3xl hover-card">
-                    <h4 class="text-sm font-bold text-purple-400 uppercase tracking-widest mb-2">Product Core</h4>
-                    <p class="text-xs text-gray-400">Outcome over Output, Backlog (MoSCoW/RICE), User Research[cite: 7, 56].</p>
-                </div>
-            </div>
+      </div>
+      <div class="rv">
+        <div class="cert-group-title cg-product" data-i18n="certs.product">Product Management</div>
+        <div class="cert-row cert-row-6">
+          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Discovery</div></div>
+          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Strategy</div></div>
+          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Roadmapping</div></div>
+          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Experimentation</div></div>
+          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Launches</div></div>
+          <div class="cert-card cp"><div class="cert-provider">Pendo.io</div><div class="cert-name">Product Management Basics</div></div>
         </div>
-    </section>
-
-    <section id="exp" class="py-20 px-6 max-w-5xl mx-auto">
-        <h2 class="text-3xl font-extrabold mb-12 flex items-center gap-4">Expériences <span class="h-[1px] w-20 bg-blue-500/30"></span></h2>
-        
-        <div class="space-y-12">
-            <div class="relative pl-8 border-l border-gray-800">
-                <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-blue-500 rounded-full timeline-dot"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-xl font-bold">Product Manager CDI</h3>
-                    <span class="text-[10px] font-bold text-gray-500 bg-white/5 px-2 py-1 rounded">JAN 2026 — PRÉSENT</span>
-                </div>
-                <p class="text-blue-400 font-semibold mb-3">OAIO (Groupe Infotel)</p>
-                <ul class="text-sm text-gray-400 space-y-2 mb-4">
-                    <li>• Benchmark de **44 outils IA** et **17 solutions LMS**[cite: 18].</li>
-                    <li>• Prototypage rapide via **Vibe Coding** (Claude Code/Lovable) pour validation UX[cite: 18].</li>
-                    <li>• Définition de la roadmap en 3 phases et analyse ROI[cite: 18].</li>
-                </ul>
-                <div class="flex gap-2 flex-wrap text-[9px] font-bold text-gray-500 uppercase">
-                    <span>#Lovable</span> <span>#ClaudeCode</span> <span>#Strategy</span>
-                </div>
-            </div>
-
-            <div class="relative pl-8 border-l border-gray-800">
-                <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-purple-500 rounded-full"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-xl font-bold">AI Trainer & Data Annotator</h3>
-                    <span class="text-[10px] font-bold text-gray-500 bg-white/5 px-2 py-1 rounded">2024 — 2025</span>
-                </div>
-                <p class="text-purple-400 font-semibold mb-3 italic text-sm">Outlier / Alignerr (Freelance)</p>
-                <p class="text-sm text-gray-400 leading-relaxed mb-4">
-                    Entraînement de modèles via **RLHF**. Création de datasets structurés et contrôle qualité rigoureux[cite: 22, 24].
-                </p>
-                <div class="flex gap-2 flex-wrap text-[9px] font-bold text-gray-500 uppercase">
-                    <span>#SQL</span> <span>#Labelbox</span> <span>#RLHF</span>
-                </div>
-            </div>
-
-            <div class="relative pl-8 border-l border-gray-800">
-                <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-gray-700 rounded-full"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-xl font-bold">AI Product Owner (Alternance)</h3>
-                    <span class="text-[10px] font-bold text-gray-500 bg-white/5 px-2 py-1 rounded">2023 — 2024</span>
-                </div>
-                <p class="text-blue-400 font-semibold mb-3 italic text-sm">AXA - SecureGPT & Copilot</p>
-                <ul class="text-sm text-gray-400 space-y-2 mb-4">
-                    <li>• Prioritisation MoSCoW du backlog SecureGPT et RAG[cite: 29, 36].</li>
-                    <li>• Automatisation via **Power Automate** & **AI Builder**.</li>
-                    <li>• Rôle d'AI Evangelist et animation des cérémonies agiles[cite: 33, 34].</li>
-                </ul>
-            </div>
-
-            <div class="relative pl-8 border-l border-gray-800">
-                <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-gray-700 rounded-full"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-xl font-bold">Product Owner (Alternance)</h3>
-                    <span class="text-[10px] font-bold text-gray-500 bg-white/5 px-2 py-1 rounded">2022 — 2023</span>
-                </div>
-                <p class="text-blue-400 font-semibold mb-3 italic text-sm">Airbus Defence and Space</p>
-                <ul class="text-sm text-gray-400 space-y-2 mb-4">
-                    <li>• Application messagerie pour les **JO Paris 2024**[cite: 38, 39].</li>
-                    <li>• Interopérabilité **TETRA/Broadband** et contribution au **DevOps**[cite: 41, 45].</li>
-                    <li>• Transition Waterfall vers SAFe[cite: 38].</li>
-                </ul>
-            </div>
-
-            <div class="relative pl-8 border-l border-gray-800">
-                <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-gray-800 rounded-full"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-xl font-bold text-gray-400">Chargé de Projet Change Management</h3>
-                    <span class="text-[10px] font-bold text-gray-500 bg-white/5 px-2 py-1 rounded">JAN — JUIN 2022</span>
-                </div>
-                <p class="text-gray-500 font-semibold mb-3 italic text-sm">Groupe Casino</p>
-                <p class="text-sm text-gray-500">Implémentation de Scrum et accompagnement à la transformation digitale.</p>
-            </div>
+      </div>
+      <div class="rv">
+        <div class="cert-group-title cg-ai" data-i18n="certs.ai">IA &amp; Divers</div>
+        <div class="cert-row cert-row-4">
+          <div class="cert-card ci"><div class="cert-provider">Product School</div><div class="cert-name">AI Certification for Product Managers</div></div>
+          <div class="cert-card ci"><div class="cert-provider">Pendo.io</div><div class="cert-name">AI for Product Management</div></div>
+          <div class="cert-card ci"><div class="cert-provider">University of Helsinki</div><div class="cert-name">Elements of AI</div></div>
+          <div class="cert-card ci"><div class="cert-provider">ORIIONS &middot; Crossthink</div><div class="cert-name" data-i18n="cert.oriions">Conduire un projet innovant &middot; Lean Six Sigma White Belt</div></div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="certs" class="py-20 px-6 bg-slate-900/40">
-        <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-3xl font-extrabold mb-4">Certifications Officielles</h2>
-            <p class="text-gray-500 text-sm mb-12 uppercase tracking-widest">15+ accréditations vérifiables sur Credly</p>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                <div class="glass p-4 rounded-2xl flex flex-col items-center justify-center">
-                    <i class="fas fa-certificate text-blue-500 mb-2"></i>
-                    <span class="text-[9px] font-bold uppercase">PSPO I</span>
-                </div>
-                <div class="glass p-4 rounded-2xl flex flex-col items-center justify-center">
-                    <i class="fas fa-shield-halved text-orange-500 mb-2"></i>
-                    <span class="text-[9px] font-bold uppercase">SAFe 6 POPM</span>
-                </div>
-                <div class="glass p-4 rounded-2xl flex flex-col items-center justify-center">
-                    <i class="fas fa-brain text-purple-500 mb-2"></i>
-                    <span class="text-[9px] font-bold uppercase">AI Certification</span>
-                </div>
-                <div class="glass p-4 rounded-2xl flex flex-col items-center justify-center">
-                    <i class="fas fa-search text-yellow-500 mb-2"></i>
-                    <span class="text-[9px] font-bold uppercase">Discovery</span>
-                </div>
-                <div class="glass p-4 rounded-2xl flex flex-col items-center justify-center">
-                    <i class="fas fa-map text-emerald-500 mb-2"></i>
-                    <span class="text-[9px] font-bold uppercase">Roadmapping</span>
-                </div>
-                <div class="glass p-4 rounded-2xl flex flex-col items-center justify-center">
-                    <i class="fas fa-vial text-red-500 mb-2"></i>
-                    <span class="text-[9px] font-bold uppercase">Experimentation</span>
-                </div>
-            </div>
-            <a href="https://www.credly.com/users/carlin-mankoto" target="_blank" class="inline-block mt-8 text-xs font-bold text-blue-400 hover:underline">Voir mon profil Credly complet →</a>
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-label"><span class="grad-blue" style="font-weight:700">04</span> <span data-i18n="nav.projects">Projets &amp; Innovation</span></div>
+    <div class="proj-grid rv">
+
+      <div class="proj-card" style="border-color:rgba(34,211,238,0.2)">
+        <div class="proj-header">
+          <div class="proj-type" style="color:var(--cyan, #22d3ee)">Projet perso &middot; Agentic AI &middot; 2025</div>
+          <div class="proj-name">Discovery Assistant</div>
+          <a href="https://cmankotech.github.io/discovery-assistant" target="_blank" class="proj-link" data-i18n="proj.link">Voir le projet &rarr;</a>
         </div>
-    </section>
-
-    <section id="edu" class="py-20 px-6 max-w-5xl mx-auto">
-        <h2 class="text-3xl font-extrabold mb-12">Formation</h2>
-        <div class="space-y-8">
-            <div class="glass p-6 rounded-3xl">
-                <div class="flex justify-between items-start mb-4">
-                    <h3 class="text-lg font-bold">Master 2 Économie & Management de l'Innovation</h3>
-                    <span class="text-[10px] font-bold text-blue-500">2024</span>
-                </div>
-                <p class="text-sm text-gray-500 mb-4 italic">Université Paris-Saclay [cite: 60]</p>
-                <p class="text-xs text-gray-400 border-l border-blue-500/30 pl-4">
-                    **Mémoire :** "Les avantages de l'agilité sur la performance opérationnelle en environnement VUCA." [cite: 61]
-                </p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-4">
-                <div class="glass p-6 rounded-3xl">
-                    <p class="text-[10px] font-bold text-gray-500 uppercase mb-2">Master 1 • 2023</p>
-                    <h4 class="text-sm font-bold mb-2 uppercase">Stratégie & Change</h4>
-                    <p class="text-[10px] text-gray-500 italic">Mémoire sur les rapports de domination économique[cite: 69].</p>
-                </div>
-                <div class="glass p-6 rounded-3xl">
-                    <p class="text-[10px] font-bold text-gray-500 uppercase mb-2">Licence • 2022</p>
-                    <h4 class="text-sm font-bold mb-2 uppercase">Science Politique</h4>
-                    <p class="text-[10px] text-gray-500 italic">Mémoire sur la régulation des données personnelles[cite: 72].</p>
-                </div>
-            </div>
+        <div class="proj-blocks">
+          <div class="proj-block">
+            <span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span>
+            <span class="proj-block-text" data-i18n="proj.da.ctx">Outil IA con&ccedil;u et d&eacute;velopp&eacute; en vibe coding pour acc&eacute;l&eacute;rer la phase de discovery produit.</span>
+          </div>
+          <div class="proj-block">
+            <span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span>
+            <span class="proj-block-text" data-i18n="proj.da.pb">Un PM en d&eacute;but de discovery part souvent sans structure : hypoth&egrave;ses floues, questions d&rsquo;interview non pr&eacute;par&eacute;es, pas de plan de test clair.</span>
+          </div>
+          <div class="proj-block">
+            <span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span>
+            <span class="proj-block-text" data-i18n="proj.da.ap">Application web autonome (HTML/JS + API Groq). L&rsquo;utilisateur d&eacute;crit son probl&egrave;me, l&rsquo;outil g&eacute;n&egrave;re 3 hypoth&egrave;ses, 5 questions d&rsquo;interview et un plan de test structur&eacute;.</span>
+          </div>
+          <div class="proj-block">
+            <span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span>
+            <span class="proj-block-text" data-i18n="proj.da.res">Outil live et accessible publiquement, con&ccedil;u de z&eacute;ro en moins d&rsquo;une journ&eacute;e. Illustre la capacit&eacute; \u00e0 shipper rapidement des outils IA utiles.</span>
+          </div>
         </div>
-    </section>
-
-    <footer class="py-20 border-t border-white/5 text-center px-6">
-        <h2 class="text-2xl font-bold mb-4">Prêt à hacker le futur ?</h2>
-        <p class="text-gray-500 text-sm mb-8">06.18.40.42.14 • carlinmankoto@proton.me [cite: 3, 4]</p>
-        <div class="flex justify-center gap-6 mb-12">
-            <a href="https://linkedin.com/in/carlinmankoto" target="_blank" class="text-2xl text-gray-500 hover:text-white transition"><i class="fab fa-linkedin"></i></a>
-            <a href="mailto:carlinmankoto@proton.me" class="text-2xl text-gray-500 hover:text-white transition"><i class="fas fa-envelope"></i></a>
+      </div>
+        <div class="proj-header">
+          <div class="proj-type">Consulting &middot; BNP Paribas &middot; 2023</div>
+          <div class="proj-name">Design Sprint - Sustainable Innovation</div>
         </div>
-        <p class="text-[9px] text-gray-700 tracking-[0.3em] uppercase">Built with Vibe Coding | © 2026 Carlin Mankoto</p>
-    </footer>
+        <div class="proj-blocks">
+          <div class="proj-block">
+            <span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span>
+            <span class="proj-block-text" data-i18n="proj.bnp.ctx">Mission consulting en Master 2. BNP Paribas cherchait des pistes d&rsquo;innovation durable pour l&rsquo;un de ses m&eacute;tiers.</span>
+          </div>
+          <div class="proj-block">
+            <span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span>
+            <span class="proj-block-text" data-i18n="proj.bnp.pb">G&eacute;n&eacute;rer des id&eacute;es actionnables en 5 jours avec des parties prenantes aux profils tr&egrave;s h&eacute;t&eacute;rog&egrave;nes.</span>
+          </div>
+          <div class="proj-block">
+            <span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span>
+            <span class="proj-block-text" data-i18n="proj.bnp.ap">Facilitation d&rsquo;un Design Sprint complet : cadrage, id&eacute;ation, prototypage rapide et test utilisateur. Animation des ateliers et synth&egrave;se des insights.</span>
+          </div>
+          <div class="proj-block">
+            <span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span>
+            <span class="proj-block-text" data-i18n="proj.bnp.res">3 concepts pr&eacute;sent&eacute;s &agrave; l&rsquo;&eacute;quipe BNP avec une recommandation argum&eacute;nt&eacute;e sur le concept &agrave; prototyper en priorit&eacute;.</span>
+          </div>
+        </div>
+      </div>
 
-</body>
-</html>
+      <div class="proj-card">
+        <div class="proj-header">
+          <div class="proj-type">E-Commerce &middot; IA &middot; Master 2 &middot; 2024</div>
+          <div class="proj-name">Shopify + Chatbot IA</div>
+        </div>
+        <div class="proj-blocks">
+          <div class="proj-block">
+            <span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span>
+            <span class="proj-block-text" data-i18n="proj.shopify.ctx">Projet de fin de Master 2 en &eacute;quipe - construire un produit e-commerce fonctionnel de A &agrave; Z.</span>
+          </div>
+          <div class="proj-block">
+            <span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span>
+            <span class="proj-block-text" data-i18n="proj.shopify.pb">R&eacute;duire le taux d&rsquo;abandon en aidant les visiteurs &agrave; trouver le bon produit sans intervention humaine.</span>
+          </div>
+          <div class="proj-block">
+            <span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span>
+            <span class="proj-block-text" data-i18n="proj.shopify.ap">R&ocirc;le de PO sur le backlog + d&eacute;veloppeur sur l&rsquo;int&eacute;gration du chatbot (Node.js, API, JS). User stories, priorisation et sprints iteacute;ratifs.</span>
+          </div>
+          <div class="proj-block">
+            <span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span>
+            <span class="proj-block-text" data-i18n="proj.shopify.res">Site livr&eacute; avec chatbot fonctionnel capable de r&eacute;pondre aux questions produit et de rediriger vers les fiches concern&eacute;es.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-header">
+          <div class="proj-type">Low-Code &middot; Power Platform &middot; 2024</div>
+          <div class="proj-name">App G&eacute;olocalisation PowerApps</div>
+        </div>
+        <div class="proj-blocks">
+          <div class="proj-block">
+            <span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span>
+            <span class="proj-block-text" data-i18n="proj.geo.ctx">Projet pratique du Master 2 pour explorer le d&eacute;veloppement low-code sur Microsoft Power Platform.</span>
+          </div>
+          <div class="proj-block">
+            <span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span>
+            <span class="proj-block-text" data-i18n="proj.geo.pb">Les &eacute;quipes terrain n&rsquo;avaient pas d&rsquo;outil simple pour signaler leur position et l&rsquo;&eacute;tat des interventions en temps r&eacute;el.</span>
+          </div>
+          <div class="proj-block">
+            <span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span>
+            <span class="proj-block-text" data-i18n="proj.geo.ap">Conception UX, mod&eacute;lisation des donn&eacute;es et d&eacute;veloppement complet sur PowerApps, connect&eacute; &agrave; SharePoint comme base de donn&eacute;es.</span>
+          </div>
+          <div class="proj-block">
+            <span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span>
+            <span class="proj-block-text" data-i18n="proj.geo.res">Application mobile fonctionnelle livr&eacute;e, test&eacute;e et document&eacute;e - d&eacute;montrant la capacit&eacute; &agrave; produire un outil op&eacute;rationnel sans code traditionnel.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-label"><span class="grad-blue" style="font-weight:700">05</span> <span data-i18n="nav.edu">Formation</span></div>
+
+    <div class="edu rv">
+      <div class="edu-year">2025</div>
+      <div>
+        <div class="edu-school">Crossthink &middot; ORIIONS</div>
+        <div class="edu-degree" data-i18n="edu.bootcamp.degree">Bootcamp Product Owner / Product Manager</div>
+        <div class="edu-thesis"><span class="edu-thesis-label" data-i18n="edu.lbl.cert">Certification obtenue</span> &laquo;&nbsp;Conduire et piloter un projet innovant avec des m&eacute;thodes agiles&nbsp;&raquo;</div>
+      </div>
+    </div>
+
+    <div class="edu rv">
+      <div class="edu-year">2024</div>
+      <div>
+        <div class="edu-school">Universit&eacute; Paris-Saclay</div>
+        <div class="edu-degree" data-i18n="edu.m2.degree">Master 2 - &Eacute;conomie et Management de l'Innovation Digitale</div>
+        <div class="edu-thesis"><span class="edu-thesis-label" data-i18n="edu.lbl.thesis">M&eacute;moire de fin d'&eacute;tudes</span> &laquo;&nbsp;Du hardware au software, du Waterfall au SAFe : Les avantages de l'agilit&eacute; sur la performance op&eacute;rationnelle en environnement VUCA.&nbsp;&raquo;</div>
+      </div>
+    </div>
+
+    <div class="edu rv">
+      <div class="edu-year">2023</div>
+      <div>
+        <div class="edu-school">Universit&eacute; Paris-Saclay</div>
+        <div class="edu-degree" data-i18n="edu.m1.degree">Master 1 - Management Strat&eacute;gique et Conduite du Changement</div>
+        <div class="edu-thesis"><span class="edu-thesis-label" data-i18n="edu.lbl.thesis">M&eacute;moire de fin d'&eacute;tudes</span> &laquo;&nbsp;L'accompagnement au changement sous le prisme des rapports de domination &eacute;conomique.&nbsp;&raquo;</div>
+      </div>
+    </div>
+
+    <div class="edu rv">
+      <div class="edu-year">2022</div>
+      <div>
+        <div class="edu-school">Universit&eacute; Paris VIII</div>
+        <div class="edu-degree" data-i18n="edu.licence.degree">Licence Science Politique - Sp&eacute;cialisation &Eacute;conomie Num&eacute;rique</div>
+        <div class="edu-thesis"><span class="edu-thesis-label" data-i18n="edu.lbl.thesis">M&eacute;moire de fin d'&eacute;tudes</span> &laquo;&nbsp;Manipulations et influence : Histoire et enjeux de la r&eacute;gulation des donn&eacute;es personnelles.&nbsp;&raquo;</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div style="border-top:1px solid var(--line);position:relative;z-index:1">
+  <div class="footer-wrap">
+    <div class="footer-hl"><span data-i18n="footer.hl">On construit<br></span><span class="grad" data-i18n="footer.hl2">quelque chose ?</span></div>
+    <div class="footer-links">
+      <a href="/cdn-cgi/l/email-protection#64070516080d0a09050a0f0b100b2414160b100b0a4a0901" class="footer-link">&#9993; <span class="__cf_email__" data-cfemail="ef8c8e9d838681828e8184809b80af9f9d809b8081c1828a">[email&#160;protected]</span></a>
+      <a href="https://linkedin.com/in/carlinmankoto" target="_blank" class="footer-link">&#8599; LinkedIn</a>
+      <a href="https://www.credly.com/users/carlin-mankoto" target="_blank" class="footer-link">&#8599; Credly</a>
+      <div style="font-size:0.72rem;color:var(--muted);margin-top:0.25rem">06.18.40.42.14 &middot; Noisy-le-Grand (93)</div>
+    </div>
+  </div>
+  <div class="footer-copy">&copy; 2026 Carlin Mankoto - AI Product Manager</div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var T={fr:{'nav.exp':'Parcours','nav.skills':'Comp\u00e9tences','nav.certs':'Certifications','nav.edu':'Formation','nav.cta':'Me contacter \u2192','nav.projects':'Projets & Innovation','hero.tag':'Disponible \u00b7 \u00cele-de-France \u00b7 CDI / Freelance','lbl.ctx':'Contexte','lbl.pb':'Probl\u00e8me','lbl.ap':'Approche','lbl.res':'R\u00e9sultat','proj.bnp.ctx':"Mission consulting en Master 2. BNP Paribas cherchait des pistes d\u2019innovation durable pour l\u2019un de ses m\u00e9tiers.",'proj.bnp.pb':"G\u00e9n\u00e9rer des id\u00e9es actionnables en 5 jours avec des parties prenantes aux profils tr\u00e8s h\u00e9t\u00e9rog\u00e8nes.",'proj.bnp.ap':"Facilitation d\u2019un Design Sprint complet : cadrage, id\u00e9ation, prototypage rapide et test utilisateur. Animation des ateliers et synth\u00e8se des insights.",'proj.bnp.res':"3 concepts pr\u00e9sent\u00e9s \u00e0 l\u2019\u00e9quipe BNP avec une recommandation argument\u00e9e sur le concept \u00e0 prototyper en priorit\u00e9.",'proj.shopify.ctx':"Projet de fin de Master 2 en \u00e9quipe \- construire un produit e-commerce fonctionnel de A \u00e0 Z.",'proj.shopify.pb':"R\u00e9duire le taux d\u2019abandon en aidant les visiteurs \u00e0 trouver le bon produit sans intervention humaine.",'proj.shopify.ap':"R\u00f4le de PO sur le backlog + d\u00e9veloppeur sur l\u2019int\u00e9gration du chatbot (Node.js, API, JS). User stories, priorisation et sprints it\u00e9ratifs.",'proj.shopify.res':"Site livr\u00e9 avec chatbot fonctionnel capable de r\u00e9pondre aux questions produit et de rediriger vers les fiches concern\u00e9es.",'proj.geo.ctx':"Projet pratique du Master 2 pour explorer le d\u00e9veloppement low-code sur Microsoft Power Platform.",'proj.geo.pb':"Les \u00e9quipes terrain n\u2019avaient pas d\u2019outil simple pour signaler leur position et l\u2019\u00e9tat des interventions en temps r\u00e9el.",'proj.geo.ap':"Conception UX, mod\u00e9lisation des donn\u00e9es et d\u00e9veloppement complet sur PowerApps, connect\u00e9 \u00e0 SharePoint comme base de donn\u00e9es.",'proj.geo.res':"Application mobile fonctionnelle livr\u00e9e, test\u00e9e et document\u00e9e \- d\u00e9montrant la capacit\u00e9 \u00e0 produire un outil op\u00e9rationnel sans code traditionnel.",'hero.intro':"PM/PO avec 3 ans d\u2019exp\u00e9rience dans des environnements exigeants (d\u00e9fense, assurance, conseil). Je couvre l\u2019ensemble du spectre produit de la discovery strat\u00e9gique jusqu\u2019\u00e0 la livraison, avec une expertise marqu\u00e9e en IA g\u00e9n\u00e9rative, syst\u00e8mes multi-agents et vibe coding.",'exp.oaio.date':'Janv. 2026<br>\- Pr\u00e9sent','exp.oaio.role':'Product Manager \u00b7 CDI','exp.oaio.desc':"Pilotage de la strat\u00e9gie produit pour l\u2019impl\u00e9mentation d\u2019une plateforme LMS et d\u2019outils IA pour 3\u00a0500+ collaborateurs. Benchmark de 17 solutions LMS et 44 outils IA avec scoring multicrit\u00e8res. Prototypage en vibe coding (Lovable + Claude Code) pour tester des hypoth\u00e8ses UX. Roadmap en 3 phases align\u00e9e aux objectifs business. Stakeholder management jusqu\u2019\u00e0 la direction.",'exp.outlier.role':'AI Trainer / Data Annotator \u00b7 Freelance','exp.outlier.desc':"Entra\u00eenement de mod\u00e8les d\u2019IA g\u00e9n\u00e9rative via RLHF. Annotation de donn\u00e9es (images, textes, audios) pour cr\u00e9er des datasets structur\u00e9s. Contr\u00f4le qualit\u00e9 rigoureux et classification des donn\u00e9es.",'exp.axa.role':'AI Product Owner \u00b7 Alternance','exp.axa.desc':"Gestion du backlog SecureGPT (RAG interne) et Microsoft Copilot en environnement SAFe. Priorisation MoSCoW, r\u00e9daction d\u2019user stories et animation des c\u00e9r\u00e9monies agiles. Automatisation via Power Automate et AI Builder. R\u00f4le d\u2019AI Evangelist et participation au LACE.",'exp.airbus.role':'Product Owner \u00b7 Alternance','exp.airbus.desc':"Application mobile de messagerie s\u00e9curis\u00e9e mission critique pour les JO Paris 2024. Transition Waterfall vers SAFe, interop\u00e9rabilit\u00e9 TETRA/Broadband. Animation des c\u00e9r\u00e9monies agiles et PI Planning.",'exp.casino.role':'Charg\u00e9 de Projet Change Management \u00b7 Stage','exp.casino.desc':"Accompagnement \u00e0 la transformation agile et impl\u00e9mentation Scrum. D\u00e9finition de la strat\u00e9gie de conduite du changement, d\u00e9ploiement du plan de communication et suivi KPI.",'skills.product':'Product','skills.ai':'IA & Tech','skills.agile':'Agilit\u00e9 & Outils','certs.credly':'V\u00e9rifier sur Credly \u2192','certs.agile':'Agilit\u00e9','certs.product':'Product Management','certs.ai':'IA & Divers','cert.oriions':'Conduire un projet innovant \u00b7 Lean Six Sigma White Belt','proj.bnp.name':'Design Sprint \- Sustainable Innovation','proj.bnp.desc':"Co-construction de solutions \u00e0 impact dans le cadre d\u2019un Design Sprint anim\u00e9 chez BNP Paribas.",'proj.shopify.desc':"Product Owner et d\u00e9veloppeur sur un site e-commerce Shopify avec chatbot IA int\u00e9gr\u00e9 (JavaScript, Node.js, CSS, HTML, API).",'proj.geo.name':'App G\u00e9olocalisation PowerApps','proj.geo.desc':"Application mobile de g\u00e9olocalisation pour la maintenance terrain, d\u00e9velopp\u00e9e sur Microsoft Power Platform.",'edu.bootcamp.degree':'Bootcamp Product Owner / Product Manager','edu.lbl.cert':'Certification obtenue','edu.lbl.thesis':"M\u00e9moire de fin d'\u00e9tudes",'edu.bootcamp.thesis':'\u00ab\u00a0Conduire et piloter un projet innovant avec des m\u00e9thodes agiles\u00a0\u00bb.','edu.m2.degree':"Master 2 \- \u00c9conomie et Management de l\u2019Innovation Digitale",'edu.m2.thesis':"\u00ab\u00a0Du hardware au software, du Waterfall au SAFe\u00a0: Les avantages de l\u2019agilit\u00e9 sur la performance op\u00e9rationnelle en environnement VUCA.\u00a0\u00bb",'edu.m1.degree':'Master 1 \- Management Strat\u00e9gique et Conduite du Changement','edu.m1.thesis':"\u00ab\u00a0L\u2019accompagnement au changement sous le prisme des rapports de domination \u00e9conomique.\u00a0\u00bb",'edu.licence.degree':'Licence Science Politique \- Sp\u00e9cialisation \u00c9conomie Num\u00e9rique','edu.licence.thesis':"\u00ab\u00a0Manipulations et influence\u00a0: Histoire et enjeux de la r\u00e9gulation des donn\u00e9es personnelles.\u00a0\u00bb",'footer.hl':'On construit<br>','footer.hl2':'quelque chose ?'},en:{'nav.exp':'Experience','nav.skills':'Skills','nav.certs':'Certifications','nav.edu':'Education','nav.cta':'Contact me \u2192','nav.projects':'Projects & Innovation','lbl.ctx':'Context','lbl.pb':'Problem','lbl.ap':'Approach','lbl.res':'Result','hero.tag':'Available \u00b7 \u00cele-de-France \u00b7 Full-time / Freelance','proj.bnp.ctx':"Consulting assignment during Master 2. BNP Paribas was looking for sustainable innovation opportunities in one of its business lines.",'proj.bnp.pb':"Generate actionable ideas in 5 days with a highly diverse group of stakeholders.",'proj.bnp.ap':"Facilitated a full Design Sprint: problem framing, ideation, rapid prototyping and user testing. Led workshops and synthesised insights.",'proj.bnp.res':"3 concepts delivered to the BNP team with a prioritised recommendation on which to prototype first.",'proj.shopify.ctx':"End-of-Master-2 team project \- build a fully functional e-commerce product from scratch.",'proj.shopify.pb':"Reduce cart abandonment by helping visitors find the right product without human support.",'proj.shopify.ap':"PO role on the backlog + developer for chatbot integration (Node.js, API, JS). User stories, prioritisation and iterative sprints.",'proj.shopify.res':"Delivered site with a working chatbot able to answer product questions and redirect to relevant pages.",'proj.geo.ctx':"Practical Master 2 project to explore low-code development on Microsoft Power Platform.",'proj.geo.pb':"Field maintenance teams had no simple tool to report their location and intervention status in real time.",'proj.geo.ap':"UX design, data modelling and full app development in PowerApps, connected to SharePoint as a database.",'proj.geo.res':"Functional mobile app delivered, tested and documented \- proving the ability to ship an operational tool without traditional code.",'hero.intro':"PM/PO with 3 years of experience in demanding environments (defence, insurance, consulting). I cover the full product spectrum from strategic discovery to delivery, with strong expertise in generative AI, multi-agent systems and vibe coding.",'exp.oaio.date':'Jan. 2026<br>\- Present','exp.oaio.role':'Product Manager \u00b7 Full-time','exp.oaio.desc':"Led product strategy for the implementation of an LMS platform and AI tools for 3,500+ employees. Benchmarked 17 LMS solutions and 44 AI tools with multi-criteria scoring. Prototyped an in-house platform via vibe coding (Lovable + Claude Code) to test UX hypotheses. Defined a 3-phase roadmap aligned with business goals. Stakeholder management up to executive level.",'exp.outlier.role':'AI Trainer / Data Annotator \u00b7 Freelance','exp.outlier.desc':"Training of generative AI models via RLHF. Data annotation (images, text, audio) to create structured datasets. Rigorous quality control and data classification to optimise model learning.",'exp.axa.role':'AI Product Owner \u00b7 Apprenticeship','exp.axa.desc':"Managed the SecureGPT backlog (internal RAG) and Microsoft Copilot in a SAFe environment. MoSCoW prioritisation, user story writing and agile ceremony facilitation. Process automation via Power Automate and AI Builder. AI Evangelist role and LACE participation.",'exp.airbus.role':'Product Owner \u00b7 Apprenticeship','exp.airbus.desc':"Mission-critical secure mobile messaging app for the Paris 2024 Olympic Games. Waterfall-to-SAFe transition, TETRA/Broadband interoperability. Agile ceremony facilitation and PI Planning.",'exp.casino.role':'Change Management Project Officer \u00b7 Internship','exp.casino.desc':"Support for agile transformation and Scrum implementation. Defined change management strategy, rolled out communication plan and tracked KPIs.",'skills.product':'Product','skills.ai':'AI & Tech','skills.agile':'Agility & Tools','certs.credly':'View on Credly \u2192','certs.agile':'Agility','certs.product':'Product Management','certs.ai':'AI & Other','cert.oriions':'Leading an Innovative Project \u00b7 Lean Six Sigma White Belt','proj.bnp.name':'Design Sprint \- Sustainable Innovation','proj.bnp.desc':"Co-designed impact-driven solutions during a Design Sprint hosted at BNP Paribas.",'proj.shopify.desc':"Product Owner and developer on a Shopify e-commerce site with integrated AI chatbot (JavaScript, Node.js, CSS, HTML, API).",'proj.geo.name':'Geolocation App \- PowerApps','proj.geo.desc':"Mobile geolocation app for field maintenance teams, built on Microsoft Power Platform.",'edu.bootcamp.degree':'Product Owner / Product Manager Bootcamp','edu.lbl.cert':'Certificate','edu.lbl.thesis':'Thesis','edu.bootcamp.thesis':'Certificate: \u201cLeading and managing an innovative project with agile methods\u201d.','edu.m2.degree':"Master's 2 \- Economics & Management of Digital Innovation",'edu.m2.thesis':'\u201cFrom hardware to software, from Waterfall to SAFe: The benefits of agility on operational performance in VUCA environments.\u201d','edu.m1.degree':"Master's 1 \- Strategic Management & Change Leadership",'edu.m1.thesis':'\u201cOrganisational and technological change management through the lens of economic power dynamics.\u201d','edu.licence.degree':"Bachelor's in Political Science \- Digital Economics",'edu.licence.thesis':'\u201cManipulation and influence: History and challenges of personal data regulation.\u201d','footer.hl':"Let's build<br>",'footer.hl2':'something together?'}};
+
+window.setLang=function(lang){
+  document.getElementById('btn-fr').classList.toggle('active',lang==='fr');
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[lang]&&T[lang][k]!==undefined)el.innerHTML=T[lang][k];
+  });
+  document.documentElement.lang=lang;
+};
+
+// Active nav on scroll
+(function(){
+  var ids=['hero','experience','skills','certs','projects','education'];
+  var links=document.querySelectorAll('.nav-links a');
+  function upd(){
+    var y=window.scrollY+130,cur='hero';
+    ids.forEach(function(id){var el=document.getElementById(id);if(el&&el.offsetTop<=y)cur=id;});
+    links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href').replace('#','')=== cur);});
+  }
+  window.addEventListener('scroll',upd,{passive:true});
+  upd();
+})();
+
+// Reveal
+(function(){
+  document.body.classList.add('js-ready');
+  var els=document.querySelectorAll('.rv');
+  function showAll(){els.forEach(function(el){el.classList.add('on');});}
+  // Show immediately anything in viewport
+  setTimeout(function(){
+    els.forEach(function(el){
+      if(el.getBoundingClientRect().top<window.innerHeight+200)el.classList.add('on');
+    }
