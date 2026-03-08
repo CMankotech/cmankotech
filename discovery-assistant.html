@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discovery Assistant — by Carlin Mankoto</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070e;--surface:#0e0e1a;--glass:rgba(255,255,255,0.03);
+  --border:rgba(255,255,255,0.08);--text:#e2e8f0;--dim:#94a3b8;--muted:#475569;
+  --blue:#60a5fa;--violet:#a78bfa;--cyan:#22d3ee;--red:#f87171;
+  --grad:linear-gradient(135deg,#60a5fa,#a78bfa,#22d3ee);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
+h1,h2,h3{font-family:'Syne',sans-serif}
+
+/* GLOWS */
+.glow{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;opacity:0.6}
+.g1{width:500px;height:500px;top:-150px;left:-100px;background:rgba(59,130,246,0.1)}
+.g2{width:400px;height:400px;bottom:5%;right:-100px;background:rgba(167,139,250,0.08)}
+
+/* LAYOUT */
+.container{max-width:800px;margin:0 auto;padding:3rem 1.5rem;position:relative;z-index:1}
+
+/* HEADER */
+header{text-align:center;margin-bottom:3.5rem}
+.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--blue);margin-bottom:1.25rem;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.2);padding:0.4rem 1rem;border-radius:99px}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-0.03em;line-height:1;margin-bottom:0.75rem}
+.grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{font-size:0.9rem;color:var(--dim);max-width:480px;margin:0 auto;line-height:1.65}
+
+/* API KEY SETUP */
+.setup-card{background:var(--surface);border:1px solid rgba(96,165,250,0.2);border-radius:14px;padding:1.5rem;margin-bottom:2.5rem}
+.setup-label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--blue);margin-bottom:0.6rem;display:block}
+.setup-row{display:flex;gap:0.75rem}
+.setup-row input{flex:1;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;outline:none;transition:border-color 0.2s}
+.setup-row input:focus{border-color:rgba(96,165,250,0.4)}
+.setup-row input::placeholder{color:var(--muted)}
+.btn-save{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.65rem 1.25rem;background:rgba(96,165,250,0.15);border:1px solid rgba(96,165,250,0.3);color:var(--blue);border-radius:8px;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.btn-save:hover{background:rgba(96,165,250,0.25)}
+.setup-note{font-size:0.68rem;color:var(--muted);margin-top:0.6rem}
+.setup-note a{color:var(--blue);text-decoration:none}
+.setup-note a:hover{text-decoration:underline}
+.key-saved{display:none;font-size:0.7rem;color:#4ade80;align-items:center;gap:0.4rem;margin-top:0.5rem}
+.key-saved.show{display:flex}
+
+/* FORM */
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;margin-bottom:1.5rem}
+.field{margin-bottom:1.5rem}
+.field:last-child{margin-bottom:0}
+.field-label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--dim);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.5rem}
+.field-label .required{color:var(--violet);font-size:0.55rem}
+textarea,input[type=text]{width:100%;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:300;outline:none;transition:border-color 0.2s,box-shadow 0.2s;resize:none}
+textarea:focus,input[type=text]:focus{border-color:rgba(167,139,250,0.4);box-shadow:0 0 0 3px rgba(167,139,250,0.08)}
+textarea::placeholder,input[type=text]::placeholder{color:var(--muted)}
+textarea{min-height:100px;line-height:1.6}
+
+.options-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* SUBMIT */
+.btn-random{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:var(--violet);border-radius:6px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;white-space:nowrap}
+.btn-random:hover{background:rgba(167,139,250,0.2);border-color:rgba(167,139,250,0.4)}width:100%;padding:1rem;background:linear-gradient(135deg,#3b82f6,#8b5cf6);border:none;border-radius:10px;color:white;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden}
+.btn-launch:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 8px 30px -8px rgba(139,92,246,0.5)}
+.btn-launch:active{transform:translateY(0)}
+.btn-launch:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.btn-launch .btn-inner{display:flex;align-items:center;justify-content:center;gap:0.6rem}
+
+/* LOADING */
+.loading{display:none;text-align:center;padding:3rem 0}
+.loading.show{display:block}
+.spinner{width:36px;height:36px;border:2px solid var(--border);border-top-color:var(--violet);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:0.78rem;color:var(--muted)}
+.loading-steps{display:flex;flex-direction:column;gap:0.3rem;margin-top:0.75rem;font-size:0.7rem;color:var(--muted)}
+.loading-step{opacity:0;transition:opacity 0.4s}
+.loading-step.show{opacity:1}
+
+/* ERROR */
+.error-box{display:none;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.25);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.8rem;color:#fca5a5}
+.error-box.show{display:block}
+
+/* RESULTS */
+.results{display:none}
+.results.show{display:block}
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem}
+.results-title{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted)}
+.btn-reset{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.9rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.btn-reset:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+
+.result-block{margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.result-block-header{display:flex;align-items:center;gap:0.75rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border)}
+.result-block-num{font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:800;width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.num-hyp{background:rgba(96,165,250,0.15);color:var(--blue)}
+.num-int{background:rgba(167,139,250,0.15);color:var(--violet)}
+.num-plan{background:rgba(34,211,238,0.15);color:var(--cyan)}
+.result-block-title{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700}
+.result-block-body{padding:1.25rem}
+
+/* HYPOTHESIS ITEMS */
+.hyp-item{padding:0.9rem 1rem;background:rgba(96,165,250,0.04);border:1px solid rgba(96,165,250,0.1);border-radius:8px;margin-bottom:0.75rem;font-size:0.82rem;line-height:1.65;color:var(--dim)}
+.hyp-item:last-child{margin-bottom:0}
+.hyp-belief{color:var(--text);font-weight:400}
+.hyp-signal{color:var(--blue);font-size:0.75rem;margin-top:0.4rem;display:block}
+
+/* INTERVIEW QUESTIONS */
+.q-item{display:flex;gap:0.75rem;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:baseline}
+.q-item:last-child{border-bottom:none;padding-bottom:0}
+.q-num{font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:800;color:var(--violet);min-width:20px}
+.q-text{font-size:0.82rem;color:var(--dim);line-height:1.6}
+
+/* TEST PLAN */
+.plan-row{display:grid;grid-template-columns:120px 1fr;gap:0.5rem 1rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:start;font-size:0.82rem}
+.plan-row:last-child{border-bottom:none;padding-bottom:0}
+.plan-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--cyan);padding-top:0.15rem}
+.plan-value{color:var(--dim);line-height:1.6}
+
+/* FOOTER */
+footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.footer-by{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em}
+.footer-by a{color:var(--blue);text-decoration:none}
+.footer-by a:hover{text-decoration:underline}
+
+@media(max-width:600px){
+  .options-row{grid-template-columns:1fr}
+  .plan-row{grid-template-columns:1fr;gap:0.25rem}
+  .plan-label{padding-top:0}
+}
+</style>
+</head>
+<body>
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+
+<div class="container">
+
+  <header>
+    <div class="header-tag"><span class="dot"></span> Product Discovery</div>
+    <h1>Discovery<br><span class="grad">Assistant</span></h1>
+    <p class="subtitle">D&eacute;cris ton probl&egrave;me utilisateur. L&rsquo;outil structure ta discovery en hypoth&egrave;ses, questions d&rsquo;interview et plan de test.</p>
+  </header>
+
+  <!-- API KEY SETUP -->
+  <div class="setup-card" id="setupCard">
+    <span class="setup-label">&#128273; Cl&eacute; API Groq</span>
+    <div class="setup-row">
+      <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
+      <button class="btn-save" onclick="saveKey()">Enregistrer</button>
+    </div>
+    <p class="setup-note">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a> &rarr; API Keys &rarr; Create API Key. La cl&eacute; reste dans ton navigateur uniquement.</p>
+    <div class="key-saved" id="keySaved">&#10003; Cl&eacute; enregistr&eacute;e, tu peux lancer ta discovery.</div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-card" id="formCard">
+    <div class="field">
+      <label class="field-label" style="justify-content:space-between">
+        <span>Probl&egrave;me utilisateur <span class="required">&#9679; Requis</span></span>
+        <button class="btn-random" onclick="randomProblem()" type="button">&#127922; Exemple al&eacute;atoire</button>
+      </label>
+      <textarea id="problem" placeholder="Ex : Les managers de mon app RH ne savent pas quels collaborateurs sont en risque de d&eacute;sengagement avant que ce soit trop tard." rows="4"></textarea>
+    </div>
+    <div class="options-row">
+      <div class="field">
+        <label class="field-label">Cible utilisateur</label>
+        <input type="text" id="target" placeholder="Ex : Managers d'&eacute;quipe B2B, 30-45 ans">
+      </div>
+      <div class="field">
+        <label class="field-label">Contexte produit</label>
+        <input type="text" id="context" placeholder="Ex : SaaS RH, scale-up 50 employ&eacute;s">
+      </div>
+    </div>
+  </div>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <button class="btn-launch" id="launchBtn" onclick="launch()">
+    <span class="btn-inner">&#9654; Lancer la discovery</span>
+  </button>
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">Analyse en cours...</div>
+    <div class="loading-steps">
+      <div class="loading-step" id="step1">&#8250; Formulation des hypoth&egrave;ses...</div>
+      <div class="loading-step" id="step2">&#8250; G&eacute;n&eacute;ration des questions d&rsquo;interview...</div>
+      <div class="loading-step" id="step3">&#8250; Construction du plan de test...</div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+    <div class="results-header">
+      <span class="results-title">R&eacute;sultats de ta discovery</span>
+      <button class="btn-reset" onclick="reset()">&#8635; Nouvelle discovery</button>
+    </div>
+
+    <div class="result-block" id="blockHyp">
+      <div class="result-block-header">
+        <span class="result-block-num num-hyp">H</span>
+        <span class="result-block-title">Hypoth&egrave;ses &agrave; tester</span>
+      </div>
+      <div class="result-block-body" id="hypBody"></div>
+    </div>
+
+    <div class="result-block" id="blockInt">
+      <div class="result-block-header">
+        <span class="result-block-num num-int">I</span>
+        <span class="result-block-title">Questions d&rsquo;interview utilisateur</span>
+      </div>
+      <div class="result-block-body" id="intBody"></div>
+    </div>
+
+    <div class="result-block" id="blockPlan">
+      <div class="result-block-header">
+        <span class="result-block-num num-plan">T</span>
+        <span class="result-block-title">Plan de test recommand&eacute;</span>
+      </div>
+      <div class="result-block-body" id="planBody"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p class="footer-by">Construit par <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager</p>
+  </footer>
+
+</div>
+
+<script>
+var EXAMPLES = [
+  { problem: "Les managers de mon app RH ne savent pas quels collaborateurs sont en risque de d\u00e9sengagement avant que ce soit trop tard.", target: "Managers d'\u00e9quipe B2B, 30-45 ans", context: "SaaS RH, scale-up 50 employ\u00e9s" },
+  { problem: "Les freelances perdent trop de temps \u00e0 relancer leurs clients pour le paiement de leurs factures.", target: "Freelances tech et cr\u00e9atifs, 25-40 ans", context: "App de facturation mobile, march\u00e9 fran\u00e7ais" },
+  { problem: "Les Product Managers n\u2019ont pas de moyen simple pour partager l\u2019\u00e9tat d\u2019avancement de la roadmap avec les \u00e9quipes m\u00e9tiers sans ouvrir JIRA.", target: "PMs et Product Owners en scale-up", context: "Outil de gestion produit B2B" },
+  { problem: "Les patients oublient de prendre leurs m\u00e9dicaments au bon moment, ce qui nuit \u00e0 l\u2019efficacit\u00e9 de leur traitement.", target: "Patients chroniques 50+, peu technophiles", context: "App sant\u00e9 mobile, partenariat pharmacies" },
+  { problem: "Les recruteurs passent trop de temps \u00e0 lire des CV non qualifi\u00e9s qui ne correspondent pas au poste.", target: "Recruteurs internes, PME et ETI", context: "Plateforme ATS SaaS" },
+  { problem: "Les \u00e9tudiants en master ne savent pas comment transformer leur m\u00e9moire en un projet portfolio visible par les recruteurs.", target: "\u00c9tudiants Bac+4/5, en recherche de stage ou d\u2019alternance", context: "Plateforme EdTech, march\u00e9 \u00e9tudiants" },
+  { problem: "Les commer\u00e7ants de proximit\u00e9 ne savent pas quels produits vont manquer en stock avant qu\u2019il soit trop tard pour commander.", target: "G\u00e9rants de petits commerces alimentaires", context: "App de gestion de stock mobile, B2B SMB" },
+  { problem: "Les nouveaux employ\u00e9s se sentent isol\u00e9s pendant leur onboarding et ne savent pas \u00e0 qui poser leurs questions.", target: "Nouveaux employ\u00e9s en remote ou hybride", context: "Outil RH interne, ETI + grandes entreprises" }
+];
+
+function randomProblem() {
+  var ex = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)];
+  document.getElementById('problem').value = ex.problem;
+  document.getElementById('target').value = ex.target || '';
+  document.getElementById('context').value = ex.context || '';
+  // Animate the textarea briefly
+  var ta = document.getElementById('problem');
+  ta.style.borderColor = 'rgba(167,139,250,0.5)';
+  setTimeout(function(){ ta.style.borderColor = ''; }, 800);
+}
+
+var apiKey = '';
+
+function saveKey() {
+  var v = document.getElementById('apiKeyInput').value.trim();
+  if (!v.startsWith('gsk_') || v.length < 20) {
+    showError('La cl\u00e9 doit commencer par "gsk_" et \u00eatre valide.');
+    return;
+  }
+  apiKey = v;
+  document.getElementById('keySaved').classList.add('show');
+  hideError();
+}
+
+function showError(msg) {
+  var el = document.getElementById('errorBox');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+function hideError() {
+  document.getElementById('errorBox').classList.remove('show');
+}
+
+async function launch() {
+  hideError();
+  var problem = document.getElementById('problem').value.trim();
+  var target = document.getElementById('target').value.trim();
+  var context = document.getElementById('context').value.trim();
+
+  if (!apiKey) { showError('Entre et enregistre ta cl\u00e9 API Groq avant de lancer.'); return; }
+  if (!problem) { showError('D\u00e9cris le probl\u00e8me utilisateur avant de continuer.'); return; }
+
+  // Show loading
+  document.getElementById('launchBtn').disabled = true;
+  document.getElementById('formCard').style.opacity = '0.4';
+  document.getElementById('loading').classList.add('show');
+  document.getElementById('results').classList.remove('show');
+
+  // Animate steps
+  var steps = ['step1','step2','step3'];
+  steps.forEach(function(s, i) {
+    setTimeout(function() {
+      document.getElementById(s).classList.add('show');
+    }, i * 900);
+  });
+
+  var prompt = buildPrompt(problem, target, context);
+
+  try {
+    var res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + apiKey,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        temperature: 0.7,
+        max_tokens: 2000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!res.ok) {
+      var err = await res.json();
+      throw new Error(err.error && err.error.message ? err.error.message : 'Erreur API Groq (' + res.status + ')');
+    }
+
+    var data = await res.json();
+    var text = data.choices[0].message.content;
+    var parsed = parseResponse(text);
+    renderResults(parsed);
+
+  } catch(e) {
+    showError('Erreur : ' + e.message);
+    document.getElementById('launchBtn').disabled = false;
+    document.getElementById('formCard').style.opacity = '1';
+  }
+
+  document.getElementById('loading').classList.remove('show');
+  steps.forEach(function(s) { document.getElementById(s).classList.remove('show'); });
+}
+
+function buildPrompt(problem, target, context) {
+  var ctx = '';
+  if (target) ctx += '\nCible utilisateur : ' + target;
+  if (context) ctx += '\nContexte produit : ' + context;
+
+  return 'Tu es un expert en Product Discovery (m\u00e9thode Teresa Torres / Continuous Discovery). Tu dois analyser un probl\u00e8me utilisateur et produire 3 livrables structur\u00e9s en fran\u00e7ais.\n\nProbl\u00e8me utilisateur : ' + problem + ctx + '\n\nR\u00e9ponds UNIQUEMENT avec un JSON valide, sans texte avant ou apr\u00e8s, avec exactement cette structure :\n{\n  "hypotheses": [\n    {\n      "belief": "Nous croyons que [assertion sp\u00e9cifique sur le comportement/besoin utilisateur]",\n      "signal": "Nous saurons que c\'est vrai si [m\u00e9trique ou signal observable concret]"\n    }\n  ],\n  "questions": [\n    "Question ouverte 1 ?",\n    "Question ouverte 2 ?",\n    "Question ouverte 3 ?",\n    "Question ouverte 4 ?",\n    "Question ouverte 5 ?"\n  ],\n  "plan": {\n    "methode": "Nom de la m\u00e9thode recommand\u00e9e (ex: entretiens utilisateurs, tests de concept, diary study)",\n    "participants": "Profil et nombre de participants recommand\u00e9s",\n    "duree": "Dur\u00e9e estim\u00e9e pour la phase de test",\n    "critere": "Crit\u00e8re de succ\u00e8s principal pour valider ou invalider",\n    "prochaine_etape": "Action concr\u00e8te imm\u00e9diate \u00e0 faire d\u00e8s demain"\n  }\n}\n\nG\u00e9n\u00e8re exactement 3 hypoth\u00e8ses et exactement 5 questions. Sois sp\u00e9cifique, actionnable et concis.';
+}
+
+function parseResponse(text) {
+  var clean = text.replace(/```json/gi,'').replace(/```/g,'').trim();
+  try {
+    return JSON.parse(clean);
+  } catch(e) {
+    var match = clean.match(/\{[\s\S]*\}/);
+    if (match) return JSON.parse(match[0]);
+    throw new Error('Impossible de parser la r\u00e9ponse. R\u00e9essaie.');
+  }
+}
+
+function renderResults(d) {
+  // Hypotheses
+  var hypHtml = '';
+  (d.hypotheses || []).forEach(function(h) {
+    hypHtml += '<div class="hyp-item"><span class="hyp-belief">' + esc(h.belief) + '</span><span class="hyp-signal">&#8594; ' + esc(h.signal) + '</span></div>';
+  });
+  document.getElementById('hypBody').innerHTML = hypHtml || '<p style="color:var(--muted);font-size:0.8rem">Aucune hypoth\u00e8se g\u00e9n\u00e9r\u00e9e.</p>';
+
+  // Questions
+  var qHtml = '';
+  (d.questions || []).forEach(function(q, i) {
+    qHtml += '<div class="q-item"><span class="q-num">0' + (i+1) + '</span><span class="q-text">' + esc(q) + '</span></div>';
+  });
+  document.getElementById('intBody').innerHTML = qHtml || '<p style="color:var(--muted);font-size:0.8rem">Aucune question g\u00e9n\u00e9r\u00e9e.</p>';
+
+  // Plan
+  var p = d.plan || {};
+  var planRows = [
+    ['M\u00e9thode', p.methode],
+    ['Participants', p.participants],
+    ['Dur\u00e9e', p.duree],
+    ['Crit\u00e8re de succ\u00e8s', p.critere],
+    ['Prochaine \u00e9tape', p.prochaine_etape]
+  ];
+  var planHtml = '';
+  planRows.forEach(function(r) {
+    if (r[1]) planHtml += '<div class="plan-row"><span class="plan-label">' + r[0] + '</span><span class="plan-value">' + esc(r[1]) + '</span></div>';
+  });
+  document.getElementById('planBody').innerHTML = planHtml || '<p style="color:var(--muted);font-size:0.8rem">Plan non disponible.</p>';
+
+  document.getElementById('results').classList.add('show');
+  document.getElementById('launchBtn').disabled = false;
+  document.getElementById('formCard').style.opacity = '1';
+  document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function reset() {
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('problem').value = '';
+  document.getElementById('target').value = '';
+  document.getElementById('context').value = '';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>
