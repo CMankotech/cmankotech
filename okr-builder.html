@@ -138,10 +138,23 @@ footer a:hover{text-decoration:underline}
   .kr-item{grid-template-columns:auto 1fr}
   .kr-type-badge{grid-column:2}
 }
+
+/* LANG TOGGLE */
+.lang-bar{display:flex;justify-content:flex-end;margin-bottom:1.5rem}
+.lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
+.lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.lang-btn.active{background:rgba(251,191,36,0.15);color:var(--yellow)}
 </style>
 </head>
 <body>
 <div class="container">
+
+  <div class="lang-bar">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lbFr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" id="lbEn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
 
   <header>
     <div class="header-tag"><span class="dot"></span> Strategy &amp; Planning</div>
@@ -369,17 +382,18 @@ async function callAI(prompt, maxTokens) {
 function renderResults(d, name, type) {
   var sub = nbObjectives + ' objectif' + (nbObjectives > 1 ? 's' : '') + ' \u00b7 ' + (period === 'trimestre' ? 'Trimestriel' : 'Annuel') + ' \u00b7 ' + name + (type ? ' (' + type + ')' : '');
   document.getElementById('resultsSub').textContent = sub;
+  document.getElementById('results').querySelector('.results-title') && (document.getElementById('results').querySelector('.results-title').textContent = LANG[currentLang]['results.title']);
 
   var okrHtml = '';
   (d.okrs || []).forEach(function(okr, i) {
     var krsHtml = (okr.key_results || []).map(function(kr, j) {
       var typeCls = kr.type === 'metric' ? 'kr-metric' : kr.type === 'milestone' ? 'kr-milestone' : 'kr-health';
-      var typeLabel = kr.type === 'metric' ? 'M\u00e9trique' : kr.type === 'milestone' ? 'Milestone' : 'Sant\u00e9';
+      var T2 = LANG[currentLang]; var typeLabel = kr.type === 'metric' ? T2['kr.metric'] : kr.type === 'milestone' ? T2['kr.milestone'] : T2['kr.health'];
       return '<div class="kr-item">' +
         '<div class="kr-num">KR' + (j+1) + '</div>' +
         '<div class="kr-body">' +
           '<div class="kr-text">' + esc(kr.text) + '</div>' +
-          (kr.baseline ? '<div class="kr-baseline">Baseline : ' + esc(kr.baseline) + '</div>' : '') +
+          (kr.baseline ? '<div class="kr-baseline">' + LANG[currentLang]["kr.baseline"] + ' ' + esc(kr.baseline) + '</div>' : '') +
         '</div>' +
         '<span class="kr-type-badge ' + typeCls + '">' + typeLabel + '</span>' +
         '</div>';
@@ -388,7 +402,7 @@ function renderResults(d, name, type) {
     okrHtml += '<div class="okr-card">' +
       '<div class="okr-header">' +
         '<div class="okr-objective">' + esc(okr.objective) + '</div>' +
-        '<span class="okr-num">Objectif ' + (i+1) + '</span>' +
+        '<span class="okr-num">' + LANG[currentLang]["obj.label"] + ' ' + (i+1) + '</span>' +
       '</div>' +
       '<div class="kr-list">' + krsHtml + '</div>' +
       '</div>';
@@ -400,7 +414,7 @@ function renderResults(d, name, type) {
     var tipsHtml = tips.map(function(t) {
       return '<div class="tip-item"><span class="tip-bullet">&#8227;</span>' + esc(t) + '</div>';
     }).join('');
-    document.getElementById('tipsList').innerHTML = tipsHtml;
+    document.getElementById('tipsList').innerHTML = tipsHtml; document.querySelector('.tips-label').innerHTML = LANG[currentLang]['tips.label'];
     document.getElementById('tipsCard').style.display = 'block';
   }
 
@@ -420,6 +434,127 @@ function reset() {
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function showError(m) { var el = document.getElementById('errorBox'); el.textContent = m; el.classList.add('show'); }
 function hideError() { document.getElementById('errorBox').classList.remove('show'); }
+
+// ---- i18n ----
+var LANG = {
+  fr: {
+    'tag': 'Strategy &amp; Planning',
+    'title': 'OKR <span class="grad">Builder</span>',
+    'subtitle': "D&eacute;cris ton contexte produit et tes ambitions. L&rsquo;IA g&eacute;n&egrave;re des OKRs coh&eacute;rents avec des Key Results mesurables et actionnables.",
+    'config.title': '&#128273; Configuration',
+    'form.title': 'Contexte produit',
+    'field.product': 'Nom du produit',
+    'field.type': 'Type de produit',
+    'field.ambitions': 'Ambitions &amp; contexte strat&eacute;gique',
+    'field.ambitions.ph': "D&eacute;cris ce que tu veux accomplir ce trimestre...",
+    'field.period': 'P&eacute;riode',
+    'field.nb': "Nombre d&rsquo;objectifs",
+    'field.nb.hint': '3 est g&eacute;n&eacute;ralement recommand&eacute; par trimestre.',
+    'field.metrics': 'M&eacute;triques actuelles',
+    'field.metrics.ph': 'Ex : DAU 8k, churn 4.2%, NPS 32...',
+    'period.q': 'Trimestre',
+    'period.a': 'Ann&eacute;e',
+    'btn.launch': '&#9654; G&eacute;n&eacute;rer mes OKRs',
+    'loading.text': 'G&eacute;n&eacute;ration des OKRs en cours...',
+    'results.title': 'OKRs g&eacute;n&eacute;r&eacute;s',
+    'btn.reset': '&#8635; Recommencer',
+    'tips.label': '&#128161; Conseils pour utiliser ces OKRs',
+    'obj.label': 'Objectif',
+    'kr.metric': 'M&eacute;trique',
+    'kr.milestone': 'Milestone',
+    'kr.health': 'Sant&eacute;',
+    'kr.baseline': 'Baseline&nbsp;:',
+    'footer.text': 'Construit par',
+    'save': 'Enregistrer',
+    'saved': '&#10003; Cl&eacute; enregistr&eacute;e.',
+    'note.groq': 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl&eacute; reste dans ton navigateur.',
+    'note.openai': 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>. GPT-4o mini est tr&egrave;s peu co&ucirc;teux.',
+    'tag.free': 'Gratuit',
+  },
+  en: {
+    'tag': 'Strategy &amp; Planning',
+    'title': 'OKR <span class="grad">Builder</span>',
+    'subtitle': "Describe your product context and ambitions. The AI generates coherent OKRs with measurable and actionable Key Results.",
+    'config.title': '&#128273; Configuration',
+    'form.title': 'Product context',
+    'field.product': 'Product name',
+    'field.type': 'Product type',
+    'field.ambitions': 'Ambitions &amp; strategic context',
+    'field.ambitions.ph': "Describe what you want to achieve this quarter...",
+    'field.period': 'Period',
+    'field.nb': 'Number of objectives',
+    'field.nb.hint': '3 is generally recommended per quarter.',
+    'field.metrics': 'Current metrics',
+    'field.metrics.ph': 'e.g. DAU 8k, churn 4.2%, NPS 32...',
+    'period.q': 'Quarter',
+    'period.a': 'Year',
+    'btn.launch': '&#9654; Generate my OKRs',
+    'loading.text': 'Generating OKRs...',
+    'results.title': 'Generated OKRs',
+    'btn.reset': '&#8635; Start over',
+    'tips.label': '&#128161; Tips for using these OKRs',
+    'obj.label': 'Objective',
+    'kr.metric': 'Metric',
+    'kr.milestone': 'Milestone',
+    'kr.health': 'Health',
+    'kr.baseline': 'Baseline:',
+    'footer.text': 'Built by',
+    'save': 'Save',
+    'saved': '&#10003; Key saved.',
+    'note.groq': 'Free at <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. Key stays in your browser.',
+    'note.openai': 'Account at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>. GPT-4o mini is very affordable.',
+    'tag.free': 'Free',
+  }
+};
+
+var currentLang = 'fr';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('lbFr').classList.toggle('active', lang === 'fr');
+  document.getElementById('lbEn').classList.toggle('active', lang === 'en');
+  var T = LANG[lang];
+  // Header
+  document.querySelector('.header-tag span:last-child') && (document.querySelector('.header-tag').innerHTML = '<span class="dot"></span> ' + T['tag']);
+  document.querySelector('h1').innerHTML = T['title'];
+  document.querySelector('.subtitle').innerHTML = T['subtitle'];
+  // Cards titles
+  var cardTitles = document.querySelectorAll('.card-title');
+  if(cardTitles[0]) cardTitles[0].innerHTML = T['config.title'] + '<span style="flex:1;height:1px;background:var(--line);display:inline-block;margin-left:0.6rem"></span>';
+  if(cardTitles[1]) cardTitles[1].innerHTML = T['form.title'] + '<button class="btn-examples" onclick="loadExample()">&#127922; Exemple</button><span style="flex:1;height:1px;background:var(--line);display:inline-block;margin-left:0.6rem"></span>';
+  // Field labels
+  var labels = document.querySelectorAll('.field label');
+  var labelKeys = ['field.product','field.type','field.ambitions','field.period','field.nb','field.metrics'];
+  labels.forEach(function(el, i) { if(T[labelKeys[i]]) el.innerHTML = T[labelKeys[i]]; });
+  // Placeholders
+  document.getElementById('ambitions').placeholder = T['field.ambitions.ph'];
+  document.getElementById('metrics').placeholder = T['field.metrics.ph'];
+  // Period buttons
+  document.getElementById('pQ').textContent = T['period.q'];
+  document.getElementById('pA').textContent = T['period.a'];
+  // Hint
+  var hints = document.querySelectorAll('.field-hint');
+  if(hints[0]) hints[0].textContent = T['field.nb.hint'];
+  // Launch btn
+  document.getElementById('launchBtn').innerHTML = T['btn.launch'];
+  // Loading
+  document.querySelector('.loading-text').innerHTML = T['loading.text'];
+  // Save btn
+  document.querySelector('.btn-save').textContent = T['save'];
+  // Provider notes
+  if(provider === 'groq') document.getElementById('providerNote').innerHTML = T['note.groq'];
+  else document.getElementById('providerNote').innerHTML = T['note.openai'];
+  // Footer
+  var footer = document.querySelector('footer');
+  if(footer) footer.innerHTML = T['footer.text'] + ' <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager';
+}
+
+// Detect lang from URL
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('lang') === 'en') setLang('en');
+})();
+
 </script>
 </body>
 </html>
