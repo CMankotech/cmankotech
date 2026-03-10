@@ -144,6 +144,24 @@ footer a:hover{text-decoration:underline}
 .lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(251,191,36,0.15);color:var(--yellow)}
+
+.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(251,191,36,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+.btn-demo:hover{border-color:rgba(251,191,36,0.6);color:var(--yellow);background:rgba(251,191,36,0.04)}
+.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);border-radius:4px;color:var(--yellow)}
+
+.howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
+.howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
+.howto-trigger:hover{background:rgba(255,255,255,0.04)}
+.howto-trigger .arrow{font-size:0.7rem;transition:transform 0.25s;color:var(--muted)}
+.howto-trigger.open .arrow{transform:rotate(180deg)}
+.howto-body{display:none;padding:1rem 1.2rem 1.2rem;border-top:1px solid var(--border)}
+.howto-body.open{display:block}
+.howto-steps{display:flex;flex-direction:column;gap:0.6rem}
+.howto-step{display:flex;gap:0.75rem;align-items:flex-start}
+.howto-step-num{min-width:1.4rem;height:1.4rem;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:var(--muted);flex-shrink:0;margin-top:0.1rem}
+.howto-step-text{font-size:0.8rem;color:var(--dim);line-height:1.5}
+.howto-step-text a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.howto-step-text a:hover{color:var(--text)}
 </style>
 </head>
 <body>
@@ -162,16 +180,28 @@ footer a:hover{text-decoration:underline}
     <p class="subtitle">D&eacute;cris ton contexte produit et tes ambitions. L&rsquo;IA g&eacute;n&egrave;re des OKRs coh&eacute;rents avec des Key Results mesurables et actionnables.</p>
   </header>
 
-  <!-- CONFIG -->
-  <div class="card">
+
+  <div class="howto">
+    <button class="howto-trigger" onclick="toggleHowto(this)" id="howtoTrigger">
+      <span id="howtoLabel">&#9432; Comment ça marche ?</span>
+      <span class="arrow">&#9660;</span>
+    </button>
+    <div class="howto-body" id="howtoBody">
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer sans clé API</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Pour générer tes propres OKRs, tu as besoin d'une clé API. Crée un compte gratuit sur <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) ou <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Copie ta clé, colle-la dans le champ en haut, puis clique sur <strong><span id="lbl_save_btn">Enregistrer</span></strong>. Elle reste dans ton navigateur, elle n'est jamais envoyée ailleurs.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Remplis le formulaire et génère tes OKRs. C'est tout.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try without API key</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">To generate your own OKRs, you need an API key. Create a free account at <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) or <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Copy your key, paste it in the field above, then click <strong>Save</strong>. It stays in your browser and is never sent anywhere else.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Fill in the form and generate your OKRs. That's it.</div></div></div>
+    </div>
+  </div>
+
+
+  <!-- CONFIG -->  <div class="card">
     <div class="card-title">&#128273; Configuration</div>
     <div class="provider-row">
-      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag">Gratuit</span></button>
+      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag" id="lbl_groq_tag">Gratuit</span></button>
       <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
     </div>
     <div class="key-row">
       <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
-      <button class="btn-save" onclick="saveKey()">Enregistrer</button>
+      <button class="btn-save" id="btn_save" onclick="saveKey()">Enregistrer</button>
     </div>
     <p class="note" id="providerNote">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl&eacute; reste dans ton navigateur.</p>
     <div class="saved-msg" id="savedMsg">&#10003; Cl&eacute; enregistr&eacute;e.</div>
@@ -180,17 +210,17 @@ footer a:hover{text-decoration:underline}
   <!-- FORM -->
   <div class="card">
     <div class="card-title">
-      Contexte produit
+      <span id="lbl_ctx_title">Contexte produit</span>
       <button class="btn-examples" onclick="loadExample()">&#127922; Exemple</button>
     </div>
 
     <div class="form-grid">
       <div class="field">
-        <label>Nom du produit</label>
+        <label><span id="lbl_prod_name">Nom du produit</span></label>
         <input type="text" id="productName" placeholder="Ex : Kira, Notion, Doctolib...">
       </div>
       <div class="field">
-        <label>Type de produit</label>
+        <label><span id="lbl_prod_type">Type de produit</span></label>
         <select id="productType">
           <option value="">-- Choisir --</option>
           <option>SaaS B2B</option>
@@ -206,20 +236,20 @@ footer a:hover{text-decoration:underline}
     </div>
 
     <div class="field">
-      <label>Ambitions &amp; contexte strat&eacute;gique</label>
+      <label><span id="lbl_ambitions">Ambitions &amp; contexte strat&eacute;gique</span></label>
       <textarea id="ambitions" rows="4" placeholder="D&eacute;cris ce que tu veux accomplir ce trimestre. Ex : On veut r&eacute;duire le churn, am&eacute;liorer l&rsquo;onboarding, et lancer une nouvelle feature d&rsquo;int&eacute;gration. Notre plus gros probl&egrave;me est que les utilisateurs ne reviennent pas apr&egrave;s J7..."></textarea>
     </div>
 
     <div class="form-grid">
       <div class="field">
-        <label>P&eacute;riode</label>
+        <label><span id="lbl_period">P&eacute;riode</span></label>
         <div class="period-toggle">
           <button class="period-btn active" id="pQ" onclick="setPeriod('trimestre')">Trimestre</button>
           <button class="period-btn" id="pA" onclick="setPeriod('annee')">Ann&eacute;e</button>
         </div>
       </div>
       <div class="field">
-        <label>Nombre d&rsquo;objectifs</label>
+        <label><span id="lbl_nb_obj">Nombre d&rsquo;objectifs</span></label>
         <div class="nb-toggle">
           <button class="nb-btn" id="nb2" onclick="setNb(2)">2</button>
           <button class="nb-btn active" id="nb3" onclick="setNb(3)">3</button>
@@ -230,7 +260,7 @@ footer a:hover{text-decoration:underline}
     </div>
 
     <div class="field">
-      <label>M&eacute;triques actuelles <span style="font-size:0.57rem;color:var(--muted);text-transform:none;letter-spacing:0">(optionnel)</span></label>
+      <label>M&eacute;triques actuelles <span style="font-size:0.57rem;color:var(--muted);text-transform:none;letter-spacing:0"><span id="lbl_optional_metrics">(optionnel)</span></label>
       <input type="text" id="metrics" placeholder="Ex : DAU 8k, churn 4.2%, NPS 32, conversion trial 12%">
     </div>
   </div>
@@ -240,6 +270,8 @@ footer a:hover{text-decoration:underline}
   <button class="btn-launch" id="launchBtn" onclick="launch()">
     &#9654; G&eacute;n&eacute;rer mes OKRs
   </button>
+
+  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer sans clé API </span><span class="demo-badge" id="badge_demo">Démo</span></button>
 
   <!-- LOADING -->
   <div class="loading" id="loading">
@@ -251,7 +283,7 @@ footer a:hover{text-decoration:underline}
   <div class="results" id="results">
     <div class="results-topbar">
       <div class="results-info">
-        <div class="results-title">OKRs g&eacute;n&eacute;r&eacute;s</div>
+        <div class="results-title"><span id="lbl_results_title">OKRs g&eacute;n&eacute;r&eacute;s</span></div>
         <div class="results-sub" id="resultsSub"></div>
       </div>
       <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
@@ -260,13 +292,13 @@ footer a:hover{text-decoration:underline}
     <div id="okrList"></div>
 
     <div class="tips-card" id="tipsCard" style="display:none">
-      <div class="tips-header"><span style="font-size:1rem">&#128161;</span><span class="tips-label">Conseils pour utiliser ces OKRs</span></div>
+      <div class="tips-header"><span style="font-size:1rem">&#128161;</span><span class="tips-label"><span id="lbl_tips_title"><span id="lbl_tips_title">Conseils pour utiliser ces OKRs</span></span></span></div>
       <div class="tips-list" id="tipsList"></div>
     </div>
   </div>
 
   <footer>
-    Construit par <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager
+    <span id="footer_by">Construit par</span> <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; <span id="footer_role">AI Product Manager</span>
   </footer>
 
 </div>
@@ -382,7 +414,7 @@ async function callAI(prompt, maxTokens) {
 function renderResults(d, name, type) {
   var sub = nbObjectives + ' objectif' + (nbObjectives > 1 ? 's' : '') + ' \u00b7 ' + (period === 'trimestre' ? 'Trimestriel' : 'Annuel') + ' \u00b7 ' + name + (type ? ' (' + type + ')' : '');
   document.getElementById('resultsSub').textContent = sub;
-  document.getElementById('results').querySelector('.results-title') && (document.getElementById('results').querySelector('.results-title').textContent = LANG[currentLang]['results.title']);
+  document.getElementById('results').querySelector('.results-title') && (document.getElementById('results').querySelector('.results-title').innerHTML = LANG[currentLang]['results.title']);
 
   var okrHtml = '';
   (d.okrs || []).forEach(function(okr, i) {
@@ -547,6 +579,7 @@ function setLang(lang) {
   // Footer
   var footer = document.querySelector('footer');
   if(footer) footer.innerHTML = T['footer.text'] + ' <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager';
+  if(typeof applyLangExtras === 'function') applyLangExtras(lang);
 }
 
 // Detect lang from URL
@@ -555,6 +588,168 @@ function setLang(lang) {
   if (params.get('lang') === 'en') setLang('en');
 })();
 
+
+// ---- DEMO MODE ----
+var MOCK_OKR = {
+  okrs: [
+    {
+      objective: "Faire de la rétention notre avantage compétitif",
+      key_results: [
+        {text: "Réduire le churn mensuel de 4.2% à 2.5% sur le trimestre", type: "metric", baseline: "Churn actuel : 4.2%"},
+        {text: "Atteindre un NPS de 42 auprès des utilisateurs actifs", type: "health", baseline: "NPS actuel : 28"},
+        {text: "Livrer le nouveau dashboard de suivi d’engagement en production", type: "milestone", baseline: ""}
+      ]
+    },
+    {
+      objective: "Transformer l’onboarding en accélérateur de valeur",
+      key_results: [
+        {text: "Réduire le time-to-value de J14 à J7 pour 70% des nouveaux clients", type: "metric", baseline: "Actuellement J14 pour 60% des clients"},
+        {text: "Atteindre 80% de completion du wizard d’onboarding", type: "metric", baseline: "Completion actuelle : 42%"},
+        {text: "Maintenir le NPS onboarding au-dessus de 40", type: "health", baseline: ""}
+      ]
+    },
+    {
+      objective: "Accélérer la valeur perçue par les managers",
+      key_results: [
+        {text: "Livrer le module de reporting avancé pour les managers", type: "milestone", baseline: ""},
+        {text: "Obtenir 60% d’adoption du module par les comptes manager dans les 4 semaines post-launch", type: "metric", baseline: ""},
+        {text: "Générer 3 case studies clients basés sur les insights du reporting", type: "milestone", baseline: ""}
+      ]
+    }
+  ],
+  tips: [
+    "Partagez ces OKRs en weekly avec l’équipe et mettez à jour le score de chaque KR en temps réel pour maintenir la dynamique.",
+    "Les KRs de type 'milestone' doivent avoir une définition de 'done' claire avant le sprint 1 pour éviter les débats en fin de trimestre.",
+    "Challengez chaque Objective : si votre équipe peut l’atteindre sans effort, le KR n’est pas assez ambitieux."
+  ]
+};
+
+function launchDemo() {
+  hideError();
+  // Fill example data
+  document.getElementById('productName').value = 'Flowly';
+  document.getElementById('productType').value = 'SaaS B2B';
+  document.getElementById('ambitions').value = "On veut améliorer la rétention des utilisateurs et réduire le churn. On souhaite aussi accélérer l’activation des nouveaux clients et lancer un module de reporting avancé pour les managers.";
+  document.getElementById('metrics').value = 'DAU 6 200, churn mensuel 4.2%, NPS 28, time-to-value J14 pour 60% des nouveaux clients';
+  setNb(3); setPeriod('trimestre');
+
+  document.getElementById('launchBtn').disabled = true;
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('loading').classList.add('show');
+
+  setTimeout(function() {
+    document.getElementById('loading').classList.remove('show');
+    document.getElementById('launchBtn').disabled = false;
+    renderResults(MOCK_OKR, 'Flowly', 'trimestre');
+  }, 2000);
+}
+
+
+function toggleHowto(btn) {
+  btn.classList.toggle('open');
+  document.getElementById('howtoBody').classList.toggle('open');
+}
+function applyLangExtras(lang) {
+  var _extraokrX = {
+    'badge_demo': ['Démo', 'Demo'],
+    'btn_demo_txt': ['&#9654; Essayer sans clé API ', '&#9654; Try without API key '],
+    'footer_by': ['Construit par', 'Built by'],
+    'footer_role': ['AI Product Manager', 'AI Product Manager'],
+    'lbl_optional_metrics': ['(optionnel)', '(optional)'],
+  };
+  Object.keys(_extraokrX).forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    var v=lang==='en'?_extraokrX[id][1]:_extraokrX[id][0];
+    if('placeholder' in el) el.placeholder=v; else el.innerHTML=v;
+  });
+
+  // Placeholders
+  var _phokr = {
+    'productName': ['Ex : Kira, Notion, Doctolib...', 'E.g. Kira, Notion, Doctolib...'],
+    'ambitions': ['Décris ce que tu veux accomplir ce trimestre...', 'Describe what you want to achieve this quarter...'],
+    'metrics': ['Ex : DAU 8k, churn 4.2%, NPS 32...', 'E.g. DAU 8k, churn 4.2%, NPS 32...'],
+  };
+  Object.keys(_phokr).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el && el.placeholder !== undefined) el.placeholder = lang==='en'?_phokr[id][1]:_phokr[id][0];
+  });
+  // Select option texts
+  var _optokr = {
+    'productType': [['-- Choisir --', '-- Choose --'], ['SaaS B2B', 'SaaS B2B'], ['SaaS B2C', 'SaaS B2C'], ['Application mobile', 'Mobile app'], ['Marketplace', 'Marketplace'], ['Plateforme interne', 'Internal platform'], ['Fintech', 'Fintech'], ['Healthtech', 'Healthtech'], ['EdTech', 'EdTech']],
+  };
+  Object.keys(_optokr).forEach(function(selId){
+    var sel=document.getElementById(selId);
+    if(!sel) return;
+    var opts = _optokr[selId]; var l = lang==='en'?1:0;
+    for(var i=0;i<sel.options.length;i++){ if(opts[i]) sel.options[i].text = opts[i][l]; }
+  });
+
+  var _finokr2 = lang === 'en' ? {
+    'btn_save': 'Save',
+  } : {
+    'btn_save': 'Enregistrer',
+  };
+  Object.keys(_finokr2).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finokr2[id];});
+
+  var _sl4 = lang === 'en' ? {
+    'lbl_ctx_title': 'Product context',
+    'lbl_groq_tag': 'Free',
+    'lbl_metrics': 'Current metrics',
+    'lbl_tips_title': 'Tips for using these OKRs',
+    'lbl_results_title': 'Generated OKRs',
+    'lbl_save_btn': 'Save',
+  } : {
+    'lbl_ctx_title': 'Contexte produit',
+    'lbl_groq_tag': 'Gratuit',
+    'lbl_metrics': 'Métriques actuelles',
+    'lbl_tips_title': 'Conseils pour utiliser ces OKRs',
+    'lbl_results_title': 'OKRs générés',
+    'lbl_save_btn': 'Enregistrer',
+  };
+  Object.keys(_sl4).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_sl4[id];});
+
+  var _sl3 = lang === 'en' ? {
+  } : {
+  };
+  Object.keys(_sl3).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_sl3[id];});
+
+  // Static labels
+  var _t = lang === 'en' ? {
+    'lbl_groq_badge': 'Free',
+    'lbl_ctx_title': 'Product context',
+    'lbl_prod_name': 'Product name',
+    'lbl_prod_type': 'Product type',
+    'lbl_ambitions': 'Ambitions &amp; strategic context',
+    'lbl_period': 'Period',
+    'lbl_nb_obj': 'Number of objectives',
+    'lbl_metrics': 'Current metrics',
+    'lbl_tips_title': 'Tips to use these OKRs',
+    'lbl_results_title': 'Generated OKRs',
+  } : {
+    'lbl_groq_badge': 'Gratuit',
+    'lbl_ctx_title': 'Contexte produit',
+    'lbl_prod_name': 'Nom du produit',
+    'lbl_prod_type': 'Type de produit',
+    'lbl_ambitions': 'Ambitions &amp; contexte strat&eacute;gique',
+    'lbl_period': 'P&eacute;riode',
+    'lbl_nb_obj': 'Nombre d&rsquo;objectifs',
+    'lbl_metrics': 'M&eacute;triques actuelles',
+    'lbl_tips_title': 'Conseils pour utiliser ces OKRs',
+    'lbl_results_title': 'OKRs g&eacute;n&eacute;r&eacute;s',
+  };
+  Object.keys(_t).forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.innerHTML = _t[id];
+  });
+
+  var fr = document.getElementById('howtoStepsFr');
+  var en = document.getElementById('howtoStepsEn');
+  if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';
+  if(en) en.style.display = lang === 'en' ? 'flex' : 'none';
+  var lbl = document.getElementById('howtoLabel');
+  if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; Comment ça marche ?' : '&#9432; How does it work?';
+}
+// Sync on load (IIFE may have fired before this function was defined)
+(function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
+
 </script>
-</body>
-</html>
