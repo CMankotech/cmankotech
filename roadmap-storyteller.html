@@ -154,6 +154,24 @@ footer a:hover{text-decoration:underline}
 .lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(167,139,250,0.15);color:var(--accent)}
+
+.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(167,139,250,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+.btn-demo:hover{border-color:var(--accent);color:var(--accent);background:rgba(167,139,250,0.04)}
+.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);border-radius:4px;color:var(--accent)}
+
+.howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
+.howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
+.howto-trigger:hover{background:rgba(255,255,255,0.04)}
+.howto-trigger .arrow{font-size:0.7rem;transition:transform 0.25s;color:var(--muted)}
+.howto-trigger.open .arrow{transform:rotate(180deg)}
+.howto-body{display:none;padding:1rem 1.2rem 1.2rem;border-top:1px solid var(--border)}
+.howto-body.open{display:block}
+.howto-steps{display:flex;flex-direction:column;gap:0.6rem}
+.howto-step{display:flex;gap:0.75rem;align-items:flex-start}
+.howto-step-num{min-width:1.4rem;height:1.4rem;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:var(--muted);flex-shrink:0;margin-top:0.1rem}
+.howto-step-text{font-size:0.8rem;color:var(--dim);line-height:1.5}
+.howto-step-text a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.howto-step-text a:hover{color:var(--text)}
 </style>
 </head>
 <body>
@@ -172,16 +190,28 @@ footer a:hover{text-decoration:underline}
     <p class="subtitle">Transforme tes features brutes en roadmap narrative claire et convaincante pour tes stakeholders.</p>
   </header>
 
-  <!-- CONFIG -->
-  <div class="card">
+
+  <div class="howto">
+    <button class="howto-trigger" onclick="toggleHowto(this)" id="howtoTrigger">
+      <span id="howtoLabel">&#9432; Comment ça marche ?</span>
+      <span class="arrow">&#9660;</span>
+    </button>
+    <div class="howto-body" id="howtoBody">
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer sans clé API</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Pour transformer ta propre roadmap, crée un compte gratuit sur <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) ou <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Colle ta clé dans le champ en haut et clique <strong>Enregistrer</strong>. Elle reste dans ton navigateur uniquement.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Remplis le formulaire et génère ta roadmap narrative.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try without API key</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">To transform your own roadmap, create a free account at <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) or <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Paste your key in the field above and click <strong>Save</strong>. It stays in your browser only.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Fill in the form and generate your narrative roadmap.</div></div></div>
+    </div>
+  </div>
+
+
+  <!-- CONFIG -->  <div class="card">
     <div class="card-title">&#128273; Configuration</div>
     <div class="provider-row">
-      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag">Gratuit</span></button>
+      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag" id="lbl_groq_free">Gratuit</span></button>
       <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
     </div>
     <div class="key-row">
       <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
-      <button class="btn-save" onclick="saveKey()">Enregistrer</button>
+      <button class="btn-save" id="btn_save" onclick="saveKey()">Enregistrer</button>
     </div>
     <p class="note" id="providerNote">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl&eacute; reste dans ton navigateur.</p>
     <div class="saved-msg" id="savedMsg">&#10003; Cl&eacute; enregistr&eacute;e.</div>
@@ -190,17 +220,17 @@ footer a:hover{text-decoration:underline}
   <!-- FORM -->
   <div class="card">
     <div class="card-title">
-      Contexte produit
+      <span id="lbl_ctx_title">Contexte produit</span>
       <button class="btn-examples" onclick="loadExample()">&#127922; Exemple</button>
     </div>
 
     <div class="form-grid">
       <div class="field">
-        <label>Nom du produit</label>
+        <label><span id="lbl_prod_name"><span id="lbl_prod_name">Nom du produit</span></span></label>
         <input type="text" id="productName" placeholder="Ex : Kira, Notion, Doctolib...">
       </div>
       <div class="field">
-        <label>Horizon</label>
+        <label><span id="lbl_horizon"><span id="lbl_horizon">Horizon</span></span></label>
         <select id="horizon">
           <option value="trimestre">Ce trimestre (3 mois)</option>
           <option value="semestre">Ce semestre (6 mois)</option>
@@ -210,7 +240,7 @@ footer a:hover{text-decoration:underline}
     </div>
 
     <div class="field">
-      <label>Audience cible</label>
+      <label><span id="lbl_audience"><span id="lbl_audience">Audience cible</span></span></label>
       <div class="audience-toggle">
         <button class="aud-btn active" id="aud-dirigeants" onclick="toggleAud('dirigeants')">Dirigeants / C-level</button>
         <button class="aud-btn" id="aud-metier" onclick="toggleAud('metier')">Equipes m&eacute;tier</button>
@@ -221,7 +251,7 @@ footer a:hover{text-decoration:underline}
     </div>
 
     <div class="field">
-      <label>Vision / objectif strat&eacute;gique</label>
+      <label><span id="lbl_vision">Vision / objectif strat&eacute;gique</span></label>
       <input type="text" id="vision" placeholder="Ex : Devenir la r&eacute;f&eacute;rence RH pour les PME en Europe">
     </div>
   </div>
@@ -229,13 +259,13 @@ footer a:hover{text-decoration:underline}
   <!-- FEATURES -->
   <div class="card">
     <div class="card-title">
-      Features &amp; initiatives
+      <span id="lbl_features_title">Features &amp; initiatives</span>
       <button class="btn-examples" onclick="loadFeaturesExample()">&#127922; Exemple</button>
     </div>
-    <p style="font-size:0.75rem;color:var(--dim);margin-bottom:1rem">Ajoute tes features ou initiatives. Assigne-leur une p&eacute;riode de livraison.</p>
+    <p style="font-size:0.75rem;color:var(--dim);margin-bottom:1rem" id="hint_features_sub">Ajoute tes features ou initiatives. Assigne-leur une p&eacute;riode de livraison.</p>
     <div class="features-list" id="featuresList"></div>
-    <button class="btn-add-feat" onclick="addFeature()">+ Ajouter une feature</button>
-    <p class="field-hint" style="margin-top:0.5rem">Entre 3 et 10 features recommand&eacute;es.</p>
+    <button class="btn-add-feat" onclick="addFeature()"><span id="btn_add_feat">+ Ajouter une feature</span></button>
+    <p class="field-hint" style="margin-top:0.5rem" id="hint_feat_count">Entre 3 et 10 features recommand&eacute;es.</p>
   </div>
 
   <div class="error-box" id="errorBox"></div>
@@ -243,6 +273,8 @@ footer a:hover{text-decoration:underline}
   <button class="btn-launch" id="launchBtn" onclick="launch()">
     &#9654; G&eacute;n&eacute;rer ma roadmap narrative
   </button>
+
+  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer sans clé API </span><span class="demo-badge" id="badge_demo">Démo</span></button>
 
   <!-- LOADING -->
   <div class="loading" id="loading">
@@ -254,7 +286,7 @@ footer a:hover{text-decoration:underline}
   <div class="results" id="results">
     <div class="results-topbar">
       <div class="results-info">
-        <div class="results-title">Roadmap g&eacute;n&eacute;r&eacute;e</div>
+        <div class="results-title"><span id="lbl_results_title">Roadmap g&eacute;n&eacute;r&eacute;e</span></div>
         <div class="results-sub" id="resultsSub"></div>
       </div>
       <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
@@ -262,7 +294,7 @@ footer a:hover{text-decoration:underline}
 
     <!-- Narrative pitch -->
     <div class="narrative-card" id="narrativeCard">
-      <div class="narrative-label">&#128172; Pitch narratif</div>
+      <div class="narrative-label"><span id="lbl_pitch_title">&#128172; Pitch narratif</span></div>
       <div class="narrative-text" id="narrativeText"></div>
       <button class="btn-copy" id="copyBtn" onclick="copyNarrative()">&#128203; Copier le pitch</button>
     </div>
@@ -272,13 +304,13 @@ footer a:hover{text-decoration:underline}
 
     <!-- Talking points -->
     <div class="talking-card" id="talkingCard" style="display:none">
-      <div class="talking-header">&#127919; Messages cl&eacute;s pour cette audience</div>
+      <div class="talking-header"><span id="lbl_msg_title">&#127919; Messages cl&eacute;s pour cette audience</span></div>
       <div class="talking-list" id="talkingList"></div>
     </div>
   </div>
 
   <footer>
-    Construit par <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager
+    <span id="footer_by">Construit par</span> <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; <span id="footer_role">AI Product Manager</span>
   </footer>
 
 </div>
@@ -324,9 +356,9 @@ function addFeature(text, period) {
   row.id = 'feat-' + id;
   row.innerHTML = '<input type="text" placeholder="Ex : Refonte onboarding, Module analytics..." value="' + esc(text||'') + '">' +
     '<select class="feature-period">' +
-    '<option value="now"' + (period==='now'?' selected':'') + '>Maintenant</option>' +
-    '<option value="next"' + (period==='next'?' selected':'') + '>Ensuite</option>' +
-    '<option value="later"' + (period==='later'?' selected':'') + '>Plus tard</option>' +
+    '<option value="now"' + (period==='now'?' selected':'') + '>' + (window._lang==='en'?'Now':'Maintenant') + '</option>' +
+    '<option value="next"' + (period==='next'?' selected':'') + '>' + (window._lang==='en'?'Next':'Ensuite') + '</option>' +
+    '<option value="later"' + (period==='later'?' selected':'') + '>' + (window._lang==='en'?'Later':'Plus tard') + '</option>' +
     '</select>' +
     '<button class="btn-remove-feat" onclick="removeFeat(' + id + ')" title="Supprimer">&times;</button>';
   document.getElementById('featuresList').appendChild(row);
@@ -527,6 +559,7 @@ var LANG = {
 };
 var currentLang = 'fr';
 function setLang(lang) {
+  window._lang = lang;
   currentLang = lang;
   document.getElementById('lbFr').classList.toggle('active', lang === 'fr');
   document.getElementById('lbEn').classList.toggle('active', lang === 'en');
@@ -561,5 +594,156 @@ function setLang(lang) {
   var params = new URLSearchParams(window.location.search);
   if (params.get('lang') === 'en') setLang('en');
 })();
+
+
+var MOCK_RS = {
+  narrative: "Cette année, Flowly passe d'un outil de gestion de projet à un véritable système nerveux des équipes hybrides. Nous commençons par résoudre le problème n°1 de nos clients : savoir où en est vraiment l'équipe. Ensuite, nous simplifions l'entrée dans le produit pour que chaque nouveau collaborateur découvre sa valeur en moins de 7 jours. Enfin, nous ouvrons Flowly au reste de l'écosystème.",
+  periods: [
+    {key:"now",label:"Maintenant",theme:"Visibilité & Fiabilité",features:[{title:"Reporting manager en temps réel",why:"Les managers voient l'état des équipes sans mise à jour manuelle."},{title:"Onboarding refondu pas-à-pas",why:"Les nouveaux utilisateurs atteignent leur premier succès en moins de 7 jours."}]},
+    {key:"next",label:"Ensuite",theme:"Intégrations & Collaboration",features:[{title:"Connexion native Slack et Teams",why:"Les équipes restent dans leurs outils habituels sans changer de contexte."},{title:"Notifications intelligentes",why:"Chaque collaborateur reçoit les bonnes informations au bon moment."}]},
+    {key:"later",label:"Plus tard",theme:"Plateforme & Écosystème",features:[{title:"Application mobile native",why:"Les équipes terrain accèdent à Flowly depuis n'importe où."},{title:"API publique pour partenaires",why:"Les clients entreprise intègrent Flowly dans leurs outils métier."}]}
+  ],
+  talking_points: ["Ce trimestre, nous livrons ce qui réduit directement le churn : visibilité et onboarding.","Chaque initiative est liée à un KPI mesurable, pas à une feature list.","La roadmap est séquencée pour livrer de la valeur tous les 3 mois."]
+};
+function launchDemo() {
+  hideError();
+  var nameEl = document.getElementById('productName');
+  var visionEl = document.getElementById('vision');
+  if(nameEl) nameEl.value = 'Flowly';
+  if(visionEl) visionEl.value = "Devenir l'outil de gestion de projet incontournable pour les équipes hybrides";
+  document.getElementById('featuresList').innerHTML = '';
+  featureCount = 0;
+  var demos = [{text:'Module de reporting avancé pour managers',period:'now'},{text:"Refonte de l'onboarding",period:'now'},{text:'Intégration Slack et Teams',period:'next'},{text:'Notifications intelligentes',period:'next'},{text:'Application mobile',period:'later'},{text:'API publique',period:'later'}];
+  demos.forEach(function(d) { addFeature(d.text, d.period); });
+  document.getElementById('launchBtn').disabled = true;
+  document.getElementById('results') && document.getElementById('results').classList.remove('show');
+  document.getElementById('loading').classList.add('show');
+  setTimeout(function() {
+    document.getElementById('loading').classList.remove('show');
+    document.getElementById('launchBtn').disabled = false;
+    if(typeof renderResults === 'function') renderResults(MOCK_RS, 'Flowly', 'semestre');
+  }, 2000);
+}
+
+
+function toggleHowto(btn) {
+  btn.classList.toggle('open');
+  document.getElementById('howtoBody').classList.toggle('open');
+}
+function applyLangExtras(lang) {
+  // Feature row period options
+  var _pOpts = document.querySelectorAll('.feature-period');
+  var _pMap = lang==='en' ? {now:'Now',next:'Next',later:'Later'} : {now:'Maintenant',next:'Ensuite',later:'Plus tard'};
+  _pOpts.forEach(function(sel){
+    for(var i=0;i<sel.options.length;i++){
+      var v=sel.options[i].value;
+      if(_pMap[v]) sel.options[i].text=_pMap[v];
+    }
+  });
+  // Feature input placeholders
+  var _featPh = lang==='en' ? 'E.g. Onboarding redesign, Analytics module...' : 'Ex : Refonte onboarding, Module analytics...';
+  document.querySelectorAll('#featuresContainer input[type=text]').forEach(function(inp){ inp.placeholder=_featPh; });
+
+  var _extrarsX = {
+    'badge_demo': ['Démo', 'Demo'],
+    'btn_demo_txt': ['&#9654; Essayer sans clé API ', '&#9654; Try without API key '],
+    'footer_by': ['Construit par', 'Built by'],
+    'footer_role': ['AI Product Manager', 'AI Product Manager'],
+    'hint_features_sub': ['Ajoute tes features ou initiatives. Assigne-leur une p&eacute;riode de livraison.', 'Add your features or initiatives. Assign them a delivery period.'],
+    'btn_add_feat': ['+ Ajouter une feature', '+ Add a feature'],
+    'hint_feat_count': ['Entre 3 et 10 features recommand&eacute;es.', 'Between 3 and 10 features recommended.'],
+  };
+  Object.keys(_extrarsX).forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    var v=lang==='en'?_extrarsX[id][1]:_extrarsX[id][0];
+    if('placeholder' in el) el.placeholder=v; else el.innerHTML=v;
+  });
+
+  var _phrs = {
+    'productName': ['Ex : Kira, Notion, Doctolib...', 'E.g. Kira, Notion, Doctolib...'],
+    'vision': ['Ex : Devenir la référence RH pour les PME en Europe', 'E.g. Become the HR reference for SMEs in Europe'],
+  };
+  Object.keys(_phrs).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el && el.placeholder !== undefined) el.placeholder = lang==='en'?_phrs[id][1]:_phrs[id][0];
+  });
+  var _optrs = {
+    'horizon': [['Ce trimestre (3 mois)', 'This quarter (3 months)'], ['Ce semestre (6 mois)', 'This semester (6 months)'], ['Cette année (12 mois)', 'This year (12 months)']],
+  };
+  Object.keys(_optrs).forEach(function(selId){
+    var sel=document.getElementById(selId); if(!sel) return;
+    var opts=_optrs[selId]; var l=lang==='en'?1:0;
+    for(var i=0;i<sel.options.length;i++){ if(opts[i]) sel.options[i].text=opts[i][l]; }
+  });
+
+  var _finrs = lang === 'en' ? {
+    'btn_save': 'Save',
+    'lbl_groq_free': 'Free',
+  } : {
+    'btn_save': 'Enregistrer',
+    'lbl_groq_free': 'Gratuit',
+  };
+  Object.keys(_finrs).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finrs[id];});
+
+  var _sl3 = lang === 'en' ? {
+    'lbl_ctx_title': 'Product context',
+    'lbl_features_title': 'Features &amp; initiatives',
+  } : {
+    'lbl_ctx_title': 'Contexte produit',
+    'lbl_features_title': 'Features &amp; initiatives',
+  };
+  Object.keys(_sl3).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_sl3[id];});
+
+  var _sl = lang === 'en' ? {
+    'lbl_prod_name': 'Product name',
+    'lbl_horizon': 'Horizon',
+    'lbl_audience': 'Target audience',
+    'lbl_vision': 'Vision / strategic objective',
+    'lbl_results_title': 'Generated roadmap',
+  } : {
+    'lbl_prod_name': 'Nom du produit',
+    'lbl_horizon': 'Horizon',
+    'lbl_audience': 'Audience cible',
+    'lbl_vision': 'Vision / objectif stratégique',
+    'lbl_results_title': 'Roadmap générée',
+  };
+  Object.keys(_sl).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_sl[id];});
+
+  // Static labels
+  var _t = lang === 'en' ? {
+    'lbl_ctx_title': 'Product context',
+    'lbl_prod_name': 'Product name',
+    'lbl_horizon': 'Horizon',
+    'lbl_audience': 'Target audience',
+    'lbl_vision': 'Vision / strategic objective',
+    'lbl_features_title': 'Features &amp; initiatives',
+    'lbl_results_title': 'Generated roadmap',
+    'lbl_pitch_title': '&#128172; Narrative pitch',
+    'lbl_msg_title': '&#127919; Key messages for this audience',
+  } : {
+    'lbl_ctx_title': 'Contexte produit',
+    'lbl_prod_name': 'Nom du produit',
+    'lbl_horizon': 'Horizon',
+    'lbl_audience': 'Audience cible',
+    'lbl_vision': 'Vision / objectif strat&eacute;gique',
+    'lbl_features_title': 'Features &amp; initiatives',
+    'lbl_results_title': 'Roadmap g&eacute;n&eacute;r&eacute;e',
+    'lbl_pitch_title': '&#128172; Pitch narratif',
+    'lbl_msg_title': '&#127919; Messages cl&eacute;s pour cette audience',
+  };
+  Object.keys(_t).forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.innerHTML = _t[id];
+  });
+
+  var fr = document.getElementById('howtoStepsFr');
+  var en = document.getElementById('howtoStepsEn');
+  if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';
+  if(en) en.style.display = lang === 'en' ? 'flex' : 'none';
+  var lbl = document.getElementById('howtoLabel');
+  if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; Comment ça marche ?' : '&#9432; How does it work?';
+}
+// Sync on load (IIFE may have fired before this function was defined)
+(function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
 
 </script>
