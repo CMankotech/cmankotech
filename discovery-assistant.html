@@ -69,7 +69,8 @@ textarea{min-height:100px;line-height:1.6}
 
 /* SUBMIT */
 .btn-random{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:var(--violet);border-radius:6px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;white-space:nowrap}
-.btn-random:hover{background:rgba(167,139,250,0.2);border-color:rgba(167,139,250,0.4)}width:100%;padding:1rem;background:linear-gradient(135deg,#3b82f6,#8b5cf6);border:none;border-radius:10px;color:white;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden}
+.btn-random:hover{background:rgba(167,139,250,0.2);border-color:rgba(167,139,250,0.4)}
+.btn-launch{width:100%;padding:1rem;background:linear-gradient(135deg,#3b82f6,#8b5cf6);border:none;border-radius:10px;color:white;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden}
 .btn-launch:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 8px 30px -8px rgba(139,92,246,0.5)}
 .btn-launch:active{transform:translateY(0)}
 .btn-launch:disabled{opacity:0.5;cursor:not-allowed;transform:none}
@@ -141,6 +142,24 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
 .lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(34,211,238,0.15);color:var(--cyan)}
+
+.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(34,211,238,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+.btn-demo:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(34,211,238,0.04)}
+.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.2);border-radius:4px;color:var(--cyan)}
+
+.howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
+.howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
+.howto-trigger:hover{background:rgba(255,255,255,0.04)}
+.howto-trigger .arrow{font-size:0.7rem;transition:transform 0.25s;color:var(--muted)}
+.howto-trigger.open .arrow{transform:rotate(180deg)}
+.howto-body{display:none;padding:1rem 1.2rem 1.2rem;border-top:1px solid var(--border)}
+.howto-body.open{display:block}
+.howto-steps{display:flex;flex-direction:column;gap:0.6rem}
+.howto-step{display:flex;gap:0.75rem;align-items:flex-start}
+.howto-step-num{min-width:1.4rem;height:1.4rem;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:var(--muted);flex-shrink:0;margin-top:0.1rem}
+.howto-step-text{font-size:0.8rem;color:var(--dim);line-height:1.5}
+.howto-step-text a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.howto-step-text a:hover{color:var(--text)}
 </style>
 </head>
 <body>
@@ -163,15 +182,27 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
   </header>
 
   <!-- API KEY SETUP -->
+  <div class="howto">
+    <button class="howto-trigger" onclick="toggleHowto(this)" id="howtoTrigger">
+      <span id="howtoLabel">&#9432; Comment ça marche ?</span>
+      <span class="arrow">&#9660;</span>
+    </button>
+    <div class="howto-body" id="howtoBody">
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer sans clé API</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Pour analyser ton propre problème, crée un compte gratuit sur <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) ou <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Colle ta clé dans le champ en haut et clique <strong>Enregistrer</strong>. Elle reste dans ton navigateur uniquement.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Décris ton problème produit et lance l'analyse.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try without API key</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">To analyse your own problem, create a free account at <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) or <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Paste your key in the field above and click <strong>Save</strong>. It stays in your browser only.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Describe your product problem and run the analysis.</div></div></div>
+    </div>
+  </div>
+
+
   <div class="setup-card" id="setupCard">
     <span class="setup-label">&#128273; Configuration</span>
     <div class="provider-toggle">
-      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag">Gratuit</span></button>
+      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag" id="lbl_groq_free">Gratuit</span></button>
       <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
     </div>
     <div class="setup-row">
       <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
-      <button class="btn-save" onclick="saveKey()">Enregistrer</button>
+      <button class="btn-save" id="btn_save" onclick="saveKey()">Enregistrer</button>
     </div>
     <p class="setup-note" id="providerNote">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a> &rarr; API Keys &rarr; Create API Key. La cl&eacute; reste dans ton navigateur uniquement.</p>
     <div class="key-saved" id="keySaved">&#10003; Cl&eacute; enregistr&eacute;e, tu peux lancer ta discovery.</div>
@@ -181,18 +212,18 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
   <div class="form-card" id="formCard">
     <div class="field">
       <label class="field-label" style="justify-content:space-between">
-        <span>Probl&egrave;me utilisateur <span class="required">&#9679; Requis</span></span>
+        <span><span id="lbl_problem">Probl&egrave;me utilisateur</span> <span class="required">&#9679; Requis</span></span>
         <button class="btn-random" onclick="randomProblem()" type="button">&#127922; Exemple al&eacute;atoire</button>
       </label>
       <textarea id="problem" placeholder="Ex : Les managers de mon app RH ne savent pas quels collaborateurs sont en risque de d&eacute;sengagement avant que ce soit trop tard." rows="4"></textarea>
     </div>
     <div class="options-row">
       <div class="field">
-        <label class="field-label">Cible utilisateur</label>
+        <label class="field-label"><span id="lbl_target">Cible utilisateur</span></label>
         <input type="text" id="target" placeholder="Ex : Managers d'&eacute;quipe B2B, 30-45 ans">
       </div>
       <div class="field">
-        <label class="field-label">Contexte produit</label>
+        <label class="field-label"><span id="lbl_ctx">Contexte produit</span></label>
         <input type="text" id="context" placeholder="Ex : SaaS RH, scale-up 50 employ&eacute;s">
       </div>
     </div>
@@ -203,6 +234,8 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
   <button class="btn-launch" id="launchBtn" onclick="launch()">
     <span class="btn-inner">&#9654; Lancer la discovery</span>
   </button>
+
+  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer sans clé API </span><span class="demo-badge" id="badge_demo">Démo</span></button>
 
   <!-- LOADING -->
   <div class="loading" id="loading">
@@ -218,14 +251,14 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
   <!-- RESULTS -->
   <div class="results" id="results">
     <div class="results-header">
-      <span class="results-title">R&eacute;sultats de ta discovery</span>
+      <span class="results-title"><span id="lbl_results_title">R&eacute;sultats de ta discovery</span></span>
       <button class="btn-reset" onclick="reset()">&#8635; Nouvelle discovery</button>
     </div>
 
     <div class="result-block" id="blockHyp">
       <div class="result-block-header">
         <span class="result-block-num num-hyp">H</span>
-        <span class="result-block-title">Hypoth&egrave;ses &agrave; tester</span>
+        <span class="result-block-title"><span id="lbl_hypo">Hypoth&egrave;ses &agrave; tester</span></span>
       </div>
       <div class="result-block-body" id="hypBody"></div>
     </div>
@@ -233,7 +266,7 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
     <div class="result-block" id="blockInt">
       <div class="result-block-header">
         <span class="result-block-num num-int">I</span>
-        <span class="result-block-title">Questions d&rsquo;interview utilisateur</span>
+        <span class="result-block-title"><span id="lbl_questions">Questions d&rsquo;interview utilisateur</span></span>
       </div>
       <div class="result-block-body" id="intBody"></div>
     </div>
@@ -241,14 +274,14 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
     <div class="result-block" id="blockPlan">
       <div class="result-block-header">
         <span class="result-block-num num-plan">T</span>
-        <span class="result-block-title">Plan de test recommand&eacute;</span>
+        <span class="result-block-title"><span id="lbl_plan">Plan de test recommand&eacute;</span></span>
       </div>
       <div class="result-block-body" id="planBody"></div>
     </div>
   </div>
 
   <footer>
-    <p class="footer-by">Construit par <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager</p>
+    <p class="footer-by"><span id="footer_by">Construit par</span> <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; <span id="footer_role">AI Product Manager</span></p>
   </footer>
 
 </div>
@@ -508,8 +541,9 @@ function setLang(lang) {
   });
   // Provider note
   if(typeof provider !== 'undefined') {
-    if(provider === 'groq' && T['note.groq']) document.getElementById('providerNote').innerHTML = T['note.groq'];
-    else if(provider === 'openai' && T['note.openai']) document.getElementById('providerNote').innerHTML = T['note.openai'];
+    var pNote = document.getElementById('providerNote');
+    if(pNote && provider === 'groq' && T['note.groq']) pNote.innerHTML = T['note.groq'];
+    else if(pNote && provider === 'openai' && T['note.openai']) pNote.innerHTML = T['note.openai'];
   }
   if(typeof applyLangExtras === 'function') applyLangExtras(lang, T);
 }
@@ -517,5 +551,117 @@ function setLang(lang) {
   var params = new URLSearchParams(window.location.search);
   if (params.get('lang') === 'en') setLang('en');
 })();
+
+
+var MOCK_DA = {
+  hypotheses: [
+    {title: "Les utilisateurs ne comprennent pas la valeur du produit au premier usage", description: "L’onboarding ne montre pas concrètement ce que l’outil change dans leur quotidien. Sans 'aha moment' rapide, ils partent.", test: "Tester un onboarding restructuré avec une démo interactive dès J1."},
+    {title: "La courbe d’apprentissage est trop abrupte pour les non-techniciens", description: "Le produit est conçu par des profils techniques qui sous-estiment la complexité perçue par des utilisateurs métier.", test: "Conduire 5 tests utilisateurs avec des profils non-tech et mesurer le time-to-first-value."},
+    {title: "L’absence de guidage contextuel crée de l’anxieté d’usage", description: "Les utilisateurs ne savent pas quelle action faire ensuite. L’interface manque de signaux de progression.", test: "Ajouter des tooltips contextuels et mesurer l’impact sur le taux de completion de l’onboarding."}
+  ],
+  interview_questions: [
+    "Pouvez-vous me raconter la première fois que vous avez utilisé le produit ? Qu’est-ce qui s’est passé ?",
+    "Qu’est-ce qui vous a donné envie d’explorer ou au contraire de décrocher ?",
+    "Quel moment vous a fait dire 'ah, je comprends maintenant à quoi ça sert' ?",
+    "Si vous deviez expliquer le produit à un collègue en 30 secondes, que diriez-vous ?",
+    "Qu’est-ce qui vous manquait pour être plus à l’aise dans les premières minutes ?"
+  ],
+  test_plan: {
+    objective: "Identifier les points de friction dans les 10 premières minutes d’usage",
+    method: "Tests utilisateurs modifiés (5 participants, profils métier non-techniciens)",
+    duration: "2 semaines",
+    success_metric: "Taux de completion de l’onboarding > 70% et identification de 3 pain points prioritaires",
+    steps: ["Recruter 5 utilisateurs cibles via le CRM", "Préparer un scénario de test standardisé", "Conduire les sessions et enregistrer les écrans", "Analyser avec l’User Interview Analyzer", "Prioriser les corrections dans le backlog"]
+  }
+};
+
+function launchDemo() {
+  hideError();
+  var problemEl = document.getElementById('problemInput');
+  var userEl = document.getElementById('targetUser');
+  var ctxEl = document.getElementById('contextInput');
+  if(problemEl) problemEl.value = "Les utilisateurs abandonnent lors de l’onboarding : 60% ne complètent pas la configuration initiale et ne reviennent pas après J3.";
+  if(userEl) userEl.value = "Nouvel utilisateur non-technique (profil métier)";
+  if(ctxEl) ctxEl.value = "SaaS B2B, freemium, onboarding auto-guidé";
+  document.getElementById('launchBtn').disabled = true;
+  document.getElementById('results') && document.getElementById('results').classList.remove('show');
+  document.getElementById('loading').classList.add('show');
+  setTimeout(function() {
+    document.getElementById('loading').classList.remove('show');
+    document.getElementById('launchBtn').disabled = false;
+    if(typeof renderResults === 'function') renderResults(MOCK_DA);
+  }, 2000);
+}
+
+
+function toggleHowto(btn) {
+  btn.classList.toggle('open');
+  document.getElementById('howtoBody').classList.toggle('open');
+}
+function applyLangExtras(lang) {
+  var _extradaX = {
+    'badge_demo': ['Démo', 'Demo'],
+    'btn_demo_txt': ['&#9654; Essayer sans clé API ', '&#9654; Try without API key '],
+    'footer_by': ['Construit par', 'Built by'],
+    'footer_role': ['AI Product Manager', 'AI Product Manager'],
+  };
+  Object.keys(_extradaX).forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    var v=lang==='en'?_extradaX[id][1]:_extradaX[id][0];
+    if('placeholder' in el) el.placeholder=v; else el.innerHTML=v;
+  });
+
+  // Placeholders
+  var _phda = {
+    'problem': ['Ex : Les managers de mon app RH ne savent pas quels collaborateurs sont en risque...', 'E.g. The managers of my HR app don\'t know which employees are at risk...'],
+    'target': ['Ex : Managers d\'équipe B2B, 30-45 ans', 'E.g. B2B team managers, 30-45 years old'],
+    'context': ['Ex : SaaS RH, scale-up 50 employés', 'E.g. HR SaaS, scale-up 50 employees'],
+  };
+  Object.keys(_phda).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el && el.placeholder !== undefined) el.placeholder = lang==='en'?_phda[id][1]:_phda[id][0];
+  });
+
+  var _finda = lang === 'en' ? {
+    'btn_save': 'Save',
+    'lbl_groq_free': 'Free',
+  } : {
+    'btn_save': 'Enregistrer',
+    'lbl_groq_free': 'Gratuit',
+  };
+  Object.keys(_finda).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finda[id];});
+
+  // Static labels
+  var _t = lang === 'en' ? {
+    'lbl_problem': 'User problem',
+    'lbl_target': 'Target user',
+    'lbl_ctx': 'Product context',
+    'lbl_results_title': 'Your discovery results',
+    'lbl_hypo': 'Hypotheses to test',
+    'lbl_questions': 'User interview questions',
+    'lbl_plan': 'Recommended test plan',
+  } : {
+    'lbl_problem': 'Probl&egrave;me utilisateur',
+    'lbl_target': 'Cible utilisateur',
+    'lbl_ctx': 'Contexte produit',
+    'lbl_results_title': 'R&eacute;sultats de ta discovery',
+    'lbl_hypo': 'Hypoth&egrave;ses &agrave; tester',
+    'lbl_questions': 'Questions d&rsquo;interview utilisateur',
+    'lbl_plan': 'Plan de test recommand&eacute;',
+  };
+  Object.keys(_t).forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.innerHTML = _t[id];
+  });
+
+  var fr = document.getElementById('howtoStepsFr');
+  var en = document.getElementById('howtoStepsEn');
+  if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';
+  if(en) en.style.display = lang === 'en' ? 'flex' : 'none';
+  var lbl = document.getElementById('howtoLabel');
+  if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; Comment ça marche ?' : '&#9432; How does it work?';
+}
+// Sync on load (IIFE may have fired before this function was defined)
+(function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
 
 </script>
