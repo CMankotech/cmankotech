@@ -168,6 +168,30 @@ footer a:hover{text-decoration:underline}
 .lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(34,211,238,0.15);color:var(--cyan)}
+
+/* LANG TOGGLE */
+.lang-bar{display:flex;justify-content:flex-end;margin-bottom:1.5rem}
+.lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
+.lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.lang-btn.active{background:rgba(34,211,238,0.15);color:var(--cyan)}
+
+.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(34,211,238,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+.btn-demo:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(34,211,238,0.04)}
+.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.2);border-radius:4px;color:var(--cyan)}
+
+.howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
+.howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
+.howto-trigger:hover{background:rgba(255,255,255,0.04)}
+.howto-trigger .arrow{font-size:0.7rem;transition:transform 0.25s;color:var(--muted)}
+.howto-trigger.open .arrow{transform:rotate(180deg)}
+.howto-body{display:none;padding:1rem 1.2rem 1.2rem;border-top:1px solid var(--border)}
+.howto-body.open{display:block}
+.howto-steps{display:flex;flex-direction:column;gap:0.6rem}
+.howto-step{display:flex;gap:0.75rem;align-items:flex-start}
+.howto-step-num{min-width:1.4rem;height:1.4rem;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:var(--muted);flex-shrink:0;margin-top:0.1rem}
+.howto-step-text{font-size:0.8rem;color:var(--dim);line-height:1.5}
+.howto-step-text a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.howto-step-text a:hover{color:var(--text)}
 </style>
 </head>
 <body>
@@ -186,16 +210,27 @@ footer a:hover{text-decoration:underline}
     <p class="subtitle">Colle tes notes d'entretien brutes. L'IA extrait les pain points, les citations clés, les opportunités produit et génère un persona synthétique.</p>
   </header>
 
+<div class="howto">
+    <button class="howto-trigger" onclick="toggleHowto(this)" id="howtoTrigger">
+      <span id="howtoLabel">&#9432; Comment ça marche ?</span>
+      <span class="arrow">&#9660;</span>
+    </button>
+    <div class="howto-body" id="howtoBody">
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer sans clé API</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Pour analyser tes propres entretiens, crée un compte gratuit sur <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) ou <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Colle ta clé dans le champ en haut et clique <strong>Enregistrer</strong>. Elle reste dans ton navigateur uniquement.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Colle tes notes d'entretiens et lance l'analyse.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try without API key</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">To analyse your own interviews, create a free account at <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) or <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Paste your key in the field above and click <strong>Save</strong>. It stays in your browser only.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Paste your interview notes and run the analysis.</div></div></div>
+    </div>
+  </div>
+
   <!-- CONFIG -->
   <div class="card">
     <div class="card-title">&#128273; Configuration</div>
     <div class="provider-row">
-      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag">Gratuit</span></button>
+      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag" id="lbl_groq_free">Gratuit</span></button>
       <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
     </div>
     <div class="key-row">
       <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
-      <button class="btn-save" onclick="saveKey()">Enregistrer</button>
+      <button class="btn-save" id="btn_save" onclick="saveKey()">Enregistrer</button>
     </div>
     <p class="note" id="providerNote">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La clé reste dans ton navigateur.</p>
     <div class="saved-msg" id="savedMsg">&#10003; Clé enregistrée.</div>
@@ -204,20 +239,20 @@ footer a:hover{text-decoration:underline}
   <!-- INTERVIEWS -->
   <div class="card">
     <div class="card-title">
-      Entretiens utilisateurs
+      <span id="lbl_interviews_title">Entretiens utilisateurs</span>
       <button class="btn-examples" onclick="loadExamples()">&#127922; Exemples</button>
     </div>
 
     <div class="input-tabs">
-      <button class="input-tab active" id="tabSingle" onclick="setMode('single')">1 entretien</button>
-      <button class="input-tab" id="tabMulti" onclick="setMode('multi')">Plusieurs (2-5)</button>
+      <button class="input-tab active" id="tabSingle" onclick="setMode('single')"><span id="lbl_one_interview"><span id="lbl_one">1 entretien</span></span></button>
+      <button class="input-tab" id="tabMulti" onclick="setMode('multi')"><span id="lbl_multi_interview"><span id="lbl_multi">Plusieurs (2-5)</span></span></button>
     </div>
 
     <!-- SINGLE -->
     <div id="singleMode">
-      <label class="field-label">Notes brutes de l'entretien</label>
+      <label class="field-label"><span id="lbl_notes_title">Notes brutes de l'entretien</span></label>
       <textarea id="singleText" rows="9" placeholder="Colle ici tes notes, verbatims, ou une retranscription partielle de l'entretien.&#10;&#10;Ex : Utilisateur 32 ans, chef de projet, utilise l'outil depuis 3 mois. Se plaint du temps passé à faire des reportings manuels. Cite Excel comme outil principal. A essayé l'export mais ne sait pas où trouver le bouton. Frustré par le manque de notifications. Souhaite un récap hebdomadaire auto..."></textarea>
-      <p class="hint">Pas besoin de format particulier : des notes brutes suffisent.</p>
+      <p class="hint" id="hint_no_format">Pas besoin de format particulier : des notes brutes suffisent.</p>
     </div>
 
     <!-- MULTI -->
@@ -228,7 +263,7 @@ footer a:hover{text-decoration:underline}
 
     <!-- CONTEXT -->
     <div style="margin-top:1.5rem">
-      <div class="card-title">Contexte produit <span style="font-size:0.57rem;color:var(--muted);text-transform:none;letter-spacing:0">(optionnel)</span></div>
+      <div class="card-title"><span id="lbl_ctx">Contexte produit</span> <span style="font-size:0.57rem;color:var(--muted);text-transform:none;letter-spacing:0"><span id="lbl_optional_ctx">(optionnel)</span></div>
       <input class="context-input" type="text" id="context" placeholder="Ex : SaaS de gestion de projet B2B, cible PME, phase de rétention">
     </div>
   </div>
@@ -238,6 +273,9 @@ footer a:hover{text-decoration:underline}
   <button class="btn-launch" id="launchBtn" onclick="launch()">
     &#9654; Analyser les entretiens
   </button>
+
+
+  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer sans clé API </span><span class="demo-badge" id="badge_demo">Démo</span></button>
 
   <!-- LOADING -->
   <div class="loading" id="loading">
@@ -249,31 +287,31 @@ footer a:hover{text-decoration:underline}
   <div class="results" id="results">
     <div class="results-topbar">
       <div class="results-info">
-        <div class="results-title">Synthèse des entretiens</div>
+        <div class="results-title"><span id="lbl_results_title">Synthèse des entretiens</span></div>
         <div class="results-sub" id="resultsSub"></div>
       </div>
       <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
     </div>
 
     <!-- PERSONA -->
-    <div class="section-label">Persona synthétique</div>
+    <div class="section-label"><span id="lbl_persona">Persona synthétique</span></div>
     <div class="persona-card" id="personaCard"></div>
 
     <!-- PAIN POINTS -->
-    <div class="section-label">Pain points groupés</div>
+    <div class="section-label"><span id="lbl_pain">Pain points groupés</span></div>
     <div id="painContainer" style="margin-bottom:1.25rem"></div>
 
     <!-- QUOTES -->
-    <div class="section-label">Citations marquantes</div>
+    <div class="section-label"><span id="lbl_quotes">Citations marquantes</span></div>
     <div class="quotes-grid" id="quotesContainer"></div>
 
     <!-- OPPORTUNITIES -->
-    <div class="section-label">Opportunités produit</div>
+    <div class="section-label"><span id="lbl_opps">Opportunités produit</span></div>
     <div class="opps-grid" id="oppsContainer"></div>
   </div>
 
   <footer>
-    Construit par <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager
+    <span id="footer_by">Construit par</span> <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; <span id="footer_role">AI Product Manager</span>
   </footer>
 
 </div>
@@ -600,4 +638,191 @@ function setLang(lang) {
   if (params.get('lang') === 'en') setLang('en');
 })();
 
+
+// ---- i18n ----
+var LANG = {
+  fr: {
+    'title': 'User Interview <span class="grad">Analyzer</span>',
+    'subtitle': "Colle tes notes d'entretiens utilisateurs. L'IA extrait les pain points, génère un persona et identifie les opportunités produit.",
+    'btn.launch': '&#9654; Analyser les entretiens',
+    'loading.text': 'Analyse en cours...',
+    'btn.reset': '&#8635; Recommencer',
+    'btn.save': 'Enregistrer',
+    'saved': '&#10003; Clé enregistrée.',
+    'note.groq': 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La clé reste dans ton navigateur.',
+    'note.openai': 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.'
+  },
+  en: {
+    'title': 'User Interview <span class="grad">Analyzer</span>',
+    'subtitle': "Paste your user interview notes. The AI extracts pain points, generates a persona and identifies product opportunities.",
+    'btn.launch': '&#9654; Analyse interviews',
+    'loading.text': 'Analysing...',
+    'btn.reset': '&#8635; Start over',
+    'btn.save': 'Save',
+    'saved': '&#10003; Key saved.',
+    'note.groq': 'Free at <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. Key stays in your browser.',
+    'note.openai': 'Account at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.',
+    'ph.contextInput': 'Optional product context...'
+  }
+};
+var currentLang = 'fr';
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('lbFr').classList.toggle('active', lang === 'fr');
+  document.getElementById('lbEn').classList.toggle('active', lang === 'en');
+  var T = LANG[lang];
+  if(T['title'] && document.querySelector('h1')) document.querySelector('h1').innerHTML = T['title'];
+  if(T['subtitle'] && document.querySelector('.subtitle')) document.querySelector('.subtitle').innerHTML = T['subtitle'];
+  var launchBtn = document.getElementById('launchBtn');
+  if(launchBtn && T['btn.launch']) launchBtn.innerHTML = T['btn.launch'];
+  var loadingTxt = document.querySelector('.loading-text');
+  if(loadingTxt && T['loading.text']) loadingTxt.innerHTML = T['loading.text'];
+  document.querySelectorAll('.btn-save').forEach(function(b) { if(T['btn.save']) b.textContent = T['btn.save']; });
+  var resetBtn = document.querySelector('.btn-reset');
+  if(resetBtn && T['btn.reset']) resetBtn.innerHTML = T['btn.reset'];
+  var savedMsg = document.getElementById('savedMsg');
+  if(savedMsg && T['saved']) savedMsg.innerHTML = T['saved'];
+  if(typeof provider !== 'undefined') {
+    if(provider === 'groq' && T['note.groq']) document.getElementById('providerNote').innerHTML = T['note.groq'];
+    else if(provider === 'openai' && T['note.openai']) document.getElementById('providerNote').innerHTML = T['note.openai'];
+  }
+  applyLangExtras(lang);
+}
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('lang') === 'en') setLang('en');
+})();
+
+// ---- DEMO MODE ----
+var MOCK_UIA = {
+  persona: {name:"Sophie, Responsable Formation",emoji:"👩‍💻",description:"Sophie pilote la formation de 200 collaborateurs dans une ETI industrielle. Elle jongle entre LMS, tableurs et emails. Elle manque de temps et cherche des outils simples.",tags:["Non-technicienne","Time-poor","Power user Excel","Décideur budget"]},
+  pain_points: [
+    {group:"Suivi & reporting",count:4,items:["Impossible de voir en temps réel qui a suivi quoi","Les rapports sont manuels et prennent 2h par semaine","Les managers demandent des stats que le LMS ne fournit pas"]},
+    {group:"Complexité d'usage",count:3,items:["L'interface est pensée pour des admins IT","Trop de clics pour assigner un parcours","La recherche ne fonctionne pas intuitivement"]},
+    {group:"Adoption collaborateurs",count:3,items:["Les employés oublient de se connecter sans relance manuelle","Les notifications sont trop génériques","Mobile non optimisé alors que 60% accèdent depuis le téléphone"]}
+  ],
+  quotes: ["Je passe plus de temps à gérer l'outil qu'à former les gens.","Mon manager me demande un reporting chaque lundi et je dois tout faire à la main dans Excel.","Si les employés pouvaient se connecter depuis leur téléphone sans galère, on doublerait les taux de completion."],
+  opportunities: [
+    {title:"Dashboard manager en self-service",impact:"high",description:"Un reporting automatique hebdomadaire réduirait 2h de travail manuel par semaine."},
+    {title:"Relances automatisées et personnalisées",impact:"high",description:"Des notifications contextuelles augmenteraient le taux de completion sans effort RH."},
+    {title:"Refonte de la navigation admin",impact:"medium",description:"Réduire le nombre de clics pour les 5 actions les plus fréquentes diminuerait la frustration."},
+    {title:"App mobile optimisée",impact:"medium",description:"60% des accès sont mobiles. Une expérience native multiplierait l'engagement."}
+  ]
+};
+function launchDemo() {
+  hideError();
+  var notesEl = document.querySelector('textarea');
+  if(notesEl) notesEl.value = "Sophie, Responsable Formation, ETI 200 personnes.\n\nElle utilise le LMS depuis 2 ans. Problème principal : le suivi. Elle passe 2h/semaine à faire des rapports manuels. Les managers veulent des stats en temps réel. L'interface est trop complexe. 'Je passe plus de temps à gérer l'outil qu'à former les gens.' Les employés oublient de se connecter. 60% accèdent depuis mobile mais l'expérience est mauvaise.";
+  document.getElementById('launchBtn').disabled = true;
+  document.getElementById('results') && document.getElementById('results').classList.remove('show');
+  document.getElementById('loading').classList.add('show');
+  setTimeout(function() {
+    document.getElementById('loading').classList.remove('show');
+    document.getElementById('launchBtn').disabled = false;
+    if(typeof renderResults === 'function') renderResults(MOCK_UIA);
+  }, 2000);
+}
+
+function toggleHowto(btn) {
+  btn.classList.toggle('open');
+  document.getElementById('howtoBody').classList.toggle('open');
+}
+function applyLangExtras(lang) {
+  var _extrauiaX = {
+    'badge_demo': ['Démo', 'Demo'],
+    'btn_demo_txt': ['&#9654; Essayer sans clé API ', '&#9654; Try without API key '],
+    'footer_by': ['Construit par', 'Built by'],
+    'footer_role': ['AI Product Manager', 'AI Product Manager'],
+    'hint_no_format': ['Pas besoin de format particulier : des notes brutes suffisent.', 'No special format needed: rough notes are fine.'],
+    'lbl_optional_ctx': ['(optionnel)', '(optional)'],
+  };
+  Object.keys(_extrauiaX).forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    var v=lang==='en'?_extrauiaX[id][1]:_extrauiaX[id][0];
+    if('placeholder' in el) el.placeholder=v; else el.innerHTML=v;
+  });
+
+  // Placeholders
+  var _phuia = {
+    'singleText': ['Colle ici tes notes, verbatims, ou une retranscription partielle de l\'entretien.', 'Paste your notes, verbatims, or a partial transcript of the interview here.'],
+    'context': ['Ex : SaaS de gestion de projet B2B, cible PME, phase de rétention', 'E.g. B2B project management SaaS, SMB target, retention phase'],
+  };
+  Object.keys(_phuia).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el && el.placeholder !== undefined) el.placeholder = lang==='en'?_phuia[id][1]:_phuia[id][0];
+  });
+
+  var _finuia = lang === 'en' ? {
+    'btn_save': 'Save',
+    'lbl_groq_free': 'Free',
+  } : {
+    'btn_save': 'Enregistrer',
+    'lbl_groq_free': 'Gratuit',
+  };
+  Object.keys(_finuia).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finuia[id];});
+
+  var _sl = lang === 'en' ? {
+    'lbl_interviews_title': 'User interviews',
+    'lbl_ctx': 'Product context',
+    'lbl_results_title': 'Interview synthesis',
+    'lbl_persona': 'Synthetic persona',
+    'lbl_pain': 'Grouped pain points',
+    'lbl_quotes': 'Key quotes',
+    'lbl_opps': 'Product opportunities',
+    'lbl_one': '1 interview',
+    'lbl_multi': 'Multiple (2-5)',
+    'lbl_notes': 'Raw interview notes',
+  } : {
+    'lbl_interviews_title': 'Entretiens utilisateurs',
+    'lbl_ctx': 'Contexte produit',
+    'lbl_results_title': 'Synthèse des entretiens',
+    'lbl_persona': 'Persona synthétique',
+    'lbl_pain': 'Pain points groupés',
+    'lbl_quotes': 'Citations marquantes',
+    'lbl_opps': 'Opportunités produit',
+    'lbl_one': '1 entretien',
+    'lbl_multi': 'Plusieurs (2-5)',
+    'lbl_notes': "Notes brutes de l'entretien",
+  };
+  Object.keys(_sl).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_sl[id];});
+
+  // Static labels
+  var _t = lang === 'en' ? {
+    'lbl_interviews_title': 'User interviews',
+    'lbl_one_interview': '1 interview',
+    'lbl_multi_interview': 'Multiple (2-5)',
+    'lbl_notes_title': 'Raw interview notes',
+    'lbl_ctx': 'Product context',
+    'lbl_results_title': 'Interview synthesis',
+    'lbl_persona': 'Synthetic persona',
+    'lbl_pain': 'Grouped pain points',
+    'lbl_quotes': 'Key quotes',
+    'lbl_opps': 'Product opportunities',
+  } : {
+    'lbl_interviews_title': 'Entretiens utilisateurs',
+    'lbl_one_interview': '1 entretien',
+    'lbl_multi_interview': 'Plusieurs (2-5)',
+    'lbl_notes_title': "Notes brutes de l'entretien",
+    'lbl_ctx': 'Contexte produit',
+    'lbl_results_title': 'Synth&egrave;se des entretiens',
+    'lbl_persona': 'Persona synth&eacute;tique',
+    'lbl_pain': 'Pain points group&eacute;s',
+    'lbl_quotes': 'Citations marquantes',
+    'lbl_opps': 'Opportunit&eacute;s produit',
+  };
+  Object.keys(_t).forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.innerHTML = _t[id];
+  });
+
+  var fr = document.getElementById('howtoStepsFr');
+  var en = document.getElementById('howtoStepsEn');
+  if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';
+  if(en) en.style.display = lang === 'en' ? 'flex' : 'none';
+  var lbl = document.getElementById('howtoLabel');
+  if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; Comment ça marche ?' : '&#9432; How does it work?';
+}
+
 </script>
+</body>
+</html>
