@@ -161,6 +161,24 @@ footer a:hover{text-decoration:underline}
 .lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(167,139,250,0.15);color:var(--violet)}
+
+.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(167,139,250,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+.btn-demo:hover{border-color:var(--violet);color:var(--violet);background:rgba(167,139,250,0.04)}
+.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);border-radius:4px;color:var(--violet)}
+
+.howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
+.howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
+.howto-trigger:hover{background:rgba(255,255,255,0.04)}
+.howto-trigger .arrow{font-size:0.7rem;transition:transform 0.25s;color:var(--muted)}
+.howto-trigger.open .arrow{transform:rotate(180deg)}
+.howto-body{display:none;padding:1rem 1.2rem 1.2rem;border-top:1px solid var(--border)}
+.howto-body.open{display:block}
+.howto-steps{display:flex;flex-direction:column;gap:0.6rem}
+.howto-step{display:flex;gap:0.75rem;align-items:flex-start}
+.howto-step-num{min-width:1.4rem;height:1.4rem;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:var(--muted);flex-shrink:0;margin-top:0.1rem}
+.howto-step-text{font-size:0.8rem;color:var(--dim);line-height:1.5}
+.howto-step-text a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.howto-step-text a:hover{color:var(--text)}
 </style>
 </head>
 <body>
@@ -183,15 +201,27 @@ footer a:hover{text-decoration:underline}
   </header>
 
   <!-- API KEY -->
+  <div class="howto">
+    <button class="howto-trigger" onclick="toggleHowto(this)" id="howtoTrigger">
+      <span id="howtoLabel">&#9432; Comment ça marche ?</span>
+      <span class="arrow">&#9660;</span>
+    </button>
+    <div class="howto-body" id="howtoBody">
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer sans clé API</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Pour prioriser ton propre backlog, crée un compte gratuit sur <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) ou <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Colle ta clé dans le champ en haut et clique <strong>Enregistrer</strong>. Elle reste dans ton navigateur uniquement.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Colle tes user stories, choisis ta méthode et lance la priorisation.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try without API key</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">To prioritise your own backlog, create a free account at <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) or <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Paste your key in the field above and click <strong>Save</strong>. It stays in your browser only.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Paste your user stories, pick your method and run prioritisation.</div></div></div>
+    </div>
+  </div>
+
+
   <div class="card">
     <div class="card-title">&#128273; Configuration</div>
     <div class="provider-toggle">
-      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag">Gratuit</span></button>
+      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag" id="lbl_groq_free">Gratuit</span></button>
       <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
     </div>
     <div class="key-row">
       <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
-      <button class="btn-sm btn-save" onclick="saveKey()">Enregistrer</button>
+      <button class="btn-sm btn-save" id="btn_save" onclick="saveKey()">Enregistrer</button>
     </div>
     <p class="note" id="providerNote">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl&eacute; reste dans ton navigateur uniquement.</p>
     <div class="saved-msg" id="savedMsg">&#10003; Cl&eacute; enregistr&eacute;e.</div>
@@ -199,25 +229,25 @@ footer a:hover{text-decoration:underline}
 
   <!-- METHOD -->
   <div class="card">
-    <div class="card-title">M&eacute;thode de priorisation</div>
+    <div class="card-title"><span id="lbl_method">M&eacute;thode de priorisation</span></div>
     <div class="method-toggle">
-      <button class="method-btn active rice" id="btnRice" onclick="setMethod('rice')">RICE Score</button>
-      <button class="method-btn moscow" id="btnMoscow" onclick="setMethod('moscow')">MoSCoW</button>
+      <button class="method-btn active rice" id="btnRice" onclick="setMethod('rice')">><span id="lbl_rice_btn">RICE Score</span></button>
+      <button class="method-btn moscow" id="btnMoscow" onclick="setMethod('moscow')"><span id="lbl_moscow_btn">MoSCoW</span></button>
     </div>
     <div class="method-desc rice" id="methodDesc">
       <strong>RICE</strong> : Reach &times; Impact &times; Confidence / Effort. Donne un score num&eacute;rique pour comparer objectivement les stories.
     </div>
 
     <!-- INPUT MODE -->
-    <div class="card-title" style="margin-top:1.5rem">User Stories <button class="btn-random-stories" onclick="randomStories()" type="button">&#127922; Exemples al&eacute;atoires</button></div>
+    <div class="card-title" style="margin-top:1.5rem"><span id="lbl_stories_title">User Stories</span> <button class="btn-random-stories" onclick="randomStories()" type="button">&#127922; Exemples al&eacute;atoires</button></div>
     <div class="input-tabs">
-      <button class="input-tab active" id="tabText" onclick="setInputMode('text')">Zone de texte</button>
-      <button class="input-tab" id="tabFields" onclick="setInputMode('fields')">Champs individuels</button>
+      <button class="input-tab active" id="tabText" onclick="setInputMode('text')"><span id="lbl_textarea_mode"><span id="lbl_textarea_mode">Zone de texte</span></span></button>
+      <button class="input-tab" id="tabFields" onclick="setInputMode('fields')"><span id="lbl_fields_mode"><span id="lbl_fields_mode">Champs individuels</span></span></button>
     </div>
 
     <div id="textareaMode">
       <textarea id="storiesText" placeholder="Ajouter une barre de progression sur le tableau de bord&#10;Permettre l'export CSV des donn&eacute;es&#10;Envoyer une notification push lors d'un nouvel &eacute;v&eacute;nement&#10;Afficher un graphique de tendance sur 30 jours" rows="6"></textarea>
-      <p class="textarea-hint">Une user story par ligne.</p>
+      <p class="textarea-hint" id="hint_story_line">Une user story par ligne.</p>
     </div>
 
     <div id="fieldsMode">
@@ -227,7 +257,7 @@ footer a:hover{text-decoration:underline}
 
     <!-- CONTEXT -->
     <div class="context-field" style="margin-top:1.5rem">
-      <div class="card-title">Contexte produit <span style="font-size:0.58rem;color:var(--muted);text-transform:none;letter-spacing:0">(optionnel)</span></div>
+      <div class="card-title"><span id="lbl_ctx">Contexte produit</span> <span style="font-size:0.58rem;color:var(--muted);text-transform:none;letter-spacing:0"><span id="lbl_optional_ctx">(optionnel)</span></div>
       <input type="text" id="context" placeholder="Ex : SaaS B2B analytics, 200 clients, priorité retention Q2">
     </div>
   </div>
@@ -237,6 +267,8 @@ footer a:hover{text-decoration:underline}
   <button class="btn-launch" id="launchBtn" onclick="launch()">
     &#9654; Lancer la priorisation
   </button>
+
+  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer sans clé API </span><span class="demo-badge" id="badge_demo">Démo</span></button>
 
   <!-- LOADING -->
   <div class="loading" id="loading">
@@ -248,7 +280,7 @@ footer a:hover{text-decoration:underline}
   <div class="results" id="results">
     <div class="results-header">
       <div class="results-meta">
-        <div class="results-title">Backlog prioris&eacute;</div>
+        <div class="results-title"><span id="lbl_results_title">Backlog prioris&eacute;</span></div>
         <div class="results-sub" id="resultsSub"></div>
       </div>
       <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
@@ -257,7 +289,7 @@ footer a:hover{text-decoration:underline}
   </div>
 
   <footer>
-    Construit par <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager
+    <span id="footer_by">Construit par</span> <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; <span id="footer_role">AI Product Manager</span>
   </footer>
 
 </div>
@@ -571,5 +603,122 @@ function setLang(lang) {
   var params = new URLSearchParams(window.location.search);
   if (params.get('lang') === 'en') setLang('en');
 })();
+
+
+var MOCK_BP = {
+  method: "RICE",
+  items: [
+    {title: "Refonte de l’onboarding", score: 168, reach: 90, impact: 3, confidence: 80, effort: 2, justification: "Touche 90% des nouveaux utilisateurs. Impact direct sur le churn J7 qui est notre KPI prioritaire ce trimestre."},
+    {title: "Module de reporting manager", score: 120, reach: 60, impact: 3, confidence: 90, effort: 4, justification: "Fort impact sur la rétention des comptes entreprise mais effort élevé. Prioritaire après l’onboarding."},
+    {title: "Intégration Slack", score: 96, reach: 70, impact: 2, confidence: 80, effort: 3, justification: "Demandé par plusieurs clients mais impact modéré sur la rétention. Quick win possible."},
+    {title: "Tableau de bord temps réel", score: 72, reach: 50, impact: 3, confidence: 60, effort: 5, justification: "Ambitieux mais risqué. Confiance faible car les specs ne sont pas stabilisées."},
+    {title: "Export CSV des données", score: 48, reach: 40, impact: 2, confidence: 80, effort: 2, justification: "Demandé par des power users. Utile mais faible impact stratégique."}
+  ]
+};
+
+function launchDemo() {
+  hideError();
+  var inputEl = document.getElementById('storiesInput') || document.getElementById('backlogInput');
+  if(inputEl) inputEl.value = "Refonte de l’onboarding\nModule de reporting manager\nIntégration Slack\nTableau de bord temps réel\nExport CSV des données";
+  document.getElementById('launchBtn').disabled = true;
+  document.getElementById('results') && document.getElementById('results').classList.remove('show');
+  document.getElementById('loading').classList.add('show');
+  setTimeout(function() {
+    document.getElementById('loading').classList.remove('show');
+    document.getElementById('launchBtn').disabled = false;
+    if(typeof renderResults === 'function') renderResults(MOCK_BP);
+  }, 2000);
+}
+
+
+function toggleHowto(btn) {
+  btn.classList.toggle('open');
+  document.getElementById('howtoBody').classList.toggle('open');
+}
+function applyLangExtras(lang) {
+  var _extrabpX = {
+    'badge_demo': ['Démo', 'Demo'],
+    'btn_demo_txt': ['&#9654; Essayer sans clé API ', '&#9654; Try without API key '],
+    'footer_by': ['Construit par', 'Built by'],
+    'footer_role': ['AI Product Manager', 'AI Product Manager'],
+    'hint_story_line': ['Une user story par ligne.', 'One user story per line.'],
+    'lbl_optional_ctx': ['(optionnel)', '(optional)'],
+  };
+  Object.keys(_extrabpX).forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    var v=lang==='en'?_extrabpX[id][1]:_extrabpX[id][0];
+    if('placeholder' in el) el.placeholder=v; else el.innerHTML=v;
+  });
+
+  // Placeholders
+  var _phbp = {
+    'storiesText': ['Ajouter une barre de progression...', 'Add a progress bar to the dashboard...'],
+    'productContext': ['Ex : SaaS B2B analytics, 200 clients, priorité retention Q2', 'E.g. B2B analytics SaaS, 200 clients, Q2 retention priority'],
+  };
+  Object.keys(_phbp).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el && el.placeholder !== undefined) el.placeholder = lang==='en'?_phbp[id][1]:_phbp[id][0];
+  });
+
+  var _finbp = lang === 'en' ? {
+    'btn_save': 'Save',
+    'lbl_groq_free': 'Free',
+  } : {
+    'btn_save': 'Enregistrer',
+    'lbl_groq_free': 'Gratuit',
+  };
+  Object.keys(_finbp).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finbp[id];});
+
+  var _sl = lang === 'en' ? {
+    'lbl_stories_title': 'User Stories',
+    'lbl_ctx': 'Product context',
+    'lbl_rice_btn': 'RICE Score',
+    'lbl_moscow_btn': 'MoSCoW',
+    'lbl_textarea_mode': 'Text area',
+    'lbl_fields_mode': 'Individual fields',
+    'lbl_results_title': 'Prioritised backlog',
+  } : {
+    'lbl_stories_title': 'User Stories',
+    'lbl_ctx': 'Contexte produit',
+    'lbl_rice_btn': 'RICE Score',
+    'lbl_moscow_btn': 'MoSCoW',
+    'lbl_textarea_mode': 'Zone de texte',
+    'lbl_fields_mode': 'Champs individuels',
+    'lbl_results_title': 'Backlog priorisé',
+  };
+  Object.keys(_sl).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_sl[id];});
+
+  // Static labels
+  var _t = lang === 'en' ? {
+    'lbl_method': 'Prioritisation method',
+    'lbl_stories_title': 'User Stories',
+    'lbl_textarea_mode': 'Text area',
+    'lbl_fields_mode': 'Individual fields',
+    'lbl_ctx': 'Product context',
+    'lbl_results_title': 'Prioritised backlog',
+    'lbl_rice_desc': 'RICE: Reach &times; Impact &times; Confidence / Effort. Gives a numeric score for objective comparison.',
+  } : {
+    'lbl_method': 'M&eacute;thode de priorisation',
+    'lbl_stories_title': 'User Stories',
+    'lbl_textarea_mode': 'Zone de texte',
+    'lbl_fields_mode': 'Champs individuels',
+    'lbl_ctx': 'Contexte produit',
+    'lbl_results_title': 'Backlog prioris&eacute;',
+    'lbl_rice_desc': 'RICE : Reach &times; Impact &times; Confidence / Effort. Donne un score num&eacute;rique pour comparer objectivement.',
+  };
+  Object.keys(_t).forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.innerHTML = _t[id];
+  });
+
+  var fr = document.getElementById('howtoStepsFr');
+  var en = document.getElementById('howtoStepsEn');
+  if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';
+  if(en) en.style.display = lang === 'en' ? 'flex' : 'none';
+  var lbl = document.getElementById('howtoLabel');
+  if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; Comment ça marche ?' : '&#9432; How does it work?';
+}
+// Sync on load (IIFE may have fired before this function was defined)
+(function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
 
 </script>
