@@ -3,168 +3,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Backlog Prioritizer — by Carlin Mankoto</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<title>Discovery Assistant — by Carlin Mankoto</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#07070e;--surface:#0e0e1a;--surface2:#13131f;
-  --border:rgba(255,255,255,0.07);--line:rgba(255,255,255,0.05);
-  --text:#e2e8f0;--dim:#94a3b8;--muted:#475569;
-  --blue:#60a5fa;--violet:#a78bfa;--cyan:#22d3ee;--green:#4ade80;--orange:#fb923c;--red:#f87171;
+  --bg:#07070e;--surface:#0e0e1a;--glass:rgba(255,255,255,0.03);
+  --border:rgba(255,255,255,0.08);--text:#e2e8f0;--dim:#94a3b8;--muted:#475569;
+  --blue:#60a5fa;--violet:#a78bfa;--cyan:#22d3ee;--red:#f87171;
+  --grad:linear-gradient(135deg,#60a5fa,#a78bfa,#22d3ee);
 }
-html{font-size:16px}
+html{font-size:16px;scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
 h1,h2,h3{font-family:'Syne',sans-serif}
-.glow{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
-.g1{width:500px;height:500px;top:-150px;right:-100px;background:rgba(167,139,250,0.09)}
-.g2{width:400px;height:400px;bottom:10%;left:-80px;background:rgba(59,130,246,0.07)}
-.container{max-width:860px;margin:0 auto;padding:3rem 1.5rem;position:relative;z-index:1}
+
+/* GLOWS */
+.glow{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;opacity:0.6}
+.g1{width:500px;height:500px;top:-150px;left:-100px;background:rgba(59,130,246,0.1)}
+.g2{width:400px;height:400px;bottom:5%;right:-100px;background:rgba(167,139,250,0.08)}
+
+/* LAYOUT */
+.container{max-width:800px;margin:0 auto;padding:3rem 1.5rem;position:relative;z-index:1}
 
 /* HEADER */
-header{text-align:center;margin-bottom:3rem}
-.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--violet);background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.2);padding:0.4rem 1rem;border-radius:99px;margin-bottom:1.25rem}
-.dot{width:5px;height:5px;border-radius:50%;background:var(--violet);animation:pulse 2s infinite}
+header{text-align:center;margin-bottom:3.5rem}
+.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--blue);margin-bottom:1.25rem;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.2);padding:0.4rem 1rem;border-radius:99px}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
 h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-0.03em;line-height:1;margin-bottom:0.75rem}
-.grad{background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.subtitle{font-size:0.88rem;color:var(--dim);max-width:500px;margin:0 auto}
+.grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{font-size:0.9rem;color:var(--dim);max-width:480px;margin:0 auto;line-height:1.65}
 
-/* CARD */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem}
-.card-title{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.6rem}
-.card-title::after{content:'';flex:1;height:1px;background:var(--line)}
+/* API KEY SETUP */
+.setup-card{background:var(--surface);border:1px solid rgba(96,165,250,0.2);border-radius:14px;padding:1.5rem;margin-bottom:2.5rem}
+.setup-label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--blue);margin-bottom:0.6rem;display:block}
+.setup-row{display:flex;gap:0.75rem}
+.setup-row input{flex:1;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;outline:none;transition:border-color 0.2s}
+.setup-row input:focus{border-color:rgba(96,165,250,0.4)}
+.setup-row input::placeholder{color:var(--muted)}
+.btn-save{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.65rem 1.25rem;background:rgba(96,165,250,0.15);border:1px solid rgba(96,165,250,0.3);color:var(--blue);border-radius:8px;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.btn-save:hover{background:rgba(96,165,250,0.25)}
+.setup-note{font-size:0.68rem;color:var(--muted);margin-top:0.6rem}
+.setup-note a{color:var(--blue);text-decoration:none}
+.setup-note a:hover{text-decoration:underline}
+.key-saved{display:none;font-size:0.7rem;color:#4ade80;align-items:center;gap:0.4rem;margin-top:0.5rem}
+.key-saved.show{display:flex}
+.provider-toggle{display:flex;gap:0.4rem;margin-bottom:0.9rem}
+.provider-btn{flex:1;padding:0.55rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:"DM Sans",sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.4rem}
+.provider-btn.active{background:rgba(96,165,250,0.12);border-color:rgba(96,165,250,0.35);color:#93c5fd}
+.provider-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
+.provider-tag{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.1rem 0.4rem;background:rgba(255,255,255,0.07);border-radius:3px}
 
-/* API KEY */
-.key-row{display:flex;gap:0.75rem}
-.key-row input{flex:1;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;outline:none;transition:border-color 0.2s}
-.key-row input:focus{border-color:rgba(167,139,250,0.4)}
-.key-row input::placeholder{color:var(--muted)}
-.btn-sm{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.65rem 1.1rem;border-radius:8px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all 0.2s}
-.btn-save{background:rgba(167,139,250,0.15);border:1px solid rgba(167,139,250,0.3);color:var(--violet)}
-.btn-save:hover{background:rgba(167,139,250,0.25)}
-.note{font-size:0.68rem;color:var(--muted);margin-top:0.6rem}
-.note a{color:var(--violet);text-decoration:none}
-.saved-msg{display:none;font-size:0.7rem;color:var(--green);align-items:center;gap:0.4rem;margin-top:0.5rem}
-.saved-msg.show{display:flex}
+/* FORM */
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;margin-bottom:1.5rem}
+.field{margin-bottom:1.5rem}
+.field:last-child{margin-bottom:0}
+.field-label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--dim);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.5rem}
+.field-label .required{color:var(--violet);font-size:0.55rem}
+textarea,input[type=text]{width:100%;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:300;outline:none;transition:border-color 0.2s,box-shadow 0.2s;resize:none}
+textarea:focus,input[type=text]:focus{border-color:rgba(167,139,250,0.4);box-shadow:0 0 0 3px rgba(167,139,250,0.08)}
+textarea::placeholder,input[type=text]::placeholder{color:var(--muted)}
+textarea{min-height:100px;line-height:1.6}
 
-/* METHOD TOGGLE */
-.method-toggle{display:flex;gap:0.5rem;margin-bottom:1.5rem}
-.method-btn{flex:1;padding:0.7rem;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:center}
-.method-btn.active.rice{background:rgba(96,165,250,0.12);border-color:rgba(96,165,250,0.35);color:var(--blue)}
-.method-btn.active.moscow{background:rgba(167,139,250,0.12);border-color:rgba(167,139,250,0.35);color:var(--violet)}
-.method-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
-.method-desc{font-size:0.72rem;color:var(--muted);margin-bottom:1.5rem;padding:0.75rem 1rem;background:rgba(255,255,255,0.02);border-radius:8px;border-left:2px solid var(--border)}
-.method-desc.rice{border-left-color:var(--blue);color:#93c5fd}
-.method-desc.moscow{border-left-color:var(--violet);color:#c4b5fd}
-
-/* INPUT MODE TABS */
-.input-tabs{display:flex;gap:0.25rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:0.2rem;margin-bottom:1.25rem;width:fit-content}
-.input-tab{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.35rem 0.9rem;border-radius:6px;border:none;cursor:pointer;background:transparent;color:var(--muted);transition:all 0.2s;font-family:'DM Sans',sans-serif}
-.input-tab.active{background:rgba(255,255,255,0.07);color:var(--text)}
-
-/* TEXTAREA MODE */
-#textareaMode textarea{width:100%;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:300;outline:none;resize:none;min-height:140px;line-height:1.7;transition:border-color 0.2s}
-#textareaMode textarea:focus{border-color:rgba(167,139,250,0.35)}
-#textareaMode textarea::placeholder{color:var(--muted)}
-.textarea-hint{font-size:0.65rem;color:var(--muted);margin-top:0.5rem}
-.btn-random-stories{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.28rem 0.7rem;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:var(--violet);border-radius:5px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-left:0.5rem}
-.btn-random-stories:hover{background:rgba(167,139,250,0.2)}
-
-/* FIELDS MODE */
-#fieldsMode{display:none}
-.story-field{display:flex;gap:0.5rem;margin-bottom:0.5rem;align-items:center}
-.story-field input{flex:1;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:300;outline:none;transition:border-color 0.2s}
-.story-field input:focus{border-color:rgba(167,139,250,0.35)}
-.story-field input::placeholder{color:var(--muted)}
-.story-num{font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:800;color:var(--muted);min-width:22px;text-align:right}
-.btn-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;padding:0.2rem 0.4rem;border-radius:4px;transition:color 0.2s;line-height:1}
-.btn-remove:hover{color:var(--red)}
-.btn-add-story{display:flex;align-items:center;gap:0.4rem;font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:rgba(255,255,255,0.03);border:1px dashed rgba(255,255,255,0.1);border-radius:8px;padding:0.6rem 1rem;cursor:pointer;width:100%;transition:all 0.2s;font-family:'DM Sans',sans-serif;margin-top:0.5rem}
-.btn-add-story:hover{border-color:rgba(167,139,250,0.3);color:var(--violet)}
-
-/* CONTEXT */
-.context-field input{width:100%;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:10px;padding:0.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:300;outline:none;transition:border-color 0.2s}
-.context-field input:focus{border-color:rgba(167,139,250,0.35)}
-.context-field input::placeholder{color:var(--muted)}
+.options-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 
 /* SUBMIT */
-.btn-launch{width:100%;padding:1rem;background:linear-gradient(135deg,#8b5cf6,#3b82f6);border:none;border-radius:10px;color:white;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;cursor:pointer;transition:all 0.25s;margin-top:1.25rem}
-.btn-launch:hover:not(:disabled){opacity:0.9;transform:translateY(-1px);box-shadow:0 8px 30px -8px rgba(139,92,246,0.5)}
-.btn-launch:disabled{opacity:0.45;cursor:not-allowed;transform:none}
-
-/* ERROR */
-.error-box{display:none;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.25);border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:1rem;font-size:0.8rem;color:#fca5a5}
-.error-box.show{display:block}
+.btn-random{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:var(--violet);border-radius:6px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;white-space:nowrap}
+.btn-random:hover{background:rgba(167,139,250,0.2);border-color:rgba(167,139,250,0.4)}
+.btn-launch{width:100%;padding:1rem;background:linear-gradient(135deg,#3b82f6,#8b5cf6);border:none;border-radius:10px;color:white;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden}
+.btn-launch:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 8px 30px -8px rgba(139,92,246,0.5)}
+.btn-launch:active{transform:translateY(0)}
+.btn-launch:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.btn-launch .btn-inner{display:flex;align-items:center;justify-content:center;gap:0.6rem}
 
 /* LOADING */
-.loading{display:none;text-align:center;padding:2.5rem 0}
+.loading{display:none;text-align:center;padding:3rem 0}
 .loading.show{display:block}
-.spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--violet);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem}
+.spinner{width:36px;height:36px;border:2px solid var(--border);border-top-color:var(--violet);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-size:0.78rem;color:var(--muted)}
+.loading-steps{display:flex;flex-direction:column;gap:0.3rem;margin-top:0.75rem;font-size:0.7rem;color:var(--muted)}
+.loading-step{opacity:0;transition:opacity 0.4s}
+.loading-step.show{opacity:1}
+
+/* ERROR */
+.error-box{display:none;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.25);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.8rem;color:#fca5a5}
+.error-box.show{display:block}
 
 /* RESULTS */
 .results{display:none}
 .results.show{display:block}
-.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
-.results-meta{display:flex;flex-direction:column;gap:0.2rem}
-.results-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700}
-.results-sub{font-size:0.7rem;color:var(--muted)}
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem}
+.results-title{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted)}
 .btn-reset{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.9rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
 .btn-reset:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
 
-/* RESULT ITEMS */
-.result-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:0.75rem;display:grid;grid-template-columns:32px 1fr auto;gap:0.75rem 1rem;align-items:start;transition:transform 0.2s}
-.result-item:hover{transform:translateX(4px)}
-.rank{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--muted);padding-top:0.1rem}
-.rank.top{color:var(--violet)}
-.story-content{display:flex;flex-direction:column;gap:0.4rem}
-.story-title{font-size:0.88rem;font-weight:500;color:var(--text);line-height:1.4}
-.story-justif{font-size:0.75rem;color:var(--dim);line-height:1.55}
-.score-col{display:flex;flex-direction:column;align-items:flex-end;gap:0.4rem;padding-top:0.1rem}
+.result-block{margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.result-block-header{display:flex;align-items:center;gap:0.75rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border)}
+.result-block-num{font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:800;width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.num-hyp{background:rgba(96,165,250,0.15);color:var(--blue)}
+.num-int{background:rgba(167,139,250,0.15);color:var(--violet)}
+.num-plan{background:rgba(34,211,238,0.15);color:var(--cyan)}
+.result-block-title{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700}
+.result-block-body{padding:1.25rem}
 
-/* RICE SCORE */
-.rice-score{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--blue);line-height:1}
-.rice-breakdown{display:flex;gap:0.3rem;flex-wrap:wrap;justify-content:flex-end}
-.rice-pill{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.15rem 0.45rem;border-radius:3px}
-.pill-r{background:rgba(96,165,250,0.12);color:#93c5fd}
-.pill-i{background:rgba(34,211,238,0.12);color:#67e8f9}
-.pill-c{background:rgba(74,222,128,0.12);color:#86efac}
-.pill-e{background:rgba(251,146,60,0.12);color:#fdba74}
+/* HYPOTHESIS ITEMS */
+.hyp-item{padding:0.9rem 1rem;background:rgba(96,165,250,0.04);border:1px solid rgba(96,165,250,0.1);border-radius:8px;margin-bottom:0.75rem;font-size:0.82rem;line-height:1.65;color:var(--dim)}
+.hyp-item:last-child{margin-bottom:0}
+.hyp-belief{color:var(--text);font-weight:400}
+.hyp-signal{color:var(--blue);font-size:0.75rem;margin-top:0.4rem;display:block}
 
-/* MOSCOW BADGE */
-.moscow-badge{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:6px}
-.must{background:rgba(248,113,113,0.15);color:#fca5a5;border:1px solid rgba(248,113,113,0.25)}
-.should{background:rgba(251,146,60,0.15);color:#fdba74;border:1px solid rgba(251,146,60,0.25)}
-.could{background:rgba(74,222,128,0.15);color:#86efac;border:1px solid rgba(74,222,128,0.25)}
-.wont{background:rgba(148,163,184,0.12);color:#94a3b8;border:1px solid rgba(148,163,184,0.2)}
+/* INTERVIEW QUESTIONS */
+.q-item{display:flex;gap:0.75rem;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:baseline}
+.q-item:last-child{border-bottom:none;padding-bottom:0}
+.q-num{font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:800;color:var(--violet);min-width:20px}
+.q-text{font-size:0.82rem;color:var(--dim);line-height:1.6}
+
+/* TEST PLAN */
+.plan-row{display:grid;grid-template-columns:120px 1fr;gap:0.5rem 1rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.04);align-items:start;font-size:0.82rem}
+.plan-row:last-child{border-bottom:none;padding-bottom:0}
+.plan-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--cyan);padding-top:0.15rem}
+.plan-value{color:var(--dim);line-height:1.6}
 
 /* FOOTER */
-footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line);font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em}
-footer a{color:var(--violet);text-decoration:none}
-footer a:hover{text-decoration:underline}
-.provider-toggle{display:flex;gap:0.4rem;margin-bottom:0.9rem}
-.provider-btn{flex:1;padding:0.55rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:"DM Sans",sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.4rem}
-.provider-btn.active{background:rgba(167,139,250,0.12);border-color:rgba(167,139,250,0.35);color:#c4b5fd}
-.provider-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
-.provider-tag{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.1rem 0.4rem;background:rgba(255,255,255,0.07);border-radius:3px}
+footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.footer-by{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em}
+.footer-by a{color:var(--blue);text-decoration:none}
+.footer-by a:hover{text-decoration:underline}
 
 @media(max-width:600px){
-  .result-item{grid-template-columns:24px 1fr;grid-template-rows:auto auto}
-  .score-col{grid-column:2;align-items:flex-start;flex-direction:row;align-items:center}
-  .method-toggle{flex-direction:column}
+  .options-row{grid-template-columns:1fr}
+  .plan-row{grid-template-columns:1fr;gap:0.25rem}
+  .plan-label{padding-top:0}
 }
 
 /* LANG TOGGLE */
 .lang-bar{display:flex;justify-content:flex-end;margin-bottom:1.5rem}
 .lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
-.lang-btn.active{background:rgba(167,139,250,0.15);color:var(--violet)}
+.lang-btn.active{background:rgba(34,211,238,0.15);color:var(--cyan)}
 
-.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(167,139,250,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
-.btn-demo:hover{border-color:var(--violet);color:var(--violet);background:rgba(167,139,250,0.04)}
-.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);border-radius:4px;color:var(--violet)}
+.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(34,211,238,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+.btn-demo:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(34,211,238,0.04)}
+.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.2);border-radius:4px;color:var(--cyan)}
 
 .howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
 .howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
@@ -195,77 +176,63 @@ footer a:hover{text-decoration:underline}
   </div>
 
   <header>
-    <div class="header-tag"><span class="dot"></span> Product Management</div>
-    <h1>Backlog<br><span class="grad">Prioritizer</span></h1>
-    <p class="subtitle">Colle tes user stories, choisis ta m&eacute;thode. L'IA score, classe et justifie chaque item en quelques secondes.</p>
+    <div class="header-tag"><span class="dot"></span> Product Discovery</div>
+    <h1>Discovery<br><span class="grad">Assistant</span></h1>
+    <p class="subtitle">D&eacute;cris ton probl&egrave;me utilisateur. L&rsquo;outil structure ta discovery en hypoth&egrave;ses, questions d&rsquo;interview et plan de test.</p>
   </header>
 
-  <!-- API KEY -->
+  <!-- API KEY SETUP -->
   <div class="howto">
     <button class="howto-trigger" onclick="toggleHowto(this)" id="howtoTrigger">
       <span id="howtoLabel">&#9432; Comment ça marche ?</span>
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer sans clé API</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Pour prioriser ton propre backlog, crée un compte gratuit sur <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) ou <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Colle ta clé dans le champ en haut et clique <strong>Enregistrer</strong>. Elle reste dans ton navigateur uniquement.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Colle tes user stories, choisis ta méthode et lance la priorisation.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try without API key</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">To prioritise your own backlog, create a free account at <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) or <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Paste your key in the field above and click <strong>Save</strong>. It stays in your browser only.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Paste your user stories, pick your method and run prioritisation.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer sans clé API</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Pour analyser ton propre problème, crée un compte gratuit sur <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) ou <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Colle ta clé dans le champ en haut et clique <strong>Enregistrer</strong>. Elle reste dans ton navigateur uniquement.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Décris ton problème produit et lance l'analyse.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try without API key</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">To analyse your own problem, create a free account at <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) or <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Paste your key in the field above and click <strong>Save</strong>. It stays in your browser only.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Describe your product problem and run the analysis.</div></div></div>
     </div>
   </div>
 
 
-  <div class="card">
-    <div class="card-title">&#128273; Configuration</div>
+  <div class="setup-card" id="setupCard">
+    <span class="setup-label">&#128273; Configuration</span>
     <div class="provider-toggle">
       <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag" id="lbl_groq_free">Gratuit</span></button>
       <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
     </div>
-    <div class="key-row">
+    <div class="setup-row">
       <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
-      <button class="btn-sm btn-save" id="btn_save" onclick="saveKey()">Enregistrer</button>
+      <button class="btn-save" id="btn_save" onclick="saveKey()">Enregistrer</button>
     </div>
-    <p class="note" id="providerNote">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl&eacute; reste dans ton navigateur uniquement.</p>
-    <div class="saved-msg" id="savedMsg">&#10003; Cl&eacute; enregistr&eacute;e.</div>
+    <p class="setup-note" id="providerNote">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a> &rarr; API Keys &rarr; Create API Key. La cl&eacute; reste dans ton navigateur uniquement.</p>
+    <div class="key-saved" id="keySaved">&#10003; Cl&eacute; enregistr&eacute;e, tu peux lancer ta discovery.</div>
   </div>
 
-  <!-- METHOD -->
-  <div class="card">
-    <div class="card-title"><span id="lbl_method">M&eacute;thode de priorisation</span></div>
-    <div class="method-toggle">
-      <button class="method-btn active rice" id="btnRice" onclick="setMethod('rice')">><span id="lbl_rice_btn">RICE Score</span></button>
-      <button class="method-btn moscow" id="btnMoscow" onclick="setMethod('moscow')"><span id="lbl_moscow_btn">MoSCoW</span></button>
+  <!-- FORM -->
+  <div class="form-card" id="formCard">
+    <div class="field">
+      <label class="field-label" style="justify-content:space-between">
+        <span><span id="lbl_problem">Probl&egrave;me utilisateur</span> <span class="required">&#9679; Requis</span></span>
+        <button class="btn-random" onclick="randomProblem()" type="button">&#127922; Exemple al&eacute;atoire</button>
+      </label>
+      <textarea id="problem" placeholder="Ex : Les managers de mon app RH ne savent pas quels collaborateurs sont en risque de d&eacute;sengagement avant que ce soit trop tard." rows="4"></textarea>
     </div>
-    <div class="method-desc rice" id="methodDesc">
-      <strong>RICE</strong> : Reach &times; Impact &times; Confidence / Effort. Donne un score num&eacute;rique pour comparer objectivement les stories.
-    </div>
-
-    <!-- INPUT MODE -->
-    <div class="card-title" style="margin-top:1.5rem"><span id="lbl_stories_title">User Stories</span> <button class="btn-random-stories" onclick="randomStories()" type="button">&#127922; Exemples al&eacute;atoires</button></div>
-    <div class="input-tabs">
-      <button class="input-tab active" id="tabText" onclick="setInputMode('text')"><span id="lbl_textarea_mode"><span id="lbl_textarea_mode">Zone de texte</span></span></button>
-      <button class="input-tab" id="tabFields" onclick="setInputMode('fields')"><span id="lbl_fields_mode"><span id="lbl_fields_mode">Champs individuels</span></span></button>
-    </div>
-
-    <div id="textareaMode">
-      <textarea id="storiesText" placeholder="Ajouter une barre de progression sur le tableau de bord&#10;Permettre l'export CSV des donn&eacute;es&#10;Envoyer une notification push lors d'un nouvel &eacute;v&eacute;nement&#10;Afficher un graphique de tendance sur 30 jours" rows="6"></textarea>
-      <p class="textarea-hint" id="hint_story_line">Une user story par ligne.</p>
-    </div>
-
-    <div id="fieldsMode">
-      <div id="storyFields"></div>
-      <button class="btn-add-story" onclick="addField()">+ Ajouter une story</button>
-    </div>
-
-    <!-- CONTEXT -->
-    <div class="context-field" style="margin-top:1.5rem">
-      <div class="card-title"><span id="lbl_ctx">Contexte produit</span> <span style="font-size:0.58rem;color:var(--muted);text-transform:none;letter-spacing:0"><span id="lbl_optional_ctx">(optionnel)</span></div>
-      <input type="text" id="context" placeholder="Ex : SaaS B2B analytics, 200 clients, priorité retention Q2">
+    <div class="options-row">
+      <div class="field">
+        <label class="field-label"><span id="lbl_target">Cible utilisateur</span></label>
+        <input type="text" id="target" placeholder="Ex : Managers d'&eacute;quipe B2B, 30-45 ans">
+      </div>
+      <div class="field">
+        <label class="field-label"><span id="lbl_ctx">Contexte produit</span></label>
+        <input type="text" id="context" placeholder="Ex : SaaS RH, scale-up 50 employ&eacute;s">
+      </div>
     </div>
   </div>
 
   <div class="error-box" id="errorBox"></div>
 
   <button class="btn-launch" id="launchBtn" onclick="launch()">
-    &#9654; Lancer la priorisation
+    <span class="btn-inner">&#9654; Lancer la discovery</span>
   </button>
 
   <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer sans clé API </span><span class="demo-badge" id="badge_demo">Démo</span></button>
@@ -273,28 +240,75 @@ footer a:hover{text-decoration:underline}
   <!-- LOADING -->
   <div class="loading" id="loading">
     <div class="spinner"></div>
-    <div class="loading-text">Analyse et scoring en cours...</div>
+    <div class="loading-text">Analyse en cours...</div>
+    <div class="loading-steps">
+      <div class="loading-step" id="step1">&#8250; Formulation des hypoth&egrave;ses...</div>
+      <div class="loading-step" id="step2">&#8250; G&eacute;n&eacute;ration des questions d&rsquo;interview...</div>
+      <div class="loading-step" id="step3">&#8250; Construction du plan de test...</div>
+    </div>
   </div>
 
   <!-- RESULTS -->
   <div class="results" id="results">
     <div class="results-header">
-      <div class="results-meta">
-        <div class="results-title"><span id="lbl_results_title">Backlog prioris&eacute;</span></div>
-        <div class="results-sub" id="resultsSub"></div>
-      </div>
-      <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
+      <span class="results-title"><span id="lbl_results_title">R&eacute;sultats de ta discovery</span></span>
+      <button class="btn-reset" onclick="reset()">&#8635; Nouvelle discovery</button>
     </div>
-    <div id="resultsList"></div>
+
+    <div class="result-block" id="blockHyp">
+      <div class="result-block-header">
+        <span class="result-block-num num-hyp">H</span>
+        <span class="result-block-title"><span id="lbl_hypo">Hypoth&egrave;ses &agrave; tester</span></span>
+      </div>
+      <div class="result-block-body" id="hypBody"></div>
+    </div>
+
+    <div class="result-block" id="blockInt">
+      <div class="result-block-header">
+        <span class="result-block-num num-int">I</span>
+        <span class="result-block-title"><span id="lbl_questions">Questions d&rsquo;interview utilisateur</span></span>
+      </div>
+      <div class="result-block-body" id="intBody"></div>
+    </div>
+
+    <div class="result-block" id="blockPlan">
+      <div class="result-block-header">
+        <span class="result-block-num num-plan">T</span>
+        <span class="result-block-title"><span id="lbl_plan">Plan de test recommand&eacute;</span></span>
+      </div>
+      <div class="result-block-body" id="planBody"></div>
+    </div>
   </div>
 
   <footer>
-    <span id="footer_by">Construit par</span> <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; <span id="footer_role">AI Product Manager</span>
+    <p class="footer-by"><span id="footer_by">Construit par</span> <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; <span id="footer_role">AI Product Manager</span></p>
   </footer>
 
 </div>
 
 <script>
+var EXAMPLES = [
+  { problem: "Les managers de mon app RH ne savent pas quels collaborateurs sont en risque de d\u00e9sengagement avant que ce soit trop tard.", target: "Managers d'\u00e9quipe B2B, 30-45 ans", context: "SaaS RH, scale-up 50 employ\u00e9s" },
+  { problem: "Les freelances perdent trop de temps \u00e0 relancer leurs clients pour le paiement de leurs factures.", target: "Freelances tech et cr\u00e9atifs, 25-40 ans", context: "App de facturation mobile, march\u00e9 fran\u00e7ais" },
+  { problem: "Les Product Managers n\u2019ont pas de moyen simple pour partager l\u2019\u00e9tat d\u2019avancement de la roadmap avec les \u00e9quipes m\u00e9tiers sans ouvrir JIRA.", target: "PMs et Product Owners en scale-up", context: "Outil de gestion produit B2B" },
+  { problem: "Les patients oublient de prendre leurs m\u00e9dicaments au bon moment, ce qui nuit \u00e0 l\u2019efficacit\u00e9 de leur traitement.", target: "Patients chroniques 50+, peu technophiles", context: "App sant\u00e9 mobile, partenariat pharmacies" },
+  { problem: "Les recruteurs passent trop de temps \u00e0 lire des CV non qualifi\u00e9s qui ne correspondent pas au poste.", target: "Recruteurs internes, PME et ETI", context: "Plateforme ATS SaaS" },
+  { problem: "Les \u00e9tudiants en master ne savent pas comment transformer leur m\u00e9moire en un projet portfolio visible par les recruteurs.", target: "\u00c9tudiants Bac+4/5, en recherche de stage ou d\u2019alternance", context: "Plateforme EdTech, march\u00e9 \u00e9tudiants" },
+  { problem: "Les commer\u00e7ants de proximit\u00e9 ne savent pas quels produits vont manquer en stock avant qu\u2019il soit trop tard pour commander.", target: "G\u00e9rants de petits commerces alimentaires", context: "App de gestion de stock mobile, B2B SMB" },
+  { problem: "Les nouveaux employ\u00e9s se sentent isol\u00e9s pendant leur onboarding et ne savent pas \u00e0 qui poser leurs questions.", target: "Nouveaux employ\u00e9s en remote ou hybride", context: "Outil RH interne, ETI + grandes entreprises" }
+];
+
+function randomProblem() {
+  var ex = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)];
+  document.getElementById('problem').value = ex.problem;
+  document.getElementById('target').value = ex.target || '';
+  document.getElementById('context').value = ex.context || '';
+  // Animate the textarea briefly
+  var ta = document.getElementById('problem');
+  ta.style.borderColor = 'rgba(167,139,250,0.5)';
+  setTimeout(function(){ ta.style.borderColor = ''; }, 800);
+}
+
 var apiKey = '';
 var provider = 'groq';
 
@@ -306,129 +320,63 @@ function setProvider(p) {
   var note = document.getElementById('providerNote');
   if (p === 'groq') {
     input.placeholder = 'gsk_...';
-    note.innerHTML = 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl\u00e9 reste dans ton navigateur uniquement.';
+    note.innerHTML = 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a> \u2192 API Keys \u2192 Create API Key.';
   } else {
     input.placeholder = 'sk-...';
     note.innerHTML = 'Cr\u00e9e un compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a> \u2192 API Keys. GPT-4o mini est tr\u00e8s peu co\u00fbteux.';
   }
   apiKey = '';
-  document.getElementById('savedMsg').classList.remove('show');
-}
-var currentMethod = 'rice';
-var currentInputMode = 'text';
-var fieldCount = 3;
-
-// ---- EXAMPLES ----
-var STORY_SETS = [
-  ["Ajouter une barre de progression sur le tableau de bord","Permettre l'export CSV des données","Envoyer une notification push lors d'un nouvel événement","Afficher un graphique de tendance sur 30 jours","Intégrer une authentification SSO pour les entreprises"],
-  ["Créer un onboarding interactif pour les nouveaux utilisateurs","Ajouter un mode sombre dans les paramètres","Permettre le partage de rapport par lien public","Améliorer la vitesse de chargement des pages de plus de 3s","Ajouter un filtre par date sur la liste des transactions"],
-  ["Mettre en place un système de tags sur les contacts","Permettre l'import de données via fichier Excel","Ajouter un chat support en temps réel","Créer une page de statistiques d'utilisation pour les admins","Envoyer un email de récapitulatif hebdomadaire automatique"],
-  ["Implémenter une recherche globale dans l'application","Ajouter une fonctionnalité de commentaires sur les projets","Permettre aux managers de créer des templates de rapports","Intégrer une API Slack pour les notifications d'équipe","Afficher un score de santé du projet en temps réel"]
-];
-var CONTEXTS = [
-  "SaaS B2B analytics, 200 clients PME, priorité rétention Q2",
-  "App mobile fintech, 50k utilisateurs, objectif activation J7",
-  "Plateforme RH SaaS, marché ETI, roadmap H2 axée adoption",
-  "Outil de gestion de projet B2B, scale-up 80 employés, focus NPS"
-];
-
-function randomStories() {
-  var set = STORY_SETS[Math.floor(Math.random() * STORY_SETS.length)];
-  var ctx = CONTEXTS[Math.floor(Math.random() * CONTEXTS.length)];
-  document.getElementById('context').value = ctx;
-  if (currentInputMode === 'text') {
-    var ta = document.getElementById('storiesText');
-    ta.value = set.join('\n');
-    ta.style.borderColor = 'rgba(167,139,250,0.5)';
-    setTimeout(function(){ ta.style.borderColor = ''; }, 800);
-  } else {
-    var container = document.getElementById('storyFields');
-    container.innerHTML = '';
-    fieldCount = 0;
-    set.forEach(function(s) { addField(s); });
-  }
+  document.getElementById('keySaved').classList.remove('show');
 }
 
-// ---- METHOD ----
-function setMethod(m) {
-  currentMethod = m;
-  document.getElementById('btnRice').classList.toggle('active', m === 'rice');
-  document.getElementById('btnRice').classList.toggle('rice', true);
-  document.getElementById('btnMoscow').classList.toggle('active', m === 'moscow');
-  var desc = document.getElementById('methodDesc');
-  if (m === 'rice') {
-    desc.className = 'method-desc rice';
-    desc.innerHTML = '<strong>RICE</strong> : Reach &times; Impact &times; Confidence / Effort. Donne un score num&eacute;rique pour comparer objectivement les stories.';
-  } else {
-    desc.className = 'method-desc moscow';
-    desc.innerHTML = '<strong>MoSCoW</strong> : Must Have / Should Have / Could Have / Won\'t Have. Cat&eacute;gorise les stories par niveau d\'obligation.';
-  }
-}
-
-// ---- INPUT MODE ----
-function setInputMode(mode) {
-  currentInputMode = mode;
-  document.getElementById('tabText').classList.toggle('active', mode === 'text');
-  document.getElementById('tabFields').classList.toggle('active', mode === 'fields');
-  document.getElementById('textareaMode').style.display = mode === 'text' ? 'block' : 'none';
-  document.getElementById('fieldsMode').style.display = mode === 'fields' ? 'block' : 'none';
-  if (mode === 'fields' && document.getElementById('storyFields').children.length === 0) {
-    addField(); addField(); addField();
-  }
-}
-
-function addField(val) {
-  fieldCount++;
-  var container = document.getElementById('storyFields');
-  var div = document.createElement('div');
-  div.className = 'story-field';
-  div.dataset.id = fieldCount;
-  div.innerHTML = '<span class="story-num">' + String(fieldCount).padStart(2,'0') + '</span>'
-    + '<input type="text" placeholder="Ex : Permettre l\'export CSV des données..." value="' + esc(val||'') + '">'
-    + '<button class="btn-remove" onclick="removeField(this)" title="Supprimer">&#215;</button>';
-  container.appendChild(div);
-}
-
-function removeField(btn) {
-  var fields = document.getElementById('storyFields');
-  if (fields.children.length <= 1) return;
-  btn.closest('.story-field').remove();
-  Array.from(fields.querySelectorAll('.story-num')).forEach(function(el, i) {
-    el.textContent = String(i+1).padStart(2,'0');
-  });
-}
-
-// ---- API KEY ----
 function saveKey() {
   var v = document.getElementById('apiKeyInput').value.trim();
-  if (provider === 'groq' && (!v.startsWith('gsk_') || v.length < 20)) { showError('Cl\u00e9 Groq invalide. Elle doit commencer par "gsk_".'); return; }
-  if (provider === 'openai' && (!v.startsWith('sk-') || v.length < 20)) { showError('Cl\u00e9 OpenAI invalide. Elle doit commencer par "sk-".'); return; }
+  if (provider === 'groq' && (!v.startsWith('gsk_') || v.length < 20)) {
+    showError('Cl\u00e9 Groq invalide. Elle doit commencer par "gsk_".');
+    return;
+  }
+  if (provider === 'openai' && (!v.startsWith('sk-') || v.length < 20)) {
+    showError('Cl\u00e9 OpenAI invalide. Elle doit commencer par "sk-".');
+    return;
+  }
   apiKey = v;
-  document.getElementById('savedMsg').classList.add('show');
+  document.getElementById('keySaved').classList.add('show');
   hideError();
 }
 
-// ---- COLLECT STORIES ----
-function getStories() {
-  if (currentInputMode === 'text') {
-    return document.getElementById('storiesText').value.split('\n').map(s => s.trim()).filter(Boolean);
-  } else {
-    return Array.from(document.querySelectorAll('#storyFields input')).map(i => i.value.trim()).filter(Boolean);
-  }
+function showError(msg) {
+  var el = document.getElementById('errorBox');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+function hideError() {
+  document.getElementById('errorBox').classList.remove('show');
 }
 
-// ---- LAUNCH ----
 async function launch() {
   hideError();
-  var stories = getStories();
+  var problem = document.getElementById('problem').value.trim();
+  var target = document.getElementById('target').value.trim();
   var context = document.getElementById('context').value.trim();
-  if (!apiKey) { showError('Entre et enregistre ta clé API Groq avant de lancer.'); return; }
-  if (stories.length < 2) { showError('Ajoute au moins 2 user stories pour lancer la priorisation.'); return; }
-  if (stories.length > 15) { showError('Maximum 15 stories par session pour garantir la qualité du scoring.'); return; }
 
+  if (!apiKey) { showError('Entre et enregistre ta cl\u00e9 API Groq avant de lancer.'); return; }
+  if (!problem) { showError('D\u00e9cris le probl\u00e8me utilisateur avant de continuer.'); return; }
+
+  // Show loading
   document.getElementById('launchBtn').disabled = true;
-  document.getElementById('results').classList.remove('show');
+  document.getElementById('formCard').style.opacity = '0.4';
   document.getElementById('loading').classList.add('show');
+  document.getElementById('results').classList.remove('show');
+
+  // Animate steps
+  var steps = ['step1','step2','step3'];
+  steps.forEach(function(s, i) {
+    setTimeout(function() {
+      document.getElementById(s).classList.add('show');
+    }, i * 900);
+  });
+
+  var prompt = buildPrompt(problem, target, context);
 
   try {
     var endpoint = provider === 'groq'
@@ -438,117 +386,113 @@ async function launch() {
 
     var res = await fetch(endpoint, {
       method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+      headers: {
+        'Authorization': 'Bearer ' + apiKey,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         model: model,
-        temperature: 0.3,
-        max_tokens: 3000,
-        messages: [{ role: 'user', content: buildPrompt(stories, context) }]
+        temperature: 0.7,
+        max_tokens: 2000,
+        messages: [{ role: 'user', content: prompt }]
       })
     });
-    if (!res.ok) { var e = await res.json(); throw new Error(e.error?.message || 'Erreur API ' + res.status); }
+
+    if (!res.ok) {
+      var err = await res.json();
+      throw new Error(err.error && err.error.message ? err.error.message : 'Erreur API Groq (' + res.status + ')');
+    }
+
     var data = await res.json();
-    var parsed = parseResponse(data.choices[0].message.content);
-    renderResults(parsed, stories.length, context);
+    var text = data.choices[0].message.content;
+    var parsed = parseResponse(text);
+    renderResults(parsed);
+
   } catch(e) {
     showError('Erreur : ' + e.message);
+    document.getElementById('launchBtn').disabled = false;
+    document.getElementById('formCard').style.opacity = '1';
   }
 
   document.getElementById('loading').classList.remove('show');
-  document.getElementById('launchBtn').disabled = false;
+  steps.forEach(function(s) { document.getElementById(s).classList.remove('show'); });
 }
 
-function buildPrompt(stories, context) {
-  var ctx = context ? '\nContexte produit : ' + context : '';
-  var list = stories.map((s,i) => (i+1) + '. ' + s).join('\n');
+function buildPrompt(problem, target, context) {
+  var ctx = '';
+  if (target) ctx += '\nCible utilisateur : ' + target;
+  if (context) ctx += '\nContexte produit : ' + context;
 
-  if (currentMethod === 'rice') {
-    return 'Tu es un expert en priorisation produit. Analyse ces user stories et attribue un score RICE à chacune.\n\nUser stories :\n' + list + ctx + '\n\nRègles RICE :\n- Reach (1-10) : combien d\'utilisateurs impactés\n- Impact (1-3) : 1=faible, 2=moyen, 3=fort\n- Confidence (0.5/0.8/1.0) : 0.5=faible, 0.8=moyen, 1.0=élevé\n- Effort (1-5) : 1=très faible, 5=très élevé\n- Score = (Reach × Impact × Confidence) / Effort\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ou après :\n{\n  "method": "rice",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "reach": 7,\n      "impact": 2,\n      "confidence": 0.8,\n      "effort": 3,\n      "score": 3.73,\n      "justification": "Justification courte et spécifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items par score décroissant. Sois précis et cohérent avec le contexte produit fourni.';
-  } else {
-    return 'Tu es un expert en priorisation produit. Applique la méthode MoSCoW à ces user stories.\n\nUser stories :\n' + list + ctx + '\n\nCatégories MoSCoW :\n- Must Have : critique pour le produit, sans ça il ne fonctionne pas\n- Should Have : important mais pas bloquant\n- Could Have : nice to have, si le temps le permet\n- Won\'t Have : hors scope pour maintenant\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ou après :\n{\n  "method": "moscow",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "category": "Must Have",\n      "justification": "Justification courte et spécifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items : Must > Should > Could > Won\'t. Sois cohérent avec le contexte produit fourni.';
-  }
+  return 'Tu es un expert en Product Discovery (m\u00e9thode Teresa Torres / Continuous Discovery). Tu dois analyser un probl\u00e8me utilisateur et produire 3 livrables structur\u00e9s en fran\u00e7ais.\n\nProbl\u00e8me utilisateur : ' + problem + ctx + '\n\nR\u00e9ponds UNIQUEMENT avec un JSON valide, sans texte avant ou apr\u00e8s, avec exactement cette structure :\n{\n  "hypotheses": [\n    {\n      "belief": "Nous croyons que [assertion sp\u00e9cifique sur le comportement/besoin utilisateur]",\n      "signal": "Nous saurons que c\'est vrai si [m\u00e9trique ou signal observable concret]"\n    }\n  ],\n  "questions": [\n    "Question ouverte 1 ?",\n    "Question ouverte 2 ?",\n    "Question ouverte 3 ?",\n    "Question ouverte 4 ?",\n    "Question ouverte 5 ?"\n  ],\n  "plan": {\n    "methode": "Nom de la m\u00e9thode recommand\u00e9e (ex: entretiens utilisateurs, tests de concept, diary study)",\n    "participants": "Profil et nombre de participants recommand\u00e9s",\n    "duree": "Dur\u00e9e estim\u00e9e pour la phase de test",\n    "critere": "Crit\u00e8re de succ\u00e8s principal pour valider ou invalider",\n    "prochaine_etape": "Action concr\u00e8te imm\u00e9diate \u00e0 faire d\u00e8s demain"\n  }\n}\n\nG\u00e9n\u00e8re exactement 3 hypoth\u00e8ses et exactement 5 questions. Sois sp\u00e9cifique, actionnable et concis.';
 }
 
 function parseResponse(text) {
   var clean = text.replace(/```json/gi,'').replace(/```/g,'').trim();
-  try { return JSON.parse(clean); }
-  catch(e) {
-    var m = clean.match(/\{[\s\S]*\}/);
-    if (m) return JSON.parse(m[0]);
-    throw new Error('Impossible de parser la réponse. Réessaie.');
+  try {
+    return JSON.parse(clean);
+  } catch(e) {
+    var match = clean.match(/\{[\s\S]*\}/);
+    if (match) return JSON.parse(match[0]);
+    throw new Error('Impossible de parser la r\u00e9ponse. R\u00e9essaie.');
   }
 }
 
-function renderResults(d, count, context) {
-  var items = d.items || [];
-  var sub = count + ' stor' + (count > 1 ? 'ies' : 'y') + ' · Méthode ' + (currentMethod === 'rice' ? 'RICE' : 'MoSCoW');
-  if (context) sub += ' · ' + context.substring(0, 40) + (context.length > 40 ? '…' : '');
-  document.getElementById('resultsSub').textContent = sub;
-
-  var html = '';
-  items.forEach(function(item, i) {
-    var rank = i + 1;
-    var isTop = rank <= 3;
-    var scoreHtml = '';
-
-    if (currentMethod === 'rice') {
-      var score = typeof item.score === 'number' ? item.score.toFixed(1) : '?';
-      scoreHtml = '<div class="score-col">'
-        + '<div class="rice-score">' + score + '</div>'
-        + '<div class="rice-breakdown">'
-        + '<span class="rice-pill pill-r">R' + (item.reach||'?') + '</span>'
-        + '<span class="rice-pill pill-i">I' + (item.impact||'?') + '</span>'
-        + '<span class="rice-pill pill-c">C' + (item.confidence||'?') + '</span>'
-        + '<span class="rice-pill pill-e">E' + (item.effort||'?') + '</span>'
-        + '</div></div>';
-    } else {
-      var cat = (item.category || 'Could Have').toLowerCase().replace(' ','');
-      var cls = cat.startsWith('must') ? 'must' : cat.startsWith('should') ? 'should' : cat.startsWith('could') ? 'could' : 'wont';
-      var label = item.category || 'Could Have';
-      scoreHtml = '<div class="score-col"><span class="moscow-badge ' + cls + '">' + label + '</span></div>';
-    }
-
-    html += '<div class="result-item">'
-      + '<div class="rank' + (isTop ? ' top' : '') + '">' + rank + '</div>'
-      + '<div class="story-content">'
-      + '<div class="story-title">' + esc(item.story) + '</div>'
-      + '<div class="story-justif">' + esc(item.justification || '') + '</div>'
-      + '</div>'
-      + scoreHtml
-      + '</div>';
+function renderResults(d) {
+  // Hypotheses
+  var hypHtml = '';
+  (d.hypotheses || []).forEach(function(h) {
+    hypHtml += '<div class="hyp-item"><span class="hyp-belief">' + esc(h.belief) + '</span><span class="hyp-signal">&#8594; ' + esc(h.signal) + '</span></div>';
   });
+  document.getElementById('hypBody').innerHTML = hypHtml || '<p style="color:var(--muted);font-size:0.8rem">Aucune hypoth\u00e8se g\u00e9n\u00e9r\u00e9e.</p>';
 
-  document.getElementById('resultsList').innerHTML = html;
+  // Questions
+  var qHtml = '';
+  (d.questions || []).forEach(function(q, i) {
+    qHtml += '<div class="q-item"><span class="q-num">0' + (i+1) + '</span><span class="q-text">' + esc(q) + '</span></div>';
+  });
+  document.getElementById('intBody').innerHTML = qHtml || '<p style="color:var(--muted);font-size:0.8rem">Aucune question g\u00e9n\u00e9r\u00e9e.</p>';
+
+  // Plan
+  var p = d.plan || {};
+  var planRows = [
+    ['M\u00e9thode', p.methode],
+    ['Participants', p.participants],
+    ['Dur\u00e9e', p.duree],
+    ['Crit\u00e8re de succ\u00e8s', p.critere],
+    ['Prochaine \u00e9tape', p.prochaine_etape]
+  ];
+  var planHtml = '';
+  planRows.forEach(function(r) {
+    if (r[1]) planHtml += '<div class="plan-row"><span class="plan-label">' + r[0] + '</span><span class="plan-value">' + esc(r[1]) + '</span></div>';
+  });
+  document.getElementById('planBody').innerHTML = planHtml || '<p style="color:var(--muted);font-size:0.8rem">Plan non disponible.</p>';
+
   document.getElementById('results').classList.add('show');
-  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('launchBtn').disabled = false;
+  document.getElementById('formCard').style.opacity = '1';
+  document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 function reset() {
   document.getElementById('results').classList.remove('show');
-  document.getElementById('storiesText').value = '';
+  document.getElementById('problem').value = '';
+  document.getElementById('target').value = '';
   document.getElementById('context').value = '';
-  document.getElementById('storyFields').innerHTML = '';
-  fieldCount = 0;
-  if (currentInputMode === 'fields') { addField(); addField(); addField(); }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({top:0, behavior:'smooth'});
 }
-
-function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function showError(m) { var el = document.getElementById('errorBox'); el.textContent = m; el.classList.add('show'); }
-function hideError() { document.getElementById('errorBox').classList.remove('show'); }
-
-// Init
-setInputMode('text');
 
 // ---- i18n ----
 var LANG = {
   fr: {
-    'title': 'Backlog <span class="grad">Prioritizer</span>',
-    'subtitle': 'Colle tes user stories, choisis ta méthode. L’IA priorise et justifie chaque décision.',
-    'btn.launch': '&#9654; Lancer la priorisation',
-    'loading.text': 'Priorisation en cours...',
+    'title': 'Discovery <span class="grad">Assistant</span>',
+    'subtitle': 'Décris un problème produit. L’IA génère des hypothèses, des questions d’interview et un plan de test structuré.',
+    'btn.launch': '&#9654; Lancer l’analyse',
+    'loading.text': 'Analyse en cours...',
     'btn.reset': '&#8635; Recommencer',
     'btn.save': 'Enregistrer',
     'saved': '&#10003; Clé enregistrée.',
@@ -556,15 +500,18 @@ var LANG = {
     'note.openai': 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.'
   },
   en: {
-    'title': 'Backlog <span class="grad">Prioritizer</span>',
-    'subtitle': 'Paste your user stories, pick your method. The AI prioritises and justifies every decision.',
-    'btn.launch': '&#9654; Run prioritisation',
-    'loading.text': 'Prioritising...',
+    'title': 'Discovery <span class="grad">Assistant</span>',
+    'subtitle': 'Describe a product problem. The AI generates hypotheses, interview questions and a structured test plan.',
+    'btn.launch': '&#9654; Run analysis',
+    'loading.text': 'Analysing...',
     'btn.reset': '&#8635; Start over',
     'btn.save': 'Save',
     'saved': '&#10003; Key saved.',
     'note.groq': 'Free at <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. Key stays in your browser.',
-    'note.openai': 'Account at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.'
+    'note.openai': 'Account at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.',
+    'ph.problemInput': 'Describe the problem you want to explore...',
+    'ph.targetUser': 'e.g. HR Manager, indie developer...',
+    'ph.contextInput': 'Optional additional context...'
   }
 };
 var currentLang = 'fr';
@@ -594,8 +541,9 @@ function setLang(lang) {
   });
   // Provider note
   if(typeof provider !== 'undefined') {
-    if(provider === 'groq' && T['note.groq']) document.getElementById('providerNote').innerHTML = T['note.groq'];
-    else if(provider === 'openai' && T['note.openai']) document.getElementById('providerNote').innerHTML = T['note.openai'];
+    var pNote = document.getElementById('providerNote');
+    if(pNote && provider === 'groq' && T['note.groq']) pNote.innerHTML = T['note.groq'];
+    else if(pNote && provider === 'openai' && T['note.openai']) pNote.innerHTML = T['note.openai'];
   }
   if(typeof applyLangExtras === 'function') applyLangExtras(lang, T);
 }
@@ -605,28 +553,43 @@ function setLang(lang) {
 })();
 
 
-var MOCK_BP = {
-  method: "RICE",
-  items: [
-    {title: "Refonte de l’onboarding", score: 168, reach: 90, impact: 3, confidence: 80, effort: 2, justification: "Touche 90% des nouveaux utilisateurs. Impact direct sur le churn J7 qui est notre KPI prioritaire ce trimestre."},
-    {title: "Module de reporting manager", score: 120, reach: 60, impact: 3, confidence: 90, effort: 4, justification: "Fort impact sur la rétention des comptes entreprise mais effort élevé. Prioritaire après l’onboarding."},
-    {title: "Intégration Slack", score: 96, reach: 70, impact: 2, confidence: 80, effort: 3, justification: "Demandé par plusieurs clients mais impact modéré sur la rétention. Quick win possible."},
-    {title: "Tableau de bord temps réel", score: 72, reach: 50, impact: 3, confidence: 60, effort: 5, justification: "Ambitieux mais risqué. Confiance faible car les specs ne sont pas stabilisées."},
-    {title: "Export CSV des données", score: 48, reach: 40, impact: 2, confidence: 80, effort: 2, justification: "Demandé par des power users. Utile mais faible impact stratégique."}
-  ]
+var MOCK_DA = {
+  hypotheses: [
+    {title: "Les utilisateurs ne comprennent pas la valeur du produit au premier usage", description: "L’onboarding ne montre pas concrètement ce que l’outil change dans leur quotidien. Sans 'aha moment' rapide, ils partent.", test: "Tester un onboarding restructuré avec une démo interactive dès J1."},
+    {title: "La courbe d’apprentissage est trop abrupte pour les non-techniciens", description: "Le produit est conçu par des profils techniques qui sous-estiment la complexité perçue par des utilisateurs métier.", test: "Conduire 5 tests utilisateurs avec des profils non-tech et mesurer le time-to-first-value."},
+    {title: "L’absence de guidage contextuel crée de l’anxieté d’usage", description: "Les utilisateurs ne savent pas quelle action faire ensuite. L’interface manque de signaux de progression.", test: "Ajouter des tooltips contextuels et mesurer l’impact sur le taux de completion de l’onboarding."}
+  ],
+  interview_questions: [
+    "Pouvez-vous me raconter la première fois que vous avez utilisé le produit ? Qu’est-ce qui s’est passé ?",
+    "Qu’est-ce qui vous a donné envie d’explorer ou au contraire de décrocher ?",
+    "Quel moment vous a fait dire 'ah, je comprends maintenant à quoi ça sert' ?",
+    "Si vous deviez expliquer le produit à un collègue en 30 secondes, que diriez-vous ?",
+    "Qu’est-ce qui vous manquait pour être plus à l’aise dans les premières minutes ?"
+  ],
+  test_plan: {
+    objective: "Identifier les points de friction dans les 10 premières minutes d’usage",
+    method: "Tests utilisateurs modifiés (5 participants, profils métier non-techniciens)",
+    duration: "2 semaines",
+    success_metric: "Taux de completion de l’onboarding > 70% et identification de 3 pain points prioritaires",
+    steps: ["Recruter 5 utilisateurs cibles via le CRM", "Préparer un scénario de test standardisé", "Conduire les sessions et enregistrer les écrans", "Analyser avec l’User Interview Analyzer", "Prioriser les corrections dans le backlog"]
+  }
 };
 
 function launchDemo() {
   hideError();
-  var inputEl = document.getElementById('storiesInput') || document.getElementById('backlogInput');
-  if(inputEl) inputEl.value = "Refonte de l’onboarding\nModule de reporting manager\nIntégration Slack\nTableau de bord temps réel\nExport CSV des données";
+  var problemEl = document.getElementById('problemInput');
+  var userEl = document.getElementById('targetUser');
+  var ctxEl = document.getElementById('contextInput');
+  if(problemEl) problemEl.value = "Les utilisateurs abandonnent lors de l’onboarding : 60% ne complètent pas la configuration initiale et ne reviennent pas après J3.";
+  if(userEl) userEl.value = "Nouvel utilisateur non-technique (profil métier)";
+  if(ctxEl) ctxEl.value = "SaaS B2B, freemium, onboarding auto-guidé";
   document.getElementById('launchBtn').disabled = true;
   document.getElementById('results') && document.getElementById('results').classList.remove('show');
   document.getElementById('loading').classList.add('show');
   setTimeout(function() {
     document.getElementById('loading').classList.remove('show');
     document.getElementById('launchBtn').disabled = false;
-    if(typeof renderResults === 'function') renderResults(MOCK_BP);
+    if(typeof renderResults === 'function') renderResults(MOCK_DA);
   }, 2000);
 }
 
@@ -636,75 +599,55 @@ function toggleHowto(btn) {
   document.getElementById('howtoBody').classList.toggle('open');
 }
 function applyLangExtras(lang) {
-  var _extrabpX = {
+  var _extradaX = {
     'badge_demo': ['Démo', 'Demo'],
     'btn_demo_txt': ['&#9654; Essayer sans clé API ', '&#9654; Try without API key '],
     'footer_by': ['Construit par', 'Built by'],
     'footer_role': ['AI Product Manager', 'AI Product Manager'],
-    'hint_story_line': ['Une user story par ligne.', 'One user story per line.'],
-    'lbl_optional_ctx': ['(optionnel)', '(optional)'],
   };
-  Object.keys(_extrabpX).forEach(function(id){
+  Object.keys(_extradaX).forEach(function(id){
     var el=document.getElementById(id); if(!el) return;
-    var v=lang==='en'?_extrabpX[id][1]:_extrabpX[id][0];
+    var v=lang==='en'?_extradaX[id][1]:_extradaX[id][0];
     if('placeholder' in el) el.placeholder=v; else el.innerHTML=v;
   });
 
   // Placeholders
-  var _phbp = {
-    'storiesText': ['Ajouter une barre de progression...', 'Add a progress bar to the dashboard...'],
-    'productContext': ['Ex : SaaS B2B analytics, 200 clients, priorité retention Q2', 'E.g. B2B analytics SaaS, 200 clients, Q2 retention priority'],
+  var _phda = {
+    'problem': ['Ex : Les managers de mon app RH ne savent pas quels collaborateurs sont en risque...', 'E.g. The managers of my HR app don\'t know which employees are at risk...'],
+    'target': ['Ex : Managers d\'équipe B2B, 30-45 ans', 'E.g. B2B team managers, 30-45 years old'],
+    'context': ['Ex : SaaS RH, scale-up 50 employés', 'E.g. HR SaaS, scale-up 50 employees'],
   };
-  Object.keys(_phbp).forEach(function(id){
+  Object.keys(_phda).forEach(function(id){
     var el=document.getElementById(id);
-    if(el && el.placeholder !== undefined) el.placeholder = lang==='en'?_phbp[id][1]:_phbp[id][0];
+    if(el && el.placeholder !== undefined) el.placeholder = lang==='en'?_phda[id][1]:_phda[id][0];
   });
 
-  var _finbp = lang === 'en' ? {
+  var _finda = lang === 'en' ? {
     'btn_save': 'Save',
     'lbl_groq_free': 'Free',
   } : {
     'btn_save': 'Enregistrer',
     'lbl_groq_free': 'Gratuit',
   };
-  Object.keys(_finbp).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finbp[id];});
-
-  var _sl = lang === 'en' ? {
-    'lbl_stories_title': 'User Stories',
-    'lbl_ctx': 'Product context',
-    'lbl_rice_btn': 'RICE Score',
-    'lbl_moscow_btn': 'MoSCoW',
-    'lbl_textarea_mode': 'Text area',
-    'lbl_fields_mode': 'Individual fields',
-    'lbl_results_title': 'Prioritised backlog',
-  } : {
-    'lbl_stories_title': 'User Stories',
-    'lbl_ctx': 'Contexte produit',
-    'lbl_rice_btn': 'RICE Score',
-    'lbl_moscow_btn': 'MoSCoW',
-    'lbl_textarea_mode': 'Zone de texte',
-    'lbl_fields_mode': 'Champs individuels',
-    'lbl_results_title': 'Backlog priorisé',
-  };
-  Object.keys(_sl).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_sl[id];});
+  Object.keys(_finda).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finda[id];});
 
   // Static labels
   var _t = lang === 'en' ? {
-    'lbl_method': 'Prioritisation method',
-    'lbl_stories_title': 'User Stories',
-    'lbl_textarea_mode': 'Text area',
-    'lbl_fields_mode': 'Individual fields',
+    'lbl_problem': 'User problem',
+    'lbl_target': 'Target user',
     'lbl_ctx': 'Product context',
-    'lbl_results_title': 'Prioritised backlog',
-    'lbl_rice_desc': 'RICE: Reach &times; Impact &times; Confidence / Effort. Gives a numeric score for objective comparison.',
+    'lbl_results_title': 'Your discovery results',
+    'lbl_hypo': 'Hypotheses to test',
+    'lbl_questions': 'User interview questions',
+    'lbl_plan': 'Recommended test plan',
   } : {
-    'lbl_method': 'M&eacute;thode de priorisation',
-    'lbl_stories_title': 'User Stories',
-    'lbl_textarea_mode': 'Zone de texte',
-    'lbl_fields_mode': 'Champs individuels',
+    'lbl_problem': 'Probl&egrave;me utilisateur',
+    'lbl_target': 'Cible utilisateur',
     'lbl_ctx': 'Contexte produit',
-    'lbl_results_title': 'Backlog prioris&eacute;',
-    'lbl_rice_desc': 'RICE : Reach &times; Impact &times; Confidence / Effort. Donne un score num&eacute;rique pour comparer objectivement.',
+    'lbl_results_title': 'R&eacute;sultats de ta discovery',
+    'lbl_hypo': 'Hypoth&egrave;ses &agrave; tester',
+    'lbl_questions': 'Questions d&rsquo;interview utilisateur',
+    'lbl_plan': 'Plan de test recommand&eacute;',
   };
   Object.keys(_t).forEach(function(id) {
     var el = document.getElementById(id);
