@@ -143,9 +143,6 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(34,211,238,0.15);color:var(--cyan)}
 
-.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(34,211,238,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
-.btn-demo:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(34,211,238,0.04)}
-.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.2);border-radius:4px;color:var(--cyan)}
 
 .howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
 .howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
@@ -247,8 +244,8 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer la démo</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Colle ton propre contenu et lance l'analyse.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try demo</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Paste your own content and run the analysis.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Décris le problème produit à explorer dans le champ dédié.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance l'analyse — l'IA génère des hypothèses, questions d'interview et un plan de test.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Describe the product problem to explore in the field.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run the analysis — the AI generates hypotheses, interview questions and a test plan.</div></div></div>
     </div>
   </div>
 
@@ -279,8 +276,6 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
   <button class="btn-launch" id="launchBtn" onclick="launch()">
     <span class="btn-inner">&#9654; Lancer la discovery</span>
   </button>
-
-  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer la démo </span><span class="demo-badge" id="badge_demo">Démo</span></button>
 
   <!-- LOADING -->
   <div class="loading" id="loading">
@@ -538,55 +533,12 @@ function setLang(lang) {
 })();
 
 
-var MOCK_DA = {
-  hypotheses: [
-    {title: "Les utilisateurs ne comprennent pas la valeur du produit au premier usage", description: "L’onboarding ne montre pas concrètement ce que l’outil change dans leur quotidien. Sans 'aha moment' rapide, ils partent.", test: "Tester un onboarding restructuré avec une démo interactive dès J1."},
-    {title: "La courbe d’apprentissage est trop abrupte pour les non-techniciens", description: "Le produit est conçu par des profils techniques qui sous-estiment la complexité perçue par des utilisateurs métier.", test: "Conduire 5 tests utilisateurs avec des profils non-tech et mesurer le time-to-first-value."},
-    {title: "L’absence de guidage contextuel crée de l’anxieté d’usage", description: "Les utilisateurs ne savent pas quelle action faire ensuite. L’interface manque de signaux de progression.", test: "Ajouter des tooltips contextuels et mesurer l’impact sur le taux de completion de l’onboarding."}
-  ],
-  interview_questions: [
-    "Pouvez-vous me raconter la première fois que vous avez utilisé le produit ? Qu’est-ce qui s’est passé ?",
-    "Qu’est-ce qui vous a donné envie d’explorer ou au contraire de décrocher ?",
-    "Quel moment vous a fait dire 'ah, je comprends maintenant à quoi ça sert' ?",
-    "Si vous deviez expliquer le produit à un collègue en 30 secondes, que diriez-vous ?",
-    "Qu’est-ce qui vous manquait pour être plus à l’aise dans les premières minutes ?"
-  ],
-  test_plan: {
-    objective: "Identifier les points de friction dans les 10 premières minutes d’usage",
-    method: "Tests utilisateurs modifiés (5 participants, profils métier non-techniciens)",
-    duration: "2 semaines",
-    success_metric: "Taux de completion de l’onboarding > 70% et identification de 3 pain points prioritaires",
-    steps: ["Recruter 5 utilisateurs cibles via le CRM", "Préparer un scénario de test standardisé", "Conduire les sessions et enregistrer les écrans", "Analyser avec l’User Interview Analyzer", "Prioriser les corrections dans le backlog"]
-  }
-};
-
-function launchDemo() {
-  hideError();
-  var problemEl = document.getElementById('problemInput');
-  var userEl = document.getElementById('targetUser');
-  var ctxEl = document.getElementById('contextInput');
-  if(problemEl) problemEl.value = "Les utilisateurs abandonnent lors de l’onboarding : 60% ne complètent pas la configuration initiale et ne reviennent pas après J3.";
-  if(userEl) userEl.value = "Nouvel utilisateur non-technique (profil métier)";
-  if(ctxEl) ctxEl.value = "SaaS B2B, freemium, onboarding auto-guidé";
-  document.getElementById('launchBtn').disabled = true;
-  document.getElementById('results') && document.getElementById('results').classList.remove('show');
-  document.getElementById('loading').classList.add('show');
-  setTimeout(function() {
-    document.getElementById('loading').classList.remove('show');
-    document.getElementById('launchBtn').disabled = false;
-    if(typeof renderResults === 'function') renderResults(MOCK_DA);
-  }, 2000);
-}
-
-
 function toggleHowto(btn) {
   btn.classList.toggle('open');
   document.getElementById('howtoBody').classList.toggle('open');
 }
 function applyLangExtras(lang) {
   var _extradaX = {
-    'badge_demo': ['Démo', 'Demo'],
-    'btn_demo_txt': ['&#9654; Essayer la démo ', '&#9654; Try demo '],
     'footer_by': ['Construit par', 'Built by'],
     'footer_role': ['AI Product Manager', 'AI Product Manager'],
   };

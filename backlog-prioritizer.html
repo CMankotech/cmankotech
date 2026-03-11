@@ -162,9 +162,6 @@ footer a:hover{text-decoration:underline}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(167,139,250,0.15);color:var(--violet)}
 
-.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(167,139,250,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
-.btn-demo:hover{border-color:var(--violet);color:var(--violet);background:rgba(167,139,250,0.04)}
-.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);border-radius:4px;color:var(--violet)}
 
 .howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
 .howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
@@ -266,8 +263,8 @@ footer a:hover{text-decoration:underline}
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer la démo</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Colle ton propre contenu et lance l'analyse.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try demo</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Paste your own content and run the analysis.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Colle tes user stories (une par ligne) et choisis ta méthode <strong>RICE</strong> ou <strong>MoSCoW</strong>.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la priorisation — l'IA score et justifie chaque item en quelques secondes.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Paste your user stories (one per line) and choose your method: <strong>RICE</strong> or <strong>MoSCoW</strong>.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run prioritisation — the AI scores and justifies each item in seconds.</div></div></div>
     </div>
   </div>
 
@@ -312,8 +309,6 @@ footer a:hover{text-decoration:underline}
   <button class="btn-launch" id="launchBtn" onclick="launch()">
     &#9654; Lancer la priorisation
   </button>
-
-  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer la démo </span><span class="demo-badge" id="badge_demo">Démo</span></button>
 
   <!-- LOADING -->
   <div class="loading" id="loading">
@@ -602,40 +597,12 @@ function setLang(lang) {
 })();
 
 
-var MOCK_BP = {
-  method: "RICE",
-  items: [
-    {title: "Refonte de l’onboarding", score: 168, reach: 90, impact: 3, confidence: 80, effort: 2, justification: "Touche 90% des nouveaux utilisateurs. Impact direct sur le churn J7 qui est notre KPI prioritaire ce trimestre."},
-    {title: "Module de reporting manager", score: 120, reach: 60, impact: 3, confidence: 90, effort: 4, justification: "Fort impact sur la rétention des comptes entreprise mais effort élevé. Prioritaire après l’onboarding."},
-    {title: "Intégration Slack", score: 96, reach: 70, impact: 2, confidence: 80, effort: 3, justification: "Demandé par plusieurs clients mais impact modéré sur la rétention. Quick win possible."},
-    {title: "Tableau de bord temps réel", score: 72, reach: 50, impact: 3, confidence: 60, effort: 5, justification: "Ambitieux mais risqué. Confiance faible car les specs ne sont pas stabilisées."},
-    {title: "Export CSV des données", score: 48, reach: 40, impact: 2, confidence: 80, effort: 2, justification: "Demandé par des power users. Utile mais faible impact stratégique."}
-  ]
-};
-
-function launchDemo() {
-  hideError();
-  var inputEl = document.getElementById('storiesInput') || document.getElementById('backlogInput');
-  if(inputEl) inputEl.value = "Refonte de l’onboarding\nModule de reporting manager\nIntégration Slack\nTableau de bord temps réel\nExport CSV des données";
-  document.getElementById('launchBtn').disabled = true;
-  document.getElementById('results') && document.getElementById('results').classList.remove('show');
-  document.getElementById('loading').classList.add('show');
-  setTimeout(function() {
-    document.getElementById('loading').classList.remove('show');
-    document.getElementById('launchBtn').disabled = false;
-    if(typeof renderResults === 'function') renderResults(MOCK_BP);
-  }, 2000);
-}
-
-
 function toggleHowto(btn) {
   btn.classList.toggle('open');
   document.getElementById('howtoBody').classList.toggle('open');
 }
 function applyLangExtras(lang) {
   var _extrabpX = {
-    'badge_demo': ['Démo', 'Demo'],
-    'btn_demo_txt': ['&#9654; Essayer la démo ', '&#9654; Try demo '],
     'footer_by': ['Construit par', 'Built by'],
     'footer_role': ['AI Product Manager', 'AI Product Manager'],
     'hint_story_line': ['Une user story par ligne.', 'One user story per line.'],

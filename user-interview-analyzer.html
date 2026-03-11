@@ -175,9 +175,6 @@ footer a:hover{text-decoration:underline}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(34,211,238,0.15);color:var(--cyan)}
 
-.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(34,211,238,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
-.btn-demo:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(34,211,238,0.04)}
-.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.2);border-radius:4px;color:var(--cyan)}
 
 .howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
 .howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
@@ -275,8 +272,8 @@ footer a:hover{text-decoration:underline}
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer la démo</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Colle ton propre contenu et lance l'analyse.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try demo</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Paste your own content and run the analysis.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Colle tes notes d'entretiens brutes dans la zone de texte.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance l'analyse — l'IA extrait pain points, insights et génère un persona utilisateur.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Paste your raw interview notes into the text area.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run analysis — the AI extracts pain points, insights and generates a user persona.</div></div></div>
     </div>
   </div>
 
@@ -318,8 +315,6 @@ footer a:hover{text-decoration:underline}
     &#9654; Analyser les entretiens
   </button>
 
-
-  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer la démo </span><span class="demo-badge" id="badge_demo">Démo</span></button>
 
   <!-- LOADING -->
   <div class="loading" id="loading">
@@ -674,44 +669,12 @@ function setLang(lang) {
   if (params.get('lang') === 'en') setLang('en');
 })();
 
-// ---- DEMO MODE ----
-var MOCK_UIA = {
-  persona: {name:"Sophie, Responsable Formation",emoji:"👩‍💻",description:"Sophie pilote la formation de 200 collaborateurs dans une ETI industrielle. Elle jongle entre LMS, tableurs et emails. Elle manque de temps et cherche des outils simples.",tags:["Non-technicienne","Time-poor","Power user Excel","Décideur budget"]},
-  pain_points: [
-    {group:"Suivi & reporting",count:4,items:["Impossible de voir en temps réel qui a suivi quoi","Les rapports sont manuels et prennent 2h par semaine","Les managers demandent des stats que le LMS ne fournit pas"]},
-    {group:"Complexité d'usage",count:3,items:["L'interface est pensée pour des admins IT","Trop de clics pour assigner un parcours","La recherche ne fonctionne pas intuitivement"]},
-    {group:"Adoption collaborateurs",count:3,items:["Les employés oublient de se connecter sans relance manuelle","Les notifications sont trop génériques","Mobile non optimisé alors que 60% accèdent depuis le téléphone"]}
-  ],
-  quotes: ["Je passe plus de temps à gérer l'outil qu'à former les gens.","Mon manager me demande un reporting chaque lundi et je dois tout faire à la main dans Excel.","Si les employés pouvaient se connecter depuis leur téléphone sans galère, on doublerait les taux de completion."],
-  opportunities: [
-    {title:"Dashboard manager en self-service",impact:"high",description:"Un reporting automatique hebdomadaire réduirait 2h de travail manuel par semaine."},
-    {title:"Relances automatisées et personnalisées",impact:"high",description:"Des notifications contextuelles augmenteraient le taux de completion sans effort RH."},
-    {title:"Refonte de la navigation admin",impact:"medium",description:"Réduire le nombre de clics pour les 5 actions les plus fréquentes diminuerait la frustration."},
-    {title:"App mobile optimisée",impact:"medium",description:"60% des accès sont mobiles. Une expérience native multiplierait l'engagement."}
-  ]
-};
-function launchDemo() {
-  hideError();
-  var notesEl = document.querySelector('textarea');
-  if(notesEl) notesEl.value = "Sophie, Responsable Formation, ETI 200 personnes.\n\nElle utilise le LMS depuis 2 ans. Problème principal : le suivi. Elle passe 2h/semaine à faire des rapports manuels. Les managers veulent des stats en temps réel. L'interface est trop complexe. 'Je passe plus de temps à gérer l'outil qu'à former les gens.' Les employés oublient de se connecter. 60% accèdent depuis mobile mais l'expérience est mauvaise.";
-  document.getElementById('launchBtn').disabled = true;
-  document.getElementById('results') && document.getElementById('results').classList.remove('show');
-  document.getElementById('loading').classList.add('show');
-  setTimeout(function() {
-    document.getElementById('loading').classList.remove('show');
-    document.getElementById('launchBtn').disabled = false;
-    if(typeof renderResults === 'function') renderResults(MOCK_UIA);
-  }, 2000);
-}
-
 function toggleHowto(btn) {
   btn.classList.toggle('open');
   document.getElementById('howtoBody').classList.toggle('open');
 }
 function applyLangExtras(lang) {
   var _extrauiaX = {
-    'badge_demo': ['Démo', 'Demo'],
-    'btn_demo_txt': ['&#9654; Essayer la démo ', '&#9654; Try demo '],
     'footer_by': ['Construit par', 'Built by'],
     'footer_role': ['AI Product Manager', 'AI Product Manager'],
     'hint_no_format': ['Pas besoin de format particulier : des notes brutes suffisent.', 'No special format needed: rough notes are fine.'],

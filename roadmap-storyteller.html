@@ -155,9 +155,6 @@ footer a:hover{text-decoration:underline}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(167,139,250,0.15);color:var(--accent)}
 
-.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(167,139,250,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
-.btn-demo:hover{border-color:var(--accent);color:var(--accent);background:rgba(167,139,250,0.04)}
-.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);border-radius:4px;color:var(--accent)}
 
 .howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
 .howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
@@ -256,8 +253,8 @@ footer a:hover{text-decoration:underline}
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer la démo</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Colle ton propre contenu et lance l'analyse.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try demo</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Paste your own content and run the analysis.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Colle tes features et précise l'audience cible (investisseurs, équipe, clients...).</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la génération — l'IA crée une roadmap narrative avec pitch et messages clés adaptés.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Paste your features and specify the target audience (investors, team, customers...).</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run generation — the AI creates a narrative roadmap with pitch and tailored key messages.</div></div></div>
     </div>
   </div>
 
@@ -318,8 +315,6 @@ footer a:hover{text-decoration:underline}
   <button class="btn-launch" id="launchBtn" onclick="launch()">
     &#9654; G&eacute;n&eacute;rer ma roadmap narrative
   </button>
-
-  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer la démo </span><span class="demo-badge" id="badge_demo">Démo</span></button>
 
   <!-- LOADING -->
   <div class="loading" id="loading">
@@ -594,36 +589,6 @@ function setLang(lang) {
 })();
 
 
-var MOCK_RS = {
-  narrative: "Cette année, Flowly passe d'un outil de gestion de projet à un véritable système nerveux des équipes hybrides. Nous commençons par résoudre le problème n°1 de nos clients : savoir où en est vraiment l'équipe. Ensuite, nous simplifions l'entrée dans le produit pour que chaque nouveau collaborateur découvre sa valeur en moins de 7 jours. Enfin, nous ouvrons Flowly au reste de l'écosystème.",
-  periods: [
-    {key:"now",label:"Maintenant",theme:"Visibilité & Fiabilité",features:[{title:"Reporting manager en temps réel",why:"Les managers voient l'état des équipes sans mise à jour manuelle."},{title:"Onboarding refondu pas-à-pas",why:"Les nouveaux utilisateurs atteignent leur premier succès en moins de 7 jours."}]},
-    {key:"next",label:"Ensuite",theme:"Intégrations & Collaboration",features:[{title:"Connexion native Slack et Teams",why:"Les équipes restent dans leurs outils habituels sans changer de contexte."},{title:"Notifications intelligentes",why:"Chaque collaborateur reçoit les bonnes informations au bon moment."}]},
-    {key:"later",label:"Plus tard",theme:"Plateforme & Écosystème",features:[{title:"Application mobile native",why:"Les équipes terrain accèdent à Flowly depuis n'importe où."},{title:"API publique pour partenaires",why:"Les clients entreprise intègrent Flowly dans leurs outils métier."}]}
-  ],
-  talking_points: ["Ce trimestre, nous livrons ce qui réduit directement le churn : visibilité et onboarding.","Chaque initiative est liée à un KPI mesurable, pas à une feature list.","La roadmap est séquencée pour livrer de la valeur tous les 3 mois."]
-};
-function launchDemo() {
-  hideError();
-  var nameEl = document.getElementById('productName');
-  var visionEl = document.getElementById('vision');
-  if(nameEl) nameEl.value = 'Flowly';
-  if(visionEl) visionEl.value = "Devenir l'outil de gestion de projet incontournable pour les équipes hybrides";
-  document.getElementById('featuresList').innerHTML = '';
-  featureCount = 0;
-  var demos = [{text:'Module de reporting avancé pour managers',period:'now'},{text:"Refonte de l'onboarding",period:'now'},{text:'Intégration Slack et Teams',period:'next'},{text:'Notifications intelligentes',period:'next'},{text:'Application mobile',period:'later'},{text:'API publique',period:'later'}];
-  demos.forEach(function(d) { addFeature(d.text, d.period); });
-  document.getElementById('launchBtn').disabled = true;
-  document.getElementById('results') && document.getElementById('results').classList.remove('show');
-  document.getElementById('loading').classList.add('show');
-  setTimeout(function() {
-    document.getElementById('loading').classList.remove('show');
-    document.getElementById('launchBtn').disabled = false;
-    if(typeof renderResults === 'function') renderResults(MOCK_RS, 'Flowly', 'semestre');
-  }, 2000);
-}
-
-
 function toggleHowto(btn) {
   btn.classList.toggle('open');
   document.getElementById('howtoBody').classList.toggle('open');
@@ -643,8 +608,6 @@ function applyLangExtras(lang) {
   document.querySelectorAll('#featuresContainer input[type=text]').forEach(function(inp){ inp.placeholder=_featPh; });
 
   var _extrarsX = {
-    'badge_demo': ['Démo', 'Demo'],
-    'btn_demo_txt': ['&#9654; Essayer la démo ', '&#9654; Try demo '],
     'footer_by': ['Construit par', 'Built by'],
     'footer_role': ['AI Product Manager', 'AI Product Manager'],
     'hint_features_sub': ['Ajoute tes features ou initiatives. Assigne-leur une p&eacute;riode de livraison.', 'Add your features or initiatives. Assign them a delivery period.'],

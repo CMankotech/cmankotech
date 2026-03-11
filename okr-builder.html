@@ -145,9 +145,6 @@ footer a:hover{text-decoration:underline}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(251,191,36,0.15);color:var(--yellow)}
 
-.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(251,191,36,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
-.btn-demo:hover{border-color:rgba(251,191,36,0.6);color:var(--yellow);background:rgba(251,191,36,0.04)}
-.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);border-radius:4px;color:var(--yellow)}
 
 .howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
 .howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
@@ -246,8 +243,8 @@ footer a:hover{text-decoration:underline}
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer la démo</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Colle ton propre contenu et lance l'analyse.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try demo</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Paste your own content and run the analysis.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Décris ton objectif stratégique et le contexte de ton équipe.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la génération — l'IA construit tes OKRs avec Key Results mesurables.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Describe your strategic objective and team context.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run generation — the AI builds your OKRs with measurable Key Results.</div></div></div>
     </div>
   </div>
 
@@ -315,8 +312,6 @@ footer a:hover{text-decoration:underline}
   <button class="btn-launch" id="launchBtn" onclick="launch()">
     &#9654; G&eacute;n&eacute;rer mes OKRs
   </button>
-
-  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer la démo </span><span class="demo-badge" id="badge_demo">Démo</span></button>
 
   <!-- LOADING -->
   <div class="loading" id="loading">
@@ -593,70 +588,12 @@ function setLang(lang) {
 })();
 
 
-// ---- DEMO MODE ----
-var MOCK_OKR = {
-  okrs: [
-    {
-      objective: "Faire de la rétention notre avantage compétitif",
-      key_results: [
-        {text: "Réduire le churn mensuel de 4.2% à 2.5% sur le trimestre", type: "metric", baseline: "Churn actuel : 4.2%"},
-        {text: "Atteindre un NPS de 42 auprès des utilisateurs actifs", type: "health", baseline: "NPS actuel : 28"},
-        {text: "Livrer le nouveau dashboard de suivi d’engagement en production", type: "milestone", baseline: ""}
-      ]
-    },
-    {
-      objective: "Transformer l’onboarding en accélérateur de valeur",
-      key_results: [
-        {text: "Réduire le time-to-value de J14 à J7 pour 70% des nouveaux clients", type: "metric", baseline: "Actuellement J14 pour 60% des clients"},
-        {text: "Atteindre 80% de completion du wizard d’onboarding", type: "metric", baseline: "Completion actuelle : 42%"},
-        {text: "Maintenir le NPS onboarding au-dessus de 40", type: "health", baseline: ""}
-      ]
-    },
-    {
-      objective: "Accélérer la valeur perçue par les managers",
-      key_results: [
-        {text: "Livrer le module de reporting avancé pour les managers", type: "milestone", baseline: ""},
-        {text: "Obtenir 60% d’adoption du module par les comptes manager dans les 4 semaines post-launch", type: "metric", baseline: ""},
-        {text: "Générer 3 case studies clients basés sur les insights du reporting", type: "milestone", baseline: ""}
-      ]
-    }
-  ],
-  tips: [
-    "Partagez ces OKRs en weekly avec l’équipe et mettez à jour le score de chaque KR en temps réel pour maintenir la dynamique.",
-    "Les KRs de type 'milestone' doivent avoir une définition de 'done' claire avant le sprint 1 pour éviter les débats en fin de trimestre.",
-    "Challengez chaque Objective : si votre équipe peut l’atteindre sans effort, le KR n’est pas assez ambitieux."
-  ]
-};
-
-function launchDemo() {
-  hideError();
-  // Fill example data
-  document.getElementById('productName').value = 'Flowly';
-  document.getElementById('productType').value = 'SaaS B2B';
-  document.getElementById('ambitions').value = "On veut améliorer la rétention des utilisateurs et réduire le churn. On souhaite aussi accélérer l’activation des nouveaux clients et lancer un module de reporting avancé pour les managers.";
-  document.getElementById('metrics').value = 'DAU 6 200, churn mensuel 4.2%, NPS 28, time-to-value J14 pour 60% des nouveaux clients';
-  setNb(3); setPeriod('trimestre');
-
-  document.getElementById('launchBtn').disabled = true;
-  document.getElementById('results').classList.remove('show');
-  document.getElementById('loading').classList.add('show');
-
-  setTimeout(function() {
-    document.getElementById('loading').classList.remove('show');
-    document.getElementById('launchBtn').disabled = false;
-    renderResults(MOCK_OKR, 'Flowly', 'trimestre');
-  }, 2000);
-}
-
-
 function toggleHowto(btn) {
   btn.classList.toggle('open');
   document.getElementById('howtoBody').classList.toggle('open');
 }
 function applyLangExtras(lang) {
   var _extraokrX = {
-    'badge_demo': ['Démo', 'Demo'],
-    'btn_demo_txt': ['&#9654; Essayer la démo ', '&#9654; Try demo '],
     'footer_by': ['Construit par', 'Built by'],
     'footer_role': ['AI Product Manager', 'AI Product Manager'],
     'lbl_optional_metrics': ['(optionnel)', '(optional)'],
