@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
@@ -44,6 +43,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hero-wrap{padding:4rem 3rem 2rem}
 .hero-compact{display:flex;flex-direction:column;gap:1.25rem;max-width:680px}
 .hero-name{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;letter-spacing:-0.03em;line-height:1}
+.hero-portfolio-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.22em;color:var(--cyan,#22d3ee);opacity:0.85;margin-bottom:0.1rem}
 .hero-role{font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.16em;color:var(--muted);margin-top:0.35rem}
 .hero-line{font-size:0.95rem;line-height:1.75;color:var(--dim);border-left:2px solid #22d3ee;padding-left:1.25rem}
 .badges{display:flex;flex-wrap:wrap;gap:0.4rem}
@@ -77,9 +77,9 @@ section{border-bottom:1px solid var(--line);position:relative;z-index:1}
 .tag{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.25rem 0.7rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#94a3b8;border-radius:2px}
 
 /* SKILLS */
-.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
-.skill-block{padding:2.5rem;background:var(--bg);transition:background 0.3s}
-.skill-block:hover{background:rgba(59,130,246,0.03)}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;align-items:start}
+.skill-block{padding:1.75rem;background:var(--glass);border:1px solid var(--border);border-radius:16px;transition:border-color 0.3s}
+.skill-block:hover{border-color:rgba(167,139,250,0.25)}
 .skill-title{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem}
 .skill-list{font-size:0.83rem;line-height:2;color:var(--dim)}
 
@@ -102,17 +102,17 @@ section{border-bottom:1px solid var(--line);position:relative;z-index:1}
 .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
 .proj-card{padding:2rem;background:var(--glass);border:1px solid var(--border);border-radius:16px;transition:all 0.3s;display:flex;flex-direction:column;gap:1.25rem;position:relative;cursor:pointer}.proj-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px -12px rgba(0,0,0,0.5)}
 .proj-card:hover{border-color:rgba(167,139,250,0.3);transform:translateY(-3px);box-shadow:0 16px 48px -12px rgba(167,139,250,0.15)}
-.proj-header{display:flex;flex-direction:column;gap:0.4rem;padding-bottom:1.25rem;border-bottom:1px solid var(--line)}
-.proj-type{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:#a78bfa}
+
+
 .proj-name{font-size:1.05rem;font-weight:700;line-height:1.2;color:var(--text)}
-.proj-blocks{display:flex;flex-direction:column;gap:0.85rem;flex:1}
+
 .proj-link{display:inline-block;margin-top:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--cyan,#22d3ee);text-decoration:none;transition:opacity 0.2s}
 .proj-link:hover{opacity:0.7}grid-template-columns:80px 1fr;gap:0.5rem;align-items:baseline}
-.proj-block-label{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;padding:0.2rem 0.5rem;border-radius:3px;text-align:center;line-height:1.6}
-.lbl-ctx{background:rgba(59,130,246,0.12);color:#93c5fd;border:1px solid rgba(59,130,246,0.2)}
-.lbl-pb{background:rgba(239,68,68,0.10);color:#fca5a5;border:1px solid rgba(239,68,68,0.2)}
-.lbl-ap{background:rgba(167,139,250,0.12);color:#c4b5fd;border:1px solid rgba(167,139,250,0.2)}
-.lbl-res{background:rgba(34,211,238,0.10);color:#67e8f9;border:1px solid rgba(34,211,238,0.2)}
+
+
+
+
+
 .proj-block-text{font-size:0.78rem;color:var(--dim);line-height:1.6}
 
 /* EDUCATION */
@@ -198,9 +198,9 @@ nav{padding:1rem 1.5rem}
   <div class="wrap hero-wrap a1">
     <div class="hero-compact">
       <div>
+        <div class="hero-portfolio-label" data-i18n="hero.portfolio">Portfolio &middot; Projets IA build&eacute;s</div>
         <div class="hero-name grad">Carlin Mankoto</div>
         <div class="hero-role" data-i18n="hero.role">AI Product Manager &middot; Builder</div>
-        <div style="display:inline-block;font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);background:rgba(255,255,255,0.04);border:1px solid var(--line);padding:0.25rem 0.75rem;border-radius:99px;margin-top:0.5rem">Portfolio &middot; Projets IA</div>
       </div>
       <p class="hero-line" data-i18n="hero.intro">PM le jour, builder la nuit. Je construis des outils concrets avec l&rsquo;IA parce que les meilleurs outils sont ceux qu&rsquo;on cr&eacute;e soi-m&ecirc;me. Test, apprends, it&egrave;re. Chaque projet ici r&eacute;pond &agrave; un vrai probl&egrave;me que j&rsquo;ai rencontr&eacute; en tant que PM.</p>
       <div class="badges">
@@ -237,92 +237,61 @@ nav{padding:1rem 1.5rem}
       </div>
     </div>
     <div class="proj-grid rv">
-
-      <div class="proj-card" style="border-color:rgba(251,191,36,0.2)" onclick="window.open('https://cmankotech.github.io/cmankotech/okr-builder.html','_blank')">
-        <div class="proj-header">
-          <div class="proj-type" style="color:#fbbf24">Projet perso &middot; Strategy Tool &middot; 2026</div>
+        <div class="proj-card" style="border-color:rgba(255,255,255,0.08)" onclick="window.open('https://cmankotech.github.io/cmankotech/okr-builder.html','_blank')" data-card="okr">
+          <div class="proj-top-row">
+            <span class="proj-tag" style="color:#fbbf24" data-i18n-tag="okr">Strategy Tool</span>
+            <span class="proj-icon" style="color:#fbbf2455"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+          </div>
           <div class="proj-name">OKR Builder</div>
+          <div class="proj-summary"><p class="proj-summary-text" data-i18n="proj.okr.sum">Génère des OKRs produit structurés avec Key Results mesurables (métrique, milestone, santé) en quelques secondes.</p></div>
           <a href="https://cmankotech.github.io/cmankotech/okr-builder.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#fbbf24" data-i18n="proj.link">Voir le projet &rarr;</a>
         </div>
-        <div class="proj-blocks">
-          <div class="proj-block"><span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span><span class="proj-block-text" data-i18n="proj.okr.ctx">Outil con&ccedil;u pour acc&eacute;l&eacute;rer la d&eacute;finition des OKRs produit, souvent floue ou d&eacute;connect&eacute;e des vraies m&eacute;triques.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span><span class="proj-block-text" data-i18n="proj.okr.pb">R&eacute;diger des OKRs coh&eacute;rents, mesurables et align&eacute;s sur la strat&eacute;gie produit prend du temps et manque souvent de rigueur m&eacute;thodologique.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span><span class="proj-block-text" data-i18n="proj.okr.ap">Application web (HTML/JS + API Groq/OpenAI). L&rsquo;utilisateur d&eacute;crit son contexte et ses ambitions, l&rsquo;IA g&eacute;n&egrave;re des OKRs avec Key Results typ&eacute;s (m&eacute;trique, milestone, sant&eacute;).</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span><span class="proj-block-text" data-i18n="proj.okr.res">OKRs structur&eacute;s en quelques secondes, avec baseline et conseils d&rsquo;utilisation en &eacute;quipe. Couvre la phase de planning strat&eacute;gique du cycle produit.</span></div>
-        </div>
-      </div>
-
-      <div class="proj-card" style="border-color:rgba(34,211,238,0.2)" onclick="window.open('https://cmankotech.github.io/cmankotech/discovery-assistant.html','_blank')">
-        <div class="proj-header">
-          <div class="proj-type" style="color:var(--cyan, #22d3ee)">Projet perso &middot; Agentic AI &middot; 2026</div>
+        <div class="proj-card" style="border-color:rgba(255,255,255,0.08)" onclick="window.open('https://cmankotech.github.io/cmankotech/discovery-assistant.html','_blank')" data-card="da">
+          <div class="proj-top-row">
+            <span class="proj-tag" style="color:#22d3ee" data-i18n-tag="da">Product Discovery</span>
+            <span class="proj-icon" style="color:#22d3ee55"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></span>
+          </div>
           <div class="proj-name">Discovery Assistant</div>
-          <a href="https://cmankotech.github.io/cmankotech/discovery-assistant.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" data-i18n="proj.link">Voir le projet &rarr;</a>
+          <div class="proj-summary"><p class="proj-summary-text" data-i18n="proj.da.sum">Transforme un problème flou en hypothèses, questions d'interview et plan de test structuré.</p></div>
+          <a href="https://cmankotech.github.io/cmankotech/discovery-assistant.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#22d3ee" data-i18n="proj.link">Voir le projet &rarr;</a>
         </div>
-        <div class="proj-blocks">
-          <div class="proj-block"><span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span><span class="proj-block-text" data-i18n="proj.da.ctx">Outil IA con&ccedil;u et d&eacute;velopp&eacute; en vibe coding pour acc&eacute;l&eacute;rer la phase de discovery produit.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span><span class="proj-block-text" data-i18n="proj.da.pb">Un PM en d&eacute;but de discovery part souvent sans structure : hypoth&egrave;ses floues, questions d&rsquo;interview non pr&eacute;par&eacute;es, pas de plan de test clair.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span><span class="proj-block-text" data-i18n="proj.da.ap">Application web autonome (HTML/JS + API Groq/OpenAI). L&rsquo;utilisateur d&eacute;crit son probl&egrave;me, l&rsquo;outil g&eacute;n&egrave;re 3 hypoth&egrave;ses, 5 questions d&rsquo;interview et un plan de test structur&eacute;.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span><span class="proj-block-text" data-i18n="proj.da.res">Outil live et accessible publiquement, con&ccedil;u de z&eacute;ro en moins d&rsquo;une journ&eacute;e. Illustre la capacit&eacute; &agrave; shipper rapidement des outils IA utiles.</span></div>
+        <div class="proj-card" style="border-color:rgba(255,255,255,0.08)" onclick="window.open('https://cmankotech.github.io/cmankotech/user-interview-analyzer.html','_blank')" data-card="uia">
+          <div class="proj-top-row">
+            <span class="proj-tag" style="color:#22d3ee" data-i18n-tag="uia">Research Tool</span>
+            <span class="proj-icon" style="color:#22d3ee55"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          </div>
+          <div class="proj-name">Interview Analyzer</div>
+          <div class="proj-summary"><p class="proj-summary-text" data-i18n="proj.uia.sum">Analyse des notes d'entretiens brutes et en extrait pain points, insights et un persona utilisateur.</p></div>
+          <a href="https://cmankotech.github.io/cmankotech/user-interview-analyzer.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#22d3ee" data-i18n="proj.link">Voir le projet &rarr;</a>
         </div>
-      </div>
-
-      <div class="proj-card" style="border-color:rgba(34,211,238,0.15)" onclick="window.open('https://cmankotech.github.io/cmankotech/user-interview-analyzer.html','_blank')">
-        <div class="proj-header">
-          <div class="proj-type" style="color:var(--cyan,#22d3ee)">Projet perso &middot; Research Tool &middot; 2026</div>
-          <div class="proj-name">User Interview Analyzer</div>
-          <a href="https://cmankotech.github.io/cmankotech/user-interview-analyzer.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" data-i18n="proj.link">Voir le projet &rarr;</a>
-        </div>
-        <div class="proj-blocks">
-          <div class="proj-block"><span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span><span class="proj-block-text" data-i18n="proj.uia.ctx">Outil con&ccedil;u pour acc&eacute;l&eacute;rer la synth&egrave;se des entretiens utilisateurs, &eacute;tape souvent chronophage dans la phase de discovery.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span><span class="proj-block-text" data-i18n="proj.uia.pb">Transformer des notes brutes en insights actionables prend du temps et introduit des biais d&rsquo;interpr&eacute;tation quand c&rsquo;est fait manuellement.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span><span class="proj-block-text" data-i18n="proj.uia.ap">Application web (HTML/JS + API Groq/OpenAI). L&rsquo;utilisateur colle ses notes (1 ou plusieurs entretiens), l&rsquo;IA extrait pain points group&eacute;s, citations, opportunit&eacute;s et g&eacute;n&egrave;re un persona.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span><span class="proj-block-text" data-i18n="proj.uia.res">Synth&egrave;se structur&eacute;e en quelques secondes. Compl&egrave;te le Discovery Assistant pour couvrir l&rsquo;int&eacute;gralit&eacute; de la phase de discovery produit.</span></div>
-        </div>
-      </div>
-
-      <div class="proj-card" style="border-color:rgba(167,139,250,0.2)" onclick="window.open('https://cmankotech.github.io/cmankotech/backlog-prioritizer.html','_blank')">
-        <div class="proj-header">
-          <div class="proj-type" style="color:var(--violet,#a78bfa)">Projet perso &middot; Product Tool &middot; 2026</div>
+        <div class="proj-card" style="border-color:rgba(255,255,255,0.08)" onclick="window.open('https://cmankotech.github.io/cmankotech/backlog-prioritizer.html','_blank')" data-card="bp">
+          <div class="proj-top-row">
+            <span class="proj-tag" style="color:#a78bfa" data-i18n-tag="bp">Product Tool</span>
+            <span class="proj-icon" style="color:#a78bfa55"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          </div>
           <div class="proj-name">Backlog Prioritizer</div>
-          <a href="https://cmankotech.github.io/cmankotech/backlog-prioritizer.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:var(--violet,#a78bfa)" data-i18n="proj.link">Voir le projet &rarr;</a>
+          <div class="proj-summary"><p class="proj-summary-text" data-i18n="proj.bp.sum">Priorise un backlog en RICE ou MoSCoW avec scoring et justification par item en moins de 2 minutes.</p></div>
+          <a href="https://cmankotech.github.io/cmankotech/backlog-prioritizer.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#a78bfa" data-i18n="proj.link">Voir le projet &rarr;</a>
         </div>
-        <div class="proj-blocks">
-          <div class="proj-block"><span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span><span class="proj-block-text" data-i18n="proj.bp.ctx">Outil IA con&ccedil;u pour acc&eacute;l&eacute;rer les sessions de priorisation backlog, souvent chronophages et subjectives.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span><span class="proj-block-text" data-i18n="proj.bp.pb">Prioriser un backlog de mani&egrave;re rigoureuse prend du temps et manque souvent de justification explicite face aux parties prenantes.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span><span class="proj-block-text" data-i18n="proj.bp.ap">Application web (HTML/JS + API Groq/OpenAI). L'utilisateur colle ses user stories, choisit RICE ou MoSCoW, et obtient un scoring complet avec justification par item.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span><span class="proj-block-text" data-i18n="proj.bp.res">Outil live avec double mode de saisie et exemples al&eacute;atoires. R&eacute;duit une session de priorisation de 30 min &agrave; moins de 2 min.</span></div>
+        <div class="proj-card" style="border-color:rgba(255,255,255,0.08)" onclick="window.open('https://cmankotech.github.io/cmankotech/epic-to-userstories.html','_blank')" data-card="eus">
+          <div class="proj-top-row">
+            <span class="proj-tag" style="color:#22d3ee" data-i18n-tag="eus">Backlog Tool</span>
+            <span class="proj-icon" style="color:#22d3ee55"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span>
+          </div>
+          <div class="proj-name">Epic → Stories</div>
+          <div class="proj-summary"><p class="proj-summary-text" data-i18n="proj.eus.sum">Décompose un epic en user stories INVEST avec critères d'acceptance, exportables en Markdown.</p></div>
+          <a href="https://cmankotech.github.io/cmankotech/epic-to-userstories.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#22d3ee" data-i18n="proj.link">Voir le projet &rarr;</a>
         </div>
-      </div>
-
-      <div class="proj-card" style="border-color:rgba(34,211,238,0.15)" onclick="window.open('https://cmankotech.github.io/cmankotech/epic-to-userstories.html','_blank')">
-        <div class="proj-header">
-          <div class="proj-type" style="color:#22d3ee">Projet perso &middot; Backlog Tool &middot; 2026</div>
-          <div class="proj-name">Epic to User Stories</div>
-          <a href="https://cmankotech.github.io/cmankotech/epic-to-userstories.html" target="_blank" class="proj-link" style="color:#22d3ee" onclick="event.stopPropagation()" data-i18n="proj.link">Voir le projet &rarr;</a>
-        </div>
-        <div class="proj-blocks">
-          <div class="proj-block"><span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span><span class="proj-block-text" data-i18n="proj.eus.ctx">Outil con&ccedil;u pour acc&eacute;l&eacute;rer la d&eacute;composition d&rsquo;un epic en user stories pr&ecirc;tes &agrave; raffiner en sprint planning.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span><span class="proj-block-text" data-i18n="proj.eus.pb">Produire des user stories ind&eacute;pendantes, bien formul&eacute;es et avec des crit&egrave;res d&rsquo;acceptance v&eacute;rifiables prend du temps et demande de la rigueur.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span><span class="proj-block-text" data-i18n="proj.eus.ap">Application web (HTML/JS + API Groq/OpenAI). L&rsquo;utilisateur d&eacute;crit son epic, choisit le format (standard ou Job Story) et le nombre de stories. L&rsquo;IA g&eacute;n&egrave;re chaque story avec priorit&eacute;, effort et crit&egrave;res d&rsquo;acceptance.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span><span class="proj-block-text" data-i18n="proj.eus.res">Backlog pr&ecirc;t en quelques secondes, exportable en Markdown pour Jira ou Confluence. Respecte le principe INVEST pour chaque story.</span></div>
-        </div>
-      </div>
-
-      <div class="proj-card" style="border-color:rgba(167,139,250,0.2)" onclick="window.open('https://cmankotech.github.io/cmankotech/roadmap-storyteller.html','_blank')">
-        <div class="proj-header">
-          <div class="proj-type" style="color:#a78bfa">Projet perso &middot; Communication Tool &middot; 2026</div>
+        <div class="proj-card" style="border-color:rgba(255,255,255,0.08)" onclick="window.open('https://cmankotech.github.io/cmankotech/roadmap-storyteller.html','_blank')" data-card="rs">
+          <div class="proj-top-row">
+            <span class="proj-tag" style="color:#a78bfa" data-i18n-tag="rs">Communication</span>
+            <span class="proj-icon" style="color:#a78bfa55"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg></span>
+          </div>
           <div class="proj-name">Roadmap Storyteller</div>
-          <a href="https://cmankotech.github.io/cmankotech/roadmap-storyteller.html" target="_blank" class="proj-link" style="color:#a78bfa" onclick="event.stopPropagation()" data-i18n="proj.link">Voir le projet &rarr;</a>
-        </div>
-        <div class="proj-blocks">
-          <div class="proj-block"><span class="proj-block-label lbl-ctx" data-i18n="lbl.ctx">Contexte</span><span class="proj-block-text" data-i18n="proj.rs.ctx">Outil con&ccedil;u pour transformer une liste de features brutes en roadmap narrative adapt&eacute;e &agrave; chaque audience.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-pb" data-i18n="lbl.pb">Probl&egrave;me</span><span class="proj-block-text" data-i18n="proj.rs.pb">Pr&eacute;senter une roadmap &agrave; des dirigeants ou clients n&eacute;cessite un discours orient&eacute; valeur, pas une liste de tickets JIRA.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-ap" data-i18n="lbl.ap">Approche</span><span class="proj-block-text" data-i18n="proj.rs.ap">Application web (HTML/JS + API Groq/OpenAI). L&rsquo;utilisateur entre ses features par p&eacute;riode (Now/Next/Later), choisit son audience et obtient un pitch narratif + timeline valoris&eacute;e + messages cl&eacute;s.</span></div>
-          <div class="proj-block"><span class="proj-block-label lbl-res" data-i18n="lbl.res">R&eacute;sultat</span><span class="proj-block-text" data-i18n="proj.rs.res">Roadmap pr&ecirc;te &agrave; pr&eacute;senter en quelques secondes, avec un pitch copiable et des messages cl&eacute;s adapt&eacute;s &agrave; l&rsquo;audience.</span></div>
+          <div class="proj-summary"><p class="proj-summary-text" data-i18n="proj.rs.sum">Transforme des features en roadmap narrative avec pitch et messages clés adaptés à chaque audience.</p></div>
+          <a href="https://cmankotech.github.io/cmankotech/roadmap-storyteller.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#a78bfa" data-i18n="proj.link">Voir le projet &rarr;</a>
         </div>
       </div>
-
-    </div>
   </div>
 </section>
 
@@ -339,11 +308,11 @@ nav{padding:1rem 1.5rem}
       </div>
       <div class="skill-block">
         <div class="skill-title" style="background:linear-gradient(to right,#818cf8,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" data-i18n="skills.ai">IA &amp; Tech</div>
-        <div class="skill-list">LLM &middot; RAG &middot; Prompt Engineering<br>Agentic AI &middot; Multi-Agent Systems<br>RLHF &middot; CrewAI &middot; Flowise &middot; Dify<br>Vibe Coding (Claude Code, Lovable)<br>n8n &middot; Make &middot; Zapier &middot; Power Automate<br>SQL &middot; Python &middot; JS &middot; API REST</div>
+        <div class="skill-list">LLM &middot; RAG &middot; Prompt Engineering<br>Agentic AI &middot; Multi-Agent Systems<br>RLHF &middot; Labelbox &middot; Flowise &middot; Dify<br>CrewAI &middot; Vibe Coding (Claude Code, Lovable)<br>n8n &middot; Make &middot; Zapier &middot; Power Automate<br>SQL &middot; Python &middot; JS &middot; API REST</div>
       </div>
       <div class="skill-block">
         <div class="skill-title" style="background:linear-gradient(to right,#a78bfa,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" data-i18n="skills.agile">Agilit&eacute; &amp; Outils</div>
-        <div class="skill-list">SAFe &middot; Scrum &middot; PI Planning<br>JIRA &middot; Confluence &middot; Azure DevOps<br>Power Platform (BI, Automate, Apps)<br>Figma &middot; Miro &middot; Notion &middot; Klaxoon<br>Lean Six Sigma &middot; LACE<br>Kubernetes &middot; Labelbox</div>
+        <div class="skill-list">SAFe &middot; Scrum &middot; PI Planning<br>JIRA &middot; Confluence &middot; Azure DevOps<br>Power Platform (BI, Automate, Apps)<br>Figma &middot; Miro &middot; Notion &middot; Klaxoon<br>Lean Six Sigma &middot; LACE</div>
       </div>
     </div>
   </div>
@@ -400,8 +369,7 @@ nav{padding:1rem 1.5rem}
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-var T={fr:{'nav.exp':'Parcours','nav.skills':'Comp\u00e9tences','nav.certs':'Certifications','nav.edu':'Formation','nav.cta':'Me contacter \u2192','nav.projects':'Projets','proj.intro':"Je build des outils PM avec l\'IA parce que j\'ai envie de r\u00e9soudre de vrais probl\u00e8mes que je rencontre en tant que PM. Pas des d\u00e9mos, des outils que j\'utilise vraiment. Stack\u00a0: HTML\u00a0/\u00a0JS\u00a0/\u00a0APIs LLM. D\u00e9ploy\u00e9s en statique, accessibles \u00e0 tous.",'proj.stat.tools':'Outils live','proj.stat.open':'Open access','proj.stat.llm':'LLM providers','hero.role':'AI Product Manager \u00b7 Builder','lbl.ctx':'Contexte','lbl.pb':'Probl\u00e8me','lbl.ap':'Approche','lbl.res':'R\u00e9sultat','proj.bnp.ctx':"Mission consulting en Master 2. BNP Paribas cherchait des pistes d\u2019innovation durable pour l\u2019un de ses m\u00e9tiers.",'proj.bnp.pb':"G\u00e9n\u00e9rer des id\u00e9es actionnables en 5 jours avec des parties prenantes aux profils tr\u00e8s h\u00e9t\u00e9rog\u00e8nes.",'proj.bnp.ap':"Facilitation d\u2019un Design Sprint complet : cadrage, id\u00e9ation, prototypage rapide et test utilisateur. Animation des ateliers et synth\u00e8se des insights.",'proj.bnp.res':"3 concepts pr\u00e9sent\u00e9s \u00e0 l\u2019\u00e9quipe BNP avec une recommandation argument\u00e9e sur le concept \u00e0 prototyper en priorit\u00e9.",'proj.shopify.ctx':"Projet de fin de Master 2 en \u00e9quipe \- construire un produit e-commerce fonctionnel de A \u00e0 Z.",'proj.shopify.pb':"R\u00e9duire le taux d\u2019abandon en aidant les visiteurs \u00e0 trouver le bon produit sans intervention humaine.",'proj.shopify.ap':"R\u00f4le de PO sur le backlog + d\u00e9veloppeur sur l\u2019int\u00e9gration du chatbot (Node.js, API, JS). User stories, priorisation et sprints it\u00e9ratifs.",'proj.shopify.res':"Site livr\u00e9 avec chatbot fonctionnel capable de r\u00e9pondre aux questions produit et de rediriger vers les fiches concern\u00e9es.",'proj.geo.ctx':"Projet pratique du Master 2 pour explorer le d\u00e9veloppement low-code sur Microsoft Power Platform.",'proj.geo.pb':"Les \u00e9quipes terrain n\u2019avaient pas d\u2019outil simple pour signaler leur position et l\u2019\u00e9tat des interventions en temps r\u00e9el.",'proj.geo.ap':"Conception UX, mod\u00e9lisation des donn\u00e9es et d\u00e9veloppement complet sur PowerApps, connect\u00e9 \u00e0 SharePoint comme base de donn\u00e9es.",'proj.geo.res':"Application mobile fonctionnelle livr\u00e9e, test\u00e9e et document\u00e9e \- d\u00e9montrant la capacit\u00e9 \u00e0 produire un outil op\u00e9rationnel sans code traditionnel.",'proj.da.ctx':"Outil IA con\u00e7u et d\u00e9velopp\u00e9 en vibe coding pour acc\u00e9l\u00e9rer la phase de discovery produit.",'proj.da.pb':"Un PM en d\u00e9but de discovery part souvent sans structure : hypoth\u00e8ses floues, questions d\u2019interview non pr\u00e9par\u00e9es, pas de plan de test clair.",'proj.da.ap':"Application web autonome (HTML/JS + API Groq). L\u2019utilisateur d\u00e9crit son probl\u00e8me, l\u2019outil g\u00e9n\u00e8re 3 hypoth\u00e8ses, 5 questions d\u2019interview et un plan de test structur\u00e9.",'proj.okr.ctx':"Outil con\u00e7u pour acc\u00e9l\u00e9rer la d\u00e9finition des OKRs produit, souvent floue ou d\u00e9connect\u00e9e des vraies m\u00e9triques.",'proj.okr.pb':"R\u00e9diger des OKRs coh\u00e9rents, mesurables et align\u00e9s sur la strat\u00e9gie produit prend du temps et manque souvent de rigueur m\u00e9thodologique.",'proj.okr.ap':"Application web (HTML/JS + API Groq/OpenAI). L\'utilisateur d\u00e9crit son contexte et ses ambitions, l\'IA g\u00e9n\u00e8re des OKRs avec Key Results typ\u00e9s (m\u00e9trique, milestone, sant\u00e9).",'proj.okr.res':"OKRs structur\u00e9s en quelques secondes, avec baseline et conseils d\'utilisation en \u00e9quipe. Couvre la phase de planning strat\u00e9gique du cycle produit.",'proj.uia.ctx':"Outil conçu pour accélérer la synthèse des entretiens utilisateurs, étape souvent chronophage dans la phase de discovery.",'proj.uia.pb':"Transformer des notes brutes en insights actionables prend du temps et introduit des biais d\'interprétation quand c\'est fait manuellement.",'proj.uia.ap':"Application web (HTML/JS + API Groq/OpenAI). L\'utilisateur colle ses notes (1 ou plusieurs entretiens), l\'IA extrait pain points groupés, citations, opportunités et génère un persona.",'proj.uia.res':"Synthèse structurée en quelques secondes. Complète le Discovery Assistant pour couvrir l\'intégralité de la phase de discovery produit.",'proj.bp.ctx':"Outil IA con\u00e7u pour acc\u00e9l\u00e9rer les sessions de priorisation backlog, souvent chronophages et subjectives.",'proj.bp.pb':"Prioriser un backlog de mani\u00e8re rigoureuse prend du temps et manque souvent de justification explicite face aux parties prenantes.",'proj.bp.ap':"Application web (HTML/JS + API Groq). L\u2019utilisateur colle ses user stories, choisit RICE ou MoSCoW, et obtient un scoring complet avec justification par item.",'proj.bp.res':"Outil live avec double mode de saisie et exemples al\u00e9atoires. R\u00e9duit une session de priorisation de 30 min \u00e0 moins de 2 min.",'proj.da.res':"Outil live et accessible publiquement, con\u00e7u de z\u00e9ro en moins d\u2019une journ\u00e9e. Illustre la capacit\u00e9 \u00e0 shipper rapidement des outils IA utiles.",'proj.link':'Voir le projet \u2192','hero.intro':"PM/PO avec 3 ans d\u2019exp\u00e9rience dans des environnements exigeants (d\u00e9fense, assurance, conseil). Je couvre l\u2019ensemble du spectre produit de la discovery strat\u00e9gique jusqu\u2019\u00e0 la livraison, avec une expertise marqu\u00e9e en IA g\u00e9n\u00e9rative, syst\u00e8mes multi-agents et vibe coding.",'exp.oaio.date':'Janv. 2026<br>\- Pr\u00e9sent','exp.oaio.role':'Product Manager \u00b7 CDI','exp.oaio.desc':"Pilotage de la strat\u00e9gie produit pour l\u2019impl\u00e9mentation d\u2019une plateforme LMS et d\u2019outils IA pour 3\u00a0500+ collaborateurs. Benchmark de 17 solutions LMS et 44 outils IA avec scoring multicrit\u00e8res. Prototypage en vibe coding (Lovable + Claude Code) pour tester des hypoth\u00e8ses UX. Roadmap en 3 phases align\u00e9e aux objectifs business. Stakeholder management jusqu\u2019\u00e0 la direction.",'exp.outlier.role':'AI Trainer / Data Annotator \u00b7 Freelance','exp.outlier.desc':"Entra\u00eenement de mod\u00e8les d\u2019IA g\u00e9n\u00e9rative via RLHF. Annotation de donn\u00e9es (images, textes, audios) pour cr\u00e9er des datasets structur\u00e9s. Contr\u00f4le qualit\u00e9 rigoureux et classification des donn\u00e9es.",'exp.axa.role':'AI Product Owner \u00b7 Alternance','exp.axa.desc':"Gestion du backlog SecureGPT (RAG interne) et Microsoft Copilot en environnement SAFe. Priorisation MoSCoW, r\u00e9daction d\u2019user stories et animation des c\u00e9r\u00e9monies agiles. Automatisation via Power Automate et AI Builder. R\u00f4le d\u2019AI Evangelist et participation au LACE.",'exp.airbus.role':'Product Owner \u00b7 Alternance','exp.airbus.desc':"Application mobile de messagerie s\u00e9curis\u00e9e mission critique pour les JO Paris 2024. Transition Waterfall vers SAFe, interop\u00e9rabilit\u00e9 TETRA/Broadband. Animation des c\u00e9r\u00e9monies agiles et PI Planning.",'exp.casino.role':'Charg\u00e9 de Projet Change Management \u00b7 Stage','exp.casino.desc':"Accompagnement \u00e0 la transformation agile et impl\u00e9mentation Scrum. D\u00e9finition de la strat\u00e9gie de conduite du changement, d\u00e9ploiement du plan de communication et suivi KPI.",'skills.product':'Product','skills.ai':'IA & Tech','skills.agile':'Agilit\u00e9 & Outils','certs.credly':'V\u00e9rifier sur Credly \u2192','certs.agile':'Agilit\u00e9','certs.product':'Product Management','certs.ai':'IA & Divers','cert.oriions':'Conduire un projet innovant \u00b7 Lean Six Sigma White Belt','proj.bnp.name':'Design Sprint \- Sustainable Innovation','proj.bnp.desc':"Co-construction de solutions \u00e0 impact dans le cadre d\u2019un Design Sprint anim\u00e9 chez BNP Paribas.",'proj.shopify.desc':"Product Owner et d\u00e9veloppeur sur un site e-commerce Shopify avec chatbot IA int\u00e9gr\u00e9 (JavaScript, Node.js, CSS, HTML, API).",'proj.geo.name':'App G\u00e9olocalisation PowerApps','proj.geo.desc':"Application mobile de g\u00e9olocalisation pour la maintenance terrain, d\u00e9velopp\u00e9e sur Microsoft Power Platform.",'edu.bootcamp.degree':'Bootcamp Product Owner / Product Manager','edu.lbl.cert':'Certification obtenue','edu.lbl.thesis':"M\u00e9moire de fin d'\u00e9tudes",'edu.bootcamp.thesis':'\u00ab\u00a0Conduire et piloter un projet innovant avec des m\u00e9thodes agiles\u00a0\u00bb.','edu.m2.degree':"Master 2 \- \u00c9conomie et Management de l\u2019Innovation Digitale",'edu.m2.thesis':"\u00ab\u00a0Du hardware au software, du Waterfall au SAFe\u00a0: Les avantages de l\u2019agilit\u00e9 sur la performance op\u00e9rationnelle en environnement VUCA.\u00a0\u00bb",'edu.m1.degree':'Master 1 \- Management Strat\u00e9gique et Conduite du Changement','edu.m1.thesis':"\u00ab\u00a0L\u2019accompagnement au changement sous le prisme des rapports de domination \u00e9conomique.\u00a0\u00bb",'edu.licence.degree':'Licence Science Politique \- Sp\u00e9cialisation \u00c9conomie Num\u00e9rique','edu.licence.thesis':"\u00ab\u00a0Manipulations et influence\u00a0: Histoire et enjeux de la r\u00e9gulation des donn\u00e9es personnelles.\u00a0\u00bb",'footer.hl':'On construit<br>','footer.hl2':'quelque chose ?'},'proj.rs.ctx':"Outil con\u00e7u pour transformer une liste de features brutes en roadmap narrative adapt\u00e9e \u00e0 chaque audience.",'proj.rs.pb':"Pr\u00e9senter une roadmap \u00e0 des dirigeants ou clients n\u00e9cessite un discours orient\u00e9 valeur, pas une liste de tickets JIRA.",'proj.rs.ap':"Application web (HTML/JS + API Groq/OpenAI). L'utilisateur entre ses features par p\u00e9riode (Now/Next/Later), choisit son audience et obtient un pitch narratif + timeline valoris\u00e9e + messages cl\u00e9s.",'proj.rs.res':"Roadmap pr\u00eate \u00e0 pr\u00e9senter en quelques secondes, avec un pitch copiable et des messages cl\u00e9s adapt\u00e9s \u00e0 l'audience." ,'proj.eus.ctx':"Outil con\u00e7u pour acc\u00e9l\u00e9rer la d\u00e9composition d\u2019un epic en user stories pr\u00eates \u00e0 raffiner en sprint planning.",'proj.eus.pb':"Produire des user stories ind\u00e9pendantes, bien formul\u00e9es et avec des crit\u00e8res d\u2019acceptance v\u00e9rifiables prend du temps et demande de la rigueur.",'proj.eus.ap':"Application web (HTML/JS + API Groq/OpenAI). L\u2019utilisateur d\u00e9crit son epic, choisit le format (standard ou Job Story) et le nombre de stories. L\u2019IA g\u00e9n\u00e8re chaque story avec priorit\u00e9, effort et crit\u00e8res d\u2019acceptance.",'proj.eus.res':"Backlog pr\u00eat en quelques secondes, exportable en Markdown pour Jira ou Confluence. Respecte le principe INVEST pour chaque story.",en:{'nav.exp':'Experience','nav.skills':'Skills','nav.certs':'Certifications','nav.edu':'Education','nav.cta':'Contact me →','nav.projects':'Projects',
-'hero.role':'AI Product Manager · Builder',
+var T={fr:{'nav.exp':'Parcours','nav.skills':'Comp\u00e9tences','nav.certs':'Certifications','nav.edu':'Formation','nav.cta':'Me contacter \u2192','nav.projects':'Projets','proj.intro':"Je build des outils PM avec l\'IA parce que j\'ai envie de r\u00e9soudre de vrais probl\u00e8mes que je rencontre en tant que PM. Pas des d\u00e9mos, des outils que j\'utilise vraiment. Stack\u00a0: HTML\u00a0/\u00a0JS\u00a0/\u00a0APIs LLM. D\u00e9ploy\u00e9s en statique, accessibles \u00e0 tous.",'proj.stat.tools':'Outils live','proj.stat.open':'Open access','proj.stat.llm':'LLM providers','hero.portfolio':'Portfolio · Projets IA buildés','hero.role':'AI Product Manager \u00b7 Builder','lbl.ctx':'Contexte','lbl.pb':'Probl\u00e8me','lbl.ap':'Approche','lbl.res':'R\u00e9sultat','proj.bnp.ctx':"Mission consulting en Master 2. BNP Paribas cherchait des pistes d\u2019innovation durable pour l\u2019un de ses m\u00e9tiers.",'proj.bnp.pb':"G\u00e9n\u00e9rer des id\u00e9es actionnables en 5 jours avec des parties prenantes aux profils tr\u00e8s h\u00e9t\u00e9rog\u00e8nes.",'proj.bnp.ap':"Facilitation d\u2019un Design Sprint complet : cadrage, id\u00e9ation, prototypage rapide et test utilisateur. Animation des ateliers et synth\u00e8se des insights.",'proj.bnp.res':"3 concepts pr\u00e9sent\u00e9s \u00e0 l\u2019\u00e9quipe BNP avec une recommandation argument\u00e9e sur le concept \u00e0 prototyper en priorit\u00e9.",'proj.shopify.ctx':"Projet de fin de Master 2 en \u00e9quipe \- construire un produit e-commerce fonctionnel de A \u00e0 Z.",'proj.shopify.pb':"R\u00e9duire le taux d\u2019abandon en aidant les visiteurs \u00e0 trouver le bon produit sans intervention humaine.",'proj.shopify.ap':"R\u00f4le de PO sur le backlog + d\u00e9veloppeur sur l\u2019int\u00e9gration du chatbot (Node.js, API, JS). User stories, priorisation et sprints it\u00e9ratifs.",'proj.shopify.res':"Site livr\u00e9 avec chatbot fonctionnel capable de r\u00e9pondre aux questions produit et de rediriger vers les fiches concern\u00e9es.",'proj.geo.ctx':"Projet pratique du Master 2 pour explorer le d\u00e9veloppement low-code sur Microsoft Power Platform.",'proj.geo.pb':"Les \u00e9quipes terrain n\u2019avaient pas d\u2019outil simple pour signaler leur position et l\u2019\u00e9tat des interventions en temps r\u00e9el.",'proj.geo.ap':"Conception UX, mod\u00e9lisation des donn\u00e9es et d\u00e9veloppement complet sur PowerApps, connect\u00e9 \u00e0 SharePoint comme base de donn\u00e9es.",'proj.geo.res':"Application mobile fonctionnelle livr\u00e9e, test\u00e9e et document\u00e9e \- d\u00e9montrant la capacit\u00e9 \u00e0 produire un outil op\u00e9rationnel sans code traditionnel.",'proj.da.ctx':"Outil IA con\u00e7u et d\u00e9velopp\u00e9 en vibe coding pour acc\u00e9l\u00e9rer la phase de discovery produit.",'proj.da.pb':"Un PM en d\u00e9but de discovery part souvent sans structure : hypoth\u00e8ses floues, questions d\u2019interview non pr\u00e9par\u00e9es, pas de plan de test clair.",'proj.da.ap':"Application web autonome (HTML/JS + API Groq). L\u2019utilisateur d\u00e9crit son probl\u00e8me, l\u2019outil g\u00e9n\u00e8re 3 hypoth\u00e8ses, 5 questions d\u2019interview et un plan de test structur\u00e9.",'proj.okr.ctx':"Outil con\u00e7u pour acc\u00e9l\u00e9rer la d\u00e9finition des OKRs produit, souvent floue ou d\u00e9connect\u00e9e des vraies m\u00e9triques.",'proj.okr.pb':"R\u00e9diger des OKRs coh\u00e9rents, mesurables et align\u00e9s sur la strat\u00e9gie produit prend du temps et manque souvent de rigueur m\u00e9thodologique.",'proj.okr.ap':"Application web (HTML/JS + API Groq/OpenAI). L\'utilisateur d\u00e9crit son contexte et ses ambitions, l\'IA g\u00e9n\u00e8re des OKRs avec Key Results typ\u00e9s (m\u00e9trique, milestone, sant\u00e9).",'proj.okr.res':"OKRs structur\u00e9s en quelques secondes, avec baseline et conseils d\'utilisation en \u00e9quipe. Couvre la phase de planning strat\u00e9gique du cycle produit.",'proj.uia.ctx':"Outil conçu pour accélérer la synthèse des entretiens utilisateurs, étape souvent chronophage dans la phase de discovery.",'proj.uia.pb':"Transformer des notes brutes en insights actionables prend du temps et introduit des biais d\'interprétation quand c\'est fait manuellement.",'proj.uia.ap':"Application web (HTML/JS + API Groq/OpenAI). L\'utilisateur colle ses notes (1 ou plusieurs entretiens), l\'IA extrait pain points groupés, citations, opportunités et génère un persona.",'proj.uia.res':"Synthèse structurée en quelques secondes. Complète le Discovery Assistant pour couvrir l\'intégralité de la phase de discovery produit.",'proj.bp.ctx':"Outil IA con\u00e7u pour acc\u00e9l\u00e9rer les sessions de priorisation backlog, souvent chronophages et subjectives.",'proj.bp.pb':"Prioriser un backlog de mani\u00e8re rigoureuse prend du temps et manque souvent de justification explicite face aux parties prenantes.",'proj.bp.ap':"Application web (HTML/JS + API Groq). L\u2019utilisateur colle ses user stories, choisit RICE ou MoSCoW, et obtient un scoring complet avec justification par item.",'proj.bp.res':"Outil live avec double mode de saisie et exemples al\u00e9atoires. R\u00e9duit une session de priorisation de 30 min \u00e0 moins de 2 min.",'proj.da.res':"Outil live et accessible publiquement, con\u00e7u de z\u00e9ro en moins d\u2019une journ\u00e9e. Illustre la capacit\u00e9 \u00e0 shipper rapidement des outils IA utiles.",'proj.link':'Voir le projet \u2192','hero.intro':"PM/PO avec 3 ans d\u2019exp\u00e9rience dans des environnements exigeants (d\u00e9fense, assurance, conseil). Je couvre l\u2019ensemble du spectre produit de la discovery strat\u00e9gique jusqu\u2019\u00e0 la livraison, avec une expertise marqu\u00e9e en IA g\u00e9n\u00e9rative, syst\u00e8mes multi-agents et vibe coding.",'exp.oaio.date':'Janv. 2026<br>\- Pr\u00e9sent','exp.oaio.role':'Product Manager \u00b7 CDI','exp.oaio.desc':"Pilotage de la strat\u00e9gie produit pour l\u2019impl\u00e9mentation d\u2019une plateforme LMS et d\u2019outils IA pour 3\u00a0500+ collaborateurs. Benchmark de 17 solutions LMS et 44 outils IA avec scoring multicrit\u00e8res. Prototypage en vibe coding (Lovable + Claude Code) pour tester des hypoth\u00e8ses UX. Roadmap en 3 phases align\u00e9e aux objectifs business. Stakeholder management jusqu\u2019\u00e0 la direction.",'exp.outlier.role':'AI Trainer / Data Annotator \u00b7 Freelance','exp.outlier.desc':"Entra\u00eenement de mod\u00e8les d\u2019IA g\u00e9n\u00e9rative via RLHF. Annotation de donn\u00e9es (images, textes, audios) pour cr\u00e9er des datasets structur\u00e9s. Contr\u00f4le qualit\u00e9 rigoureux et classification des donn\u00e9es.",'exp.axa.role':'AI Product Owner \u00b7 Alternance','exp.axa.desc':"Gestion du backlog SecureGPT (RAG interne) et Microsoft Copilot en environnement SAFe. Priorisation MoSCoW, r\u00e9daction d\u2019user stories et animation des c\u00e9r\u00e9monies agiles. Automatisation via Power Automate et AI Builder. R\u00f4le d\u2019AI Evangelist et participation au LACE.",'exp.airbus.role':'Product Owner \u00b7 Alternance','exp.airbus.desc':"Application mobile de messagerie s\u00e9curis\u00e9e mission critique pour les JO Paris 2024. Transition Waterfall vers SAFe, interop\u00e9rabilit\u00e9 TETRA/Broadband. Animation des c\u00e9r\u00e9monies agiles et PI Planning.",'exp.casino.role':'Charg\u00e9 de Projet Change Management \u00b7 Stage','exp.casino.desc':"Accompagnement \u00e0 la transformation agile et impl\u00e9mentation Scrum. D\u00e9finition de la strat\u00e9gie de conduite du changement, d\u00e9ploiement du plan de communication et suivi KPI.",'skills.product':'Product','skills.ai':'IA & Tech','skills.agile':'Agilit\u00e9 & Outils','certs.credly':'V\u00e9rifier sur Credly \u2192','certs.agile':'Agilit\u00e9','certs.product':'Product Management','certs.ai':'IA & Divers','cert.oriions':'Conduire un projet innovant \u00b7 Lean Six Sigma White Belt','proj.bnp.name':'Design Sprint \- Sustainable Innovation','proj.bnp.desc':"Co-construction de solutions \u00e0 impact dans le cadre d\u2019un Design Sprint anim\u00e9 chez BNP Paribas.",'proj.shopify.desc':"Product Owner et d\u00e9veloppeur sur un site e-commerce Shopify avec chatbot IA int\u00e9gr\u00e9 (JavaScript, Node.js, CSS, HTML, API).",'proj.geo.name':'App G\u00e9olocalisation PowerApps','proj.geo.desc':"Application mobile de g\u00e9olocalisation pour la maintenance terrain, d\u00e9velopp\u00e9e sur Microsoft Power Platform.",'edu.bootcamp.degree':'Bootcamp Product Owner / Product Manager','edu.lbl.cert':'Certification obtenue','edu.lbl.thesis':"M\u00e9moire de fin d'\u00e9tudes",'edu.bootcamp.thesis':'\u00ab\u00a0Conduire et piloter un projet innovant avec des m\u00e9thodes agiles\u00a0\u00bb.','edu.m2.degree':"Master 2 \- \u00c9conomie et Management de l\u2019Innovation Digitale",'edu.m2.thesis':"\u00ab\u00a0Du hardware au software, du Waterfall au SAFe\u00a0: Les avantages de l\u2019agilit\u00e9 sur la performance op\u00e9rationnelle en environnement VUCA.\u00a0\u00bb",'edu.m1.degree':'Master 1 \- Management Strat\u00e9gique et Conduite du Changement','edu.m1.thesis':"\u00ab\u00a0L\u2019accompagnement au changement sous le prisme des rapports de domination \u00e9conomique.\u00a0\u00bb",'edu.licence.degree':'Licence Science Politique \- Sp\u00e9cialisation \u00c9conomie Num\u00e9rique','edu.licence.thesis':"\u00ab\u00a0Manipulations et influence\u00a0: Histoire et enjeux de la r\u00e9gulation des donn\u00e9es personnelles.\u00a0\u00bb",'footer.hl':'On construit<br>','footer.hl2':'quelque chose ?'},'proj.rs.ctx':"Outil con\u00e7u pour transformer une liste de features brutes en roadmap narrative adapt\u00e9e \u00e0 chaque audience.",'proj.rs.pb':"Pr\u00e9senter une roadmap \u00e0 des dirigeants ou clients n\u00e9cessite un discours orient\u00e9 valeur, pas une liste de tickets JIRA.",'proj.rs.ap':"Application web (HTML/JS + API Groq/OpenAI). L'utilisateur entre ses features par p\u00e9riode (Now/Next/Later), choisit son audience et obtient un pitch narratif + timeline valoris\u00e9e + messages cl\u00e9s.",'proj.rs.res':"Roadmap pr\u00eate \u00e0 pr\u00e9senter en quelques secondes, avec un pitch copiable et des messages cl\u00e9s adapt\u00e9s \u00e0 l'audience." ,'proj.eus.ctx':"Outil con\u00e7u pour acc\u00e9l\u00e9rer la d\u00e9composition d\u2019un epic en user stories pr\u00eates \u00e0 raffiner en sprint planning.",'proj.eus.pb':"Produire des user stories ind\u00e9pendantes, bien formul\u00e9es et avec des crit\u00e8res d\u2019acceptance v\u00e9rifiables prend du temps et demande de la rigueur.",'proj.eus.ap':"Application web (HTML/JS + API Groq/OpenAI). L\u2019utilisateur d\u00e9crit son epic, choisit le format (standard ou Job Story) et le nombre de stories. L\u2019IA g\u00e9n\u00e8re chaque story avec priorit\u00e9, effort et crit\u00e8res d\u2019acceptance.",'proj.eus.res':"Backlog pr\u00eat en quelques secondes, exportable en Markdown pour Jira ou Confluence. Respecte le principe INVEST pour chaque story.",en:{'hero.portfolio':'Portfolio · AI Projects built','nav.exp':'Experience','nav.skills':'Skills','nav.certs':'Certifications','nav.edu':'Education','nav.cta':'Contact me →','nav.projects':'Projects','hero.role':'AI Product Manager · Builder',
 'hero.intro':"PM by day, builder by night. I build concrete tools with AI because the best tools are the ones you create yourself. Test, learn, iterate. Every project here solves a real problem I faced as a PM.",
 'proj.intro':"I build PM tools with AI to solve real problems I face as a PM. Not demos, tools I actually use. Stack: HTML / JS / LLM APIs. Deployed as static files, open to everyone.",
 'proj.stat.tools':'Live tools','proj.stat.open':'Open access','proj.stat.llm':'LLM providers',
@@ -482,5 +450,293 @@ window.setLang=function(lang){
   window.addEventListener('scroll',showAll,{passive:true});
 }());
 </script>
+
+<!-- ========== CHAT ASSISTANT ========== -->
+<style>
+#chat-fab{position:fixed;bottom:1.75rem;right:1.75rem;z-index:9999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#a78bfa);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(34,211,238,0.35);transition:transform 0.2s,box-shadow 0.2s}
+#chat-fab:hover{transform:scale(1.08);box-shadow:0 6px 32px rgba(34,211,238,0.5)}
+#chat-fab svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#chat-window{position:fixed;bottom:5.5rem;right:1.75rem;z-index:9998;width:340px;max-height:480px;background:#0e0e1a;border:1px solid rgba(255,255,255,0.08);border-radius:16px;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,0.6);overflow:hidden;transform:scale(0.92) translateY(16px);opacity:0;pointer-events:none;transition:transform 0.22s cubic-bezier(.34,1.56,.64,1),opacity 0.18s}
+#chat-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+#chat-header{padding:0.9rem 1.1rem;background:rgba(34,211,238,0.06);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:0.6rem}
+#chat-header .ch-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#07070f;flex-shrink:0}
+#chat-header .ch-info{flex:1}
+#chat-header .ch-name{font-size:0.8rem;font-weight:700;color:#fff;font-family:"Syne",sans-serif}
+#chat-header .ch-status{font-size:0.65rem;color:#22d3ee;display:flex;align-items:center;gap:0.3rem}
+#chat-header .ch-status::before{content:"";width:6px;height:6px;border-radius:50%;background:#22d3ee;display:inline-block}
+#chat-close{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:1.1rem;padding:0.2rem;line-height:1}
+#chat-close:hover{color:#fff}
+#chat-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:0.75rem;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent}
+.msg{max-width:85%;font-size:0.8rem;line-height:1.55;padding:0.6rem 0.85rem;border-radius:12px;animation:msgIn 0.2s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.msg.bot{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.88);border-radius:4px 12px 12px 12px;align-self:flex-start}
+.msg.user{background:linear-gradient(135deg,rgba(34,211,238,0.18),rgba(167,139,250,0.18));color:#fff;border-radius:12px 4px 12px 12px;align-self:flex-end}
+.msg a{color:#22d3ee;text-decoration:underline;text-underline-offset:2px}
+.msg .chips{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem}
+.chip{font-size:0.7rem;padding:0.25rem 0.65rem;border-radius:99px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.25);color:#22d3ee;cursor:pointer;transition:background 0.15s;white-space:nowrap}
+.chip:hover{background:rgba(34,211,238,0.2)}
+#chat-typing{display:none;align-self:flex-start;padding:0.5rem 0.85rem;background:rgba(255,255,255,0.06);border-radius:4px 12px 12px 12px}
+#chat-typing span{display:inline-block;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.4);margin:0 2px;animation:bounce 1.2s infinite}
+#chat-typing span:nth-child(2){animation-delay:0.2s}
+#chat-typing span:nth-child(3){animation-delay:0.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+#chat-input-row{padding:0.75rem;border-top:1px solid rgba(255,255,255,0.06);display:flex;gap:0.5rem}
+#chat-input{flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:0.5rem 0.75rem;color:#fff;font-size:0.78rem;font-family:"DM Sans",sans-serif;outline:none;transition:border-color 0.15s}
+#chat-input:focus{border-color:rgba(34,211,238,0.4)}
+#chat-input::placeholder{color:rgba(255,255,255,0.3)}
+#chat-send{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#22d3ee,#a78bfa);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity 0.15s}
+#chat-send:hover{opacity:0.85}
+#chat-send svg{width:14px;height:14px;fill:none;stroke:#07070f;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:480px){#chat-window{width:calc(100vw - 2rem);right:1rem;bottom:5rem}}
+</style>
+
+<!-- FAB Button -->
+<button id="chat-fab" onclick="toggleChat()" aria-label="Assistant">
+  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+
+<!-- Chat Window -->
+<div id="chat-window">
+  <div id="chat-header">
+    <div class="ch-avatar">CM</div>
+    <div class="ch-info">
+      <div class="ch-name">Assistant Portfolio</div>
+      <div class="ch-status" id="chat-status-lbl">En ligne</div>
+    </div>
+    <button id="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div id="chat-messages"></div>
+  <div id="chat-typing"><span></span><span></span><span></span></div>
+  <div id="chat-input-row">
+    <input id="chat-input" type="text" placeholder="Posez votre question..." onkeydown="if(event.key==='Enter')sendChat()"/>
+    <button id="chat-send" onclick="sendChat()">
+      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var _chatOpen = false;
+  var _lang = 'fr';
+
+  // ---- KNOWLEDGE BASE ----
+  var KB = {
+    fr: {
+      welcome: "Bonjour 👋 Je suis l'assistant de Carlin. Posez-moi une question sur son profil, ses outils ou son parcours.",
+      chips_welcome: ["Qui est Carlin ?", "Quels sont ses outils ?", "Son expérience ?", "Comment le contacter ?"],
+      placeholder: "Posez votre question...",
+      status: "En ligne",
+      rules: [
+        {
+          k: ["qui","carlin","profil","présente","présentation","c'est qui"],
+          r: "Carlin Mankoto est AI Product Manager avec 3 ans d'expérience (AXA, Airbus, Casino, OAIO/Infotel). Il est certifié PSPO I, SAFe POPM et couvre tout le spectre produit : discovery, backlog, roadmap. Il build également ses propres outils IA en vibe coding.",
+          chips: ["Ses outils IA ?", "Ses certifications ?", "Le contacter"]
+        },
+        {
+          k: ["outil","build","projet","ia","app","tool"],
+          r: "Carlin a développé 6 outils IA pour les Product Managers :\n\n• <a href='https://cmankotech.github.io/cmankotech/okr-builder.html' target='_blank'>OKR Builder</a> — génère des OKRs structurés\n• <a href='https://cmankotech.github.io/cmankotech/discovery-assistant.html' target='_blank'>Discovery Assistant</a> — hypothèses + questions d'interview\n• <a href='https://cmankotech.github.io/cmankotech/user-interview-analyzer.html' target='_blank'>User Interview Analyzer</a> — synthèse d'entretiens\n• <a href='https://cmankotech.github.io/cmankotech/backlog-prioritizer.html' target='_blank'>Backlog Prioritizer</a> — scoring RICE/MoSCoW\n• <a href='https://cmankotech.github.io/cmankotech/epic-to-userstories.html' target='_blank'>Epic to User Stories</a> — décomposition d'epics\n• <a href='https://cmankotech.github.io/cmankotech/roadmap-storyteller.html' target='_blank'>Roadmap Storyteller</a> — pitch narratif",
+          chips: ["Comment ils fonctionnent ?", "Quel outil pour moi ?"]
+        },
+        {
+          k: ["fonctionn","comment","stack","tech","api","groq","openai","llm"],
+          r: "Chaque outil est une web app HTML/JS pur, déployée en statique sur GitHub Pages. Le moteur IA est Groq (llama-3.3-70b) ou OpenAI (GPT-4o mini). L'utilisateur entre sa propre clé API — aucune donnée n'est stockée côté serveur.",
+          chips: ["Essayer un outil", "Ses compétences techniques ?"]
+        },
+        {
+          k: ["expérience","parcours","travail","poste","mission","axa","airbus","casino","oaio","infotel"],
+          r: "Son parcours :\n\n• <strong>OAIO/Infotel</strong> — PM Consultant (2026) : stratégie LMS + outils IA pour 3500 collaborateurs\n• <strong>AXA</strong> — AI PO : SecureGPT (RAG interne), Microsoft Copilot, SAFe\n• <strong>Airbus D&S</strong> — PO : app mobile sécurisée pour les JO Paris 2024\n• <strong>Groupe Casino</strong> — Change Management : transformation agile Scrum",
+          chips: ["Ses certifications ?", "Le contacter"]
+        },
+        {
+          k: ["certif","pspo","safe","formation","diplôme","master","scrum"],
+          r: "Certifications : PSPO I (Scrum.org), SAFe POPM + SSM (Scaled Agile), plusieurs certifications Product School (Discovery, Strategy, Roadmapping, Analytics). Formation : Master 2 Innovation Digitale (Paris-Saclay), Master 1 Management Stratégique.",
+          chips: ["Son expérience ?", "Le contacter"]
+        },
+        {
+          k: ["contact","linkedin","email","recrut","mission","freelance","cdi","disponible"],
+          r: "Carlin est disponible pour des missions CDI ou freelance. Vous pouvez le contacter sur <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> ou par email à carlinmankoto@proton.me",
+          chips: ["Qui est Carlin ?", "Ses outils IA ?"]
+        },
+        {
+          k: ["discovery","recherche","utilisateur","interview","hypothèse"],
+          r: "Pour la phase de discovery, Carlin a deux outils :\n\n• <a href='https://cmankotech.github.io/cmankotech/discovery-assistant.html' target='_blank'>Discovery Assistant</a> — structurer un problème en hypothèses + questions d'interview\n• <a href='https://cmankotech.github.io/cmankotech/user-interview-analyzer.html' target='_blank'>User Interview Analyzer</a> — analyser des notes d'entretiens brutes",
+          chips: ["Voir tous les outils", "Comment ils fonctionnent ?"]
+        },
+        {
+          k: ["backlog","priorit","rice","moscow","story","epic","user stor"],
+          r: "Pour le backlog et la livraison :\n\n• <a href='https://cmankotech.github.io/cmankotech/backlog-prioritizer.html' target='_blank'>Backlog Prioritizer</a> — scoring RICE ou MoSCoW\n• <a href='https://cmankotech.github.io/cmankotech/epic-to-userstories.html' target='_blank'>Epic to User Stories</a> — décomposer un epic en stories",
+          chips: ["Voir tous les outils"]
+        },
+        {
+          k: ["okr","objectif","kpi","stratég","roadmap","pitch"],
+          r: "Pour la stratégie et la communication :\n\n• <a href='https://cmankotech.github.io/cmankotech/okr-builder.html' target='_blank'>OKR Builder</a> — générer des OKRs mesurables\n• <a href='https://cmankotech.github.io/cmankotech/roadmap-storyteller.html' target='_blank'>Roadmap Storyteller</a> — transformer une roadmap en pitch narratif",
+          chips: ["Voir tous les outils"]
+        }
+      ],
+      fallback: "Je n'ai pas de réponse précise à ça, mais vous pouvez contacter Carlin directement sur <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> 👋",
+      chips_fallback: ["Qui est Carlin ?", "Ses outils IA ?", "Le contacter"]
+    },
+    en: {
+      welcome: "Hi 👋 I'm Carlin's assistant. Ask me anything about his profile, tools or background.",
+      chips_welcome: ["Who is Carlin?", "His AI tools?", "His experience?", "How to reach him?"],
+      placeholder: "Ask your question...",
+      status: "Online",
+      rules: [
+        {
+          k: ["who","carlin","profile","about","introduce"],
+          r: "Carlin Mankoto is an AI Product Manager with 3 years of experience (AXA, Airbus, Casino, OAIO/Infotel). He is PSPO I and SAFe POPM certified, covering the full product spectrum: discovery, backlog, roadmap. He also builds his own AI tools via vibe coding.",
+          chips: ["His AI tools?", "His certifications?", "Reach him"]
+        },
+        {
+          k: ["tool","build","project","ai","app"],
+          r: "Carlin built 6 AI tools for Product Managers:\n\n• <a href='https://cmankotech.github.io/cmankotech/okr-builder.html' target='_blank'>OKR Builder</a> — generate structured OKRs\n• <a href='https://cmankotech.github.io/cmankotech/discovery-assistant.html' target='_blank'>Discovery Assistant</a> — hypotheses + interview questions\n• <a href='https://cmankotech.github.io/cmankotech/user-interview-analyzer.html' target='_blank'>User Interview Analyzer</a> — interview synthesis\n• <a href='https://cmankotech.github.io/cmankotech/backlog-prioritizer.html' target='_blank'>Backlog Prioritizer</a> — RICE/MoSCoW scoring\n• <a href='https://cmankotech.github.io/cmankotech/epic-to-userstories.html' target='_blank'>Epic to User Stories</a> — epic decomposition\n• <a href='https://cmankotech.github.io/cmankotech/roadmap-storyteller.html' target='_blank'>Roadmap Storyteller</a> — narrative pitch",
+          chips: ["How do they work?", "Which tool for me?"]
+        },
+        {
+          k: ["how","work","stack","tech","api","groq","openai","llm"],
+          r: "Each tool is a pure HTML/JS web app, statically deployed on GitHub Pages. The AI engine is Groq (llama-3.3-70b) or OpenAI (GPT-4o mini). Users provide their own API key — no data is stored server-side.",
+          chips: ["Try a tool", "His technical skills?"]
+        },
+        {
+          k: ["experience","background","work","job","axa","airbus","casino","oaio"],
+          r: "His background:\n\n• <strong>OAIO/Infotel</strong> — PM Consultant (2026): LMS strategy + AI tools for 3,500 employees\n• <strong>AXA</strong> — AI PO: SecureGPT (internal RAG), Microsoft Copilot, SAFe\n• <strong>Airbus D&S</strong> — PO: secure mobile app for Paris 2024 Olympics\n• <strong>Groupe Casino</strong> — Change Management: Agile/Scrum transformation",
+          chips: ["His certifications?", "Reach him"]
+        },
+        {
+          k: ["certif","pspo","safe","degree","master","scrum","formation"],
+          r: "Certifications: PSPO I (Scrum.org), SAFe POPM + SSM (Scaled Agile), multiple Product School certs (Discovery, Strategy, Roadmapping, Analytics). Education: Master 2 Digital Innovation (Paris-Saclay), Master 1 Strategic Management.",
+          chips: ["His experience?", "Reach him"]
+        },
+        {
+          k: ["contact","linkedin","email","hire","recruit","freelance","available"],
+          r: "Carlin is open to CDI or freelance opportunities. Reach him on <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> or at carlinmankoto@proton.me",
+          chips: ["Who is Carlin?", "His AI tools?"]
+        },
+        {
+          k: ["discovery","research","user","interview","hypothesis"],
+          r: "For the discovery phase, Carlin has two tools:\n\n• <a href='https://cmankotech.github.io/cmankotech/discovery-assistant.html' target='_blank'>Discovery Assistant</a> — structure a problem into hypotheses + interview questions\n• <a href='https://cmankotech.github.io/cmankotech/user-interview-analyzer.html' target='_blank'>User Interview Analyzer</a> — analyze raw interview notes",
+          chips: ["See all tools", "How do they work?"]
+        },
+        {
+          k: ["backlog","priorit","rice","moscow","story","epic"],
+          r: "For backlog and delivery:\n\n• <a href='https://cmankotech.github.io/cmankotech/backlog-prioritizer.html' target='_blank'>Backlog Prioritizer</a> — RICE or MoSCoW scoring\n• <a href='https://cmankotech.github.io/cmankotech/epic-to-userstories.html' target='_blank'>Epic to User Stories</a> — break down an epic into stories",
+          chips: ["See all tools"]
+        },
+        {
+          k: ["okr","objective","kpi","strateg","roadmap","pitch"],
+          r: "For strategy and communication:\n\n• <a href='https://cmankotech.github.io/cmankotech/okr-builder.html' target='_blank'>OKR Builder</a> — generate measurable OKRs\n• <a href='https://cmankotech.github.io/cmankotech/roadmap-storyteller.html' target='_blank'>Roadmap Storyteller</a> — turn a roadmap into a narrative pitch",
+          chips: ["See all tools"]
+        }
+      ],
+      fallback: "I don't have a precise answer for that, but you can reach Carlin directly on <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> 👋",
+      chips_fallback: ["Who is Carlin?", "His AI tools?", "Reach him"]
+    }
+  };
+
+  window.toggleChat = function() {
+    _chatOpen = !_chatOpen;
+    var win = document.getElementById('chat-window');
+    win.classList.toggle('open', _chatOpen);
+    if (_chatOpen && document.getElementById('chat-messages').children.length === 0) {
+      initChat();
+    }
+    if (_chatOpen) setTimeout(function(){ document.getElementById('chat-input').focus(); }, 250);
+  };
+
+  function initChat() {
+    _lang = (document.documentElement.lang === 'en' || (window.currentLang && window.currentLang === 'en')) ? 'en' : 'fr';
+    var kb = KB[_lang];
+    document.getElementById('chat-input').placeholder = kb.placeholder;
+    document.getElementById('chat-status-lbl').textContent = kb.status;
+    addBotMsg(kb.welcome, kb.chips_welcome);
+  }
+
+  function addBotMsg(text, chips) {
+    var msgs = document.getElementById('chat-messages');
+    var div = document.createElement('div');
+    div.className = 'msg bot';
+    div.innerHTML = text.replace(/\n/g, '<br>');
+    if (chips && chips.length) {
+      var chipsDiv = document.createElement('div');
+      chipsDiv.className = 'chips';
+      chips.forEach(function(chip) {
+        var btn = document.createElement('button');
+        btn.className = 'chip';
+        btn.textContent = chip;
+        btn.onclick = function() { handleInput(chip); };
+        chipsDiv.appendChild(btn);
+      });
+      div.appendChild(chipsDiv);
+    }
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function addUserMsg(text) {
+    var msgs = document.getElementById('chat-messages');
+    var div = document.createElement('div');
+    div.className = 'msg user';
+    div.textContent = text;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function showTyping() {
+    var t = document.getElementById('chat-typing');
+    t.style.display = 'block';
+    var msgs = document.getElementById('chat-messages');
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function hideTyping() {
+    document.getElementById('chat-typing').style.display = 'none';
+  }
+
+  function handleInput(text) {
+    if (!text.trim()) return;
+    addUserMsg(text);
+    document.getElementById('chat-input').value = '';
+    showTyping();
+    setTimeout(function() {
+      hideTyping();
+      respond(text.toLowerCase());
+    }, 650 + Math.random() * 400);
+  }
+
+  function respond(q) {
+    var kb = KB[_lang];
+    for (var i = 0; i < kb.rules.length; i++) {
+      var rule = kb.rules[i];
+      for (var j = 0; j < rule.k.length; j++) {
+        if (q.indexOf(rule.k[j]) !== -1) {
+          addBotMsg(rule.r, rule.chips);
+          return;
+        }
+      }
+    }
+    addBotMsg(kb.fallback, kb.chips_fallback);
+  }
+
+  window.sendChat = function() {
+    var val = document.getElementById('chat-input').value.trim();
+    if (val) handleInput(val);
+  };
+
+  // Sync lang when portfolio lang switches
+  var _origSetLang = window.setLang;
+  window.setLang = function(lang) {
+    _lang = lang;
+    var kb = KB[lang] || KB['fr'];
+    var inp = document.getElementById('chat-input');
+    var status = document.getElementById('chat-status-lbl');
+    if (inp) inp.placeholder = kb.placeholder;
+    if (status) status.textContent = kb.status;
+    if (_origSetLang) _origSetLang(lang);
+  };
+
+})();
+</script>
+
 </body>
 </html>
