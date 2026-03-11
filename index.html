@@ -548,8 +548,6 @@ window.setLang=function(lang){
   var _history = [];
   var _autoOpened = false;
 
-  var GROQ_KEY = 'gsk_REMPLACER_PAR_TA_CLE';
-
   var SYSTEM_PROMPT = "Tu es l'assistant portfolio de Carlin Mankoto, AI Product Manager.\n" +
     "Réponds de façon concise et professionnelle en français par défaut (en anglais si on te parle en anglais).\n" +
     "Ne réponds qu'aux questions liées à Carlin ou à ses outils. Si la question est hors sujet, redirige poliment.\n\n" +
@@ -590,10 +588,9 @@ window.setLang=function(lang){
     _history.push({role: 'user', content: userMessage});
     showTyping();
     try {
-      var res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      var res = await fetch('REMPLACER_PAR_URL_WORKER', {
         method: 'POST',
         headers: {
-          'Authorization': 'Bearer ' + GROQ_KEY,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
