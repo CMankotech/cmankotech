@@ -194,15 +194,15 @@ nav{padding:1rem 1.5rem}
   </div>
 </nav>
 
-<section id="hero">
+<section id="hero" style="position:relative;overflow:hidden"><canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.45"></canvas>
   <div class="wrap hero-wrap a1">
     <div class="hero-compact">
       <div>
         <div class="hero-portfolio-label" data-i18n="hero.portfolio">Portfolio &middot; Projets IA build&eacute;s</div>
         <div class="hero-name grad">Carlin Mankoto</div>
-        <div class="hero-role" data-i18n="hero.role">AI Product Manager &middot; Builder</div>
+        <div class="hero-role" id="heroRole">AI Product Manager &middot; Builder</div>
       </div>
-      <p class="hero-line" data-i18n="hero.intro">PM le jour, builder la nuit. Je construis des outils concrets avec l&rsquo;IA parce que les meilleurs outils sont ceux qu&rsquo;on cr&eacute;e soi-m&ecirc;me. Test, apprends, it&egrave;re. Chaque projet ici r&eacute;pond &agrave; un vrai probl&egrave;me que j&rsquo;ai rencontr&eacute; en tant que PM.</p>
+      <p class="hero-line" id="heroLine" data-i18n="hero.intro">PM le jour, builder la nuit. Je construis des outils concrets avec l&rsquo;IA parce que les meilleurs outils sont ceux qu&rsquo;on cr&eacute;e soi-m&ecirc;me. Test, apprends, it&egrave;re. Chaque projet ici r&eacute;pond &agrave; un vrai probl&egrave;me que j&rsquo;ai rencontr&eacute; en tant que PM.</p>
       <div class="badges">
         <span class="badge b1">Agentic AI</span>
         <span class="badge b1">Vibe Coding</span>
@@ -229,11 +229,11 @@ nav{padding:1rem 1.5rem}
   <div class="wrap">
     <div class="sec-label"><span class="grad-blue" style="font-weight:700">01</span> <span data-i18n="nav.projects">Projets</span></div>
     <div class="proj-intro rv">
-      <p class="proj-intro-text" data-i18n="proj.intro">Je build des outils PM avec l&rsquo;IA parce que j&rsquo;ai envie de r&eacute;soudre de vrais probl&egrave;mes que je rencontre en tant que PM. Pas des d&eacute;mos, des outils que j&rsquo;utilise vraiment. Stack&nbsp;: HTML&nbsp;/&nbsp;JS&nbsp;/&nbsp;APIs LLM. D&eacute;ploy&eacute;s en statique, accessibles &agrave; tous.</p>
+      <p class="proj-intro-text" id="stackLine">Je build des outils PM avec l&rsquo;IA parce que j&rsquo;ai envie de r&eacute;soudre de vrais probl&egrave;mes que je rencontre en tant que PM. Pas des d&eacute;mos, des outils que j&rsquo;utilise vraiment. Stack&nbsp;: HTML&nbsp;/&nbsp;JS&nbsp;/&nbsp;APIs LLM. D&eacute;ploy&eacute;s en statique, accessibles &agrave; tous.</p>
       <div class="proj-intro-stats">
-        <div class="proj-stat"><span class="proj-stat-num grad">6</span><span class="proj-stat-lbl" data-i18n="proj.stat.tools">Outils live</span></div>
-        <div class="proj-stat"><span class="proj-stat-num grad">100%</span><span class="proj-stat-lbl" data-i18n="proj.stat.open">Open access</span></div>
-        <div class="proj-stat"><span class="proj-stat-num grad">2</span><span class="proj-stat-lbl" data-i18n="proj.stat.llm">LLM providers</span></div>
+        <div class="proj-stat"><span class="proj-stat-num grad" id="stat0" data-val="0">0</span><span class="proj-stat-lbl" data-i18n="proj.stat.tools">Outils live</span></div>
+        <div class="proj-stat"><span class="proj-stat-num grad" id="stat1" data-val="100" data-suffix="%">100%</span><span class="proj-stat-lbl" data-i18n="proj.stat.open">Open access</span></div>
+        <div class="proj-stat"><span class="proj-stat-num grad" id="stat2" data-val="2">2</span><span class="proj-stat-lbl" data-i18n="proj.stat.llm">LLM providers</span></div>
       </div>
     </div>
     <div class="proj-grid rv">
@@ -737,6 +737,211 @@ window.setLang=function(lang){
 
 })();
 </script>
+
+
+<script>
+(function(){
+
+// ═══════════════════════════════════════════════════════
+// 1. PARTICLES
+// ═══════════════════════════════════════════════════════
+var canvas = document.getElementById('heroCanvas');
+if(canvas){
+  var ctx = canvas.getContext('2d');
+  var pts = [];
+  var W, H;
+
+  function resize(){
+    var hero = document.getElementById('hero');
+    W = canvas.width  = hero ? hero.offsetWidth  : window.innerWidth;
+    H = canvas.height = hero ? hero.offsetHeight : 420;
+  }
+
+  function mkPt(){
+    return {
+      x: Math.random()*W, y: Math.random()*H,
+      vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.25,
+      r: Math.random()*1.6+0.4,
+      c: Math.random() > .5 ? '34,211,238' : '167,139,250',
+      a: Math.random()*.6+.15
+    };
+  }
+
+  function drawParticles(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(function(p){
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba('+p.c+','+p.a+')';
+      ctx.fill();
+      // update
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W) p.vx*=-1;
+      if(p.y<0||p.y>H) p.vy*=-1;
+    });
+    // connect nearby dots
+    for(var i=0;i<pts.length;i++){
+      for(var j=i+1;j<pts.length;j++){
+        var dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
+        var dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<110){
+          ctx.beginPath();
+          ctx.strokeStyle='rgba(34,211,238,'+(0.06*(1-dist/110))+')';
+          ctx.lineWidth=.5;
+          ctx.moveTo(pts[i].x,pts[i].y);
+          ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(drawParticles);
+  }
+
+  resize();
+  for(var i=0;i<55;i++) pts.push(mkPt());
+  drawParticles();
+  window.addEventListener('resize', function(){
+    resize();
+    pts=[];
+    for(var i=0;i<55;i++) pts.push(mkPt());
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// 2. TYPEWRITER — hero tagline + stack line (chained)
+// ═══════════════════════════════════════════════════════
+var _tw_fr = "PM le jour, builder la nuit. Je construis des outils concrets avec l’IA parce que les meilleurs outils sont ceux qu’on crée soi-même.";
+var _tw_en = "PM by day, builder by night. I build concrete tools with AI because the best tools are the ones you create yourself.";
+var _st_fr = "Je build des outils PM avec l’IA pour résoudre de vrais problèmes que je rencontre en tant que PM. Pas des démos, des outils que j’utilise vraiment.
+Stack : HTML / JS / APIs LLM. Déployés en statique, accessibles à tous.";
+var _st_en = "I build PM tools with AI to solve real problems I face as a PM. Not demos, tools I actually use.
+Stack: HTML / JS / LLM APIs. Deployed as static files, open to everyone.";
+var _twEl  = document.getElementById('heroLine');
+var _stEl  = document.getElementById('stackLine');
+var _twLang = 'fr';
+
+function typewrite(el, txt, speed, onDone){
+  if(!el) return;
+  el.innerHTML = '';
+  var i = 0;
+  var cursor = document.createElement('span');
+  cursor.style.cssText = 'display:inline-block;width:2px;height:0.9em;background:#22d3ee;margin-left:2px;vertical-align:middle;animation:blink .7s steps(1) infinite';
+  el.appendChild(cursor);
+  function tick(){
+    if(i >= txt.length){
+      setTimeout(function(){ cursor.remove(); if(onDone) onDone(); }, 500);
+      return;
+    }
+    var ch = txt[i];
+    if(ch === '\n'){
+      el.insertBefore(document.createElement('br'), cursor);
+    } else {
+      el.insertBefore(document.createTextNode(ch), cursor);
+    }
+    i++;
+    setTimeout(tick, speed || 22);
+  }
+  tick();
+}
+
+function runBothTW(){
+  if(_stEl) _stEl.innerHTML = '';
+  typewrite(_twEl, _twLang==='en' ? _tw_en : _tw_fr, 22, function(){
+    setTimeout(function(){
+      typewrite(_stEl, _twLang==='en' ? _st_en : _st_fr, 18);
+    }, 200);
+  });
+}
+
+window.addEventListener('DOMContentLoaded', function(){ setTimeout(runBothTW, 500); });
+
+var _origTwSetLang = window.setLang;
+window.setLang = function(lang){
+  _twLang = lang;
+  runBothTW();
+  if(_origTwSetLang) _origTwSetLang(lang);
+};
+
+// ═══════════════════════════════════════════════════════
+// 3. ROTATING ROLE BADGE
+// ═══════════════════════════════════════════════════════
+var _roles_fr = ['AI Product Manager','Builder','Vibe Coder','AI Enthusiast'];
+var _roles_en = ['AI Product Manager','Builder','Vibe Coder','AI Enthusiast'];
+var _roleEl = document.getElementById('heroRole');
+var _roleIdx = 0;
+var _roleLang = 'fr';
+
+function rotateRole(){
+  if(!_roleEl) return;
+  var roles = _roleLang==='en' ? _roles_en : _roles_fr;
+  _roleIdx = (_roleIdx+1) % roles.length;
+  _roleEl.style.opacity='0';
+  _roleEl.style.transform='translateY(-8px)';
+  setTimeout(function(){
+    _roleEl.textContent = roles[_roleIdx];
+    _roleEl.style.transition='opacity .4s ease,transform .4s ease';
+    _roleEl.style.opacity='1';
+    _roleEl.style.transform='translateY(0)';
+  }, 350);
+}
+
+_roleEl && (_roleEl.style.transition='opacity .4s ease,transform .4s ease');
+setInterval(rotateRole, 2200);
+
+var _origRoleSetLang = window.setLang;
+window.setLang = function(lang){
+  _roleLang = lang;
+  if(_origRoleSetLang) _origRoleSetLang(lang);
+};
+
+// ═══════════════════════════════════════════════════════
+// 4. ANIMATED COUNTERS
+// ═══════════════════════════════════════════════════════
+function animCounter(el){
+  var target = parseInt(el.getAttribute('data-val'),10);
+  var suffix = el.getAttribute('data-suffix')||'';
+  var duration = 1200;
+  var start = null;
+  var startVal = 0;
+  function step(ts){
+    if(!start) start=ts;
+    var progress=Math.min((ts-start)/duration,1);
+    var ease=1-Math.pow(1-progress,3);
+    var current=Math.round(startVal+(target-startVal)*ease);
+    el.textContent=current+suffix;
+    if(progress<1) requestAnimationFrame(step);
+    else el.textContent=target+suffix;
+  }
+  requestAnimationFrame(step);
+}
+
+var _statsTriggered=false;
+var _statsObs=new IntersectionObserver(function(entries){
+  if(entries[0].isIntersecting && !_statsTriggered){
+    _statsTriggered=true;
+    // stat0: count live proj-cards dynamically
+    var stat0 = document.getElementById('stat0');
+    if(stat0){
+      var toolCount = document.querySelectorAll('.proj-card').length;
+      stat0.setAttribute('data-val', toolCount);
+    }
+    [0,1,2].forEach(function(i){
+      var el=document.getElementById('stat'+i);
+      if(el) setTimeout(function(){animCounter(el);},i*180);
+    });
+    _statsObs.disconnect();
+  }
+},{threshold:0.5});
+
+var _statsSection=document.querySelector('.proj-intro-stats');
+if(_statsSection) _statsObs.observe(_statsSection);
+
+})();
+</script>
+<style>
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+#heroRole{display:inline-block;will-change:opacity,transform}
+</style>
 
 </body>
 </html>
