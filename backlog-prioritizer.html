@@ -428,6 +428,13 @@ function getStories() {
 }
 
 // ---- LAUNCH ----
+function friendlyApiError(err, status) {
+  if (status === 429) return 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return 'Service temporairement indisponible — réessaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
+  if (err && err.message) return err.message;
+  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
+}
 async function launch() {
   hideError();
   var stories = getStories();
@@ -439,6 +446,8 @@ async function launch() {
   document.getElementById('results').classList.remove('show');
   document.getElementById('loading').classList.add('show');
 
+  var _ctrl = new AbortController();
+  var _timeout = setTimeout(function() { _ctrl.abort(); }, 30000);
   try {
     var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
     var model = 'llama-3.3-70b-versatile';
@@ -447,6 +456,7 @@ async function launch() {
     var res = await fetch(endpoint, {
       method: 'POST',
       headers: reqHeaders,
+      signal: _ctrl.signal,
       body: JSON.stringify({
         model: model,
         temperature: 0.3,
@@ -454,12 +464,15 @@ async function launch() {
         messages: [{ role: 'user', content: buildPrompt(stories, context) }]
       })
     });
-    if (!res.ok) { var e = await res.json(); throw new Error(e.error?.message || 'Erreur API ' + res.status); }
+    clearTimeout(_timeout);
+    if (!res.ok) { var e = await res.json(); throw new Error(friendlyApiError(e.error, res.status)); }
     var data = await res.json();
     var parsed = parseResponse(data.choices[0].message.content);
     renderResults(parsed, stories.length, context);
   } catch(e) {
-    showError('Erreur : ' + e.message);
+    clearTimeout(_timeout);
+    if (e.name === 'AbortError') showError('Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    else showError('Erreur : ' + e.message);
   }
 
   document.getElementById('loading').classList.remove('show');
@@ -570,6 +583,7 @@ var LANG = {
 var currentLang = 'fr';
 function setLang(lang) {
   currentLang = lang;
+  localStorage.setItem('lang', lang);
   document.getElementById('lbFr').classList.toggle('active', lang === 'fr');
   document.getElementById('lbEn').classList.toggle('active', lang === 'en');
   var T = LANG[lang];
@@ -592,10 +606,17 @@ function setLang(lang) {
 }
 (function() {
   var params = new URLSearchParams(window.location.search);
-  if (params.get('lang') === 'en') setLang('en');
+  var lang = params.get('lang') || localStorage.getItem('lang') || 'fr';
+  if (lang === 'en') setLang('en');
 })();
 
 
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    var btn = document.getElementById('launchBtn');
+    if (btn && !btn.disabled) btn.click();
+  }
+});
 function toggleHowto(btn) {
   btn.classList.toggle('open');
   document.getElementById('howtoBody').classList.toggle('open');

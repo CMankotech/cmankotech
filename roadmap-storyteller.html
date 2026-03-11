@@ -446,7 +446,8 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, name, horizon);
   } catch(e) {
-    showError('Erreur : ' + e.message);
+    if (e.name === 'AbortError') showError('Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    else showError('Erreur : ' + e.message);
   }
   document.getElementById('loading').classList.remove('show');
   document.getElementById('launchBtn').disabled = false;
@@ -461,18 +462,34 @@ function buildPrompt(name, vision, horizon, features) {
   return 'Tu es un expert en Product Management et communication produit. G\u00e9n\u00e8re une roadmap narrative pour les stakeholders.\n\nProduit : "' + name + '"\nVision : ' + (vision||'Non pr\u00e9cis\u00e9e') + '\nHorizon : ' + horizonStr + '\nAudience(s) : ' + audStr + '\n\nFeatures (NOW = maintenant, NEXT = ensuite, LATER = plus tard) :\n' + featStr + '\n\nG\u00e9n\u00e8re une roadmap narrative avec :\n1. Un pitch narratif de 3-4 phrases qui raconte l\'histoire du produit (inspir\u00e9, orient\u00e9 impact, pas technique)\n2. La timeline organis\u00e9e en p\u00e9riodes NOW/NEXT/LATER avec pour chaque feature : un titre clair et court (pas celui donn\u00e9 en input, reformule-le) + une phrase "Pourquoi" orient\u00e9e valeur pour l\'audience cible\n3. 3 messages cl\u00e9s adapt\u00e9s \u00e0 l\'audience pour convaincre et aligner\n\nR\u00e9ponds UNIQUEMENT avec un JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "narrative": "Pitch narratif de 3-4 phrases qui raconte l\'histoire...",\n  "periods": [\n    {\n      "key": "now",\n      "label": "Maintenant",\n      "theme": "Un mot-cl\u00e9 ou th\u00e8me de cette p\u00e9riode",\n      "features": [\n        {"title": "Titre reformul\u00e9 de la feature", "why": "Valeur concr\u00e8te pour l\'audience"}\n      ]\n    }\n  ],\n  "talking_points": [\n    "Message cl\u00e9 court et percutant pour cette audience"\n  ]\n}';
 }
 
+function friendlyApiError(err, status) {
+  if (status === 429) return 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return 'Service temporairement indisponible — réessaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
+  if (err && err.message) return err.message;
+  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
+}
 async function callAI(prompt, maxTokens) {
   var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
   var model = 'llama-3.3-70b-versatile';
   var hdrs={'Content-Type':'application/json'};
-  var res = await fetch(endpoint, {
-    method:'POST',
-    headers:hdrs,
-    body:JSON.stringify({model,temperature:0.55,max_tokens:maxTokens,messages:[{role:'user',content:prompt}]})
-  });
-  if(!res.ok){var e=await res.json();throw new Error(e.error?.message||'Erreur API '+res.status);}
-  var data = await res.json();
-  return data.choices[0].message.content;
+  var _ctrl = new AbortController();
+  var _timeout = setTimeout(function() { _ctrl.abort(); }, 30000);
+  try {
+    var res = await fetch(endpoint, {
+      method:'POST',
+      headers:hdrs,
+      signal:_ctrl.signal,
+      body:JSON.stringify({model,temperature:0.55,max_tokens:maxTokens,messages:[{role:'user',content:prompt}]})
+    });
+    clearTimeout(_timeout);
+    if(!res.ok){var e=await res.json();throw new Error(friendlyApiError(e.error, res.status));}
+    var data = await res.json();
+    return data.choices[0].message.content;
+  } catch(e) {
+    clearTimeout(_timeout);
+    throw e;
+  }
 }
 
 function renderResults(d, name, horizon) {
@@ -562,6 +579,7 @@ var currentLang = 'fr';
 function setLang(lang) {
   window._lang = lang;
   currentLang = lang;
+  localStorage.setItem('lang', lang);
   document.getElementById('lbFr').classList.toggle('active', lang === 'fr');
   document.getElementById('lbEn').classList.toggle('active', lang === 'en');
   var T = LANG[lang];
@@ -584,10 +602,17 @@ function setLang(lang) {
 }
 (function() {
   var params = new URLSearchParams(window.location.search);
-  if (params.get('lang') === 'en') setLang('en');
+  var lang = params.get('lang') || localStorage.getItem('lang') || 'fr';
+  if (lang === 'en') setLang('en');
 })();
 
 
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    var btn = document.getElementById('launchBtn');
+    if (btn && !btn.disabled) btn.click();
+  }
+});
 function toggleHowto(btn) {
   btn.classList.toggle('open');
   document.getElementById('howtoBody').classList.toggle('open');

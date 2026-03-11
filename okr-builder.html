@@ -391,7 +391,8 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, name, type);
   } catch(e) {
-    showError('Erreur : ' + e.message);
+    if (e.name === 'AbortError') showError('Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    else showError('Erreur : ' + e.message);
   }
   document.getElementById('loading').classList.remove('show');
   document.getElementById('launchBtn').disabled = false;
@@ -404,18 +405,34 @@ function buildPrompt(name, type, ambitions, metrics) {
   return 'Tu es un expert en Product Management et strat\u00e9gie OKR. G\u00e9n\u00e8re des OKRs pour le produit suivant.\n\nProduit : "' + name + '"' + t + '\nP\u00e9riode : ' + p + '\nNombre d\'objectifs souhait\u00e9 : ' + nbObjectives + '\nAmbitions : ' + ambitions + m + '\n\nR\u00e8gles importantes :\n- Chaque Objective doit \u00eatre qualitatif, inspirant et m\u00e9morable (pas de chiffres dans l\'objectif)\n- Chaque Key Result doit \u00eatre mesurable, avec une valeur cible pr\u00e9cise et r\u00e9aliste\n- 3 Key Results par objectif\n- Varie les types : metric (KPI \u00e0 atteindre), milestone (\u00e9tape cl\u00e9 \u00e0 franchir), health (indicateur \u00e0 maintenir)\n- Ancre les KRs dans les m\u00e9triques fournies si disponibles\n\nR\u00e9ponds UNIQUEMENT avec un JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "okrs": [\n    {\n      "objective": "Faire de l\'onboarding un acc\u00e9l\u00e9rateur de valeur",\n      "key_results": [\n        {"text": "Augmenter le time-to-value de J14 \u00e0 J7 pour 70% des nouveaux clients", "type": "metric", "baseline": "Actuellement J14 pour 60% des clients"},\n        {"text": "Livrer le nouveau flow d\'onboarding interactif en production", "type": "milestone", "baseline": ""},\n        {"text": "Maintenir le NPS onboarding au-dessus de 40", "type": "health", "baseline": "NPS actuel : 28"}\n      ]\n    }\n  ],\n  "tips": [\n    "Conseil court et actionnable sur l\'utilisation de ces OKRs"\n  ]\n}\n\nG\u00e9n\u00e8re exactement ' + nbObjectives + ' objectif(s). Les tips doivent \u00eatre 3 conseils concrets sur comment utiliser ces OKRs en \u00e9quipe produit.';
 }
 
+function friendlyApiError(err, status) {
+  if (status === 429) return 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return 'Service temporairement indisponible — réessaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
+  if (err && err.message) return err.message;
+  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
+}
 async function callAI(prompt, maxTokens) {
   var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
   var model = 'llama-3.3-70b-versatile';
   var headers = { 'Content-Type': 'application/json' };
-  var res = await fetch(endpoint, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify({ model, temperature: 0.5, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
-  });
-  if (!res.ok) { var e = await res.json(); throw new Error(e.error?.message || 'Erreur API ' + res.status); }
-  var data = await res.json();
-  return data.choices[0].message.content;
+  var _ctrl = new AbortController();
+  var _timeout = setTimeout(function() { _ctrl.abort(); }, 30000);
+  try {
+    var res = await fetch(endpoint, {
+      method: 'POST',
+      headers: headers,
+      signal: _ctrl.signal,
+      body: JSON.stringify({ model, temperature: 0.5, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
+    });
+    clearTimeout(_timeout);
+    if (!res.ok) { var e = await res.json(); throw new Error(friendlyApiError(e.error, res.status)); }
+    var data = await res.json();
+    return data.choices[0].message.content;
+  } catch(e) {
+    clearTimeout(_timeout);
+    throw e;
+  }
 }
 
 function renderResults(d, name, type) {
@@ -544,6 +561,7 @@ var currentLang = 'fr';
 
 function setLang(lang) {
   currentLang = lang;
+  localStorage.setItem('lang', lang);
   document.getElementById('lbFr').classList.toggle('active', lang === 'fr');
   document.getElementById('lbEn').classList.toggle('active', lang === 'en');
   var T = LANG[lang];
@@ -583,10 +601,17 @@ function setLang(lang) {
 // Detect lang from URL
 (function() {
   var params = new URLSearchParams(window.location.search);
-  if (params.get('lang') === 'en') setLang('en');
+  var lang = params.get('lang') || localStorage.getItem('lang') || 'fr';
+  if (lang === 'en') setLang('en');
 })();
 
 
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    var btn = document.getElementById('launchBtn');
+    if (btn && !btn.disabled) btn.click();
+  }
+});
 function toggleHowto(btn) {
   btn.classList.toggle('open');
   document.getElementById('howtoBody').classList.toggle('open');
