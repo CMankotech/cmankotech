@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Portrait futuriste du chatbot KRL1">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="35%" r="75%">
+      <stop offset="0%" stop-color="#1f3b78"/>
+      <stop offset="55%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#07070e"/>
+    </radialGradient>
+    <linearGradient id="neon" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <circle cx="170" cy="160" r="120" fill="#22d3ee" opacity="0.14"/>
+  <circle cx="360" cy="250" r="140" fill="#a78bfa" opacity="0.16"/>
+
+  <g filter="url(#glow)">
+    <line x1="256" y1="82" x2="256" y2="132" stroke="#93c5fd" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="256" cy="64" r="17" fill="#22d3ee"/>
+  </g>
+
+  <rect x="118" y="132" width="276" height="264" rx="58" fill="#0f172a" stroke="url(#neon)" stroke-width="8"/>
+  <rect x="155" y="172" width="202" height="114" rx="36" fill="#111827" stroke="#334155"/>
+
+  <circle cx="208" cy="228" r="34" fill="#22d3ee"/>
+  <circle cx="304" cy="228" r="34" fill="#a78bfa"/>
+  <circle cx="208" cy="228" r="11" fill="#ecfeff" opacity="0.9"/>
+  <circle cx="304" cy="228" r="11" fill="#f5f3ff" opacity="0.9"/>
+
+  <path d="M188 312 Q256 365 324 312" fill="none" stroke="#e2e8f0" stroke-width="10" stroke-linecap="round"/>
+
+  <rect x="184" y="340" width="144" height="40" rx="12" fill="#0b1225" stroke="#22d3ee" opacity="0.9"/>
+  <text x="256" y="367" text-anchor="middle" font-family="'Syne', Arial, sans-serif" font-size="26" font-weight="700" fill="#e2e8f0">KRL1</text>
+</svg>
