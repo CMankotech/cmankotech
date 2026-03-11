@@ -485,7 +485,7 @@ window.setLang=function(lang){
 #chat-window{position:fixed;bottom:5.5rem;right:1.75rem;z-index:9998;width:340px;max-height:480px;background:#0e0e1a;border:1px solid rgba(255,255,255,0.08);border-radius:16px;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,0.6);overflow:hidden;transform:scale(0.92) translateY(16px);opacity:0;pointer-events:none;transition:transform 0.22s cubic-bezier(.34,1.56,.64,1),opacity 0.18s}
 #chat-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
 #chat-header{padding:0.9rem 1.1rem;background:rgba(34,211,238,0.06);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:0.6rem}
-#chat-header .ch-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#07070f;flex-shrink:0}
+#chat-header .ch-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,0.18);box-shadow:0 0 0 2px rgba(34,211,238,0.18);flex-shrink:0}
 #chat-header .ch-info{flex:1}
 #chat-header .ch-name{font-size:0.8rem;font-weight:700;color:#fff;font-family:"Syne",sans-serif}
 #chat-header .ch-status{font-size:0.65rem;color:#22d3ee;display:flex;align-items:center;gap:0.3rem}
@@ -517,16 +517,16 @@ window.setLang=function(lang){
 </style>
 
 <!-- FAB Button -->
-<button id="chat-fab" onclick="toggleChat()" aria-label="Assistant">
+<button id="chat-fab" onclick="toggleChat()" aria-label="KRL1">
   <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
 </button>
 
 <!-- Chat Window -->
 <div id="chat-window">
   <div id="chat-header">
-    <div class="ch-avatar">CM</div>
+    <img class="ch-avatar" src="assets/krl1-photo.svg" alt="Avatar du chatbot KRL1"/>
     <div class="ch-info">
-      <div class="ch-name">Assistant Portfolio</div>
+      <div class="ch-name">KRL1</div>
       <div class="ch-status" id="chat-status-lbl">En ligne</div>
     </div>
     <button id="chat-close" onclick="toggleChat()">✕</button>
@@ -548,7 +548,7 @@ window.setLang=function(lang){
   var _history = [];
   var _autoOpened = false;
 
-  var SYSTEM_PROMPT = "Tu es l'assistant portfolio de Carlin Mankoto, AI Product Manager.\n" +
+  var SYSTEM_PROMPT = "Tu es KRL1, l'assistant portfolio de Carlin Mankoto, AI Product Manager.\n" +
     "Réponds de façon concise et professionnelle en français par défaut (en anglais si on te parle en anglais).\n" +
     "Ne réponds qu'aux questions liées à Carlin ou à ses outils. Si la question est hors sujet, redirige poliment.\n\n" +
     "PROFIL :\n" +
@@ -568,14 +568,14 @@ window.setLang=function(lang){
 
   var I18N = {
     fr: {
-      welcome: "Bonjour 👋 Je suis l'assistant de Carlin. Posez-moi n'importe quelle question sur son profil, ses outils ou son parcours.",
+      welcome: "Bonjour 👋 Je suis KRL1, ton assistant. Je suis l'assistant de Carlin : pose-moi n'importe quelle question sur son profil, ses outils ou son parcours.",
       chips: ["🎯 Son profil en 30s ?", "🛠️ Voir ses outils IA", "💼 Son expérience ?", "📩 Le contacter"],
       placeholder: "Posez votre question...",
       status: "En ligne",
       error: "Désolé, une erreur s'est produite. Contacte Carlin directement sur <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> 👋"
     },
     en: {
-      welcome: "Hi 👋 I'm Carlin's assistant. Ask me anything about his profile, tools or background.",
+      welcome: "Hi 👋 I'm KRL1, your assistant. I'm Carlin's assistant—ask me anything about his profile, tools or background.",
       chips: ["🎯 His profile in 30s?", "🛠️ See his AI tools", "💼 His background?", "📩 Reach him"],
       placeholder: "Ask your question...",
       status: "Online",
@@ -613,7 +613,7 @@ window.setLang=function(lang){
 
   var KB = {
     fr: {
-      welcome: "Bonjour 👋 Je suis l'assistant de Carlin. Posez-moi une question sur son profil, ses outils ou son parcours.",
+      welcome: "Bonjour 👋 Je suis KRL1, ton assistant. Je suis l'assistant de Carlin : pose-moi une question sur son profil, ses outils ou son parcours.",
       chips_welcome: ["Qui est Carlin ?", "Quels sont ses outils ?", "Son expérience ?", "Comment le contacter ?"],
       placeholder: "Posez votre question...",
       status: "En ligne",
@@ -668,7 +668,7 @@ window.setLang=function(lang){
       chips_fallback: ["Qui est Carlin ?", "Ses outils IA ?", "Le contacter"]
     },
     en: {
-      welcome: "Hi 👋 I'm Carlin's assistant. Ask me anything about his profile, tools or background.",
+      welcome: "Hi 👋 I'm KRL1, your assistant. I'm Carlin's assistant—ask me anything about his profile, tools or background.",
       chips_welcome: ["Who is Carlin?", "His AI tools?", "His experience?", "How to reach him?"],
       placeholder: "Ask your question...",
       status: "Online",
