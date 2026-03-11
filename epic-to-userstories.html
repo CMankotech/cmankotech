@@ -382,6 +382,7 @@ async function launch() {
   if (!desc || desc.length < 30) { showError('D\u00e9cris l\u2019epic plus en d\u00e9tail.'); return; }
 
   document.getElementById('launchBtn').disabled = true;
+  var _rr = document.getElementById('rerunBtn'); if(_rr) _rr.disabled = true;
   document.getElementById('results').classList.remove('show');
   document.getElementById('loading').classList.add('show');
 
@@ -398,6 +399,7 @@ async function launch() {
   }
   document.getElementById('loading').classList.remove('show');
   document.getElementById('launchBtn').disabled = false;
+  var _rr2 = document.getElementById('rerunBtn'); if(_rr2) _rr2.disabled = false;
 }
 
 function buildPrompt(title, desc, persona, tech) {
@@ -506,18 +508,13 @@ function copyAll() {
     }
     lines.push('');
   });
-  navigator.clipboard.writeText(lines.join('\n')).then(function() {
-    var btn = document.getElementById('copyAllBtn');
-    btn.textContent = '\u2713 Copi\u00e9 !';
-    btn.classList.add('copied');
-    setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000);
-  });
+  var _text = lines.join('\n');
+  var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
+  var _fb = function() { var ta = document.createElement('textarea'); ta.value = _text; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); _onCopied(); } catch(e) {} document.body.removeChild(ta); };
+  if (navigator.clipboard) navigator.clipboard.writeText(_text).then(_onCopied).catch(_fb); else _fb();
 }
 
-function rerun() {
-  document.getElementById('results').classList.remove('show');
-  launch();
-}
+function rerun() { launch(); }
 
 function reset() {
   document.getElementById('results').classList.remove('show');
@@ -692,6 +689,10 @@ function applyLangExtras(lang) {
   if(en) en.style.display = lang === 'en' ? 'flex' : 'none';
   var lbl = document.getElementById('howtoLabel');
   if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; Comment ça marche ?' : '&#9432; How does it work?';
+  var cpBtn = document.getElementById('copyAllBtn');
+  if (cpBtn && !cpBtn.classList.contains('copied')) cpBtn.innerHTML = lang === 'en' ? '&#128203; Copy all' : '&#128203; Copier tout';
+  var rrBtn = document.getElementById('rerunBtn');
+  if (rrBtn) rrBtn.innerHTML = lang === 'en' ? '&#8634; Re-generate' : '&#8634; R&eacute;-g&eacute;n&eacute;rer';
 }
 // Sync on load (IIFE may have fired before this function was defined)
 (function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
