@@ -103,6 +103,12 @@ h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;lin
 .results-sub{font-size:0.68rem;color:var(--dim)}
 .btn-reset{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.9rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
 .btn-reset:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+.btn-copy-all{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.4rem 0.9rem;border-radius:6px;border:1px solid rgba(251,191,36,0.25);background:rgba(251,191,36,0.06);color:var(--yellow);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-copy-all:hover{background:rgba(251,191,36,0.14)}
+.btn-copy-all.copied{color:var(--green);border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.06)}
+.btn-rerun{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.4rem 0.9rem;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--dim);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-rerun:hover{border-color:rgba(96,165,250,0.5);color:var(--blue)}
+.input-hint{font-size:0.68rem;color:var(--muted);margin-top:0.3rem;text-align:right}
 
 /* OKR CARDS */
 .okr-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.25rem;border-left:3px solid var(--yellow)}
@@ -279,6 +285,7 @@ footer a:hover{text-decoration:underline}
     <div class="field">
       <label><span id="lbl_ambitions">Ambitions &amp; contexte strat&eacute;gique</span></label>
       <textarea id="ambitions" rows="4" placeholder="D&eacute;cris ce que tu veux accomplir ce trimestre. Ex : On veut r&eacute;duire le churn, am&eacute;liorer l&rsquo;onboarding, et lancer une nouvelle feature d&rsquo;int&eacute;gration. Notre plus gros probl&egrave;me est que les utilisateurs ne reviennent pas apr&egrave;s J7..."></textarea>
+      <div class="input-hint" id="ambitionsHint"></div>
     </div>
 
     <div class="form-grid">
@@ -325,7 +332,11 @@ footer a:hover{text-decoration:underline}
         <div class="results-title"><span id="lbl_results_title">OKRs g&eacute;n&eacute;r&eacute;s</span></div>
         <div class="results-sub" id="resultsSub"></div>
       </div>
-      <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
+      <div style="display:flex;gap:0.5rem;align-items:center">
+        <button class="btn-copy-all" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
+        <button class="btn-rerun" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
+        <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
+      </div>
     </div>
 
     <div id="okrList"></div>
@@ -474,8 +485,36 @@ function renderResults(d, name, type) {
     document.getElementById('tipsCard').style.display = 'block';
   }
 
+  window._okrData = d;
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function rerun() {
+  document.getElementById('results').classList.remove('show');
+  launch();
+}
+
+function copyResults() {
+  var d = window._okrData || {};
+  var lines = ['# OKRs générés\n'];
+  (d.okrs || []).forEach(function(okr, i) {
+    lines.push('## Objectif ' + (i+1) + ' : ' + (okr.objective||''));
+    (okr.key_results || []).forEach(function(kr, j) {
+      lines.push('  KR' + (j+1) + ' : ' + (kr.text||'') + (kr.baseline ? ' (baseline : ' + kr.baseline + ')' : ''));
+    });
+    lines.push('');
+  });
+  if (d.tips && d.tips.length) {
+    lines.push('## Conseils\n');
+    d.tips.forEach(function(t) { lines.push('- ' + t); });
+  }
+  navigator.clipboard.writeText(lines.join('\n')).then(function() {
+    var btn = document.getElementById('copyAllBtn');
+    btn.textContent = '\u2713 Copi\u00e9 !';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000);
+  });
 }
 
 function reset() {
@@ -612,6 +651,18 @@ document.addEventListener('keydown', function(e) {
     if (btn && !btn.disabled) btn.click();
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  var ta = document.getElementById('ambitions');
+  var hint = document.getElementById('ambitionsHint');
+  if (ta && hint) {
+    ta.addEventListener('input', function() {
+      var n = this.value.length;
+      hint.textContent = n + ' caract\u00e8re' + (n > 1 ? 's' : '');
+    });
+  }
+});
+
 function toggleHowto(btn) {
   btn.classList.toggle('open');
   document.getElementById('howtoBody').classList.toggle('open');

@@ -97,6 +97,12 @@ textarea{min-height:100px;line-height:1.6}
 .results-title{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted)}
 .btn-reset{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.9rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
 .btn-reset:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+.input-hint{font-size:0.68rem;color:var(--muted);margin-top:0.3rem;text-align:right}
+.btn-copy-all{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.4rem 0.9rem;border-radius:6px;border:1px solid rgba(34,211,238,0.25);background:rgba(34,211,238,0.06);color:var(--cyan);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-copy-all:hover{background:rgba(34,211,238,0.14)}
+.btn-copy-all.copied{color:var(--green);border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.06)}
+.btn-rerun{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.4rem 0.9rem;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--dim);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-rerun:hover{border-color:rgba(96,165,250,0.5);color:var(--blue)}
 
 .result-block{margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
 .result-block-header{display:flex;align-items:center;gap:0.75rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border)}
@@ -257,6 +263,7 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
         <button class="btn-random" onclick="randomProblem()" type="button">&#127922; Exemple al&eacute;atoire</button>
       </label>
       <textarea id="problem" placeholder="Ex : Les managers de mon app RH ne savent pas quels collaborateurs sont en risque de d&eacute;sengagement avant que ce soit trop tard." rows="4"></textarea>
+      <div class="input-hint" id="problemHint"></div>
     </div>
     <div class="options-row">
       <div class="field">
@@ -291,7 +298,11 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
   <div class="results" id="results">
     <div class="results-header">
       <span class="results-title"><span id="lbl_results_title">R&eacute;sultats de ta discovery</span></span>
-      <button class="btn-reset" onclick="reset()">&#8635; Nouvelle discovery</button>
+      <div style="display:flex;gap:0.5rem;align-items:center">
+        <button class="btn-copy-all" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
+        <button class="btn-rerun" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
+        <button class="btn-reset" onclick="reset()">&#8635; Nouvelle discovery</button>
+      </div>
     </div>
 
     <div class="result-block" id="blockHyp">
@@ -477,10 +488,46 @@ function renderResults(d) {
   });
   document.getElementById('planBody').innerHTML = planHtml || '<p style="color:var(--muted);font-size:0.8rem">Plan non disponible.</p>';
 
+  window._discoveryData = d;
   document.getElementById('results').classList.add('show');
   document.getElementById('launchBtn').disabled = false;
   document.getElementById('formCard').style.opacity = '1';
   document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function rerun() {
+  document.getElementById('results').classList.remove('show');
+  launch();
+}
+
+function copyResults() {
+  var d = window._discoveryData || {};
+  var lines = ['# Discovery — Résultats\n'];
+  var hyps = d.hypotheses || [];
+  if (hyps.length) {
+    lines.push('## Hypothèses\n');
+    hyps.forEach(function(h) { lines.push('- ' + (h.belief||'') + ' → ' + (h.signal||'')); });
+    lines.push('');
+  }
+  var qs = d.questions || [];
+  if (qs.length) {
+    lines.push('## Questions d\'interview\n');
+    qs.forEach(function(q, i) { lines.push((i+1) + '. ' + q); });
+    lines.push('');
+  }
+  var p = d.plan || {};
+  lines.push('## Plan de test\n');
+  if (p.methode) lines.push('Méthode : ' + p.methode);
+  if (p.participants) lines.push('Participants : ' + p.participants);
+  if (p.duree) lines.push('Durée : ' + p.duree);
+  if (p.critere) lines.push('Critère de succès : ' + p.critere);
+  if (p.prochaine_etape) lines.push('Prochaine étape : ' + p.prochaine_etape);
+  navigator.clipboard.writeText(lines.join('\n')).then(function() {
+    var btn = document.getElementById('copyAllBtn');
+    btn.textContent = '\u2713 Copi\u00e9 !';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000);
+  });
 }
 
 function esc(s) {
@@ -553,6 +600,18 @@ document.addEventListener('keydown', function(e) {
     if (btn && !btn.disabled) btn.click();
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  var ta = document.getElementById('problem');
+  var hint = document.getElementById('problemHint');
+  if (ta && hint) {
+    ta.addEventListener('input', function() {
+      var n = this.value.trim().split(/\s+/).filter(Boolean).length;
+      hint.textContent = n + ' mot' + (n > 1 ? 's' : '');
+    });
+  }
+});
+
 function toggleHowto(btn) {
   btn.classList.toggle('open');
   document.getElementById('howtoBody').classList.toggle('open');
