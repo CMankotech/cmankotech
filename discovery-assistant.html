@@ -259,11 +259,11 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
       <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag" id="lbl_groq_free">Gratuit</span></button>
       <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
     </div>
-    <div class="setup-row">
+    <div class="setup-row" id="keyRow" style="display:none">
       <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
       <button class="btn-save" id="btn_save" onclick="saveKey()">Enregistrer</button>
     </div>
-    <p class="setup-note" id="providerNote">Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a> &rarr; API Keys &rarr; Create API Key. La cl&eacute; reste dans ton navigateur uniquement.</p>
+    <p class="setup-note" id="providerNote">Cl&eacute; API int&eacute;gr&eacute;e &mdash; aucune configuration requise.</p>
     <div class="key-saved" id="keySaved">&#10003; Cl&eacute; enregistr&eacute;e, tu peux lancer ta discovery.</div>
   </div>
 
@@ -378,9 +378,10 @@ function setProvider(p) {
   var input = document.getElementById('apiKeyInput');
   var note = document.getElementById('providerNote');
   if (p === 'groq') {
-    input.placeholder = 'gsk_...';
-    note.innerHTML = 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a> \u2192 API Keys \u2192 Create API Key.';
+    document.getElementById('keyRow').style.display = 'none';
+    note.innerHTML = 'Cl\u00e9 API int\u00e9gr\u00e9e \u2014 aucune configuration requise.';
   } else {
+    document.getElementById('keyRow').style.display = '';
     input.placeholder = 'sk-...';
     note.innerHTML = 'Cr\u00e9e un compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a> \u2192 API Keys. GPT-4o mini est tr\u00e8s peu co\u00fbteux.';
   }
@@ -418,7 +419,7 @@ async function launch() {
   var target = document.getElementById('target').value.trim();
   var context = document.getElementById('context').value.trim();
 
-  if (!apiKey) { showError('Entre et enregistre ta cl\u00e9 API Groq avant de lancer.'); return; }
+  if (provider !== 'groq' && !apiKey) { showError('Entre et enregistre ta cl\u00e9 API avant de lancer.'); return; }
   if (!problem) { showError('D\u00e9cris le probl\u00e8me utilisateur avant de continuer.'); return; }
 
   // Show loading
@@ -439,16 +440,15 @@ async function launch() {
 
   try {
     var endpoint = provider === 'groq'
-      ? 'https://api.groq.com/openai/v1/chat/completions'
+      ? 'https://groq-proxy.cmankotech.workers.dev'
       : 'https://api.openai.com/v1/chat/completions';
     var model = provider === 'groq' ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+    var reqHeaders = { 'Content-Type': 'application/json' };
+    if (provider !== 'groq') reqHeaders['Authorization'] = 'Bearer ' + apiKey;
 
     var res = await fetch(endpoint, {
       method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + apiKey,
-        'Content-Type': 'application/json'
-      },
+      headers: reqHeaders,
       body: JSON.stringify({
         model: model,
         temperature: 0.7,
