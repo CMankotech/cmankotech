@@ -545,8 +545,72 @@ window.setLang=function(lang){
 (function(){
   var _chatOpen = false;
   var _lang = 'fr';
+  var _history = [];
+  var _autoOpened = false;
 
-  // ---- KNOWLEDGE BASE ----
+  var SYSTEM_PROMPT = "Tu es l'assistant portfolio de Carlin Mankoto, AI Product Manager.\n" +
+    "Réponds de façon concise et professionnelle en français par défaut (en anglais si on te parle en anglais).\n" +
+    "Ne réponds qu'aux questions liées à Carlin ou à ses outils. Si la question est hors sujet, redirige poliment.\n\n" +
+    "PROFIL :\n" +
+    "- 3 ans d'expérience PM/PO : OAIO/Infotel (2026, CDI, stratégie LMS + outils IA pour 3500 collaborateurs), AXA (AI PO, SAFe, SecureGPT RAG interne, Microsoft Copilot), Airbus D&S (PO app mobile sécurisée JO Paris 2024), Groupe Casino (change management, transformation Scrum)\n" +
+    "- Certifications : PSPO I (Scrum.org), SAFe POPM + SSM (Scaled Agile), Product School (Discovery, Strategy, Roadmapping, Experimentation, Launches, AI for PM), Pendo.io (PM Basics, AI for PM), Elements of AI (Helsinki), Lean Six Sigma White Belt\n" +
+    "- Formation : Master 2 Innovation Digitale (Paris-Saclay), Master 1 Management Stratégique\n" +
+    "- Compétences : Discovery, Roadmapping, Backlog, User Stories, RICE/MoSCoW, A/B Testing, PLG, Continuous Discovery, LLM, RAG, Prompt Engineering, Agentic AI, Multi-Agent Systems, CrewAI, n8n, Make, Vibe Coding (Claude Code, Lovable), SQL, Python, JS, SAFe, Scrum, JIRA, Confluence, Figma, Miro, Power Platform\n\n" +
+    "OUTILS IA BUILDÉS (HTML/JS + API Groq/OpenAI, déployés sur GitHub Pages) :\n" +
+    "1. OKR Builder — génère OKRs structurés avec Key Results typés (métrique, milestone, santé) : https://cmankotech.github.io/cmankotech/okr-builder.html\n" +
+    "2. Discovery Assistant — transforme un problème en hypothèses, questions d'interview et plan de test : https://cmankotech.github.io/cmankotech/discovery-assistant.html\n" +
+    "3. User Interview Analyzer — synthèse d'entretiens bruts en pain points, citations, persona : https://cmankotech.github.io/cmankotech/user-interview-analyzer.html\n" +
+    "4. Backlog Prioritizer — scoring RICE ou MoSCoW avec justification par item : https://cmankotech.github.io/cmankotech/backlog-prioritizer.html\n" +
+    "5. Epic → User Stories — décomposition epic en stories INVEST avec critères d'acceptance : https://cmankotech.github.io/cmankotech/epic-to-userstories.html\n" +
+    "6. Roadmap Storyteller — roadmap narrative adaptée à chaque audience avec pitch et messages clés : https://cmankotech.github.io/cmankotech/roadmap-storyteller.html\n\n" +
+    "CONTACT : LinkedIn https://linkedin.com/in/carlinmankoto | Email carlinmankoto@proton.me\n" +
+    "Disponible pour CDI ou missions freelance.";
+
+  var I18N = {
+    fr: {
+      welcome: "Bonjour 👋 Je suis l'assistant de Carlin. Posez-moi n'importe quelle question sur son profil, ses outils ou son parcours.",
+      chips: ["🎯 Son profil en 30s ?", "🛠️ Voir ses outils IA", "💼 Son expérience ?", "📩 Le contacter"],
+      placeholder: "Posez votre question...",
+      status: "En ligne",
+      error: "Désolé, une erreur s'est produite. Contacte Carlin directement sur <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> 👋"
+    },
+    en: {
+      welcome: "Hi 👋 I'm Carlin's assistant. Ask me anything about his profile, tools or background.",
+      chips: ["🎯 His profile in 30s?", "🛠️ See his AI tools", "💼 His background?", "📩 Reach him"],
+      placeholder: "Ask your question...",
+      status: "Online",
+      error: "Sorry, an error occurred. Reach Carlin directly on <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> 👋"
+    }
+  };
+
+  // ---- GROQ API ----
+  async function fetchGroq(userMessage) {
+    _history.push({role: 'user', content: userMessage});
+    showTyping();
+    try {
+      var res = await fetch('REMPLACER_PAR_URL_WORKER', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [{role: 'system', content: SYSTEM_PROMPT}].concat(_history),
+          max_tokens: 350,
+          temperature: 0.65
+        })
+      });
+      var data = await res.json();
+      var reply = data.choices[0].message.content;
+      _history.push({role: 'assistant', content: reply});
+      hideTyping();
+      addBotMsg(reply);
+    } catch(e) {
+      hideTyping();
+      addBotMsg(I18N[_lang].error);
+    }
+  }
+
   var KB = {
     fr: {
       welcome: "Bonjour 👋 Je suis l'assistant de Carlin. Posez-moi une question sur son profil, ses outils ou son parcours.",
@@ -672,10 +736,10 @@ window.setLang=function(lang){
 
   function initChat() {
     _lang = (document.documentElement.lang === 'en' || (window.currentLang && window.currentLang === 'en')) ? 'en' : 'fr';
-    var kb = KB[_lang];
-    document.getElementById('chat-input').placeholder = kb.placeholder;
-    document.getElementById('chat-status-lbl').textContent = kb.status;
-    addBotMsg(kb.welcome, kb.chips_welcome);
+    var i18n = I18N[_lang];
+    document.getElementById('chat-input').placeholder = i18n.placeholder;
+    document.getElementById('chat-status-lbl').textContent = i18n.status;
+    addBotMsg(i18n.welcome, i18n.chips);
   }
 
   function addBotMsg(text, chips) {
@@ -723,25 +787,7 @@ window.setLang=function(lang){
     if (!text.trim()) return;
     addUserMsg(text);
     document.getElementById('chat-input').value = '';
-    showTyping();
-    setTimeout(function() {
-      hideTyping();
-      respond(text.toLowerCase());
-    }, 650 + Math.random() * 400);
-  }
-
-  function respond(q) {
-    var kb = KB[_lang];
-    for (var i = 0; i < kb.rules.length; i++) {
-      var rule = kb.rules[i];
-      for (var j = 0; j < rule.k.length; j++) {
-        if (q.indexOf(rule.k[j]) !== -1) {
-          addBotMsg(rule.r, rule.chips);
-          return;
-        }
-      }
-    }
-    addBotMsg(kb.fallback, kb.chips_fallback);
+    fetchGroq(text);
   }
 
   window.sendChat = function() {
@@ -749,15 +795,23 @@ window.setLang=function(lang){
     if (val) handleInput(val);
   };
 
+  // Auto-open after 6s if user hasn't interacted
+  setTimeout(function() {
+    if (!_chatOpen && !_autoOpened) {
+      _autoOpened = true;
+      toggleChat();
+    }
+  }, 6000);
+
   // Sync lang when portfolio lang switches
   var _origSetLang = window.setLang;
   window.setLang = function(lang) {
     _lang = lang;
-    var kb = KB[lang] || KB['fr'];
+    var i18n = I18N[lang] || I18N['fr'];
     var inp = document.getElementById('chat-input');
     var status = document.getElementById('chat-status-lbl');
-    if (inp) inp.placeholder = kb.placeholder;
-    if (status) status.textContent = kb.status;
+    if (inp) inp.placeholder = i18n.placeholder;
+    if (status) status.textContent = i18n.status;
     if (_origSetLang) _origSetLang(lang);
   };
 
