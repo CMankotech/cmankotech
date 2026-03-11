@@ -35,11 +35,11 @@ h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;lin
 .card-title::after{content:'';flex:1;height:1px;background:var(--line)}
 
 /* PROVIDER ROW */
-.provider-row{display:flex;gap:0.4rem;margin-bottom:0.9rem}
-.provider-btn{flex:1;padding:0.55rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.35rem}
-.provider-btn.active{background:rgba(34,211,238,0.1);border-color:rgba(34,211,238,0.35);color:var(--cyan)}
-.provider-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
-.provider-tag{font-size:0.52rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.1rem 0.4rem;background:rgba(255,255,255,0.06);border-radius:3px}
+
+
+
+
+
 .key-row{display:flex;gap:0.75rem}
 .key-row input{flex:1;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;outline:none;transition:border-color 0.2s}
 .key-row input:focus{border-color:rgba(34,211,238,0.4)}
@@ -275,24 +275,9 @@ footer a:hover{text-decoration:underline}
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer sans clé API</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Pour analyser tes propres entretiens, crée un compte gratuit sur <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) ou <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Colle ta clé dans le champ en haut et clique <strong>Enregistrer</strong>. Elle reste dans ton navigateur uniquement.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Colle tes notes d'entretiens et lance l'analyse.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try without API key</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">To analyse your own interviews, create a free account at <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) or <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Paste your key in the field above and click <strong>Save</strong>. It stays in your browser only.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Paste your interview notes and run the analysis.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer la démo</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Colle ton propre contenu et lance l'analyse.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try demo</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Paste your own content and run the analysis.</div></div></div>
     </div>
-  </div>
-
-  <!-- CONFIG -->
-  <div class="card">
-    <div class="card-title">&#128273; Configuration</div>
-    <div class="provider-row">
-      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag" id="lbl_groq_free">Gratuit</span></button>
-      <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
-    </div>
-    <div class="key-row" id="keyRow" style="display:none">
-      <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
-      <button class="btn-save" id="btn_save" onclick="saveKey()">Enregistrer</button>
-    </div>
-    <p class="note" id="providerNote">Clé API intégrée — aucune configuration requise.</p>
-    <div class="saved-msg" id="savedMsg">&#10003; Clé enregistrée.</div>
   </div>
 
   <!-- INTERVIEWS -->
@@ -334,7 +319,7 @@ footer a:hover{text-decoration:underline}
   </button>
 
 
-  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer sans clé API </span><span class="demo-badge" id="badge_demo">Démo</span></button>
+  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer la démo </span><span class="demo-badge" id="badge_demo">Démo</span></button>
 
   <!-- LOADING -->
   <div class="loading" id="loading">
@@ -376,8 +361,6 @@ footer a:hover{text-decoration:underline}
 </div>
 
 <script>
-var apiKey = '';
-var provider = 'groq';
 var inputMode = 'single';
 var interviewCount = 0;
 
@@ -439,35 +422,6 @@ function loadExamples() {
     MULTI_EXAMPLES.forEach(function(ex) { addInterview(ex.label, ex.text); });
   }
 }
-
-// ---- PROVIDER ----
-function setProvider(p) {
-  provider = p;
-  document.getElementById('pbGroq').classList.toggle('active', p === 'groq');
-  document.getElementById('pbOpenai').classList.toggle('active', p === 'openai');
-  var note = document.getElementById('providerNote');
-  var inp = document.getElementById('apiKeyInput');
-  if (p === 'groq') {
-    document.getElementById('keyRow').style.display = 'none';
-    note.innerHTML = 'Clé API intégrée — aucune configuration requise.';
-  } else {
-    document.getElementById('keyRow').style.display = '';
-    inp.placeholder = 'sk-...';
-    note.innerHTML = 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>. GPT-4o mini est très peu coûteux.';
-  }
-  apiKey = '';
-  document.getElementById('savedMsg').classList.remove('show');
-}
-
-function saveKey() {
-  var v = document.getElementById('apiKeyInput').value.trim();
-  if (provider === 'groq' && (!v.startsWith('gsk_') || v.length < 20)) { showError('Clé Groq invalide. Elle doit commencer par "gsk_".'); return; }
-  if (provider === 'openai' && (!v.startsWith('sk-') || v.length < 20)) { showError('Clé OpenAI invalide. Elle doit commencer par "sk-".'); return; }
-  apiKey = v;
-  document.getElementById('savedMsg').classList.add('show');
-  hideError();
-}
-
 // ---- INPUT MODE ----
 function setMode(m) {
   inputMode = m;
@@ -525,7 +479,6 @@ async function launch() {
   hideError();
   var text = getInterviewsText();
   var context = document.getElementById('context').value.trim();
-  if (provider !== 'groq' && !apiKey) { showError('Entre et enregistre ta clé API avant de lancer.'); return; }
   if (!text || text.length < 80) { showError('Ajoute des notes d\'entretien plus détaillées (minimum ~80 caractères).'); return; }
 
   document.getElementById('launchBtn').disabled = true;
@@ -552,12 +505,9 @@ function buildPrompt(text, context) {
 }
 
 async function callAI(prompt, maxTokens) {
-  var endpoint = provider === 'groq'
-    ? 'https://groq-proxy.cmankotech.workers.dev'
-    : 'https://api.openai.com/v1/chat/completions';
-  var model = provider === 'groq' ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+  var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
+  var model = 'llama-3.3-70b-versatile';
   var headers = { 'Content-Type': 'application/json' };
-  if (provider !== 'groq') headers['Authorization'] = 'Bearer ' + apiKey;
   var res = await fetch(endpoint, {
     method: 'POST',
     headers: headers,
@@ -645,10 +595,6 @@ var LANG = {
     'btn.launch': '&#9654; Analyser les entretiens',
     'loading.text': 'Analyse en cours...',
     'btn.reset': '&#8635; Recommencer',
-    'btn.save': 'Enregistrer',
-    'saved': '&#10003; Clé enregistrée.',
-    'note.groq': 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La clé reste dans ton navigateur.',
-    'note.openai': 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.'
   },
   en: {
     'title': 'User Interview <span class="grad">Analyzer</span>',
@@ -656,10 +602,6 @@ var LANG = {
     'btn.launch': '&#9654; Analyse interviews',
     'loading.text': 'Analysing...',
     'btn.reset': '&#8635; Start over',
-    'btn.save': 'Save',
-    'saved': '&#10003; Key saved.',
-    'note.groq': 'Free at <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. Key stays in your browser.',
-    'note.openai': 'Account at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.',
     'ph.contextInput': 'Optional product context...'
   }
 };
@@ -675,12 +617,8 @@ function setLang(lang) {
   if(launchBtn && T['btn.launch']) launchBtn.innerHTML = T['btn.launch'];
   var loadingTxt = document.querySelector('.loading-text');
   if(loadingTxt && T['loading.text']) loadingTxt.innerHTML = T['loading.text'];
-  var saveBtns = document.querySelectorAll('.btn-save');
-  saveBtns.forEach(function(b) { if(T['btn.save']) b.textContent = T['btn.save']; });
   var resetBtn = document.querySelector('.btn-reset');
   if(resetBtn && T['btn.reset']) resetBtn.innerHTML = T['btn.reset'];
-  var savedMsg = document.getElementById('savedMsg');
-  if(savedMsg && T['saved']) savedMsg.innerHTML = T['saved'];
   // Placeholders
   Object.keys(T).forEach(function(k) {
     if(k.startsWith('ph.')) {
@@ -688,11 +626,6 @@ function setLang(lang) {
       if(el) el.placeholder = T[k];
     }
   });
-  // Provider note
-  if(typeof provider !== 'undefined') {
-    if(provider === 'groq' && T['note.groq']) document.getElementById('providerNote').innerHTML = T['note.groq'];
-    else if(provider === 'openai' && T['note.openai']) document.getElementById('providerNote').innerHTML = T['note.openai'];
-  }
   if(typeof applyLangExtras === 'function') applyLangExtras(lang, T);
 }
 (function() {
@@ -709,10 +642,6 @@ var LANG = {
     'btn.launch': '&#9654; Analyser les entretiens',
     'loading.text': 'Analyse en cours...',
     'btn.reset': '&#8635; Recommencer',
-    'btn.save': 'Enregistrer',
-    'saved': '&#10003; Clé enregistrée.',
-    'note.groq': 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La clé reste dans ton navigateur.',
-    'note.openai': 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.'
   },
   en: {
     'title': 'User Interview <span class="grad">Analyzer</span>',
@@ -720,10 +649,6 @@ var LANG = {
     'btn.launch': '&#9654; Analyse interviews',
     'loading.text': 'Analysing...',
     'btn.reset': '&#8635; Start over',
-    'btn.save': 'Save',
-    'saved': '&#10003; Key saved.',
-    'note.groq': 'Free at <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. Key stays in your browser.',
-    'note.openai': 'Account at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.',
     'ph.contextInput': 'Optional product context...'
   }
 };
@@ -742,12 +667,6 @@ function setLang(lang) {
   document.querySelectorAll('.btn-save').forEach(function(b) { if(T['btn.save']) b.textContent = T['btn.save']; });
   var resetBtn = document.querySelector('.btn-reset');
   if(resetBtn && T['btn.reset']) resetBtn.innerHTML = T['btn.reset'];
-  var savedMsg = document.getElementById('savedMsg');
-  if(savedMsg && T['saved']) savedMsg.innerHTML = T['saved'];
-  if(typeof provider !== 'undefined') {
-    if(provider === 'groq' && T['note.groq']) document.getElementById('providerNote').innerHTML = T['note.groq'];
-    else if(provider === 'openai' && T['note.openai']) document.getElementById('providerNote').innerHTML = T['note.openai'];
-  }
   applyLangExtras(lang);
 }
 (function() {
@@ -792,7 +711,7 @@ function toggleHowto(btn) {
 function applyLangExtras(lang) {
   var _extrauiaX = {
     'badge_demo': ['Démo', 'Demo'],
-    'btn_demo_txt': ['&#9654; Essayer sans clé API ', '&#9654; Try without API key '],
+    'btn_demo_txt': ['&#9654; Essayer la démo ', '&#9654; Try demo '],
     'footer_by': ['Construit par', 'Built by'],
     'footer_role': ['AI Product Manager', 'AI Product Manager'],
     'hint_no_format': ['Pas besoin de format particulier : des notes brutes suffisent.', 'No special format needed: rough notes are fine.'],
@@ -815,11 +734,7 @@ function applyLangExtras(lang) {
   });
 
   var _finuia = lang === 'en' ? {
-    'btn_save': 'Save',
-    'lbl_groq_free': 'Free',
   } : {
-    'btn_save': 'Enregistrer',
-    'lbl_groq_free': 'Gratuit',
   };
   Object.keys(_finuia).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finuia[id];});
 
