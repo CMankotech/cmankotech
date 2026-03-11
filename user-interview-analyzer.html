@@ -210,6 +210,65 @@ footer a:hover{text-decoration:underline}
     <p class="subtitle">Colle tes notes d'entretien brutes. L'IA extrait les pain points, les citations clés, les opportunités produit et génère un persona synthétique.</p>
   </header>
 
+
+
+
+<style>
+.about-section{margin-bottom:1.25rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden}
+.about-toggle{width:100%;background:none;border:none;cursor:pointer;padding:0.85rem 1.2rem;display:flex;align-items:center;justify-content:space-between;color:#fff;font-family:'DM Sans',sans-serif}
+.about-toggle-label{font-size:0.78rem;font-weight:600;letter-spacing:0.03em;color:rgba(255,255,255,0.65)}
+.about-arrow{font-size:0.65rem;color:rgba(255,255,255,0.25);transition:transform 0.2s}
+.about-toggle.open .about-arrow{transform:rotate(180deg)}
+.about-body{display:none;padding:0 1rem 1rem}
+.about-body.open{display:block}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem}
+@media(max-width:600px){.about-grid{grid-template-columns:1fr}}
+.about-block{padding:0.85rem 1rem;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06)}
+.about-lbl{display:inline-block;font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.13em;padding:0.18rem 0.55rem;border-radius:99px;margin-bottom:0.5rem;background:rgba(255,255,255,0.07);color:var(--about-color,#22d3ee)}
+.about-text{font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.65;margin:0}
+</style>
+<div class="about-section" style="--about-color:#22d3ee">
+  <button class="about-toggle" onclick="this.classList.toggle('open');document.getElementById('aboutBody').classList.toggle('open')" id="aboutToggle">
+    <span class="about-toggle-label" id="aboutTitle">À propos de cet outil</span>
+    <span class="about-arrow">&#9660;</span>
+  </button>
+  <div class="about-body" id="aboutBody">
+    <div class="about-grid">
+      <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la synthèse des entretiens utilisateurs, étape souvent chronophage en discovery.</p></div>
+      <div class="about-block"><div class="about-lbl" id="aLblPb">Probl&egrave;me</div><p class="about-text" id="aPb">Transformer des notes brutes en insights actionnables prend du temps et introduit des biais d'interprétation.</p></div>
+      <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur colle ses notes d'entretien, l'IA extrait pain points, citations, opportunités et génère un persona. Stack : HTML/JS + Groq/OpenAI.</p></div>
+      <div class="about-block"><div class="about-lbl" id="aLblRes">R&eacute;sultat</div><p class="about-text" id="aRes">Synthèse structurée en quelques secondes. Complète le Discovery Assistant pour couvrir toute la phase de discovery.</p></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var _d = {
+    fr:{title:"À propos de cet outil",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour accélérer la synthèse des entretiens utilisateurs, étape souvent chronophage en discovery.",pb:"Transformer des notes brutes en insights actionnables prend du temps et introduit des biais d\'interprétation.",ap:"L\'utilisateur colle ses notes d\'entretien, l\'IA extrait pain points, citations, opportunités et génère un persona. Stack : HTML/JS + Groq/OpenAI.",res:"Synthèse structurée en quelques secondes. Complète le Discovery Assistant pour couvrir toute la phase de discovery."},
+    en:{title:"About this tool",lbl:["Context","Problem","Approach","Result"],ctx:"Built to speed up user interview synthesis, a time-consuming step in the discovery phase.",pb:"Turning raw notes into actionable insights takes time and introduces interpretation bias when done manually.",ap:"The user pastes interview notes, the AI extracts pain points, quotes, opportunities and generates a persona. Stack: HTML/JS + Groq/OpenAI.",res:"Structured synthesis in seconds. Complements the Discovery Assistant to cover the full discovery phase."}
+  };
+  function _upAbout(lang){
+    var d=_d[lang]||_d.fr,g=document.getElementById.bind(document);
+    if(g('aboutTitle'))g('aboutTitle').textContent=d.title;
+    if(g('aLblCtx'))g('aLblCtx').textContent=d.lbl[0];
+    if(g('aLblPb'))g('aLblPb').textContent=d.lbl[1];
+    if(g('aLblAp'))g('aLblAp').textContent=d.lbl[2];
+    if(g('aLblRes'))g('aLblRes').textContent=d.lbl[3];
+    if(g('aCtx'))g('aCtx').textContent=d.ctx;
+    if(g('aPb'))g('aPb').textContent=d.pb;
+    if(g('aAp'))g('aAp').textContent=d.ap;
+    if(g('aRes'))g('aRes').textContent=d.res;
+  }
+  // Hook AFTER page load so setLang is already defined
+  window.addEventListener('DOMContentLoaded',function(){
+    var _orig=window.setLang;
+    window.setLang=function(lang){_upAbout(lang);if(_orig)_orig(lang);};
+    // Apply current lang if already set
+    var params=new URLSearchParams(window.location.search);
+    if(params.get('lang')==='en')_upAbout('en');
+  });
+})();
+</script>
 <div class="howto">
     <button class="howto-trigger" onclick="toggleHowto(this)" id="howtoTrigger">
       <span id="howtoLabel">&#9432; Comment ça marche ?</span>
