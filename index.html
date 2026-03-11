@@ -588,7 +588,7 @@ window.setLang=function(lang){
     _history.push({role: 'user', content: userMessage});
     showTyping();
     try {
-      var res = await fetch('REMPLACER_PAR_URL_WORKER', {
+      var res = await fetch('https://groq-proxy.cmankotech.workers.dev', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
