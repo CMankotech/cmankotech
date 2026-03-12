@@ -218,7 +218,8 @@ footer a:hover{text-decoration:underline}
     window.setLang=function(lang){_upAbout(lang);if(_orig)_orig(lang);};
     // Apply current lang if already set
     var params=new URLSearchParams(window.location.search);
-    if(params.get('lang')==='en')_upAbout('en');
+    var _lang=params.get('lang')||localStorage.getItem('lang')||'fr';
+    if(_lang==='en')_upAbout('en');
   });
 })();
 </script>
@@ -742,6 +743,6 @@ function applyLangExtras(lang) {
   if (rrBtn) rrBtn.innerHTML = lang === 'en' ? '&#8634; Re-generate' : '&#8634; R&eacute;-g&eacute;n&eacute;rer';
 }
 // Sync on load (IIFE may have fired before this function was defined)
-(function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
+(function() { var _l=new URLSearchParams(window.location.search).get('lang')||localStorage.getItem('lang')||'fr'; if(_l==='en') applyLangExtras('en'); })();
 
 </script>
