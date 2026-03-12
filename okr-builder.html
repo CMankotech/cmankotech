@@ -607,7 +607,7 @@ function setLang(lang) {
   // Loading
   document.querySelector('.loading-text').innerHTML = T['loading.text'];
   // Save btn
-  document.querySelector('.btn-save').textContent = T['save'];
+  var _bs = document.querySelector('.btn-save'); if(_bs) _bs.textContent = T['save'];
   // Footer
   var footer = document.querySelector('footer');
   if(footer) footer.innerHTML = T['footer.text'] + ' <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager';
