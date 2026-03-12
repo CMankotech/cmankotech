@@ -287,7 +287,7 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
       <span class="results-title"><span id="lbl_results_title">R&eacute;sultats de ta discovery</span></span>
       <div style="display:flex;gap:0.5rem;align-items:center">
         <button class="btn-copy-all" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
-        <button class="btn-rerun" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
+        <button class="btn-rerun" id="rerunBtn" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
         <button class="btn-reset" onclick="reset()">&#8635; Nouvelle discovery</button>
       </div>
     </div>
@@ -623,10 +623,6 @@ function applyLangExtras(lang) {
     if(el && el.placeholder !== undefined) el.placeholder = lang==='en'?_phda[id][1]:_phda[id][0];
   });
 
-  var _finda = lang === 'en' ? {
-  } : {
-  };
-  Object.keys(_finda).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finda[id];});
 
   // Static labels
   var _t = lang === 'en' ? {

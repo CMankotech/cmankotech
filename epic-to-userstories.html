@@ -265,18 +265,18 @@ footer a:hover{text-decoration:underline}
 
     <div class="form-grid">
       <div class="field">
-        <label><span id="lbl_persona"><span id="lbl_persona">Persona principal</span></span></label>
+        <label><span id="lbl_persona">Persona principal</span></label>
         <input type="text" id="persona" placeholder="Ex : Manager RH, Utilisateur final, Admin...">
       </div>
       <div class="field">
-        <label><span id="lbl_tech">Contexte technique</span> <span style="font-size:0.57rem;text-transform:none;letter-spacing:0;color:var(--muted)"><span id="eu_optional">(optionnel)</span></label>
+        <label><span id="lbl_tech">Contexte technique</span> <span style="font-size:0.57rem;text-transform:none;letter-spacing:0;color:var(--muted)"><span id="eu_optional">(optionnel)</span></span></label>
         <input type="text" id="techContext" placeholder="Ex : React SPA, mobile-first, API REST...">
       </div>
     </div>
 
     <div class="form-grid">
       <div class="field">
-        <label><span id="lbl_nb_stories"><span id="lbl_nb_stories">Nombre de user stories</span></span></label>
+        <label><span id="lbl_nb_stories">Nombre de user stories</span></label>
         <div class="nb-toggle">
           <button class="nb-btn" id="nb4" onclick="setNb(4)">4</button>
           <button class="nb-btn active" id="nb6" onclick="setNb(6)">6</button>
@@ -285,9 +285,9 @@ footer a:hover{text-decoration:underline}
         </div>
       </div>
       <div class="field">
-        <label><span id="lbl_format"><span id="lbl_format">Format user story</span></span></label>
+        <label><span id="lbl_format">Format user story</span></label>
         <div class="format-toggle">
-          <button class="fmt-btn active" id="fmtStandard" onclick="setFormat('standard')"><span id="lbl_standard_fmt"><span id="lbl_standard_fmt">En tant que...</span></span></button>
+          <button class="fmt-btn active" id="fmtStandard" onclick="setFormat('standard')"><span id="lbl_standard_fmt">En tant que...</span></button>
           <button class="fmt-btn" id="fmtJobStory" onclick="setFormat('job')"><span id="lbl_job_fmt">Job Story</span></button>
         </div>
         <p class="field-hint" id="eu_jobstory_hint">Job Story : "Quand... je veux... afin de..."</p>
@@ -316,7 +316,7 @@ footer a:hover{text-decoration:underline}
       </div>
       <div style="display:flex;gap:0.5rem;align-items:center">
         <button class="btn-copy-all" id="copyAllBtn" onclick="copyAll()">&#128203; Copier tout</button>
-        <button class="btn-rerun" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
+        <button class="btn-rerun" id="rerunBtn" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
         <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
       </div>
     </div>
@@ -612,10 +612,6 @@ function applyLangExtras(lang) {
     if(el && el.placeholder !== undefined) el.placeholder = lang==='en'?_pheu[id][1]:_pheu[id][0];
   });
 
-  var _fineu = lang === 'en' ? {
-  } : {
-  };
-  Object.keys(_fineu).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_fineu[id];});
 
   var _sl3 = lang === 'en' ? {
     'lbl_tech': 'Technical context',

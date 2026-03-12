@@ -322,7 +322,7 @@ footer a:hover{text-decoration:underline}
       </div>
       <div style="display:flex;gap:0.5rem;align-items:center">
         <button class="btn-copy-all" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
-        <button class="btn-rerun" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
+        <button class="btn-rerun" id="rerunBtn" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
         <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
       </div>
     </div>
@@ -683,10 +683,6 @@ function applyLangExtras(lang) {
     for(var i=0;i<sel.options.length;i++){ if(opts[i]) sel.options[i].text=opts[i][l]; }
   });
 
-  var _finrs = lang === 'en' ? {
-  } : {
-  };
-  Object.keys(_finrs).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finrs[id];});
 
   var _sl3 = lang === 'en' ? {
     'lbl_ctx_title': 'Product context',

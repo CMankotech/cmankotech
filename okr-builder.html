@@ -321,7 +321,7 @@ footer a:hover{text-decoration:underline}
       </div>
       <div style="display:flex;gap:0.5rem;align-items:center">
         <button class="btn-copy-all" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
-        <button class="btn-rerun" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
+        <button class="btn-rerun" id="rerunBtn" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
         <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
       </div>
     </div>
@@ -684,10 +684,6 @@ function applyLangExtras(lang) {
     for(var i=0;i<sel.options.length;i++){ if(opts[i]) sel.options[i].text = opts[i][l]; }
   });
 
-  var _finokr2 = lang === 'en' ? {
-  } : {
-  };
-  Object.keys(_finokr2).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finokr2[id];});
 
   var _sl4 = lang === 'en' ? {
     'lbl_ctx_title': 'Product context',
@@ -704,10 +700,6 @@ function applyLangExtras(lang) {
   };
   Object.keys(_sl4).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_sl4[id];});
 
-  var _sl3 = lang === 'en' ? {
-  } : {
-  };
-  Object.keys(_sl3).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_sl3[id];});
 
   // Static labels
   var _t = lang === 'en' ? {

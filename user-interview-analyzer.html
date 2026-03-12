@@ -297,7 +297,7 @@ footer a:hover{text-decoration:underline}
 
     <!-- CONTEXT -->
     <div style="margin-top:1.5rem">
-      <div class="card-title"><span id="lbl_ctx">Contexte produit</span> <span style="font-size:0.57rem;color:var(--muted);text-transform:none;letter-spacing:0"><span id="lbl_optional_ctx">(optionnel)</span></div>
+      <div class="card-title"><span id="lbl_ctx">Contexte produit</span> <span style="font-size:0.57rem;color:var(--muted);text-transform:none;letter-spacing:0"><span id="lbl_optional_ctx">(optionnel)</span></span></div>
       <input class="context-input" type="text" id="context" placeholder="Ex : SaaS de gestion de projet B2B, cible PME, phase de rétention">
     </div>
   </div>
@@ -324,7 +324,7 @@ footer a:hover{text-decoration:underline}
       </div>
       <div style="display:flex;gap:0.5rem;align-items:center">
         <button class="btn-copy-all" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
-        <button class="btn-rerun" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
+        <button class="btn-rerun" id="rerunBtn" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
         <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
       </div>
     </div>
@@ -772,10 +772,6 @@ function applyLangExtras(lang) {
     if(el && el.placeholder !== undefined) el.placeholder = lang==='en'?_phuia[id][1]:_phuia[id][0];
   });
 
-  var _finuia = lang === 'en' ? {
-  } : {
-  };
-  Object.keys(_finuia).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finuia[id];});
 
   var _sl = lang === 'en' ? {
     'lbl_interviews_title': 'User interviews',
@@ -842,6 +838,9 @@ function applyLangExtras(lang) {
   var rrBtn = document.getElementById('rerunBtn');
   if (rrBtn) rrBtn.innerHTML = lang === 'en' ? '&#8634; Re-generate' : '&#8634; R&eacute;-g&eacute;n&eacute;rer';
 }
+
+// Sync on load (IIFE may have fired before this function was defined)
+(function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
 
 </script>
 </body>
