@@ -35,11 +35,11 @@ h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;lin
 .card-title::after{content:'';flex:1;height:1px;background:var(--line)}
 
 /* PROVIDER */
-.provider-row{display:flex;gap:0.4rem;margin-bottom:0.9rem}
-.provider-btn{flex:1;padding:0.55rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.35rem}
-.provider-btn.active{background:rgba(251,191,36,0.1);border-color:rgba(251,191,36,0.35);color:var(--yellow)}
-.provider-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
-.provider-tag{font-size:0.52rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.1rem 0.4rem;background:rgba(255,255,255,0.06);border-radius:3px}
+
+
+
+
+
 .key-row{display:flex;gap:0.75rem}
 .key-row input{flex:1;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;outline:none;transition:border-color 0.2s}
 .key-row input:focus{border-color:rgba(251,191,36,0.4)}
@@ -103,6 +103,12 @@ h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;lin
 .results-sub{font-size:0.68rem;color:var(--dim)}
 .btn-reset{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.9rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
 .btn-reset:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+.btn-copy-all{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.4rem 0.9rem;border-radius:6px;border:1px solid rgba(251,191,36,0.25);background:rgba(251,191,36,0.06);color:var(--yellow);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-copy-all:hover{background:rgba(251,191,36,0.14)}
+.btn-copy-all.copied{color:var(--green);border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.06)}
+.btn-rerun{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.4rem 0.9rem;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--dim);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-rerun:hover{border-color:rgba(96,165,250,0.5);color:var(--blue)}
+.input-hint{font-size:0.68rem;color:var(--muted);margin-top:0.3rem;text-align:right}
 
 /* OKR CARDS */
 .okr-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.25rem;border-left:3px solid var(--yellow)}
@@ -145,10 +151,6 @@ footer a:hover{text-decoration:underline}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(251,191,36,0.15);color:var(--yellow)}
 
-.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(251,191,36,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
-.btn-demo:hover{border-color:rgba(251,191,36,0.6);color:var(--yellow);background:rgba(251,191,36,0.04)}
-.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);border-radius:4px;color:var(--yellow)}
-
 .howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
 .howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
 .howto-trigger:hover{background:rgba(255,255,255,0.04)}
@@ -185,42 +187,22 @@ footer a:hover{text-decoration:underline}
 
 
 <style>
-.about-section{margin-bottom:1.25rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden}
-.about-toggle{width:100%;background:none;border:none;cursor:pointer;padding:0.85rem 1.2rem;display:flex;align-items:center;justify-content:space-between;color:#fff;font-family:'DM Sans',sans-serif}
-.about-toggle-label{font-size:0.78rem;font-weight:600;letter-spacing:0.03em;color:rgba(255,255,255,0.65)}
-.about-arrow{font-size:0.65rem;color:rgba(255,255,255,0.25);transition:transform 0.2s}
-.about-toggle.open .about-arrow{transform:rotate(180deg)}
-.about-body{display:none;padding:0 1rem 1rem}
-.about-body.open{display:block}
+.about-divider{height:1px;background:var(--border);margin:0.9rem 0}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem}
 @media(max-width:600px){.about-grid{grid-template-columns:1fr}}
 .about-block{padding:0.85rem 1rem;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06)}
 .about-lbl{display:inline-block;font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.13em;padding:0.18rem 0.55rem;border-radius:99px;margin-bottom:0.5rem;background:rgba(255,255,255,0.07);color:var(--about-color,#22d3ee)}
 .about-text{font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.65;margin:0}
 </style>
-<div class="about-section" style="--about-color:#fbbf24">
-  <button class="about-toggle" onclick="this.classList.toggle('open');document.getElementById('aboutBody').classList.toggle('open')" id="aboutToggle">
-    <span class="about-toggle-label" id="aboutTitle">À propos de cet outil</span>
-    <span class="about-arrow">&#9660;</span>
-  </button>
-  <div class="about-body" id="aboutBody">
-    <div class="about-grid">
-      <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la définition des OKRs produit, souvent floue ou déconnectée des vraies métriques.</p></div>
-      <div class="about-block"><div class="about-lbl" id="aLblPb">Probl&egrave;me</div><p class="about-text" id="aPb">Rédiger des OKRs cohérents, mesurables et alignés sur la stratégie produit prend du temps et manque de rigueur.</p></div>
-      <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur décrit son contexte et ses ambitions, l'IA génère des OKRs avec Key Results typés (métrique, milestone, santé). Stack : HTML/JS + Groq/OpenAI.</p></div>
-      <div class="about-block"><div class="about-lbl" id="aLblRes">R&eacute;sultat</div><p class="about-text" id="aRes">OKRs structurés en quelques secondes, avec baseline et conseils d'utilisation en équipe.</p></div>
-    </div>
-  </div>
-</div>
 <script>
 (function(){
   var _d = {
-    fr:{title:"À propos de cet outil",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour accélérer la définition des OKRs produit, souvent floue ou déconnectée des vraies métriques.",pb:"Rédiger des OKRs cohérents, mesurables et alignés sur la stratégie produit prend du temps et manque de rigueur.",ap:"L\'utilisateur décrit son contexte et ses ambitions, l\'IA génère des OKRs avec Key Results typés (métrique, milestone, santé). Stack : HTML/JS + Groq/OpenAI.",res:"OKRs structurés en quelques secondes, avec baseline et conseils d\'utilisation en équipe."},
-    en:{title:"About this tool",lbl:["Context","Problem","Approach","Result"],ctx:"Built to speed up product OKR definition, often vague or disconnected from real metrics.",pb:"Writing coherent, measurable OKRs aligned with product strategy takes time and often lacks rigor.",ap:"The user describes their context and ambitions, the AI generates OKRs with typed Key Results (metric, milestone, health). Stack: HTML/JS + Groq/OpenAI.",res:"Structured OKRs in seconds, with baseline and team usage guidance."}
+    fr:{title:"En savoir plus",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour accélérer la définition des OKRs produit, souvent floue ou déconnectée des vraies métriques.",pb:"Rédiger des OKRs cohérents, mesurables et alignés sur la stratégie produit prend du temps et manque de rigueur.",ap:"L\'utilisateur décrit son contexte et ses ambitions, l\'IA génère des OKRs avec Key Results typés (métrique, milestone, santé). Stack : HTML/JS + Groq.",res:"OKRs structurés en quelques secondes, avec baseline et conseils d\'utilisation en équipe."},
+    en:{title:"Learn more",lbl:["Context","Problem","Approach","Result"],ctx:"Built to speed up product OKR definition, often vague or disconnected from real metrics.",pb:"Writing coherent, measurable OKRs aligned with product strategy takes time and often lacks rigor.",ap:"The user describes their context and ambitions, the AI generates OKRs with typed Key Results (metric, milestone, health). Stack: HTML/JS + Groq.",res:"Structured OKRs in seconds, with baseline and team usage guidance."}
   };
   function _upAbout(lang){
     var d=_d[lang]||_d.fr,g=document.getElementById.bind(document);
-    if(g('aboutTitle'))g('aboutTitle').textContent=d.title;
+    if(g('howtoLabel'))g('howtoLabel').innerHTML='&#9432; '+d.title;
     if(g('aLblCtx'))g('aLblCtx').textContent=d.lbl[0];
     if(g('aLblPb'))g('aLblPb').textContent=d.lbl[1];
     if(g('aLblAp'))g('aLblAp').textContent=d.lbl[2];
@@ -240,31 +222,24 @@ footer a:hover{text-decoration:underline}
   });
 })();
 </script>
-<div class="howto">
+<div class="howto" style="--about-color:#fbbf24">
     <button class="howto-trigger" onclick="toggleHowto(this)" id="howtoTrigger">
-      <span id="howtoLabel">&#9432; Comment ça marche ?</span>
+      <span id="howtoLabel">&#9432; En savoir plus</span>
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer sans clé API</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Pour générer tes propres OKRs, tu as besoin d'une clé API. Crée un compte gratuit sur <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) ou <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Copie ta clé, colle-la dans le champ en haut, puis clique sur <strong><span id="lbl_save_btn">Enregistrer</span></strong>. Elle reste dans ton navigateur, elle n'est jamais envoyée ailleurs.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Remplis le formulaire et génère tes OKRs. C'est tout.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try without API key</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">To generate your own OKRs, you need an API key. Create a free account at <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) or <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Copy your key, paste it in the field above, then click <strong>Save</strong>. It stays in your browser and is never sent anywhere else.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Fill in the form and generate your OKRs. That's it.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Renseigne le nom du produit, son type, tes ambitions stratégiques et tes métriques actuelles.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la génération — l'IA construit tes OKRs avec Key Results mesurables.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Fill in the product name, type, your strategic ambitions and current metrics.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run generation — the AI builds your OKRs with measurable Key Results.</div></div></div>
+      <div class="about-divider"></div>
+      <div class="about-grid">
+        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la définition des OKRs produit, souvent floue ou déconnectée des vraies métriques.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblPb">Problème</div><p class="about-text" id="aPb">Rédiger des OKRs cohérents, mesurables et alignés sur la stratégie produit prend du temps et manque de rigueur.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur décrit son contexte et ses ambitions, l'IA génère des OKRs avec Key Results typés (métrique, milestone, santé). Stack : HTML/JS + Groq.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblRes">Résultat</div><p class="about-text" id="aRes">OKRs structurés en quelques secondes, avec baseline et conseils d'utilisation en équipe.</p></div>
+      </div>
     </div>
   </div>
 
-
-  <!-- CONFIG -->  <div class="card">
-    <div class="card-title">&#128273; Configuration</div>
-    <div class="provider-row">
-      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag" id="lbl_groq_tag">Gratuit</span></button>
-      <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
-    </div>
-    <div class="key-row" id="keyRow" style="display:none">
-      <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
-      <button class="btn-save" id="btn_save" onclick="saveKey()">Enregistrer</button>
-    </div>
-    <p class="note" id="providerNote">Cl&eacute; API int&eacute;gr&eacute;e &mdash; aucune configuration requise.</p>
-    <div class="saved-msg" id="savedMsg">&#10003; Cl&eacute; enregistr&eacute;e.</div>
-  </div>
 
   <!-- FORM -->
   <div class="card">
@@ -297,6 +272,7 @@ footer a:hover{text-decoration:underline}
     <div class="field">
       <label><span id="lbl_ambitions">Ambitions &amp; contexte strat&eacute;gique</span></label>
       <textarea id="ambitions" rows="4" placeholder="D&eacute;cris ce que tu veux accomplir ce trimestre. Ex : On veut r&eacute;duire le churn, am&eacute;liorer l&rsquo;onboarding, et lancer une nouvelle feature d&rsquo;int&eacute;gration. Notre plus gros probl&egrave;me est que les utilisateurs ne reviennent pas apr&egrave;s J7..."></textarea>
+      <div class="input-hint" id="ambitionsHint"></div>
     </div>
 
     <div class="form-grid">
@@ -330,8 +306,6 @@ footer a:hover{text-decoration:underline}
     &#9654; G&eacute;n&eacute;rer mes OKRs
   </button>
 
-  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer sans clé API </span><span class="demo-badge" id="badge_demo">Démo</span></button>
-
   <!-- LOADING -->
   <div class="loading" id="loading">
     <div class="spinner"></div>
@@ -345,7 +319,11 @@ footer a:hover{text-decoration:underline}
         <div class="results-title"><span id="lbl_results_title">OKRs g&eacute;n&eacute;r&eacute;s</span></div>
         <div class="results-sub" id="resultsSub"></div>
       </div>
-      <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
+      <div style="display:flex;gap:0.5rem;align-items:center">
+        <button class="btn-copy-all" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
+        <button class="btn-rerun" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
+        <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
+      </div>
     </div>
 
     <div id="okrList"></div>
@@ -363,8 +341,6 @@ footer a:hover{text-decoration:underline}
 </div>
 
 <script>
-var apiKey = '';
-var provider = 'groq';
 var period = 'trimestre';
 var nbObjectives = 3;
 
@@ -381,34 +357,6 @@ function loadExample() {
   document.getElementById('ambitions').value = EXAMPLE.ambitions;
   document.getElementById('metrics').value = EXAMPLE.metrics;
 }
-
-function setProvider(p) {
-  provider = p;
-  document.getElementById('pbGroq').classList.toggle('active', p === 'groq');
-  document.getElementById('pbOpenai').classList.toggle('active', p === 'openai');
-  var note = document.getElementById('providerNote');
-  var inp = document.getElementById('apiKeyInput');
-  if (p === 'groq') {
-    document.getElementById('keyRow').style.display = 'none';
-    note.innerHTML = 'Cl\u00e9 API int\u00e9gr\u00e9e \u2014 aucune configuration requise.';
-  } else {
-    document.getElementById('keyRow').style.display = '';
-    inp.placeholder = 'sk-...';
-    note.innerHTML = 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>. GPT-4o mini est tr\u00e8s peu co\u00fbteux.';
-  }
-  apiKey = '';
-  document.getElementById('savedMsg').classList.remove('show');
-}
-
-function saveKey() {
-  var v = document.getElementById('apiKeyInput').value.trim();
-  if (provider === 'groq' && (!v.startsWith('gsk_') || v.length < 20)) { showError('Cl\u00e9 Groq invalide. Elle doit commencer par "gsk_".'); return; }
-  if (provider === 'openai' && (!v.startsWith('sk-') || v.length < 20)) { showError('Cl\u00e9 OpenAI invalide. Elle doit commencer par "sk-".'); return; }
-  apiKey = v;
-  document.getElementById('savedMsg').classList.add('show');
-  hideError();
-}
-
 function setPeriod(p) {
   period = p;
   document.getElementById('pQ').classList.toggle('active', p === 'trimestre');
@@ -426,12 +374,11 @@ async function launch() {
   var type = document.getElementById('productType').value;
   var ambitions = document.getElementById('ambitions').value.trim();
   var metrics = document.getElementById('metrics').value.trim();
-
-  if (provider !== 'groq' && !apiKey) { showError('Entre et enregistre ta cl\u00e9 API avant de lancer.'); return; }
   if (!name) { showError('Donne un nom au produit.'); return; }
   if (!ambitions || ambitions.length < 30) { showError('D\u00e9cris tes ambitions plus en d\u00e9tail.'); return; }
 
   document.getElementById('launchBtn').disabled = true;
+  var _rr = document.getElementById('rerunBtn'); if(_rr) _rr.disabled = true;
   document.getElementById('results').classList.remove('show');
   document.getElementById('loading').classList.add('show');
 
@@ -443,10 +390,12 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, name, type);
   } catch(e) {
-    showError('Erreur : ' + e.message);
+    if (e.name === 'AbortError') showError('Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    else showError('Erreur : ' + e.message);
   }
   document.getElementById('loading').classList.remove('show');
   document.getElementById('launchBtn').disabled = false;
+  var _rr2 = document.getElementById('rerunBtn'); if(_rr2) _rr2.disabled = false;
 }
 
 function buildPrompt(name, type, ambitions, metrics) {
@@ -456,21 +405,34 @@ function buildPrompt(name, type, ambitions, metrics) {
   return 'Tu es un expert en Product Management et strat\u00e9gie OKR. G\u00e9n\u00e8re des OKRs pour le produit suivant.\n\nProduit : "' + name + '"' + t + '\nP\u00e9riode : ' + p + '\nNombre d\'objectifs souhait\u00e9 : ' + nbObjectives + '\nAmbitions : ' + ambitions + m + '\n\nR\u00e8gles importantes :\n- Chaque Objective doit \u00eatre qualitatif, inspirant et m\u00e9morable (pas de chiffres dans l\'objectif)\n- Chaque Key Result doit \u00eatre mesurable, avec une valeur cible pr\u00e9cise et r\u00e9aliste\n- 3 Key Results par objectif\n- Varie les types : metric (KPI \u00e0 atteindre), milestone (\u00e9tape cl\u00e9 \u00e0 franchir), health (indicateur \u00e0 maintenir)\n- Ancre les KRs dans les m\u00e9triques fournies si disponibles\n\nR\u00e9ponds UNIQUEMENT avec un JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "okrs": [\n    {\n      "objective": "Faire de l\'onboarding un acc\u00e9l\u00e9rateur de valeur",\n      "key_results": [\n        {"text": "Augmenter le time-to-value de J14 \u00e0 J7 pour 70% des nouveaux clients", "type": "metric", "baseline": "Actuellement J14 pour 60% des clients"},\n        {"text": "Livrer le nouveau flow d\'onboarding interactif en production", "type": "milestone", "baseline": ""},\n        {"text": "Maintenir le NPS onboarding au-dessus de 40", "type": "health", "baseline": "NPS actuel : 28"}\n      ]\n    }\n  ],\n  "tips": [\n    "Conseil court et actionnable sur l\'utilisation de ces OKRs"\n  ]\n}\n\nG\u00e9n\u00e8re exactement ' + nbObjectives + ' objectif(s). Les tips doivent \u00eatre 3 conseils concrets sur comment utiliser ces OKRs en \u00e9quipe produit.';
 }
 
+function friendlyApiError(err, status) {
+  if (status === 429) return 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return 'Service temporairement indisponible — réessaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
+  if (err && err.message) return err.message;
+  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
+}
 async function callAI(prompt, maxTokens) {
-  var endpoint = provider === 'groq'
-    ? 'https://groq-proxy.cmankotech.workers.dev'
-    : 'https://api.openai.com/v1/chat/completions';
-  var model = provider === 'groq' ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+  var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
+  var model = 'llama-3.3-70b-versatile';
   var headers = { 'Content-Type': 'application/json' };
-  if (provider !== 'groq') headers['Authorization'] = 'Bearer ' + apiKey;
-  var res = await fetch(endpoint, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify({ model, temperature: 0.5, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
-  });
-  if (!res.ok) { var e = await res.json(); throw new Error(e.error?.message || 'Erreur API ' + res.status); }
-  var data = await res.json();
-  return data.choices[0].message.content;
+  var _ctrl = new AbortController();
+  var _timeout = setTimeout(function() { _ctrl.abort(); }, 30000);
+  try {
+    var res = await fetch(endpoint, {
+      method: 'POST',
+      headers: headers,
+      signal: _ctrl.signal,
+      body: JSON.stringify({ model, temperature: 0.5, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
+    });
+    clearTimeout(_timeout);
+    if (!res.ok) { var e = await res.json(); throw new Error(friendlyApiError(e.error, res.status)); }
+    var data = await res.json();
+    return data.choices[0].message.content;
+  } catch(e) {
+    clearTimeout(_timeout);
+    throw e;
+  }
 }
 
 function renderResults(d, name, type) {
@@ -512,8 +474,31 @@ function renderResults(d, name, type) {
     document.getElementById('tipsCard').style.display = 'block';
   }
 
+  window._okrData = d;
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function rerun() { launch(); }
+
+function copyResults() {
+  var d = window._okrData || {};
+  var lines = ['# OKRs générés\n'];
+  (d.okrs || []).forEach(function(okr, i) {
+    lines.push('## Objectif ' + (i+1) + ' : ' + (okr.objective||''));
+    (okr.key_results || []).forEach(function(kr, j) {
+      lines.push('  KR' + (j+1) + ' : ' + (kr.text||'') + (kr.baseline ? ' (baseline : ' + kr.baseline + ')' : ''));
+    });
+    lines.push('');
+  });
+  if (d.tips && d.tips.length) {
+    lines.push('## Conseils\n');
+    d.tips.forEach(function(t) { lines.push('- ' + t); });
+  }
+  var _text = lines.join('\n');
+  var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
+  var _fb = function() { var ta = document.createElement('textarea'); ta.value = _text; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); _onCopied(); } catch(e) {} document.body.removeChild(ta); };
+  if (navigator.clipboard) navigator.clipboard.writeText(_text).then(_onCopied).catch(_fb); else _fb();
 }
 
 function reset() {
@@ -560,9 +545,6 @@ var LANG = {
     'kr.baseline': 'Baseline&nbsp;:',
     'footer.text': 'Construit par',
     'save': 'Enregistrer',
-    'saved': '&#10003; Cl&eacute; enregistr&eacute;e.',
-    'note.groq': 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La cl&eacute; reste dans ton navigateur.',
-    'note.openai': 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>. GPT-4o mini est tr&egrave;s peu co&ucirc;teux.',
     'tag.free': 'Gratuit',
   },
   en: {
@@ -594,9 +576,6 @@ var LANG = {
     'kr.baseline': 'Baseline:',
     'footer.text': 'Built by',
     'save': 'Save',
-    'saved': '&#10003; Key saved.',
-    'note.groq': 'Free at <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. Key stays in your browser.',
-    'note.openai': 'Account at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>. GPT-4o mini is very affordable.',
     'tag.free': 'Free',
   }
 };
@@ -605,6 +584,7 @@ var currentLang = 'fr';
 
 function setLang(lang) {
   currentLang = lang;
+  localStorage.setItem('lang', lang);
   document.getElementById('lbFr').classList.toggle('active', lang === 'fr');
   document.getElementById('lbEn').classList.toggle('active', lang === 'en');
   var T = LANG[lang];
@@ -635,9 +615,6 @@ function setLang(lang) {
   document.querySelector('.loading-text').innerHTML = T['loading.text'];
   // Save btn
   document.querySelector('.btn-save').textContent = T['save'];
-  // Provider notes
-  if(provider === 'groq') document.getElementById('providerNote').innerHTML = T['note.groq'];
-  else document.getElementById('providerNote').innerHTML = T['note.openai'];
   // Footer
   var footer = document.querySelector('footer');
   if(footer) footer.innerHTML = T['footer.text'] + ' <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager';
@@ -647,65 +624,28 @@ function setLang(lang) {
 // Detect lang from URL
 (function() {
   var params = new URLSearchParams(window.location.search);
-  if (params.get('lang') === 'en') setLang('en');
+  var lang = params.get('lang') || localStorage.getItem('lang') || 'fr';
+  if (lang === 'en') setLang('en');
 })();
 
 
-// ---- DEMO MODE ----
-var MOCK_OKR = {
-  okrs: [
-    {
-      objective: "Faire de la rétention notre avantage compétitif",
-      key_results: [
-        {text: "Réduire le churn mensuel de 4.2% à 2.5% sur le trimestre", type: "metric", baseline: "Churn actuel : 4.2%"},
-        {text: "Atteindre un NPS de 42 auprès des utilisateurs actifs", type: "health", baseline: "NPS actuel : 28"},
-        {text: "Livrer le nouveau dashboard de suivi d’engagement en production", type: "milestone", baseline: ""}
-      ]
-    },
-    {
-      objective: "Transformer l’onboarding en accélérateur de valeur",
-      key_results: [
-        {text: "Réduire le time-to-value de J14 à J7 pour 70% des nouveaux clients", type: "metric", baseline: "Actuellement J14 pour 60% des clients"},
-        {text: "Atteindre 80% de completion du wizard d’onboarding", type: "metric", baseline: "Completion actuelle : 42%"},
-        {text: "Maintenir le NPS onboarding au-dessus de 40", type: "health", baseline: ""}
-      ]
-    },
-    {
-      objective: "Accélérer la valeur perçue par les managers",
-      key_results: [
-        {text: "Livrer le module de reporting avancé pour les managers", type: "milestone", baseline: ""},
-        {text: "Obtenir 60% d’adoption du module par les comptes manager dans les 4 semaines post-launch", type: "metric", baseline: ""},
-        {text: "Générer 3 case studies clients basés sur les insights du reporting", type: "milestone", baseline: ""}
-      ]
-    }
-  ],
-  tips: [
-    "Partagez ces OKRs en weekly avec l’équipe et mettez à jour le score de chaque KR en temps réel pour maintenir la dynamique.",
-    "Les KRs de type 'milestone' doivent avoir une définition de 'done' claire avant le sprint 1 pour éviter les débats en fin de trimestre.",
-    "Challengez chaque Objective : si votre équipe peut l’atteindre sans effort, le KR n’est pas assez ambitieux."
-  ]
-};
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    var btn = document.getElementById('launchBtn');
+    if (btn && !btn.disabled) btn.click();
+  }
+});
 
-function launchDemo() {
-  hideError();
-  // Fill example data
-  document.getElementById('productName').value = 'Flowly';
-  document.getElementById('productType').value = 'SaaS B2B';
-  document.getElementById('ambitions').value = "On veut améliorer la rétention des utilisateurs et réduire le churn. On souhaite aussi accélérer l’activation des nouveaux clients et lancer un module de reporting avancé pour les managers.";
-  document.getElementById('metrics').value = 'DAU 6 200, churn mensuel 4.2%, NPS 28, time-to-value J14 pour 60% des nouveaux clients';
-  setNb(3); setPeriod('trimestre');
-
-  document.getElementById('launchBtn').disabled = true;
-  document.getElementById('results').classList.remove('show');
-  document.getElementById('loading').classList.add('show');
-
-  setTimeout(function() {
-    document.getElementById('loading').classList.remove('show');
-    document.getElementById('launchBtn').disabled = false;
-    renderResults(MOCK_OKR, 'Flowly', 'trimestre');
-  }, 2000);
-}
-
+document.addEventListener('DOMContentLoaded', function() {
+  var ta = document.getElementById('ambitions');
+  var hint = document.getElementById('ambitionsHint');
+  if (ta && hint) {
+    ta.addEventListener('input', function() {
+      var n = this.value.length;
+      hint.textContent = n + ' caract\u00e8re' + (n > 1 ? 's' : '');
+    });
+  }
+});
 
 function toggleHowto(btn) {
   btn.classList.toggle('open');
@@ -713,8 +653,6 @@ function toggleHowto(btn) {
 }
 function applyLangExtras(lang) {
   var _extraokrX = {
-    'badge_demo': ['Démo', 'Demo'],
-    'btn_demo_txt': ['&#9654; Essayer sans clé API ', '&#9654; Try without API key '],
     'footer_by': ['Construit par', 'Built by'],
     'footer_role': ['AI Product Manager', 'AI Product Manager'],
     'lbl_optional_metrics': ['(optionnel)', '(optional)'],
@@ -747,22 +685,18 @@ function applyLangExtras(lang) {
   });
 
   var _finokr2 = lang === 'en' ? {
-    'btn_save': 'Save',
   } : {
-    'btn_save': 'Enregistrer',
   };
   Object.keys(_finokr2).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finokr2[id];});
 
   var _sl4 = lang === 'en' ? {
     'lbl_ctx_title': 'Product context',
-    'lbl_groq_tag': 'Free',
     'lbl_metrics': 'Current metrics',
     'lbl_tips_title': 'Tips for using these OKRs',
     'lbl_results_title': 'Generated OKRs',
     'lbl_save_btn': 'Save',
   } : {
     'lbl_ctx_title': 'Contexte produit',
-    'lbl_groq_tag': 'Gratuit',
     'lbl_metrics': 'Métriques actuelles',
     'lbl_tips_title': 'Conseils pour utiliser ces OKRs',
     'lbl_results_title': 'OKRs générés',
@@ -809,7 +743,11 @@ function applyLangExtras(lang) {
   if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';
   if(en) en.style.display = lang === 'en' ? 'flex' : 'none';
   var lbl = document.getElementById('howtoLabel');
-  if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; Comment ça marche ?' : '&#9432; How does it work?';
+  if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; En savoir plus' : '&#9432; Learn more';
+  var cpBtn = document.getElementById('copyAllBtn');
+  if (cpBtn && !cpBtn.classList.contains('copied')) cpBtn.innerHTML = lang === 'en' ? '&#128203; Copy all' : '&#128203; Copier tout';
+  var rrBtn = document.getElementById('rerunBtn');
+  if (rrBtn) rrBtn.innerHTML = lang === 'en' ? '&#8634; Re-generate' : '&#8634; R&eacute;-g&eacute;n&eacute;rer';
 }
 // Sync on load (IIFE may have fired before this function was defined)
 (function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();

@@ -36,11 +36,11 @@ h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;lin
 .card-title::after{content:'';flex:1;height:1px;background:var(--line)}
 
 /* PROVIDER */
-.provider-row{display:flex;gap:0.4rem;margin-bottom:0.9rem}
-.provider-btn{flex:1;padding:0.55rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.35rem}
-.provider-btn.active{background:rgba(34,211,238,0.08);border-color:rgba(34,211,238,0.3);color:var(--cyan)}
-.provider-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
-.provider-tag{font-size:0.52rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.1rem 0.4rem;background:rgba(255,255,255,0.06);border-radius:3px}
+
+
+
+
+
 .key-row{display:flex;gap:0.75rem}
 .key-row input{flex:1;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;outline:none;transition:border-color 0.2s}
 .key-row input:focus{border-color:rgba(34,211,238,0.4)}
@@ -136,6 +136,9 @@ h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;lin
 .btn-copy-all{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.55rem 1.1rem;border-radius:8px;border:1px solid rgba(34,211,238,0.25);background:rgba(34,211,238,0.06);color:var(--cyan);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .btn-copy-all:hover{background:rgba(34,211,238,0.14)}
 .btn-copy-all.copied{color:var(--green);border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.06)}
+.btn-rerun{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.55rem 1.1rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--dim);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-rerun:hover{border-color:rgba(96,165,250,0.5);color:var(--blue)}
+.input-hint{font-size:0.68rem;color:var(--muted);margin-top:0.3rem;text-align:right}
 
 footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--line);font-size:0.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em}
 footer a{color:var(--cyan);text-decoration:none}
@@ -151,10 +154,6 @@ footer a:hover{text-decoration:underline}
 .lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(34,211,238,0.15);color:var(--cyan)}
-
-.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(34,211,238,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
-.btn-demo:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(34,211,238,0.04)}
-.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.2);border-radius:4px;color:var(--cyan)}
 
 .howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
 .howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
@@ -192,42 +191,22 @@ footer a:hover{text-decoration:underline}
 
 
 <style>
-.about-section{margin-bottom:1.25rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden}
-.about-toggle{width:100%;background:none;border:none;cursor:pointer;padding:0.85rem 1.2rem;display:flex;align-items:center;justify-content:space-between;color:#fff;font-family:'DM Sans',sans-serif}
-.about-toggle-label{font-size:0.78rem;font-weight:600;letter-spacing:0.03em;color:rgba(255,255,255,0.65)}
-.about-arrow{font-size:0.65rem;color:rgba(255,255,255,0.25);transition:transform 0.2s}
-.about-toggle.open .about-arrow{transform:rotate(180deg)}
-.about-body{display:none;padding:0 1rem 1rem}
-.about-body.open{display:block}
+.about-divider{height:1px;background:var(--border);margin:0.9rem 0}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem}
 @media(max-width:600px){.about-grid{grid-template-columns:1fr}}
 .about-block{padding:0.85rem 1rem;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06)}
 .about-lbl{display:inline-block;font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.13em;padding:0.18rem 0.55rem;border-radius:99px;margin-bottom:0.5rem;background:rgba(255,255,255,0.07);color:var(--about-color,#22d3ee)}
 .about-text{font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.65;margin:0}
 </style>
-<div class="about-section" style="--about-color:#22d3ee">
-  <button class="about-toggle" onclick="this.classList.toggle('open');document.getElementById('aboutBody').classList.toggle('open')" id="aboutToggle">
-    <span class="about-toggle-label" id="aboutTitle">À propos de cet outil</span>
-    <span class="about-arrow">&#9660;</span>
-  </button>
-  <div class="about-body" id="aboutBody">
-    <div class="about-grid">
-      <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la décomposition d'un epic en user stories prêtes pour le sprint planning.</p></div>
-      <div class="about-block"><div class="about-lbl" id="aLblPb">Probl&egrave;me</div><p class="about-text" id="aPb">Produire des user stories indépendantes, bien formulées et avec des critères d'acceptance vérifiables demande du temps et de la rigueur.</p></div>
-      <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur décrit son epic, choisit le format (standard ou Job Story) et le nombre de stories. L'IA génère chaque story avec priorité, effort et critères d'acceptance. Stack : HTML/JS + Groq/OpenAI.</p></div>
-      <div class="about-block"><div class="about-lbl" id="aLblRes">R&eacute;sultat</div><p class="about-text" id="aRes">Backlog prêt en quelques secondes, exportable en Markdown pour Jira ou Confluence. Respecte le principe INVEST.</p></div>
-    </div>
-  </div>
-</div>
 <script>
 (function(){
   var _d = {
-    fr:{title:"À propos de cet outil",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour accélérer la décomposition d\'un epic en user stories prêtes pour le sprint planning.",pb:"Produire des user stories indépendantes, bien formulées et avec des critères d\'acceptance vérifiables demande du temps et de la rigueur.",ap:"L\'utilisateur décrit son epic, choisit le format (standard ou Job Story) et le nombre de stories. L\'IA génère chaque story avec priorité, effort et critères d\'acceptance. Stack : HTML/JS + Groq/OpenAI.",res:"Backlog prêt en quelques secondes, exportable en Markdown pour Jira ou Confluence. Respecte le principe INVEST."},
-    en:{title:"About this tool",lbl:["Context","Problem","Approach","Result"],ctx:"Built to accelerate epic breakdown into user stories ready for sprint planning.",pb:"Producing independent, well-formulated user stories with verifiable acceptance criteria takes time and rigor.",ap:"The user describes their epic, selects format (standard or Job Story) and story count. The AI generates each story with priority, effort and acceptance criteria. Stack: HTML/JS + Groq/OpenAI.",res:"Backlog ready in seconds, exportable to Markdown for Jira or Confluence. Follows the INVEST principle."}
+    fr:{title:"En savoir plus",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour accélérer la décomposition d\'un epic en user stories prêtes pour le sprint planning.",pb:"Produire des user stories indépendantes, bien formulées et avec des critères d\'acceptance vérifiables demande du temps et de la rigueur.",ap:"L\'utilisateur décrit son epic, choisit le format (standard ou Job Story) et le nombre de stories. L\'IA génère chaque story avec priorité, effort et critères d\'acceptance. Stack : HTML/JS + Groq.",res:"Backlog prêt en quelques secondes, exportable en Markdown pour Jira ou Confluence. Respecte le principe INVEST."},
+    en:{title:"Learn more",lbl:["Context","Problem","Approach","Result"],ctx:"Built to accelerate epic breakdown into user stories ready for sprint planning.",pb:"Producing independent, well-formulated user stories with verifiable acceptance criteria takes time and rigor.",ap:"The user describes their epic, selects format (standard or Job Story) and story count. The AI generates each story with priority, effort and acceptance criteria. Stack: HTML/JS + Groq.",res:"Backlog ready in seconds, exportable to Markdown for Jira or Confluence. Follows the INVEST principle."}
   };
   function _upAbout(lang){
     var d=_d[lang]||_d.fr,g=document.getElementById.bind(document);
-    if(g('aboutTitle'))g('aboutTitle').textContent=d.title;
+    if(g('howtoLabel'))g('howtoLabel').innerHTML='&#9432; '+d.title;
     if(g('aLblCtx'))g('aLblCtx').textContent=d.lbl[0];
     if(g('aLblPb'))g('aLblPb').textContent=d.lbl[1];
     if(g('aLblAp'))g('aLblAp').textContent=d.lbl[2];
@@ -247,31 +226,24 @@ footer a:hover{text-decoration:underline}
   });
 })();
 </script>
-<div class="howto">
+<div class="howto" style="--about-color:#22d3ee">
     <button class="howto-trigger" onclick="toggleHowto(this)" id="howtoTrigger">
-      <span id="howtoLabel">&#9432; Comment ça marche ?</span>
+      <span id="howtoLabel">&#9432; En savoir plus</span>
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer sans clé API</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Pour décomposer ton propre epic, crée un compte gratuit sur <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) ou <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Colle ta clé dans le champ en haut et clique <strong>Enregistrer</strong>. Elle reste dans ton navigateur uniquement.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Décris ton epic et génère tes user stories.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try without API key</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">To break down your own epic, create a free account at <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) or <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Paste your key in the field above and click <strong>Save</strong>. It stays in your browser only.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Describe your epic and generate your user stories.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Colle ton epic et précise le contexte produit si besoin.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la décomposition — l'IA génère des user stories INVEST avec critères d'acceptance.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Paste your epic and add product context if needed.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run the breakdown — the AI generates INVEST user stories with acceptance criteria.</div></div></div>
+      <div class="about-divider"></div>
+      <div class="about-grid">
+        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la décomposition d'un epic en user stories prêtes pour le sprint planning.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblPb">Problème</div><p class="about-text" id="aPb">Produire des user stories indépendantes, bien formulées et avec des critères d'acceptance vérifiables demande du temps et de la rigueur.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur décrit son epic, choisit le format (standard ou Job Story) et le nombre de stories. L'IA génère chaque story avec priorité, effort et critères d'acceptance. Stack : HTML/JS + Groq.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblRes">Résultat</div><p class="about-text" id="aRes">Backlog prêt en quelques secondes, exportable en Markdown pour Jira ou Confluence. Respecte le principe INVEST.</p></div>
+      </div>
     </div>
   </div>
 
-
-  <!-- CONFIG -->  <div class="card">
-    <div class="card-title">&#128273; Configuration</div>
-    <div class="provider-row">
-      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag" id="lbl_groq_free">Gratuit</span></button>
-      <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
-    </div>
-    <div class="key-row" id="keyRow" style="display:none">
-      <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
-      <button class="btn-save" id="btn_save" onclick="saveKey()">Enregistrer</button>
-    </div>
-    <p class="note" id="providerNote">Cl&eacute; API int&eacute;gr&eacute;e &mdash; aucune configuration requise.</p>
-    <div class="saved-msg" id="savedMsg">&#10003; Cl&eacute; enregistr&eacute;e.</div>
-  </div>
 
   <!-- FORM -->
   <div class="card">
@@ -288,6 +260,7 @@ footer a:hover{text-decoration:underline}
     <div class="field">
       <label><span id="lbl_desc"><span id="lbl_desc">Description &amp; objectif</span></span></label>
       <textarea id="epicDesc" rows="4" placeholder="D&eacute;cris l&rsquo;epic, le probl&egrave;me qu&rsquo;il r&eacute;sout et la valeur attendue. Ex : Les utilisateurs abandonnent lors de l&rsquo;onboarding faute de guidage. On veut r&eacute;duire le time-to-value de J14 &agrave; J7 en simplifiant les &eacute;tapes et en ajoutant des tooltips contextuels."></textarea>
+      <div class="input-hint" id="epicDescHint"></div>
     </div>
 
     <div class="form-grid">
@@ -328,8 +301,6 @@ footer a:hover{text-decoration:underline}
     &#9654; G&eacute;n&eacute;rer les user stories
   </button>
 
-  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer sans clé API </span><span class="demo-badge" id="badge_demo">Démo</span></button>
-
   <!-- LOADING -->
   <div class="loading" id="loading">
     <div class="spinner"></div>
@@ -345,6 +316,7 @@ footer a:hover{text-decoration:underline}
       </div>
       <div style="display:flex;gap:0.5rem;align-items:center">
         <button class="btn-copy-all" id="copyAllBtn" onclick="copyAll()">&#128203; Copier tout</button>
+        <button class="btn-rerun" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
         <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
       </div>
     </div>
@@ -360,8 +332,6 @@ footer a:hover{text-decoration:underline}
 </div>
 
 <script>
-var apiKey = '';
-var provider = 'groq';
 var nbStories = 6;
 var format = 'standard';
 
@@ -378,34 +348,6 @@ function loadExample() {
   document.getElementById('persona').value = EXAMPLE.persona;
   document.getElementById('techContext').value = EXAMPLE.tech;
 }
-
-function setProvider(p) {
-  provider = p;
-  document.getElementById('pbGroq').classList.toggle('active', p === 'groq');
-  document.getElementById('pbOpenai').classList.toggle('active', p === 'openai');
-  var inp = document.getElementById('apiKeyInput');
-  var note = document.getElementById('providerNote');
-  if (p === 'groq') {
-    document.getElementById('keyRow').style.display = 'none';
-    note.innerHTML = 'Cl\u00e9 API int\u00e9gr\u00e9e \u2014 aucune configuration requise.';
-  } else {
-    document.getElementById('keyRow').style.display = '';
-    inp.placeholder = 'sk-...';
-    note.innerHTML = 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>. GPT-4o mini est tr\u00e8s peu co\u00fbteux.';
-  }
-  apiKey = '';
-  document.getElementById('savedMsg').classList.remove('show');
-}
-
-function saveKey() {
-  var v = document.getElementById('apiKeyInput').value.trim();
-  if (provider === 'groq' && (!v.startsWith('gsk_') || v.length < 20)) { showError('Cl\u00e9 Groq invalide (doit commencer par "gsk_").'); return; }
-  if (provider === 'openai' && (!v.startsWith('sk-') || v.length < 20)) { showError('Cl\u00e9 OpenAI invalide (doit commencer par "sk-").'); return; }
-  apiKey = v;
-  document.getElementById('savedMsg').classList.add('show');
-  hideError();
-}
-
 function setNb(n) {
   nbStories = n;
   [4, 6, 8, 10].forEach(function(x) { document.getElementById('nb' + x).classList.toggle('active', x === n); });
@@ -423,12 +365,11 @@ async function launch() {
   var desc = document.getElementById('epicDesc').value.trim();
   var persona = document.getElementById('persona').value.trim();
   var tech = document.getElementById('techContext').value.trim();
-
-  if (provider !== 'groq' && !apiKey) { showError('Entre et enregistre ta cl\u00e9 API avant de lancer.'); return; }
   if (!title) { showError('Donne un titre \u00e0 ton epic.'); return; }
   if (!desc || desc.length < 30) { showError('D\u00e9cris l\u2019epic plus en d\u00e9tail.'); return; }
 
   document.getElementById('launchBtn').disabled = true;
+  var _rr = document.getElementById('rerunBtn'); if(_rr) _rr.disabled = true;
   document.getElementById('results').classList.remove('show');
   document.getElementById('loading').classList.add('show');
 
@@ -440,10 +381,12 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, title);
   } catch(e) {
-    showError('Erreur : ' + e.message);
+    if (e.name === 'AbortError') showError('Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    else showError('Erreur : ' + e.message);
   }
   document.getElementById('loading').classList.remove('show');
   document.getElementById('launchBtn').disabled = false;
+  var _rr2 = document.getElementById('rerunBtn'); if(_rr2) _rr2.disabled = false;
 }
 
 function buildPrompt(title, desc, persona, tech) {
@@ -456,19 +399,34 @@ function buildPrompt(title, desc, persona, tech) {
   return 'Tu es un expert Product Owner. D\u00e9compose l\u2019epic suivant en ' + nbStories + ' user stories actionables.\n\nEpic : "' + title + '"\nDescription : ' + desc + personaStr + techStr + '\n\nR\u00e8gles :\n- ' + fmtInstruction + '\n- Chaque user story doit \u00eatre ind\u00e9pendante et livrable seule (principe INVEST)\n- 2 \u00e0 3 crit\u00e8res d\u2019acceptance concrets et v\u00e9rifiables par story\n- Priorit\u00e9 : high / medium / low\n- Effort estim\u00e9 : XS (< 1j), S (1-2j), M (3-5j), L (> 5j)\n- Type : feature / tech / ux / bug-fix\n- Varie les types et priorit\u00e9s de fa\u00e7on r\u00e9aliste\n\nR\u00e9ponds UNIQUEMENT en JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "epic_summary": "R\u00e9sum\u00e9 de l\u2019epic en 1 phrase",\n  "stories": [\n    {\n      "id": "US-01",\n      "title": "Titre court de la story",\n      "story": "En tant que... je veux... afin de...",\n      "type": "feature",\n      "priority": "high",\n      "effort": "M",\n      "acceptance_criteria": [\n        "Crit\u00e8re 1 v\u00e9rifiable",\n        "Crit\u00e8re 2 v\u00e9rifiable"\n      ]\n    }\n  ]\n}';
 }
 
+function friendlyApiError(err, status) {
+  if (status === 429) return 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return 'Service temporairement indisponible — réessaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
+  if (err && err.message) return err.message;
+  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
+}
 async function callAI(prompt, maxTokens) {
-  var endpoint = provider === 'groq' ? 'https://groq-proxy.cmankotech.workers.dev' : 'https://api.openai.com/v1/chat/completions';
-  var model = provider === 'groq' ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+  var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
+  var model = 'llama-3.3-70b-versatile';
   var headers = { 'Content-Type': 'application/json' };
-  if (provider !== 'groq') headers['Authorization'] = 'Bearer ' + apiKey;
-  var res = await fetch(endpoint, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify({ model, temperature: 0.4, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
-  });
-  if (!res.ok) { var e = await res.json(); throw new Error(e.error?.message || 'Erreur API ' + res.status); }
-  var data = await res.json();
-  return data.choices[0].message.content;
+  var _ctrl = new AbortController();
+  var _timeout = setTimeout(function() { _ctrl.abort(); }, 30000);
+  try {
+    var res = await fetch(endpoint, {
+      method: 'POST',
+      headers: headers,
+      signal: _ctrl.signal,
+      body: JSON.stringify({ model, temperature: 0.4, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
+    });
+    clearTimeout(_timeout);
+    if (!res.ok) { var e = await res.json(); throw new Error(friendlyApiError(e.error, res.status)); }
+    var data = await res.json();
+    return data.choices[0].message.content;
+  } catch(e) {
+    clearTimeout(_timeout);
+    throw e;
+  }
 }
 
 function renderResults(d, epicTitle) {
@@ -537,13 +495,13 @@ function copyAll() {
     }
     lines.push('');
   });
-  navigator.clipboard.writeText(lines.join('\n')).then(function() {
-    var btn = document.getElementById('copyAllBtn');
-    btn.textContent = '\u2713 Copi\u00e9 !';
-    btn.classList.add('copied');
-    setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000);
-  });
+  var _text = lines.join('\n');
+  var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
+  var _fb = function() { var ta = document.createElement('textarea'); ta.value = _text; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); _onCopied(); } catch(e) {} document.body.removeChild(ta); };
+  if (navigator.clipboard) navigator.clipboard.writeText(_text).then(_onCopied).catch(_fb); else _fb();
 }
+
+function rerun() { launch(); }
 
 function reset() {
   document.getElementById('results').classList.remove('show');
@@ -566,10 +524,6 @@ var LANG = {
     'btn.launch': '&#9654; Générer les user stories',
     'loading.text': 'Génération des user stories en cours...',
     'btn.reset': '&#8635; Recommencer',
-    'btn.save': 'Enregistrer',
-    'saved': '&#10003; Clé enregistrée.',
-    'note.groq': 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La clé reste dans ton navigateur.',
-    'note.openai': 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.',
     'ph.epicTitle': 'Ex : Refonte de l’onboarding utilisateur',
     'ph.persona': 'Ex : Manager RH, Utilisateur final...',
     'ph.techContext': 'Ex : React SPA, mobile-first, API REST...'
@@ -580,10 +534,6 @@ var LANG = {
     'btn.launch': '&#9654; Generate user stories',
     'loading.text': 'Generating user stories...',
     'btn.reset': '&#8635; Start over',
-    'btn.save': 'Save',
-    'saved': '&#10003; Key saved.',
-    'note.groq': 'Free at <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. Key stays in your browser.',
-    'note.openai': 'Account at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.',
     'ph.epicTitle': 'e.g. Onboarding redesign',
     'ph.persona': 'e.g. HR Manager, end user, admin...',
     'ph.techContext': 'e.g. React SPA, mobile-first, REST API...'
@@ -592,6 +542,7 @@ var LANG = {
 var currentLang = 'fr';
 function setLang(lang) {
   currentLang = lang;
+  localStorage.setItem('lang', lang);
   document.getElementById('lbFr').classList.toggle('active', lang === 'fr');
   document.getElementById('lbEn').classList.toggle('active', lang === 'en');
   var T = LANG[lang];
@@ -601,12 +552,8 @@ function setLang(lang) {
   if(launchBtn && T['btn.launch']) launchBtn.innerHTML = T['btn.launch'];
   var loadingTxt = document.querySelector('.loading-text');
   if(loadingTxt && T['loading.text']) loadingTxt.innerHTML = T['loading.text'];
-  var saveBtns = document.querySelectorAll('.btn-save');
-  saveBtns.forEach(function(b) { if(T['btn.save']) b.textContent = T['btn.save']; });
   var resetBtn = document.querySelector('.btn-reset');
   if(resetBtn && T['btn.reset']) resetBtn.innerHTML = T['btn.reset'];
-  var savedMsg = document.getElementById('savedMsg');
-  if(savedMsg && T['saved']) savedMsg.innerHTML = T['saved'];
   // Placeholders
   Object.keys(T).forEach(function(k) {
     if(k.startsWith('ph.')) {
@@ -614,49 +561,32 @@ function setLang(lang) {
       if(el) el.placeholder = T[k];
     }
   });
-  // Provider note
-  if(typeof provider !== 'undefined') {
-    if(provider === 'groq' && T['note.groq']) document.getElementById('providerNote').innerHTML = T['note.groq'];
-    else if(provider === 'openai' && T['note.openai']) document.getElementById('providerNote').innerHTML = T['note.openai'];
-  }
   if(typeof applyLangExtras === 'function') applyLangExtras(lang, T);
 }
 (function() {
   var params = new URLSearchParams(window.location.search);
-  if (params.get('lang') === 'en') setLang('en');
+  var lang = params.get('lang') || localStorage.getItem('lang') || 'fr';
+  if (lang === 'en') setLang('en');
 })();
 
 
-var MOCK_EUS = {
-  epic_summary: "Refondre l'onboarding pour réduire le time-to-value de J14 à J7",
-  stories: [
-    {id:"US-01",title:"Wizard d'onboarding en 4 étapes",story:"En tant que nouvel utilisateur, je veux être guidé pas à pas lors de ma première connexion afin de comprendre rapidement la valeur du produit.",type:"ux",priority:"high",effort:"L",acceptance_criteria:["Le wizard s'affiche automatiquement à la première connexion","L'utilisateur peut passer chaque étape ou recommencer","La progression est visible et persistante"]},
-    {id:"US-02",title:"Barre de progression de l'onboarding",story:"En tant que nouvel utilisateur, je veux voir ma progression dans l'onboarding afin de savoir combien d'étapes il me reste.",type:"feature",priority:"high",effort:"S",acceptance_criteria:["La barre affiche le % de completion en temps réel","Elle disparaît une fois l'onboarding terminé","Elle est visible sur toutes les pages"]},
-    {id:"US-03",title:"Tooltips contextuels sur les actions clés",story:"En tant que nouvel utilisateur, je veux voir des explications contextuelles sur les fonctionnalités principales afin de ne pas me sentir perdu.",type:"ux",priority:"medium",effort:"M",acceptance_criteria:["Les tooltips s'affichent au premier survol des éléments clés","Ils peuvent être désactivés","Ils ne bloquent pas l'interface"]},
-    {id:"US-04",title:"Email de bienvenue J+0 et relance J+1",story:"En tant que nouvel utilisateur, je veux recevoir un email de bienvenue personnalisé afin d'avoir un point d'entrée clair vers les prochaines étapes.",type:"feature",priority:"high",effort:"S",acceptance_criteria:["L'email J+0 est envoyé dans les 5 minutes après l'inscription","L'email J+1 est envoyé si l'onboarding est incomplet","Le CTA renvoie directement à l'étape en cours"]},
-    {id:"US-05",title:"Dashboard vide avec actions guidées",story:"En tant que nouvel utilisateur, je veux voir des suggestions d'actions sur mon dashboard vide afin de savoir par où commencer.",type:"ux",priority:"medium",effort:"M",acceptance_criteria:["Le dashboard vide affiche 3 actions prioritaires","Les suggestions disparaissent une fois l'action réalisée","Le design est cohérent avec le reste de l'interface"]},
-    {id:"US-06",title:"Tracking des étapes d'onboarding",story:"En tant que PM, je veux suivre le taux de completion de chaque étape d'onboarding afin d'identifier les points de friction.",type:"tech",priority:"high",effort:"M",acceptance_criteria:["Chaque étape terminée envoie un event analytics","Un dashboard interne affiche le funnel d'onboarding","Les données sont disponibles en temps réel"]}
-  ]
-};
-function launchDemo() {
-  hideError();
-  var titleEl = document.getElementById('epicTitle');
-  var descEl = document.getElementById('epicDesc');
-  var personaEl = document.getElementById('persona');
-  if(titleEl) titleEl.value = "Refonte de l'onboarding utilisateur";
-  if(descEl) descEl.value = "Les nouveaux utilisateurs abandonnent en masse lors de l'onboarding : 60% ne complètent pas la configuration initiale. On veut réduire le time-to-value de J14 à J7 en ajoutant un wizard guidé, des tooltips contextuels et un email de relance J+1.";
-  if(personaEl) personaEl.value = "Nouvel utilisateur (non-technique)";
-  setNb(6);
-  document.getElementById('launchBtn').disabled = true;
-  document.getElementById('results') && document.getElementById('results').classList.remove('show');
-  document.getElementById('loading').classList.add('show');
-  setTimeout(function() {
-    document.getElementById('loading').classList.remove('show');
-    document.getElementById('launchBtn').disabled = false;
-    if(typeof renderResults === 'function') renderResults(MOCK_EUS, "Refonte de l'onboarding");
-  }, 2000);
-}
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    var btn = document.getElementById('launchBtn');
+    if (btn && !btn.disabled) btn.click();
+  }
+});
 
+document.addEventListener('DOMContentLoaded', function() {
+  var ta = document.getElementById('epicDesc');
+  var hint = document.getElementById('epicDescHint');
+  if (ta && hint) {
+    ta.addEventListener('input', function() {
+      var n = this.value.length;
+      hint.textContent = n + ' caract\u00e8re' + (n > 1 ? 's' : '');
+    });
+  }
+});
 
 function toggleHowto(btn) {
   btn.classList.toggle('open');
@@ -664,8 +594,6 @@ function toggleHowto(btn) {
 }
 function applyLangExtras(lang) {
   var _eZeuX={
-    'badge_demo':['Démo','Demo'],
-    'btn_demo_txt':['&#9654; Essayer sans clé API ','&#9654; Try without API key '],
     'footer_by':['Construit par','Built by'],
     'footer_role':['AI Product Manager','AI Product Manager'],
     'eu_optional':['(optionnel)','(optional)'],
@@ -685,11 +613,7 @@ function applyLangExtras(lang) {
   });
 
   var _fineu = lang === 'en' ? {
-    'btn_save': 'Save',
-    'lbl_groq_free': 'Free',
   } : {
-    'btn_save': 'Enregistrer',
-    'lbl_groq_free': 'Gratuit',
   };
   Object.keys(_fineu).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_fineu[id];});
 
@@ -751,7 +675,11 @@ function applyLangExtras(lang) {
   if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';
   if(en) en.style.display = lang === 'en' ? 'flex' : 'none';
   var lbl = document.getElementById('howtoLabel');
-  if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; Comment ça marche ?' : '&#9432; How does it work?';
+  if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; En savoir plus' : '&#9432; Learn more';
+  var cpBtn = document.getElementById('copyAllBtn');
+  if (cpBtn && !cpBtn.classList.contains('copied')) cpBtn.innerHTML = lang === 'en' ? '&#128203; Copy all' : '&#128203; Copier tout';
+  var rrBtn = document.getElementById('rerunBtn');
+  if (rrBtn) rrBtn.innerHTML = lang === 'en' ? '&#8634; Re-generate' : '&#8634; R&eacute;-g&eacute;n&eacute;rer';
 }
 // Sync on load (IIFE may have fired before this function was defined)
 (function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();

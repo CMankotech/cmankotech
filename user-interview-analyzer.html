@@ -35,11 +35,11 @@ h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;lin
 .card-title::after{content:'';flex:1;height:1px;background:var(--line)}
 
 /* PROVIDER ROW */
-.provider-row{display:flex;gap:0.4rem;margin-bottom:0.9rem}
-.provider-btn{flex:1;padding:0.55rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.35rem}
-.provider-btn.active{background:rgba(34,211,238,0.1);border-color:rgba(34,211,238,0.35);color:var(--cyan)}
-.provider-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
-.provider-tag{font-size:0.52rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.1rem 0.4rem;background:rgba(255,255,255,0.06);border-radius:3px}
+
+
+
+
+
 .key-row{display:flex;gap:0.75rem}
 .key-row input{flex:1;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:0.65rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;outline:none;transition:border-color 0.2s}
 .key-row input:focus{border-color:rgba(34,211,238,0.4)}
@@ -111,6 +111,12 @@ textarea::placeholder{color:var(--muted)}
 .results-sub{font-size:0.68rem;color:var(--dim)}
 .btn-reset{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.9rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
 .btn-reset:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+.btn-copy-all{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.4rem 0.9rem;border-radius:6px;border:1px solid rgba(34,211,238,0.25);background:rgba(34,211,238,0.06);color:var(--cyan);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-copy-all:hover{background:rgba(34,211,238,0.14)}
+.btn-copy-all.copied{color:var(--green);border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.06)}
+.btn-rerun{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.4rem 0.9rem;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--dim);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-rerun:hover{border-color:rgba(96,165,250,0.5);color:var(--blue)}
+.input-hint{font-size:0.68rem;color:var(--muted);margin-top:0.3rem;text-align:right}
 
 /* PERSONA */
 .persona-card{background:linear-gradient(135deg,rgba(167,139,250,0.08),rgba(34,211,238,0.06));border:1px solid rgba(167,139,250,0.2);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem;display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:start}
@@ -175,10 +181,6 @@ footer a:hover{text-decoration:underline}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(34,211,238,0.15);color:var(--cyan)}
 
-.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(34,211,238,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
-.btn-demo:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(34,211,238,0.04)}
-.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.2);border-radius:4px;color:var(--cyan)}
-
 .howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
 .howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
 .howto-trigger:hover{background:rgba(255,255,255,0.04)}
@@ -214,42 +216,22 @@ footer a:hover{text-decoration:underline}
 
 
 <style>
-.about-section{margin-bottom:1.25rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden}
-.about-toggle{width:100%;background:none;border:none;cursor:pointer;padding:0.85rem 1.2rem;display:flex;align-items:center;justify-content:space-between;color:#fff;font-family:'DM Sans',sans-serif}
-.about-toggle-label{font-size:0.78rem;font-weight:600;letter-spacing:0.03em;color:rgba(255,255,255,0.65)}
-.about-arrow{font-size:0.65rem;color:rgba(255,255,255,0.25);transition:transform 0.2s}
-.about-toggle.open .about-arrow{transform:rotate(180deg)}
-.about-body{display:none;padding:0 1rem 1rem}
-.about-body.open{display:block}
+.about-divider{height:1px;background:var(--border);margin:0.9rem 0}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem}
 @media(max-width:600px){.about-grid{grid-template-columns:1fr}}
 .about-block{padding:0.85rem 1rem;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06)}
 .about-lbl{display:inline-block;font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.13em;padding:0.18rem 0.55rem;border-radius:99px;margin-bottom:0.5rem;background:rgba(255,255,255,0.07);color:var(--about-color,#22d3ee)}
 .about-text{font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.65;margin:0}
 </style>
-<div class="about-section" style="--about-color:#22d3ee">
-  <button class="about-toggle" onclick="this.classList.toggle('open');document.getElementById('aboutBody').classList.toggle('open')" id="aboutToggle">
-    <span class="about-toggle-label" id="aboutTitle">À propos de cet outil</span>
-    <span class="about-arrow">&#9660;</span>
-  </button>
-  <div class="about-body" id="aboutBody">
-    <div class="about-grid">
-      <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la synthèse des entretiens utilisateurs, étape souvent chronophage en discovery.</p></div>
-      <div class="about-block"><div class="about-lbl" id="aLblPb">Probl&egrave;me</div><p class="about-text" id="aPb">Transformer des notes brutes en insights actionnables prend du temps et introduit des biais d'interprétation.</p></div>
-      <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur colle ses notes d'entretien, l'IA extrait pain points, citations, opportunités et génère un persona. Stack : HTML/JS + Groq/OpenAI.</p></div>
-      <div class="about-block"><div class="about-lbl" id="aLblRes">R&eacute;sultat</div><p class="about-text" id="aRes">Synthèse structurée en quelques secondes. Complète le Discovery Assistant pour couvrir toute la phase de discovery.</p></div>
-    </div>
-  </div>
-</div>
 <script>
 (function(){
   var _d = {
-    fr:{title:"À propos de cet outil",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour accélérer la synthèse des entretiens utilisateurs, étape souvent chronophage en discovery.",pb:"Transformer des notes brutes en insights actionnables prend du temps et introduit des biais d\'interprétation.",ap:"L\'utilisateur colle ses notes d\'entretien, l\'IA extrait pain points, citations, opportunités et génère un persona. Stack : HTML/JS + Groq/OpenAI.",res:"Synthèse structurée en quelques secondes. Complète le Discovery Assistant pour couvrir toute la phase de discovery."},
-    en:{title:"About this tool",lbl:["Context","Problem","Approach","Result"],ctx:"Built to speed up user interview synthesis, a time-consuming step in the discovery phase.",pb:"Turning raw notes into actionable insights takes time and introduces interpretation bias when done manually.",ap:"The user pastes interview notes, the AI extracts pain points, quotes, opportunities and generates a persona. Stack: HTML/JS + Groq/OpenAI.",res:"Structured synthesis in seconds. Complements the Discovery Assistant to cover the full discovery phase."}
+    fr:{title:"En savoir plus",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour accélérer la synthèse des entretiens utilisateurs, étape souvent chronophage en discovery.",pb:"Transformer des notes brutes en insights actionnables prend du temps et introduit des biais d\'interprétation.",ap:"L\'utilisateur colle ses notes d\'entretien, l\'IA extrait pain points, citations, opportunités et génère un persona. Stack : HTML/JS + Groq.",res:"Synthèse structurée en quelques secondes. Complète le Discovery Assistant pour couvrir toute la phase de discovery."},
+    en:{title:"Learn more",lbl:["Context","Problem","Approach","Result"],ctx:"Built to speed up user interview synthesis, a time-consuming step in the discovery phase.",pb:"Turning raw notes into actionable insights takes time and introduces interpretation bias when done manually.",ap:"The user pastes interview notes, the AI extracts pain points, quotes, opportunities and generates a persona. Stack: HTML/JS + Groq.",res:"Structured synthesis in seconds. Complements the Discovery Assistant to cover the full discovery phase."}
   };
   function _upAbout(lang){
     var d=_d[lang]||_d.fr,g=document.getElementById.bind(document);
-    if(g('aboutTitle'))g('aboutTitle').textContent=d.title;
+    if(g('howtoLabel'))g('howtoLabel').innerHTML='&#9432; '+d.title;
     if(g('aLblCtx'))g('aLblCtx').textContent=d.lbl[0];
     if(g('aLblPb'))g('aLblPb').textContent=d.lbl[1];
     if(g('aLblAp'))g('aLblAp').textContent=d.lbl[2];
@@ -269,30 +251,22 @@ footer a:hover{text-decoration:underline}
   });
 })();
 </script>
-<div class="howto">
+<div class="howto" style="--about-color:#22d3ee">
     <button class="howto-trigger" onclick="toggleHowto(this)" id="howtoTrigger">
-      <span id="howtoLabel">&#9432; Comment ça marche ?</span>
+      <span id="howtoLabel">&#9432; En savoir plus</span>
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer sans clé API</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Pour analyser tes propres entretiens, crée un compte gratuit sur <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) ou <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Colle ta clé dans le champ en haut et clique <strong>Enregistrer</strong>. Elle reste dans ton navigateur uniquement.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Colle tes notes d'entretiens et lance l'analyse.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try without API key</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">To analyse your own interviews, create a free account at <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) or <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Paste your key in the field above and click <strong>Save</strong>. It stays in your browser only.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Paste your interview notes and run the analysis.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Colle tes notes d'entretiens brutes dans la zone de texte.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance l'analyse — l'IA extrait pain points, insights et génère un persona utilisateur.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Paste your raw interview notes into the text area.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run analysis — the AI extracts pain points, insights and generates a user persona.</div></div></div>
+      <div class="about-divider"></div>
+      <div class="about-grid">
+        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la synthèse des entretiens utilisateurs, étape souvent chronophage en discovery.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblPb">Problème</div><p class="about-text" id="aPb">Transformer des notes brutes en insights actionnables prend du temps et introduit des biais d'interprétation.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur colle ses notes d'entretien, l'IA extrait pain points, citations, opportunités et génère un persona. Stack : HTML/JS + Groq.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblRes">Résultat</div><p class="about-text" id="aRes">Synthèse structurée en quelques secondes. Complète le Discovery Assistant pour couvrir toute la phase de discovery.</p></div>
+      </div>
     </div>
-  </div>
-
-  <!-- CONFIG -->
-  <div class="card">
-    <div class="card-title">&#128273; Configuration</div>
-    <div class="provider-row">
-      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag" id="lbl_groq_free">Gratuit</span></button>
-      <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
-    </div>
-    <div class="key-row" id="keyRow" style="display:none">
-      <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
-      <button class="btn-save" id="btn_save" onclick="saveKey()">Enregistrer</button>
-    </div>
-    <p class="note" id="providerNote">Clé API intégrée — aucune configuration requise.</p>
-    <div class="saved-msg" id="savedMsg">&#10003; Clé enregistrée.</div>
   </div>
 
   <!-- INTERVIEWS -->
@@ -311,6 +285,7 @@ footer a:hover{text-decoration:underline}
     <div id="singleMode">
       <label class="field-label"><span id="lbl_notes_title">Notes brutes de l'entretien</span></label>
       <textarea id="singleText" rows="9" placeholder="Colle ici tes notes, verbatims, ou une retranscription partielle de l'entretien.&#10;&#10;Ex : Utilisateur 32 ans, chef de projet, utilise l'outil depuis 3 mois. Se plaint du temps passé à faire des reportings manuels. Cite Excel comme outil principal. A essayé l'export mais ne sait pas où trouver le bouton. Frustré par le manque de notifications. Souhaite un récap hebdomadaire auto..."></textarea>
+      <div class="input-hint" id="singleTextHint"></div>
       <p class="hint" id="hint_no_format">Pas besoin de format particulier : des notes brutes suffisent.</p>
     </div>
 
@@ -334,8 +309,6 @@ footer a:hover{text-decoration:underline}
   </button>
 
 
-  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer sans clé API </span><span class="demo-badge" id="badge_demo">Démo</span></button>
-
   <!-- LOADING -->
   <div class="loading" id="loading">
     <div class="spinner"></div>
@@ -349,7 +322,11 @@ footer a:hover{text-decoration:underline}
         <div class="results-title"><span id="lbl_results_title">Synthèse des entretiens</span></div>
         <div class="results-sub" id="resultsSub"></div>
       </div>
-      <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
+      <div style="display:flex;gap:0.5rem;align-items:center">
+        <button class="btn-copy-all" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
+        <button class="btn-rerun" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
+        <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
+      </div>
     </div>
 
     <!-- PERSONA -->
@@ -376,8 +353,6 @@ footer a:hover{text-decoration:underline}
 </div>
 
 <script>
-var apiKey = '';
-var provider = 'groq';
 var inputMode = 'single';
 var interviewCount = 0;
 
@@ -439,35 +414,6 @@ function loadExamples() {
     MULTI_EXAMPLES.forEach(function(ex) { addInterview(ex.label, ex.text); });
   }
 }
-
-// ---- PROVIDER ----
-function setProvider(p) {
-  provider = p;
-  document.getElementById('pbGroq').classList.toggle('active', p === 'groq');
-  document.getElementById('pbOpenai').classList.toggle('active', p === 'openai');
-  var note = document.getElementById('providerNote');
-  var inp = document.getElementById('apiKeyInput');
-  if (p === 'groq') {
-    document.getElementById('keyRow').style.display = 'none';
-    note.innerHTML = 'Clé API intégrée — aucune configuration requise.';
-  } else {
-    document.getElementById('keyRow').style.display = '';
-    inp.placeholder = 'sk-...';
-    note.innerHTML = 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>. GPT-4o mini est très peu coûteux.';
-  }
-  apiKey = '';
-  document.getElementById('savedMsg').classList.remove('show');
-}
-
-function saveKey() {
-  var v = document.getElementById('apiKeyInput').value.trim();
-  if (provider === 'groq' && (!v.startsWith('gsk_') || v.length < 20)) { showError('Clé Groq invalide. Elle doit commencer par "gsk_".'); return; }
-  if (provider === 'openai' && (!v.startsWith('sk-') || v.length < 20)) { showError('Clé OpenAI invalide. Elle doit commencer par "sk-".'); return; }
-  apiKey = v;
-  document.getElementById('savedMsg').classList.add('show');
-  hideError();
-}
-
 // ---- INPUT MODE ----
 function setMode(m) {
   inputMode = m;
@@ -525,10 +471,10 @@ async function launch() {
   hideError();
   var text = getInterviewsText();
   var context = document.getElementById('context').value.trim();
-  if (provider !== 'groq' && !apiKey) { showError('Entre et enregistre ta clé API avant de lancer.'); return; }
   if (!text || text.length < 80) { showError('Ajoute des notes d\'entretien plus détaillées (minimum ~80 caractères).'); return; }
 
   document.getElementById('launchBtn').disabled = true;
+  var _rr = document.getElementById('rerunBtn'); if(_rr) _rr.disabled = true;
   document.getElementById('results').classList.remove('show');
   document.getElementById('loading').classList.add('show');
 
@@ -540,10 +486,12 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, context);
   } catch(e) {
-    showError('Erreur : ' + e.message);
+    if (e.name === 'AbortError') showError('Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    else showError('Erreur : ' + e.message);
   }
   document.getElementById('loading').classList.remove('show');
   document.getElementById('launchBtn').disabled = false;
+  var _rr2 = document.getElementById('rerunBtn'); if(_rr2) _rr2.disabled = false;
 }
 
 function buildPrompt(text, context) {
@@ -551,21 +499,34 @@ function buildPrompt(text, context) {
   return 'Tu es un UX researcher et Product Manager expert. Analyse ces notes d\'entretiens utilisateur.\n\nNotes :\n' + text + ctx + '\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ni après :\n{\n  "interview_count": 1,\n  "persona": {\n    "name": "Marie",\n    "emoji": "👩‍💼",\n    "description": "Responsable marketing, 34 ans, utilise l\'outil au quotidien pour gérer ses reportings et suivre ses projets d\'équipe.",\n    "tags": ["Marketing", "PME", "Power user", "Mobile first"]\n  },\n  "pain_groups": [\n    {\n      "group": "Partage et collaboration",\n      "count": 3,\n      "items": [\n        "Impossible de partager un rapport sans donner accès complet à l\'outil",\n        "Pas de notification lors de modifications par un collègue"\n      ]\n    }\n  ],\n  "quotes": [\n    {\n      "text": "Citation exacte ou reformulée fidèlement depuis les notes",\n      "profile": "Marie, responsable marketing"\n    }\n  ],\n  "opportunities": [\n    {\n      "title": "Export PDF en un clic",\n      "description": "Permettre le partage de rapports sans compte requis, via un lien ou un email avec PDF généré automatiquement.",\n      "impact": "high"\n    }\n  ]\n}\n\nRègles :\n- pain_groups : 2-4 groupes, chacun avec 2-3 items\n- quotes : 3-4 citations marquantes\n- opportunities : 3-4 opportunités, impact parmi high/medium/low\n- Si plusieurs entretiens : synthétise les patterns communs\n- Sois précis, actionnable, ancré dans les notes fournies.';
 }
 
+function friendlyApiError(err, status) {
+  if (status === 429) return 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return 'Service temporairement indisponible — réessaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
+  if (err && err.message) return err.message;
+  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
+}
 async function callAI(prompt, maxTokens) {
-  var endpoint = provider === 'groq'
-    ? 'https://groq-proxy.cmankotech.workers.dev'
-    : 'https://api.openai.com/v1/chat/completions';
-  var model = provider === 'groq' ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+  var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
+  var model = 'llama-3.3-70b-versatile';
   var headers = { 'Content-Type': 'application/json' };
-  if (provider !== 'groq') headers['Authorization'] = 'Bearer ' + apiKey;
-  var res = await fetch(endpoint, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify({ model, temperature: 0.4, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
-  });
-  if (!res.ok) { var e = await res.json(); throw new Error(e.error?.message || 'Erreur API ' + res.status); }
-  var data = await res.json();
-  return data.choices[0].message.content;
+  var _ctrl = new AbortController();
+  var _timeout = setTimeout(function() { _ctrl.abort(); }, 30000);
+  try {
+    var res = await fetch(endpoint, {
+      method: 'POST',
+      headers: headers,
+      signal: _ctrl.signal,
+      body: JSON.stringify({ model, temperature: 0.4, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
+    });
+    clearTimeout(_timeout);
+    if (!res.ok) { var e = await res.json(); throw new Error(friendlyApiError(e.error, res.status)); }
+    var data = await res.json();
+    return data.choices[0].message.content;
+  } catch(e) {
+    clearTimeout(_timeout);
+    throw e;
+  }
 }
 
 // ---- RENDER ----
@@ -617,8 +578,48 @@ function renderResults(d, context) {
   }).join('');
   document.getElementById('oppsContainer').innerHTML = oppsHtml;
 
+  window._interviewData = d;
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function rerun() { launch(); }
+
+function copyResults() {
+  var d = window._interviewData || {};
+  var lines = ['# Analyse des entretiens\n'];
+  var p = d.persona || {};
+  if (p.name) {
+    lines.push('## Persona : ' + p.name + '\n');
+    if (p.description) lines.push(p.description);
+    if (p.tags && p.tags.length) lines.push('Tags : ' + p.tags.join(', '));
+    lines.push('');
+  }
+  if (d.pain_groups && d.pain_groups.length) {
+    lines.push('## Pain points\n');
+    d.pain_groups.forEach(function(g) {
+      lines.push('### ' + (g.group||'') + '\n');
+      (g.items||[]).forEach(function(it) { lines.push('- ' + it); });
+      lines.push('');
+    });
+  }
+  if (d.quotes && d.quotes.length) {
+    lines.push('## Citations\n');
+    d.quotes.forEach(function(q) {
+      lines.push('« ' + (q.text||'') + ' »' + (q.profile ? ' — ' + q.profile : ''));
+    });
+    lines.push('');
+  }
+  if (d.opportunities && d.opportunities.length) {
+    lines.push('## Opportunités\n');
+    d.opportunities.forEach(function(o, i) {
+      lines.push((i+1) + '. ' + (o.title||'') + ' [' + (o.impact||'') + '] — ' + (o.description||''));
+    });
+  }
+  var _text = lines.join('\n');
+  var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
+  var _fb = function() { var ta = document.createElement('textarea'); ta.value = _text; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); _onCopied(); } catch(e) {} document.body.removeChild(ta); };
+  if (navigator.clipboard) navigator.clipboard.writeText(_text).then(_onCopied).catch(_fb); else _fb();
 }
 
 function reset() {
@@ -645,10 +646,6 @@ var LANG = {
     'btn.launch': '&#9654; Analyser les entretiens',
     'loading.text': 'Analyse en cours...',
     'btn.reset': '&#8635; Recommencer',
-    'btn.save': 'Enregistrer',
-    'saved': '&#10003; Clé enregistrée.',
-    'note.groq': 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La clé reste dans ton navigateur.',
-    'note.openai': 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.'
   },
   en: {
     'title': 'User Interview <span class="grad">Analyzer</span>',
@@ -656,10 +653,6 @@ var LANG = {
     'btn.launch': '&#9654; Analyse interviews',
     'loading.text': 'Analysing...',
     'btn.reset': '&#8635; Start over',
-    'btn.save': 'Save',
-    'saved': '&#10003; Key saved.',
-    'note.groq': 'Free at <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. Key stays in your browser.',
-    'note.openai': 'Account at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.',
     'ph.contextInput': 'Optional product context...'
   }
 };
@@ -675,12 +668,8 @@ function setLang(lang) {
   if(launchBtn && T['btn.launch']) launchBtn.innerHTML = T['btn.launch'];
   var loadingTxt = document.querySelector('.loading-text');
   if(loadingTxt && T['loading.text']) loadingTxt.innerHTML = T['loading.text'];
-  var saveBtns = document.querySelectorAll('.btn-save');
-  saveBtns.forEach(function(b) { if(T['btn.save']) b.textContent = T['btn.save']; });
   var resetBtn = document.querySelector('.btn-reset');
   if(resetBtn && T['btn.reset']) resetBtn.innerHTML = T['btn.reset'];
-  var savedMsg = document.getElementById('savedMsg');
-  if(savedMsg && T['saved']) savedMsg.innerHTML = T['saved'];
   // Placeholders
   Object.keys(T).forEach(function(k) {
     if(k.startsWith('ph.')) {
@@ -688,11 +677,6 @@ function setLang(lang) {
       if(el) el.placeholder = T[k];
     }
   });
-  // Provider note
-  if(typeof provider !== 'undefined') {
-    if(provider === 'groq' && T['note.groq']) document.getElementById('providerNote').innerHTML = T['note.groq'];
-    else if(provider === 'openai' && T['note.openai']) document.getElementById('providerNote').innerHTML = T['note.openai'];
-  }
   if(typeof applyLangExtras === 'function') applyLangExtras(lang, T);
 }
 (function() {
@@ -709,10 +693,6 @@ var LANG = {
     'btn.launch': '&#9654; Analyser les entretiens',
     'loading.text': 'Analyse en cours...',
     'btn.reset': '&#8635; Recommencer',
-    'btn.save': 'Enregistrer',
-    'saved': '&#10003; Clé enregistrée.',
-    'note.groq': 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La clé reste dans ton navigateur.',
-    'note.openai': 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.'
   },
   en: {
     'title': 'User Interview <span class="grad">Analyzer</span>',
@@ -720,10 +700,6 @@ var LANG = {
     'btn.launch': '&#9654; Analyse interviews',
     'loading.text': 'Analysing...',
     'btn.reset': '&#8635; Start over',
-    'btn.save': 'Save',
-    'saved': '&#10003; Key saved.',
-    'note.groq': 'Free at <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. Key stays in your browser.',
-    'note.openai': 'Account at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.',
     'ph.contextInput': 'Optional product context...'
   }
 };
@@ -742,48 +718,32 @@ function setLang(lang) {
   document.querySelectorAll('.btn-save').forEach(function(b) { if(T['btn.save']) b.textContent = T['btn.save']; });
   var resetBtn = document.querySelector('.btn-reset');
   if(resetBtn && T['btn.reset']) resetBtn.innerHTML = T['btn.reset'];
-  var savedMsg = document.getElementById('savedMsg');
-  if(savedMsg && T['saved']) savedMsg.innerHTML = T['saved'];
-  if(typeof provider !== 'undefined') {
-    if(provider === 'groq' && T['note.groq']) document.getElementById('providerNote').innerHTML = T['note.groq'];
-    else if(provider === 'openai' && T['note.openai']) document.getElementById('providerNote').innerHTML = T['note.openai'];
-  }
+  localStorage.setItem('lang', lang);
   applyLangExtras(lang);
 }
 (function() {
   var params = new URLSearchParams(window.location.search);
-  if (params.get('lang') === 'en') setLang('en');
+  var lang = params.get('lang') || localStorage.getItem('lang') || 'fr';
+  if (lang === 'en') setLang('en');
 })();
 
-// ---- DEMO MODE ----
-var MOCK_UIA = {
-  persona: {name:"Sophie, Responsable Formation",emoji:"👩‍💻",description:"Sophie pilote la formation de 200 collaborateurs dans une ETI industrielle. Elle jongle entre LMS, tableurs et emails. Elle manque de temps et cherche des outils simples.",tags:["Non-technicienne","Time-poor","Power user Excel","Décideur budget"]},
-  pain_points: [
-    {group:"Suivi & reporting",count:4,items:["Impossible de voir en temps réel qui a suivi quoi","Les rapports sont manuels et prennent 2h par semaine","Les managers demandent des stats que le LMS ne fournit pas"]},
-    {group:"Complexité d'usage",count:3,items:["L'interface est pensée pour des admins IT","Trop de clics pour assigner un parcours","La recherche ne fonctionne pas intuitivement"]},
-    {group:"Adoption collaborateurs",count:3,items:["Les employés oublient de se connecter sans relance manuelle","Les notifications sont trop génériques","Mobile non optimisé alors que 60% accèdent depuis le téléphone"]}
-  ],
-  quotes: ["Je passe plus de temps à gérer l'outil qu'à former les gens.","Mon manager me demande un reporting chaque lundi et je dois tout faire à la main dans Excel.","Si les employés pouvaient se connecter depuis leur téléphone sans galère, on doublerait les taux de completion."],
-  opportunities: [
-    {title:"Dashboard manager en self-service",impact:"high",description:"Un reporting automatique hebdomadaire réduirait 2h de travail manuel par semaine."},
-    {title:"Relances automatisées et personnalisées",impact:"high",description:"Des notifications contextuelles augmenteraient le taux de completion sans effort RH."},
-    {title:"Refonte de la navigation admin",impact:"medium",description:"Réduire le nombre de clics pour les 5 actions les plus fréquentes diminuerait la frustration."},
-    {title:"App mobile optimisée",impact:"medium",description:"60% des accès sont mobiles. Une expérience native multiplierait l'engagement."}
-  ]
-};
-function launchDemo() {
-  hideError();
-  var notesEl = document.querySelector('textarea');
-  if(notesEl) notesEl.value = "Sophie, Responsable Formation, ETI 200 personnes.\n\nElle utilise le LMS depuis 2 ans. Problème principal : le suivi. Elle passe 2h/semaine à faire des rapports manuels. Les managers veulent des stats en temps réel. L'interface est trop complexe. 'Je passe plus de temps à gérer l'outil qu'à former les gens.' Les employés oublient de se connecter. 60% accèdent depuis mobile mais l'expérience est mauvaise.";
-  document.getElementById('launchBtn').disabled = true;
-  document.getElementById('results') && document.getElementById('results').classList.remove('show');
-  document.getElementById('loading').classList.add('show');
-  setTimeout(function() {
-    document.getElementById('loading').classList.remove('show');
-    document.getElementById('launchBtn').disabled = false;
-    if(typeof renderResults === 'function') renderResults(MOCK_UIA);
-  }, 2000);
-}
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    var btn = document.getElementById('launchBtn');
+    if (btn && !btn.disabled) btn.click();
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var ta = document.getElementById('singleText');
+  var hint = document.getElementById('singleTextHint');
+  if (ta && hint) {
+    ta.addEventListener('input', function() {
+      var n = this.value.trim().split(/\s+/).filter(Boolean).length;
+      hint.textContent = n + ' mot' + (n > 1 ? 's' : '');
+    });
+  }
+});
 
 function toggleHowto(btn) {
   btn.classList.toggle('open');
@@ -791,8 +751,6 @@ function toggleHowto(btn) {
 }
 function applyLangExtras(lang) {
   var _extrauiaX = {
-    'badge_demo': ['Démo', 'Demo'],
-    'btn_demo_txt': ['&#9654; Essayer sans clé API ', '&#9654; Try without API key '],
     'footer_by': ['Construit par', 'Built by'],
     'footer_role': ['AI Product Manager', 'AI Product Manager'],
     'hint_no_format': ['Pas besoin de format particulier : des notes brutes suffisent.', 'No special format needed: rough notes are fine.'],
@@ -815,11 +773,7 @@ function applyLangExtras(lang) {
   });
 
   var _finuia = lang === 'en' ? {
-    'btn_save': 'Save',
-    'lbl_groq_free': 'Free',
   } : {
-    'btn_save': 'Enregistrer',
-    'lbl_groq_free': 'Gratuit',
   };
   Object.keys(_finuia).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finuia[id];});
 
@@ -882,7 +836,11 @@ function applyLangExtras(lang) {
   if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';
   if(en) en.style.display = lang === 'en' ? 'flex' : 'none';
   var lbl = document.getElementById('howtoLabel');
-  if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; Comment ça marche ?' : '&#9432; How does it work?';
+  if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; En savoir plus' : '&#9432; Learn more';
+  var cpBtn = document.getElementById('copyAllBtn');
+  if (cpBtn && !cpBtn.classList.contains('copied')) cpBtn.innerHTML = lang === 'en' ? '&#128203; Copy all' : '&#128203; Copier tout';
+  var rrBtn = document.getElementById('rerunBtn');
+  if (rrBtn) rrBtn.innerHTML = lang === 'en' ? '&#8634; Re-generate' : '&#8634; R&eacute;-g&eacute;n&eacute;rer';
 }
 
 </script>

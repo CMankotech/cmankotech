@@ -48,11 +48,11 @@ h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-0.03em;line-he
 .setup-note a:hover{text-decoration:underline}
 .key-saved{display:none;font-size:0.7rem;color:#4ade80;align-items:center;gap:0.4rem;margin-top:0.5rem}
 .key-saved.show{display:flex}
-.provider-toggle{display:flex;gap:0.4rem;margin-bottom:0.9rem}
-.provider-btn{flex:1;padding:0.55rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:"DM Sans",sans-serif;font-size:0.72rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.4rem}
-.provider-btn.active{background:rgba(96,165,250,0.12);border-color:rgba(96,165,250,0.35);color:#93c5fd}
-.provider-btn:hover:not(.active){border-color:rgba(255,255,255,0.15);color:var(--dim)}
-.provider-tag{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.1rem 0.4rem;background:rgba(255,255,255,0.07);border-radius:3px}
+
+
+
+
+
 
 /* FORM */
 .form-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;margin-bottom:1.5rem}
@@ -97,6 +97,12 @@ textarea{min-height:100px;line-height:1.6}
 .results-title{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted)}
 .btn-reset{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.9rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
 .btn-reset:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+.input-hint{font-size:0.68rem;color:var(--muted);margin-top:0.3rem;text-align:right}
+.btn-copy-all{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.4rem 0.9rem;border-radius:6px;border:1px solid rgba(34,211,238,0.25);background:rgba(34,211,238,0.06);color:var(--cyan);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-copy-all:hover{background:rgba(34,211,238,0.14)}
+.btn-copy-all.copied{color:var(--green);border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.06)}
+.btn-rerun{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.4rem 0.9rem;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--dim);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-rerun:hover{border-color:rgba(96,165,250,0.5);color:var(--blue)}
 
 .result-block{margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
 .result-block-header{display:flex;align-items:center;gap:0.75rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border)}
@@ -143,10 +149,6 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(34,211,238,0.15);color:var(--cyan)}
 
-.btn-demo{width:100%;padding:0.85rem;background:transparent;border:1px dashed rgba(34,211,238,0.3);border-radius:10px;color:var(--dim);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:all 0.25s;margin-top:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
-.btn-demo:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(34,211,238,0.04)}
-.demo-badge{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.2);border-radius:4px;color:var(--cyan)}
-
 .howto{border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;overflow:hidden}
 .howto-trigger{width:100%;background:rgba(255,255,255,0.02);border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.2s}
 .howto-trigger:hover{background:rgba(255,255,255,0.04)}
@@ -186,42 +188,22 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
 
 
 <style>
-.about-section{margin-bottom:1.25rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden}
-.about-toggle{width:100%;background:none;border:none;cursor:pointer;padding:0.85rem 1.2rem;display:flex;align-items:center;justify-content:space-between;color:#fff;font-family:'DM Sans',sans-serif}
-.about-toggle-label{font-size:0.78rem;font-weight:600;letter-spacing:0.03em;color:rgba(255,255,255,0.65)}
-.about-arrow{font-size:0.65rem;color:rgba(255,255,255,0.25);transition:transform 0.2s}
-.about-toggle.open .about-arrow{transform:rotate(180deg)}
-.about-body{display:none;padding:0 1rem 1rem}
-.about-body.open{display:block}
+.about-divider{height:1px;background:var(--border);margin:0.9rem 0}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem}
 @media(max-width:600px){.about-grid{grid-template-columns:1fr}}
 .about-block{padding:0.85rem 1rem;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06)}
 .about-lbl{display:inline-block;font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.13em;padding:0.18rem 0.55rem;border-radius:99px;margin-bottom:0.5rem;background:rgba(255,255,255,0.07);color:var(--about-color,#22d3ee)}
 .about-text{font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.65;margin:0}
 </style>
-<div class="about-section" style="--about-color:#22d3ee">
-  <button class="about-toggle" onclick="this.classList.toggle('open');document.getElementById('aboutBody').classList.toggle('open')" id="aboutToggle">
-    <span class="about-toggle-label" id="aboutTitle">À propos de cet outil</span>
-    <span class="about-arrow">&#9660;</span>
-  </button>
-  <div class="about-body" id="aboutBody">
-    <div class="about-grid">
-      <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la phase de discovery produit, développé en vibe coding.</p></div>
-      <div class="about-block"><div class="about-lbl" id="aLblPb">Probl&egrave;me</div><p class="about-text" id="aPb">Un PM en début de discovery part souvent sans structure : hypothèses floues, questions d'interview non préparées, pas de plan de test clair.</p></div>
-      <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur décrit son problème, l'outil génère 3 hypothèses, 5 questions d'interview et un plan de test structuré. Stack : HTML/JS + Groq/OpenAI.</p></div>
-      <div class="about-block"><div class="about-lbl" id="aLblRes">R&eacute;sultat</div><p class="about-text" id="aRes">Conçu de zéro en moins d'une journée. Outil live illustrant la capacité à shipper rapidement des outils IA utiles.</p></div>
-    </div>
-  </div>
-</div>
 <script>
 (function(){
   var _d = {
-    fr:{title:"À propos de cet outil",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour accélérer la phase de discovery produit, développé en vibe coding.",pb:"Un PM en début de discovery part souvent sans structure : hypothèses floues, questions d\'interview non préparées, pas de plan de test clair.",ap:"L\'utilisateur décrit son problème, l\'outil génère 3 hypothèses, 5 questions d\'interview et un plan de test structuré. Stack : HTML/JS + Groq/OpenAI.",res:"Conçu de zéro en moins d\'une journée. Outil live illustrant la capacité à shipper rapidement des outils IA utiles."},
-    en:{title:"About this tool",lbl:["Context","Problem","Approach","Result"],ctx:"Built to accelerate the product discovery phase, developed via vibe coding.",pb:"A PM starting discovery often lacks structure: vague hypotheses, unprepared interview questions, no clear test plan.",ap:"The user describes their problem, the tool generates 3 hypotheses, 5 interview questions and a structured test plan. Stack: HTML/JS + Groq/OpenAI.",res:"Built from scratch in under a day. Live tool demonstrating the ability to ship useful AI tools quickly."}
+    fr:{title:"En savoir plus",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour accélérer la phase de discovery produit, développé en vibe coding.",pb:"Un PM en début de discovery part souvent sans structure : hypothèses floues, questions d\'interview non préparées, pas de plan de test clair.",ap:"L\'utilisateur décrit son problème, l\'outil génère 3 hypothèses, 5 questions d\'interview et un plan de test structuré. Stack : HTML/JS + Groq.",res:"Conçu de zéro en moins d\'une journée. Outil live illustrant la capacité à shipper rapidement des outils IA utiles."},
+    en:{title:"Learn more",lbl:["Context","Problem","Approach","Result"],ctx:"Built to accelerate the product discovery phase, developed via vibe coding.",pb:"A PM starting discovery often lacks structure: vague hypotheses, unprepared interview questions, no clear test plan.",ap:"The user describes their problem, the tool generates 3 hypotheses, 5 interview questions and a structured test plan. Stack: HTML/JS + Groq.",res:"Built from scratch in under a day. Live tool demonstrating the ability to ship useful AI tools quickly."}
   };
   function _upAbout(lang){
     var d=_d[lang]||_d.fr,g=document.getElementById.bind(document);
-    if(g('aboutTitle'))g('aboutTitle').textContent=d.title;
+    if(g('howtoLabel'))g('howtoLabel').innerHTML='&#9432; '+d.title;
     if(g('aLblCtx'))g('aLblCtx').textContent=d.lbl[0];
     if(g('aLblPb'))g('aLblPb').textContent=d.lbl[1];
     if(g('aLblAp'))g('aLblAp').textContent=d.lbl[2];
@@ -241,31 +223,24 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
   });
 })();
 </script>
-<div class="howto">
+<div class="howto" style="--about-color:#22d3ee">
     <button class="howto-trigger" onclick="toggleHowto(this)" id="howtoTrigger">
-      <span id="howtoLabel">&#9432; Comment ça marche ?</span>
+      <span id="howtoLabel">&#9432; En savoir plus</span>
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Clique sur <strong>Essayer sans clé API</strong> pour voir un exemple de résultat instantanément.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Pour analyser ton propre problème, crée un compte gratuit sur <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) ou <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Colle ta clé dans le champ en haut et clique <strong>Enregistrer</strong>. Elle reste dans ton navigateur uniquement.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Décris ton problème produit et lance l'analyse.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Click <strong>Try without API key</strong> to instantly see a sample result.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">To analyse your own problem, create a free account at <a href='https://console.groq.com/keys' target='_blank'>console.groq.com</a> (Groq) or <a href='https://platform.openai.com/api-keys' target='_blank'>platform.openai.com</a> (OpenAI).</div></div><div class="howto-step"><div class="howto-step-num">3</div><div class="howto-step-text">Paste your key in the field above and click <strong>Save</strong>. It stays in your browser only.</div></div><div class="howto-step"><div class="howto-step-num">4</div><div class="howto-step-text">Describe your product problem and run the analysis.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Décris le problème produit à explorer dans le champ dédié.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance l'analyse — l'IA génère des hypothèses, questions d'interview et un plan de test.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Describe the product problem to explore in the field.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run the analysis — the AI generates hypotheses, interview questions and a test plan.</div></div></div>
+      <div class="about-divider"></div>
+      <div class="about-grid">
+        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la phase de discovery produit, développé en vibe coding.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblPb">Problème</div><p class="about-text" id="aPb">Un PM en début de discovery part souvent sans structure : hypothèses floues, questions d'interview non préparées, pas de plan de test clair.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur décrit son problème, l'outil génère 3 hypothèses, 5 questions d'interview et un plan de test structuré. Stack : HTML/JS + Groq.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblRes">Résultat</div><p class="about-text" id="aRes">Conçu de zéro en moins d'une journée. Outil live illustrant la capacité à shipper rapidement des outils IA utiles.</p></div>
+      </div>
     </div>
   </div>
 
-
-  <div class="setup-card" id="setupCard">
-    <span class="setup-label">&#128273; Configuration</span>
-    <div class="provider-toggle">
-      <button class="provider-btn active" id="pbGroq" onclick="setProvider('groq')">Groq <span class="provider-tag" id="lbl_groq_free">Gratuit</span></button>
-      <button class="provider-btn" id="pbOpenai" onclick="setProvider('openai')">OpenAI <span class="provider-tag">GPT-4o mini</span></button>
-    </div>
-    <div class="setup-row" id="keyRow" style="display:none">
-      <input type="password" id="apiKeyInput" placeholder="gsk_..." autocomplete="off">
-      <button class="btn-save" id="btn_save" onclick="saveKey()">Enregistrer</button>
-    </div>
-    <p class="setup-note" id="providerNote">Cl&eacute; API int&eacute;gr&eacute;e &mdash; aucune configuration requise.</p>
-    <div class="key-saved" id="keySaved">&#10003; Cl&eacute; enregistr&eacute;e, tu peux lancer ta discovery.</div>
-  </div>
 
   <!-- FORM -->
   <div class="form-card" id="formCard">
@@ -275,6 +250,7 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
         <button class="btn-random" onclick="randomProblem()" type="button">&#127922; Exemple al&eacute;atoire</button>
       </label>
       <textarea id="problem" placeholder="Ex : Les managers de mon app RH ne savent pas quels collaborateurs sont en risque de d&eacute;sengagement avant que ce soit trop tard." rows="4"></textarea>
+      <div class="input-hint" id="problemHint"></div>
     </div>
     <div class="options-row">
       <div class="field">
@@ -294,8 +270,6 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
     <span class="btn-inner">&#9654; Lancer la discovery</span>
   </button>
 
-  <button class="btn-demo" onclick="launchDemo()"><span id="btn_demo_txt">&#9654; Essayer sans clé API </span><span class="demo-badge" id="badge_demo">Démo</span></button>
-
   <!-- LOADING -->
   <div class="loading" id="loading">
     <div class="spinner"></div>
@@ -311,7 +285,11 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
   <div class="results" id="results">
     <div class="results-header">
       <span class="results-title"><span id="lbl_results_title">R&eacute;sultats de ta discovery</span></span>
-      <button class="btn-reset" onclick="reset()">&#8635; Nouvelle discovery</button>
+      <div style="display:flex;gap:0.5rem;align-items:center">
+        <button class="btn-copy-all" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
+        <button class="btn-rerun" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
+        <button class="btn-reset" onclick="reset()">&#8635; Nouvelle discovery</button>
+      </div>
     </div>
 
     <div class="result-block" id="blockHyp">
@@ -367,43 +345,6 @@ function randomProblem() {
   ta.style.borderColor = 'rgba(167,139,250,0.5)';
   setTimeout(function(){ ta.style.borderColor = ''; }, 800);
 }
-
-var apiKey = '';
-var provider = 'groq';
-
-function setProvider(p) {
-  provider = p;
-  document.getElementById('pbGroq').classList.toggle('active', p === 'groq');
-  document.getElementById('pbOpenai').classList.toggle('active', p === 'openai');
-  var input = document.getElementById('apiKeyInput');
-  var note = document.getElementById('providerNote');
-  if (p === 'groq') {
-    document.getElementById('keyRow').style.display = 'none';
-    note.innerHTML = 'Cl\u00e9 API int\u00e9gr\u00e9e \u2014 aucune configuration requise.';
-  } else {
-    document.getElementById('keyRow').style.display = '';
-    input.placeholder = 'sk-...';
-    note.innerHTML = 'Cr\u00e9e un compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a> \u2192 API Keys. GPT-4o mini est tr\u00e8s peu co\u00fbteux.';
-  }
-  apiKey = '';
-  document.getElementById('keySaved').classList.remove('show');
-}
-
-function saveKey() {
-  var v = document.getElementById('apiKeyInput').value.trim();
-  if (provider === 'groq' && (!v.startsWith('gsk_') || v.length < 20)) {
-    showError('Cl\u00e9 Groq invalide. Elle doit commencer par "gsk_".');
-    return;
-  }
-  if (provider === 'openai' && (!v.startsWith('sk-') || v.length < 20)) {
-    showError('Cl\u00e9 OpenAI invalide. Elle doit commencer par "sk-".');
-    return;
-  }
-  apiKey = v;
-  document.getElementById('keySaved').classList.add('show');
-  hideError();
-}
-
 function showError(msg) {
   var el = document.getElementById('errorBox');
   el.textContent = msg;
@@ -413,17 +354,23 @@ function hideError() {
   document.getElementById('errorBox').classList.remove('show');
 }
 
+function friendlyApiError(err, status) {
+  if (status === 429) return 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return 'Service temporairement indisponible — réessaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
+  if (err && err.message) return err.message;
+  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
+}
 async function launch() {
   hideError();
   var problem = document.getElementById('problem').value.trim();
   var target = document.getElementById('target').value.trim();
   var context = document.getElementById('context').value.trim();
-
-  if (provider !== 'groq' && !apiKey) { showError('Entre et enregistre ta cl\u00e9 API avant de lancer.'); return; }
   if (!problem) { showError('D\u00e9cris le probl\u00e8me utilisateur avant de continuer.'); return; }
 
   // Show loading
   document.getElementById('launchBtn').disabled = true;
+  var _rr = document.getElementById('rerunBtn'); if(_rr) _rr.disabled = true;
   document.getElementById('formCard').style.opacity = '0.4';
   document.getElementById('loading').classList.add('show');
   document.getElementById('results').classList.remove('show');
@@ -438,17 +385,17 @@ async function launch() {
 
   var prompt = buildPrompt(problem, target, context);
 
+  var _ctrl = new AbortController();
+  var _timeout = setTimeout(function() { _ctrl.abort(); }, 30000);
   try {
-    var endpoint = provider === 'groq'
-      ? 'https://groq-proxy.cmankotech.workers.dev'
-      : 'https://api.openai.com/v1/chat/completions';
-    var model = provider === 'groq' ? 'llama-3.3-70b-versatile' : 'gpt-4o-mini';
+    var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
+    var model = 'llama-3.3-70b-versatile';
     var reqHeaders = { 'Content-Type': 'application/json' };
-    if (provider !== 'groq') reqHeaders['Authorization'] = 'Bearer ' + apiKey;
 
     var res = await fetch(endpoint, {
       method: 'POST',
       headers: reqHeaders,
+      signal: _ctrl.signal,
       body: JSON.stringify({
         model: model,
         temperature: 0.7,
@@ -456,10 +403,11 @@ async function launch() {
         messages: [{ role: 'user', content: prompt }]
       })
     });
+    clearTimeout(_timeout);
 
     if (!res.ok) {
       var err = await res.json();
-      throw new Error(err.error && err.error.message ? err.error.message : 'Erreur API Groq (' + res.status + ')');
+      throw new Error(friendlyApiError(err.error, res.status));
     }
 
     var data = await res.json();
@@ -468,8 +416,11 @@ async function launch() {
     renderResults(parsed);
 
   } catch(e) {
-    showError('Erreur : ' + e.message);
+    clearTimeout(_timeout);
+    if (e.name === 'AbortError') showError('Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    else showError('Erreur : ' + e.message);
     document.getElementById('launchBtn').disabled = false;
+    var _rr2 = document.getElementById('rerunBtn'); if(_rr2) _rr2.disabled = false;
     document.getElementById('formCard').style.opacity = '1';
   }
 
@@ -526,10 +477,42 @@ function renderResults(d) {
   });
   document.getElementById('planBody').innerHTML = planHtml || '<p style="color:var(--muted);font-size:0.8rem">Plan non disponible.</p>';
 
+  window._discoveryData = d;
   document.getElementById('results').classList.add('show');
   document.getElementById('launchBtn').disabled = false;
+  var _rr3 = document.getElementById('rerunBtn'); if(_rr3) _rr3.disabled = false;
   document.getElementById('formCard').style.opacity = '1';
   document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function rerun() { launch(); }
+
+function copyResults() {
+  var d = window._discoveryData || {};
+  var lines = ['# Discovery — Résultats\n'];
+  var hyps = d.hypotheses || [];
+  if (hyps.length) {
+    lines.push('## Hypothèses\n');
+    hyps.forEach(function(h) { lines.push('- ' + (h.belief||'') + ' → ' + (h.signal||'')); });
+    lines.push('');
+  }
+  var qs = d.questions || [];
+  if (qs.length) {
+    lines.push('## Questions d\'interview\n');
+    qs.forEach(function(q, i) { lines.push((i+1) + '. ' + q); });
+    lines.push('');
+  }
+  var p = d.plan || {};
+  lines.push('## Plan de test\n');
+  if (p.methode) lines.push('Méthode : ' + p.methode);
+  if (p.participants) lines.push('Participants : ' + p.participants);
+  if (p.duree) lines.push('Durée : ' + p.duree);
+  if (p.critere) lines.push('Critère de succès : ' + p.critere);
+  if (p.prochaine_etape) lines.push('Prochaine étape : ' + p.prochaine_etape);
+  var _text = lines.join('\n');
+  var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
+  var _fb = function() { var ta = document.createElement('textarea'); ta.value = _text; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); _onCopied(); } catch(e) {} document.body.removeChild(ta); };
+  if (navigator.clipboard) navigator.clipboard.writeText(_text).then(_onCopied).catch(_fb); else _fb();
 }
 
 function esc(s) {
@@ -553,10 +536,6 @@ var LANG = {
     'btn.launch': '&#9654; Lancer l’analyse',
     'loading.text': 'Analyse en cours...',
     'btn.reset': '&#8635; Recommencer',
-    'btn.save': 'Enregistrer',
-    'saved': '&#10003; Clé enregistrée.',
-    'note.groq': 'Gratuit sur <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. La clé reste dans ton navigateur.',
-    'note.openai': 'Compte sur <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.'
   },
   en: {
     'title': 'Discovery <span class="grad">Assistant</span>',
@@ -564,10 +543,6 @@ var LANG = {
     'btn.launch': '&#9654; Run analysis',
     'loading.text': 'Analysing...',
     'btn.reset': '&#8635; Start over',
-    'btn.save': 'Save',
-    'saved': '&#10003; Key saved.',
-    'note.groq': 'Free at <a href="https://console.groq.com/keys" target="_blank">console.groq.com</a>. Key stays in your browser.',
-    'note.openai': 'Account at <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a>.',
     'ph.problemInput': 'Describe the problem you want to explore...',
     'ph.targetUser': 'e.g. HR Manager, indie developer...',
     'ph.contextInput': 'Optional additional context...'
@@ -576,6 +551,7 @@ var LANG = {
 var currentLang = 'fr';
 function setLang(lang) {
   currentLang = lang;
+  localStorage.setItem('lang', lang);
   document.getElementById('lbFr').classList.toggle('active', lang === 'fr');
   document.getElementById('lbEn').classList.toggle('active', lang === 'en');
   var T = LANG[lang];
@@ -585,12 +561,8 @@ function setLang(lang) {
   if(launchBtn && T['btn.launch']) launchBtn.innerHTML = T['btn.launch'];
   var loadingTxt = document.querySelector('.loading-text');
   if(loadingTxt && T['loading.text']) loadingTxt.innerHTML = T['loading.text'];
-  var saveBtns = document.querySelectorAll('.btn-save');
-  saveBtns.forEach(function(b) { if(T['btn.save']) b.textContent = T['btn.save']; });
   var resetBtn = document.querySelector('.btn-reset');
   if(resetBtn && T['btn.reset']) resetBtn.innerHTML = T['btn.reset'];
-  var savedMsg = document.getElementById('savedMsg');
-  if(savedMsg && T['saved']) savedMsg.innerHTML = T['saved'];
   // Placeholders
   Object.keys(T).forEach(function(k) {
     if(k.startsWith('ph.')) {
@@ -598,60 +570,32 @@ function setLang(lang) {
       if(el) el.placeholder = T[k];
     }
   });
-  // Provider note
-  if(typeof provider !== 'undefined') {
-    var pNote = document.getElementById('providerNote');
-    if(pNote && provider === 'groq' && T['note.groq']) pNote.innerHTML = T['note.groq'];
-    else if(pNote && provider === 'openai' && T['note.openai']) pNote.innerHTML = T['note.openai'];
-  }
   if(typeof applyLangExtras === 'function') applyLangExtras(lang, T);
 }
 (function() {
   var params = new URLSearchParams(window.location.search);
-  if (params.get('lang') === 'en') setLang('en');
+  var lang = params.get('lang') || localStorage.getItem('lang') || 'fr';
+  if (lang === 'en') setLang('en');
 })();
 
 
-var MOCK_DA = {
-  hypotheses: [
-    {title: "Les utilisateurs ne comprennent pas la valeur du produit au premier usage", description: "L’onboarding ne montre pas concrètement ce que l’outil change dans leur quotidien. Sans 'aha moment' rapide, ils partent.", test: "Tester un onboarding restructuré avec une démo interactive dès J1."},
-    {title: "La courbe d’apprentissage est trop abrupte pour les non-techniciens", description: "Le produit est conçu par des profils techniques qui sous-estiment la complexité perçue par des utilisateurs métier.", test: "Conduire 5 tests utilisateurs avec des profils non-tech et mesurer le time-to-first-value."},
-    {title: "L’absence de guidage contextuel crée de l’anxieté d’usage", description: "Les utilisateurs ne savent pas quelle action faire ensuite. L’interface manque de signaux de progression.", test: "Ajouter des tooltips contextuels et mesurer l’impact sur le taux de completion de l’onboarding."}
-  ],
-  interview_questions: [
-    "Pouvez-vous me raconter la première fois que vous avez utilisé le produit ? Qu’est-ce qui s’est passé ?",
-    "Qu’est-ce qui vous a donné envie d’explorer ou au contraire de décrocher ?",
-    "Quel moment vous a fait dire 'ah, je comprends maintenant à quoi ça sert' ?",
-    "Si vous deviez expliquer le produit à un collègue en 30 secondes, que diriez-vous ?",
-    "Qu’est-ce qui vous manquait pour être plus à l’aise dans les premières minutes ?"
-  ],
-  test_plan: {
-    objective: "Identifier les points de friction dans les 10 premières minutes d’usage",
-    method: "Tests utilisateurs modifiés (5 participants, profils métier non-techniciens)",
-    duration: "2 semaines",
-    success_metric: "Taux de completion de l’onboarding > 70% et identification de 3 pain points prioritaires",
-    steps: ["Recruter 5 utilisateurs cibles via le CRM", "Préparer un scénario de test standardisé", "Conduire les sessions et enregistrer les écrans", "Analyser avec l’User Interview Analyzer", "Prioriser les corrections dans le backlog"]
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    var btn = document.getElementById('launchBtn');
+    if (btn && !btn.disabled) btn.click();
   }
-};
+});
 
-function launchDemo() {
-  hideError();
-  var problemEl = document.getElementById('problemInput');
-  var userEl = document.getElementById('targetUser');
-  var ctxEl = document.getElementById('contextInput');
-  if(problemEl) problemEl.value = "Les utilisateurs abandonnent lors de l’onboarding : 60% ne complètent pas la configuration initiale et ne reviennent pas après J3.";
-  if(userEl) userEl.value = "Nouvel utilisateur non-technique (profil métier)";
-  if(ctxEl) ctxEl.value = "SaaS B2B, freemium, onboarding auto-guidé";
-  document.getElementById('launchBtn').disabled = true;
-  document.getElementById('results') && document.getElementById('results').classList.remove('show');
-  document.getElementById('loading').classList.add('show');
-  setTimeout(function() {
-    document.getElementById('loading').classList.remove('show');
-    document.getElementById('launchBtn').disabled = false;
-    if(typeof renderResults === 'function') renderResults(MOCK_DA);
-  }, 2000);
-}
-
+document.addEventListener('DOMContentLoaded', function() {
+  var ta = document.getElementById('problem');
+  var hint = document.getElementById('problemHint');
+  if (ta && hint) {
+    ta.addEventListener('input', function() {
+      var n = this.value.trim().split(/\s+/).filter(Boolean).length;
+      hint.textContent = n + ' mot' + (n > 1 ? 's' : '');
+    });
+  }
+});
 
 function toggleHowto(btn) {
   btn.classList.toggle('open');
@@ -659,8 +603,6 @@ function toggleHowto(btn) {
 }
 function applyLangExtras(lang) {
   var _extradaX = {
-    'badge_demo': ['Démo', 'Demo'],
-    'btn_demo_txt': ['&#9654; Essayer sans clé API ', '&#9654; Try without API key '],
     'footer_by': ['Construit par', 'Built by'],
     'footer_role': ['AI Product Manager', 'AI Product Manager'],
   };
@@ -682,11 +624,7 @@ function applyLangExtras(lang) {
   });
 
   var _finda = lang === 'en' ? {
-    'btn_save': 'Save',
-    'lbl_groq_free': 'Free',
   } : {
-    'btn_save': 'Enregistrer',
-    'lbl_groq_free': 'Gratuit',
   };
   Object.keys(_finda).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_finda[id];});
 
@@ -718,7 +656,11 @@ function applyLangExtras(lang) {
   if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';
   if(en) en.style.display = lang === 'en' ? 'flex' : 'none';
   var lbl = document.getElementById('howtoLabel');
-  if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; Comment ça marche ?' : '&#9432; How does it work?';
+  if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; En savoir plus' : '&#9432; Learn more';
+  var cpBtn = document.getElementById('copyAllBtn');
+  if (cpBtn && !cpBtn.classList.contains('copied')) cpBtn.innerHTML = lang === 'en' ? '&#128203; Copy all' : '&#128203; Copier tout';
+  var rrBtn = document.getElementById('rerunBtn');
+  if (rrBtn) rrBtn.innerHTML = lang === 'en' ? '&#8634; Re-generate' : '&#8634; R&eacute;-g&eacute;n&eacute;rer';
 }
 // Sync on load (IIFE may have fired before this function was defined)
 (function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
