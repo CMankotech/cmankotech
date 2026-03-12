@@ -613,6 +613,9 @@ function setLang(lang) {
       if(el) el.placeholder = T[k];
     }
   });
+  var _hF=document.getElementById('howtoStepsFr'),_hE=document.getElementById('howtoStepsEn'),_hL=document.getElementById('howtoLabel');
+  if(_hF)_hF.style.display=lang==='fr'?'flex':'none';if(_hE)_hE.style.display=lang==='en'?'flex':'none';
+  if(_hL)_hL.innerHTML=lang==='fr'?'&#9432; En savoir plus':'&#9432; Learn more';
   if(typeof applyLangExtras === 'function') applyLangExtras(lang, T);
 }
 (function() {
