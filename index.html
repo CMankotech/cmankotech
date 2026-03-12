@@ -409,6 +409,7 @@ var T={fr:{'nav.exp':'Parcours','nav.skills':'Comp\u00e9tences','nav.certs':'Cer
 'proj.eus.ctx':"Tool designed to speed up the decomposition of an epic into user stories ready to refine in sprint planning.",'proj.eus.pb':"Writing independent, well-formulated user stories with verifiable acceptance criteria takes time and requires rigor.",'proj.eus.ap':"Web app (HTML/JS + Groq). The user describes their epic, picks the format (standard or Job Story) and number of stories. The AI generates each story with priority, effort and acceptance criteria.",'proj.eus.res':"Ready backlog in seconds, exportable to Markdown for Jira or Confluence. Follows the INVEST principle for each story.",'footer.hl':'Let\'s build<br>','footer.hl2':'something together?','skills.product':'Product','skills.ai':'AI & Tech','skills.agile':'Agility & Tools','certs.agile':'Agility','certs.product':'Product Management','certs.ai':'AI & Other','certs.credly':'See all my badges on Credly \u2192','cert.oriions':'Innovative Agile Project Management (Crossthink/ORIIONS)','proj.rs.ctx':"Tool designed to transform a raw feature list into a narrative roadmap adapted to each audience.",'proj.rs.pb':"Presenting a roadmap to executives or clients requires a value-oriented pitch, not a JIRA ticket list.",'proj.rs.ap':"Web app (HTML/JS + Groq). The user enters features by period (Now/Next/Later), picks their audience and gets a narrative pitch + valued timeline + key messages.",'proj.rs.res':"Presentation-ready roadmap in seconds, with a copyable pitch and audience-tailored key messages." }};
 
 window.setLang=function(lang){
+  localStorage.setItem('lang',lang);
   document.getElementById('btn-fr').classList.toggle('active',lang==='fr');
   document.getElementById('btn-en').classList.toggle('active',lang==='en');
   document.querySelectorAll('[data-i18n]').forEach(function(el){
@@ -436,6 +437,9 @@ window.setLang=function(lang){
     }
   });
 };
+
+// Init language from localStorage or URL param
+(function(){var p=new URLSearchParams(window.location.search).get('lang');var l=p||localStorage.getItem('lang')||'fr';if(l!=='fr')window.setLang(l);})();
 
 // Hamburger menu
 (function(){
