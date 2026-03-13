@@ -595,7 +595,10 @@ function setLang(lang) {
   // Cards titles
   var cardTitles = document.querySelectorAll('.card-title');
   if(cardTitles[0]) cardTitles[0].innerHTML = T['config.title'] + '<span style="flex:1;height:1px;background:var(--line);display:inline-block;margin-left:0.6rem"></span>';
-  if(cardTitles[1]) cardTitles[1].innerHTML = T['form.title'] + '<button class="btn-examples" onclick="loadExample()">&#127922; Exemple</button><span style="flex:1;height:1px;background:var(--line);display:inline-block;margin-left:0.6rem"></span>';
+  if(cardTitles[1]) {
+    var examplesLabel = lang === 'en' ? 'Example' : 'Exemple';
+    cardTitles[1].innerHTML = T['form.title'] + '<button class="btn-examples" onclick="loadExample()">&#127922; ' + examplesLabel + '</button><span style="flex:1;height:1px;background:var(--line);display:inline-block;margin-left:0.6rem"></span>';
+  }
   // Field labels
   var labels = document.querySelectorAll('.field label');
   var labelKeys = ['field.product','field.type','field.ambitions','field.period','field.nb','field.metrics'];
@@ -614,7 +617,8 @@ function setLang(lang) {
   // Loading
   document.querySelector('.loading-text').innerHTML = T['loading.text'];
   // Save btn
-  document.querySelector('.btn-save').textContent = T['save'];
+  var saveBtn = document.querySelector('.btn-save');
+  if (saveBtn) saveBtn.textContent = T['save'];
   // Footer
   var footer = document.querySelector('footer');
   if(footer) footer.innerHTML = T['footer.text'] + ' <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> &middot; AI Product Manager';
@@ -746,8 +750,10 @@ function applyLangExtras(lang) {
   if(lbl) lbl.innerHTML = lang === 'fr' ? '&#9432; En savoir plus' : '&#9432; Learn more';
   var cpBtn = document.getElementById('copyAllBtn');
   if (cpBtn && !cpBtn.classList.contains('copied')) cpBtn.innerHTML = lang === 'en' ? '&#128203; Copy all' : '&#128203; Copier tout';
-  var rrBtn = document.getElementById('rerunBtn');
+  var rrBtn = document.getElementById('rerunBtn') || document.querySelector('.btn-rerun');
   if (rrBtn) rrBtn.innerHTML = lang === 'en' ? '&#8634; Re-generate' : '&#8634; R&eacute;-g&eacute;n&eacute;rer';
+  var resetBtn = document.querySelector('.btn-reset');
+  if (resetBtn) resetBtn.innerHTML = lang === 'en' ? '&#8635; Start over' : '&#8635; Recommencer';
 }
 // Sync on load (IIFE may have fired before this function was defined)
 (function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
