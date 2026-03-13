@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Comment j'ai construit ce site | Carlin Mankoto</title>
+  <meta name="description" content="Architecture et choix techniques derrière les outils IA PM de Carlin Mankoto." />
+  <style>
+    :root { --bg:#07070f; --text:#f4f7ff; --muted:#9aa4b2; --line:rgba(255,255,255,.1); --cyan:#22d3ee; --violet:#a78bfa; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:var(--bg); color:var(--text); }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 2.25rem 1.25rem 4rem; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin:.5rem 0 1rem; }
+    h2 { margin: 2rem 0 .75rem; font-size: 1.25rem; }
+    p, li { color: var(--muted); line-height: 1.7; }
+    .badge { display:inline-block; padding:.35rem .7rem; border:1px solid var(--line); border-radius:999px; color:var(--cyan); font-size:.8rem; }
+    .card { border:1px solid var(--line); border-radius:16px; padding:1rem 1rem; margin:.75rem 0; background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); }
+    .grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); }
+    code { color: var(--text); background: rgba(255,255,255,.08); padding:.1rem .35rem; border-radius:6px; }
+    a { color: var(--cyan); text-underline-offset: 2px; }
+    .cta { margin-top:2.2rem; border-left:2px solid var(--violet); padding-left:1rem; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <span class="badge">How I built this</span>
+    <h1>Comment j’ai construit ce site et ses outils IA</h1>
+    <p>
+      J’ai construit ce portfolio et les outils PM avec une approche simple : des interfaces statiques rapides à charger,
+      une couche proxy sécurisée pour les appels IA, puis une orchestration plus intelligente pour guider les réponses.
+    </p>
+
+    <h2>Architecture globale</h2>
+    <div class="grid">
+      <section class="card">
+        <h3>1) Frontend statique</h3>
+        <p>Chaque outil est une page HTML/JS autonome, déployée sur GitHub Pages. Aucun secret n’est exposé dans le navigateur.</p>
+      </section>
+      <section class="card">
+        <h3>2) Proxy Cloudflare</h3>
+        <p>Les appels passent par un Worker (<code>/orchestrate</code>) qui centralise la sécurité, le routage et les fallbacks.</p>
+      </section>
+      <section class="card">
+        <h3>3) Orchestrateur LangGraph</h3>
+        <p>Un service FastAPI + LangGraph produit un plan structuré puis une réponse concise via un flux <strong>planner → synthesis</strong>.</p>
+      </section>
+    </div>
+
+    <h2>Ce qu’on a ajouté récemment (LangGraph)</h2>
+    <ul>
+      <li>Une route Worker <code>POST /orchestrate</code> qui tente d’abord l’orchestrateur externe quand il est disponible.</li>
+      <li>Un fallback natif vers Groq côté Worker si l’orchestrateur n’est pas joignable.</li>
+      <li>Un parsing plus robuste des sorties planner (y compris JSON entouré de blocs <code>```json</code>).</li>
+      <li>Des tests automatiques sur l’orchestrateur et le proxy pour sécuriser les cas de routing/fallback.</li>
+    </ul>
+
+    <h2>Pourquoi ce choix ?</h2>
+    <p>
+      L’objectif est d’avoir une expérience fiable et actionnable :
+      plan PM structuré + réponse claire, tout en gardant un site rapide, keyless côté utilisateur, et simple à maintenir.
+    </p>
+
+    <p class="cta">
+      Voir les outils :
+      <a href="https://cmankotech.github.io/cmankotech/">cmankotech.github.io/cmankotech</a>
+    </p>
+  </main>
+</body>
+</html>
