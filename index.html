@@ -930,11 +930,8 @@ function runBothTW(){
   if(_twEl && _twEl._twCancel) _twEl._twCancel();
   if(_stEl && _stEl._twCancel) _stEl._twCancel();
   if(_stEl) _stEl.innerHTML = '';
-  typewrite(_twEl, _twLang==='en' ? _tw_en : _tw_fr, 22, function(){
-    setTimeout(function(){
-      typewrite(_stEl, _twLang==='en' ? _st_en : _st_fr, 18);
-    }, 200);
-  });
+  typewrite(_twEl, _twLang==='en' ? _tw_en : _tw_fr, 22);
+  typewrite(_stEl, _twLang==='en' ? _st_en : _st_fr, 18);
 }
 
 window.addEventListener('DOMContentLoaded', function(){ setTimeout(runBothTW, 500); });
