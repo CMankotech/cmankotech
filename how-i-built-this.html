@@ -74,11 +74,10 @@ section{margin-bottom:4rem}
 /* TIMELINE */
 .timeline{display:flex;flex-direction:column;gap:0}
 .tl-item{display:grid;grid-template-columns:48px 1fr;gap:1.5rem;position:relative}
-.tl-item:not(:last-child) .tl-line::after{content:'';position:absolute;left:23px;top:48px;bottom:-1.5rem;width:1px;background:var(--line)}
 .tl-left{position:relative;display:flex;flex-direction:column;align-items:center;padding-top:0.25rem}
-.tl-num{width:36px;height:36px;border-radius:50%;background:var(--glass);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;color:var(--cyan);flex-shrink:0;transition:all 0.3s;z-index:1}
+.tl-item:not(:last-child) .tl-left::after{content:'';position:absolute;left:50%;transform:translateX(-50%);top:40px;bottom:0;width:1px;background:var(--line)}
+.tl-num{width:36px;height:36px;border-radius:50%;background:var(--glass);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;color:var(--cyan);flex-shrink:0;transition:all 0.3s;position:relative;z-index:1}
 .tl-item:hover .tl-num{border-color:rgba(34,211,238,0.4);background:rgba(34,211,238,0.08);box-shadow:0 0 16px rgba(34,211,238,0.2)}
-.tl-line{position:relative;flex:1}
 .tl-content{padding:0.5rem 0 2.5rem}
 .tl-step-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--muted);margin-bottom:0.4rem}
 .tl-step-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.5rem}
@@ -182,7 +181,7 @@ section{margin-bottom:4rem}
     <div class="timeline">
       <div class="tl-item">
         <div class="tl-left">
-          <div class="tl-num tl-line">1</div>
+          <div class="tl-num">1</div>
         </div>
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step1.label">Idée & cadrage</div>
@@ -192,7 +191,7 @@ section{margin-bottom:4rem}
       </div>
       <div class="tl-item">
         <div class="tl-left">
-          <div class="tl-num tl-line">2</div>
+          <div class="tl-num">2</div>
         </div>
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step2.label">Design</div>
@@ -202,7 +201,7 @@ section{margin-bottom:4rem}
       </div>
       <div class="tl-item">
         <div class="tl-left">
-          <div class="tl-num tl-line">3</div>
+          <div class="tl-num">3</div>
         </div>
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step3.label">Développement</div>
@@ -212,7 +211,7 @@ section{margin-bottom:4rem}
       </div>
       <div class="tl-item">
         <div class="tl-left">
-          <div class="tl-num tl-line">4</div>
+          <div class="tl-num">4</div>
         </div>
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step4.label">Intégration LLM</div>
@@ -222,7 +221,7 @@ section{margin-bottom:4rem}
       </div>
       <div class="tl-item">
         <div class="tl-left">
-          <div class="tl-num tl-line">5</div>
+          <div class="tl-num">5</div>
         </div>
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step5.label">Déploiement</div>
