@@ -35,6 +35,17 @@ export default {
 };
 
 async function handleOrchestrator(body, env) {
+  if (env.LANGGRAPH_ORCHESTRATOR_URL) {
+    try {
+      const langGraphRes = await forwardToLangGraph(body, env);
+      if (langGraphRes && langGraphRes.ok) {
+        return langGraphRes;
+      }
+    } catch {
+      // fallback to worker-native orchestration
+    }
+  }
+
   const lang = body.lang === 'en' ? 'en' : 'fr';
   const history = Array.isArray(body.history) ? body.history.slice(-8) : [];
   const userMessage = typeof body.message === 'string' ? body.message : '';
@@ -101,6 +112,26 @@ async function handleOrchestrator(body, env) {
 
   const reply = extractContent(synthesisRes.data);
   return jsonResponse({ reply, plan: safeJsonParse(planText) || null });
+}
+
+
+async function forwardToLangGraph(body, env) {
+  const endpoint = env.LANGGRAPH_ORCHESTRATOR_URL;
+  if (!endpoint) {
+    return null;
+  }
+
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+  const text = await res.text();
+  return new Response(text, {
+    status: res.status,
+    headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+  });
 }
 
 async function proxyGroq(body, env) {

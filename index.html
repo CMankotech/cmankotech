@@ -588,20 +588,9 @@ window.setLang=function(lang){
   async function fetchGroq(userMessage) {
     _history.push({role: 'user', content: userMessage});
     showTyping();
+
     try {
-      var res = await fetch('https://groq-proxy.cmankotech.workers.dev/orchestrate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          lang: _lang,
-          message: userMessage,
-          history: [{role: 'system', content: SYSTEM_PROMPT}].concat(_history)
-        })
-      });
-      var data = await res.json();
-      var reply = data.reply || (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || I18N[_lang].error;
+      var reply = await fetchOrchestratedReply(userMessage);
       _history.push({role: 'assistant', content: reply});
       hideTyping();
       addBotMsg(reply);
@@ -609,6 +598,48 @@ window.setLang=function(lang){
       hideTyping();
       addBotMsg(I18N[_lang].error);
     }
+  }
+
+  async function fetchOrchestratedReply(userMessage) {
+    var historyWithSystem = [{role: 'system', content: SYSTEM_PROMPT}].concat(_history);
+
+    try {
+      var orchestratorRes = await fetch('https://groq-proxy.cmankotech.workers.dev/orchestrate', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          lang: _lang,
+          message: userMessage,
+          history: historyWithSystem
+        })
+      });
+
+      if (orchestratorRes.ok) {
+        var orchestratorData = await orchestratorRes.json();
+        var orchestratorReply = orchestratorData.reply || (orchestratorData.choices && orchestratorData.choices[0] && orchestratorData.choices[0].message && orchestratorData.choices[0].message.content);
+        if (orchestratorReply) return orchestratorReply;
+      }
+    } catch (_) {
+      // fallback to legacy passthrough below
+    }
+
+    var legacyRes = await fetch('https://groq-proxy.cmankotech.workers.dev', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: historyWithSystem,
+        max_tokens: 350,
+        temperature: 0.65
+      })
+    });
+
+    if (!legacyRes.ok) {
+      throw new Error('Legacy fallback failed');
+    }
+
+    var legacyData = await legacyRes.json();
+    return (legacyData.choices && legacyData.choices[0] && legacyData.choices[0].message && legacyData.choices[0].message.content) || I18N[_lang].error;
   }
 
   var KB = {
