@@ -468,11 +468,11 @@ window.setLang=function(lang){
   var els=document.querySelectorAll('.rv');
   function showAll(){els.forEach(function(el){el.classList.add('on');});}
   // Show immediately anything in viewport
-  setTimeout(function(){
+  requestAnimationFrame(function(){
     els.forEach(function(el){
       if(el.getBoundingClientRect().top<window.innerHeight+200)el.classList.add('on');
     });
-  }, 100);
+  });
   window.addEventListener('scroll',showAll,{passive:true});
 }());
 </script>
@@ -937,7 +937,7 @@ function runBothTW(){
   });
 }
 
-window.addEventListener('DOMContentLoaded', function(){ setTimeout(runBothTW, 500); });
+window.addEventListener('DOMContentLoaded', function(){ requestAnimationFrame(runBothTW); });
 
 var _origTwSetLang = window.setLang;
 window.setLang = function(lang){
