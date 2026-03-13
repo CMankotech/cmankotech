@@ -74,3 +74,25 @@ def test_orchestrate_planner_invalid_json_fallback(monkeypatch):
     data = res.json()
     assert data["plan"]["intent"] == "unknown"
     assert "planner_json_parse_error" in data["plan"]["risks"]
+
+
+def test_orchestrate_planner_accepts_fenced_json(monkeypatch):
+    outputs = [
+        """```json
+{"intent":"priorisation","confidence":0.8,"user_goal":"Prioriser le backlog","steps":[],"risks":[],"quick_win":"Classer avec MoSCoW"}
+```""",
+        "Réponse de synthèse.",
+    ]
+
+    monkeypatch.setattr(orchestrator_app, "get_llm", lambda temperature=0.3: DummyLLM(outputs))
+
+    client = TestClient(orchestrator_app.app)
+    res = client.post(
+        "/orchestrate",
+        json={"lang": "fr", "message": "Prioriser backlog", "history": []},
+    )
+
+    assert res.status_code == 200
+    data = res.json()
+    assert data["plan"]["intent"] == "priorisation"
+    assert "planner_json_parse_error" not in data["plan"].get("risks", [])

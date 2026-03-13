@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from typing import Any, Dict, List, TypedDict
 
 from fastapi import FastAPI, HTTPException
@@ -71,8 +72,9 @@ def planner_node(state: GraphState) -> GraphState:
     ])
 
     raw = completion.content if isinstance(completion.content, str) else json.dumps(completion.content)
+    cleaned = strip_json_code_fences(raw)
     try:
-        plan = json.loads(raw)
+        plan = json.loads(cleaned)
     except json.JSONDecodeError:
         plan = {
             "intent": "unknown",
@@ -85,6 +87,12 @@ def planner_node(state: GraphState) -> GraphState:
         }
 
     return {"plan": plan}
+
+
+def strip_json_code_fences(value: str) -> str:
+    stripped = value.strip()
+    code_fence_match = re.match(r"^```(?:json)?\s*(.*?)\s*```$", stripped, flags=re.DOTALL | re.IGNORECASE)
+    return code_fence_match.group(1).strip() if code_fence_match else stripped
 
 
 def synthesis_node(state: GraphState) -> GraphState:
