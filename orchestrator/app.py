@@ -1,7 +1,6 @@
 import json
 import os
-import re
-from typing import Any, Dict, List, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 
 from fastapi import FastAPI, HTTPException
 from langchain_openai import ChatOpenAI
@@ -10,7 +9,6 @@ from pydantic import BaseModel, Field
 
 DEFAULT_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 GROQ_BASE_URL = os.getenv("GROQ_BASE_URL", "https://api.groq.com/openai/v1")
-ALLOWED_ROLES = {"user", "assistant", "system"}
 
 
 class OrchestrateRequest(BaseModel):
@@ -40,16 +38,6 @@ def get_llm(temperature: float = 0.3):
     )
 
 
-def normalize_history(raw_history: List[Dict[str, str]]) -> List[Dict[str, str]]:
-    normalized: List[Dict[str, str]] = []
-    for item in raw_history:
-        role = item.get("role") if isinstance(item, dict) else None
-        content = item.get("content") if isinstance(item, dict) else None
-        if role in ALLOWED_ROLES and isinstance(content, str) and content.strip():
-            normalized.append({"role": role, "content": content.strip()})
-    return normalized[-8:]
-
-
 def planner_node(state: GraphState) -> GraphState:
     lang = "en" if state.get("lang") == "en" else "fr"
     llm = get_llm(temperature=0.2)
@@ -62,7 +50,7 @@ def planner_node(state: GraphState) -> GraphState:
         "intent, confidence (0-1), user_goal, steps (tableau de {tool, objective, output}), risks (tableau), quick_win."
     )
 
-    history = normalize_history(state.get("history", []))
+    history = state.get("history", [])[-8:]
     user_message = state.get("message", "")
 
     completion = llm.invoke([
@@ -72,9 +60,8 @@ def planner_node(state: GraphState) -> GraphState:
     ])
 
     raw = completion.content if isinstance(completion.content, str) else json.dumps(completion.content)
-    cleaned = strip_json_code_fences(raw)
     try:
-        plan = json.loads(cleaned)
+        plan = json.loads(raw)
     except json.JSONDecodeError:
         plan = {
             "intent": "unknown",
@@ -87,12 +74,6 @@ def planner_node(state: GraphState) -> GraphState:
         }
 
     return {"plan": plan}
-
-
-def strip_json_code_fences(value: str) -> str:
-    stripped = value.strip()
-    code_fence_match = re.match(r"^```(?:json)?\s*(.*?)\s*```$", stripped, flags=re.DOTALL | re.IGNORECASE)
-    return code_fence_match.group(1).strip() if code_fence_match else stripped
 
 
 def synthesis_node(state: GraphState) -> GraphState:
@@ -155,7 +136,7 @@ def orchestrate(payload: OrchestrateRequest):
     state: GraphState = {
         "lang": payload.lang,
         "message": payload.message,
-        "history": normalize_history(payload.history),
+        "history": payload.history,
     }
 
     result = compiled_graph.invoke(state)

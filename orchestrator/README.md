@@ -50,10 +50,3 @@ Réponse:
   "engine": "langgraph"
 }
 ```
-
-## Tests
-
-```bash
-cd orchestrator
-pytest
-```
