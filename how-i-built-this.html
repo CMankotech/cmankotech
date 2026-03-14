@@ -99,6 +99,13 @@ section{margin-bottom:4rem}
 .decision-a{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:0.5rem}
 .decision-why{font-size:0.82rem;color:var(--dim);line-height:1.7}
 
+/* LANGGRAPH GRID */
+.lg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.update-list{display:flex;flex-direction:column;gap:0.5rem;margin:1.5rem 0 0}
+.update-item{display:flex;align-items:baseline;gap:0.75rem;font-size:0.83rem;color:var(--dim);line-height:1.7}
+.update-item::before{content:'→';color:var(--cyan);flex-shrink:0;font-weight:700}
+.update-item code{color:var(--text);background:rgba(255,255,255,0.08);padding:0.1rem 0.35rem;border-radius:6px;font-size:0.78rem}
+
 /* FOOTER */
 .page-footer{border-top:1px solid var(--line);padding-top:3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
 .footer-back{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;transition:color 0.2s}
@@ -106,7 +113,7 @@ section{margin-bottom:4rem}
 .footer-copy{font-size:0.65rem;color:var(--muted);letter-spacing:0.08em}
 
 @media(max-width:700px){
-  .stack-grid,.tools-grid{grid-template-columns:1fr}
+  .stack-grid,.tools-grid,.lg-grid{grid-template-columns:1fr}
   .tl-item{grid-template-columns:36px 1fr;gap:1rem}
   .tl-num{width:28px;height:28px;font-size:0.65rem}
   .top-bar{flex-wrap:wrap;gap:0.75rem}
@@ -304,6 +311,50 @@ section{margin-bottom:4rem}
     </div>
   </section>
 
+  <!-- 05 ORCHESTRATION LANGGRAPH -->
+  <section>
+    <div class="sec-header">
+      <span class="sec-num">05</span>
+      <span class="sec-title" data-i18n="s5.title">Orchestration LangGraph</span>
+    </div>
+    <div class="lg-grid">
+      <div class="stack-card">
+        <div class="stack-icon">🌐</div>
+        <div class="stack-name" data-i18n="lg.front.name">Frontend statique</div>
+        <div class="stack-badge sb-cyan" data-i18n="lg.front.badge">HTML · JS</div>
+        <div class="stack-desc" data-i18n="lg.front.desc">Chaque outil est une page HTML/JS autonome, déployée sur GitHub Pages. Aucun secret n'est exposé dans le navigateur.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">⚡</div>
+        <div class="stack-name" data-i18n="lg.proxy.name">Proxy Cloudflare</div>
+        <div class="stack-badge sb-orange" data-i18n="lg.proxy.badge">Worker /orchestrate</div>
+        <div class="stack-desc" data-i18n="lg.proxy.desc">Les appels passent par un Worker (<code>/orchestrate</code>) qui centralise la sécurité, le routage et les fallbacks.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🤖</div>
+        <div class="stack-name" data-i18n="lg.orch.name">Orchestrateur LangGraph</div>
+        <div class="stack-badge sb-violet" data-i18n="lg.orch.badge">FastAPI · LangGraph</div>
+        <div class="stack-desc" data-i18n="lg.orch.desc">Un service FastAPI + LangGraph produit un plan structuré puis une réponse concise via un flux <strong>planner → synthesis</strong>.</div>
+      </div>
+    </div>
+
+    <div class="decision-card" style="margin-top:1.5rem">
+      <div class="decision-q" data-i18n="lg.recent.label">Ce qu'on a ajouté récemment</div>
+      <div class="update-list">
+        <div class="update-item" data-i18n="lg.r1">Une route Worker <code>POST /orchestrate</code> qui tente d'abord l'orchestrateur externe quand il est disponible.</div>
+        <div class="update-item" data-i18n="lg.r2">Un fallback natif vers Groq côté Worker si l'orchestrateur n'est pas joignable.</div>
+        <div class="update-item" data-i18n="lg.r3">Un parsing plus robuste des sorties planner (y compris JSON entouré de blocs <code>```json</code>).</div>
+        <div class="update-item" data-i18n="lg.r4">Des tests automatiques sur l'orchestrateur et le proxy pour sécuriser les cas de routing/fallback.</div>
+      </div>
+    </div>
+
+    <div class="decision-card" style="margin-top:1rem">
+      <div class="decision-q" data-i18n="lg.why.q">Pourquoi LangGraph ?</div>
+      <div class="decision-a" data-i18n="lg.why.a">Plan PM structuré + réponse claire, site rapide et keyless</div>
+      <div class="decision-why" data-i18n="lg.why.desc">L'objectif est d'avoir une expérience fiable et actionnable : plan PM structuré + réponse claire, tout en gardant un site rapide, keyless côté utilisateur, et simple à maintenir.</div>
+    </div>
+  </section>
+
   <footer class="page-footer">
     <a href="https://cmankotech.github.io/cmankotech/" class="footer-back">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -369,7 +420,25 @@ var T={
     'd4.q':'Pourquoi GitHub Pages plutôt qu\'un VPS ou Vercel ?',
     'd4.a':'Gratuit, simple, CI/CD natif',
     'd4.why':'Pour des fichiers statiques, GitHub Pages est imbattable : gratuit, CDN mondial, HTTPS automatique, et le déploiement se déclenche simplement avec un git push. Pas besoin d\'une infrastructure plus complexe pour ce cas d\'usage.',
-    'footer.back':'Retour au portfolio'
+    'footer.back':'Retour au portfolio',
+    's5.title':'Orchestration LangGraph',
+    'lg.front.name':'Frontend statique',
+    'lg.front.badge':'HTML · JS',
+    'lg.front.desc':'Chaque outil est une page HTML/JS autonome, déployée sur GitHub Pages. Aucun secret n\'est exposé dans le navigateur.',
+    'lg.proxy.name':'Proxy Cloudflare',
+    'lg.proxy.badge':'Worker /orchestrate',
+    'lg.proxy.desc':'Les appels passent par un Worker (<code>/orchestrate</code>) qui centralise la sécurité, le routage et les fallbacks.',
+    'lg.orch.name':'Orchestrateur LangGraph',
+    'lg.orch.badge':'FastAPI · LangGraph',
+    'lg.orch.desc':'Un service FastAPI + LangGraph produit un plan structuré puis une réponse concise via un flux <strong>planner → synthesis</strong>.',
+    'lg.recent.label':'Ce qu\'on a ajouté récemment',
+    'lg.r1':'Une route Worker <code>POST /orchestrate</code> qui tente d\'abord l\'orchestrateur externe quand il est disponible.',
+    'lg.r2':'Un fallback natif vers Groq côté Worker si l\'orchestrateur n\'est pas joignable.',
+    'lg.r3':'Un parsing plus robuste des sorties planner (y compris JSON entouré de blocs <code>```json</code>).',
+    'lg.r4':'Des tests automatiques sur l\'orchestrateur et le proxy pour sécuriser les cas de routing/fallback.',
+    'lg.why.q':'Pourquoi LangGraph ?',
+    'lg.why.a':'Plan PM structuré + réponse claire, site rapide et keyless',
+    'lg.why.desc':'L\'objectif est d\'avoir une expérience fiable et actionnable : plan PM structuré + réponse claire, tout en gardant un site rapide, keyless côté utilisateur, et simple à maintenir.'
   },
   en:{
     'back':'Portfolio',
@@ -424,7 +493,25 @@ var T={
     'd4.q':'Why GitHub Pages instead of a VPS or Vercel?',
     'd4.a':'Free, simple, native CI/CD',
     'd4.why':'For static files, GitHub Pages is unbeatable: free, global CDN, automatic HTTPS, and deployment triggered simply by a git push. No need for more complex infrastructure for this use case.',
-    'footer.back':'Back to portfolio'
+    'footer.back':'Back to portfolio',
+    's5.title':'LangGraph Orchestration',
+    'lg.front.name':'Static Frontend',
+    'lg.front.badge':'HTML · JS',
+    'lg.front.desc':'Each tool is a standalone HTML/JS page deployed on GitHub Pages. No secret is ever exposed in the browser.',
+    'lg.proxy.name':'Cloudflare Proxy',
+    'lg.proxy.badge':'Worker /orchestrate',
+    'lg.proxy.desc':'Calls go through a Worker (<code>/orchestrate</code>) that centralises security, routing and fallbacks.',
+    'lg.orch.name':'LangGraph Orchestrator',
+    'lg.orch.badge':'FastAPI · LangGraph',
+    'lg.orch.desc':'A FastAPI + LangGraph service produces a structured plan then a concise response via a <strong>planner → synthesis</strong> flow.',
+    'lg.recent.label':'What we added recently',
+    'lg.r1':'A Worker route <code>POST /orchestrate</code> that tries the external orchestrator first when available.',
+    'lg.r2':'A native Groq fallback on the Worker side if the orchestrator is unreachable.',
+    'lg.r3':'More robust parsing of planner outputs (including JSON wrapped in <code>```json</code> blocks).',
+    'lg.r4':'Automated tests on the orchestrator and proxy to secure routing/fallback scenarios.',
+    'lg.why.q':'Why LangGraph?',
+    'lg.why.a':'Structured PM plan + clear response, fast & keyless site',
+    'lg.why.desc':'The goal is a reliable, actionable experience: structured PM plan + clear response, while keeping the site fast, keyless for the user, and easy to maintain.'
   }
 };
 
