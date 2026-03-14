@@ -182,7 +182,7 @@ section{margin-bottom:4rem}
         <div class="stack-icon">🤖</div>
         <div class="stack-name">Groq API</div>
         <div class="stack-badge sb-violet" data-i18n="stack.llm.badge">LLM Provider</div>
-        <div class="stack-desc" data-i18n="stack.llm.desc">Accès aux modèles Llama 3 via API REST. Inférence ultra-rapide, plan gratuit généreux pour un usage personnel, et compatibilité OpenAI SDK.</div>
+        <div class="stack-desc" data-i18n="stack.llm.desc">Accès au modèle llama-3.3-70b-versatile via API REST. Inférence ultra-rapide sur LPU Groq, plan gratuit généreux pour un usage personnel, et compatibilité OpenAI SDK.</div>
       </div>
     </div>
   </section>
@@ -336,30 +336,31 @@ section{margin-bottom:4rem}
         <div class="stack-icon">⚡</div>
         <div class="stack-name" data-i18n="lg.proxy.name">Proxy Cloudflare</div>
         <div class="stack-badge sb-orange" data-i18n="lg.proxy.badge">Worker /orchestrate</div>
-        <div class="stack-desc" data-i18n="lg.proxy.desc">Les appels passent par un Worker (<code>/orchestrate</code>) qui centralise la sécurité, le routage et les fallbacks.</div>
+        <div class="stack-desc" data-i18n="lg.proxy.desc">Le Worker expose deux routes : <code>POST /</code> passthrough direct Groq (les 6 outils PM) et <code>POST /orchestrate</code> avec orchestration LangGraph + fallback natif (KRL1 uniquement).</div>
       </div>
       <div class="stack-card">
         <div class="stack-icon">🤖</div>
         <div class="stack-name" data-i18n="lg.orch.name">Orchestrateur LangGraph</div>
         <div class="stack-badge sb-violet" data-i18n="lg.orch.badge">FastAPI · LangGraph</div>
-        <div class="stack-desc" data-i18n="lg.orch.desc">Un service FastAPI + LangGraph produit un plan structuré puis une réponse concise via un flux <strong>planner → synthesis</strong>.</div>
+        <div class="stack-desc" data-i18n="lg.orch.desc">Service Python FastAPI (port 8081) avec un <code>StateGraph</code> LangGraph à deux nœuds : <strong>planner</strong> (T=0.2, JSON strict) → <strong>synthesis</strong> (T=0.45, max 220 mots). Tracing LangSmith optionnel.</div>
       </div>
     </div>
 
     <div class="decision-card" style="margin-top:1.5rem">
       <div class="decision-q" data-i18n="lg.recent.label">Ce qu'on a ajouté récemment</div>
       <div class="update-list">
-        <div class="update-item" data-i18n="lg.r1">Une route Worker <code>POST /orchestrate</code> qui tente d'abord l'orchestrateur externe quand il est disponible.</div>
+        <div class="update-item" data-i18n="lg.r1">La route Worker <code>POST /orchestrate</code>, réservée au chatbot KRL1, tente d'abord l'orchestrateur FastAPI externe puis bascule en fallback natif Worker.</div>
         <div class="update-item" data-i18n="lg.r2">Un fallback natif vers Groq côté Worker si l'orchestrateur n'est pas joignable.</div>
         <div class="update-item" data-i18n="lg.r3">Un parsing plus robuste des sorties planner (y compris JSON entouré de blocs <code>```json</code>).</div>
         <div class="update-item" data-i18n="lg.r4">Des tests automatiques sur l'orchestrateur et le proxy pour sécuriser les cas de routing/fallback.</div>
+        <div class="update-item" data-i18n="lg.r5">Le tracing LangSmith optionnel (<code>LANGSMITH_API_KEY</code> + <code>LANGCHAIN_TRACING_V2=true</code>) pour observer le graph en production.</div>
       </div>
     </div>
 
     <div class="decision-card" style="margin-top:1rem">
       <div class="decision-q" data-i18n="lg.why.q">Pourquoi LangGraph ?</div>
       <div class="decision-a" data-i18n="lg.why.a">Plan PM structuré + réponse claire, site rapide et keyless</div>
-      <div class="decision-why" data-i18n="lg.why.desc">L'objectif est d'avoir une expérience fiable et actionnable : plan PM structuré + réponse claire, tout en gardant un site rapide, keyless côté utilisateur, et simple à maintenir.</div>
+      <div class="decision-why" data-i18n="lg.why.desc">Le double-nœud répond à deux besoins opposés : le planner doit être déterministe (T=0.2, JSON strict) pour produire un plan PM fiable ; le synthesis doit être fluide (T=0.45) pour formuler une réponse concise et actionnable. Un seul appel LLM ne peut pas optimiser les deux en même temps.</div>
     </div>
   </section>
 
@@ -389,7 +390,7 @@ var T={
     'stack.proxy.badge':'API Proxy',
     'stack.proxy.desc':'Worker serverless qui fait proxy entre le frontend et l\'API Groq. Sécurise la clé API côté serveur, gère le CORS, et tourne sur le plan gratuit Cloudflare.',
     'stack.llm.badge':'LLM Provider',
-    'stack.llm.desc':'Accès aux modèles Llama 3 via API REST. Inférence ultra-rapide, plan gratuit généreux pour un usage personnel, et compatibilité OpenAI SDK.',
+    'stack.llm.desc':'Accès au modèle llama-3.3-70b-versatile via API REST. Inférence ultra-rapide sur LPU Groq, plan gratuit généreux pour un usage personnel, et compatibilité OpenAI SDK.',
     's2.title':'Étapes de création',
     'step1.label':'Idée & cadrage',
     'step1.title':'Partir d\'un vrai problème PM',
@@ -435,18 +436,19 @@ var T={
     'lg.front.desc':'Chaque outil est une page HTML/JS autonome, déployée sur GitHub Pages. Aucun secret n\'est exposé dans le navigateur.',
     'lg.proxy.name':'Proxy Cloudflare',
     'lg.proxy.badge':'Worker /orchestrate',
-    'lg.proxy.desc':'Les appels passent par un Worker (<code>/orchestrate</code>) qui centralise la sécurité, le routage et les fallbacks.',
+    'lg.proxy.desc':'Le Worker expose deux routes : <code>POST /</code> passthrough direct Groq (les 6 outils PM) et <code>POST /orchestrate</code> avec orchestration LangGraph + fallback natif (KRL1 uniquement).',
     'lg.orch.name':'Orchestrateur LangGraph',
     'lg.orch.badge':'FastAPI · LangGraph',
-    'lg.orch.desc':'Un service FastAPI + LangGraph produit un plan structuré puis une réponse concise via un flux <strong>planner → synthesis</strong>.',
+    'lg.orch.desc':'Service Python FastAPI (port 8081) avec un <code>StateGraph</code> LangGraph à deux nœuds : <strong>planner</strong> (T=0.2, JSON strict) → <strong>synthesis</strong> (T=0.45, max 220 mots). Tracing LangSmith optionnel.',
     'lg.recent.label':'Ce qu\'on a ajouté récemment',
-    'lg.r1':'Une route Worker <code>POST /orchestrate</code> qui tente d\'abord l\'orchestrateur externe quand il est disponible.',
+    'lg.r1':'La route Worker <code>POST /orchestrate</code>, réservée au chatbot KRL1, tente d\'abord l\'orchestrateur FastAPI externe puis bascule en fallback natif Worker.',
     'lg.r2':'Un fallback natif vers Groq côté Worker si l\'orchestrateur n\'est pas joignable.',
     'lg.r3':'Un parsing plus robuste des sorties planner (y compris JSON entouré de blocs <code>```json</code>).',
     'lg.r4':'Des tests automatiques sur l\'orchestrateur et le proxy pour sécuriser les cas de routing/fallback.',
+    'lg.r5':'Le tracing LangSmith optionnel (<code>LANGSMITH_API_KEY</code> + <code>LANGCHAIN_TRACING_V2=true</code>) pour observer le graph en production.',
     'lg.why.q':'Pourquoi LangGraph ?',
     'lg.why.a':'Plan PM structuré + réponse claire, site rapide et keyless',
-    'lg.why.desc':'L\'objectif est d\'avoir une expérience fiable et actionnable : plan PM structuré + réponse claire, tout en gardant un site rapide, keyless côté utilisateur, et simple à maintenir.'
+    'lg.why.desc':'Le double-nœud répond à deux besoins opposés : le planner doit être déterministe (T=0.2, JSON strict) pour produire un plan PM fiable ; le synthesis doit être fluide (T=0.45) pour formuler une réponse concise et actionnable. Un seul appel LLM ne peut pas optimiser les deux en même temps.'
   },
   en:{
     'back':'Portfolio',
@@ -462,7 +464,7 @@ var T={
     'stack.proxy.badge':'API Proxy',
     'stack.proxy.desc':'Serverless Worker that proxies requests between the frontend and the Groq API. Secures the API key server-side, handles CORS, and runs on Cloudflare\'s free plan.',
     'stack.llm.badge':'LLM Provider',
-    'stack.llm.desc':'Access to Llama 3 models via REST API. Ultra-fast inference, generous free plan for personal use, and OpenAI SDK compatibility.',
+    'stack.llm.desc':'Access to the llama-3.3-70b-versatile model via REST API. Ultra-fast inference on Groq LPU hardware, generous free plan for personal use, and OpenAI SDK compatibility.',
     's2.title':'Creation steps',
     'step1.label':'Idea & scoping',
     'step1.title':'Start from a real PM problem',
@@ -508,18 +510,19 @@ var T={
     'lg.front.desc':'Each tool is a standalone HTML/JS page deployed on GitHub Pages. No secret is ever exposed in the browser.',
     'lg.proxy.name':'Cloudflare Proxy',
     'lg.proxy.badge':'Worker /orchestrate',
-    'lg.proxy.desc':'Calls go through a Worker (<code>/orchestrate</code>) that centralises security, routing and fallbacks.',
+    'lg.proxy.desc':'The Worker exposes two routes: <code>POST /</code> direct Groq passthrough (the 6 PM tools) and <code>POST /orchestrate</code> with LangGraph orchestration + native fallback (KRL1 only).',
     'lg.orch.name':'LangGraph Orchestrator',
     'lg.orch.badge':'FastAPI · LangGraph',
-    'lg.orch.desc':'A FastAPI + LangGraph service produces a structured plan then a concise response via a <strong>planner → synthesis</strong> flow.',
+    'lg.orch.desc':'Python FastAPI service (port 8081) with a two-node LangGraph <code>StateGraph</code>: <strong>planner</strong> (T=0.2, strict JSON) → <strong>synthesis</strong> (T=0.45, max 220 words). Optional LangSmith tracing.',
     'lg.recent.label':'What we added recently',
-    'lg.r1':'A Worker route <code>POST /orchestrate</code> that tries the external orchestrator first when available.',
+    'lg.r1':'The Worker route <code>POST /orchestrate</code>, reserved for the KRL1 chatbot, first tries the external FastAPI orchestrator then falls back to native Worker orchestration.',
     'lg.r2':'A native Groq fallback on the Worker side if the orchestrator is unreachable.',
     'lg.r3':'More robust parsing of planner outputs (including JSON wrapped in <code>```json</code> blocks).',
     'lg.r4':'Automated tests on the orchestrator and proxy to secure routing/fallback scenarios.',
+    'lg.r5':'Optional LangSmith tracing (<code>LANGSMITH_API_KEY</code> + <code>LANGCHAIN_TRACING_V2=true</code>) to observe the graph in production.',
     'lg.why.q':'Why LangGraph?',
     'lg.why.a':'Structured PM plan + clear response, fast & keyless site',
-    'lg.why.desc':'The goal is a reliable, actionable experience: structured PM plan + clear response, while keeping the site fast, keyless for the user, and easy to maintain.'
+    'lg.why.desc':'The two-node design addresses opposite needs: the planner must be deterministic (T=0.2, strict JSON) to produce a reliable PM plan; the synthesis must be fluid (T=0.45) to craft a concise, actionable response. A single LLM call cannot optimise both at once.'
   }
 };
 
