@@ -1,25 +1,125 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Comment j'ai construit ce site | Carlin Mankoto</title>
-  <meta name="description" content="Architecture et choix techniques derrière les outils IA PM de Carlin Mankoto." />
-  <style>
-    :root { --bg:#07070f; --text:#f4f7ff; --muted:#9aa4b2; --line:rgba(255,255,255,.1); --cyan:#22d3ee; --violet:#a78bfa; }
-    * { box-sizing:border-box; }
-    body { margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:var(--bg); color:var(--text); }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 2.25rem 1.25rem 4rem; }
-    h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin:.5rem 0 1rem; }
-    h2 { margin: 2rem 0 .75rem; font-size: 1.25rem; }
-    p, li { color: var(--muted); line-height: 1.7; }
-    .badge { display:inline-block; padding:.35rem .7rem; border:1px solid var(--line); border-radius:999px; color:var(--cyan); font-size:.8rem; }
-    .card { border:1px solid var(--line); border-radius:16px; padding:1rem 1rem; margin:.75rem 0; background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); }
-    .grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); }
-    code { color: var(--text); background: rgba(255,255,255,.08); padding:.1rem .35rem; border-radius:6px; }
-    a { color: var(--cyan); text-underline-offset: 2px; }
-    .cta { margin-top:2.2rem; border-left:2px solid var(--violet); padding-left:1rem; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comment j'ai construit ce site — Carlin Mankoto</title>
+<meta name="description" content="Stack technique, étapes de création et décisions d'architecture derrière le portfolio de Carlin Mankoto.">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070e;--surface:#0e0e1a;--glass:rgba(255,255,255,0.03);
+  --border:rgba(255,255,255,0.08);--text:#e2e8f0;--dim:#94a3b8;--muted:#475569;
+  --blue:#60a5fa;--violet:#a78bfa;--cyan:#22d3ee;--green:#4ade80;--orange:#fb923c;
+  --grad:linear-gradient(135deg,#60a5fa,#a78bfa,#22d3ee);
+  --line:rgba(255,255,255,0.06);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+
+/* GLOWS */
+.glow{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;opacity:0.6}
+.g1{width:500px;height:500px;top:-150px;left:-100px;background:rgba(59,130,246,0.1)}
+.g2{width:400px;height:400px;bottom:5%;right:-100px;background:rgba(167,139,250,0.08)}
+.g3{width:350px;height:350px;top:50%;left:30%;background:rgba(34,211,238,0.05)}
+
+/* LAYOUT */
+.container{max-width:860px;margin:0 auto;padding:3rem 1.5rem;position:relative;z-index:1}
+
+/* BACK LINK */
+.back-link{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;margin-bottom:2.5rem;transition:color 0.2s}
+.back-link:hover{color:var(--text)}
+.back-link svg{transition:transform 0.2s}
+.back-link:hover svg{transform:translateX(-3px)}
+
+/* LANG */
+.lang-switcher{display:inline-flex;align-items:center;gap:0.25rem;background:var(--glass);border:1px solid var(--border);border-radius:99px;padding:0.2rem;margin-left:auto}
+.lang-btn{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;padding:0.3rem 0.65rem;border-radius:99px;border:none;cursor:pointer;background:transparent;color:var(--muted);transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.lang-btn.active{background:rgba(59,130,246,0.2);color:#93c5fd}
+.lang-btn:hover:not(.active){color:var(--text)}
+.top-bar{display:flex;align-items:center;margin-bottom:2.5rem}
+
+/* HEADER */
+header{margin-bottom:4rem}
+.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--cyan);margin-bottom:1.25rem;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.2);padding:0.4rem 1rem;border-radius:99px}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
+h1{font-size:clamp(2rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;line-height:1.05;margin-bottom:1rem}
+.grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{font-size:0.92rem;color:var(--dim);max-width:560px;line-height:1.75;border-left:2px solid var(--cyan);padding-left:1.25rem;margin-top:1.25rem}
+
+/* SECTION TITLES */
+.sec-header{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+.sec-num{font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.1em}
+.sec-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#fff;letter-spacing:-0.02em}
+.sec-header::after{content:'';flex:1;height:1px;background:var(--line)}
+section{margin-bottom:4rem}
+
+/* STACK GRID */
+.stack-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.stack-card{padding:1.5rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;transition:all 0.3s;display:flex;flex-direction:column;gap:0.75rem}
+.stack-card:hover{transform:translateY(-2px);border-color:rgba(167,139,250,0.25);box-shadow:0 10px 40px -10px rgba(167,139,250,0.1)}
+.stack-icon{font-size:1.4rem;line-height:1}
+.stack-name{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text)}
+.stack-desc{font-size:0.8rem;color:var(--dim);line-height:1.6}
+.stack-badge{display:inline-block;font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.2rem 0.6rem;border-radius:99px;border:1px solid;width:fit-content}
+.sb-cyan{background:rgba(34,211,238,0.1);border-color:rgba(34,211,238,0.3);color:#67e8f9}
+.sb-blue{background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.3);color:#93c5fd}
+.sb-violet{background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.3);color:#c4b5fd}
+.sb-orange{background:rgba(251,146,60,0.1);border-color:rgba(251,146,60,0.3);color:#fdba74}
+.sb-green{background:rgba(74,222,128,0.1);border-color:rgba(74,222,128,0.3);color:#86efac}
+
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{display:grid;grid-template-columns:48px 1fr;gap:1.5rem;position:relative}
+.tl-left{position:relative;display:flex;flex-direction:column;align-items:center;padding-top:0.25rem}
+.tl-item:not(:last-child) .tl-left::after{content:'';position:absolute;left:50%;transform:translateX(-50%);top:40px;bottom:0;width:1px;background:var(--line)}
+.tl-num{width:36px;height:36px;border-radius:50%;background:var(--glass);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;color:var(--cyan);flex-shrink:0;transition:all 0.3s;position:relative;z-index:1}
+.tl-item:hover .tl-num{border-color:rgba(34,211,238,0.4);background:rgba(34,211,238,0.08);box-shadow:0 0 16px rgba(34,211,238,0.2)}
+.tl-content{padding:0.5rem 0 2.5rem}
+.tl-step-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--muted);margin-bottom:0.4rem}
+.tl-step-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.5rem}
+.tl-step-desc{font-size:0.83rem;color:var(--dim);line-height:1.75}
+
+/* BUILD TOOLS */
+.tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.tool-card{padding:1.75rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;transition:all 0.3s}
+.tool-card:hover{transform:translateY(-2px);border-color:rgba(96,165,250,0.2)}
+.tool-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.25rem;display:flex;align-items:center;gap:0.65rem}
+.tool-role{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.75rem}
+.tool-desc{font-size:0.82rem;color:var(--dim);line-height:1.7}
+
+/* DECISIONS */
+.decision-list{display:flex;flex-direction:column;gap:1rem}
+.decision-card{padding:1.5rem 1.75rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;transition:border-color 0.3s}
+.decision-card:hover{border-color:rgba(167,139,250,0.2)}
+.decision-q{font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.5rem}
+.decision-a{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:0.5rem}
+.decision-why{font-size:0.82rem;color:var(--dim);line-height:1.7}
+
+/* LANGGRAPH GRID */
+.lg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.update-list{display:flex;flex-direction:column;gap:0.5rem;margin:1.5rem 0 0}
+.update-item{display:flex;align-items:baseline;gap:0.75rem;font-size:0.83rem;color:var(--dim);line-height:1.7}
+.update-item::before{content:'→';color:var(--cyan);flex-shrink:0;font-weight:700}
+.update-item code{color:var(--text);background:rgba(255,255,255,0.08);padding:0.1rem 0.35rem;border-radius:6px;font-size:0.78rem}
+
+/* FOOTER */
+.page-footer{border-top:1px solid var(--line);padding-top:3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-back{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.footer-back:hover{color:var(--cyan)}
+.footer-copy{font-size:0.65rem;color:var(--muted);letter-spacing:0.08em}
+
+@media(max-width:700px){
+  .stack-grid,.tools-grid,.lg-grid{grid-template-columns:1fr}
+  .tl-item{grid-template-columns:36px 1fr;gap:1rem}
+  .tl-num{width:28px;height:28px;font-size:0.65rem}
+  .top-bar{flex-wrap:wrap;gap:0.75rem}
+  .page-footer{flex-direction:column;align-items:flex-start}
+}
+</style>
 </head>
 <body>
   <main class="wrap">
@@ -45,6 +145,393 @@
         <p>Un service FastAPI + LangGraph produit un plan structuré puis une réponse concise via un flux <strong>planner → synthesis</strong>.</p>
       </section>
     </div>
+  </div>
+
+  <header>
+    <div class="header-tag"><span class="dot"></span><span data-i18n="tag">Behind the build</span></div>
+    <h1 data-i18n="h1.line1">Comment j'ai<br><span class="grad" data-i18n="h1.grad">construit ce site</span></h1>
+    <p class="subtitle" data-i18n="subtitle">Stack vanilla, déploiement statique, LLM via proxy sécurisé. Zéro framework, zéro dépendance inutile — juste du web qui fonctionne.</p>
+  </header>
+
+  <!-- 01 STACK -->
+  <section>
+    <div class="sec-header">
+      <span class="sec-num">01</span>
+      <span class="sec-title" data-i18n="s1.title">Stack technique</span>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-card">
+        <div class="stack-icon">🌐</div>
+        <div class="stack-name">HTML · CSS · JavaScript</div>
+        <div class="stack-badge sb-cyan" data-i18n="stack.front.badge">Frontend</div>
+        <div class="stack-desc" data-i18n="stack.front.desc">Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque page est un fichier HTML autonome avec son CSS et son JS inline.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">☁️</div>
+        <div class="stack-name">GitHub Pages</div>
+        <div class="stack-badge sb-blue" data-i18n="stack.deploy.badge">Hébergement</div>
+        <div class="stack-desc" data-i18n="stack.deploy.desc">Déploiement statique gratuit, CI/CD natif via git push. Chaque commit sur main déclenche automatiquement un déploiement sur le domaine GitHub.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">⚡</div>
+        <div class="stack-name">Cloudflare Workers</div>
+        <div class="stack-badge sb-orange" data-i18n="stack.proxy.badge">API Proxy</div>
+        <div class="stack-desc" data-i18n="stack.proxy.desc">Worker serverless qui fait proxy entre le frontend et l'API Groq. Sécurise la clé API côté serveur, gère le CORS, et tourne sur le plan gratuit Cloudflare.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🤖</div>
+        <div class="stack-name">Groq API</div>
+        <div class="stack-badge sb-violet" data-i18n="stack.llm.badge">LLM Provider</div>
+        <div class="stack-desc" data-i18n="stack.llm.desc">Accès aux modèles Llama 3 via API REST. Inférence ultra-rapide, plan gratuit généreux pour un usage personnel, et compatibilité OpenAI SDK.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 ÉTAPES -->
+  <section>
+    <div class="sec-header">
+      <span class="sec-num">02</span>
+      <span class="sec-title" data-i18n="s2.title">Étapes de création</span>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-num">1</div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-step-label" data-i18n="step1.label">Idée & cadrage</div>
+          <div class="tl-step-title" data-i18n="step1.title">Partir d'un vrai problème PM</div>
+          <div class="tl-step-desc" data-i18n="step1.desc">Chaque outil répond à une friction réelle que j'ai vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens à la main, préparer une roadmap pour des dirigeants. Le site est né de cette liste de frustrations, pas d'une envie de faire un portfolio classique.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-num">2</div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-step-label" data-i18n="step2.label">Design</div>
+          <div class="tl-step-title" data-i18n="step2.title">Système de design en CSS variables</div>
+          <div class="tl-step-desc" data-i18n="step2.desc">Dark theme pensé dès le départ avec un système de tokens CSS (couleurs, surfaces, borders) cohérent sur toutes les pages. La palette bleue-violette-cyan crée une identité visuelle forte sans recourir à un framework UI. Typographie Syne pour les titres, DM Sans pour le corps.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-num">3</div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-step-label" data-i18n="step3.label">Développement</div>
+          <div class="tl-step-title" data-i18n="step3.title">Pages HTML autonomes, JS vanilla</div>
+          <div class="tl-step-desc" data-i18n="step3.desc">Chaque outil est une page HTML indépendante avec son propre CSS et JS. Pas de routing, pas de state management, pas de composants partagés. Simple, lisible, et débuggable sans toolchain. La gestion bilingue FR/EN est faite avec un objet de traductions et des attributs data-i18n.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-num">4</div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-step-label" data-i18n="step4.label">Intégration LLM</div>
+          <div class="tl-step-title" data-i18n="step4.title">Proxy Cloudflare pour sécuriser la clé</div>
+          <div class="tl-step-desc" data-i18n="step4.desc">Les pages font des requêtes vers un Cloudflare Worker qui proxifie vers l'API Groq. La clé API ne transit jamais côté client. Le Worker valide l'origine, gère les headers CORS et retourne la réponse. Déployé en quelques minutes avec Wrangler CLI.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-num">5</div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-step-label" data-i18n="step5.label">Déploiement</div>
+          <div class="tl-step-title" data-i18n="step5.title">GitHub Pages, push = deploy</div>
+          <div class="tl-step-desc" data-i18n="step5.desc">Le repo GitHub est directement connecté à GitHub Pages. Chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. Zéro configuration de CI/CD complexe, zéro coût d'hébergement.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 OUTILS DE BUILD -->
+  <section>
+    <div class="sec-header">
+      <span class="sec-num">03</span>
+      <span class="sec-title" data-i18n="s3.title">Outils de build</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-name">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Claude Code
+        </div>
+        <div class="tool-role" data-i18n="tool.cc.role">Vibe coding — CLI Anthropic</div>
+        <div class="tool-desc" data-i18n="tool.cc.desc">Principal outil de développement. J'écris les specs en langage naturel, Claude Code génère le code, refactorise les sections et gère les commits. Permet de shipper vite sans sacrifier la qualité du code.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Lovable
+        </div>
+        <div class="tool-role" data-i18n="tool.lovable.role">Prototypage UI — vibe coding</div>
+        <div class="tool-desc" data-i18n="tool.lovable.desc">Utilisé pour explorer rapidement des layouts et des composants visuels. Lovable accélère la phase de design en générant du HTML/CSS propre à partir d'une description.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Wrangler CLI
+        </div>
+        <div class="tool-role" data-i18n="tool.wrangler.role">Déploiement Cloudflare Workers</div>
+        <div class="tool-desc" data-i18n="tool.wrangler.desc">CLI officiel de Cloudflare pour développer, tester en local et déployer le proxy Worker. Configuration via un fichier wrangler.toml minimaliste, déploiement en une commande.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          Git · GitHub
+        </div>
+        <div class="tool-role" data-i18n="tool.git.role">Versioning & déploiement</div>
+        <div class="tool-desc" data-i18n="tool.git.desc">Gestion de version classique avec Git. Le remote GitHub est la source de vérité et déclenche le déploiement Pages automatiquement à chaque push sur la branche principale.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 DÉCISIONS D'ARCHITECTURE -->
+  <section>
+    <div class="sec-header">
+      <span class="sec-num">04</span>
+      <span class="sec-title" data-i18n="s4.title">Décisions d'architecture</span>
+    </div>
+    <div class="decision-list">
+      <div class="decision-card">
+        <div class="decision-q" data-i18n="d1.q">Pourquoi HTML vanilla plutôt que React ou Next.js ?</div>
+        <div class="decision-a" data-i18n="d1.a">Zéro dépendance, zéro toolchain, zéro dette</div>
+        <div class="decision-why" data-i18n="d1.why">Un site statique de portfolio et d'outils simples n'a pas besoin d'un framework SPA. HTML vanilla se déploie directement, se lit facilement et ne génère aucune dette technique. Moins de complexité = plus de vélocité.</div>
+      </div>
+      <div class="decision-card">
+        <div class="decision-q" data-i18n="d2.q">Pourquoi un proxy Cloudflare Workers plutôt qu'exposer la clé API ?</div>
+        <div class="decision-a" data-i18n="d2.a">Sécurité non négociable, plan gratuit généreux</div>
+        <div class="decision-why" data-i18n="d2.why">Exposer une clé API dans du code client-side, c'est l'offrir à n'importe qui. Le Worker intercepte les requêtes, injecte la clé côté serveur et valide l'origine. Plan gratuit Cloudflare : 100 000 requêtes/jour — largement suffisant.</div>
+      </div>
+      <div class="decision-card">
+        <div class="decision-q" data-i18n="d3.q">Pourquoi Groq plutôt qu'OpenAI ou Anthropic directement ?</div>
+        <div class="decision-a" data-i18n="d3.a">Vitesse d'inférence et plan gratuit</div>
+        <div class="decision-why" data-i18n="d3.why">Groq tourne les modèles Llama 3 sur du matériel LPU optimisé pour l'inférence. Résultat : des réponses en 1-2 secondes là où d'autres providers prennent 5-10s. Et le plan gratuit couvre amplement un usage personnel.</div>
+      </div>
+      <div class="decision-card">
+        <div class="decision-q" data-i18n="d4.q">Pourquoi GitHub Pages plutôt qu'un VPS ou Vercel ?</div>
+        <div class="decision-a" data-i18n="d4.a">Gratuit, simple, CI/CD natif</div>
+        <div class="decision-why" data-i18n="d4.why">Pour des fichiers statiques, GitHub Pages est imbattable : gratuit, CDN mondial, HTTPS automatique, et le déploiement se déclenche simplement avec un git push. Pas besoin d'une infrastructure plus complexe pour ce cas d'usage.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 ORCHESTRATION LANGGRAPH -->
+  <section>
+    <div class="sec-header">
+      <span class="sec-num">05</span>
+      <span class="sec-title" data-i18n="s5.title">Orchestration LangGraph</span>
+    </div>
+    <div class="lg-grid">
+      <div class="stack-card">
+        <div class="stack-icon">🌐</div>
+        <div class="stack-name" data-i18n="lg.front.name">Frontend statique</div>
+        <div class="stack-badge sb-cyan" data-i18n="lg.front.badge">HTML · JS</div>
+        <div class="stack-desc" data-i18n="lg.front.desc">Chaque outil est une page HTML/JS autonome, déployée sur GitHub Pages. Aucun secret n'est exposé dans le navigateur.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">⚡</div>
+        <div class="stack-name" data-i18n="lg.proxy.name">Proxy Cloudflare</div>
+        <div class="stack-badge sb-orange" data-i18n="lg.proxy.badge">Worker /orchestrate</div>
+        <div class="stack-desc" data-i18n="lg.proxy.desc">Les appels passent par un Worker (<code>/orchestrate</code>) qui centralise la sécurité, le routage et les fallbacks.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🤖</div>
+        <div class="stack-name" data-i18n="lg.orch.name">Orchestrateur LangGraph</div>
+        <div class="stack-badge sb-violet" data-i18n="lg.orch.badge">FastAPI · LangGraph</div>
+        <div class="stack-desc" data-i18n="lg.orch.desc">Un service FastAPI + LangGraph produit un plan structuré puis une réponse concise via un flux <strong>planner → synthesis</strong>.</div>
+      </div>
+    </div>
+
+    <div class="decision-card" style="margin-top:1.5rem">
+      <div class="decision-q" data-i18n="lg.recent.label">Ce qu'on a ajouté récemment</div>
+      <div class="update-list">
+        <div class="update-item" data-i18n="lg.r1">Une route Worker <code>POST /orchestrate</code> qui tente d'abord l'orchestrateur externe quand il est disponible.</div>
+        <div class="update-item" data-i18n="lg.r2">Un fallback natif vers Groq côté Worker si l'orchestrateur n'est pas joignable.</div>
+        <div class="update-item" data-i18n="lg.r3">Un parsing plus robuste des sorties planner (y compris JSON entouré de blocs <code>```json</code>).</div>
+        <div class="update-item" data-i18n="lg.r4">Des tests automatiques sur l'orchestrateur et le proxy pour sécuriser les cas de routing/fallback.</div>
+      </div>
+    </div>
+
+    <div class="decision-card" style="margin-top:1rem">
+      <div class="decision-q" data-i18n="lg.why.q">Pourquoi LangGraph ?</div>
+      <div class="decision-a" data-i18n="lg.why.a">Plan PM structuré + réponse claire, site rapide et keyless</div>
+      <div class="decision-why" data-i18n="lg.why.desc">L'objectif est d'avoir une expérience fiable et actionnable : plan PM structuré + réponse claire, tout en gardant un site rapide, keyless côté utilisateur, et simple à maintenir.</div>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    <a href="https://cmankotech.github.io/cmankotech/" class="footer-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-i18n="footer.back">Retour au portfolio</span>
+    </a>
+    <div class="footer-copy">&copy; 2026 Carlin Mankoto</div>
+  </footer>
+
+</div>
+
+<script>
+var T={
+  fr:{
+    'back':'Portfolio',
+    'tag':'Behind the build',
+    'h1.line1':'Comment j\'ai<br>',
+    'h1.grad':'construit ce site',
+    'subtitle':'Stack vanilla, déploiement statique, LLM via proxy sécurisé. Zéro framework, zéro dépendance inutile — juste du web qui fonctionne.',
+    's1.title':'Stack technique',
+    'stack.front.badge':'Frontend',
+    'stack.front.desc':'Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque page est un fichier HTML autonome avec son CSS et son JS inline.',
+    'stack.deploy.badge':'Hébergement',
+    'stack.deploy.desc':'Déploiement statique gratuit, CI/CD natif via git push. Chaque commit sur main déclenche automatiquement un déploiement sur le domaine GitHub.',
+    'stack.proxy.badge':'API Proxy',
+    'stack.proxy.desc':'Worker serverless qui fait proxy entre le frontend et l\'API Groq. Sécurise la clé API côté serveur, gère le CORS, et tourne sur le plan gratuit Cloudflare.',
+    'stack.llm.badge':'LLM Provider',
+    'stack.llm.desc':'Accès aux modèles Llama 3 via API REST. Inférence ultra-rapide, plan gratuit généreux pour un usage personnel, et compatibilité OpenAI SDK.',
+    's2.title':'Étapes de création',
+    'step1.label':'Idée & cadrage',
+    'step1.title':'Partir d\'un vrai problème PM',
+    'step1.desc':'Chaque outil répond à une friction réelle que j\'ai vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens à la main, préparer une roadmap pour des dirigeants. Le site est né de cette liste de frustrations, pas d\'une envie de faire un portfolio classique.',
+    'step2.label':'Design',
+    'step2.title':'Système de design en CSS variables',
+    'step2.desc':'Dark theme pensé dès le départ avec un système de tokens CSS (couleurs, surfaces, borders) cohérent sur toutes les pages. La palette bleue-violette-cyan crée une identité visuelle forte sans recourir à un framework UI. Typographie Syne pour les titres, DM Sans pour le corps.',
+    'step3.label':'Développement',
+    'step3.title':'Pages HTML autonomes, JS vanilla',
+    'step3.desc':'Chaque outil est une page HTML indépendante avec son propre CSS et JS. Pas de routing, pas de state management, pas de composants partagés. Simple, lisible, et débuggable sans toolchain. La gestion bilingue FR/EN est faite avec un objet de traductions et des attributs data-i18n.',
+    'step4.label':'Intégration LLM',
+    'step4.title':'Proxy Cloudflare pour sécuriser la clé',
+    'step4.desc':'Les pages font des requêtes vers un Cloudflare Worker qui proxifie vers l\'API Groq. La clé API ne transit jamais côté client. Le Worker valide l\'origine, gère les headers CORS et retourne la réponse. Déployé en quelques minutes avec Wrangler CLI.',
+    'step5.label':'Déploiement',
+    'step5.title':'GitHub Pages, push = deploy',
+    'step5.desc':'Le repo GitHub est directement connecté à GitHub Pages. Chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. Zéro configuration de CI/CD complexe, zéro coût d\'hébergement.',
+    's3.title':'Outils de build',
+    'tool.cc.role':'Vibe coding — CLI Anthropic',
+    'tool.cc.desc':'Principal outil de développement. J\'écris les specs en langage naturel, Claude Code génère le code, refactorise les sections et gère les commits. Permet de shipper vite sans sacrifier la qualité du code.',
+    'tool.lovable.role':'Prototypage UI — vibe coding',
+    'tool.lovable.desc':'Utilisé pour explorer rapidement des layouts et des composants visuels. Lovable accélère la phase de design en générant du HTML/CSS propre à partir d\'une description.',
+    'tool.wrangler.role':'Déploiement Cloudflare Workers',
+    'tool.wrangler.desc':'CLI officiel de Cloudflare pour développer, tester en local et déployer le proxy Worker. Configuration via un fichier wrangler.toml minimaliste, déploiement en une commande.',
+    'tool.git.role':'Versioning & déploiement',
+    'tool.git.desc':'Gestion de version classique avec Git. Le remote GitHub est la source de vérité et déclenche le déploiement Pages automatiquement à chaque push sur la branche principale.',
+    's4.title':'Décisions d\'architecture',
+    'd1.q':'Pourquoi HTML vanilla plutôt que React ou Next.js ?',
+    'd1.a':'Zéro dépendance, zéro toolchain, zéro dette',
+    'd1.why':'Un site statique de portfolio et d\'outils simples n\'a pas besoin d\'un framework SPA. HTML vanilla se déploie directement, se lit facilement et ne génère aucune dette technique. Moins de complexité = plus de vélocité.',
+    'd2.q':'Pourquoi un proxy Cloudflare Workers plutôt qu\'exposer la clé API ?',
+    'd2.a':'Sécurité non négociable, plan gratuit généreux',
+    'd2.why':'Exposer une clé API dans du code client-side, c\'est l\'offrir à n\'importe qui. Le Worker intercepte les requêtes, injecte la clé côté serveur et valide l\'origine. Plan gratuit Cloudflare : 100 000 requêtes/jour — largement suffisant.',
+    'd3.q':'Pourquoi Groq plutôt qu\'OpenAI ou Anthropic directement ?',
+    'd3.a':'Vitesse d\'inférence et plan gratuit',
+    'd3.why':'Groq tourne les modèles Llama 3 sur du matériel LPU optimisé pour l\'inférence. Résultat : des réponses en 1-2 secondes là où d\'autres providers prennent 5-10s. Et le plan gratuit couvre amplement un usage personnel.',
+    'd4.q':'Pourquoi GitHub Pages plutôt qu\'un VPS ou Vercel ?',
+    'd4.a':'Gratuit, simple, CI/CD natif',
+    'd4.why':'Pour des fichiers statiques, GitHub Pages est imbattable : gratuit, CDN mondial, HTTPS automatique, et le déploiement se déclenche simplement avec un git push. Pas besoin d\'une infrastructure plus complexe pour ce cas d\'usage.',
+    'footer.back':'Retour au portfolio',
+    's5.title':'Orchestration LangGraph',
+    'lg.front.name':'Frontend statique',
+    'lg.front.badge':'HTML · JS',
+    'lg.front.desc':'Chaque outil est une page HTML/JS autonome, déployée sur GitHub Pages. Aucun secret n\'est exposé dans le navigateur.',
+    'lg.proxy.name':'Proxy Cloudflare',
+    'lg.proxy.badge':'Worker /orchestrate',
+    'lg.proxy.desc':'Les appels passent par un Worker (<code>/orchestrate</code>) qui centralise la sécurité, le routage et les fallbacks.',
+    'lg.orch.name':'Orchestrateur LangGraph',
+    'lg.orch.badge':'FastAPI · LangGraph',
+    'lg.orch.desc':'Un service FastAPI + LangGraph produit un plan structuré puis une réponse concise via un flux <strong>planner → synthesis</strong>.',
+    'lg.recent.label':'Ce qu\'on a ajouté récemment',
+    'lg.r1':'Une route Worker <code>POST /orchestrate</code> qui tente d\'abord l\'orchestrateur externe quand il est disponible.',
+    'lg.r2':'Un fallback natif vers Groq côté Worker si l\'orchestrateur n\'est pas joignable.',
+    'lg.r3':'Un parsing plus robuste des sorties planner (y compris JSON entouré de blocs <code>```json</code>).',
+    'lg.r4':'Des tests automatiques sur l\'orchestrateur et le proxy pour sécuriser les cas de routing/fallback.',
+    'lg.why.q':'Pourquoi LangGraph ?',
+    'lg.why.a':'Plan PM structuré + réponse claire, site rapide et keyless',
+    'lg.why.desc':'L\'objectif est d\'avoir une expérience fiable et actionnable : plan PM structuré + réponse claire, tout en gardant un site rapide, keyless côté utilisateur, et simple à maintenir.'
+  },
+  en:{
+    'back':'Portfolio',
+    'tag':'Behind the build',
+    'h1.line1':'How I<br>',
+    'h1.grad':'built this site',
+    'subtitle':'Vanilla stack, static deployment, LLM via secure proxy. No framework, no unnecessary dependencies — just web that works.',
+    's1.title':'Tech stack',
+    'stack.front.badge':'Frontend',
+    'stack.front.desc':'100% vanilla. No framework, no bundler, no npm dependencies. Each page is a standalone HTML file with its own inline CSS and JS.',
+    'stack.deploy.badge':'Hosting',
+    'stack.deploy.desc':'Free static deployment with native CI/CD via git push. Every commit to main automatically triggers a deployment to the GitHub domain.',
+    'stack.proxy.badge':'API Proxy',
+    'stack.proxy.desc':'Serverless Worker that proxies requests between the frontend and the Groq API. Secures the API key server-side, handles CORS, and runs on Cloudflare\'s free plan.',
+    'stack.llm.badge':'LLM Provider',
+    'stack.llm.desc':'Access to Llama 3 models via REST API. Ultra-fast inference, generous free plan for personal use, and OpenAI SDK compatibility.',
+    's2.title':'Creation steps',
+    'step1.label':'Idea & scoping',
+    'step1.title':'Start from a real PM problem',
+    'step1.desc':'Every tool addresses a real friction I experienced as a PM: writing vague OKRs, manually synthesising interviews, preparing a roadmap for executives. The site grew from that list of frustrations, not from a desire to build a classic portfolio.',
+    'step2.label':'Design',
+    'step2.title':'Design system via CSS variables',
+    'step2.desc':'Dark theme planned from the start with a CSS token system (colors, surfaces, borders) consistent across all pages. The blue-violet-cyan palette creates a strong visual identity without relying on a UI framework. Syne for headings, DM Sans for body text.',
+    'step3.label':'Development',
+    'step3.title':'Standalone HTML pages, vanilla JS',
+    'step3.desc':'Each tool is an independent HTML page with its own CSS and JS. No routing, no state management, no shared components. Simple, readable, and debuggable without a toolchain. FR/EN bilingual support is handled with a translation object and data-i18n attributes.',
+    'step4.label':'LLM integration',
+    'step4.title':'Cloudflare proxy to secure the API key',
+    'step4.desc':'Pages send requests to a Cloudflare Worker that proxies to the Groq API. The API key never travels client-side. The Worker validates the origin, handles CORS headers and returns the response. Deployed in minutes with the Wrangler CLI.',
+    'step5.label':'Deployment',
+    'step5.title':'GitHub Pages, push = deploy',
+    'step5.desc':'The GitHub repo is directly connected to GitHub Pages. Every git push to main triggers an automatic deployment in under 60 seconds. Zero complex CI/CD configuration, zero hosting cost.',
+    's3.title':'Build tools',
+    'tool.cc.role':'Vibe coding — Anthropic CLI',
+    'tool.cc.desc':'Primary development tool. I write specs in plain language, Claude Code generates the code, refactors sections and manages commits. Lets you ship fast without sacrificing code quality.',
+    'tool.lovable.role':'UI prototyping — vibe coding',
+    'tool.lovable.desc':'Used to quickly explore layouts and visual components. Lovable accelerates the design phase by generating clean HTML/CSS from a description.',
+    'tool.wrangler.role':'Cloudflare Workers deployment',
+    'tool.wrangler.desc':'Cloudflare\'s official CLI to develop, test locally and deploy the proxy Worker. Configured via a minimal wrangler.toml file, deployed with a single command.',
+    'tool.git.role':'Versioning & deployment',
+    'tool.git.desc':'Classic version control with Git. The GitHub remote is the source of truth and triggers Pages deployment automatically on every push to the main branch.',
+    's4.title':'Architecture decisions',
+    'd1.q':'Why vanilla HTML instead of React or Next.js?',
+    'd1.a':'Zero dependencies, zero toolchain, zero technical debt',
+    'd1.why':'A static portfolio and simple tools site doesn\'t need a SPA framework. Vanilla HTML deploys directly, reads easily, and generates no technical debt. Less complexity = more velocity.',
+    'd2.q':'Why a Cloudflare Workers proxy instead of exposing the API key?',
+    'd2.a':'Non-negotiable security, generous free plan',
+    'd2.why':'Exposing an API key in client-side code is handing it to anyone. The Worker intercepts requests, injects the key server-side and validates the origin. Cloudflare free plan: 100,000 requests/day — more than enough.',
+    'd3.q':'Why Groq instead of OpenAI or Anthropic directly?',
+    'd3.a':'Inference speed and free plan',
+    'd3.why':'Groq runs Llama 3 models on LPU hardware optimised for inference. Result: responses in 1-2 seconds where other providers take 5-10s. And the free plan comfortably covers personal use.',
+    'd4.q':'Why GitHub Pages instead of a VPS or Vercel?',
+    'd4.a':'Free, simple, native CI/CD',
+    'd4.why':'For static files, GitHub Pages is unbeatable: free, global CDN, automatic HTTPS, and deployment triggered simply by a git push. No need for more complex infrastructure for this use case.',
+    'footer.back':'Back to portfolio',
+    's5.title':'LangGraph Orchestration',
+    'lg.front.name':'Static Frontend',
+    'lg.front.badge':'HTML · JS',
+    'lg.front.desc':'Each tool is a standalone HTML/JS page deployed on GitHub Pages. No secret is ever exposed in the browser.',
+    'lg.proxy.name':'Cloudflare Proxy',
+    'lg.proxy.badge':'Worker /orchestrate',
+    'lg.proxy.desc':'Calls go through a Worker (<code>/orchestrate</code>) that centralises security, routing and fallbacks.',
+    'lg.orch.name':'LangGraph Orchestrator',
+    'lg.orch.badge':'FastAPI · LangGraph',
+    'lg.orch.desc':'A FastAPI + LangGraph service produces a structured plan then a concise response via a <strong>planner → synthesis</strong> flow.',
+    'lg.recent.label':'What we added recently',
+    'lg.r1':'A Worker route <code>POST /orchestrate</code> that tries the external orchestrator first when available.',
+    'lg.r2':'A native Groq fallback on the Worker side if the orchestrator is unreachable.',
+    'lg.r3':'More robust parsing of planner outputs (including JSON wrapped in <code>```json</code> blocks).',
+    'lg.r4':'Automated tests on the orchestrator and proxy to secure routing/fallback scenarios.',
+    'lg.why.q':'Why LangGraph?',
+    'lg.why.a':'Structured PM plan + clear response, fast & keyless site',
+    'lg.why.desc':'The goal is a reliable, actionable experience: structured PM plan + clear response, while keeping the site fast, keyless for the user, and easy to maintain.'
+  }
+};
+
+function setLang(lang){
+  document.getElementById('btn-fr').classList.toggle('active', lang==='fr');
+  document.getElementById('btn-en').classList.toggle('active', lang==='en');
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k = el.getAttribute('data-i18n');
+    if(T[lang] && T[lang][k] !== undefined) el.innerHTML = T[lang][k];
+  });
+}
 
     <h2>Ce qu’on a ajouté récemment (LangGraph)</h2>
     <ul>
