@@ -122,28 +122,20 @@ section{margin-bottom:4rem}
 </style>
 </head>
 <body>
-  <main class="wrap">
-    <span class="badge">How I built this</span>
-    <h1>Comment j’ai construit ce site et ses outils IA</h1>
-    <p>
-      J’ai construit ce portfolio et les outils PM avec une approche simple : des interfaces statiques rapides à charger,
-      une couche proxy sécurisée pour les appels IA, puis une orchestration plus intelligente pour guider les réponses.
-    </p>
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+<div class="glow g3"></div>
 
-    <h2>Architecture globale</h2>
-    <div class="grid">
-      <section class="card">
-        <h3>1) Frontend statique</h3>
-        <p>Chaque outil est une page HTML/JS autonome, déployée sur GitHub Pages. Aucun secret n’est exposé dans le navigateur.</p>
-      </section>
-      <section class="card">
-        <h3>2) Proxy Cloudflare</h3>
-        <p>Les appels passent par un Worker (<code>/orchestrate</code>) qui centralise la sécurité, le routage et les fallbacks.</p>
-      </section>
-      <section class="card">
-        <h3>3) Orchestrateur LangGraph</h3>
-        <p>Un service FastAPI + LangGraph produit un plan structuré puis une réponse concise via un flux <strong>planner → synthesis</strong>.</p>
-      </section>
+<div class="container">
+
+  <div class="top-bar">
+    <a href="https://cmankotech.github.io/cmankotech/" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-i18n="back">Portfolio</span>
+    </a>
+    <div class="lang-switcher">
+      <button class="lang-btn active" id="btn-fr" onclick="setLang(‘fr’)">FR</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang(‘en’)">EN</button>
     </div>
   </div>
 
@@ -536,24 +528,12 @@ function setLang(lang){
   });
 }
 
-    <h2>Ce qu’on a ajouté récemment (LangGraph)</h2>
-    <ul>
-      <li>Une route Worker <code>POST /orchestrate</code> qui tente d’abord l’orchestrateur externe quand il est disponible.</li>
-      <li>Un fallback natif vers Groq côté Worker si l’orchestrateur n’est pas joignable.</li>
-      <li>Un parsing plus robuste des sorties planner (y compris JSON entouré de blocs <code>```json</code>).</li>
-      <li>Des tests automatiques sur l’orchestrateur et le proxy pour sécuriser les cas de routing/fallback.</li>
-    </ul>
-
-    <h2>Pourquoi ce choix ?</h2>
-    <p>
-      L’objectif est d’avoir une expérience fiable et actionnable :
-      plan PM structuré + réponse claire, tout en gardant un site rapide, keyless côté utilisateur, et simple à maintenir.
-    </p>
-
-    <p class="cta">
-      Voir les outils :
-      <a href="https://cmankotech.github.io/cmankotech/">cmankotech.github.io/cmankotech</a>
-    </p>
-  </main>
+// Init from URL param
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var lang = params.get(‘lang’);
+  if(lang === ‘en’) setLang(‘en’);
+})();
+</script>
 </body>
 </html>
