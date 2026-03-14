@@ -143,6 +143,12 @@ section{border-bottom:1px solid var(--line);position:relative;z-index:1}
 .proj-stat-num{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;line-height:1;letter-spacing:-0.04em}
 .proj-stat-lbl{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted)}
 
+/* BUILT PILL */
+.built-pill{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;padding:0.55rem 1.1rem;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.25);color:#67e8f9;border-radius:99px;text-decoration:none;transition:all 0.25s;width:fit-content}
+.built-pill:hover{background:rgba(34,211,238,0.15);border-color:rgba(34,211,238,0.45);box-shadow:0 0 20px rgba(34,211,238,0.15);transform:translateY(-1px)}
+.built-pill svg{flex-shrink:0;transition:transform 0.2s}
+.built-pill:hover svg{transform:translateX(2px)}
+
 /* REVEAL - visible par defaut, anime si JS */
 .rv{opacity:1;transform:none;transition:opacity 0.55s ease,transform 0.55s ease}
 .js-ready .rv{opacity:0;transform:translateY(16px)}
@@ -206,6 +212,7 @@ nav{padding:1rem 1.5rem}
   <a href="#projects" data-i18n="nav.projects" onclick="document.getElementById('nav-hamburger').click()">Projets</a>
   <a href="#skills" data-i18n="nav.skills" onclick="document.getElementById('nav-hamburger').click()">Comp&eacute;tences</a>
   <a href="#certs" data-i18n="nav.certs" onclick="document.getElementById('nav-hamburger').click()">Certifications</a>
+  <a href="https://cmankotech.github.io/cmankotech/how-i-built-this.html" target="_blank" onclick="document.getElementById('nav-hamburger').click()" style="color:#22d3ee;font-size:1rem" data-i18n="mobile.built">Behind the build ↗</a>
 </div>
 
 <section id="hero" style="position:relative;overflow:hidden"><canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.45"></canvas>
@@ -224,6 +231,10 @@ nav{padding:1rem 1.5rem}
         <span class="badge b3">PSPO I &middot; SAFe</span>
         <span class="badge b4">CrewAI &middot; n8n</span>
       </div>
+      <a href="https://cmankotech.github.io/cmankotech/how-i-built-this.html" target="_blank" class="built-pill" data-i18n="hero.built">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Comment j'ai construit ce site &rarr;
+      </a>
     </div>
   </div>
 </section>
@@ -376,7 +387,7 @@ nav{padding:1rem 1.5rem}
       <a href="mailto:carlinmankoto@proton.me" class="footer-link">&#9993; carlinmankoto@proton.me</a>
       <a href="https://linkedin.com/in/carlinmankoto" target="_blank" class="footer-link">&#8599; LinkedIn</a>
       <a href="https://www.credly.com/users/carlin-mankoto" target="_blank" class="footer-link">&#8599; Credly</a>
-      
+      <a href="https://cmankotech.github.io/cmankotech/how-i-built-this.html" target="_blank" class="footer-link" data-i18n="footer.built">&#8599; Comment j'ai construit ce site</a>
     </div>
   </div>
   <div class="footer-copy">&copy; 2026 Carlin Mankoto - AI Product Manager</div>
@@ -406,7 +417,7 @@ var T={fr:{'nav.exp':'Parcours','nav.skills':'Comp\u00e9tences','nav.certs':'Cer
 'proj.okr.ap':"Web app (HTML/JS + Groq). The user describes their context and ambitions, the AI generates OKRs with typed Key Results (metric, milestone, health).",
 'proj.okr.res':"Structured OKRs in seconds, with baselines and team usage tips. Covers the strategic planning phase of the product cycle.",
 'skills.title':'Skills',
-'proj.eus.ctx':"Tool designed to speed up the decomposition of an epic into user stories ready to refine in sprint planning.",'proj.eus.pb':"Writing independent, well-formulated user stories with verifiable acceptance criteria takes time and requires rigor.",'proj.eus.ap':"Web app (HTML/JS + Groq). The user describes their epic, picks the format (standard or Job Story) and number of stories. The AI generates each story with priority, effort and acceptance criteria.",'proj.eus.res':"Ready backlog in seconds, exportable to Markdown for Jira or Confluence. Follows the INVEST principle for each story.",'footer.hl':'Let\'s build<br>','footer.hl2':'something together?','skills.product':'Product','skills.ai':'AI & Tech','skills.agile':'Agility & Tools','certs.agile':'Agility','certs.product':'Product Management','certs.ai':'AI & Other','certs.credly':'See all my badges on Credly \u2192','cert.oriions':'Innovative Agile Project Management (Crossthink/ORIIONS)','proj.rs.ctx':"Tool designed to transform a raw feature list into a narrative roadmap adapted to each audience.",'proj.rs.pb':"Presenting a roadmap to executives or clients requires a value-oriented pitch, not a JIRA ticket list.",'proj.rs.ap':"Web app (HTML/JS + Groq). The user enters features by period (Now/Next/Later), picks their audience and gets a narrative pitch + valued timeline + key messages.",'proj.rs.res':"Presentation-ready roadmap in seconds, with a copyable pitch and audience-tailored key messages." }};
+'proj.eus.ctx':"Tool designed to speed up the decomposition of an epic into user stories ready to refine in sprint planning.",'proj.eus.pb':"Writing independent, well-formulated user stories with verifiable acceptance criteria takes time and requires rigor.",'proj.eus.ap':"Web app (HTML/JS + Groq). The user describes their epic, picks the format (standard or Job Story) and number of stories. The AI generates each story with priority, effort and acceptance criteria.",'proj.eus.res':"Ready backlog in seconds, exportable to Markdown for Jira or Confluence. Follows the INVEST principle for each story.",'footer.hl':'Let\'s build<br>','footer.hl2':'something together?','footer.built':'\u2197 How I built this site','mobile.built':'Behind the build \u2197','hero.built':'How I built this site \u2192','skills.product':'Product','skills.ai':'AI & Tech','skills.agile':'Agility & Tools','certs.agile':'Agility','certs.product':'Product Management','certs.ai':'AI & Other','certs.credly':'See all my badges on Credly \u2192','cert.oriions':'Innovative Agile Project Management (Crossthink/ORIIONS)','proj.rs.ctx':"Tool designed to transform a raw feature list into a narrative roadmap adapted to each audience.",'proj.rs.pb':"Presenting a roadmap to executives or clients requires a value-oriented pitch, not a JIRA ticket list.",'proj.rs.ap':"Web app (HTML/JS + Groq). The user enters features by period (Now/Next/Later), picks their audience and gets a narrative pitch + valued timeline + key messages.",'proj.rs.res':"Presentation-ready roadmap in seconds, with a copyable pitch and audience-tailored key messages." }};
 
 window.setLang=function(lang){
   document.getElementById('btn-fr').classList.toggle('active',lang==='fr');
