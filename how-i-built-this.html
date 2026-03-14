@@ -156,25 +156,31 @@ section{margin-bottom:4rem}
         <div class="stack-icon">🌐</div>
         <div class="stack-name">HTML · CSS · JavaScript</div>
         <div class="stack-badge sb-cyan" data-i18n="stack.front.badge">Frontend</div>
-        <div class="stack-desc" data-i18n="stack.front.desc">Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque page est un fichier HTML autonome avec son CSS et son JS inline.</div>
+        <div class="stack-desc" data-i18n="stack.front.desc">Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline — pas de composants partagés, pas de routing entre pages. Ce choix permet un déploiement direct sans étape de build, un debug immédiat dans les DevTools navigateur, et un code lisible à plat sans couche d'abstraction. Six pages indépendantes : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller.</div>
       </div>
       <div class="stack-card">
         <div class="stack-icon">☁️</div>
         <div class="stack-name">GitHub Pages</div>
         <div class="stack-badge sb-blue" data-i18n="stack.deploy.badge">Hébergement</div>
-        <div class="stack-desc" data-i18n="stack.deploy.desc">Déploiement statique gratuit, CI/CD natif via git push. Chaque commit sur main déclenche automatiquement un déploiement sur le domaine GitHub.</div>
+        <div class="stack-desc" data-i18n="stack.deploy.desc">Hébergement statique gratuit avec CI/CD natif : chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Zéro coût, zéro infra à gérer — idéal pour un site statique à fichiers HTML/CSS/JS.</div>
       </div>
       <div class="stack-card">
         <div class="stack-icon">⚡</div>
         <div class="stack-name">Cloudflare Workers</div>
         <div class="stack-badge sb-orange" data-i18n="stack.proxy.badge">API Proxy</div>
-        <div class="stack-desc" data-i18n="stack.proxy.desc">Worker serverless qui fait proxy entre le frontend et l'API Groq. Sécurise la clé API côté serveur, gère le CORS, et tourne sur le plan gratuit Cloudflare.</div>
+        <div class="stack-desc" data-i18n="stack.proxy.desc">Worker serverless JavaScript avec double routing. POST / : passthrough direct vers l'API Groq pour les 6 outils PM — la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, qui tente l'orchestrateur FastAPI externe avant de basculer sur le fallback natif Worker. Validation d'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.</div>
       </div>
       <div class="stack-card">
         <div class="stack-icon">🤖</div>
         <div class="stack-name">Groq API</div>
         <div class="stack-badge sb-violet" data-i18n="stack.llm.badge">LLM Provider</div>
-        <div class="stack-desc" data-i18n="stack.llm.desc">Accès au modèle llama-3.3-70b-versatile via API REST. Inférence ultra-rapide sur LPU Groq, plan gratuit généreux pour un usage personnel, et compatibilité OpenAI SDK.</div>
+        <div class="stack-desc" data-i18n="stack.llm.desc">Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes — 5 à 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 3 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).</div>
+      </div>
+      <div class="stack-card" style="grid-column:1/-1">
+        <div class="stack-icon">🐍</div>
+        <div class="stack-name">FastAPI · LangGraph</div>
+        <div class="stack-badge sb-violet" data-i18n="stack.lg.badge">Orchestration</div>
+        <div class="stack-desc" data-i18n="stack.lg.desc">Service Python autonome (port 8081) qui ajoute une couche d'intelligence structurée pour KRL1. Le StateGraph LangGraph enchaîne deux nœuds : planner (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; synthesis (T=0.45) transforme ce plan en réponse naturelle max 220 mots avec liens vers les outils PM. LangSmith optionnel trace chaque run du graph en production. Le Worker bascule en fallback natif si le service est hors ligne.</div>
       </div>
     </div>
   </section>
@@ -193,7 +199,7 @@ section{margin-bottom:4rem}
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step1.label">Idée & cadrage</div>
           <div class="tl-step-title" data-i18n="step1.title">Partir d'un vrai problème PM</div>
-          <div class="tl-step-desc" data-i18n="step1.desc">Chaque outil répond à une friction réelle que j'ai vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens à la main, préparer une roadmap pour des dirigeants. Le site est né de cette liste de frustrations, pas d'une envie de faire un portfolio classique.</div>
+          <div class="tl-step-desc" data-i18n="step1.desc">Chaque outil répond à une friction réelle vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens utilisateurs à la main, prioriser un backlog sans méthode claire, préparer une roadmap narrative pour des dirigeants. Le site est né de cette liste de frustrations, pas d'une envie de faire un portfolio classique. Six outils ont émergé de ce processus : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories et Roadmap Storyteller.</div>
         </div>
       </div>
       <div class="tl-item">
@@ -203,7 +209,7 @@ section{margin-bottom:4rem}
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step2.label">Design</div>
           <div class="tl-step-title" data-i18n="step2.title">Système de design en CSS variables</div>
-          <div class="tl-step-desc" data-i18n="step2.desc">Dark theme pensé dès le départ avec un système de tokens CSS (couleurs, surfaces, borders) cohérent sur toutes les pages. La palette bleue-violette-cyan crée une identité visuelle forte sans recourir à un framework UI. Typographie Syne pour les titres, DM Sans pour le corps.</div>
+          <div class="tl-step-desc" data-i18n="step2.desc">Dark theme pensé dès le départ avec un système de tokens CSS (couleurs, surfaces, borders) cohérent sur toutes les pages. La palette bleue-violette-cyan crée une identité visuelle forte sans recourir à un framework UI. Typographie Syne (titres, weight 800) pour l'impact, DM Sans (corps, weight 300) pour la lisibilité. Les CSS variables permettent une cohérence automatique — modifier --cyan suffit à mettre à jour l'accent sur toutes les pages.</div>
         </div>
       </div>
       <div class="tl-item">
@@ -213,7 +219,7 @@ section{margin-bottom:4rem}
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step3.label">Développement</div>
           <div class="tl-step-title" data-i18n="step3.title">Pages HTML autonomes, JS vanilla</div>
-          <div class="tl-step-desc" data-i18n="step3.desc">Chaque outil est une page HTML indépendante avec son propre CSS et JS. Pas de routing, pas de state management, pas de composants partagés. Simple, lisible, et débuggable sans toolchain. La gestion bilingue FR/EN est faite avec un objet de traductions et des attributs data-i18n.</div>
+          <div class="tl-step-desc" data-i18n="step3.desc">Chaque outil est une page HTML indépendante avec son propre CSS et JS. Pas de routing, pas de state management, pas de composants partagés. Simple, lisible, et débuggable sans toolchain. Chaque prompt system est spécialisé (ex : 'Tu es un expert en OKR…') et la réponse attendue est du JSON structuré que le JS parse et injecte dans le DOM. La gestion bilingue FR/EN est faite avec un objet de traductions et des attributs data-i18n.</div>
         </div>
       </div>
       <div class="tl-item">
@@ -223,7 +229,7 @@ section{margin-bottom:4rem}
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step4.label">Intégration LLM</div>
           <div class="tl-step-title" data-i18n="step4.title">Proxy Cloudflare pour sécuriser la clé</div>
-          <div class="tl-step-desc" data-i18n="step4.desc">Les pages font des requêtes vers un Cloudflare Worker qui proxifie vers l'API Groq. La clé API ne transit jamais côté client. Le Worker valide l'origine, gère les headers CORS et retourne la réponse. Déployé en quelques minutes avec Wrangler CLI.</div>
+          <div class="tl-step-desc" data-i18n="step4.desc">Les pages font des requêtes fetch vers un Cloudflare Worker qui proxifie vers l'API Groq. La clé API ne transite jamais côté client — elle est injectée par le Worker côté serveur. Le Worker valide l'origine (uniquement cmankotech.github.io), gère les headers CORS et retourne la réponse Groq au format OpenAI. Déployé en quelques minutes avec Wrangler CLI et un wrangler.toml minimaliste.</div>
         </div>
       </div>
       <div class="tl-item">
@@ -233,7 +239,17 @@ section{margin-bottom:4rem}
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step5.label">Déploiement</div>
           <div class="tl-step-title" data-i18n="step5.title">GitHub Pages, push = deploy</div>
-          <div class="tl-step-desc" data-i18n="step5.desc">Le repo GitHub est directement connecté à GitHub Pages. Chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. Zéro configuration de CI/CD complexe, zéro coût d'hébergement.</div>
+          <div class="tl-step-desc" data-i18n="step5.desc">Le repo GitHub est directement connecté à GitHub Pages. Chaque git push sur main déclenche un déploiement automatique via GitHub Actions en moins de 60 secondes — aucune configuration CI/CD manuelle. CDN mondial, HTTPS automatique, domaine cmankotech.github.io. Zéro coût d'hébergement pour des fichiers statiques.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-num">6</div>
+        </div>
+        <div class="tl-content">
+          <div class="tl-step-label" data-i18n="step6.label">Orchestration</div>
+          <div class="tl-step-title" data-i18n="step6.title">LangGraph pour structurer KRL1</div>
+          <div class="tl-step-desc" data-i18n="step6.desc">Face aux limites d'un prompt unique pour KRL1 — réponses parfois trop génériques, peu actionnables — j'ai ajouté une couche d'orchestration Python. Le principe : séparer la planification de la synthèse. Le nœud planner (T=0.2) analyse l'intention et produit un plan PM JSON déterministe (intent, user_goal, steps, risks, quick_win). Le nœud synthesis (T=0.45) transforme ce plan en réponse naturelle concise avec liens directs vers les outils. Développé avec Codex en mode agent autonome, testé avec pytest + httpx, tracé avec LangSmith.</div>
         </div>
       </div>
     </div>
@@ -325,34 +341,18 @@ section{margin-bottom:4rem}
       <span class="sec-num">05</span>
       <span class="sec-title" data-i18n="s5.title">Orchestration LangGraph</span>
     </div>
-    <div class="lg-grid">
-      <div class="stack-card">
-        <div class="stack-icon">🌐</div>
-        <div class="stack-name" data-i18n="lg.front.name">Frontend statique</div>
-        <div class="stack-badge sb-cyan" data-i18n="lg.front.badge">HTML · JS</div>
-        <div class="stack-desc" data-i18n="lg.front.desc">Chaque outil est une page HTML/JS autonome, déployée sur GitHub Pages. Aucun secret n'est exposé dans le navigateur.</div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-icon">⚡</div>
-        <div class="stack-name" data-i18n="lg.proxy.name">Proxy Cloudflare</div>
-        <div class="stack-badge sb-orange" data-i18n="lg.proxy.badge">Worker /orchestrate</div>
-        <div class="stack-desc" data-i18n="lg.proxy.desc">Le Worker expose deux routes : <code>POST /</code> passthrough direct Groq (les 6 outils PM) et <code>POST /orchestrate</code> avec orchestration LangGraph + fallback natif (KRL1 uniquement).</div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-icon">🤖</div>
-        <div class="stack-name" data-i18n="lg.orch.name">Orchestrateur LangGraph</div>
-        <div class="stack-badge sb-violet" data-i18n="lg.orch.badge">FastAPI · LangGraph</div>
-        <div class="stack-desc" data-i18n="lg.orch.desc">Service Python FastAPI (port 8081) avec un <code>StateGraph</code> LangGraph à deux nœuds : <strong>planner</strong> (T=0.2, JSON strict) → <strong>synthesis</strong> (T=0.45, max 220 mots). Tracing LangSmith optionnel.</div>
-      </div>
+    <div class="decision-card" style="margin-bottom:1.5rem">
+      <div class="decision-q" data-i18n="lg.flow.label">Flow d'une requête KRL1</div>
+      <div class="decision-why" data-i18n="lg.flow.desc">1 · L'utilisateur envoie un message dans le chat KRL1 (index.html). 2 · Le JS appelle POST /orchestrate sur le Worker Cloudflare avec {lang, message, history}. 3 · Le Worker tente l'orchestrateur FastAPI externe (si LANGGRAPH_ORCHESTRATOR_URL est défini). 4 · Le planner LangGraph (T=0.2) analyse l'intention → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 5 · Le synthesis LangGraph (T=0.45) transforme le plan en réponse max 220 mots avec liens outils PM. 6 · Fallback si FastAPI indisponible : le Worker exécute ce même flow planner→synthesis nativement via Groq. 7 · La réponse {reply, plan, engine} arrive au client — le chat affiche reply, le JSON plan reste disponible.</div>
     </div>
 
     <div class="decision-card" style="margin-top:1.5rem">
       <div class="decision-q" data-i18n="lg.recent.label">Ce qu'on a ajouté récemment</div>
       <div class="update-list">
         <div class="update-item" data-i18n="lg.r1">La route Worker <code>POST /orchestrate</code>, réservée au chatbot KRL1, tente d'abord l'orchestrateur FastAPI externe puis bascule en fallback natif Worker.</div>
-        <div class="update-item" data-i18n="lg.r2">Un fallback natif vers Groq côté Worker si l'orchestrateur n'est pas joignable.</div>
-        <div class="update-item" data-i18n="lg.r3">Un parsing plus robuste des sorties planner (y compris JSON entouré de blocs <code>```json</code>).</div>
-        <div class="update-item" data-i18n="lg.r4">Des tests automatiques sur l'orchestrateur et le proxy pour sécuriser les cas de routing/fallback.</div>
+        <div class="update-item" data-i18n="lg.r2">Un fallback Worker natif (même flow planner→synthesis) si l'orchestrateur FastAPI n'est pas joignable — garantit une réponse structurée même sans service Python déployé.</div>
+        <div class="update-item" data-i18n="lg.r3">Un parsing robuste via <code>strip_json_code_fences()</code> — gère les JSON entourés de blocs <code>```json</code> que le LLM peut produire malgré les instructions strict JSON only.</div>
+        <div class="update-item" data-i18n="lg.r4">Des tests automatiques (pytest + httpx) couvrant : planner JSON invalide, JSON fencé, orchestrateur externe hors ligne, routing /orchestrate vs / — pour sécuriser chaque cas de fallback.</div>
         <div class="update-item" data-i18n="lg.r5">Le tracing LangSmith optionnel (<code>LANGSMITH_API_KEY</code> + <code>LANGCHAIN_TRACING_V2=true</code>) pour observer le graph en production.</div>
       </div>
     </div>
@@ -360,7 +360,7 @@ section{margin-bottom:4rem}
     <div class="decision-card" style="margin-top:1rem">
       <div class="decision-q" data-i18n="lg.why.q">Pourquoi LangGraph ?</div>
       <div class="decision-a" data-i18n="lg.why.a">Plan PM structuré + réponse claire, site rapide et keyless</div>
-      <div class="decision-why" data-i18n="lg.why.desc">Le double-nœud répond à deux besoins opposés : le planner doit être déterministe (T=0.2, JSON strict) pour produire un plan PM fiable ; le synthesis doit être fluide (T=0.45) pour formuler une réponse concise et actionnable. Un seul appel LLM ne peut pas optimiser les deux en même temps.</div>
+      <div class="decision-why" data-i18n="lg.why.desc">Le double-nœud répond à deux contraintes opposées. Le planner a besoin d'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. Une température trop haute rend le JSON imprévisible et difficile à parser. La synthesis a besoin au contraire d'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots) avec les liens vers les outils PM pertinents. Un seul appel LLM ne peut pas satisfaire ces deux contraintes. LangGraph permet de composer ces comportements en un StateGraph lisible, testable et extensible — ajouter un nœud de validation ou de critique est trivial.</div>
     </div>
   </section>
 
@@ -384,29 +384,34 @@ var T={
     'subtitle':'Stack vanilla, déploiement statique, LLM via proxy sécurisé. Zéro framework, zéro dépendance inutile — juste du web qui fonctionne.',
     's1.title':'Stack technique',
     'stack.front.badge':'Frontend',
-    'stack.front.desc':'Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque page est un fichier HTML autonome avec son CSS et son JS inline.',
+    'stack.front.desc':'Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline — pas de composants partagés, pas de routing entre pages. Ce choix permet un déploiement direct sans étape de build, un debug immédiat dans les DevTools navigateur, et un code lisible à plat sans couche d\'abstraction. Six pages indépendantes : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller.',
     'stack.deploy.badge':'Hébergement',
-    'stack.deploy.desc':'Déploiement statique gratuit, CI/CD natif via git push. Chaque commit sur main déclenche automatiquement un déploiement sur le domaine GitHub.',
+    'stack.deploy.desc':'Hébergement statique gratuit avec CI/CD natif : chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Zéro coût, zéro infra à gérer — idéal pour un site statique à fichiers HTML/CSS/JS.',
     'stack.proxy.badge':'API Proxy',
-    'stack.proxy.desc':'Worker serverless qui fait proxy entre le frontend et l\'API Groq. Sécurise la clé API côté serveur, gère le CORS, et tourne sur le plan gratuit Cloudflare.',
+    'stack.proxy.desc':'Worker serverless JavaScript avec double routing. POST / : passthrough direct vers l\'API Groq pour les 6 outils PM — la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, qui tente l\'orchestrateur FastAPI externe avant de basculer sur le fallback natif Worker. Validation d\'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.',
     'stack.llm.badge':'LLM Provider',
-    'stack.llm.desc':'Accès au modèle llama-3.3-70b-versatile via API REST. Inférence ultra-rapide sur LPU Groq, plan gratuit généreux pour un usage personnel, et compatibilité OpenAI SDK.',
+    'stack.llm.desc':'Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L\'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes — 5 à 10x plus rapide que les providers classiques. Chaque outil PM l\'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 3 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).',
+    'stack.lg.badge':'Orchestration',
+    'stack.lg.desc':'Service Python autonome (port 8081) qui ajoute une couche d\'intelligence structurée pour KRL1. Le StateGraph LangGraph enchaîne deux nœuds : planner (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; synthesis (T=0.45) transforme ce plan en réponse naturelle max 220 mots avec liens vers les outils PM. LangSmith optionnel trace chaque run du graph en production. Le Worker bascule en fallback natif si le service est hors ligne.',
     's2.title':'Étapes de création',
     'step1.label':'Idée & cadrage',
     'step1.title':'Partir d\'un vrai problème PM',
-    'step1.desc':'Chaque outil répond à une friction réelle que j\'ai vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens à la main, préparer une roadmap pour des dirigeants. Le site est né de cette liste de frustrations, pas d\'une envie de faire un portfolio classique.',
+    'step1.desc':'Chaque outil répond à une friction réelle vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens utilisateurs à la main, prioriser un backlog sans méthode claire, préparer une roadmap narrative pour des dirigeants. Le site est né de cette liste de frustrations, pas d\'une envie de faire un portfolio classique. Six outils ont émergé de ce processus : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories et Roadmap Storyteller.',
     'step2.label':'Design',
     'step2.title':'Système de design en CSS variables',
-    'step2.desc':'Dark theme pensé dès le départ avec un système de tokens CSS (couleurs, surfaces, borders) cohérent sur toutes les pages. La palette bleue-violette-cyan crée une identité visuelle forte sans recourir à un framework UI. Typographie Syne pour les titres, DM Sans pour le corps.',
+    'step2.desc':'Dark theme pensé dès le départ avec un système de tokens CSS (couleurs, surfaces, borders) cohérent sur toutes les pages. La palette bleue-violette-cyan crée une identité visuelle forte sans recourir à un framework UI. Typographie Syne (titres, weight 800) pour l\'impact, DM Sans (corps, weight 300) pour la lisibilité. Les CSS variables permettent une cohérence automatique — modifier --cyan suffit à mettre à jour l\'accent sur toutes les pages.',
     'step3.label':'Développement',
     'step3.title':'Pages HTML autonomes, JS vanilla',
-    'step3.desc':'Chaque outil est une page HTML indépendante avec son propre CSS et JS. Pas de routing, pas de state management, pas de composants partagés. Simple, lisible, et débuggable sans toolchain. La gestion bilingue FR/EN est faite avec un objet de traductions et des attributs data-i18n.',
+    'step3.desc':'Chaque outil est une page HTML indépendante avec son propre CSS et JS. Pas de routing, pas de state management, pas de composants partagés. Simple, lisible, et débuggable sans toolchain. Chaque prompt system est spécialisé (ex : \'Tu es un expert en OKR…\') et la réponse attendue est du JSON structuré que le JS parse et injecte dans le DOM. La gestion bilingue FR/EN est faite avec un objet de traductions et des attributs data-i18n.',
     'step4.label':'Intégration LLM',
     'step4.title':'Proxy Cloudflare pour sécuriser la clé',
-    'step4.desc':'Les pages font des requêtes vers un Cloudflare Worker qui proxifie vers l\'API Groq. La clé API ne transit jamais côté client. Le Worker valide l\'origine, gère les headers CORS et retourne la réponse. Déployé en quelques minutes avec Wrangler CLI.',
+    'step4.desc':'Les pages font des requêtes fetch vers un Cloudflare Worker qui proxifie vers l\'API Groq. La clé API ne transite jamais côté client — elle est injectée par le Worker côté serveur. Le Worker valide l\'origine (uniquement cmankotech.github.io), gère les headers CORS et retourne la réponse Groq au format OpenAI. Déployé en quelques minutes avec Wrangler CLI et un wrangler.toml minimaliste.',
     'step5.label':'Déploiement',
     'step5.title':'GitHub Pages, push = deploy',
-    'step5.desc':'Le repo GitHub est directement connecté à GitHub Pages. Chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. Zéro configuration de CI/CD complexe, zéro coût d\'hébergement.',
+    'step5.desc':'Le repo GitHub est directement connecté à GitHub Pages. Chaque git push sur main déclenche un déploiement automatique via GitHub Actions en moins de 60 secondes — aucune configuration CI/CD manuelle. CDN mondial, HTTPS automatique, domaine cmankotech.github.io. Zéro coût d\'hébergement pour des fichiers statiques.',
+    'step6.label':'Orchestration',
+    'step6.title':'LangGraph pour structurer KRL1',
+    'step6.desc':'Face aux limites d\'un prompt unique pour KRL1 — réponses parfois trop génériques, peu actionnables — j\'ai ajouté une couche d\'orchestration Python. Le principe : séparer la planification de la synthèse. Le nœud planner (T=0.2) analyse l\'intention et produit un plan PM JSON déterministe (intent, user_goal, steps, risks, quick_win). Le nœud synthesis (T=0.45) transforme ce plan en réponse naturelle concise avec liens directs vers les outils. Développé avec Codex en mode agent autonome, testé avec pytest + httpx, tracé avec LangSmith.',
     's3.title':'Outils de build',
     'tool.cc.role':'Vibe coding — CLI Anthropic',
     'tool.cc.desc':'Principal outil de développement. J\'écris les specs en langage naturel, Claude Code génère le code, refactorise les sections et gère les commits. Permet de shipper vite sans sacrifier la qualité du code.',
@@ -442,15 +447,17 @@ var T={
     'lg.orch.name':'Orchestrateur LangGraph',
     'lg.orch.badge':'FastAPI · LangGraph',
     'lg.orch.desc':'Service Python FastAPI (port 8081) avec un <code>StateGraph</code> LangGraph à deux nœuds : <strong>planner</strong> (T=0.2, JSON strict) → <strong>synthesis</strong> (T=0.45, max 220 mots). Tracing LangSmith optionnel.',
+    'lg.flow.label':'Flow d\'une requête KRL1',
+    'lg.flow.desc':'1 · L\'utilisateur envoie un message dans le chat KRL1 (index.html). 2 · Le JS appelle POST /orchestrate sur le Worker Cloudflare avec {lang, message, history}. 3 · Le Worker tente l\'orchestrateur FastAPI externe (si LANGGRAPH_ORCHESTRATOR_URL est défini). 4 · Le planner LangGraph (T=0.2) analyse l\'intention → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 5 · Le synthesis LangGraph (T=0.45) transforme le plan en réponse max 220 mots avec liens outils PM. 6 · Fallback si FastAPI indisponible : le Worker exécute ce même flow planner→synthesis nativement via Groq. 7 · La réponse {reply, plan, engine} arrive au client — le chat affiche reply, le JSON plan reste disponible.',
     'lg.recent.label':'Ce qu\'on a ajouté récemment',
     'lg.r1':'La route Worker <code>POST /orchestrate</code>, réservée au chatbot KRL1, tente d\'abord l\'orchestrateur FastAPI externe puis bascule en fallback natif Worker.',
-    'lg.r2':'Un fallback natif vers Groq côté Worker si l\'orchestrateur n\'est pas joignable.',
-    'lg.r3':'Un parsing plus robuste des sorties planner (y compris JSON entouré de blocs <code>```json</code>).',
-    'lg.r4':'Des tests automatiques sur l\'orchestrateur et le proxy pour sécuriser les cas de routing/fallback.',
+    'lg.r2':'Un fallback Worker natif (même flow planner→synthesis) si l\'orchestrateur FastAPI n\'est pas joignable — garantit une réponse structurée même sans service Python déployé.',
+    'lg.r3':'Un parsing robuste via <code>strip_json_code_fences()</code> — gère les JSON entourés de blocs <code>```json</code> que le LLM peut produire malgré les instructions strict JSON only.',
+    'lg.r4':'Des tests automatiques (pytest + httpx) couvrant : planner JSON invalide, JSON fencé, orchestrateur externe hors ligne, routing /orchestrate vs / — pour sécuriser chaque cas de fallback.',
     'lg.r5':'Le tracing LangSmith optionnel (<code>LANGSMITH_API_KEY</code> + <code>LANGCHAIN_TRACING_V2=true</code>) pour observer le graph en production.',
     'lg.why.q':'Pourquoi LangGraph ?',
     'lg.why.a':'Plan PM structuré + réponse claire, site rapide et keyless',
-    'lg.why.desc':'Le double-nœud répond à deux besoins opposés : le planner doit être déterministe (T=0.2, JSON strict) pour produire un plan PM fiable ; le synthesis doit être fluide (T=0.45) pour formuler une réponse concise et actionnable. Un seul appel LLM ne peut pas optimiser les deux en même temps.'
+    'lg.why.desc':'Le double-nœud répond à deux contraintes opposées. Le planner a besoin d\'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. Une température trop haute rend le JSON imprévisible et difficile à parser. La synthesis a besoin au contraire d\'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots) avec les liens vers les outils PM pertinents. Un seul appel LLM ne peut pas satisfaire ces deux contraintes. LangGraph permet de composer ces comportements en un StateGraph lisible, testable et extensible — ajouter un nœud de validation ou de critique est trivial.'
   },
   en:{
     'back':'Portfolio',
@@ -460,29 +467,34 @@ var T={
     'subtitle':'Vanilla stack, static deployment, LLM via secure proxy. No framework, no unnecessary dependencies — just web that works.',
     's1.title':'Tech stack',
     'stack.front.badge':'Frontend',
-    'stack.front.desc':'100% vanilla. No framework, no bundler, no npm dependencies. Each page is a standalone HTML file with its own inline CSS and JS.',
+    'stack.front.desc':'100% vanilla. No framework, no bundler, no npm dependencies. Each tool is a standalone HTML page with its own inline CSS and JS — no shared components, no cross-page routing. This allows direct deployment without a build step, instant debugging in browser DevTools, and flat, abstraction-free code. Six independent pages: OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller.',
     'stack.deploy.badge':'Hosting',
-    'stack.deploy.desc':'Free static deployment with native CI/CD via git push. Every commit to main automatically triggers a deployment to the GitHub domain.',
+    'stack.deploy.desc':'Free static hosting with native CI/CD: every git push to main triggers an automatic deployment in under 60 seconds. Global CDN, automatic HTTPS, cmankotech.github.io domain with zero configuration. Zero cost, zero infrastructure to manage — ideal for a static HTML/CSS/JS site.',
     'stack.proxy.badge':'API Proxy',
-    'stack.proxy.desc':'Serverless Worker that proxies requests between the frontend and the Groq API. Secures the API key server-side, handles CORS, and runs on Cloudflare\'s free plan.',
+    'stack.proxy.desc':'Serverless JavaScript Worker with dual routing. POST /: direct passthrough to the Groq API for the 6 PM tools — the API key is injected Worker-side, never exposed to the browser. POST /orchestrate: dedicated route for the KRL1 chatbot, which tries the external FastAPI orchestrator before falling back to native Worker orchestration. Origin validation, automatic CORS, Cloudflare free plan: 100,000 req/day.',
     'stack.llm.badge':'LLM Provider',
-    'stack.llm.desc':'Access to the llama-3.3-70b-versatile model via REST API. Ultra-fast inference on Groq LPU hardware, generous free plan for personal use, and OpenAI SDK compatibility.',
+    'stack.llm.desc':'Access to the llama-3.3-70b-versatile model via an OpenAI-compatible REST API. LPU (Language Processing Unit) inference delivers responses in 1–2 seconds — 5 to 10x faster than classic providers. Each PM tool calls it with tailored parameters: temperatures between 0.3 and 0.7 depending on the task, max_tokens between 2,000 and 3,000, specialised system prompts (OKR strategist, discovery analyst, prioritisation expert…).',
+    'stack.lg.badge':'Orchestration',
+    'stack.lg.desc':'Standalone Python service (port 8081) that adds a structured intelligence layer for KRL1. The LangGraph StateGraph chains two nodes: planner (T=0.2) generates strict JSON with intent, user_goal, actionable steps, risks and quick_win; synthesis (T=0.45) transforms this plan into a natural response max 220 words with PM tool links. Optional LangSmith traces each graph run in production. The Worker falls back to native orchestration if the service is offline.',
     's2.title':'Creation steps',
     'step1.label':'Idea & scoping',
     'step1.title':'Start from a real PM problem',
-    'step1.desc':'Every tool addresses a real friction I experienced as a PM: writing vague OKRs, manually synthesising interviews, preparing a roadmap for executives. The site grew from that list of frustrations, not from a desire to build a classic portfolio.',
+    'step1.desc':'Every tool addresses a real friction experienced as a PM: writing vague OKRs, manually synthesising user interviews, prioritising a backlog without a clear method, preparing a narrative roadmap for executives. The site grew from that list of frustrations, not from a desire to build a classic portfolio. Six tools emerged from this process: OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories and Roadmap Storyteller.',
     'step2.label':'Design',
     'step2.title':'Design system via CSS variables',
-    'step2.desc':'Dark theme planned from the start with a CSS token system (colors, surfaces, borders) consistent across all pages. The blue-violet-cyan palette creates a strong visual identity without relying on a UI framework. Syne for headings, DM Sans for body text.',
+    'step2.desc':'Dark theme planned from the start with a CSS token system (colors, surfaces, borders) consistent across all pages. The blue-violet-cyan palette creates a strong visual identity without relying on a UI framework. Syne (headings, weight 800) for impact, DM Sans (body, weight 300) for readability. CSS variables ensure automatic consistency — changing --cyan is enough to update the accent across all pages.',
     'step3.label':'Development',
     'step3.title':'Standalone HTML pages, vanilla JS',
-    'step3.desc':'Each tool is an independent HTML page with its own CSS and JS. No routing, no state management, no shared components. Simple, readable, and debuggable without a toolchain. FR/EN bilingual support is handled with a translation object and data-i18n attributes.',
+    'step3.desc':'Each tool is an independent HTML page with its own CSS and JS. No routing, no state management, no shared components. Simple, readable, and debuggable without a toolchain. Each system prompt is specialised (e.g. \'You are an OKR expert…\') and the expected output is structured JSON that JS parses and injects into the DOM. FR/EN bilingual support is handled with a translation object and data-i18n attributes.',
     'step4.label':'LLM integration',
     'step4.title':'Cloudflare proxy to secure the API key',
-    'step4.desc':'Pages send requests to a Cloudflare Worker that proxies to the Groq API. The API key never travels client-side. The Worker validates the origin, handles CORS headers and returns the response. Deployed in minutes with the Wrangler CLI.',
+    'step4.desc':'Pages send fetch requests to a Cloudflare Worker that proxies to the Groq API. The API key never travels client-side — it is injected by the Worker server-side. The Worker validates the origin (cmankotech.github.io only), handles CORS headers and returns the Groq response in OpenAI format. Deployed in minutes with the Wrangler CLI and a minimal wrangler.toml.',
     'step5.label':'Deployment',
     'step5.title':'GitHub Pages, push = deploy',
-    'step5.desc':'The GitHub repo is directly connected to GitHub Pages. Every git push to main triggers an automatic deployment in under 60 seconds. Zero complex CI/CD configuration, zero hosting cost.',
+    'step5.desc':'The GitHub repo is directly connected to GitHub Pages. Every git push to main triggers an automatic deployment via GitHub Actions in under 60 seconds — no manual CI/CD configuration. Global CDN, automatic HTTPS, cmankotech.github.io domain. Zero hosting cost for static files.',
+    'step6.label':'Orchestration',
+    'step6.title':'LangGraph to structure KRL1',
+    'step6.desc':'Faced with the limits of a single prompt for KRL1 — sometimes too generic, not actionable enough — I added a Python orchestration layer. The principle: separate planning from synthesis. The planner node (T=0.2) analyses intent and produces a deterministic JSON PM plan (intent, user_goal, steps, risks, quick_win). The synthesis node (T=0.45) transforms this plan into a concise natural response with direct links to the tools. Built with Codex in autonomous agent mode, tested with pytest + httpx, traced with LangSmith.',
     's3.title':'Build tools',
     'tool.cc.role':'Vibe coding — Anthropic CLI',
     'tool.cc.desc':'Primary development tool. I write specs in plain language, Claude Code generates the code, refactors sections and manages commits. Lets you ship fast without sacrificing code quality.',
@@ -518,15 +530,17 @@ var T={
     'lg.orch.name':'LangGraph Orchestrator',
     'lg.orch.badge':'FastAPI · LangGraph',
     'lg.orch.desc':'Python FastAPI service (port 8081) with a two-node LangGraph <code>StateGraph</code>: <strong>planner</strong> (T=0.2, strict JSON) → <strong>synthesis</strong> (T=0.45, max 220 words). Optional LangSmith tracing.',
+    'lg.flow.label':'KRL1 request flow',
+    'lg.flow.desc':'1 · User sends a message in the KRL1 chat (index.html). 2 · JS calls POST /orchestrate on the Cloudflare Worker with {lang, message, history}. 3 · Worker tries the external FastAPI orchestrator (if LANGGRAPH_ORCHESTRATOR_URL is set). 4 · LangGraph planner (T=0.2) analyses intent → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 5 · LangGraph synthesis (T=0.45) transforms the plan into a max 220-word response with PM tool links. 6 · Fallback if FastAPI unavailable: Worker runs the same planner→synthesis flow natively via Groq. 7 · Response {reply, plan, engine} arrives at client — chat displays reply, JSON plan remains available.',
     'lg.recent.label':'What we added recently',
     'lg.r1':'The Worker route <code>POST /orchestrate</code>, reserved for the KRL1 chatbot, first tries the external FastAPI orchestrator then falls back to native Worker orchestration.',
-    'lg.r2':'A native Groq fallback on the Worker side if the orchestrator is unreachable.',
-    'lg.r3':'More robust parsing of planner outputs (including JSON wrapped in <code>```json</code> blocks).',
-    'lg.r4':'Automated tests on the orchestrator and proxy to secure routing/fallback scenarios.',
+    'lg.r2':'A native Worker fallback (same planner→synthesis flow) if the FastAPI orchestrator is unreachable — guarantees a structured response even without a deployed Python service.',
+    'lg.r3':'Robust parsing via <code>strip_json_code_fences()</code> — handles JSON wrapped in <code>```json</code> blocks that the LLM may produce despite strict JSON only instructions.',
+    'lg.r4':'Automated tests (pytest + httpx) covering: invalid planner JSON, fenced JSON, external orchestrator offline, /orchestrate vs / routing — to secure every fallback scenario.',
     'lg.r5':'Optional LangSmith tracing (<code>LANGSMITH_API_KEY</code> + <code>LANGCHAIN_TRACING_V2=true</code>) to observe the graph in production.',
     'lg.why.q':'Why LangGraph?',
     'lg.why.a':'Structured PM plan + clear response, fast & keyless site',
-    'lg.why.desc':'The two-node design addresses opposite needs: the planner must be deterministic (T=0.2, strict JSON) to produce a reliable PM plan; the synthesis must be fluid (T=0.45) to craft a concise, actionable response. A single LLM call cannot optimise both at once.'
+    'lg.why.desc':'The two-node design addresses two opposite constraints. The planner needs a low temperature (T=0.2) to produce deterministic, reliable JSON: intent, user_goal, actionable steps, identified risks, quick_win. Too high a temperature makes the JSON unpredictable and hard to parse. The synthesis needs a more creative temperature (T=0.45) to produce a natural, concise response (max 220 words) with links to the relevant PM tools. A single LLM call cannot satisfy both constraints simultaneously. LangGraph allows these behaviours to be composed into a readable, testable and extensible StateGraph — adding a validation or critique node is trivial.'
   }
 };
 
