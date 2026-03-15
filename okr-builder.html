@@ -245,7 +245,7 @@ footer a:hover{text-decoration:underline}
   <div class="card">
     <div class="card-title">
       <span id="lbl_ctx_title">Contexte produit</span>
-      <button class="btn-examples" onclick="loadExample()">&#127922; Exemple</button>
+      <button class="btn-examples" onclick="loadExample()">&#127922; Exemple aléatoire</button>
     </div>
 
     <div class="form-grid">
@@ -344,18 +344,35 @@ footer a:hover{text-decoration:underline}
 var period = 'trimestre';
 var nbObjectives = 3;
 
-var EXAMPLE = {
-  name: 'Flowly',
-  type: 'SaaS B2B',
-  ambitions: "On veut améliorer la rétention des utilisateurs et réduire le churn qui est notre plus gros problème. On souhaite aussi accélérer l'activation des nouveaux clients et lancer un module de reporting avancé pour les équipes managers.",
-  metrics: 'DAU 6 200, churn mensuel 3.8%, NPS 28, time-to-value J14 pour 60% des nouveaux clients'
-};
+var EXAMPLES = [
+  {
+    name: 'Flowly', type: 'SaaS B2B',
+    ambitions: "On veut améliorer la rétention des utilisateurs et réduire le churn qui est notre plus gros problème. On souhaite aussi accélérer l'activation des nouveaux clients et lancer un module de reporting avancé pour les équipes managers.",
+    metrics: 'DAU 6 200, churn mensuel 3.8%, NPS 28, time-to-value J14 pour 60% des nouveaux clients'
+  },
+  {
+    name: 'Mealzy', type: 'Marketplace B2C',
+    ambitions: "Doubler notre base de livreurs partenaires d'ici fin d'année et améliorer la note moyenne des restaurants. Réduire le taux d'annulation des commandes qui dépasse les 8%.",
+    metrics: 'GMV mensuel 1.2M€, 45k commandes/mois, taux annulation 8.3%, note moy. restaurants 3.8/5'
+  },
+  {
+    name: 'HiringPro', type: 'SaaS RH B2B',
+    ambitions: "Réduire le time-to-hire et augmenter le taux d'acceptation des offres. Lancer un module d'analytics pour les RH et monter en gamme sur le segment ETI.",
+    metrics: "Time-to-hire moyen 24 jours, taux d'acceptation 62%, NPS 34, MRR 180k€, churn 4.1%"
+  },
+  {
+    name: 'Learnia', type: 'EdTech B2C / B2B',
+    ambitions: "Améliorer le taux de complétion des parcours qui est trop bas et lancer une offre entreprise pour diversifier les revenus. Réduire le CAC qui a explosé ces 6 derniers mois.",
+    metrics: 'Taux de complétion 23%, CAC 42€, LTV 95€, 18k utilisateurs actifs, 3 entreprises pilotes'
+  }
+];
 
 function loadExample() {
-  document.getElementById('productName').value = EXAMPLE.name;
-  document.getElementById('productType').value = EXAMPLE.type;
-  document.getElementById('ambitions').value = EXAMPLE.ambitions;
-  document.getElementById('metrics').value = EXAMPLE.metrics;
+  var e = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)];
+  document.getElementById('productName').value = e.name;
+  document.getElementById('productType').value = e.type;
+  document.getElementById('ambitions').value = e.ambitions;
+  document.getElementById('metrics').value = e.metrics;
 }
 function setPeriod(p) {
   period = p;
@@ -596,7 +613,7 @@ function setLang(lang) {
   var cardTitles = document.querySelectorAll('.card-title');
   if(cardTitles[0]) cardTitles[0].innerHTML = T['config.title'] + '<span style="flex:1;height:1px;background:var(--line);display:inline-block;margin-left:0.6rem"></span>';
   if(cardTitles[1]) {
-    var examplesLabel = lang === 'en' ? 'Example' : 'Exemple';
+    var examplesLabel = lang === 'en' ? 'Random example' : 'Exemple aléatoire';
     cardTitles[1].innerHTML = T['form.title'] + '<button class="btn-examples" onclick="loadExample()">&#127922; ' + examplesLabel + '</button><span style="flex:1;height:1px;background:var(--line);display:inline-block;margin-left:0.6rem"></span>';
   }
   // Field labels
