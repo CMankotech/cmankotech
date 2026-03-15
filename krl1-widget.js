@@ -365,51 +365,73 @@
       return;
     }
 
-    try {
-      var result = await fetchStream(userMessage);
-      _history.push({ role: 'assistant', content: result.text });
-      var chips = getContextualChips(userMessage);
-      if (chips && chips.length) {
-        var cd = document.createElement('div');
-        cd.className = 'chips';
-        chips.forEach(function (chip) {
-          var btn = document.createElement('button');
-          btn.className = 'chip';
-          btn.textContent = chip;
-          btn.onclick = function () { handleInput(chip); };
-          cd.appendChild(btn);
-        });
-        result.div.appendChild(cd);
-        document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
-      }
-    } catch (e) {
+    // Collect text — dots stay visible the whole time
+    var fullText = null;
+    try { fullText = await collectStream(userMessage); } catch (_) {}
+    if (!fullText) {
+      try { fullText = await fetchFallback(userMessage); } catch (_) {}
+    }
+
+    if (!fullText) {
       hideTyping();
-      try {
-        var reply = await fetchFallback(userMessage);
-        _history.push({ role: 'assistant', content: reply });
-        addBotMsg(reply, getContextualChips(userMessage));
-      } catch (e2) {
-        addBotMsg((I18N[_lang] || I18N['fr']).error);
+      addBotMsg((I18N[_lang] || I18N['fr']).error);
+      return;
+    }
+
+    _history.push({ role: 'assistant', content: fullText });
+
+    // Progressive reveal — dots hidden only when first word appears
+    hideTyping();
+    var msgs = document.getElementById('chat-messages');
+    var div = document.createElement('div');
+    div.className = 'msg bot streaming';
+    msgs.appendChild(div);
+
+    var words = fullText.split(/(\s+)/);
+    var built = '';
+    for (var wi = 0; wi < words.length; wi++) {
+      built += words[wi];
+      div.innerHTML = mdToHtml(built);
+      msgs.scrollTop = msgs.scrollHeight;
+      if (words[wi].trim()) {
+        await new Promise(function (r) { setTimeout(r, 22); });
       }
+    }
+    div.classList.remove('streaming');
+
+    // Auto-expand if long response
+    if (!_expanded && fullText.split(/\s+/).length > 65) toggleSize();
+
+    // Contextual chips
+    var chips = getContextualChips(userMessage);
+    if (chips && chips.length) {
+      var cd = document.createElement('div');
+      cd.className = 'chips';
+      chips.forEach(function (chip) {
+        var btn = document.createElement('button');
+        btn.className = 'chip';
+        btn.textContent = chip;
+        btn.onclick = function () { handleInput(chip); };
+        cd.appendChild(btn);
+      });
+      div.appendChild(cd);
+      msgs.scrollTop = msgs.scrollHeight;
     }
   }
 
-  async function fetchStream(userMessage) {
+  async function collectStream(userMessage) {
     var history = [{ role: 'system', content: SYSTEM_PROMPT }].concat(_history);
     var res = await fetch('https://groq-proxy.cmankotech.workers.dev/orchestrate-stream', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ lang: _lang, message: userMessage, history: history })
     });
-
     if (!res.ok || !res.body) throw new Error('Stream failed');
 
-    // Collect full response (backend buffers before sending)
     var reader = res.body.getReader();
     var decoder = new TextDecoder();
     var fullText = '';
     var buffer = '';
-
     while (true) {
       var chunk = await reader.read();
       if (chunk.done) break;
@@ -429,35 +451,8 @@
       }
     }
 
-    if (!fullText) { hideTyping(); throw new Error('Empty response'); }
-
-    // Progressive word-by-word reveal
-    hideTyping();
-    var msgs = document.getElementById('chat-messages');
-    var div = document.createElement('div');
-    div.className = 'msg bot streaming';
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
-
-    var words = fullText.split(/(\s+)/);
-    var built = '';
-    for (var wi = 0; wi < words.length; wi++) {
-      built += words[wi];
-      div.innerHTML = mdToHtml(built);
-      msgs.scrollTop = msgs.scrollHeight;
-      if (words[wi].trim()) {
-        await new Promise(function (r) { setTimeout(r, 22); });
-      }
-    }
-
-    div.classList.remove('streaming');
-
-    // Auto-expand window if response is long
-    if (!_expanded && fullText.split(/\s+/).length > 65) {
-      toggleSize();
-    }
-
-    return { text: fullText, div: div };
+    if (!fullText) throw new Error('Empty response');
+    return fullText;
   }
 
   async function fetchFallback(userMessage) {
