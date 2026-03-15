@@ -113,7 +113,7 @@
 
   var TOOL_CONTEXT = {
     'okr-builder': {
-      fr: "Je vois que tu utilises l'**OKR Builder** 🎯 Je peux t'aider à formuler tes objectifs, calibrer tes Key Results ou débloquer une situation. Qu'est-ce qui te bloque ?",
+      fr: "Je vois que tu utilises le **OKR Builder** 🎯 Je peux t'aider à formuler tes objectifs, calibrer tes Key Results ou débloquer une situation. Qu'est-ce qui te bloque ?",
       en: "I see you're using the **OKR Builder** 🎯 I can help you frame your objectives, calibrate your Key Results or unblock any situation. What's stopping you?",
       chips_fr: ["💡 Comment formuler un bon OKR ?", "📊 OKRs vs KPIs, c'est quoi la diff ?", "👤 Profil de Carlin"],
       chips_en: ["💡 How to write a good OKR?", "📊 OKRs vs KPIs, what's the diff?", "👤 Carlin's profile"]
@@ -175,7 +175,7 @@
     "6. Roadmap Storyteller : https://cmankotech.github.io/cmankotech/roadmap-storyteller.html\n\n" +
     "CONTACT : LinkedIn https://linkedin.com/in/carlinmankoto | Email carlinmankoto@proton.me\n" +
     "Disponible pour CDI ou missions freelance.\n\n" +
-    "INSTRUCTION CRITIQUE : Quand l'utilisateur mentionne un sujet PM (backlog, prioritisation, OKR, discovery, interview, roadmap, user story, epic), inclus TOUJOURS un lien HTML cliquable vers l'outil PM correspondant. Réponse actionnable et concise (max 200 mots). N'utilise jamais de tirets longs (—) : utilise des virgules ou des deux-points à la place.";
+    "INSTRUCTION CRITIQUE : Quand l'utilisateur mentionne un sujet PM (backlog, prioritisation, OKR, discovery, interview, roadmap, user story, epic), inclus TOUJOURS un lien HTML cliquable vers l'outil PM correspondant. Réponse actionnable et concise (max 200 mots). N'utilise jamais de tirets longs (—) : utilise des virgules ou des deux-points à la place. N'utilise jamais l'élision 'l'' devant un nom d'outil : écris toujours 'le OKR Builder', 'le Discovery Assistant', etc.";
 
   // ── KB FAST-PATH ───────────────────────────────────────────────────────────
   var KB = {
