@@ -96,14 +96,14 @@
   // ── I18N ───────────────────────────────────────────────────────────────────
   var I18N = {
     fr: {
-      welcome: "Bonjour 👋 Je suis KRL1. Je peux t'aider sur tes défis PM — priorisation, OKRs, discovery, roadmap — ou te présenter le portfolio de Carlin. Par où on commence ?",
+      welcome: "Bonjour 👋 Je suis KRL1. Je peux t'aider sur tes défis PM : priorisation, OKRs, discovery, roadmap, ou te présenter le portfolio de Carlin. Par où on commence ?",
       chips: ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs", "🔍 Préparer une discovery", "👤 Profil de Carlin"],
       placeholder: "Ex : comment prioriser entre 3 features ?",
       status: "En ligne",
       error: "Désolé, une erreur s'est produite. Contacte Carlin sur <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> 👋"
     },
     en: {
-      welcome: "Hi 👋 I'm KRL1. I can help with your PM challenges — prioritisation, OKRs, discovery, roadmap — or walk you through Carlin's portfolio. Where do you want to start?",
+      welcome: "Hi 👋 I'm KRL1. I can help with your PM challenges: prioritisation, OKRs, discovery, roadmap, or walk you through Carlin's portfolio. Where do you want to start?",
       chips: ["🎯 Prioritise my backlog", "📊 Structure my OKRs", "🔍 Prepare a discovery", "👤 Carlin's profile"],
       placeholder: "E.g. how to prioritise between 3 features?",
       status: "Online",
@@ -175,7 +175,7 @@
     "6. Roadmap Storyteller : https://cmankotech.github.io/cmankotech/roadmap-storyteller.html\n\n" +
     "CONTACT : LinkedIn https://linkedin.com/in/carlinmankoto | Email carlinmankoto@proton.me\n" +
     "Disponible pour CDI ou missions freelance.\n\n" +
-    "INSTRUCTION CRITIQUE : Quand l'utilisateur mentionne un sujet PM (backlog, prioritisation, OKR, discovery, interview, roadmap, user story, epic), inclus TOUJOURS un lien HTML cliquable vers l'outil PM correspondant. Réponse actionnable et concise (max 200 mots).";
+    "INSTRUCTION CRITIQUE : Quand l'utilisateur mentionne un sujet PM (backlog, prioritisation, OKR, discovery, interview, roadmap, user story, epic), inclus TOUJOURS un lien HTML cliquable vers l'outil PM correspondant. Réponse actionnable et concise (max 200 mots). N'utilise jamais de tirets longs (—) : utilise des virgules ou des deux-points à la place.";
 
   // ── KB FAST-PATH ───────────────────────────────────────────────────────────
   var KB = {
@@ -190,7 +190,7 @@
         r: "Carlin a développé 6 outils IA pour les PMs :\n\n• <a href='https://cmankotech.github.io/cmankotech/okr-builder.html' target='_blank'>OKR Builder</a>\n• <a href='https://cmankotech.github.io/cmankotech/discovery-assistant.html' target='_blank'>Discovery Assistant</a>\n• <a href='https://cmankotech.github.io/cmankotech/user-interview-analyzer.html' target='_blank'>User Interview Analyzer</a>\n• <a href='https://cmankotech.github.io/cmankotech/backlog-prioritizer.html' target='_blank'>Backlog Prioritizer</a>\n• <a href='https://cmankotech.github.io/cmankotech/epic-to-userstories.html' target='_blank'>Epic to User Stories</a>\n• <a href='https://cmankotech.github.io/cmankotech/roadmap-storyteller.html' target='_blank'>Roadmap Storyteller</a>",
         chips: ["🎯 Prioriser mon backlog", "👤 Profil de Carlin"] },
       { k: ["expérience","parcours","travail","poste","mission","axa","airbus","casino","oaio","infotel"],
-        r: "Son parcours :\n\n• <strong>OAIO/Infotel</strong> (2026) — stratégie LMS + outils IA pour 3500 collaborateurs\n• <strong>AXA</strong> — AI PO : SecureGPT (RAG), Microsoft Copilot, SAFe\n• <strong>Airbus D&S</strong> — PO : app mobile sécurisée JO Paris 2024\n• <strong>Groupe Casino</strong> — transformation Scrum",
+        r: "Son parcours :\n\n• <strong>OAIO/Infotel</strong> (2026) : stratégie LMS + outils IA pour 3500 collaborateurs\n• <strong>AXA</strong> : AI PO, SecureGPT (RAG), Microsoft Copilot, SAFe\n• <strong>Airbus D&S</strong> : PO, app mobile sécurisée JO Paris 2024\n• <strong>Groupe Casino</strong> : transformation Scrum",
         chips: ["📋 Ses certifications ?", "📩 Le contacter"] },
       { k: ["certif","pspo","safe","formation","diplôme","master","scrum"],
         r: "Certifications : PSPO I (Scrum.org), SAFe POPM + SSM (Scaled Agile), Product School (Discovery, Strategy, Roadmapping, Analytics). Formation : Master 2 Innovation Digitale (Paris-Saclay), Master 1 Management Stratégique.",
@@ -210,7 +210,7 @@
         r: "Carlin built 6 AI tools for PMs:\n\n• <a href='https://cmankotech.github.io/cmankotech/okr-builder.html' target='_blank'>OKR Builder</a>\n• <a href='https://cmankotech.github.io/cmankotech/discovery-assistant.html' target='_blank'>Discovery Assistant</a>\n• <a href='https://cmankotech.github.io/cmankotech/user-interview-analyzer.html' target='_blank'>User Interview Analyzer</a>\n• <a href='https://cmankotech.github.io/cmankotech/backlog-prioritizer.html' target='_blank'>Backlog Prioritizer</a>\n• <a href='https://cmankotech.github.io/cmankotech/epic-to-userstories.html' target='_blank'>Epic to User Stories</a>\n• <a href='https://cmankotech.github.io/cmankotech/roadmap-storyteller.html' target='_blank'>Roadmap Storyteller</a>",
         chips: ["🎯 Prioritise my backlog", "👤 Carlin's profile"] },
       { k: ["experience","background","job","axa","airbus","casino","oaio"],
-        r: "His background:\n\n• <strong>OAIO/Infotel</strong> (2026) — LMS strategy + AI tools for 3,500 employees\n• <strong>AXA</strong> — AI PO: SecureGPT (RAG), Microsoft Copilot, SAFe\n• <strong>Airbus D&S</strong> — PO: secure mobile app for Paris 2024 Olympics\n• <strong>Groupe Casino</strong> — Agile/Scrum transformation",
+        r: "His background:\n\n• <strong>OAIO/Infotel</strong> (2026): LMS strategy + AI tools for 3,500 employees\n• <strong>AXA</strong>: AI PO, SecureGPT (RAG), Microsoft Copilot, SAFe\n• <strong>Airbus D&S</strong>: PO, secure mobile app for Paris 2024 Olympics\n• <strong>Groupe Casino</strong>: Agile/Scrum transformation",
         chips: ["📋 His certifications?", "📩 Reach him"] },
       { k: ["certif","pspo","safe","degree","master","scrum"],
         r: "Certifications: PSPO I (Scrum.org), SAFe POPM + SSM (Scaled Agile), multiple Product School certs. Education: Master 2 Digital Innovation (Paris-Saclay), Master 1 Strategic Management.",
@@ -253,6 +253,7 @@
   function mdToHtml(t) {
     t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
     t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    t = t.replace(/\s*—\s*/g, ', ');
     t = t.replace(/\n/g, '<br>');
     return t;
   }
@@ -403,12 +404,7 @@
 
     if (!res.ok || !res.body) throw new Error('Stream failed');
 
-    var msgs = document.getElementById('chat-messages');
-    var div = document.createElement('div');
-    div.className = 'msg bot streaming';
-    div.style.display = 'none';
-    msgs.appendChild(div);
-
+    // Collect full response (backend buffers before sending)
     var reader = res.body.getReader();
     var decoder = new TextDecoder();
     var fullText = '';
@@ -428,22 +424,39 @@
         try {
           var parsed = JSON.parse(data);
           var token = (parsed.choices && parsed.choices[0] && parsed.choices[0].delta && parsed.choices[0].delta.content) || '';
-          if (token) {
-            if (div.style.display === 'none') {
-              hideTyping();
-              div.style.display = '';
-            }
-            fullText += token;
-            div.innerHTML = mdToHtml(fullText);
-            msgs.scrollTop = msgs.scrollHeight;
-          }
+          fullText += token;
         } catch (_) {}
       }
     }
-    // Fallback: if no tokens came through (e.g. empty stream), hide typing
-    if (div.style.display === 'none') hideTyping();
+
+    if (!fullText) { hideTyping(); throw new Error('Empty response'); }
+
+    // Progressive word-by-word reveal
+    hideTyping();
+    var msgs = document.getElementById('chat-messages');
+    var div = document.createElement('div');
+    div.className = 'msg bot streaming';
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    var words = fullText.split(/(\s+)/);
+    var built = '';
+    for (var wi = 0; wi < words.length; wi++) {
+      built += words[wi];
+      div.innerHTML = mdToHtml(built);
+      msgs.scrollTop = msgs.scrollHeight;
+      if (words[wi].trim()) {
+        await new Promise(function (r) { setTimeout(r, 22); });
+      }
+    }
 
     div.classList.remove('streaming');
+
+    // Auto-expand window if response is long
+    if (!_expanded && fullText.split(/\s+/).length > 65) {
+      toggleSize();
+    }
+
     return { text: fullText, div: div };
   }
 
