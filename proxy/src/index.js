@@ -3,12 +3,17 @@ const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const origin = request.headers.get('Origin') || '';
     const url = new URL(request.url);
 
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders() });
+    }
+
+    // Public read endpoint for usage stats
+    if (request.method === 'GET' && url.pathname === '/stats') {
+      return handleStats(env);
     }
 
     if (request.method !== 'POST') {
@@ -27,18 +32,41 @@ export default {
     }
 
     if (url.pathname === '/orchestrate') {
-      return handleOrchestrator(body, env);
+      return handleOrchestrator(body, env, ctx);
     }
 
-    return proxyGroq(body, env);
+    return proxyGroq(body, env, ctx);
   },
 };
 
-async function handleOrchestrator(body, env) {
+async function handleStats(env) {
+  if (!env.USAGE_COUNTER) {
+    return new Response(JSON.stringify({ total: 0 }), {
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+    });
+  }
+  const val = await env.USAGE_COUNTER.get('total');
+  return new Response(JSON.stringify({ total: parseInt(val || '0', 10) }), {
+    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+  });
+}
+
+async function incrementCounter(env) {
+  if (!env.USAGE_COUNTER) return;
+  try {
+    const current = parseInt((await env.USAGE_COUNTER.get('total')) || '0', 10);
+    await env.USAGE_COUNTER.put('total', String(current + 1));
+  } catch {
+    // non-blocking — never fail a request over a counter
+  }
+}
+
+async function handleOrchestrator(body, env, ctx) {
   if (env.LANGGRAPH_ORCHESTRATOR_URL) {
     try {
       const langGraphRes = await forwardToLangGraph(body, env);
       if (langGraphRes && langGraphRes.ok) {
+        ctx.waitUntil(incrementCounter(env));
         return langGraphRes;
       }
     } catch {
@@ -111,6 +139,7 @@ async function handleOrchestrator(body, env) {
   }
 
   const reply = extractContent(synthesisRes.data);
+  ctx.waitUntil(incrementCounter(env));
   return jsonResponse({ reply, plan: safeJsonParse(planText) || null });
 }
 
@@ -134,7 +163,7 @@ async function forwardToLangGraph(body, env) {
   });
 }
 
-async function proxyGroq(body, env) {
+async function proxyGroq(body, env, ctx) {
   const groqRes = await fetch(GROQ_URL, {
     method: 'POST',
     headers: {
@@ -145,6 +174,7 @@ async function proxyGroq(body, env) {
   });
 
   const text = await groqRes.text();
+  if (groqRes.ok) ctx.waitUntil(incrementCounter(env));
   return new Response(text, {
     status: groqRes.status,
     headers: { 'Content-Type': 'application/json', ...corsHeaders() },
