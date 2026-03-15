@@ -107,27 +107,45 @@
   var TOOL_CONTEXT = {
     'okr-builder': {
       fr: "Je vois que tu utilises l'**OKR Builder** 🎯 Je peux t'aider à formuler tes objectifs, calibrer tes Key Results ou débloquer une situation. Qu'est-ce qui te bloque ?",
-      en: "I see you're using the **OKR Builder** 🎯 I can help you frame your objectives, calibrate your Key Results or unblock any situation. What's stopping you?"
+      en: "I see you're using the **OKR Builder** 🎯 I can help you frame your objectives, calibrate your Key Results or unblock any situation. What's stopping you?",
+      chips_fr: ["💡 Comment formuler un bon OKR ?", "📊 OKRs vs KPIs, c'est quoi la diff ?", "👤 Profil de Carlin"],
+      chips_en: ["💡 How to write a good OKR?", "📊 OKRs vs KPIs, what's the diff?", "👤 Carlin's profile"]
     },
     'backlog-prioritizer': {
       fr: "Je vois que tu utilises le **Backlog Prioritizer** 🗂️ Je peux t'aider à choisir entre RICE et MoSCoW, scorer tes items ou expliquer tes choix à tes parties prenantes. C'est quoi ton challenge ?",
-      en: "I see you're using the **Backlog Prioritizer** 🗂️ I can help you choose between RICE and MoSCoW, score your items or explain your decisions to stakeholders. What's your challenge?"
+      en: "I see you're using the **Backlog Prioritizer** 🗂️ I can help you choose between RICE and MoSCoW, score your items or explain your decisions to stakeholders. What's your challenge?",
+      chips_fr: ["⚖️ RICE ou MoSCoW, quand choisir ?", "🗣️ Comment pitcher ma priorisation ?", "👤 Profil de Carlin"],
+      chips_en: ["⚖️ RICE or MoSCoW, when to pick?", "🗣️ How to pitch my prioritisation?", "👤 Carlin's profile"]
     },
     'discovery-assistant': {
       fr: "Je vois que tu utilises le **Discovery Assistant** 🔍 Je peux t'aider à reformuler ton problème, valider tes hypothèses ou préparer tes questions d'interview. Par où commencer ?",
-      en: "I see you're using the **Discovery Assistant** 🔍 I can help you reframe your problem, validate your hypotheses or prepare interview questions. Where to start?"
+      en: "I see you're using the **Discovery Assistant** 🔍 I can help you reframe your problem, validate your hypotheses or prepare interview questions. Where to start?",
+      chips_fr: ["🔍 C'est quoi une bonne hypothèse ?", "🎙️ Questions d'interview à éviter ?", "👤 Profil de Carlin"],
+      chips_en: ["🔍 What makes a good hypothesis?", "🎙️ Interview questions to avoid?", "👤 Carlin's profile"]
     },
     'user-interview-analyzer': {
       fr: "Je vois que tu utilises le **User Interview Analyzer** 🎙️ Je peux t'aider à structurer tes verbatims, identifier les patterns ou transformer tes insights en actions concrètes. C'est quoi le contexte ?",
-      en: "I see you're using the **User Interview Analyzer** 🎙️ I can help you structure your verbatims, identify patterns or turn insights into concrete actions. What's the context?"
+      en: "I see you're using the **User Interview Analyzer** 🎙️ I can help you structure your verbatims, identify patterns or turn insights into concrete actions. What's the context?",
+      chips_fr: ["📊 Comment identifier les patterns ?", "🗂️ Jobs-to-be-done vs personas ?", "👤 Profil de Carlin"],
+      chips_en: ["📊 How to identify patterns?", "🗂️ Jobs-to-be-done vs personas?", "👤 Carlin's profile"]
     },
     'epic-to-userstories': {
       fr: "Je vois que tu utilises **Epic to User Stories** 📋 Je peux t'aider à décomposer ton epic, rédiger des critères d'acceptance INVEST ou estimer la complexité. Quel est ton epic ?",
-      en: "I see you're using **Epic to User Stories** 📋 I can help you break down your epic, write INVEST acceptance criteria or estimate complexity. What's your epic?"
+      en: "I see you're using **Epic to User Stories** 📋 I can help you break down your epic, write INVEST acceptance criteria or estimate complexity. What's your epic?",
+      chips_fr: ["✅ Qu'est-ce que les critères INVEST ?", "📋 Quand découper une User Story ?", "👤 Profil de Carlin"],
+      chips_en: ["✅ What are INVEST criteria?", "📋 When to split a User Story?", "👤 Carlin's profile"]
     },
     'roadmap-storyteller': {
       fr: "Je vois que tu utilises le **Roadmap Storyteller** 🗺️ Je peux t'aider à adapter ton message à ton audience (C-level, tech, sales) ou structurer ton narrative. Pour qui tu pitches ?",
-      en: "I see you're using the **Roadmap Storyteller** 🗺️ I can help you tailor your message to your audience (C-level, tech, sales) or structure your narrative. Who are you pitching to?"
+      en: "I see you're using the **Roadmap Storyteller** 🗺️ I can help you tailor your message to your audience (C-level, tech, sales) or structure your narrative. Who are you pitching to?",
+      chips_fr: ["🗺️ Roadmap par thèmes vs dates ?", "💼 Comment adapter au C-level ?", "👤 Profil de Carlin"],
+      chips_en: ["🗺️ Theme-based vs date-based roadmap?", "💼 How to adapt for C-level?", "👤 Carlin's profile"]
+    },
+    'how-i-built-this': {
+      fr: "Tu explores **Comment j'ai construit ce site** 🛠️ Je peux t'expliquer les choix techniques, l'architecture IA ou la stack en détail. Qu'est-ce qui t'intéresse ?",
+      en: "You're reading **How I Built This** 🛠️ I can explain the technical choices, AI architecture or the full stack in detail. What are you curious about?",
+      chips_fr: ["🏗️ Pourquoi Cloudflare Workers ?", "🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?", "📩 Contacter Carlin"],
+      chips_en: ["🏗️ Why Cloudflare Workers?", "🤖 How does KRL1 work?", "⚡ Why no backend?", "📩 Contact Carlin"]
     }
   };
 
@@ -288,7 +306,8 @@
     document.getElementById('chat-status-lbl').textContent = i18n.status;
     var ctx = TOOL_CONTEXT[TOOL_ID];
     if (ctx) {
-      addBotMsg(ctx[_lang] || ctx['fr']);
+      var ctxChips = (_lang === 'en' ? ctx.chips_en : ctx.chips_fr) || null;
+      addBotMsg(ctx[_lang] || ctx['fr'], ctxChips);
     } else {
       addBotMsg(i18n.welcome, i18n.chips);
     }
