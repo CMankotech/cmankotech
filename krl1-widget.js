@@ -471,6 +471,9 @@
   var _origSetLang = window.setLang;
   window.setLang = function (lang) {
     _lang = lang;
+    // Translate the page first so buttons/content update immediately
+    if (_origSetLang) _origSetLang(lang);
+    // Then update widget UI
     var inp = document.getElementById('chat-input');
     var status = document.getElementById('chat-status-lbl');
     var i18n = I18N[lang] || I18N['fr'];
@@ -487,7 +490,6 @@
         initChat();
       }
     }
-    if (_origSetLang) _origSetLang(lang);
   };
 
 })();
