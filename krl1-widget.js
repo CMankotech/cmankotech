@@ -46,6 +46,13 @@
     '#chat-send:hover{opacity:0.85}',
     '#chat-send svg{width:14px;height:14px;fill:none;stroke:#07070f;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}',
     '@media(max-width:480px){#chat-window,#chat-window.expanded{width:calc(100vw - 2rem);right:1rem;bottom:5rem}}',
+    '#krl1-journey{margin-top:32px;border:1px solid rgba(34,211,238,.22);border-radius:12px;padding:20px 24px;background:rgba(34,211,238,.04);}',
+    '#krl1-journey .jrn-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;}',
+    '#krl1-journey .jrn-dot{width:6px;height:6px;border-radius:50%;background:#22d3ee;flex-shrink:0;}',
+    '#krl1-journey .jrn-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#22d3ee;}',
+    '#krl1-journey .jrn-reason{font-size:14px;color:rgba(255,255,255,.65);margin:0 0 16px;line-height:1.55;}',
+    '#krl1-journey .jrn-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.28);color:#22d3ee;font-size:14px;font-weight:600;text-decoration:none;transition:background .18s,border-color .18s;}',
+    '#krl1-journey .jrn-btn:hover{background:rgba(34,211,238,.2);border-color:rgba(34,211,238,.5);}',
   ].join('');
   document.head.appendChild(styleEl);
 
@@ -155,6 +162,82 @@
       chips_en: ["🏗️ Why Cloudflare Workers?", "🤖 How does KRL1 work?", "⚡ Why no backend?", "📩 Contact Carlin"]
     }
   };
+
+  // ── PM JOURNEY ─────────────────────────────────────────────────────────────
+  var JOURNEY = {
+    'discovery-assistant': {
+      nextName: 'User Interview Analyzer',
+      nextUrl:  'https://cmankotech.github.io/cmankotech/user-interview-analyzer.html',
+      fr: 'Problème cadré. Prochaine étape : valider avec de vraies interviews utilisateurs.',
+      en: 'Problem framed. Next: validate with real user interviews.',
+      emoji: '🎙️'
+    },
+    'user-interview-analyzer': {
+      nextName: 'OKR Builder',
+      nextUrl:  'https://cmankotech.github.io/cmankotech/okr-builder.html',
+      fr: 'Insights synthétisés. Transforme-les maintenant en objectifs mesurables.',
+      en: 'Insights synthesised. Now turn them into measurable objectives.',
+      emoji: '🎯'
+    },
+    'okr-builder': {
+      nextName: 'Backlog Prioritizer',
+      nextUrl:  'https://cmankotech.github.io/cmankotech/backlog-prioritizer.html',
+      fr: 'OKRs posés. Priorise maintenant les features qui permettront de les atteindre.',
+      en: 'OKRs set. Now prioritise the features that will get you there.',
+      emoji: '🗂️'
+    },
+    'backlog-prioritizer': {
+      nextName: 'Epic to User Stories',
+      nextUrl:  'https://cmankotech.github.io/cmankotech/epic-to-userstories.html',
+      fr: 'Backlog priorisé. Découpe maintenant ton epic prioritaire en user stories livrables.',
+      en: 'Backlog ranked. Break your top epic into deliverable user stories.',
+      emoji: '📋'
+    },
+    'epic-to-userstories': {
+      nextName: 'Roadmap Storyteller',
+      nextUrl:  'https://cmankotech.github.io/cmankotech/roadmap-storyteller.html',
+      fr: 'User stories prêtes. Dernière étape : construire une roadmap narrative pour tes parties prenantes.',
+      en: 'User stories ready. Final step: build a narrative roadmap for your stakeholders.',
+      emoji: '🗺️'
+    },
+    'roadmap-storyteller': {
+      nextName: null,
+      nextUrl:  'https://cmankotech.github.io/cmankotech/',
+      fr: 'Parcours PM complet : Discovery · Interviews · OKRs · Backlog · User Stories · Roadmap.',
+      en: 'Full PM journey done: Discovery · Interviews · OKRs · Backlog · User Stories · Roadmap.',
+      emoji: '🏠'
+    }
+  };
+
+  function injectJourneyCTA() {
+    if (document.getElementById('krl1-journey')) return;
+    var jrn = JOURNEY[TOOL_ID];
+    if (!jrn) return;
+    var resultsEl = document.getElementById('results');
+    if (!resultsEl) return;
+    var lang = _lang || 'fr';
+    var isEnd = !jrn.nextName;
+    var div = document.createElement('div');
+    div.id = 'krl1-journey';
+    div.innerHTML =
+      '<div class="jrn-header"><span class="jrn-dot"></span><span class="jrn-label">KRL1 · PM Journey</span></div>' +
+      '<p class="jrn-reason">' + (jrn[lang] || jrn['fr']) + '</p>' +
+      '<a class="jrn-btn" href="' + jrn.nextUrl + '">' +
+        jrn.emoji + ' ' + (isEnd ? (lang === 'en' ? 'Back to portfolio' : 'Retour au portfolio') : jrn.nextName + ' →') +
+      '</a>';
+    resultsEl.appendChild(div);
+  }
+
+  function updateJourneyCTA(lang) {
+    var el = document.getElementById('krl1-journey');
+    if (!el) return;
+    var jrn = JOURNEY[TOOL_ID];
+    if (!jrn) return;
+    var isEnd = !jrn.nextName;
+    el.querySelector('.jrn-reason').textContent = jrn[lang] || jrn['fr'];
+    el.querySelector('.jrn-btn').textContent =
+      jrn.emoji + ' ' + (isEnd ? (lang === 'en' ? 'Back to portfolio' : 'Retour au portfolio') : jrn.nextName + ' →');
+  }
 
   // ── SYSTEM PROMPT ──────────────────────────────────────────────────────────
   var SYSTEM_PROMPT =
@@ -326,6 +409,16 @@
     if (!_chatOpen) toggleChat();
   }, 6000);
 
+  // PM Journey: watch #results for .show class appearance
+  if (JOURNEY[TOOL_ID]) {
+    var _resultsTarget = document.getElementById('results');
+    if (_resultsTarget) {
+      new MutationObserver(function () {
+        if (_resultsTarget.classList.contains('show')) injectJourneyCTA();
+      }).observe(_resultsTarget, { attributes: true, attributeFilter: ['class'] });
+    }
+  }
+
   function initChat() {
     var i18n = I18N[_lang] || I18N['fr'];
     document.getElementById('chat-input').placeholder = i18n.placeholder;
@@ -490,6 +583,8 @@
         initChat();
       }
     }
+    // Update journey card language if visible
+    updateJourneyCTA(lang);
   };
 
 })();
