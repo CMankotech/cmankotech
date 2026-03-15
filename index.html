@@ -508,6 +508,8 @@ window.setLang=function(lang){
 .msg{max-width:85%;font-size:0.8rem;line-height:1.55;padding:0.6rem 0.85rem;border-radius:12px;animation:msgIn 0.2s ease}
 @keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .msg.bot{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.88);border-radius:4px 12px 12px 12px;align-self:flex-start}
+.msg.bot.streaming::after{content:'▋';display:inline-block;animation:blink 0.9s step-end infinite;color:#60a5fa;margin-left:2px}
+@keyframes blink{50%{opacity:0}}
 .msg.user{background:linear-gradient(135deg,rgba(34,211,238,0.18),rgba(167,139,250,0.18));color:#fff;border-radius:12px 4px 12px 12px;align-self:flex-end}
 .msg a{color:#22d3ee;text-decoration:underline;text-underline-offset:2px}
 .msg .chips{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem}
@@ -650,14 +652,87 @@ window.setLang=function(lang){
     }
 
     try {
-      var reply = await fetchOrchestratedReply(userMessage);
-      _history.push({role: 'assistant', content: reply});
-      hideTyping();
-      addBotMsg(reply, getContextualChips(userMessage));
+      var result = await fetchOrchestratedReplyStream(userMessage);
+      _history.push({role: 'assistant', content: result.text});
+      var chips = getContextualChips(userMessage);
+      if (chips && chips.length) {
+        var chipsDiv = document.createElement('div');
+        chipsDiv.className = 'chat-chips';
+        chips.forEach(function(chip) {
+          var btn = document.createElement('button');
+          btn.className = 'chip-btn';
+          btn.textContent = chip;
+          btn.onclick = function(){ handleInput(chip); };
+          chipsDiv.appendChild(btn);
+        });
+        result.div.appendChild(chipsDiv);
+        var msgs = document.getElementById('chat-messages');
+        msgs.scrollTop = msgs.scrollHeight;
+      }
     } catch(e) {
       hideTyping();
-      addBotMsg(I18N[_lang].error);
+      try {
+        var reply = await fetchOrchestratedReply(userMessage);
+        _history.push({role: 'assistant', content: reply});
+        addBotMsg(reply, getContextualChips(userMessage));
+      } catch(e2) {
+        addBotMsg(I18N[_lang].error);
+      }
     }
+  }
+
+  async function fetchOrchestratedReplyStream(userMessage) {
+    var historyWithSystem = [{role: 'system', content: SYSTEM_PROMPT}].concat(_history);
+
+    var res = await fetch('https://groq-proxy.cmankotech.workers.dev/orchestrate-stream', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        lang: _lang,
+        message: userMessage,
+        history: historyWithSystem
+      })
+    });
+
+    if (!res.ok || !res.body) throw new Error('Stream failed');
+
+    hideTyping();
+    var msgs = document.getElementById('chat-messages');
+    var div = document.createElement('div');
+    div.className = 'msg bot streaming';
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    var reader = res.body.getReader();
+    var decoder = new TextDecoder();
+    var fullText = '';
+    var buffer = '';
+
+    while (true) {
+      var chunk = await reader.read();
+      if (chunk.done) break;
+      buffer += decoder.decode(chunk.value, {stream: true});
+      var lines = buffer.split('\n');
+      buffer = lines.pop();
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i].trim();
+        if (!line.startsWith('data: ')) continue;
+        var data = line.slice(6);
+        if (data === '[DONE]') continue;
+        try {
+          var parsed = JSON.parse(data);
+          var token = (parsed.choices && parsed.choices[0] && parsed.choices[0].delta && parsed.choices[0].delta.content) || '';
+          if (token) {
+            fullText += token;
+            div.innerHTML = mdToHtml(fullText);
+            msgs.scrollTop = msgs.scrollHeight;
+          }
+        } catch(_) {}
+      }
+    }
+
+    div.classList.remove('streaming');
+    return {text: fullText, div: div};
   }
 
   async function fetchOrchestratedReply(userMessage) {

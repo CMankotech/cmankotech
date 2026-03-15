@@ -35,6 +35,10 @@ export default {
       return handleOrchestrator(body, env, ctx);
     }
 
+    if (url.pathname === '/orchestrate-stream') {
+      return handleOrchestratorStream(body, env, ctx);
+    }
+
     return proxyGroq(body, env, ctx);
   },
 };
@@ -143,6 +147,87 @@ async function handleOrchestrator(body, env, ctx) {
   return jsonResponse({ reply, plan: safeJsonParse(planText) || null });
 }
 
+
+async function handleOrchestratorStream(body, env, ctx) {
+  const lang = body.lang === 'en' ? 'en' : 'fr';
+  const history = Array.isArray(body.history) ? body.history.slice(-8) : [];
+  const userMessage = typeof body.message === 'string' ? body.message : '';
+
+  if (!userMessage.trim()) {
+    return jsonResponse({ reply: lang === 'en' ? 'Please share your request.' : 'Partage-moi ton besoin.' }, 400);
+  }
+
+  const plannerPrompt = lang === 'en'
+    ? 'You are KRL1 PM Orchestrator. Output strict JSON only with keys: intent, confidence (0-1), user_goal, steps (array of {tool, objective, output}), risks (array), quick_win.'
+    : 'Tu es KRL1 PM Orchestrator. Retourne uniquement du JSON strict avec les clés: intent, confidence (0-1), user_goal, steps (tableau de {tool, objective, output}), risks (tableau), quick_win.';
+
+  const plannerRes = await callGroq(env, {
+    model: DEFAULT_MODEL,
+    messages: [
+      { role: 'system', content: plannerPrompt },
+      ...history,
+      { role: 'user', content: userMessage },
+    ],
+    temperature: 0.2,
+    max_tokens: 500,
+    response_format: { type: 'json_object' },
+  });
+
+  if (!plannerRes.ok) return plannerRes.response;
+
+  const planText = extractContent(plannerRes.data);
+
+  const synthesisPrompt = lang === 'en'
+    ? 'You are KRL1. Transform plan JSON into a concise, actionable answer. Max 220 words. Include next step. When mentioning a tool, insert a clickable HTML link: <a href="URL" target="_blank">Tool Name</a>. Never use markdown link syntax.'
+    : 'Tu es KRL1. Transforme ce plan JSON en réponse actionnable et concise. Max 220 mots, avec prochaine action. Quand tu cites un outil, insère un lien HTML cliquable : <a href="URL" target="_blank">Nom Outil</a>. N\'utilise jamais la syntaxe markdown pour les liens.';
+
+  const toolLinks = [
+    'OKR Builder: https://cmankotech.github.io/cmankotech/okr-builder.html',
+    'Discovery Assistant: https://cmankotech.github.io/cmankotech/discovery-assistant.html',
+    'User Interview Analyzer: https://cmankotech.github.io/cmankotech/user-interview-analyzer.html',
+    'Backlog Prioritizer: https://cmankotech.github.io/cmankotech/backlog-prioritizer.html',
+    'Epic to User Stories: https://cmankotech.github.io/cmankotech/epic-to-userstories.html',
+    'Roadmap Storyteller: https://cmankotech.github.io/cmankotech/roadmap-storyteller.html',
+  ].join('\n');
+
+  const groqRes = await fetch(GROQ_URL, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${env.GROQ_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: DEFAULT_MODEL,
+      messages: [
+        { role: 'system', content: synthesisPrompt },
+        { role: 'user', content: `User request:\n${userMessage}\n\nPlan JSON:\n${planText}\n\nTools:\n${toolLinks}` },
+      ],
+      temperature: 0.45,
+      max_tokens: 450,
+      stream: true,
+    }),
+  });
+
+  if (!groqRes.ok) {
+    const text = await groqRes.text();
+    return new Response(text, {
+      status: groqRes.status,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+    });
+  }
+
+  ctx.waitUntil(incrementCounter(env));
+
+  return new Response(groqRes.body, {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'X-Accel-Buffering': 'no',
+      ...corsHeaders(),
+    },
+  });
+}
 
 async function forwardToLangGraph(body, env) {
   const endpoint = env.LANGGRAPH_ORCHESTRATOR_URL;
