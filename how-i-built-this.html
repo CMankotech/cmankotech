@@ -106,6 +106,14 @@ section{margin-bottom:4rem}
 .update-item::before{content:'→';color:var(--cyan);flex-shrink:0;font-weight:700}
 .update-item code{color:var(--text);background:rgba(255,255,255,0.08);padding:0.1rem 0.35rem;border-radius:6px;font-size:0.78rem}
 
+/* NARRATIVE */
+.narrative-block{padding:1.75rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;display:flex;flex-direction:column;gap:1.25rem}
+.narrative-lead{font-size:0.92rem;color:var(--text);line-height:1.8;border-left:2px solid rgba(34,211,238,0.35);padding-left:1.25rem}
+.narrative-p{font-size:0.83rem;color:var(--dim);line-height:1.8}
+.narrative-reasons{display:flex;flex-direction:column;gap:0.75rem}
+.narrative-reason{font-size:0.83rem;color:var(--dim);line-height:1.8;padding:0.75rem 1rem;background:rgba(255,255,255,0.015);border:1px solid var(--line);border-radius:8px}
+.narrative-reason strong{color:var(--text);font-weight:600}
+
 /* FOOTER */
 .page-footer{border-top:1px solid var(--line);padding-top:3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
 .footer-back{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;transition:color 0.2s}
@@ -144,6 +152,23 @@ section{margin-bottom:4rem}
     <h1 data-i18n="h1.line1">Comment j'ai<br><span class="grad" data-i18n="h1.grad">construit ce site</span></h1>
     <p class="subtitle" data-i18n="subtitle">Stack vanilla, déploiement statique, LLM via proxy sécurisé. Zéro framework, zéro dépendance inutile — juste du web qui fonctionne.</p>
   </header>
+
+  <!-- 00 POURQUOI CE SITE EXISTE -->
+  <section>
+    <div class="sec-header">
+      <span class="sec-num">00</span>
+      <span class="sec-title" data-i18n="s0.title">Pourquoi ce site existe</span>
+    </div>
+    <div class="narrative-block">
+      <p class="narrative-lead" data-i18n="s0.lead">En cherchant un poste d'AI PM, j'ai réalisé que tout le monde dit "je maîtrise l'IA". Personne ne le montre. Ce site est ma réponse à ça.</p>
+      <p class="narrative-p" data-i18n="s0.intro">Trois raisons l'ont fait naître en même temps.</p>
+      <div class="narrative-reasons">
+        <div class="narrative-reason" data-i18n="s0.r1"><strong>Frustration terrain.</strong> Chez AXA, chez Airbus, chez OAIO, j'aurais eu besoin d'outils comme ceux-ci : un vrai générateur d'OKRs, un analyseur d'entretiens qui synthétise en 10 secondes, un backlog prioritizer qui justifie ses choix. Je les ai construits parce que je les aurais utilisés.</div>
+        <div class="narrative-reason" data-i18n="s0.r2"><strong>Une conviction.</strong> Un PM qui prétend comprendre l'IA sans jamais avoir construit avec, c'est un PM qui parle de ce qu'il n'a pas vécu.</div>
+        <div class="narrative-reason" data-i18n="s0.r3"><strong>Un contexte.</strong> En recherche d'emploi active, j'avais du temps et une vraie raison de shipper vite. Ce site est né de ces trois choses en même temps.</div>
+      </div>
+    </div>
+  </section>
 
   <!-- 01 STACK -->
   <section>
@@ -335,6 +360,26 @@ section{margin-bottom:4rem}
     </div>
   </section>
 
+  <!-- 05b CE QUI N'A PAS MARCHÉ -->
+  <section>
+    <div class="sec-header">
+      <span class="sec-num">5b</span>
+      <span class="sec-title" data-i18n="s5b.title">Ce qui n'a pas marché</span>
+    </div>
+    <div class="decision-card" style="margin-bottom:1rem">
+      <div class="decision-q" data-i18n="s5b.approach.label">L'approche initiale : prompt système unique</div>
+      <div class="decision-why" data-i18n="s5b.approach.desc">KRL1 a commencé avec un prompt système unique : une longue instruction envoyée au modèle avant chaque message utilisateur, lui expliquant qui il est, comment répondre, et quels outils recommander. C'est l'approche la plus simple et la plus répandue pour construire un chatbot.</div>
+    </div>
+    <div class="decision-card" style="margin-bottom:1rem">
+      <div class="decision-q" data-i18n="s5b.problem.label">Le problème</div>
+      <div class="decision-why" data-i18n="s5b.problem.desc">Les réponses étaient correctes mais génériques. Un utilisateur qui demande "comment prioriser mon backlog" obtenait une explication du RICE en prose : pédagogique, mais pas actionnable. Il n'était pas renvoyé vers le Backlog Prioritizer. Il ne repartait pas avec un plan concret.</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-q" data-i18n="s5b.root.label">La cause racine</div>
+      <div class="decision-why" data-i18n="s5b.root.desc">Un prompt unique demande au modèle de faire deux choses à la fois : analyser l'intention de l'utilisateur de façon rigoureuse ET formuler une réponse naturelle et engageante. Ces deux tâches ont des exigences opposées. L'analyse d'intention demande de la précision et de la cohérence : le modèle doit produire un résultat fiable, structuré, parseable. La formulation d'une réponse demande de la fluidité et un peu de liberté créative pour que ça ne sonne pas robotique. Un seul appel LLM avec un seul paramètre de température ne peut pas satisfaire les deux en même temps. C'est ce problème concret qui a mené à LangGraph : pas une envie de sur-ingénierie, mais la solution minimale à une contrainte réelle.</div>
+    </div>
+  </section>
+
   <!-- 05 ORCHESTRATION LANGGRAPH -->
   <section>
     <div class="sec-header">
@@ -361,6 +406,31 @@ section{margin-bottom:4rem}
       <div class="decision-q" data-i18n="lg.why.q">Pourquoi LangGraph ?</div>
       <div class="decision-a" data-i18n="lg.why.a">Plan PM structuré + réponse claire, site rapide et keyless</div>
       <div class="decision-why" data-i18n="lg.why.desc">Le double-nœud répond à deux contraintes opposées. Le planner a besoin d'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. Une température trop haute rend le JSON imprévisible et difficile à parser. La synthesis a besoin au contraire d'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots) avec les liens vers les outils PM pertinents. Un seul appel LLM ne peut pas satisfaire ces deux contraintes. LangGraph permet de composer ces comportements en un StateGraph lisible, testable et extensible — ajouter un nœud de validation ou de critique est trivial.</div>
+    </div>
+    <div class="decision-card" style="margin-top:1rem;border-color:rgba(167,139,250,0.2)">
+      <div class="decision-q" data-i18n="s5.reflect.label">Ce que ça dit de ma façon de penser en tant que PM</div>
+      <div class="decision-why" data-i18n="s5.reflect.desc">Ce choix d'architecture reflète directement ma façon de penser : identifier la vraie contrainte avant de choisir la solution. Ici la contrainte n'était pas "KRL1 répond mal". C'était "un seul nœud ne peut pas être déterministe et créatif à la fois". Une fois la contrainte bien posée, la solution devient évidente. Le graph est testable indépendamment nœud par nœud, extensible sans tout réécrire, et chaque composant a une responsabilité claire. C'est exactement ce qu'on attend d'un bon design produit.</div>
+    </div>
+  </section>
+
+  <!-- 06 ET MAINTENANT -->
+  <section>
+    <div class="sec-header">
+      <span class="sec-num">06</span>
+      <span class="sec-title" data-i18n="s6.title">Et maintenant ?</span>
+    </div>
+    <div class="decision-card" style="margin-bottom:1rem">
+      <div class="decision-q" data-i18n="s6.status.label">Où en est le site</div>
+      <div class="decision-why" data-i18n="s6.status.desc">Le site n'est pas encore vraiment partagé. C'est volontaire : je voulais d'abord que l'architecture soit solide, les cas de fallback couverts, les tests en place. Shipper quelque chose de cassé à des recruteurs ou à des PMs de mon réseau aurait fait plus de mal que de bien.</div>
+    </div>
+    <div class="decision-card" style="margin-bottom:1rem">
+      <div class="decision-q" data-i18n="s6.next.label">La prochaine étape</div>
+      <div class="decision-why" data-i18n="s6.next.desc">Ouvrir le site et mesurer. Quels outils sont utilisés ? Lesquels sont ouverts mais abandonnés avant de générer quoi que ce soit : signe que l'UX d'input est trop complexe ou que la promesse n'est pas claire ? Est-ce que KRL1 renvoie vers les bons outils au bon moment, ou est-ce que les utilisateurs repartent sans cliquer sur un lien ? Ces questions ne peuvent pas être répondues sans données réelles.</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-q" data-i18n="s6.pm.label">Ce que ça démontre</div>
+      <div class="decision-a" data-i18n="s6.pm.a">Builder, mesurer, décider</div>
+      <div class="decision-why" data-i18n="s6.pm.desc">Ajouter un système d'analytics léger, même juste des événements custom sur les clics de génération et les liens KRL1, est la prochaine priorité technique. Ensuite itérer sur les outils les moins performants. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.</div>
     </div>
   </section>
 
@@ -411,7 +481,7 @@ var T={
     'step5.desc':'Le repo GitHub est directement connecté à GitHub Pages. Chaque git push sur main déclenche un déploiement automatique via GitHub Actions en moins de 60 secondes — aucune configuration CI/CD manuelle. CDN mondial, HTTPS automatique, domaine cmankotech.github.io. Zéro coût d\'hébergement pour des fichiers statiques.',
     'step6.label':'Orchestration',
     'step6.title':'LangGraph pour structurer KRL1',
-    'step6.desc':'Face aux limites d\'un prompt unique pour KRL1 — réponses parfois trop génériques, peu actionnables — j\'ai ajouté une couche d\'orchestration Python. Le principe : séparer la planification de la synthèse. Le nœud planner (T=0.2) analyse l\'intention et produit un plan PM JSON déterministe (intent, user_goal, steps, risks, quick_win). Le nœud synthesis (T=0.45) transforme ce plan en réponse naturelle concise avec liens directs vers les outils. Développé avec Codex en mode agent autonome, testé avec pytest + httpx, tracé avec LangSmith.',
+    'step6.desc':'Face aux limites d\'un prompt unique pour KRL1, j\'ai ajouté une couche d\'orchestration Python. Le nœud planner (T=0.2) analyse l\'intention et produit un plan PM JSON déterministe (intent, user_goal, steps, risks, quick_win). Le nœud synthesis (T=0.45) transforme ce plan en réponse naturelle concise avec liens directs vers les outils. Les tests pytest+httpx sécurisent quatre scénarios critiques : planner JSON invalide, JSON entouré de fences markdown, orchestrateur FastAPI hors ligne, routing /orchestrate vs /. LangSmith trace chaque run en production : durée par nœud, tokens consommés, JSON du planner, réponse finale.',
     's3.title':'Outils de build',
     'tool.cc.role':'Vibe coding — CLI Anthropic',
     'tool.cc.desc':'Principal outil de développement. J\'écris les specs en langage naturel, Claude Code génère le code, refactorise les sections et gère les commits. Permet de shipper vite sans sacrifier la qualité du code.',
@@ -457,7 +527,30 @@ var T={
     'lg.r5':'Le tracing LangSmith optionnel (<code>LANGSMITH_API_KEY</code> + <code>LANGCHAIN_TRACING_V2=true</code>) pour observer le graph en production.',
     'lg.why.q':'Pourquoi LangGraph ?',
     'lg.why.a':'Plan PM structuré + réponse claire, site rapide et keyless',
-    'lg.why.desc':'Le double-nœud répond à deux contraintes opposées. Le planner a besoin d\'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. Une température trop haute rend le JSON imprévisible et difficile à parser. La synthesis a besoin au contraire d\'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots) avec les liens vers les outils PM pertinents. Un seul appel LLM ne peut pas satisfaire ces deux contraintes. LangGraph permet de composer ces comportements en un StateGraph lisible, testable et extensible — ajouter un nœud de validation ou de critique est trivial.'
+    'lg.why.desc':'Le double-nœud répond à deux contraintes opposées. Le planner a besoin d\'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. Une température trop haute rend le JSON imprévisible et difficile à parser. La synthesis a besoin au contraire d\'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots) avec les liens vers les outils PM pertinents. Un seul appel LLM ne peut pas satisfaire ces deux contraintes. LangGraph permet de composer ces comportements en un StateGraph lisible, testable et extensible — ajouter un nœud de validation ou de critique est trivial.',
+    's0.title':'Pourquoi ce site existe',
+    's0.lead':'En cherchant un poste d\'AI PM, j\'ai réalisé que tout le monde dit "je maîtrise l\'IA". Personne ne le montre. Ce site est ma réponse à ça.',
+    's0.intro':'Trois raisons l\'ont fait naître en même temps.',
+    's0.r1':'<strong>Frustration terrain.</strong> Chez AXA, chez Airbus, chez OAIO, j\'aurais eu besoin d\'outils comme ceux-ci : un vrai générateur d\'OKRs, un analyseur d\'entretiens qui synthétise en 10 secondes, un backlog prioritizer qui justifie ses choix. Je les ai construits parce que je les aurais utilisés.',
+    's0.r2':'<strong>Une conviction.</strong> Un PM qui prétend comprendre l\'IA sans jamais avoir construit avec, c\'est un PM qui parle de ce qu\'il n\'a pas vécu.',
+    's0.r3':'<strong>Un contexte.</strong> En recherche d\'emploi active, j\'avais du temps et une vraie raison de shipper vite. Ce site est né de ces trois choses en même temps.',
+    's5b.title':'Ce qui n\'a pas marché',
+    's5b.approach.label':'L\'approche initiale : prompt système unique',
+    's5b.approach.desc':'KRL1 a commencé avec un prompt système unique : une longue instruction envoyée au modèle avant chaque message utilisateur, lui expliquant qui il est, comment répondre, et quels outils recommander. C\'est l\'approche la plus simple et la plus répandue pour construire un chatbot.',
+    's5b.problem.label':'Le problème',
+    's5b.problem.desc':'Les réponses étaient correctes mais génériques. Un utilisateur qui demande "comment prioriser mon backlog" obtenait une explication du RICE en prose : pédagogique, mais pas actionnable. Il n\'était pas renvoyé vers le Backlog Prioritizer. Il ne repartait pas avec un plan concret.',
+    's5b.root.label':'La cause racine',
+    's5b.root.desc':'Un prompt unique demande au modèle de faire deux choses à la fois : analyser l\'intention de l\'utilisateur de façon rigoureuse ET formuler une réponse naturelle et engageante. Ces deux tâches ont des exigences opposées. L\'analyse d\'intention demande de la précision et de la cohérence : le modèle doit produire un résultat fiable, structuré, parseable. La formulation d\'une réponse demande de la fluidité et un peu de liberté créative pour que ça ne sonne pas robotique. Un seul appel LLM avec un seul paramètre de température ne peut pas satisfaire les deux en même temps. C\'est ce problème concret qui a mené à LangGraph : pas une envie de sur-ingénierie, mais la solution minimale à une contrainte réelle.',
+    's5.reflect.label':'Ce que ça dit de ma façon de penser en tant que PM',
+    's5.reflect.desc':'Ce choix d\'architecture reflète directement ma façon de penser : identifier la vraie contrainte avant de choisir la solution. Ici la contrainte n\'était pas "KRL1 répond mal". C\'était "un seul nœud ne peut pas être déterministe et créatif à la fois". Une fois la contrainte bien posée, la solution devient évidente. Le graph est testable indépendamment nœud par nœud, extensible sans tout réécrire, et chaque composant a une responsabilité claire. C\'est exactement ce qu\'on attend d\'un bon design produit.',
+    's6.title':'Et maintenant ?',
+    's6.status.label':'Où en est le site',
+    's6.status.desc':'Le site n\'est pas encore vraiment partagé. C\'est volontaire : je voulais d\'abord que l\'architecture soit solide, les cas de fallback couverts, les tests en place. Shipper quelque chose de cassé à des recruteurs ou à des PMs de mon réseau aurait fait plus de mal que de bien.',
+    's6.next.label':'La prochaine étape',
+    's6.next.desc':'Ouvrir le site et mesurer. Quels outils sont utilisés ? Lesquels sont ouverts mais abandonnés avant de générer quoi que ce soit : signe que l\'UX d\'input est trop complexe ou que la promesse n\'est pas claire ? Est-ce que KRL1 renvoie vers les bons outils au bon moment, ou est-ce que les utilisateurs repartent sans cliquer sur un lien ? Ces questions ne peuvent pas être répondues sans données réelles.',
+    's6.pm.label':'Ce que ça démontre',
+    's6.pm.a':'Builder, mesurer, décider',
+    's6.pm.desc':'Ajouter un système d\'analytics léger, même juste des événements custom sur les clics de génération et les liens KRL1, est la prochaine priorité technique. Ensuite itérer sur les outils les moins performants. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.'
   },
   en:{
     'back':'Portfolio',
@@ -494,7 +587,7 @@ var T={
     'step5.desc':'The GitHub repo is directly connected to GitHub Pages. Every git push to main triggers an automatic deployment via GitHub Actions in under 60 seconds — no manual CI/CD configuration. Global CDN, automatic HTTPS, cmankotech.github.io domain. Zero hosting cost for static files.',
     'step6.label':'Orchestration',
     'step6.title':'LangGraph to structure KRL1',
-    'step6.desc':'Faced with the limits of a single prompt for KRL1 — sometimes too generic, not actionable enough — I added a Python orchestration layer. The principle: separate planning from synthesis. The planner node (T=0.2) analyses intent and produces a deterministic JSON PM plan (intent, user_goal, steps, risks, quick_win). The synthesis node (T=0.45) transforms this plan into a concise natural response with direct links to the tools. Built with Codex in autonomous agent mode, tested with pytest + httpx, traced with LangSmith.',
+    'step6.desc':'Faced with the limits of a single prompt for KRL1, I added a Python orchestration layer. The planner node (T=0.2) analyses intent and produces a deterministic JSON PM plan (intent, user_goal, steps, risks, quick_win). The synthesis node (T=0.45) transforms this plan into a concise natural response with direct tool links. Pytest+httpx tests cover four critical scenarios: invalid planner JSON, markdown-fenced JSON, FastAPI orchestrator offline, /orchestrate vs / routing. LangSmith traces each graph run in production: per-node duration, tokens consumed, planner JSON, final response.',
     's3.title':'Build tools',
     'tool.cc.role':'Vibe coding — Anthropic CLI',
     'tool.cc.desc':'Primary development tool. I write specs in plain language, Claude Code generates the code, refactors sections and manages commits. Lets you ship fast without sacrificing code quality.',
@@ -540,7 +633,30 @@ var T={
     'lg.r5':'Optional LangSmith tracing (<code>LANGSMITH_API_KEY</code> + <code>LANGCHAIN_TRACING_V2=true</code>) to observe the graph in production.',
     'lg.why.q':'Why LangGraph?',
     'lg.why.a':'Structured PM plan + clear response, fast & keyless site',
-    'lg.why.desc':'The two-node design addresses two opposite constraints. The planner needs a low temperature (T=0.2) to produce deterministic, reliable JSON: intent, user_goal, actionable steps, identified risks, quick_win. Too high a temperature makes the JSON unpredictable and hard to parse. The synthesis needs a more creative temperature (T=0.45) to produce a natural, concise response (max 220 words) with links to the relevant PM tools. A single LLM call cannot satisfy both constraints simultaneously. LangGraph allows these behaviours to be composed into a readable, testable and extensible StateGraph — adding a validation or critique node is trivial.'
+    'lg.why.desc':'The two-node design addresses two opposite constraints. The planner needs a low temperature (T=0.2) to produce deterministic, reliable JSON: intent, user_goal, actionable steps, identified risks, quick_win. Too high a temperature makes the JSON unpredictable and hard to parse. The synthesis needs a more creative temperature (T=0.45) to produce a natural, concise response (max 220 words) with links to the relevant PM tools. A single LLM call cannot satisfy both constraints simultaneously. LangGraph allows these behaviours to be composed into a readable, testable and extensible StateGraph — adding a validation or critique node is trivial.',
+    's0.title':'Why this site exists',
+    's0.lead':'Looking for an AI PM position, I realised everyone says "I know AI". Nobody shows it. This site is my answer to that.',
+    's0.intro':'Three reasons brought it to life at the same time.',
+    's0.r1':'<strong>Field frustration.</strong> At AXA, Airbus and OAIO, I would have needed tools like these: a real OKR generator, an interview analyser that synthesises in 10 seconds, a backlog prioritiser that justifies its choices. I built them because I would have used them.',
+    's0.r2':'<strong>A conviction.</strong> A PM who claims to understand AI without ever having built with it is a PM who talks about what they have not experienced.',
+    's0.r3':'<strong>A context.</strong> Actively looking for a job, I had time and a real reason to ship fast. This site was born from all three things at once.',
+    's5b.title':'What did not work',
+    's5b.approach.label':'The initial approach: single system prompt',
+    's5b.approach.desc':'KRL1 started with a single system prompt: a long instruction sent to the model before every user message, explaining who it is, how to respond, and which tools to recommend. It is the simplest and most common way to build a chatbot.',
+    's5b.problem.label':'The problem',
+    's5b.problem.desc':'Responses were correct but generic. A user asking "how do I prioritise my backlog" got a prose explanation of RICE: educational, but not actionable. They were not redirected to the Backlog Prioritiser. They did not leave with a concrete plan.',
+    's5b.root.label':'The root cause',
+    's5b.root.desc':'A single prompt asks the model to do two things at once: analyse the user\'s intent rigorously AND formulate a natural, engaging response. These two tasks have opposing requirements. Intent analysis demands precision and consistency: the model must produce a reliable, structured, parseable output. Response formulation demands fluency and some creative freedom so it does not sound robotic. A single LLM call with a single temperature parameter cannot satisfy both at the same time. This concrete problem led to LangGraph: not a desire for over-engineering, but the minimal solution to a real constraint.',
+    's5.reflect.label':'What this says about my PM thinking',
+    's5.reflect.desc':'This architectural choice directly reflects how I think: identify the real constraint before choosing the solution. Here the constraint was not "KRL1 responds poorly". It was "a single node cannot be deterministic and creative at the same time". Once the constraint is clearly stated, the solution becomes obvious. The graph is testable node by node independently, extensible without rewriting everything, and each component has a single clear responsibility. That is exactly what good product design looks like.',
+    's6.title':'What\'s next',
+    's6.status.label':'Where the site stands',
+    's6.status.desc':'The site has not really been shared yet. That is intentional: I wanted the architecture to be solid first, the fallback cases covered, the tests in place. Shipping something broken to recruiters or PMs in my network would have done more harm than good.',
+    's6.next.label':'The next step',
+    's6.next.desc':'Open the site and measure. Which tools are used? Which ones are opened but abandoned before generating anything: a sign that the input UX is too complex or the value proposition is unclear? Does KRL1 redirect to the right tools at the right moment, or do users leave without clicking a link? These questions cannot be answered without real data.',
+    's6.pm.label':'What this demonstrates',
+    's6.pm.a':'Build, measure, decide',
+    's6.pm.desc':'Adding a lightweight analytics system, even just custom events on generation clicks and KRL1 links, is the next technical priority. Then iterate on the weakest-performing tools. This cycle is exactly what I advocate as a PM. It made sense for this portfolio to be a demonstration of it.'
   }
 };
 
