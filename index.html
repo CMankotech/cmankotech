@@ -951,26 +951,6 @@ window.setLang=function(lang){
     }
   }, 6000);
 
-  // Auto-trigger when landing from a tool page (?krl1=<tool>)
-  var _krl1Tool = new URLSearchParams(window.location.search).get('krl1');
-  if (_krl1Tool) {
-    var _krl1Map = {
-      'okr-builder': "J'utilise l'OKR Builder, peux-tu m'aider à structurer mes OKRs ?",
-      'backlog-prioritizer': "J'utilise le Backlog Prioritizer, peux-tu m'aider à prioriser mes features ?",
-      'discovery-assistant': "J'utilise le Discovery Assistant, peux-tu m'aider à préparer ma discovery ?",
-      'user-interview-analyzer': "J'utilise le User Interview Analyzer, peux-tu m'aider à analyser mes entretiens ?",
-      'epic-to-userstories': "J'utilise l'Epic to User Stories, peux-tu m'aider à décomposer mon epic en stories ?",
-      'roadmap-storyteller': "J'utilise le Roadmap Storyteller, peux-tu m'aider à pitcher ma roadmap ?",
-    };
-    var _krl1Msg = _krl1Map[_krl1Tool];
-    if (_krl1Msg) {
-      _autoOpened = true;
-      setTimeout(function() {
-        if (!_chatOpen) toggleChat();
-        setTimeout(function() { handleInput(_krl1Msg); }, 700);
-      }, 400);
-    }
-  }
 
   // Sync lang when portfolio lang switches
   var _origSetLang = window.setLang;
