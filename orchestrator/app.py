@@ -82,10 +82,12 @@ def synthesis_node(state: GraphState) -> GraphState:
 
     prompt = (
         "You are KRL1. Turn this PM plan into a concise, actionable answer (max 220 words). "
-        "Include the next step and direct links for named tools."
+        "Include the next step. When mentioning a tool, insert a clickable HTML link: "
+        '<a href="URL" target="_blank">Tool Name</a>. Never use markdown link syntax.'
         if lang == "en"
         else "Tu es KRL1. Transforme ce plan PM en réponse concise et actionnable (max 220 mots). "
-        "Ajoute la prochaine action et les liens directs des outils cités."
+        "Ajoute la prochaine action. Quand tu cites un outil, insère un lien HTML cliquable : "
+        '<a href="URL" target="_blank">Nom Outil</a>. N\'utilise jamais la syntaxe markdown pour les liens.'
     )
 
     tool_links = "\n".join([

@@ -59,8 +59,8 @@ async function handleOrchestrator(body, env) {
     : 'Tu es KRL1 PM Orchestrator. Retourne uniquement du JSON strict avec les clés: intent, confidence (0-1), user_goal, steps (tableau de {tool, objective, output}), risks (tableau), quick_win.';
 
   const synthesisPrompt = lang === 'en'
-    ? 'You are KRL1. Transform plan JSON into a concise, actionable answer. Keep max 220 words, include next step and direct links when a tool is mentioned.'
-    : 'Tu es KRL1. Transforme ce plan JSON en réponse actionnable et concise. Max 220 mots, avec prochaine action et liens directs quand un outil est mentionné.';
+    ? 'You are KRL1. Transform plan JSON into a concise, actionable answer. Max 220 words. Include next step. When mentioning a tool, insert a clickable HTML link: <a href="URL" target="_blank">Tool Name</a>. Never use markdown link syntax.'
+    : 'Tu es KRL1. Transforme ce plan JSON en réponse actionnable et concise. Max 220 mots, avec prochaine action. Quand tu cites un outil, insère un lien HTML cliquable : <a href="URL" target="_blank">Nom Outil</a>. N\'utilise jamais la syntaxe markdown pour les liens.';
 
   const plannerMessages = [
     { role: 'system', content: plannerPrompt },

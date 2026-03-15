@@ -804,11 +804,21 @@ window.setLang=function(lang){
     addBotMsg(i18n.welcome, i18n.chips);
   }
 
+  function mdToHtml(t) {
+    // Convert markdown links [text](url) → <a> tags
+    t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+    // Convert **bold** → <strong>
+    t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    // Convert newlines
+    t = t.replace(/\n/g, '<br>');
+    return t;
+  }
+
   function addBotMsg(text, chips) {
     var msgs = document.getElementById('chat-messages');
     var div = document.createElement('div');
     div.className = 'msg bot';
-    div.innerHTML = text.replace(/\n/g, '<br>');
+    div.innerHTML = mdToHtml(text);
     if (chips && chips.length) {
       var chipsDiv = document.createElement('div');
       chipsDiv.className = 'chips';
