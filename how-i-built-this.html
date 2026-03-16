@@ -99,17 +99,23 @@ section{margin-bottom:4rem}
 .decision-a{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:0.5rem}
 .decision-why{font-size:0.82rem;color:var(--dim);line-height:1.7}
 
-/* ARCH FLOW DIAGRAM */
-.arch-flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center;margin:0 0 2rem;padding:1.5rem 1rem;background:var(--glass);border:1px solid var(--border);border-radius:14px}
-.arch-node{display:flex;flex-direction:column;align-items:center;gap:0.45rem;padding:0.9rem 1.1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;min-width:110px;text-align:center}
+/* ARCH DIAGRAM V2 — vertical tree */
+.arch-node{display:flex;flex-direction:column;align-items:center;gap:0.4rem;padding:0.85rem 1.1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;min-width:130px;text-align:center}
 .arch-node-name{font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:var(--text);line-height:1.3}
-.arch-node-label{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.2rem 0.5rem;border-radius:4px}
-.arch-arrow{color:var(--muted);font-size:1.1rem;padding:0 0.6rem;flex-shrink:0;line-height:1}
+.arch-node-label{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.18rem 0.5rem;border-radius:4px}
 .arch-node.n-user .arch-node-label{color:var(--cyan);background:rgba(34,211,238,0.1)}
 .arch-node.n-worker .arch-node-label{color:var(--orange);background:rgba(251,146,60,0.1)}
 .arch-node.n-lg .arch-node-label{color:var(--violet);background:rgba(167,139,250,0.1)}
 .arch-node.n-groq .arch-node-label{color:var(--blue);background:rgba(96,165,250,0.1)}
-@media(max-width:600px){.arch-flow{flex-direction:column;gap:0.25rem}.arch-arrow{transform:rotate(90deg)}}
+.arch-diagram{display:flex;flex-direction:column;align-items:center;padding:2rem 1.5rem 1.5rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;margin:0 0 2rem}
+.arch-top{display:flex;align-items:center;gap:0.6rem}
+.arch-h-arrow{color:var(--muted);font-size:1rem;flex-shrink:0}
+.arch-vline{width:1px;height:1.5rem;background:var(--border);margin:0 auto}
+.arch-fork-bar{display:flex;align-items:flex-start;gap:2rem;position:relative}
+.arch-fork-bar::before{content:'';position:absolute;top:0;left:25%;right:25%;height:1px;background:var(--border)}
+.arch-branch{display:flex;flex-direction:column;align-items:center}
+.arch-branch-tag{font-size:0.58rem;font-weight:700;font-family:monospace;background:rgba(255,255,255,0.06);border:1px solid rgba(196,181,253,0.3);border-radius:4px;padding:0.15rem 0.5rem;color:#c4b5fd;margin:0.5rem 0}
+.arch-fallback-note{font-size:0.6rem;color:var(--muted);font-style:italic;text-align:center;margin-top:0.75rem;padding-top:0.6rem;border-top:1px dashed rgba(255,255,255,0.08);line-height:1.6;max-width:160px}
 
 /* LANGGRAPH GRID */
 .lg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
@@ -134,14 +140,7 @@ section{margin-bottom:4rem}
 .stat-lbl{font-size:0.57rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted)}
 .stat-num.live{color:var(--cyan)}
 
-/* ARCH SPLIT */
-.arch-flow-split{flex-direction:row;align-items:center;gap:0.75rem;flex-wrap:nowrap;justify-content:flex-start}
-.arch-col-left{display:flex;align-items:center;gap:0.5rem;flex-shrink:0}
-.arch-col-sep{width:1px;background:var(--border);align-self:stretch;min-height:80px;margin:0 0.25rem;flex-shrink:0}
-.arch-col-right{display:flex;flex-direction:column;gap:0.55rem;flex:1;justify-content:center;min-width:0}
-.arch-route-row{display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap}
-.arch-route-tag{font-size:0.6rem;font-weight:700;font-family:monospace;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:4px;padding:0.15rem 0.45rem;color:#c4b5fd;flex-shrink:0;white-space:nowrap}
-.arch-fallback{font-size:0.6rem;color:var(--muted);font-style:italic;padding-top:0.4rem;border-top:1px dashed var(--line);margin-top:0.1rem}
+@media(max-width:600px){.arch-fork-bar{flex-direction:column;align-items:center;gap:1rem}.arch-fork-bar::before{display:none}.arch-node{min-width:110px}}
 
 /* PROMPT BLOCK */
 .prompt-block{font-family:monospace;font-size:0.72rem;line-height:1.65;color:#a5b4fc;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;white-space:pre-wrap;word-break:break-word;margin:0.75rem 0;overflow-x:auto}
@@ -181,8 +180,7 @@ section{margin-bottom:4rem}
   .top-bar{flex-wrap:wrap;gap:0.75rem}
   .page-footer{flex-direction:column;align-items:flex-start}
   .test-grid{grid-template-columns:1fr}
-  .arch-flow-split{flex-direction:column;align-items:flex-start}
-  .arch-col-sep{width:100%;height:1px;min-height:0;margin:0.25rem 0}
+
   .stats-bar{flex-wrap:wrap}
   .stat-item{min-width:45%;flex:none}
   .stat-sep{display:none}
@@ -259,43 +257,48 @@ section{margin-bottom:4rem}
       <span class="sec-num">01</span>
       <span class="sec-title" data-i18n="s1.title">Stack technique</span>
     </div>
-    <!-- ARCHITECTURE FLOW -->
-    <div class="arch-flow arch-flow-split" role="img" aria-label="Architecture: Browser → CF Worker → dual routing → Groq API">
-      <div class="arch-col-left">
+    <!-- ARCHITECTURE DIAGRAM -->
+    <div class="arch-diagram" role="img" aria-label="Architecture: Browser → CF Worker → deux routes → Groq API">
+      <!-- Niveau 1: Browser → Worker -->
+      <div class="arch-top">
         <div class="arch-node n-user">
           <div class="arch-node-name">Browser</div>
           <div class="arch-node-label">User</div>
         </div>
-        <div class="arch-arrow">→</div>
+        <div class="arch-h-arrow">→</div>
         <div class="arch-node n-worker">
           <div class="arch-node-name">Cloudflare Worker</div>
           <div class="arch-node-label">API Proxy</div>
         </div>
       </div>
-      <div class="arch-col-sep"></div>
-      <div class="arch-col-right">
-        <div class="arch-route-row">
-          <span class="arch-route-tag">POST /</span>
-          <div class="arch-arrow">→</div>
+      <!-- Connecteur vertical -->
+      <div class="arch-vline"></div>
+      <!-- Niveau 2: fork en deux routes -->
+      <div class="arch-fork-bar">
+        <!-- Route 1 -->
+        <div class="arch-branch">
+          <span class="arch-branch-tag">POST /</span>
+          <div class="arch-vline"></div>
           <div class="arch-node n-groq">
             <div class="arch-node-name">Groq API</div>
             <div class="arch-node-label">6 outils PM</div>
           </div>
         </div>
-        <div class="arch-route-row">
-          <span class="arch-route-tag">POST /orchestrate</span>
-          <div class="arch-arrow">→</div>
+        <!-- Route 2 -->
+        <div class="arch-branch">
+          <span class="arch-branch-tag">POST /orchestrate</span>
+          <div class="arch-vline"></div>
           <div class="arch-node n-lg">
             <div class="arch-node-name">FastAPI · LangGraph</div>
             <div class="arch-node-label">KRL1</div>
           </div>
-          <div class="arch-arrow">→</div>
+          <div class="arch-vline"></div>
           <div class="arch-node n-groq">
             <div class="arch-node-name">Groq API</div>
             <div class="arch-node-label">planner + synthesis</div>
           </div>
+          <div class="arch-fallback-note" data-i18n="arch.fallback">↩ fallback Worker direct si FastAPI offline</div>
         </div>
-        <div class="arch-fallback" data-i18n="arch.fallback">↗ fallback natif Worker si FastAPI offline</div>
       </div>
     </div>
 
@@ -768,7 +771,7 @@ var T={
     'stat.tools':'outils PM',
     'stat.cost':'/ mois d\'infra',
     'stat.weeks':'sem. en spare time',
-    'arch.fallback':'↗ fallback natif Worker si FastAPI offline',
+    'arch.fallback':'↩ fallback Worker direct si FastAPI offline',
     's4b.title':'Prompt engineering',
     's4b.okr.label':'Prompt system — OKR Builder (extrait réel)',
     's4b.okr.why':'T=0.5 est délibéré : assez bas pour que le JSON soit fiable et parseable, assez haut pour que les libellés d\'OKR soient variés et inspirants. À T=0.2, les OKRs seraient trop uniformes. À T=0.7, le JSON devient parfois invalide. L\'example JSON dans le prompt sert de guardrail de format — il contraint la structure de sortie plus efficacement qu\'une description textuelle.',
@@ -903,7 +906,7 @@ var T={
     'stat.tools':'PM tools',
     'stat.cost':'/ month infra cost',
     'stat.weeks':'weeks in spare time',
-    'arch.fallback':'↗ native Worker fallback if FastAPI offline',
+    'arch.fallback':'↩ direct Worker fallback if FastAPI offline',
     's4b.title':'Prompt engineering',
     's4b.okr.label':'System prompt — OKR Builder (real extract)',
     's4b.okr.why':'T=0.5 is deliberate: low enough that the JSON is reliable and parseable, high enough that the OKR labels are varied and inspiring. At T=0.2, OKRs would be too uniform. At T=0.7, the JSON occasionally becomes invalid. The example JSON in the prompt acts as a format guardrail — it constrains the output structure more effectively than a textual description.',
