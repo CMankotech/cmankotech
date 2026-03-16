@@ -398,8 +398,10 @@ var EXAMPLES = [
   }
 ];
 
+var _exIdx = 0;
 function loadExample() {
-  var e = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)];
+  var e = EXAMPLES[_exIdx % EXAMPLES.length];
+  _exIdx++;
   document.getElementById('productName').value = e.product;
   document.getElementById('vision').value = e.vision;
   document.getElementById('featuresList').innerHTML = '';

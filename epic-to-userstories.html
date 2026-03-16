@@ -362,8 +362,10 @@ var EXAMPLES = [
   }
 ];
 
+var _exIdx = 0;
 function loadExample() {
-  var e = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)];
+  var e = EXAMPLES[_exIdx % EXAMPLES.length];
+  _exIdx++;
   document.getElementById('epicTitle').value = e.title;
   document.getElementById('epicDesc').value = e.desc;
   document.getElementById('persona').value = e.persona;

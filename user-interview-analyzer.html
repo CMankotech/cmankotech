@@ -357,7 +357,10 @@ var inputMode = 'single';
 var interviewCount = 0;
 
 // ---- EXAMPLES ----
-var SINGLE_EXAMPLE = `Profil : Marie, 34 ans, responsable marketing dans une PME de 45 personnes. Utilise l'outil depuis 4 mois.
+var SINGLE_EXAMPLES = [
+  {
+    context: 'SaaS de gestion de projet B2B, cible PME et scale-ups, phase de rétention',
+    text: `Profil : Marie, 34 ans, responsable marketing dans une PME de 45 personnes. Utilise l'outil depuis 4 mois.
 
 Douleurs principales :
 - Passe environ 2h par semaine à exporter des données et refaire des graphiques dans Excel pour ses reportings.
@@ -371,47 +374,130 @@ Ce qui fonctionne bien :
 
 Verbatim clé : "J'adorerais un bouton 'partager rapport' qui envoie juste un PDF par email, sans que les gens aient besoin d'un compte".
 
-Demandes futures : notifications configurables, meilleure app mobile, export PDF direct.`;
-
-var MULTI_EXAMPLES = [
+Demandes futures : notifications configurables, meilleure app mobile, export PDF direct.`
+  },
   {
-    label: "Entretien 1 — Thomas, dev freelance",
-    text: `Thomas, 28 ans, développeur freelance. Utilise l'outil pour gérer ses missions clients.
+    context: 'Application fintech B2C, gestion de budget personnel, phase d\'acquisition',
+    text: `Profil : Lucas, 26 ans, étudiant en master, utilise l'app depuis 2 semaines suite à une recommandation.
+
+Douleurs principales :
+- La connexion bancaire a échoué 3 fois avant de fonctionner : "J'ai failli désinstaller l'app à ce moment-là".
+- Ne comprend pas la différence entre "catégories" et "enveloppes budgétaires" dans l'interface.
+- Agacé par les notifications quotidiennes jugées trop fréquentes et pas personnalisables.
+- Ne trouve pas l'historique au-delà de 3 mois, pense que les données sont supprimées.
+
+Ce qui fonctionne bien :
+- Adore le graphique circulaire des dépenses, le consulte tous les soirs.
+- A partagé l'app avec 2 amis parce qu'il trouve le design "propre et moderne".
+
+Verbatim clé : "Si la connexion bancaire était plus fluide, ce serait parfait. C'est le seul truc qui m'a vraiment bloqué".
+
+Demandes futures : mode couple pour partager un budget, widgets iOS, rappels de factures.`
+  },
+  {
+    context: 'Plateforme e-learning B2B, formation des équipes commerciales, phase de croissance',
+    text: `Profil : Isabelle, 47 ans, directrice des ressources humaines dans un groupe retail de 300 personnes.
+
+Douleurs principales :
+- Passe beaucoup de temps à créer des rapports de suivi de complétion manuellement chaque mois.
+- Certains collaborateurs contournent les quiz en cherchant les réponses en ligne : "On a une formation, mais pas forcément de l'apprentissage".
+- Trouve l'interface d'administration complexe : a eu besoin d'une heure de formation pour créer son premier parcours.
+- Impossible d'assigner une formation à un groupe sans gérer les utilisateurs un par un.
+
+Ce qui fonctionne bien :
+- Très satisfaite de la qualité des contenus vidéo intégrés.
+- Apprécie les rappels automatiques envoyés aux apprenants en retard.
+
+Verbatim clé : "Mon besoin numéro un, c'est de gagner du temps sur l'admin. Le contenu est bon, mais tout le reste est laborieux".
+
+Demandes futures : import CSV d'utilisateurs, rapports automatiques par email, intégration SIRH.`
+  }
+];
+
+var MULTI_EXAMPLE_SETS = [
+  {
+    context: 'SaaS de gestion de projet B2B, cible PME et scale-ups, phase de rétention',
+    interviews: [
+      {
+        label: "Entretien 1 — Thomas, dev freelance",
+        text: `Thomas, 28 ans, développeur freelance. Utilise l'outil pour gérer ses missions clients.
 
 - Crée en moyenne 3-4 projets par mois. Trouve la duplication de projet trop lente : "Je fais toujours la même config, j'aimerais des templates".
 - Se plaint que l'historique des modifications n'est pas accessible : a perdu une semaine de travail suite à une suppression accidentelle.
 - Utilise l'API mais trouve la documentation incomplète, notamment sur l'authentification OAuth.
 - Citation : "Si j'avais des templates de projets, je gagnerais au moins une heure par mission".`
-  },
-  {
-    label: "Entretien 2 — Camille, product manager",
-    text: `Camille, 31 ans, PM dans une scale-up. Utilise l'outil en équipe de 8 personnes.
+      },
+      {
+        label: "Entretien 2 — Camille, product manager",
+        text: `Camille, 31 ans, PM dans une scale-up. Utilise l'outil en équipe de 8 personnes.
 
 - Principale frustration : impossible de voir d'un coup d'œil qui travaille sur quoi. "On a besoin d'une vraie vue équipe".
 - A essayé d'intégrer avec Slack mais l'intégration est "cassée" selon elle, les notifications arrivent en double.
 - Apprécie beaucoup le backlog mais voudrait pouvoir le filtrer par sprint directement.
 - Citation : "Le plus gros problème c'est la visibilité. Je ne sais jamais où en sont mes collègues sans les relancer".`
-  },
-  {
-    label: "Entretien 3 — Romain, directeur opérations",
-    text: `Romain, 43 ans, directeur des opérations dans une ETI. Utilisateur occasionnel, décideur d'achat.
+      },
+      {
+        label: "Entretien 3 — Romain, directeur opérations",
+        text: `Romain, 43 ans, directeur des opérations dans une ETI. Utilisateur occasionnel, décideur d'achat.
 
 - Utilise principalement les rapports générés par son équipe, pas l'outil en direct.
 - Veut pouvoir recevoir un récapitulatif hebdomadaire automatique par email.
 - Trouve l'outil "trop technique" pour des non-initiés dans son équipe.
 - Citation : "Si je dois former chaque nouvelle recrue pendant 2 jours, ça ne scale pas".
 - Envisage de résilier si l'onboarding n'est pas simplifié d'ici 3 mois.`
+      }
+    ]
+  },
+  {
+    context: 'Application de livraison de repas B2C, marché urbain, phase de fidélisation',
+    interviews: [
+      {
+        label: "Entretien 1 — Amina, utilisatrice régulière",
+        text: `Amina, 29 ans, consultante, commande 3 à 4 fois par semaine depuis 8 mois.
+
+- Irritée par les estimations de livraison inexactes : "On m'annonce 25 min, il arrive en 50 min. J'ai arrêté de faire confiance aux horaires".
+- A annulé sa commande deux fois car le paiement a refusé sans explication claire.
+- Aimerait un mode "mes préférences" pour ne pas refiltrer à chaque commande.
+- Citation : "Ce qui me retient c'est l'habitude, pas l'expérience. Si un concurrent était aussi rapide, je partirais".`
+      },
+      {
+        label: "Entretien 2 — Kevin, utilisateur occasionnel",
+        text: `Kevin, 35 ans, père de famille, utilise l'app le week-end principalement.
+
+- Commande pour toute la famille (4 personnes) : trouver des plats qui conviennent à tous est "un vrai casse-tête" avec les filtres actuels.
+- A eu un problème de commande incomplète : remboursement reçu mais le processus était "opaque et long".
+- Positif sur le programme de fidélité mais ne comprend pas comment les points expirent.
+- Citation : "Un mode 'commande en groupe' où chacun choisit son plat et on paie ensemble, ce serait révolutionnaire pour nous".`
+      },
+      {
+        label: "Entretien 3 — Nadia, ex-utilisatrice revenue",
+        text: `Nadia, 32 ans, avait arrêté l'app pendant 6 mois, revenue suite à une promo.
+
+- Était partie à cause des frais de livraison jugés trop élevés par rapport à la concurrence.
+- Revenue après une offre 0€ de livraison, mais surveille les prix de près.
+- Trouve les avis restaurants peu fiables : "Il y a des restaurants avec 4,8 étoiles qui livrent froid".
+- Citation : "Je resterai si le rapport qualité-prix reste compétitif. Mais à la première déception tarifaire, je pars".`
+      }
+    ]
   }
 ];
 
+var _singleExIdx = 0;
+var _multiExIdx = 0;
+
 function loadExamples() {
-  document.getElementById('context').value = 'SaaS de gestion de projet B2B, cible PME et scale-ups, phase de rétention';
   if (inputMode === 'single') {
-    document.getElementById('singleText').value = SINGLE_EXAMPLE;
+    var ex = SINGLE_EXAMPLES[_singleExIdx % SINGLE_EXAMPLES.length];
+    _singleExIdx++;
+    document.getElementById('context').value = ex.context;
+    document.getElementById('singleText').value = ex.text;
   } else {
+    var set = MULTI_EXAMPLE_SETS[_multiExIdx % MULTI_EXAMPLE_SETS.length];
+    _multiExIdx++;
+    document.getElementById('context').value = set.context;
     document.getElementById('interviewBlocks').innerHTML = '';
     interviewCount = 0;
-    MULTI_EXAMPLES.forEach(function(ex) { addInterview(ex.label, ex.text); });
+    set.interviews.forEach(function(ex) { addInterview(ex.label, ex.text); });
   }
 }
 // ---- INPUT MODE ----
