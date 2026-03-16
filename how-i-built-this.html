@@ -126,6 +126,48 @@ section{margin-bottom:4rem}
 .narrative-reason{font-size:0.83rem;color:var(--dim);line-height:1.8;padding:0.75rem 1rem;background:rgba(255,255,255,0.015);border:1px solid var(--line);border-radius:8px}
 .narrative-reason strong{color:var(--text);font-weight:600}
 
+/* STATS BAR */
+.stats-bar{display:flex;align-items:stretch;margin:0 0 4rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.stat-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.25rem;flex:1;padding:1.25rem 0.75rem;text-align:center}
+.stat-sep{width:1px;background:var(--border);flex-shrink:0}
+.stat-num{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;line-height:1;letter-spacing:-0.04em;color:var(--text)}
+.stat-lbl{font-size:0.57rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted)}
+.stat-num.live{color:var(--cyan)}
+
+/* ARCH SPLIT */
+.arch-flow-split{flex-direction:row;align-items:center;gap:0.75rem;flex-wrap:nowrap;justify-content:flex-start}
+.arch-col-left{display:flex;align-items:center;gap:0.5rem;flex-shrink:0}
+.arch-col-sep{width:1px;background:var(--border);align-self:stretch;min-height:80px;margin:0 0.25rem;flex-shrink:0}
+.arch-col-right{display:flex;flex-direction:column;gap:0.55rem;flex:1;justify-content:center;min-width:0}
+.arch-route-row{display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap}
+.arch-route-tag{font-size:0.6rem;font-weight:700;font-family:monospace;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:4px;padding:0.15rem 0.45rem;color:#c4b5fd;flex-shrink:0;white-space:nowrap}
+.arch-fallback{font-size:0.6rem;color:var(--muted);font-style:italic;padding-top:0.4rem;border-top:1px dashed var(--line);margin-top:0.1rem}
+
+/* PROMPT BLOCK */
+.prompt-block{font-family:monospace;font-size:0.72rem;line-height:1.65;color:#a5b4fc;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;white-space:pre-wrap;word-break:break-word;margin:0.75rem 0;overflow-x:auto}
+.prompt-meta{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.5rem}
+.prompt-tag{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;padding:0.18rem 0.55rem;border-radius:99px;border:1px solid}
+.pt-t{background:rgba(251,146,60,0.1);border-color:rgba(251,146,60,0.3);color:#fdba74}
+.pt-mt{background:rgba(96,165,250,0.1);border-color:rgba(96,165,250,0.3);color:#93c5fd}
+.pt-out{background:rgba(74,222,128,0.1);border-color:rgba(74,222,128,0.3);color:#86efac}
+
+/* PARAMS TABLE */
+.params-table{width:100%;font-size:0.78rem;border-collapse:collapse;margin-top:0.75rem}
+.params-table th{font-size:0.57rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);padding:0.45rem 0.75rem;text-align:left;border-bottom:1px solid var(--border)}
+.params-table td{padding:0.45rem 0.75rem;color:var(--dim);border-bottom:1px solid rgba(255,255,255,0.03)}
+.params-table tr:last-child td{border-bottom:none}
+.params-table .td-tool{color:var(--text);font-weight:500}
+.params-table .td-temp{font-family:monospace;color:var(--orange)}
+.params-table .td-tokens{font-family:monospace;color:var(--blue)}
+
+/* TEST GRID */
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-top:1rem}
+.test-case{padding:1rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;gap:0.4rem}
+.test-case-num{font-size:0.57rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
+.test-case-title{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--text);line-height:1.3}
+.test-case-desc{font-size:0.74rem;color:var(--dim);line-height:1.6}
+.test-case-result{font-size:0.62rem;font-family:monospace;color:#4ade80;margin-top:auto;padding-top:0.4rem;border-top:1px solid rgba(74,222,128,0.1)}
+
 /* FOOTER */
 .page-footer{border-top:1px solid var(--line);padding-top:3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
 .footer-back{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;transition:color 0.2s}
@@ -138,6 +180,12 @@ section{margin-bottom:4rem}
   .tl-num{width:28px;height:28px;font-size:0.65rem}
   .top-bar{flex-wrap:wrap;gap:0.75rem}
   .page-footer{flex-direction:column;align-items:flex-start}
+  .test-grid{grid-template-columns:1fr}
+  .arch-flow-split{flex-direction:column;align-items:flex-start}
+  .arch-col-sep{width:100%;height:1px;min-height:0;margin:0.25rem 0}
+  .stats-bar{flex-wrap:wrap}
+  .stat-item{min-width:45%;flex:none}
+  .stat-sep{display:none}
 }
 </style>
 </head>
@@ -165,6 +213,29 @@ section{margin-bottom:4rem}
     <p class="subtitle" data-i18n="subtitle">Stack vanilla, déploiement statique, LLM via proxy sécurisé. Zéro framework, zéro dépendance inutile — juste du web qui fonctionne.</p>
   </header>
 
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num live" id="stat-reqs">—</div>
+      <div class="stat-lbl" data-i18n="stat.reqs">requêtes traitées</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <div class="stat-num">6</div>
+      <div class="stat-lbl" data-i18n="stat.tools">outils PM</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <div class="stat-num">0€</div>
+      <div class="stat-lbl" data-i18n="stat.cost">/ mois d'infra</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <div class="stat-num">~6</div>
+      <div class="stat-lbl" data-i18n="stat.weeks">sem. en spare time</div>
+    </div>
+  </div>
+
   <!-- 00 POURQUOI CE SITE EXISTE -->
   <section>
     <div class="sec-header">
@@ -189,25 +260,42 @@ section{margin-bottom:4rem}
       <span class="sec-title" data-i18n="s1.title">Stack technique</span>
     </div>
     <!-- ARCHITECTURE FLOW -->
-    <div class="arch-flow" role="img" aria-label="Architecture flow: User → Cloudflare Worker → FastAPI LangGraph → Groq API">
-      <div class="arch-node n-user">
-        <div class="arch-node-name">Browser</div>
-        <div class="arch-node-label">User</div>
+    <div class="arch-flow arch-flow-split" role="img" aria-label="Architecture: Browser → CF Worker → dual routing → Groq API">
+      <div class="arch-col-left">
+        <div class="arch-node n-user">
+          <div class="arch-node-name">Browser</div>
+          <div class="arch-node-label">User</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node n-worker">
+          <div class="arch-node-name">Cloudflare Worker</div>
+          <div class="arch-node-label">API Proxy</div>
+        </div>
       </div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-node n-worker">
-        <div class="arch-node-name">Cloudflare Worker</div>
-        <div class="arch-node-label">API Proxy</div>
-      </div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-node n-lg">
-        <div class="arch-node-name">FastAPI · LangGraph</div>
-        <div class="arch-node-label">Orchestration</div>
-      </div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-node n-groq">
-        <div class="arch-node-name">Groq API</div>
-        <div class="arch-node-label">LLM</div>
+      <div class="arch-col-sep"></div>
+      <div class="arch-col-right">
+        <div class="arch-route-row">
+          <span class="arch-route-tag">POST /</span>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node n-groq">
+            <div class="arch-node-name">Groq API</div>
+            <div class="arch-node-label">6 outils PM</div>
+          </div>
+        </div>
+        <div class="arch-route-row">
+          <span class="arch-route-tag">POST /orchestrate</span>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node n-lg">
+            <div class="arch-node-name">FastAPI · LangGraph</div>
+            <div class="arch-node-label">KRL1</div>
+          </div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node n-groq">
+            <div class="arch-node-name">Groq API</div>
+            <div class="arch-node-label">planner + synthesis</div>
+          </div>
+        </div>
+        <div class="arch-fallback" data-i18n="arch.fallback">↗ fallback natif Worker si FastAPI offline</div>
       </div>
     </div>
 
@@ -395,6 +483,72 @@ section{margin-bottom:4rem}
     </div>
   </section>
 
+  <!-- 04b PROMPT ENGINEERING -->
+  <section>
+    <div class="sec-header">
+      <span class="sec-num">04b</span>
+      <span class="sec-title" data-i18n="s4b.title">Prompt engineering</span>
+    </div>
+
+    <div class="decision-card" style="margin-bottom:1rem">
+      <div class="decision-q" data-i18n="s4b.okr.label">Prompt system — OKR Builder (extrait réel)</div>
+      <div class="prompt-meta">
+        <span class="prompt-tag pt-t">T = 0.5</span>
+        <span class="prompt-tag pt-mt">max_tokens 3 000</span>
+        <span class="prompt-tag pt-out">JSON strict</span>
+      </div>
+      <pre class="prompt-block">Tu es un expert en Product Management et stratégie OKR.
+Génère des OKRs pour le produit suivant.
+
+Règles importantes :
+- Chaque Objective : qualitatif, inspirant, mémorable (sans chiffres)
+- Chaque Key Result : mesurable, valeur cible précise et réaliste
+- 3 Key Results par objectif
+- Varie les types : metric / milestone / health
+- Ancre les KRs dans les métriques fournies si disponibles
+
+Réponds UNIQUEMENT avec un JSON valide :
+{
+  "okrs": [{
+    "objective": "...",
+    "key_results": [
+      {"text": "...", "type": "metric", "baseline": "..."}
+    ]
+  }],
+  "tips": ["conseil 1", "conseil 2", "conseil 3"]
+}</pre>
+      <div class="decision-why" data-i18n="s4b.okr.why">T=0.5 est délibéré : assez bas pour que le JSON soit fiable et parseable, assez haut pour que les libellés d'OKR soient variés et inspirants. À T=0.2, les OKRs seraient trop uniformes. À T=0.7, le JSON devient parfois invalide. L'example JSON dans le prompt sert de guardrail de format — il contraint la structure de sortie plus efficacement qu'une description textuelle.</div>
+    </div>
+
+    <div class="decision-card" style="margin-bottom:1rem">
+      <div class="decision-q" data-i18n="s4b.kb.label">KB fast-path — KRL1 avant d'appeler le LLM</div>
+      <div class="decision-why" data-i18n="s4b.kb.why">KRL1 vérifie d'abord une base de connaissances locale (6 patterns FR + 6 EN, matching par mots-clés) avant d'envoyer quoi que ce soit à Groq. Si la question correspond — "qu'est-ce que le backlog prioritizer ?", "quel est le profil de Carlin ?" — la réponse part en ~400ms sans consommer un seul token. Cette couche couvre ~30-40% des questions récurrentes. C'est une décision de coût et de perf : réponses plus rapides, plus cohérentes, zéro dépendance API pour les cas les plus fréquents.</div>
+    </div>
+
+    <div class="decision-card">
+      <div class="decision-q" data-i18n="s4b.params.label">Paramètres adaptés par outil</div>
+      <div class="decision-why" data-i18n="s4b.params.intro">Chaque outil a une contrainte différente. Le Backlog Prioritizer utilise la température la plus basse : le scoring RICE doit être cohérent et reproductible. Le Discovery Assistant utilise la plus haute : reformuler des hypothèses et des questions d'interview bénéficie de variété.</div>
+      <table class="params-table">
+        <thead>
+          <tr>
+            <th data-i18n="params.th.tool">Outil</th>
+            <th data-i18n="params.th.t">Température</th>
+            <th data-i18n="params.th.tok">max_tokens</th>
+            <th data-i18n="params.th.out">Output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-tool">OKR Builder</td><td class="td-temp">0.5</td><td class="td-tokens">3 000</td><td>JSON</td></tr>
+          <tr><td class="td-tool">Discovery Assistant</td><td class="td-temp">0.7</td><td class="td-tokens">2 000</td><td>JSON</td></tr>
+          <tr><td class="td-tool">User Interview Analyzer</td><td class="td-temp">0.4</td><td class="td-tokens">3 000</td><td>JSON</td></tr>
+          <tr><td class="td-tool">Backlog Prioritizer</td><td class="td-temp">0.3</td><td class="td-tokens">3 000</td><td>JSON</td></tr>
+          <tr><td class="td-tool">Epic to User Stories</td><td class="td-temp">0.4</td><td class="td-tokens">4 000</td><td>JSON</td></tr>
+          <tr><td class="td-tool">Roadmap Storyteller</td><td class="td-temp">0.55</td><td class="td-tokens">3 500</td><td>JSON</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
   <!-- 05b CE QUI N'A PAS MARCHÉ -->
   <section>
     <div class="sec-header">
@@ -434,6 +588,30 @@ section{margin-bottom:4rem}
         <div class="update-item" data-i18n="lg.r3">Un parsing robuste via <code>strip_json_code_fences()</code> — gère les JSON entourés de blocs <code>```json</code> que le LLM peut produire malgré les instructions strict JSON only.</div>
         <div class="update-item" data-i18n="lg.r4">Des tests automatiques (pytest + httpx) couvrant : planner JSON invalide, JSON fencé, orchestrateur externe hors ligne, routing /orchestrate vs / — pour sécuriser chaque cas de fallback.</div>
         <div class="update-item" data-i18n="lg.r5">Le tracing LangSmith optionnel (<code>LANGSMITH_API_KEY</code> + <code>LANGCHAIN_TRACING_V2=true</code>) pour observer le graph en production.</div>
+      </div>
+    </div>
+
+    <div class="decision-card" style="margin-top:1.5rem">
+      <div class="decision-q" data-i18n="lg.tests.label">Tests automatiques — proxy.test.mjs</div>
+      <div class="test-grid">
+        <div class="test-case">
+          <div class="test-case-num" data-i18n="test.n1">Test 1</div>
+          <div class="test-case-title" data-i18n="test.t1">LangGraph externe actif</div>
+          <div class="test-case-desc" data-i18n="test.d1">LANGGRAPH_ORCHESTRATOR_URL est défini → le Worker forward la requête. Le client reçoit la réponse LangGraph avec engine: "langgraph".</div>
+          <div class="test-case-result" data-i18n="test.r1">assert reply = "via-langgraph", engine = "langgraph"</div>
+        </div>
+        <div class="test-case">
+          <div class="test-case-num" data-i18n="test.n2">Test 2</div>
+          <div class="test-case-title" data-i18n="test.t2">Orchestrateur natif Worker</div>
+          <div class="test-case-desc" data-i18n="test.d2">Sans URL externe : 2 appels Groq séquentiels — planner (JSON strict) puis synthesis (texte). Le client reçoit {reply, plan}.</div>
+          <div class="test-case-result" data-i18n="test.r2">assert plan.intent = "roadmap", reply = "Synthèse utile"</div>
+        </div>
+        <div class="test-case">
+          <div class="test-case-num" data-i18n="test.n3">Test 3</div>
+          <div class="test-case-title" data-i18n="test.t3">Routing POST / intact</div>
+          <div class="test-case-desc" data-i18n="test.d3">La route racine (6 outils PM) reste un passthrough direct vers Groq, non affectée par l'orchestration KRL1.</div>
+          <div class="test-case-result" data-i18n="test.r3">assert choices[0].content = "legacy"</div>
+        </div>
       </div>
     </div>
 
@@ -585,7 +763,36 @@ var T={
     's6.next.desc':'Ouvrir le site et mesurer. Quels outils sont utilisés ? Lesquels sont ouverts mais abandonnés avant de générer quoi que ce soit : signe que l\'UX d\'input est trop complexe ou que la promesse n\'est pas claire ? Est-ce que KRL1 renvoie vers les bons outils au bon moment, ou est-ce que les utilisateurs repartent sans cliquer sur un lien ? Ces questions ne peuvent pas être répondues sans données réelles.',
     's6.pm.label':'Ce que ça démontre',
     's6.pm.a':'Builder, mesurer, décider',
-    's6.pm.desc':'Ajouter un système d\'analytics léger, même juste des événements custom sur les clics de génération et les liens KRL1, est la prochaine priorité technique. Ensuite itérer sur les outils les moins performants. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.'
+    's6.pm.desc':'Ajouter un système d\'analytics léger, même juste des événements custom sur les clics de génération et les liens KRL1, est la prochaine priorité technique. Ensuite itérer sur les outils les moins performants. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.',
+    'stat.reqs':'requêtes traitées',
+    'stat.tools':'outils PM',
+    'stat.cost':'/ mois d\'infra',
+    'stat.weeks':'sem. en spare time',
+    'arch.fallback':'↗ fallback natif Worker si FastAPI offline',
+    's4b.title':'Prompt engineering',
+    's4b.okr.label':'Prompt system — OKR Builder (extrait réel)',
+    's4b.okr.why':'T=0.5 est délibéré : assez bas pour que le JSON soit fiable et parseable, assez haut pour que les libellés d\'OKR soient variés et inspirants. À T=0.2, les OKRs seraient trop uniformes. À T=0.7, le JSON devient parfois invalide. L\'example JSON dans le prompt sert de guardrail de format — il contraint la structure de sortie plus efficacement qu\'une description textuelle.',
+    's4b.kb.label':'KB fast-path — KRL1 avant d\'appeler le LLM',
+    's4b.kb.why':'KRL1 vérifie d\'abord une base de connaissances locale (6 patterns FR + 6 EN, matching par mots-clés) avant d\'envoyer quoi que ce soit à Groq. Si la question correspond — "qu\'est-ce que le backlog prioritizer ?", "quel est le profil de Carlin ?" — la réponse part en ~400ms sans consommer un seul token. Cette couche couvre ~30-40% des questions récurrentes. C\'est une décision de coût et de perf : réponses plus rapides, plus cohérentes, zéro dépendance API pour les cas les plus fréquents.',
+    's4b.params.label':'Paramètres adaptés par outil',
+    's4b.params.intro':'Chaque outil a une contrainte différente. Le Backlog Prioritizer utilise la température la plus basse : le scoring RICE doit être cohérent et reproductible. Le Discovery Assistant utilise la plus haute : reformuler des hypothèses et des questions d\'interview bénéficie de variété.',
+    'params.th.tool':'Outil',
+    'params.th.t':'Température',
+    'params.th.tok':'max_tokens',
+    'params.th.out':'Output',
+    'lg.tests.label':'Tests automatiques — proxy.test.mjs',
+    'test.n1':'Test 1',
+    'test.t1':'LangGraph externe actif',
+    'test.d1':'LANGGRAPH_ORCHESTRATOR_URL est défini → le Worker forward la requête. Le client reçoit la réponse LangGraph avec engine: "langgraph".',
+    'test.r1':'assert reply = "via-langgraph", engine = "langgraph"',
+    'test.n2':'Test 2',
+    'test.t2':'Orchestrateur natif Worker',
+    'test.d2':'Sans URL externe : 2 appels Groq séquentiels — planner (JSON strict) puis synthesis (texte). Le client reçoit {reply, plan}.',
+    'test.r2':'assert plan.intent = "roadmap", reply = "Synthèse utile"',
+    'test.n3':'Test 3',
+    'test.t3':'Routing POST / intact',
+    'test.d3':'La route racine (6 outils PM) reste un passthrough direct vers Groq, non affectée par l\'orchestration KRL1.',
+    'test.r3':'assert choices[0].content = "legacy"'
   },
   en:{
     'back':'Portfolio',
@@ -691,7 +898,36 @@ var T={
     's6.next.desc':'Open the site and measure. Which tools are used? Which ones are opened but abandoned before generating anything: a sign that the input UX is too complex or the value proposition is unclear? Does KRL1 redirect to the right tools at the right moment, or do users leave without clicking a link? These questions cannot be answered without real data.',
     's6.pm.label':'What this demonstrates',
     's6.pm.a':'Build, measure, decide',
-    's6.pm.desc':'Adding a lightweight analytics system, even just custom events on generation clicks and KRL1 links, is the next technical priority. Then iterate on the weakest-performing tools. This cycle is exactly what I advocate as a PM. It made sense for this portfolio to be a demonstration of it.'
+    's6.pm.desc':'Adding a lightweight analytics system, even just custom events on generation clicks and KRL1 links, is the next technical priority. Then iterate on the weakest-performing tools. This cycle is exactly what I advocate as a PM. It made sense for this portfolio to be a demonstration of it.',
+    'stat.reqs':'requests processed',
+    'stat.tools':'PM tools',
+    'stat.cost':'/ month infra cost',
+    'stat.weeks':'weeks in spare time',
+    'arch.fallback':'↗ native Worker fallback if FastAPI offline',
+    's4b.title':'Prompt engineering',
+    's4b.okr.label':'System prompt — OKR Builder (real extract)',
+    's4b.okr.why':'T=0.5 is deliberate: low enough that the JSON is reliable and parseable, high enough that the OKR labels are varied and inspiring. At T=0.2, OKRs would be too uniform. At T=0.7, the JSON occasionally becomes invalid. The example JSON in the prompt acts as a format guardrail — it constrains the output structure more effectively than a textual description.',
+    's4b.kb.label':'KB fast-path — KRL1 before hitting the LLM',
+    's4b.kb.why':'KRL1 first checks a local knowledge base (6 FR patterns + 6 EN, keyword matching) before sending anything to Groq. If the question matches a rule — "what is the backlog prioritizer?", "what is Carlin\'s profile?" — the response goes out in ~400ms without consuming a single token. This layer covers ~30-40% of recurring questions. It\'s a cost and performance decision: faster, more consistent responses, zero API dependency for the most common cases.',
+    's4b.params.label':'Parameters per tool',
+    's4b.params.intro':'Each tool has a different constraint. The Backlog Prioritizer uses the lowest temperature: RICE scoring must be consistent and reproducible. The Discovery Assistant uses the highest: reformulating hypotheses and interview questions benefits from more variety.',
+    'params.th.tool':'Tool',
+    'params.th.t':'Temperature',
+    'params.th.tok':'max_tokens',
+    'params.th.out':'Output',
+    'lg.tests.label':'Automated tests — proxy.test.mjs',
+    'test.n1':'Test 1',
+    'test.t1':'External LangGraph active',
+    'test.d1':'LANGGRAPH_ORCHESTRATOR_URL is set → Worker forwards the request. Client receives the LangGraph response with engine: "langgraph".',
+    'test.r1':'assert reply = "via-langgraph", engine = "langgraph"',
+    'test.n2':'Test 2',
+    'test.t2':'Native Worker orchestrator',
+    'test.d2':'Without external URL: 2 sequential Groq calls — planner (strict JSON) then synthesis (text). Client receives {reply, plan}.',
+    'test.r2':'assert plan.intent = "roadmap", reply = "Synthèse utile"',
+    'test.n3':'Test 3',
+    'test.t3':'POST / routing intact',
+    'test.d3':'The root route (6 PM tools) remains a direct Groq passthrough, unaffected by KRL1 orchestration.',
+    'test.r3':'assert choices[0].content = "legacy"'
   }
 };
 
@@ -710,6 +946,19 @@ function setLang(lang){
   var params = new URLSearchParams(window.location.search);
   var lang = params.get(‘lang’);
   if(lang === ‘en’) setLang(‘en’);
+})();
+
+// Live usage counter
+(function(){
+  fetch(‘https://groq-proxy.cmankotech.workers.dev/stats’)
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var el = document.getElementById(‘stat-reqs’);
+      if(el && d && typeof d.total === ‘number’){
+        el.textContent = d.total.toLocaleString(‘fr-FR’);
+      }
+    })
+    .catch(function(){});
 })();
 </script>
 <script src="krl1-widget.js"></script>
