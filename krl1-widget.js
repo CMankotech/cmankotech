@@ -280,7 +280,19 @@
         chips: ["💼 Son expérience ?", "📩 Le contacter"] },
       { k: ["contact","linkedin","email","recrut","freelance","cdi","disponible","embauche"],
         r: "Carlin est disponible pour des missions CDI ou freelance. <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> ou carlinmankoto@proton.me",
-        chips: ["👤 Profil de Carlin", "🛠️ Ses outils IA ?"] }
+        chips: ["👤 Profil de Carlin", "🛠️ Ses outils IA ?"] },
+      { k: ["krl1","comment tu","tu fonctionnes","qui es-tu","comment ça marche","t'as été construit","créé comment"],
+        r: "Je suis <strong>KRL1</strong>, l'assistant IA du portfolio de Carlin Mankoto. Je suis construit avec :\n\n• <strong>LangGraph</strong> : orchestrateur Python (nœuds planner + synthesis) pour des réponses structurées\n• <strong>Groq API</strong> : inférence LLM ultra-rapide sur LPU, 1-2s de latence\n• <strong>Cloudflare Worker</strong> : proxy serverless qui sécurise la clé API et route les requêtes\n\nJe peux t'aider sur tes défis PM ou te présenter le portfolio de Carlin.",
+        chips: ["🏗️ Pourquoi Cloudflare Workers ?", "⚡ Pourquoi pas de backend ?", "👤 Profil de Carlin"] },
+      { k: ["stack","architecture","comment c'est construit","langgraph","fastapi","technique","comment ce site"],
+        r: "La stack du site :\n\n• <strong>Frontend</strong> : HTML/CSS/JS vanilla, déployé sur GitHub Pages\n• <strong>Proxy</strong> : Cloudflare Worker (clé API sécurisée, double routing)\n• <strong>LLM</strong> : Groq API + llama-3.3-70b-versatile (1-2s sur LPU)\n• <strong>Orchestration</strong> : FastAPI + LangGraph (planner → synthesis)\n\nTous les détails sur <a href='https://cmankotech.github.io/cmankotech/how-i-built-this.html' target='_blank'>Comment j'ai construit ce site →</a>",
+        chips: ["🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?", "👤 Profil de Carlin"] },
+      { k: ["pourquoi cloudflare","pourquoi worker","cloudflare worker"],
+        r: "<strong>Cloudflare Workers</strong> résout le problème clé : appeler l'API Groq depuis le navigateur sans exposer la clé API côté client. Le Worker intercepte, injecte la clé côté serveur, gère les CORS. Plan gratuit : 100 000 req/jour, déployé en quelques minutes avec Wrangler CLI.",
+        chips: ["🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?", "👤 Profil de Carlin"] },
+      { k: ["pourquoi pas de backend","pas de backend","sans backend","pourquoi pas de serveur","no backend"],
+        r: "Le site est 100% statique (HTML/JS vanilla). Pas de base de données, pas de sessions côté serveur. Le Cloudflare Worker suffit comme couche API. Avantages : zéro infra à maintenir, zéro coût serveur, déploiement via un simple git push.",
+        chips: ["🤖 Comment fonctionne KRL1 ?", "🏗️ Pourquoi Cloudflare Workers ?", "👤 Profil de Carlin"] }
     ]},
     en: { rules: [
       { k: ["what can","can you","you do","help me","capabilities"],
@@ -300,7 +312,19 @@
         chips: ["💼 His experience?", "📩 Reach him"] },
       { k: ["contact","linkedin","email","hire","recruit","freelance","available"],
         r: "Carlin is open to CDI or freelance opportunities. <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> or carlinmankoto@proton.me",
-        chips: ["👤 Carlin's profile", "🛠️ His AI tools?"] }
+        chips: ["👤 Carlin's profile", "🛠️ His AI tools?"] },
+      { k: ["krl1","how do you work","what are you","who are you","how were you built","how is it built","how does it work"],
+        r: "I'm <strong>KRL1</strong>, Carlin Mankoto's portfolio AI assistant. My stack:\n\n• <strong>LangGraph</strong>: Python orchestrator (planner + synthesis nodes) for structured responses\n• <strong>Groq API</strong>: ultra-fast LPU inference, 1-2s latency\n• <strong>Cloudflare Worker</strong>: serverless proxy securing the API key and routing requests\n\nI can help with PM challenges or walk you through Carlin's portfolio.",
+        chips: ["🏗️ Why Cloudflare Workers?", "⚡ Why no backend?", "👤 Carlin's profile"] },
+      { k: ["tech stack","architecture","how was this built","langgraph","fastapi","technical"],
+        r: "Site stack:\n\n• <strong>Frontend</strong>: vanilla HTML/CSS/JS, deployed on GitHub Pages\n• <strong>Proxy</strong>: Cloudflare Worker (API key secured, dual routing)\n• <strong>LLM</strong>: Groq API + llama-3.3-70b-versatile (1-2s on LPU)\n• <strong>Orchestration</strong>: FastAPI + LangGraph (planner → synthesis)\n\nFull details on <a href='https://cmankotech.github.io/cmankotech/how-i-built-this.html' target='_blank'>How I Built This →</a>",
+        chips: ["🤖 How does KRL1 work?", "⚡ Why no backend?", "👤 Carlin's profile"] },
+      { k: ["why cloudflare","why worker","cloudflare worker"],
+        r: "<strong>Cloudflare Workers</strong> solves the key issue: calling the Groq API from the browser without exposing the API key client-side. The Worker intercepts, injects the key server-side, handles CORS. Free plan: 100,000 req/day, deployed in minutes with Wrangler CLI.",
+        chips: ["🤖 How does KRL1 work?", "⚡ Why no backend?", "👤 Carlin's profile"] },
+      { k: ["why no backend","no backend","without backend","why no server","serverless"],
+        r: "The site is 100% static (vanilla HTML/JS). No database, no server-side sessions. The Cloudflare Worker handles the API layer. Benefits: zero infrastructure to maintain, zero server cost, deployment via a simple git push.",
+        chips: ["🤖 How does KRL1 work?", "🏗️ Why Cloudflare Workers?", "👤 Carlin's profile"] }
     ]}
   };
 
@@ -444,6 +468,8 @@
     if (val) handleInput(val);
   }
 
+  var PM_REGEX = /\b(backlog|priorit[ie]|okr|key.?result|discovery|roadmap|epic|user.?stor|entretien utilisateur|interview utilisateur|prioriser|priorisation|sprint|scrum|feature|product.?backlog|user.?story)\b/i;
+
   async function fetchGroq(userMessage) {
     _history.push({ role: 'user', content: userMessage });
     showTyping();
@@ -458,11 +484,19 @@
       return;
     }
 
-    // Collect text — dots stay visible the whole time
+    // Route: PM workflow → orchestrator (planner+synthesis), everything else → direct LLM
+    var isPM = PM_REGEX.test(userMessage);
     var fullText = null;
-    try { fullText = await collectStream(userMessage); } catch (_) {}
-    if (!fullText) {
-      try { fullText = await fetchFallback(userMessage); } catch (_) {}
+    if (isPM) {
+      try { fullText = await collectStream(userMessage); } catch (_) {}
+      if (!fullText) {
+        try { fullText = await fetchFallback(userMessage); } catch (_) {}
+      }
+    } else {
+      try { fullText = await fetchDirect(userMessage); } catch (_) {}
+      if (!fullText) {
+        try { fullText = await fetchFallback(userMessage); } catch (_) {}
+      }
     }
 
     if (!fullText) {
@@ -546,6 +580,23 @@
 
     if (!fullText) throw new Error('Empty response');
     return fullText;
+  }
+
+  async function fetchDirect(userMessage) {
+    var messages = [{ role: 'system', content: SYSTEM_PROMPT }].concat(_history);
+    var res = await fetch('https://groq-proxy.cmankotech.workers.dev/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: messages,
+        temperature: 0.5,
+        max_tokens: 400
+      })
+    });
+    if (!res.ok) throw new Error('Direct failed');
+    var data = await res.json();
+    return (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || null;
   }
 
   async function fetchFallback(userMessage) {

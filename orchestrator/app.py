@@ -43,11 +43,23 @@ def planner_node(state: GraphState) -> GraphState:
     llm = get_llm(temperature=0.2)
 
     prompt = (
-        "You are KRL1 PM Orchestrator. Return strict JSON only with keys: "
-        "intent, confidence (0-1), user_goal, steps (array of {tool, objective, output}), risks (array), quick_win."
+        "You are KRL1, portfolio assistant for Carlin Mankoto (AI Product Manager). "
+        "Analyse the user intent and return strict JSON only. "
+        "Intent values: 'pm_workflow' (backlog/OKR/discovery/roadmap/epic/userStory questions), "
+        "'portfolio' (Carlin profile/experience/certifications), "
+        "'tech' (stack/architecture/KRL1 technical questions), 'contact', 'other'. "
+        "Keys: intent, confidence (0-1), user_goal, "
+        "steps (array of {tool, objective, output} — only for pm_workflow, else []), "
+        "risks (array), quick_win."
         if lang == "en"
-        else "Tu es KRL1 PM Orchestrator. Retourne uniquement du JSON strict avec les clés: "
-        "intent, confidence (0-1), user_goal, steps (tableau de {tool, objective, output}), risks (tableau), quick_win."
+        else "Tu es KRL1, assistant portfolio de Carlin Mankoto (AI PM). "
+        "Analyse l'intention et retourne uniquement du JSON strict. "
+        "Valeurs d'intent : 'pm_workflow' (backlog/OKR/discovery/roadmap/epic/userStory), "
+        "'portfolio' (profil/expérience/certifs de Carlin), "
+        "'tech' (stack/architecture/questions techniques sur KRL1), 'contact', 'other'. "
+        "Clés : intent, confidence (0-1), user_goal, "
+        "steps (tableau {tool, objective, output} — seulement pour pm_workflow, sinon []), "
+        "risks (tableau), quick_win."
     )
 
     history = state.get("history", [])[-8:]
@@ -81,13 +93,19 @@ def synthesis_node(state: GraphState) -> GraphState:
     llm = get_llm(temperature=0.45)
 
     prompt = (
-        "You are KRL1. Turn this PM plan into a concise, actionable answer (max 220 words). "
-        "Include the next step. When mentioning a tool, insert a clickable HTML link: "
-        '<a href="URL" target="_blank">Tool Name</a>. Never use markdown link syntax.'
+        "You are KRL1, Carlin Mankoto's portfolio assistant. "
+        "For intent 'pm_workflow': transform the PM plan into an actionable answer with links to PM tools. "
+        "For other intents (portfolio/tech/contact/other): answer the question directly based on user_goal "
+        "— do NOT mention PM tools unless genuinely relevant. "
+        "Max 220 words. When citing a tool, use HTML link: "
+        '<a href="URL" target="_blank">Name</a>. Never use markdown link syntax.'
         if lang == "en"
-        else "Tu es KRL1. Transforme ce plan PM en réponse concise et actionnable (max 220 mots). "
-        "Ajoute la prochaine action. Quand tu cites un outil, insère un lien HTML cliquable : "
-        '<a href="URL" target="_blank">Nom Outil</a>. N\'utilise jamais la syntaxe markdown pour les liens.'
+        else "Tu es KRL1, assistant portfolio de Carlin Mankoto. "
+        "Pour l'intent 'pm_workflow' : transforme le plan PM en réponse actionnable avec liens vers les outils PM. "
+        "Pour les autres intents (portfolio/tech/contact/other) : réponds directement à la question via user_goal "
+        "— ne cite pas les outils PM sauf si vraiment pertinent. "
+        "Max 220 mots. Liens HTML cliquables si tu cites un outil : "
+        '<a href="URL" target="_blank">Nom</a>. Jamais de liens markdown.'
     )
 
     tool_links = "\n".join([
