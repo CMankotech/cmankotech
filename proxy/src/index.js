@@ -70,7 +70,7 @@ async function handleOrchestrator(body, env, ctx) {
     try {
       const langGraphRes = await forwardToLangGraph(body, env);
       if (langGraphRes && langGraphRes.ok) {
-        ctx.waitUntil(incrementCounter(env));
+        ctx?.waitUntil?.(incrementCounter(env));
         return langGraphRes;
       }
     } catch {
@@ -153,7 +153,7 @@ async function handleOrchestrator(body, env, ctx) {
   }
 
   const reply = extractContent(synthesisRes.data);
-  ctx.waitUntil(incrementCounter(env));
+  ctx?.waitUntil?.(incrementCounter(env));
   return jsonResponse({ reply, plan: safeJsonParse(planText) || null });
 }
 
@@ -236,7 +236,7 @@ async function handleOrchestratorStream(body, env, ctx) {
     });
   }
 
-  ctx.waitUntil(incrementCounter(env));
+  ctx?.waitUntil?.(incrementCounter(env));
 
   return new Response(groqRes.body, {
     status: 200,
@@ -279,7 +279,7 @@ async function proxyGroq(body, env, ctx) {
   });
 
   const text = await groqRes.text();
-  if (groqRes.ok) ctx.waitUntil(incrementCounter(env));
+  if (groqRes.ok) ctx?.waitUntil?.(incrementCounter(env));
   return new Response(text, {
     status: groqRes.status,
     headers: { 'Content-Type': 'application/json', ...corsHeaders() },
