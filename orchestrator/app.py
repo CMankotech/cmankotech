@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Any, Dict, List, Optional, TypedDict
+from typing import Any, Dict, List, TypedDict
 
 from fastapi import FastAPI, HTTPException
 from langchain_openai import ChatOpenAI
@@ -23,6 +23,47 @@ class GraphState(TypedDict, total=False):
     history: List[Dict[str, str]]
     plan: Dict[str, Any]
     reply: str
+
+
+ALLOWED_HISTORY_ROLES = {"user", "assistant", "system"}
+
+
+def normalize_history(history: List[Dict[str, str]]) -> List[Dict[str, str]]:
+    normalized: List[Dict[str, str]] = []
+    for item in history:
+        if not isinstance(item, dict):
+            continue
+
+        role = str(item.get("role", "")).strip()
+        content = str(item.get("content", "")).strip()
+        if role not in ALLOWED_HISTORY_ROLES or not content:
+            continue
+
+        normalized.append({"role": role, "content": content})
+
+    return normalized
+
+
+def parse_planner_json(raw: str, *, lang: str, user_message: str) -> Dict[str, Any]:
+    cleaned_raw = raw.strip()
+
+    if cleaned_raw.startswith("```"):
+        lines = cleaned_raw.splitlines()
+        if len(lines) >= 3:
+            cleaned_raw = "\n".join(lines[1:-1]).strip()
+
+    try:
+        return json.loads(cleaned_raw)
+    except json.JSONDecodeError:
+        return {
+            "intent": "unknown",
+            "confidence": 0.3,
+            "user_goal": user_message,
+            "steps": [],
+            "risks": ["planner_json_parse_error"],
+            "quick_win": "Clarifier le besoin en une phrase" if lang == "fr" else "Clarify the goal in one sentence",
+            "raw": raw,
+        }
 
 
 def get_llm(temperature: float = 0.3):
@@ -62,7 +103,7 @@ def planner_node(state: GraphState) -> GraphState:
         "risks (tableau), quick_win."
     )
 
-    history = state.get("history", [])[-8:]
+    history = normalize_history(state.get("history", []))[-8:]
     user_message = state.get("message", "")
 
     completion = llm.invoke([
@@ -72,18 +113,7 @@ def planner_node(state: GraphState) -> GraphState:
     ])
 
     raw = completion.content if isinstance(completion.content, str) else json.dumps(completion.content)
-    try:
-        plan = json.loads(raw)
-    except json.JSONDecodeError:
-        plan = {
-            "intent": "unknown",
-            "confidence": 0.3,
-            "user_goal": user_message,
-            "steps": [],
-            "risks": ["planner_json_parse_error"],
-            "quick_win": "Clarifier le besoin en une phrase" if lang == "fr" else "Clarify the goal in one sentence",
-            "raw": raw,
-        }
+    plan = parse_planner_json(raw, lang=lang, user_message=user_message)
 
     return {"plan": plan}
 
