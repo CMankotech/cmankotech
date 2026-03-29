@@ -358,6 +358,10 @@
 
   // ── DOM HELPERS ────────────────────────────────────────────────────────────
   function mdToHtml(t) {
+    // Strip any HTML tags except safe ones (a, strong, br, em)
+    t = t.replace(/<(?!\/?(?:a\b|strong\b|br\b|em\b)[^>]*>)[^>]+>/gi, '');
+    // Sanitize href to allow only https links
+    t = t.replace(/<a\s+[^>]*href\s*=\s*["'](?!https?:\/\/)[^"']*["'][^>]*>/gi, '<a>');
     t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
     t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
     t = t.replace(/\s*—\s*/g, ', ');
@@ -472,6 +476,7 @@
 
   async function fetchGroq(userMessage) {
     _history.push({ role: 'user', content: userMessage });
+    if (_history.length > 40) _history = _history.slice(-40);
     showTyping();
 
     var kbMatch = matchKB(userMessage);

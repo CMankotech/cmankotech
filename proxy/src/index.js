@@ -44,15 +44,12 @@ export default {
 };
 
 async function handleStats(env) {
+  const headers = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': ALLOWED_ORIGIN };
   if (!env.USAGE_COUNTER) {
-    return new Response(JSON.stringify({ total: 0 }), {
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-    });
+    return new Response(JSON.stringify({ total: 0 }), { headers });
   }
   const val = await env.USAGE_COUNTER.get('total');
-  return new Response(JSON.stringify({ total: parseInt(val || '0', 10) }), {
-    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-  });
+  return new Response(JSON.stringify({ total: parseInt(val || '0', 10) }), { headers });
 }
 
 async function incrementCounter(env) {
@@ -65,7 +62,22 @@ async function incrementCounter(env) {
   }
 }
 
+function normalizeHistory(history) {
+  if (!Array.isArray(history)) return [];
+  return history
+    .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
+    .map(m => ({ role: m.role, content: m.content.slice(0, 2000) }))
+    .slice(-8);
+}
+
 async function handleOrchestrator(body, env, ctx) {
+  const userMessage = typeof body.message === 'string' ? body.message.trim() : '';
+  if (!userMessage || userMessage.length > 2000) {
+    const lang = body.lang === 'en' ? 'en' : 'fr';
+    if (!userMessage) return jsonResponse({ reply: lang === 'en' ? 'Please share your request.' : 'Partage-moi ton besoin.' }, 400);
+    return jsonResponse({ reply: lang === 'en' ? 'Message too long.' : 'Message trop long.' }, 400);
+  }
+
   if (env.LANGGRAPH_ORCHESTRATOR_URL) {
     try {
       const langGraphRes = await forwardToLangGraph(body, env);
@@ -79,12 +91,7 @@ async function handleOrchestrator(body, env, ctx) {
   }
 
   const lang = body.lang === 'en' ? 'en' : 'fr';
-  const history = Array.isArray(body.history) ? body.history.slice(-8) : [];
-  const userMessage = typeof body.message === 'string' ? body.message : '';
-
-  if (!userMessage.trim()) {
-    return jsonResponse({ reply: lang === 'en' ? 'Please share your request.' : 'Partage-moi ton besoin.' }, 400);
-  }
+  const history = normalizeHistory(body.history);
 
   const plannerPrompt = lang === 'en'
     ? 'You are KRL1, portfolio assistant for Carlin Mankoto (AI Product Manager). Analyse the user intent and return strict JSON only. ' +
@@ -160,11 +167,12 @@ async function handleOrchestrator(body, env, ctx) {
 
 async function handleOrchestratorStream(body, env, ctx) {
   const lang = body.lang === 'en' ? 'en' : 'fr';
-  const history = Array.isArray(body.history) ? body.history.slice(-8) : [];
-  const userMessage = typeof body.message === 'string' ? body.message : '';
+  const history = normalizeHistory(body.history);
+  const userMessage = typeof body.message === 'string' ? body.message.trim() : '';
 
-  if (!userMessage.trim()) {
-    return jsonResponse({ reply: lang === 'en' ? 'Please share your request.' : 'Partage-moi ton besoin.' }, 400);
+  if (!userMessage || userMessage.length > 2000) {
+    if (!userMessage) return jsonResponse({ reply: lang === 'en' ? 'Please share your request.' : 'Partage-moi ton besoin.' }, 400);
+    return jsonResponse({ reply: lang === 'en' ? 'Message too long.' : 'Message trop long.' }, 400);
   }
 
   const plannerPrompt = lang === 'en'
@@ -332,7 +340,8 @@ function jsonResponse(payload, status = 200) {
 function corsHeaders() {
   return {
     'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
+    'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'",
   };
 }
