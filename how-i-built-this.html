@@ -214,11 +214,6 @@ section{margin-bottom:4rem}
   <!-- STATS BAR -->
   <div class="stats-bar">
     <div class="stat-item">
-      <div class="stat-num live" id="stat-reqs">—</div>
-      <div class="stat-lbl" data-i18n="stat.reqs">requêtes traitées</div>
-    </div>
-    <div class="stat-sep"></div>
-    <div class="stat-item">
       <div class="stat-num">6</div>
       <div class="stat-lbl" data-i18n="stat.tools">outils PM</div>
     </div>
@@ -767,7 +762,6 @@ var T={
     's6.pm.label':'Ce que ça démontre',
     's6.pm.a':'Builder, mesurer, décider',
     's6.pm.desc':'Ajouter un système d\'analytics léger, même juste des événements custom sur les clics de génération et les liens KRL1, est la prochaine priorité technique. Ensuite itérer sur les outils les moins performants. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.',
-    'stat.reqs':'requêtes traitées',
     'stat.tools':'outils PM',
     'stat.cost':'/ mois d\'infra',
     'stat.weeks':'sem. en spare time',
@@ -902,7 +896,6 @@ var T={
     's6.pm.label':'What this demonstrates',
     's6.pm.a':'Build, measure, decide',
     's6.pm.desc':'Adding a lightweight analytics system, even just custom events on generation clicks and KRL1 links, is the next technical priority. Then iterate on the weakest-performing tools. This cycle is exactly what I advocate as a PM. It made sense for this portfolio to be a demonstration of it.',
-    'stat.reqs':'requests processed',
     'stat.tools':'PM tools',
     'stat.cost':'/ month infra cost',
     'stat.weeks':'weeks in spare time',
@@ -951,18 +944,6 @@ function setLang(lang){
   if(lang === ‘en’) setLang(‘en’);
 })();
 
-// Live usage counter
-(function(){
-  fetch(‘https://groq-proxy.cmankotech.workers.dev/stats’)
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      var el = document.getElementById(‘stat-reqs’);
-      if(el && d && typeof d.total === ‘number’){
-        el.textContent = d.total.toLocaleString(‘fr-FR’);
-      }
-    })
-    .catch(function(){});
-})();
 </script>
 <script src="krl1-widget.js"></script>
 </body>
