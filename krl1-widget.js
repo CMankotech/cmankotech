@@ -358,11 +358,23 @@
 
   // ── DOM HELPERS ────────────────────────────────────────────────────────────
   function mdToHtml(t) {
-    // Strip any HTML tags except safe ones (a, strong, br, em)
-    t = t.replace(/<(?!\/?(?:a\b|strong\b|br\b|em\b)[^>]*>)[^>]+>/gi, '');
-    // Sanitize href to allow only https links
-    t = t.replace(/<a\s+[^>]*href\s*=\s*["'](?!https?:\/\/)[^"']*["'][^>]*>/gi, '<a>');
-    t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+    // Escape-then-allowlist: escape everything, then selectively restore safe patterns
+    t = t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+    // Allow <a href="https://..." target="_blank">text</a> (attribute order flexible, single or double quotes)
+    t = t.replace(
+      /&lt;a\s+href=(?:&quot;|&#39;)(https?:\/\/[^\s"'<>]+)(?:&quot;|&#39;)(?:\s+target=(?:&quot;|&#39;)_blank(?:&quot;|&#39;))?\s*&gt;([\s\S]*?)&lt;\/a&gt;/gi,
+      '<a href="$1" target="_blank" rel="noopener noreferrer">$2</a>'
+    );
+    // Allow <strong>text</strong>
+    t = t.replace(/&lt;strong&gt;([\s\S]*?)&lt;\/strong&gt;/gi, '<strong>$1</strong>');
+    // Allow <em>text</em>
+    t = t.replace(/&lt;em&gt;([\s\S]*?)&lt;\/em&gt;/gi, '<em>$1</em>');
+    // Allow <br> and <br/>
+    t = t.replace(/&lt;br\s*\/?&gt;/gi, '<br>');
+
+    // Markdown transforms (generate safe HTML from the already-escaped text)
+    t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
     t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
     t = t.replace(/\s*—\s*/g, ', ');
     t = t.replace(/\n/g, '<br>');
