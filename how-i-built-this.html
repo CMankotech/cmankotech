@@ -214,11 +214,6 @@ section{margin-bottom:4rem}
   <!-- STATS BAR -->
   <div class="stats-bar">
     <div class="stat-item">
-      <div class="stat-num live" id="stat-reqs">—</div>
-      <div class="stat-lbl" data-i18n="stat.reqs">requêtes traitées</div>
-    </div>
-    <div class="stat-sep"></div>
-    <div class="stat-item">
       <div class="stat-num">6</div>
       <div class="stat-lbl" data-i18n="stat.tools">outils PM</div>
     </div>
@@ -323,8 +318,8 @@ section{margin-bottom:4rem}
       </div>
       <div class="stack-card">
         <div class="stack-icon">🤖</div>
-        <div class="stack-name">Groq API</div>
-        <div class="stack-badge sb-violet" data-i18n="stack.llm.badge">LLM Provider</div>
+        <div class="stack-name">Groq · llama-3.3-70b-versatile</div>
+        <div class="stack-badge sb-violet" data-i18n="stack.llm.badge">LLM</div>
         <div class="stack-desc" data-i18n="stack.llm.desc">Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes — 5 à 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).</div>
       </div>
       <div class="stack-card" style="grid-column:1/-1">
@@ -675,7 +670,7 @@ var T={
     'stack.deploy.desc':'Hébergement statique gratuit avec CI/CD natif : chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Zéro coût, zéro infra à gérer — idéal pour un site statique à fichiers HTML/CSS/JS.',
     'stack.proxy.badge':'API Proxy',
     'stack.proxy.desc':'Worker serverless JavaScript avec triple routing. POST / : passthrough direct vers l\'API Groq pour les 6 outils PM — la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, qui tente l\'orchestrateur FastAPI externe avant de basculer sur le fallback natif Worker. POST /orchestrate-stream : même flow planner→synthesis mais la réponse synthesis arrive en SSE (Server-Sent Events) pour un affichage progressif. Validation d\'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.',
-    'stack.llm.badge':'LLM Provider',
+    'stack.llm.badge':'LLM',
     'stack.llm.desc':'Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L\'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes — 5 à 10x plus rapide que les providers classiques. Chaque outil PM l\'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).',
     'stack.lg.badge':'Orchestration',
     'stack.lg.desc':'Service Python autonome (port 8081) qui ajoute une couche d\'intelligence structurée pour KRL1. Le StateGraph LangGraph enchaîne deux nœuds : planner (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; synthesis (T=0.45) transforme ce plan en réponse naturelle max 220 mots avec liens vers les outils PM. LangSmith optionnel trace chaque run du graph en production. Le Worker bascule en fallback natif si le service est hors ligne.',
@@ -767,7 +762,6 @@ var T={
     's6.pm.label':'Ce que ça démontre',
     's6.pm.a':'Builder, mesurer, décider',
     's6.pm.desc':'Ajouter un système d\'analytics léger, même juste des événements custom sur les clics de génération et les liens KRL1, est la prochaine priorité technique. Ensuite itérer sur les outils les moins performants. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.',
-    'stat.reqs':'requêtes traitées',
     'stat.tools':'outils PM',
     'stat.cost':'/ mois d\'infra',
     'stat.weeks':'sem. en spare time',
@@ -810,7 +804,7 @@ var T={
     'stack.deploy.desc':'Free static hosting with native CI/CD: every git push to main triggers an automatic deployment in under 60 seconds. Global CDN, automatic HTTPS, cmankotech.github.io domain with zero configuration. Zero cost, zero infrastructure to manage — ideal for a static HTML/CSS/JS site.',
     'stack.proxy.badge':'API Proxy',
     'stack.proxy.desc':'Serverless JavaScript Worker with triple routing. POST /: direct passthrough to the Groq API for the 6 PM tools — the API key is injected Worker-side, never exposed to the browser. POST /orchestrate: dedicated route for the KRL1 chatbot, which tries the external FastAPI orchestrator before falling back to native Worker orchestration. POST /orchestrate-stream: same planner→synthesis flow but the synthesis response arrives as SSE (Server-Sent Events) for progressive display. Origin validation, automatic CORS, Cloudflare free plan: 100,000 req/day.',
-    'stack.llm.badge':'LLM Provider',
+    'stack.llm.badge':'LLM',
     'stack.llm.desc':'Access to the llama-3.3-70b-versatile model via an OpenAI-compatible REST API. LPU (Language Processing Unit) inference delivers responses in 1–2 seconds — 5 to 10x faster than classic providers. Each PM tool calls it with tailored parameters: temperatures between 0.3 and 0.7 depending on the task, max_tokens between 2,000 and 4,000, specialised system prompts (OKR strategist, discovery analyst, prioritisation expert…).',
     'stack.lg.badge':'Orchestration',
     'stack.lg.desc':'Standalone Python service (port 8081) that adds a structured intelligence layer for KRL1. The LangGraph StateGraph chains two nodes: planner (T=0.2) generates strict JSON with intent, user_goal, actionable steps, risks and quick_win; synthesis (T=0.45) transforms this plan into a natural response max 220 words with PM tool links. Optional LangSmith traces each graph run in production. The Worker falls back to native orchestration if the service is offline.',
@@ -902,7 +896,6 @@ var T={
     's6.pm.label':'What this demonstrates',
     's6.pm.a':'Build, measure, decide',
     's6.pm.desc':'Adding a lightweight analytics system, even just custom events on generation clicks and KRL1 links, is the next technical priority. Then iterate on the weakest-performing tools. This cycle is exactly what I advocate as a PM. It made sense for this portfolio to be a demonstration of it.',
-    'stat.reqs':'requests processed',
     'stat.tools':'PM tools',
     'stat.cost':'/ month infra cost',
     'stat.weeks':'weeks in spare time',
@@ -951,18 +944,6 @@ function setLang(lang){
   if(lang === ‘en’) setLang(‘en’);
 })();
 
-// Live usage counter
-(function(){
-  fetch(‘https://groq-proxy.cmankotech.workers.dev/stats’)
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      var el = document.getElementById(‘stat-reqs’);
-      if(el && d && typeof d.total === ‘number’){
-        el.textContent = d.total.toLocaleString(‘fr-FR’);
-      }
-    })
-    .catch(function(){});
-})();
 </script>
 <script src="krl1-widget.js"></script>
 </body>
