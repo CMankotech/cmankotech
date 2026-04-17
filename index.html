@@ -19,10 +19,16 @@
 html{font-size:16px}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden}
 h1,h2,h3,h4{font-family:'Syne',sans-serif}
-.glow{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
-.g1{width:600px;height:600px;top:-200px;left:-100px;background:rgba(59,130,246,0.08)}
-.g2{width:500px;height:500px;top:40%;right:-150px;background:rgba(167,139,250,0.07)}
-.g3{width:400px;height:400px;bottom:10%;left:20%;background:rgba(34,211,238,0.05)}
+.glow{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0;will-change:transform;mix-blend-mode:screen}
+.g1{width:700px;height:700px;top:-15%;left:-10%;background:radial-gradient(circle,rgba(59,130,246,0.15),rgba(59,130,246,0) 70%);animation:drift1 22s ease-in-out infinite}
+.g2{width:600px;height:600px;top:35%;right:-12%;background:radial-gradient(circle,rgba(167,139,250,0.12),rgba(167,139,250,0) 70%);animation:drift2 26s ease-in-out infinite}
+.g3{width:550px;height:550px;bottom:5%;left:15%;background:radial-gradient(circle,rgba(34,211,238,0.10),rgba(34,211,238,0) 70%);animation:drift3 30s ease-in-out infinite}
+.g4{width:500px;height:500px;top:20%;left:40%;background:radial-gradient(circle,rgba(244,114,182,0.08),rgba(244,114,182,0) 70%);animation:drift4 28s ease-in-out infinite}
+@keyframes drift1{0%{transform:translate(0,0) scale(1) rotate(0deg)}25%{transform:translate(80px,60px) scale(1.12) rotate(5deg)}50%{transform:translate(-40px,120px) scale(0.95) rotate(-3deg)}75%{transform:translate(60px,-30px) scale(1.08) rotate(4deg)}100%{transform:translate(0,0) scale(1) rotate(0deg)}}
+@keyframes drift2{0%{transform:translate(0,0) scale(1) rotate(0deg)}25%{transform:translate(-70px,-50px) scale(1.1) rotate(-4deg)}50%{transform:translate(50px,-90px) scale(0.92) rotate(6deg)}75%{transform:translate(-60px,40px) scale(1.05) rotate(-2deg)}100%{transform:translate(0,0) scale(1) rotate(0deg)}}
+@keyframes drift3{0%{transform:translate(0,0) scale(1) rotate(0deg)}25%{transform:translate(90px,-40px) scale(1.08) rotate(3deg)}50%{transform:translate(-30px,-80px) scale(1.15) rotate(-5deg)}75%{transform:translate(-70px,50px) scale(0.9) rotate(2deg)}100%{transform:translate(0,0) scale(1) rotate(0deg)}}
+@keyframes drift4{0%{transform:translate(0,0) scale(1) rotate(0deg)}25%{transform:translate(-50px,70px) scale(1.1) rotate(-3deg)}50%{transform:translate(60px,30px) scale(0.95) rotate(5deg)}75%{transform:translate(30px,-60px) scale(1.12) rotate(-4deg)}100%{transform:translate(0,0) scale(1) rotate(0deg)}}
+@media (prefers-reduced-motion:reduce){.glow{animation:none!important}}
 .grad{background:linear-gradient(135deg,#60a5fa 0%,#a78bfa 50%,#22d3ee 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .grad-blue{background:linear-gradient(to right,#60a5fa,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
@@ -266,6 +272,7 @@ nav{padding:1rem 1.5rem}
 <div class="glow g1"></div>
 <div class="glow g2"></div>
 <div class="glow g3"></div>
+<div class="glow g4"></div>
 
 <nav>
   <div class="nav-logo grad">CARLIN M.</div>
