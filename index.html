@@ -54,8 +54,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .lang-btn:hover:not(.active){color:var(--text)}
 
 /* HERO */
-#hero{border-bottom:1px solid var(--line);position:relative;z-index:1;padding-top:8rem}
-.hero-wrap{padding:3rem 3rem 2rem}
+#hero{border-bottom:1px solid var(--line);position:relative;z-index:1;padding-top:8rem;min-height:100vh;display:flex;align-items:center}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05);transition:transform 2s cubic-bezier(.16,1,.3,1);z-index:0;pointer-events:none}
+.hero-video-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,15,0.35) 0%,rgba(8,8,15,0.55) 55%,rgba(8,8,15,0.9) 100%);z-index:1;pointer-events:none}
+.hero-wrap{padding:3rem 3rem 2rem;position:relative;z-index:2}
 .hero-compact{display:flex;flex-direction:column;gap:1.25rem;max-width:680px}
 .hero-name{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;letter-spacing:-0.03em;line-height:1}
 .hero-portfolio-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.22em;color:var(--cyan,#22d3ee);opacity:0.85;margin-bottom:0.1rem}
@@ -301,7 +303,12 @@ nav{padding:1rem 1.5rem}
   <a href="#architecture" data-i18n="nav.arch" onclick="document.getElementById('nav-hamburger').click()">Architecture</a>
 </div>
 
-<section id="hero" style="position:relative;overflow:hidden"><canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.45"></canvas>
+<section id="hero" style="position:relative;overflow:hidden">
+  <video class="hero-video" autoplay loop muted playsinline preload="auto">
+    <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/agentic-hero-9yW3wnTNMfn2U6lsVhTTZSJFEvAoSj.mp4" type="video/mp4">
+  </video>
+  <div class="hero-video-overlay"></div>
+  <canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:0.35"></canvas>
   <div class="wrap hero-wrap a1">
     <div class="hero-compact">
       <div>
