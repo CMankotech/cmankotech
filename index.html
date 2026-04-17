@@ -182,6 +182,84 @@ nav{padding:1rem 1.5rem}
 .footer-wrap{grid-template-columns:1fr}
 .footer-links{align-items:flex-start}
 }
+
+/* PANELS (accordéon uniforme) */
+.panels-wrap{border-bottom:1px solid var(--line);position:relative;z-index:1}
+.panels-wrap .wrap{padding-top:2rem;padding-bottom:2rem}
+.panel{border-top:1px solid var(--line)}
+.panel:first-child{border-top:none}
+.panel-btn{width:100%;display:flex;align-items:center;gap:1.25rem;padding:2rem 0;background:none;border:none;color:inherit;cursor:pointer;font-family:inherit;text-align:left;transition:opacity .2s}
+.panel-btn:hover{opacity:0.85}
+.panel-btn .sec-num{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.1em;flex-shrink:0}
+.panel-btn .sec-name{font-family:'Syne',sans-serif;font-size:1.85rem;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1}
+.panel-btn .panel-sub{font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-left:0.5rem}
+.panel-chev{margin-left:auto;flex-shrink:0;transition:transform .4s cubic-bezier(.4,0,.2,1),color .25s ease;color:var(--muted)}
+.panel-btn:hover .panel-chev{color:var(--text)}
+.panel[data-open="true"] > .panel-btn .panel-chev{transform:rotate(180deg);color:#22d3ee}
+.panel-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.4,0,.2,1),opacity .4s ease;opacity:0}
+.panel-body > .panel-body-inner{overflow:hidden;min-height:0}
+.panel[data-open="true"] > .panel-body{grid-template-rows:1fr;opacity:1}
+.panel[data-open="true"] > .panel-body > .panel-body-inner{padding-bottom:3rem}
+@media (prefers-reduced-motion: reduce){.panel-body{transition:none}.panel-chev{transition:none}}
+@media(max-width:900px){
+.panel-btn{padding:1.5rem 0;gap:0.85rem}
+.panel-btn .sec-name{font-size:1.4rem}
+.panel-btn .panel-sub{display:none}
+}
+
+/* ARCHITECTURE PANEL — styles repris de how-i-built-this */
+.arch-sub-h{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);letter-spacing:-0.01em;margin:2.5rem 0 1rem;display:flex;align-items:center;gap:0.75rem}
+.arch-sub-h::before{content:'';width:18px;height:1px;background:linear-gradient(to right,#22d3ee,transparent)}
+.arch-sub-h:first-child{margin-top:0}
+.stack-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.stack-card{padding:1.5rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;transition:all 0.3s;display:flex;flex-direction:column;gap:0.75rem}
+.stack-card:hover{transform:translateY(-2px);border-color:rgba(167,139,250,0.25);box-shadow:0 10px 40px -10px rgba(167,139,250,0.1)}
+.stack-icon{font-size:1.4rem;line-height:1}
+.stack-name{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text)}
+.stack-desc{font-size:0.8rem;color:var(--dim);line-height:1.6}
+.stack-badge{display:inline-block;font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.2rem 0.6rem;border-radius:99px;border:1px solid;width:fit-content}
+.sb-cyan{background:rgba(34,211,238,0.1);border-color:rgba(34,211,238,0.3);color:#67e8f9}
+.sb-blue{background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.3);color:#93c5fd}
+.sb-violet{background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.3);color:#c4b5fd}
+.sb-orange{background:rgba(251,146,60,0.1);border-color:rgba(251,146,60,0.3);color:#fdba74}
+.arch-node{display:flex;flex-direction:column;align-items:center;gap:0.4rem;padding:0.85rem 1.1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;min-width:130px;text-align:center}
+.arch-node-name{font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:var(--text);line-height:1.3}
+.arch-node-label{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.18rem 0.5rem;border-radius:4px}
+.arch-node.n-user .arch-node-label{color:#22d3ee;background:rgba(34,211,238,0.1)}
+.arch-node.n-worker .arch-node-label{color:#fb923c;background:rgba(251,146,60,0.1)}
+.arch-node.n-lg .arch-node-label{color:#a78bfa;background:rgba(167,139,250,0.1)}
+.arch-node.n-groq .arch-node-label{color:#60a5fa;background:rgba(96,165,250,0.1)}
+.arch-diagram{display:flex;flex-direction:column;align-items:center;padding:2rem 1.5rem 1.5rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;margin:0 0 2rem}
+.arch-top{display:flex;align-items:center;gap:0.6rem}
+.arch-h-arrow{color:var(--muted);font-size:1rem;flex-shrink:0}
+.arch-vline{width:1px;height:1.5rem;background:var(--border);margin:0 auto}
+.arch-fork-bar{display:flex;align-items:flex-start;gap:2rem;position:relative}
+.arch-fork-bar::before{content:'';position:absolute;top:0;left:25%;right:25%;height:1px;background:var(--border)}
+.arch-branch{display:flex;flex-direction:column;align-items:center}
+.arch-branch-tag{font-size:0.58rem;font-weight:700;font-family:monospace;background:rgba(255,255,255,0.06);border:1px solid rgba(196,181,253,0.3);border-radius:4px;padding:0.15rem 0.5rem;color:#c4b5fd;margin:0.5rem 0}
+.arch-fallback-note{font-size:0.6rem;color:var(--muted);font-style:italic;text-align:center;margin-top:0.75rem;padding-top:0.6rem;border-top:1px dashed rgba(255,255,255,0.08);line-height:1.6;max-width:160px}
+.decision-list{display:flex;flex-direction:column;gap:1rem}
+.decision-card{padding:1.5rem 1.75rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;transition:border-color 0.3s}
+.decision-card:hover{border-color:rgba(167,139,250,0.2)}
+.decision-q{font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.5rem}
+.decision-a{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:0.5rem}
+.decision-why{font-size:0.82rem;color:var(--dim);line-height:1.7}
+.update-list{display:flex;flex-direction:column;gap:0.5rem;margin:1.5rem 0 0}
+.update-item{display:flex;align-items:baseline;gap:0.75rem;font-size:0.83rem;color:var(--dim);line-height:1.7}
+.update-item::before{content:'→';color:#22d3ee;flex-shrink:0;font-weight:700}
+.update-item code{color:var(--text);background:rgba(255,255,255,0.08);padding:0.1rem 0.35rem;border-radius:6px;font-size:0.78rem}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-top:1rem}
+.test-case{padding:1rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;gap:0.4rem}
+.test-case-num{font-size:0.57rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
+.test-case-title{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--text);line-height:1.3}
+.test-case-desc{font-size:0.74rem;color:var(--dim);line-height:1.6}
+.test-case-result{font-size:0.62rem;font-family:monospace;color:#4ade80;margin-top:auto;padding-top:0.4rem;border-top:1px solid rgba(74,222,128,0.1)}
+@media(max-width:900px){
+.stack-grid{grid-template-columns:1fr}
+.test-grid{grid-template-columns:1fr}
+.arch-fork-bar{flex-direction:column;align-items:center;gap:1rem}
+.arch-fork-bar::before{display:none}
+}
 </style>
 </head>
 <body>
@@ -195,6 +273,7 @@ nav{padding:1rem 1.5rem}
     <a href="#projects" data-i18n="nav.projects">Projets</a>
     <a href="#skills" data-i18n="nav.skills">Comp&eacute;tences</a>
     <a href="#certs" data-i18n="nav.certs">Certifications</a>
+    <a href="#architecture" data-i18n="nav.arch">Architecture</a>
   </div>
   <div class="nav-right">
     <div class="lang-switcher">
@@ -212,7 +291,7 @@ nav{padding:1rem 1.5rem}
   <a href="#projects" data-i18n="nav.projects" onclick="document.getElementById('nav-hamburger').click()">Projets</a>
   <a href="#skills" data-i18n="nav.skills" onclick="document.getElementById('nav-hamburger').click()">Comp&eacute;tences</a>
   <a href="#certs" data-i18n="nav.certs" onclick="document.getElementById('nav-hamburger').click()">Certifications</a>
-  <a href="https://cmankotech.github.io/cmankotech/how-i-built-this.html" target="_blank" onclick="document.getElementById('nav-hamburger').click()" style="color:#22d3ee;font-size:1rem" data-i18n="mobile.built">Behind the build ↗</a>
+  <a href="#architecture" data-i18n="nav.arch" onclick="document.getElementById('nav-hamburger').click()">Architecture</a>
 </div>
 
 <section id="hero" style="position:relative;overflow:hidden"><canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.45"></canvas>
@@ -231,9 +310,9 @@ nav{padding:1rem 1.5rem}
         <span class="badge b3">PSPO I &middot; SAFe</span>
         <span class="badge b4">CrewAI &middot; n8n</span>
       </div>
-      <a href="https://cmankotech.github.io/cmankotech/how-i-built-this.html" target="_blank" class="built-pill" data-i18n="hero.built">
+      <a href="#architecture" class="built-pill" data-i18n="hero.built">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        Comment j'ai construit ce site &rarr;
+        Architecture du site &rarr;
       </a>
     </div>
   </div>
@@ -249,11 +328,19 @@ nav{padding:1rem 1.5rem}
 
 
 
-<!-- PROJECTS (01) -->
-<section id="projects">
+<!-- PANELS: Projets · Comp. · Certs · Architecture -->
+<section class="panels-wrap">
   <div class="wrap">
-    <div class="sec-label"><span class="sec-num">01</span><span class="sec-name" data-i18n="nav.projects">Projets</span></div>
-    <div class="proj-intro rv">
+
+    <div class="panel" id="projects" data-open="false">
+      <button class="panel-btn" type="button" aria-expanded="false" aria-controls="body-projects">
+        <span class="sec-num">01</span>
+        <span class="sec-name" data-i18n="nav.projects">Projets</span>
+        <span class="panel-sub" data-i18n="panel.sub.projects">6 outils live</span>
+        <svg class="panel-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="panel-body" id="body-projects" role="region"><div class="panel-body-inner">
+        <div class="proj-intro rv">
       <p class="proj-intro-text" id="stackLine">Je build des outils PM avec l&rsquo;IA pour r&eacute;soudre des vrais probl&egrave;mes terrain, pas pour faire des d&eacute;mos. Stack&nbsp;: HTML/JS statique + proxy Cloudflare + orchestration LangGraph (planner + synthesis) avec fallback Groq. Le tout est d&eacute;ploy&eacute; en open access sur GitHub Pages, sans cl&eacute; API c&ocirc;t&eacute; utilisateur.</p>
       <div class="proj-intro-stats">
         <div class="proj-stat"><span class="proj-stat-num grad" id="stat0" data-val="0">0</span><span class="proj-stat-lbl" data-i18n="proj.stat.tools">Outils live</span></div>
@@ -318,16 +405,18 @@ nav{padding:1rem 1.5rem}
           <a href="https://cmankotech.github.io/cmankotech/roadmap-storyteller.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#f472b6" data-i18n="proj.link">Voir le projet &rarr;</a>
         </div>
       </div>
-  </div>
-</section>
+      </div></div>
+    </div>
 
-
-
-<!-- SKILLS (03) -->
-<section id="skills">
-  <div class="wrap">
-    <div class="sec-label"><span class="sec-num">02</span><span class="sec-name" data-i18n="nav.skills">Comp&eacute;tences</span></div>
-    <div class="skills-grid rv">
+    <div class="panel" id="skills" data-open="false">
+      <button class="panel-btn" type="button" aria-expanded="false" aria-controls="body-skills">
+        <span class="sec-num">02</span>
+        <span class="sec-name" data-i18n="nav.skills">Comp&eacute;tences</span>
+        <span class="panel-sub" data-i18n="panel.sub.skills">Product &middot; IA &middot; Agilit&eacute;</span>
+        <svg class="panel-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="panel-body" id="body-skills" role="region"><div class="panel-body-inner">
+        <div class="skills-grid rv">
       <div class="skill-block">
         <div class="skill-title grad-blue" data-i18n="skills.product">Product</div>
         <div class="skill-list">Discovery &middot; Roadmapping &middot; Backlog<br>User Stories &middot; MoSCoW / RICE<br>User Research &middot; Stakeholder Mgmt<br>A/B Testing &middot; Go-to-Market<br>PLG &middot; Continuous Discovery<br>Outcome over Output</div>
@@ -341,14 +430,19 @@ nav{padding:1rem 1.5rem}
         <div class="skill-list">SAFe &middot; Scrum &middot; PI Planning<br>JIRA &middot; Confluence &middot; Azure DevOps<br>Power Platform (BI, Automate, Apps)<br>Figma &middot; Miro &middot; Notion &middot; Klaxoon<br>Lean Six Sigma &middot; LACE</div>
       </div>
     </div>
-  </div>
-</section>
+      </div></div>
+    </div>
 
-<!-- CERTS (04) -->
-<section id="certs">
-  <div class="wrap">
-    <div class="sec-label"><span class="sec-num">03</span><span class="sec-name" data-i18n="nav.certs">Certifications</span><a href="https://www.credly.com/users/carlin-mankoto" target="_blank" style="color:#60a5fa;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;margin-left:1rem" data-i18n="certs.credly">V&eacute;rifier sur Credly &rarr;</a></div>
-    <div class="cert-groups">
+    <div class="panel" id="certs" data-open="false">
+      <button class="panel-btn" type="button" aria-expanded="false" aria-controls="body-certs">
+        <span class="sec-num">03</span>
+        <span class="sec-name" data-i18n="nav.certs">Certifications</span>
+        <span class="panel-sub" data-i18n="panel.sub.certs">13 badges &middot; Scrum &middot; SAFe &middot; AI</span>
+        <svg class="panel-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="panel-body" id="body-certs" role="region"><div class="panel-body-inner">
+        <div style="margin-bottom:1.5rem"><a href="https://www.credly.com/users/carlin-mankoto" target="_blank" style="color:#60a5fa;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none" data-i18n="certs.credly">V&eacute;rifier sur Credly &rarr;</a></div>
+        <div class="cert-groups">
       <div class="rv">
         <div class="cert-group-title cg-agile" data-i18n="certs.agile">Agilit&eacute;</div>
         <div class="cert-row cert-row-3">
@@ -378,6 +472,152 @@ nav{padding:1rem 1.5rem}
         </div>
       </div>
     </div>
+      </div></div>
+    </div>
+
+    <div class="panel" id="architecture" data-open="false">
+      <button class="panel-btn" type="button" aria-expanded="false" aria-controls="body-architecture">
+        <span class="sec-num">04</span>
+        <span class="sec-name" data-i18n="nav.arch">Architecture</span>
+        <span class="panel-sub" data-i18n="panel.sub.arch">Stack &middot; d&eacute;cisions &middot; LangGraph</span>
+        <svg class="panel-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="panel-body" id="body-architecture" role="region"><div class="panel-body-inner">
+
+        <div class="arch-sub-h" data-i18n="s1.title">Stack technique</div>
+        <div class="arch-diagram rv" role="img" aria-label="Architecture: Browser &rarr; CF Worker &rarr; deux routes &rarr; Groq API">
+          <div class="arch-top">
+            <div class="arch-node n-user">
+              <div class="arch-node-name">Browser</div>
+              <div class="arch-node-label">User</div>
+            </div>
+            <div class="arch-h-arrow">&rarr;</div>
+            <div class="arch-node n-worker">
+              <div class="arch-node-name">Cloudflare Worker</div>
+              <div class="arch-node-label">API Proxy</div>
+            </div>
+          </div>
+          <div class="arch-vline"></div>
+          <div class="arch-fork-bar">
+            <div class="arch-branch">
+              <span class="arch-branch-tag">POST /</span>
+              <div class="arch-vline"></div>
+              <div class="arch-node n-groq">
+                <div class="arch-node-name">Groq API</div>
+                <div class="arch-node-label">6 outils PM</div>
+              </div>
+            </div>
+            <div class="arch-branch">
+              <span class="arch-branch-tag">POST /orchestrate[-stream]</span>
+              <div class="arch-vline"></div>
+              <div class="arch-node n-lg">
+                <div class="arch-node-name">FastAPI &middot; LangGraph</div>
+                <div class="arch-node-label">KRL1</div>
+              </div>
+              <div class="arch-vline"></div>
+              <div class="arch-node n-groq">
+                <div class="arch-node-name">Groq API</div>
+                <div class="arch-node-label">planner + synthesis</div>
+              </div>
+              <div class="arch-fallback-note" data-i18n="arch.fallback">&crarr; fallback Worker direct si FastAPI offline</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack-grid rv">
+          <div class="stack-card">
+            <div class="stack-icon">&#127760;</div>
+            <div class="stack-name">HTML &middot; CSS &middot; JavaScript</div>
+            <div class="stack-badge sb-cyan" data-i18n="stack.front.badge">Frontend</div>
+            <div class="stack-desc" data-i18n="stack.front.desc">Vanilla &agrave; 100%. Pas de framework, pas de bundler, pas de d&eacute;pendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline &mdash; pas de composants partag&eacute;s, pas de routing entre pages. Ce choix permet un d&eacute;ploiement direct sans &eacute;tape de build, un debug imm&eacute;diat dans les DevTools navigateur, et un code lisible &agrave; plat sans couche d'abstraction. Six pages ind&eacute;pendantes : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller.</div>
+          </div>
+          <div class="stack-card">
+            <div class="stack-icon">&#9729;&#65039;</div>
+            <div class="stack-name">GitHub Pages</div>
+            <div class="stack-badge sb-blue" data-i18n="stack.deploy.badge">H&eacute;bergement</div>
+            <div class="stack-desc" data-i18n="stack.deploy.desc">H&eacute;bergement statique gratuit avec CI/CD natif : chaque git push sur main d&eacute;clenche un d&eacute;ploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Z&eacute;ro co&ucirc;t, z&eacute;ro infra &agrave; g&eacute;rer &mdash; id&eacute;al pour un site statique &agrave; fichiers HTML/CSS/JS.</div>
+          </div>
+          <div class="stack-card">
+            <div class="stack-icon">&#9889;</div>
+            <div class="stack-name">Cloudflare Workers</div>
+            <div class="stack-badge sb-orange" data-i18n="stack.proxy.badge">API Proxy</div>
+            <div class="stack-desc" data-i18n="stack.proxy.desc">Worker serverless JavaScript avec triple routing. POST / : passthrough direct vers l'API Groq pour les 6 outils PM &mdash; la cl&eacute; API est inject&eacute;e c&ocirc;t&eacute; Worker, jamais expos&eacute;e au navigateur. POST /orchestrate : route d&eacute;di&eacute;e au chatbot KRL1, qui tente l'orchestrateur FastAPI externe avant de basculer sur le fallback natif Worker. POST /orchestrate-stream : m&ecirc;me flow planner&rarr;synthesis mais la r&eacute;ponse synthesis arrive en SSE (Server-Sent Events) pour un affichage progressif. Validation d'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.</div>
+          </div>
+          <div class="stack-card">
+            <div class="stack-icon">&#129302;</div>
+            <div class="stack-name">Groq &middot; llama-3.3-70b-versatile</div>
+            <div class="stack-badge sb-violet" data-i18n="stack.llm.badge">LLM</div>
+            <div class="stack-desc" data-i18n="stack.llm.desc">Acc&egrave;s au mod&egrave;le llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inf&eacute;rence sur LPU (Language Processing Unit) donne des r&eacute;ponses en 1 &agrave; 2 secondes &mdash; 5 &agrave; 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des param&egrave;tres adapt&eacute;s : temp&eacute;ratures entre 0.3 et 0.7 selon la t&acirc;che, max_tokens entre 2 000 et 4 000, prompts system sp&eacute;cialis&eacute;s (strat&egrave;ge OKR, analyste discovery, expert priorisation&hellip;).</div>
+          </div>
+          <div class="stack-card" style="grid-column:1/-1">
+            <div class="stack-icon">&#128013;</div>
+            <div class="stack-name">FastAPI &middot; LangGraph</div>
+            <div class="stack-badge sb-violet" data-i18n="stack.lg.badge">Orchestration</div>
+            <div class="stack-desc" data-i18n="stack.lg.desc">Service Python autonome (port 8081) qui ajoute une couche d'intelligence structur&eacute;e pour KRL1. Le StateGraph LangGraph encha&icirc;ne deux n&oelig;uds : planner (T=0.2) g&eacute;n&egrave;re un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; synthesis (T=0.45) transforme ce plan en r&eacute;ponse naturelle max 220 mots avec liens vers les outils PM. LangSmith optionnel trace chaque run du graph en production. Le Worker bascule en fallback natif si le service est hors ligne.</div>
+          </div>
+        </div>
+
+        <div class="arch-sub-h" data-i18n="s4.title">D&eacute;cisions d'architecture</div>
+        <div class="decision-list rv">
+          <div class="decision-card">
+            <div class="decision-q" data-i18n="d1.q">Pourquoi HTML vanilla plut&ocirc;t que React ou Next.js ?</div>
+            <div class="decision-a" data-i18n="d1.a">Z&eacute;ro d&eacute;pendance, z&eacute;ro toolchain, z&eacute;ro dette</div>
+            <div class="decision-why" data-i18n="d1.why">Un site statique de portfolio et d'outils simples n'a pas besoin d'un framework SPA. HTML vanilla se d&eacute;ploie directement, se lit facilement et ne g&eacute;n&egrave;re aucune dette technique. Moins de complexit&eacute; = plus de v&eacute;locit&eacute;.</div>
+          </div>
+          <div class="decision-card">
+            <div class="decision-q" data-i18n="d2.q">Pourquoi un proxy Cloudflare Workers plut&ocirc;t qu'exposer la cl&eacute; API ?</div>
+            <div class="decision-a" data-i18n="d2.a">S&eacute;curit&eacute; non n&eacute;gociable, plan gratuit g&eacute;n&eacute;reux</div>
+            <div class="decision-why" data-i18n="d2.why">Exposer une cl&eacute; API dans du code client-side, c'est l'offrir &agrave; n'importe qui. Le Worker intercepte les requ&ecirc;tes, injecte la cl&eacute; c&ocirc;t&eacute; serveur et valide l'origine. Plan gratuit Cloudflare : 100 000 requ&ecirc;tes/jour &mdash; largement suffisant.</div>
+          </div>
+          <div class="decision-card">
+            <div class="decision-q" data-i18n="d3.q">Pourquoi Groq plut&ocirc;t qu'OpenAI ou Anthropic directement ?</div>
+            <div class="decision-a" data-i18n="d3.a">Vitesse d'inf&eacute;rence et plan gratuit</div>
+            <div class="decision-why" data-i18n="d3.why">Groq tourne les mod&egrave;les Llama 3 sur du mat&eacute;riel LPU optimis&eacute; pour l'inf&eacute;rence. R&eacute;sultat : des r&eacute;ponses en 1-2 secondes l&agrave; o&ugrave; d'autres providers prennent 5-10s. Et le plan gratuit couvre amplement un usage personnel.</div>
+          </div>
+          <div class="decision-card">
+            <div class="decision-q" data-i18n="d4.q">Pourquoi GitHub Pages plut&ocirc;t qu'un VPS ou Vercel ?</div>
+            <div class="decision-a" data-i18n="d4.a">Gratuit, simple, CI/CD natif</div>
+            <div class="decision-why" data-i18n="d4.why">Pour des fichiers statiques, GitHub Pages est imbattable : gratuit, CDN mondial, HTTPS automatique, et le d&eacute;ploiement se d&eacute;clenche simplement avec un git push. Pas besoin d'une infrastructure plus complexe pour ce cas d'usage.</div>
+          </div>
+        </div>
+
+        <div class="arch-sub-h" data-i18n="s5.title">Orchestration LangGraph</div>
+        <div class="decision-card rv" style="margin-bottom:1rem">
+          <div class="decision-q" data-i18n="lg.flow.label">Flow d'une requ&ecirc;te KRL1</div>
+          <div class="decision-why" data-i18n="lg.flow.desc">1 &middot; L'utilisateur envoie un message dans le chat KRL1. 2 &middot; Le JS appelle POST /orchestrate sur le Worker Cloudflare avec {lang, message, history}. 3 &middot; Le Worker tente l'orchestrateur FastAPI externe (si LANGGRAPH_ORCHESTRATOR_URL est d&eacute;fini). 4 &middot; Le planner LangGraph (T=0.2) analyse l'intention &rarr; JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 5 &middot; Le synthesis LangGraph (T=0.45) transforme le plan en r&eacute;ponse max 220 mots avec liens outils PM. 6 &middot; Fallback si FastAPI indisponible : le Worker ex&eacute;cute ce m&ecirc;me flow planner&rarr;synthesis nativement via Groq. 7 &middot; La r&eacute;ponse {reply, plan, engine} arrive au client &mdash; le chat affiche reply, le JSON plan reste disponible.</div>
+        </div>
+        <div class="decision-card rv" style="margin-bottom:1rem">
+          <div class="decision-q" data-i18n="lg.tests.label">Tests automatiques &mdash; proxy.test.mjs</div>
+          <div class="test-grid">
+            <div class="test-case">
+              <div class="test-case-num" data-i18n="test.n1">Test 1</div>
+              <div class="test-case-title" data-i18n="test.t1">LangGraph externe actif</div>
+              <div class="test-case-desc" data-i18n="test.d1">LANGGRAPH_ORCHESTRATOR_URL est d&eacute;fini &rarr; le Worker forward la requ&ecirc;te. Le client re&ccedil;oit la r&eacute;ponse LangGraph avec engine: "langgraph".</div>
+              <div class="test-case-result" data-i18n="test.r1">assert reply = "via-langgraph", engine = "langgraph"</div>
+            </div>
+            <div class="test-case">
+              <div class="test-case-num" data-i18n="test.n2">Test 2</div>
+              <div class="test-case-title" data-i18n="test.t2">Orchestrateur natif Worker</div>
+              <div class="test-case-desc" data-i18n="test.d2">Sans URL externe : 2 appels Groq s&eacute;quentiels &mdash; planner (JSON strict) puis synthesis (texte). Le client re&ccedil;oit {reply, plan}.</div>
+              <div class="test-case-result" data-i18n="test.r2">assert plan.intent = "roadmap", reply = "Synth&egrave;se utile"</div>
+            </div>
+            <div class="test-case">
+              <div class="test-case-num" data-i18n="test.n3">Test 3</div>
+              <div class="test-case-title" data-i18n="test.t3">Routing POST / intact</div>
+              <div class="test-case-desc" data-i18n="test.d3">La route racine (6 outils PM) reste un passthrough direct vers Groq, non affect&eacute;e par l'orchestration KRL1.</div>
+              <div class="test-case-result" data-i18n="test.r3">assert choices[0].content = "legacy"</div>
+            </div>
+          </div>
+        </div>
+        <div class="decision-card rv">
+          <div class="decision-q" data-i18n="lg.why.q">Pourquoi LangGraph ?</div>
+          <div class="decision-a" data-i18n="lg.why.a">Plan PM structur&eacute; + r&eacute;ponse claire, site rapide et keyless</div>
+          <div class="decision-why" data-i18n="lg.why.desc">Le double-n&oelig;ud r&eacute;pond &agrave; deux contraintes oppos&eacute;es. Le planner a besoin d'une temp&eacute;rature basse (T=0.2) pour produire un JSON d&eacute;terministe et fiable : intent, user_goal, steps actionnables, risks identifi&eacute;s, quick_win. Une temp&eacute;rature trop haute rend le JSON impr&eacute;visible et difficile &agrave; parser. La synthesis a besoin au contraire d'une temp&eacute;rature plus cr&eacute;ative (T=0.45) pour formuler une r&eacute;ponse naturelle et concise (max 220 mots) avec les liens vers les outils PM pertinents. Un seul appel LLM ne peut pas satisfaire ces deux contraintes. LangGraph permet de composer ces comportements en un StateGraph lisible, testable et extensible &mdash; ajouter un n&oelig;ud de validation ou de critique est trivial.</div>
+        </div>
+
+      </div></div>
+    </div>
+
   </div>
 </section>
 
@@ -388,14 +628,14 @@ nav{padding:1rem 1.5rem}
       <a href="mailto:carlinmankoto@proton.me" class="footer-link">&#9993; carlinmankoto@proton.me</a>
       <a href="https://linkedin.com/in/carlinmankoto" target="_blank" class="footer-link">&#8599; LinkedIn</a>
       <a href="https://www.credly.com/users/carlin-mankoto" target="_blank" class="footer-link">&#8599; Credly</a>
-      <a href="https://cmankotech.github.io/cmankotech/how-i-built-this.html" target="_blank" class="footer-link" data-i18n="footer.built">&#8599; Comment j'ai construit ce site</a>
+      <a href="#architecture" class="footer-link" data-i18n="footer.built">&#8599; Architecture du site</a>
     </div>
   </div>
   <div class="footer-copy">&copy; 2026 Carlin Mankoto - AI Product Manager</div>
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-var T={fr:{'nav.exp':'Parcours','nav.skills':'Comp\u00e9tences','nav.certs':'Certifications','nav.edu':'Formation','nav.cta':'Me contacter \u2192','nav.projects':'Projets','proj.intro':"Je build des outils PM avec l'IA pour résoudre des vrais problèmes terrain, pas pour faire des démos. Stack : HTML/JS statique + proxy Cloudflare + orchestration LangGraph (planner + synthesis) avec fallback Groq. Le tout est déployé en open access sur GitHub Pages, sans clé API côté utilisateur.",'proj.stat.tools':'Outils live','proj.stat.open':'Open access','proj.stat.llm':'LLM providers','proj.stat.reqs':'Requêtes IA','hero.portfolio':'Portfolio · Projets IA buildés','hero.role':'AI Product Manager \u00b7 Builder','lbl.ctx':'Contexte','lbl.pb':'Probl\u00e8me','lbl.ap':'Approche','lbl.res':'R\u00e9sultat','proj.bnp.ctx':"Mission consulting en Master 2. BNP Paribas cherchait des pistes d\u2019innovation durable pour l\u2019un de ses m\u00e9tiers.",'proj.bnp.pb':"G\u00e9n\u00e9rer des id\u00e9es actionnables en 5 jours avec des parties prenantes aux profils tr\u00e8s h\u00e9t\u00e9rog\u00e8nes.",'proj.bnp.ap':"Facilitation d\u2019un Design Sprint complet : cadrage, id\u00e9ation, prototypage rapide et test utilisateur. Animation des ateliers et synth\u00e8se des insights.",'proj.bnp.res':"3 concepts pr\u00e9sent\u00e9s \u00e0 l\u2019\u00e9quipe BNP avec une recommandation argument\u00e9e sur le concept \u00e0 prototyper en priorit\u00e9.",'proj.shopify.ctx':"Projet de fin de Master 2 en \u00e9quipe \- construire un produit e-commerce fonctionnel de A \u00e0 Z.",'proj.shopify.pb':"R\u00e9duire le taux d\u2019abandon en aidant les visiteurs \u00e0 trouver le bon produit sans intervention humaine.",'proj.shopify.ap':"R\u00f4le de PO sur le backlog + d\u00e9veloppeur sur l\u2019int\u00e9gration du chatbot (Node.js, API, JS). User stories, priorisation et sprints it\u00e9ratifs.",'proj.shopify.res':"Site livr\u00e9 avec chatbot fonctionnel capable de r\u00e9pondre aux questions produit et de rediriger vers les fiches concern\u00e9es.",'proj.geo.ctx':"Projet pratique du Master 2 pour explorer le d\u00e9veloppement low-code sur Microsoft Power Platform.",'proj.geo.pb':"Les \u00e9quipes terrain n\u2019avaient pas d\u2019outil simple pour signaler leur position et l\u2019\u00e9tat des interventions en temps r\u00e9el.",'proj.geo.ap':"Conception UX, mod\u00e9lisation des donn\u00e9es et d\u00e9veloppement complet sur PowerApps, connect\u00e9 \u00e0 SharePoint comme base de donn\u00e9es.",'proj.geo.res':"Application mobile fonctionnelle livr\u00e9e, test\u00e9e et document\u00e9e \- d\u00e9montrant la capacit\u00e9 \u00e0 produire un outil op\u00e9rationnel sans code traditionnel.",'proj.da.ctx':"Outil IA con\u00e7u et d\u00e9velopp\u00e9 en vibe coding pour acc\u00e9l\u00e9rer la phase de discovery produit.",'proj.da.pb':"Un PM en d\u00e9but de discovery part souvent sans structure : hypoth\u00e8ses floues, questions d\u2019interview non pr\u00e9par\u00e9es, pas de plan de test clair.",'proj.da.ap':"Application web autonome (HTML/JS + API Groq). L\u2019utilisateur d\u00e9crit son probl\u00e8me, l\u2019outil g\u00e9n\u00e8re 3 hypoth\u00e8ses, 5 questions d\u2019interview et un plan de test structur\u00e9.",'proj.okr.ctx':"Outil con\u00e7u pour acc\u00e9l\u00e9rer la d\u00e9finition des OKRs produit, souvent floue ou d\u00e9connect\u00e9e des vraies m\u00e9triques.",'proj.okr.pb':"R\u00e9diger des OKRs coh\u00e9rents, mesurables et align\u00e9s sur la strat\u00e9gie produit prend du temps et manque souvent de rigueur m\u00e9thodologique.",'proj.okr.ap':"Application web (HTML/JS + API Groq). L\'utilisateur d\u00e9crit son contexte et ses ambitions, l\'IA g\u00e9n\u00e8re des OKRs avec Key Results typ\u00e9s (m\u00e9trique, milestone, sant\u00e9).",'proj.okr.res':"OKRs structur\u00e9s en quelques secondes, avec baseline et conseils d\'utilisation en \u00e9quipe. Couvre la phase de planning strat\u00e9gique du cycle produit.",'proj.uia.ctx':"Outil conçu pour accélérer la synthèse des entretiens utilisateurs, étape souvent chronophage dans la phase de discovery.",'proj.uia.pb':"Transformer des notes brutes en insights actionables prend du temps et introduit des biais d\'interprétation quand c\'est fait manuellement.",'proj.uia.ap':"Application web (HTML/JS + API Groq). L\'utilisateur colle ses notes (1 ou plusieurs entretiens), l\'IA extrait pain points groupés, citations, opportunités et génère un persona.",'proj.uia.res':"Synthèse structurée en quelques secondes. Complète le Discovery Assistant pour couvrir l\'intégralité de la phase de discovery produit.",'proj.bp.ctx':"Outil IA con\u00e7u pour acc\u00e9l\u00e9rer les sessions de priorisation backlog, souvent chronophages et subjectives.",'proj.bp.pb':"Prioriser un backlog de mani\u00e8re rigoureuse prend du temps et manque souvent de justification explicite face aux parties prenantes.",'proj.bp.ap':"Application web (HTML/JS + API Groq). L\u2019utilisateur colle ses user stories, choisit RICE ou MoSCoW, et obtient un scoring complet avec justification par item.",'proj.bp.res':"Outil live avec double mode de saisie et exemples al\u00e9atoires. R\u00e9duit une session de priorisation de 30 min \u00e0 moins de 2 min.",'proj.da.res':"Outil live et accessible publiquement, con\u00e7u de z\u00e9ro en moins d\u2019une journ\u00e9e. Illustre la capacit\u00e9 \u00e0 shipper rapidement des outils IA utiles.",'proj.link':'Voir le projet \u2192','hero.intro':"PM/PO avec 3 ans d\u2019exp\u00e9rience dans des environnements exigeants (d\u00e9fense, assurance, conseil). Je couvre l\u2019ensemble du spectre produit de la discovery strat\u00e9gique jusqu\u2019\u00e0 la livraison, avec une expertise marqu\u00e9e en IA g\u00e9n\u00e9rative, syst\u00e8mes multi-agents et vibe coding.",'exp.oaio.date':'Janv. 2026<br>\- Pr\u00e9sent','exp.oaio.role':'Product Manager \u00b7 CDI','exp.oaio.desc':"Pilotage de la strat\u00e9gie produit pour l\u2019impl\u00e9mentation d\u2019une plateforme LMS et d\u2019outils IA pour 3\u00a0500+ collaborateurs. Benchmark de 17 solutions LMS et 44 outils IA avec scoring multicrit\u00e8res. Prototypage en vibe coding (Lovable + Claude Code) pour tester des hypoth\u00e8ses UX. Roadmap en 3 phases align\u00e9e aux objectifs business. Stakeholder management jusqu\u2019\u00e0 la direction.",'exp.outlier.role':'AI Trainer / Data Annotator \u00b7 Freelance','exp.outlier.desc':"Entra\u00eenement de mod\u00e8les d\u2019IA g\u00e9n\u00e9rative via RLHF. Annotation de donn\u00e9es (images, textes, audios) pour cr\u00e9er des datasets structur\u00e9s. Contr\u00f4le qualit\u00e9 rigoureux et classification des donn\u00e9es.",'exp.axa.role':'AI Product Owner \u00b7 Alternance','exp.axa.desc':"Gestion du backlog SecureGPT (RAG interne) et Microsoft Copilot en environnement SAFe. Priorisation MoSCoW, r\u00e9daction d\u2019user stories et animation des c\u00e9r\u00e9monies agiles. Automatisation via Power Automate et AI Builder. R\u00f4le d\u2019AI Evangelist et participation au LACE.",'exp.airbus.role':'Product Owner \u00b7 Alternance','exp.airbus.desc':"Application mobile de messagerie s\u00e9curis\u00e9e mission critique pour les JO Paris 2024. Transition Waterfall vers SAFe, interop\u00e9rabilit\u00e9 TETRA/Broadband. Animation des c\u00e9r\u00e9monies agiles et PI Planning.",'exp.casino.role':'Charg\u00e9 de Projet Change Management \u00b7 Stage','exp.casino.desc':"Accompagnement \u00e0 la transformation agile et impl\u00e9mentation Scrum. D\u00e9finition de la strat\u00e9gie de conduite du changement, d\u00e9ploiement du plan de communication et suivi KPI.",'skills.product':'Product','skills.ai':'IA & Tech','skills.agile':'Agilit\u00e9 & Outils','certs.credly':'V\u00e9rifier sur Credly \u2192','certs.agile':'Agilit\u00e9','certs.product':'Product Management','certs.ai':'IA & Divers','cert.oriions':'Conduire un projet innovant \u00b7 Lean Six Sigma White Belt','proj.bnp.name':'Design Sprint \- Sustainable Innovation','proj.bnp.desc':"Co-construction de solutions \u00e0 impact dans le cadre d\u2019un Design Sprint anim\u00e9 chez BNP Paribas.",'proj.shopify.desc':"Product Owner et d\u00e9veloppeur sur un site e-commerce Shopify avec chatbot IA int\u00e9gr\u00e9 (JavaScript, Node.js, CSS, HTML, API).",'proj.geo.name':'App G\u00e9olocalisation PowerApps','proj.geo.desc':"Application mobile de g\u00e9olocalisation pour la maintenance terrain, d\u00e9velopp\u00e9e sur Microsoft Power Platform.",'edu.bootcamp.degree':'Bootcamp Product Owner / Product Manager','edu.lbl.cert':'Certification obtenue','edu.lbl.thesis':"M\u00e9moire de fin d'\u00e9tudes",'edu.bootcamp.thesis':'\u00ab\u00a0Conduire et piloter un projet innovant avec des m\u00e9thodes agiles\u00a0\u00bb.','edu.m2.degree':"Master 2 \- \u00c9conomie et Management de l\u2019Innovation Digitale",'edu.m2.thesis':"\u00ab\u00a0Du hardware au software, du Waterfall au SAFe\u00a0: Les avantages de l\u2019agilit\u00e9 sur la performance op\u00e9rationnelle en environnement VUCA.\u00a0\u00bb",'edu.m1.degree':'Master 1 \- Management Strat\u00e9gique et Conduite du Changement','edu.m1.thesis':"\u00ab\u00a0L\u2019accompagnement au changement sous le prisme des rapports de domination \u00e9conomique.\u00a0\u00bb",'edu.licence.degree':'Licence Science Politique \- Sp\u00e9cialisation \u00c9conomie Num\u00e9rique','edu.licence.thesis':"\u00ab\u00a0Manipulations et influence\u00a0: Histoire et enjeux de la r\u00e9gulation des donn\u00e9es personnelles.\u00a0\u00bb",'footer.hl':'On construit<br>','footer.hl2':'quelque chose ?'},'proj.rs.ctx':"Outil con\u00e7u pour transformer une liste de features brutes en roadmap narrative adapt\u00e9e \u00e0 chaque audience.",'proj.rs.pb':"Pr\u00e9senter une roadmap \u00e0 des dirigeants ou clients n\u00e9cessite un discours orient\u00e9 valeur, pas une liste de tickets JIRA.",'proj.rs.ap':"Application web (HTML/JS + API Groq). L'utilisateur entre ses features par p\u00e9riode (Now/Next/Later), choisit son audience et obtient un pitch narratif + timeline valoris\u00e9e + messages cl\u00e9s.",'proj.rs.res':"Roadmap pr\u00eate \u00e0 pr\u00e9senter en quelques secondes, avec un pitch copiable et des messages cl\u00e9s adapt\u00e9s \u00e0 l'audience." ,'proj.eus.ctx':"Outil con\u00e7u pour acc\u00e9l\u00e9rer la d\u00e9composition d\u2019un epic en user stories pr\u00eates \u00e0 raffiner en sprint planning.",'proj.eus.pb':"Produire des user stories ind\u00e9pendantes, bien formul\u00e9es et avec des crit\u00e8res d\u2019acceptance v\u00e9rifiables prend du temps et demande de la rigueur.",'proj.eus.ap':"Application web (HTML/JS + API Groq). L\u2019utilisateur d\u00e9crit son epic, choisit le format (standard ou Job Story) et le nombre de stories. L\u2019IA g\u00e9n\u00e8re chaque story avec priorit\u00e9, effort et crit\u00e8res d\u2019acceptance.",'proj.eus.res':"Backlog pr\u00eat en quelques secondes, exportable en Markdown pour Jira ou Confluence. Respecte le principe INVEST pour chaque story.",en:{'hero.portfolio':'Portfolio · AI Projects built','nav.exp':'Experience','nav.skills':'Skills','nav.certs':'Certifications','nav.edu':'Education','nav.cta':'Contact me →','nav.projects':'Projects','hero.role':'AI Product Manager · Builder',
+var T={fr:{'nav.exp':'Parcours','nav.skills':'Comp\u00e9tences','nav.certs':'Certifications','nav.edu':'Formation','nav.cta':'Me contacter \u2192','nav.projects':'Projets','proj.intro':"Je build des outils PM avec l'IA pour résoudre des vrais problèmes terrain, pas pour faire des démos. Stack : HTML/JS statique + proxy Cloudflare + orchestration LangGraph (planner + synthesis) avec fallback Groq. Le tout est déployé en open access sur GitHub Pages, sans clé API côté utilisateur.",'proj.stat.tools':'Outils live','proj.stat.open':'Open access','proj.stat.llm':'LLM providers','proj.stat.reqs':'Requêtes IA','hero.portfolio':'Portfolio · Projets IA buildés','hero.role':'AI Product Manager \u00b7 Builder','lbl.ctx':'Contexte','lbl.pb':'Probl\u00e8me','lbl.ap':'Approche','lbl.res':'R\u00e9sultat','proj.bnp.ctx':"Mission consulting en Master 2. BNP Paribas cherchait des pistes d\u2019innovation durable pour l\u2019un de ses m\u00e9tiers.",'proj.bnp.pb':"G\u00e9n\u00e9rer des id\u00e9es actionnables en 5 jours avec des parties prenantes aux profils tr\u00e8s h\u00e9t\u00e9rog\u00e8nes.",'proj.bnp.ap':"Facilitation d\u2019un Design Sprint complet : cadrage, id\u00e9ation, prototypage rapide et test utilisateur. Animation des ateliers et synth\u00e8se des insights.",'proj.bnp.res':"3 concepts pr\u00e9sent\u00e9s \u00e0 l\u2019\u00e9quipe BNP avec une recommandation argument\u00e9e sur le concept \u00e0 prototyper en priorit\u00e9.",'proj.shopify.ctx':"Projet de fin de Master 2 en \u00e9quipe \- construire un produit e-commerce fonctionnel de A \u00e0 Z.",'proj.shopify.pb':"R\u00e9duire le taux d\u2019abandon en aidant les visiteurs \u00e0 trouver le bon produit sans intervention humaine.",'proj.shopify.ap':"R\u00f4le de PO sur le backlog + d\u00e9veloppeur sur l\u2019int\u00e9gration du chatbot (Node.js, API, JS). User stories, priorisation et sprints it\u00e9ratifs.",'proj.shopify.res':"Site livr\u00e9 avec chatbot fonctionnel capable de r\u00e9pondre aux questions produit et de rediriger vers les fiches concern\u00e9es.",'proj.geo.ctx':"Projet pratique du Master 2 pour explorer le d\u00e9veloppement low-code sur Microsoft Power Platform.",'proj.geo.pb':"Les \u00e9quipes terrain n\u2019avaient pas d\u2019outil simple pour signaler leur position et l\u2019\u00e9tat des interventions en temps r\u00e9el.",'proj.geo.ap':"Conception UX, mod\u00e9lisation des donn\u00e9es et d\u00e9veloppement complet sur PowerApps, connect\u00e9 \u00e0 SharePoint comme base de donn\u00e9es.",'proj.geo.res':"Application mobile fonctionnelle livr\u00e9e, test\u00e9e et document\u00e9e \- d\u00e9montrant la capacit\u00e9 \u00e0 produire un outil op\u00e9rationnel sans code traditionnel.",'proj.da.ctx':"Outil IA con\u00e7u et d\u00e9velopp\u00e9 en vibe coding pour acc\u00e9l\u00e9rer la phase de discovery produit.",'proj.da.pb':"Un PM en d\u00e9but de discovery part souvent sans structure : hypoth\u00e8ses floues, questions d\u2019interview non pr\u00e9par\u00e9es, pas de plan de test clair.",'proj.da.ap':"Application web autonome (HTML/JS + API Groq). L\u2019utilisateur d\u00e9crit son probl\u00e8me, l\u2019outil g\u00e9n\u00e8re 3 hypoth\u00e8ses, 5 questions d\u2019interview et un plan de test structur\u00e9.",'proj.okr.ctx':"Outil con\u00e7u pour acc\u00e9l\u00e9rer la d\u00e9finition des OKRs produit, souvent floue ou d\u00e9connect\u00e9e des vraies m\u00e9triques.",'proj.okr.pb':"R\u00e9diger des OKRs coh\u00e9rents, mesurables et align\u00e9s sur la strat\u00e9gie produit prend du temps et manque souvent de rigueur m\u00e9thodologique.",'proj.okr.ap':"Application web (HTML/JS + API Groq). L\'utilisateur d\u00e9crit son contexte et ses ambitions, l\'IA g\u00e9n\u00e8re des OKRs avec Key Results typ\u00e9s (m\u00e9trique, milestone, sant\u00e9).",'proj.okr.res':"OKRs structur\u00e9s en quelques secondes, avec baseline et conseils d\'utilisation en \u00e9quipe. Couvre la phase de planning strat\u00e9gique du cycle produit.",'proj.uia.ctx':"Outil conçu pour accélérer la synthèse des entretiens utilisateurs, étape souvent chronophage dans la phase de discovery.",'proj.uia.pb':"Transformer des notes brutes en insights actionables prend du temps et introduit des biais d\'interprétation quand c\'est fait manuellement.",'proj.uia.ap':"Application web (HTML/JS + API Groq). L\'utilisateur colle ses notes (1 ou plusieurs entretiens), l\'IA extrait pain points groupés, citations, opportunités et génère un persona.",'proj.uia.res':"Synthèse structurée en quelques secondes. Complète le Discovery Assistant pour couvrir l\'intégralité de la phase de discovery produit.",'proj.bp.ctx':"Outil IA con\u00e7u pour acc\u00e9l\u00e9rer les sessions de priorisation backlog, souvent chronophages et subjectives.",'proj.bp.pb':"Prioriser un backlog de mani\u00e8re rigoureuse prend du temps et manque souvent de justification explicite face aux parties prenantes.",'proj.bp.ap':"Application web (HTML/JS + API Groq). L\u2019utilisateur colle ses user stories, choisit RICE ou MoSCoW, et obtient un scoring complet avec justification par item.",'proj.bp.res':"Outil live avec double mode de saisie et exemples al\u00e9atoires. R\u00e9duit une session de priorisation de 30 min \u00e0 moins de 2 min.",'proj.da.res':"Outil live et accessible publiquement, con\u00e7u de z\u00e9ro en moins d\u2019une journ\u00e9e. Illustre la capacit\u00e9 \u00e0 shipper rapidement des outils IA utiles.",'proj.link':'Voir le projet \u2192','hero.intro':"PM/PO avec 3 ans d\u2019exp\u00e9rience dans des environnements exigeants (d\u00e9fense, assurance, conseil). Je couvre l\u2019ensemble du spectre produit de la discovery strat\u00e9gique jusqu\u2019\u00e0 la livraison, avec une expertise marqu\u00e9e en IA g\u00e9n\u00e9rative, syst\u00e8mes multi-agents et vibe coding.",'exp.oaio.date':'Janv. 2026<br>\- Pr\u00e9sent','exp.oaio.role':'Product Manager \u00b7 CDI','exp.oaio.desc':"Pilotage de la strat\u00e9gie produit pour l\u2019impl\u00e9mentation d\u2019une plateforme LMS et d\u2019outils IA pour 3\u00a0500+ collaborateurs. Benchmark de 17 solutions LMS et 44 outils IA avec scoring multicrit\u00e8res. Prototypage en vibe coding (Lovable + Claude Code) pour tester des hypoth\u00e8ses UX. Roadmap en 3 phases align\u00e9e aux objectifs business. Stakeholder management jusqu\u2019\u00e0 la direction.",'exp.outlier.role':'AI Trainer / Data Annotator \u00b7 Freelance','exp.outlier.desc':"Entra\u00eenement de mod\u00e8les d\u2019IA g\u00e9n\u00e9rative via RLHF. Annotation de donn\u00e9es (images, textes, audios) pour cr\u00e9er des datasets structur\u00e9s. Contr\u00f4le qualit\u00e9 rigoureux et classification des donn\u00e9es.",'exp.axa.role':'AI Product Owner \u00b7 Alternance','exp.axa.desc':"Gestion du backlog SecureGPT (RAG interne) et Microsoft Copilot en environnement SAFe. Priorisation MoSCoW, r\u00e9daction d\u2019user stories et animation des c\u00e9r\u00e9monies agiles. Automatisation via Power Automate et AI Builder. R\u00f4le d\u2019AI Evangelist et participation au LACE.",'exp.airbus.role':'Product Owner \u00b7 Alternance','exp.airbus.desc':"Application mobile de messagerie s\u00e9curis\u00e9e mission critique pour les JO Paris 2024. Transition Waterfall vers SAFe, interop\u00e9rabilit\u00e9 TETRA/Broadband. Animation des c\u00e9r\u00e9monies agiles et PI Planning.",'exp.casino.role':'Charg\u00e9 de Projet Change Management \u00b7 Stage','exp.casino.desc':"Accompagnement \u00e0 la transformation agile et impl\u00e9mentation Scrum. D\u00e9finition de la strat\u00e9gie de conduite du changement, d\u00e9ploiement du plan de communication et suivi KPI.",'skills.product':'Product','skills.ai':'IA & Tech','skills.agile':'Agilit\u00e9 & Outils','certs.credly':'V\u00e9rifier sur Credly \u2192','certs.agile':'Agilit\u00e9','certs.product':'Product Management','certs.ai':'IA & Divers','cert.oriions':'Conduire un projet innovant \u00b7 Lean Six Sigma White Belt','proj.bnp.name':'Design Sprint \- Sustainable Innovation','proj.bnp.desc':"Co-construction de solutions \u00e0 impact dans le cadre d\u2019un Design Sprint anim\u00e9 chez BNP Paribas.",'proj.shopify.desc':"Product Owner et d\u00e9veloppeur sur un site e-commerce Shopify avec chatbot IA int\u00e9gr\u00e9 (JavaScript, Node.js, CSS, HTML, API).",'proj.geo.name':'App G\u00e9olocalisation PowerApps','proj.geo.desc':"Application mobile de g\u00e9olocalisation pour la maintenance terrain, d\u00e9velopp\u00e9e sur Microsoft Power Platform.",'edu.bootcamp.degree':'Bootcamp Product Owner / Product Manager','edu.lbl.cert':'Certification obtenue','edu.lbl.thesis':"M\u00e9moire de fin d'\u00e9tudes",'edu.bootcamp.thesis':'\u00ab\u00a0Conduire et piloter un projet innovant avec des m\u00e9thodes agiles\u00a0\u00bb.','edu.m2.degree':"Master 2 \- \u00c9conomie et Management de l\u2019Innovation Digitale",'edu.m2.thesis':"\u00ab\u00a0Du hardware au software, du Waterfall au SAFe\u00a0: Les avantages de l\u2019agilit\u00e9 sur la performance op\u00e9rationnelle en environnement VUCA.\u00a0\u00bb",'edu.m1.degree':'Master 1 \- Management Strat\u00e9gique et Conduite du Changement','edu.m1.thesis':"\u00ab\u00a0L\u2019accompagnement au changement sous le prisme des rapports de domination \u00e9conomique.\u00a0\u00bb",'edu.licence.degree':'Licence Science Politique \- Sp\u00e9cialisation \u00c9conomie Num\u00e9rique','edu.licence.thesis':"\u00ab\u00a0Manipulations et influence\u00a0: Histoire et enjeux de la r\u00e9gulation des donn\u00e9es personnelles.\u00a0\u00bb",'nav.arch':'Architecture','panel.sub.projects':'6 outils live','panel.sub.skills':'Product \u00b7 IA \u00b7 Agilit\u00e9','panel.sub.certs':'13 badges \u00b7 Scrum \u00b7 SAFe \u00b7 AI','panel.sub.arch':'Stack \u00b7 d\u00e9cisions \u00b7 LangGraph','hero.built':'Architecture du site \u2192','footer.built':'\u2197 Architecture du site','s1.title':'Stack technique','stack.front.badge':'Frontend','stack.front.desc':"Vanilla \u00e0 100%. Pas de framework, pas de bundler, pas de d\u00e9pendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline \u2014 pas de composants partag\u00e9s, pas de routing entre pages. Ce choix permet un d\u00e9ploiement direct sans \u00e9tape de build, un debug imm\u00e9diat dans les DevTools navigateur, et un code lisible \u00e0 plat sans couche d'abstraction. Six pages ind\u00e9pendantes : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller.",'stack.deploy.badge':'H\u00e9bergement','stack.deploy.desc':"H\u00e9bergement statique gratuit avec CI/CD natif : chaque git push sur main d\u00e9clenche un d\u00e9ploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Z\u00e9ro co\u00fbt, z\u00e9ro infra \u00e0 g\u00e9rer \u2014 id\u00e9al pour un site statique \u00e0 fichiers HTML/CSS/JS.",'stack.proxy.badge':'API Proxy','stack.proxy.desc':"Worker serverless JavaScript avec triple routing. POST / : passthrough direct vers l'API Groq pour les 6 outils PM \u2014 la cl\u00e9 API est inject\u00e9e c\u00f4t\u00e9 Worker, jamais expos\u00e9e au navigateur. POST /orchestrate : route d\u00e9di\u00e9e au chatbot KRL1, qui tente l'orchestrateur FastAPI externe avant de basculer sur le fallback natif Worker. POST /orchestrate-stream : m\u00eame flow planner\u2192synthesis mais la r\u00e9ponse synthesis arrive en SSE (Server-Sent Events) pour un affichage progressif. Validation d'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.",'stack.llm.badge':'LLM','stack.llm.desc':"Acc\u00e8s au mod\u00e8le llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inf\u00e9rence sur LPU (Language Processing Unit) donne des r\u00e9ponses en 1 \u00e0 2 secondes \u2014 5 \u00e0 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des param\u00e8tres adapt\u00e9s : temp\u00e9ratures entre 0.3 et 0.7 selon la t\u00e2che, max_tokens entre 2 000 et 4 000, prompts system sp\u00e9cialis\u00e9s (strat\u00e8ge OKR, analyste discovery, expert priorisation\u2026).",'stack.lg.badge':'Orchestration','stack.lg.desc':"Service Python autonome (port 8081) qui ajoute une couche d'intelligence structur\u00e9e pour KRL1. Le StateGraph LangGraph encha\u00eene deux n\u0153uds : planner (T=0.2) g\u00e9n\u00e8re un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; synthesis (T=0.45) transforme ce plan en r\u00e9ponse naturelle max 220 mots avec liens vers les outils PM. LangSmith optionnel trace chaque run du graph en production. Le Worker bascule en fallback natif si le service est hors ligne.",'arch.fallback':'\u21a9 fallback Worker direct si FastAPI offline','s4.title':"D\u00e9cisions d'architecture",'d1.q':'Pourquoi HTML vanilla plut\u00f4t que React ou Next.js ?','d1.a':'Z\u00e9ro d\u00e9pendance, z\u00e9ro toolchain, z\u00e9ro dette','d1.why':"Un site statique de portfolio et d'outils simples n'a pas besoin d'un framework SPA. HTML vanilla se d\u00e9ploie directement, se lit facilement et ne g\u00e9n\u00e8re aucune dette technique. Moins de complexit\u00e9 = plus de v\u00e9locit\u00e9.",'d2.q':"Pourquoi un proxy Cloudflare Workers plut\u00f4t qu'exposer la cl\u00e9 API ?",'d2.a':'S\u00e9curit\u00e9 non n\u00e9gociable, plan gratuit g\u00e9n\u00e9reux','d2.why':"Exposer une cl\u00e9 API dans du code client-side, c'est l'offrir \u00e0 n'importe qui. Le Worker intercepte les requ\u00eates, injecte la cl\u00e9 c\u00f4t\u00e9 serveur et valide l'origine. Plan gratuit Cloudflare : 100 000 requ\u00eates/jour \u2014 largement suffisant.",'d3.q':"Pourquoi Groq plut\u00f4t qu'OpenAI ou Anthropic directement ?",'d3.a':"Vitesse d'inf\u00e9rence et plan gratuit",'d3.why':"Groq tourne les mod\u00e8les Llama 3 sur du mat\u00e9riel LPU optimis\u00e9 pour l'inf\u00e9rence. R\u00e9sultat : des r\u00e9ponses en 1-2 secondes l\u00e0 o\u00f9 d'autres providers prennent 5-10s. Et le plan gratuit couvre amplement un usage personnel.",'d4.q':"Pourquoi GitHub Pages plut\u00f4t qu'un VPS ou Vercel ?",'d4.a':'Gratuit, simple, CI/CD natif','d4.why':"Pour des fichiers statiques, GitHub Pages est imbattable : gratuit, CDN mondial, HTTPS automatique, et le d\u00e9ploiement se d\u00e9clenche simplement avec un git push. Pas besoin d'une infrastructure plus complexe pour ce cas d'usage.",'s5.title':'Orchestration LangGraph','lg.flow.label':"Flow d'une requ\u00eate KRL1",'lg.flow.desc':"1 \u00b7 L'utilisateur envoie un message dans le chat KRL1. 2 \u00b7 Le JS appelle POST /orchestrate sur le Worker Cloudflare avec {lang, message, history}. 3 \u00b7 Le Worker tente l'orchestrateur FastAPI externe (si LANGGRAPH_ORCHESTRATOR_URL est d\u00e9fini). 4 \u00b7 Le planner LangGraph (T=0.2) analyse l'intention \u2192 JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 5 \u00b7 Le synthesis LangGraph (T=0.45) transforme le plan en r\u00e9ponse max 220 mots avec liens outils PM. 6 \u00b7 Fallback si FastAPI indisponible : le Worker ex\u00e9cute ce m\u00eame flow planner\u2192synthesis nativement via Groq. 7 \u00b7 La r\u00e9ponse {reply, plan, engine} arrive au client \u2014 le chat affiche reply, le JSON plan reste disponible.",'lg.tests.label':'Tests automatiques \u2014 proxy.test.mjs','test.n1':'Test 1','test.t1':'LangGraph externe actif','test.d1':'LANGGRAPH_ORCHESTRATOR_URL est d\u00e9fini \u2192 le Worker forward la requ\u00eate. Le client re\u00e7oit la r\u00e9ponse LangGraph avec engine: "langgraph".','test.r1':'assert reply = "via-langgraph", engine = "langgraph"','test.n2':'Test 2','test.t2':'Orchestrateur natif Worker','test.d2':'Sans URL externe : 2 appels Groq s\u00e9quentiels \u2014 planner (JSON strict) puis synthesis (texte). Le client re\u00e7oit {reply, plan}.','test.r2':'assert plan.intent = "roadmap", reply = "Synth\u00e8se utile"','test.n3':'Test 3','test.t3':'Routing POST / intact','test.d3':"La route racine (6 outils PM) reste un passthrough direct vers Groq, non affect\u00e9e par l'orchestration KRL1.",'test.r3':'assert choices[0].content = "legacy"','lg.why.q':'Pourquoi LangGraph ?','lg.why.a':'Plan PM structur\u00e9 + r\u00e9ponse claire, site rapide et keyless','lg.why.desc':"Le double-n\u0153ud r\u00e9pond \u00e0 deux contraintes oppos\u00e9es. Le planner a besoin d'une temp\u00e9rature basse (T=0.2) pour produire un JSON d\u00e9terministe et fiable : intent, user_goal, steps actionnables, risks identifi\u00e9s, quick_win. Une temp\u00e9rature trop haute rend le JSON impr\u00e9visible et difficile \u00e0 parser. La synthesis a besoin au contraire d'une temp\u00e9rature plus cr\u00e9ative (T=0.45) pour formuler une r\u00e9ponse naturelle et concise (max 220 mots) avec les liens vers les outils PM pertinents.",'footer.hl':'On construit<br>','footer.hl2':'quelque chose ?'},'proj.rs.ctx':"Outil con\u00e7u pour transformer une liste de features brutes en roadmap narrative adapt\u00e9e \u00e0 chaque audience.",'proj.rs.pb':"Pr\u00e9senter une roadmap \u00e0 des dirigeants ou clients n\u00e9cessite un discours orient\u00e9 valeur, pas une liste de tickets JIRA.",'proj.rs.ap':"Application web (HTML/JS + API Groq). L'utilisateur entre ses features par p\u00e9riode (Now/Next/Later), choisit son audience et obtient un pitch narratif + timeline valoris\u00e9e + messages cl\u00e9s.",'proj.rs.res':"Roadmap pr\u00eate \u00e0 pr\u00e9senter en quelques secondes, avec un pitch copiable et des messages cl\u00e9s adapt\u00e9s \u00e0 l'audience." ,'proj.eus.ctx':"Outil con\u00e7u pour acc\u00e9l\u00e9rer la d\u00e9composition d\u2019un epic en user stories pr\u00eates \u00e0 raffiner en sprint planning.",'proj.eus.pb':"Produire des user stories ind\u00e9pendantes, bien formul\u00e9es et avec des crit\u00e8res d\u2019acceptance v\u00e9rifiables prend du temps et demande de la rigueur.",'proj.eus.ap':"Application web (HTML/JS + API Groq). L\u2019utilisateur d\u00e9crit son epic, choisit le format (standard ou Job Story) et le nombre de stories. L\u2019IA g\u00e9n\u00e8re chaque story avec priorit\u00e9, effort et crit\u00e8res d\u2019acceptance.",'proj.eus.res':"Backlog pr\u00eat en quelques secondes, exportable en Markdown pour Jira ou Confluence. Respecte le principe INVEST pour chaque story.",en:{'hero.portfolio':'Portfolio · AI Projects built','nav.exp':'Experience','nav.skills':'Skills','nav.certs':'Certifications','nav.edu':'Education','nav.cta':'Contact me →','nav.projects':'Projects','hero.role':'AI Product Manager · Builder',
 'hero.intro':"PM by day, builder by night. I build concrete tools with AI because the best tools are the ones you create yourself. Test, learn, iterate. Every project here solves a real problem I faced as a PM.",
 'proj.intro':"I build PM tools with AI to solve real, day-to-day product problems—not to ship demos. Stack: static HTML/JS + Cloudflare proxy + LangGraph orchestration (planner + synthesis) with Groq fallback. Everything is open-access on GitHub Pages with no API key required on the user side.",
 'proj.stat.tools':'Live tools','proj.stat.open':'Open access','proj.stat.llm':'LLM providers','proj.stat.reqs':'AI requests',
@@ -418,7 +658,7 @@ var T={fr:{'nav.exp':'Parcours','nav.skills':'Comp\u00e9tences','nav.certs':'Cer
 'proj.okr.ap':"Web app (HTML/JS + Groq). The user describes their context and ambitions, the AI generates OKRs with typed Key Results (metric, milestone, health).",
 'proj.okr.res':"Structured OKRs in seconds, with baselines and team usage tips. Covers the strategic planning phase of the product cycle.",
 'skills.title':'Skills',
-'proj.eus.ctx':"Tool designed to speed up the decomposition of an epic into user stories ready to refine in sprint planning.",'proj.eus.pb':"Writing independent, well-formulated user stories with verifiable acceptance criteria takes time and requires rigor.",'proj.eus.ap':"Web app (HTML/JS + Groq). The user describes their epic, picks the format (standard or Job Story) and number of stories. The AI generates each story with priority, effort and acceptance criteria.",'proj.eus.res':"Ready backlog in seconds, exportable to Markdown for Jira or Confluence. Follows the INVEST principle for each story.",'footer.hl':'Let\'s build<br>','footer.hl2':'something together?','footer.built':'\u2197 How I built this site','mobile.built':'Behind the build \u2197','hero.built':'How I built this site \u2192','skills.product':'Product','skills.ai':'AI & Tech','skills.agile':'Agility & Tools','certs.agile':'Agility','certs.product':'Product Management','certs.ai':'AI & Other','certs.credly':'See all my badges on Credly \u2192','cert.oriions':'Innovative Agile Project Management (Crossthink/ORIIONS)','proj.rs.ctx':"Tool designed to transform a raw feature list into a narrative roadmap adapted to each audience.",'proj.rs.pb':"Presenting a roadmap to executives or clients requires a value-oriented pitch, not a JIRA ticket list.",'proj.rs.ap':"Web app (HTML/JS + Groq). The user enters features by period (Now/Next/Later), picks their audience and gets a narrative pitch + valued timeline + key messages.",'proj.rs.res':"Presentation-ready roadmap in seconds, with a copyable pitch and audience-tailored key messages." }};
+'proj.eus.ctx':"Tool designed to speed up the decomposition of an epic into user stories ready to refine in sprint planning.",'proj.eus.pb':"Writing independent, well-formulated user stories with verifiable acceptance criteria takes time and requires rigor.",'proj.eus.ap':"Web app (HTML/JS + Groq). The user describes their epic, picks the format (standard or Job Story) and number of stories. The AI generates each story with priority, effort and acceptance criteria.",'proj.eus.res':"Ready backlog in seconds, exportable to Markdown for Jira or Confluence. Follows the INVEST principle for each story.",'nav.arch':'Architecture','panel.sub.projects':'6 live tools','panel.sub.skills':'Product \u00b7 AI \u00b7 Agile','panel.sub.certs':'13 badges \u00b7 Scrum \u00b7 SAFe \u00b7 AI','panel.sub.arch':'Stack \u00b7 decisions \u00b7 LangGraph','s1.title':'Tech stack','stack.front.badge':'Frontend','stack.front.desc':'100% vanilla. No framework, no bundler, no npm dependencies. Each tool is a standalone HTML page with its own inline CSS and JS \u2014 no shared components, no cross-page routing. This allows direct deployment without a build step, instant debugging in browser DevTools, and flat, abstraction-free code. Six independent pages: OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller.','stack.deploy.badge':'Hosting','stack.deploy.desc':'Free static hosting with native CI/CD: every git push to main triggers an automatic deployment in under 60 seconds. Global CDN, automatic HTTPS, cmankotech.github.io domain with zero configuration. Zero cost, zero infrastructure to manage \u2014 ideal for a static HTML/CSS/JS site.','stack.proxy.badge':'API Proxy','stack.proxy.desc':'Serverless JavaScript Worker with triple routing. POST /: direct passthrough to the Groq API for the 6 PM tools \u2014 the API key is injected Worker-side, never exposed to the browser. POST /orchestrate: dedicated route for the KRL1 chatbot, which tries the external FastAPI orchestrator before falling back to native Worker orchestration. POST /orchestrate-stream: same planner\u2192synthesis flow but the synthesis response arrives as SSE (Server-Sent Events) for progressive display. Origin validation, automatic CORS, Cloudflare free plan: 100,000 req/day.','stack.llm.badge':'LLM','stack.llm.desc':"Access to the llama-3.3-70b-versatile model via an OpenAI-compatible REST API. LPU (Language Processing Unit) inference delivers responses in 1\u20132 seconds \u2014 5 to 10x faster than classic providers. Each PM tool calls it with tailored parameters: temperatures between 0.3 and 0.7 depending on the task, max_tokens between 2,000 and 4,000, specialised system prompts (OKR strategist, discovery analyst, prioritisation expert\u2026).",'stack.lg.badge':'Orchestration','stack.lg.desc':'Standalone Python service (port 8081) that adds a structured intelligence layer for KRL1. The LangGraph StateGraph chains two nodes: planner (T=0.2) generates strict JSON with intent, user_goal, actionable steps, risks and quick_win; synthesis (T=0.45) transforms this plan into a natural response max 220 words with PM tool links. Optional LangSmith traces each graph run in production. The Worker falls back to native orchestration if the service is offline.','arch.fallback':'\u21a9 direct Worker fallback if FastAPI offline','s4.title':'Architecture decisions','d1.q':'Why vanilla HTML instead of React or Next.js?','d1.a':'Zero dependencies, zero toolchain, zero technical debt','d1.why':"A static portfolio and simple tools site doesn't need a SPA framework. Vanilla HTML deploys directly, reads easily, and generates no technical debt. Less complexity = more velocity.",'d2.q':'Why a Cloudflare Workers proxy instead of exposing the API key?','d2.a':'Non-negotiable security, generous free plan','d2.why':'Exposing an API key in client-side code is handing it to anyone. The Worker intercepts requests, injects the key server-side and validates the origin. Cloudflare free plan: 100,000 requests/day \u2014 more than enough.','d3.q':'Why Groq instead of OpenAI or Anthropic directly?','d3.a':'Inference speed and free plan','d3.why':'Groq runs Llama 3 models on LPU hardware optimised for inference. Result: responses in 1-2 seconds where other providers take 5-10s. And the free plan comfortably covers personal use.','d4.q':'Why GitHub Pages instead of a VPS or Vercel?','d4.a':'Free, simple, native CI/CD','d4.why':'For static files, GitHub Pages is unbeatable: free, global CDN, automatic HTTPS, and deployment triggered simply by a git push. No need for more complex infrastructure for this use case.','s5.title':'LangGraph Orchestration','lg.flow.label':'KRL1 request flow','lg.flow.desc':'1 \u00b7 User sends a message in the KRL1 chat. 2 \u00b7 JS calls POST /orchestrate on the Cloudflare Worker with {lang, message, history}. 3 \u00b7 Worker tries the external FastAPI orchestrator (if LANGGRAPH_ORCHESTRATOR_URL is set). 4 \u00b7 LangGraph planner (T=0.2) analyses intent \u2192 JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 5 \u00b7 LangGraph synthesis (T=0.45) transforms the plan into a max 220-word response with PM tool links. 6 \u00b7 Fallback if FastAPI unavailable: Worker runs the same planner\u2192synthesis flow natively via Groq. 7 \u00b7 Response {reply, plan, engine} arrives at client \u2014 chat displays reply, JSON plan remains available.','lg.tests.label':'Automated tests \u2014 proxy.test.mjs','test.n1':'Test 1','test.t1':'External LangGraph active','test.d1':'LANGGRAPH_ORCHESTRATOR_URL is set \u2192 Worker forwards the request. Client receives the LangGraph response with engine: "langgraph".','test.r1':'assert reply = "via-langgraph", engine = "langgraph"','test.n2':'Test 2','test.t2':'Native Worker orchestrator','test.d2':'Without external URL: 2 sequential Groq calls \u2014 planner (strict JSON) then synthesis (text). Client receives {reply, plan}.','test.r2':'assert plan.intent = "roadmap", reply = "Synth\u00e8se utile"','test.n3':'Test 3','test.t3':'POST / routing intact','test.d3':'The root route (6 PM tools) remains a direct Groq passthrough, unaffected by KRL1 orchestration.','test.r3':'assert choices[0].content = "legacy"','lg.why.q':'Why LangGraph?','lg.why.a':'Structured PM plan + clear response, fast & keyless site','lg.why.desc':'The two-node design addresses two opposite constraints. The planner needs a low temperature (T=0.2) to produce deterministic, reliable JSON: intent, user_goal, actionable steps, identified risks, quick_win. Too high a temperature makes the JSON unpredictable and hard to parse. The synthesis needs a more creative temperature (T=0.45) to produce a natural, concise response (max 220 words) with links to the relevant PM tools.','footer.hl':'Let\'s build<br>','footer.hl2':'something together?','footer.built':'\u2197 Site architecture','mobile.built':'Site architecture','hero.built':'Site architecture \u2192','skills.product':'Product','skills.ai':'AI & Tech','skills.agile':'Agility & Tools','certs.agile':'Agility','certs.product':'Product Management','certs.ai':'AI & Other','certs.credly':'See all my badges on Credly \u2192','cert.oriions':'Innovative Agile Project Management (Crossthink/ORIIONS)','proj.rs.ctx':"Tool designed to transform a raw feature list into a narrative roadmap adapted to each audience.",'proj.rs.pb':"Presenting a roadmap to executives or clients requires a value-oriented pitch, not a JIRA ticket list.",'proj.rs.ap':"Web app (HTML/JS + Groq). The user enters features by period (Now/Next/Later), picks their audience and gets a narrative pitch + valued timeline + key messages.",'proj.rs.res':"Presentation-ready roadmap in seconds, with a copyable pitch and audience-tailored key messages." }};
 
 window.setLang=function(lang){
   document.getElementById('btn-fr').classList.toggle('active',lang==='fr');
@@ -463,7 +703,7 @@ window.setLang=function(lang){
 
 // Active nav on scroll
 (function(){
-  var ids=['hero','projects','skills','certs'];
+  var ids=['hero','projects','skills','certs','architecture'];
   var links=document.querySelectorAll('.nav-links a');
   function upd(){
     var y=window.scrollY+130,cur='hero';
@@ -472,6 +712,36 @@ window.setLang=function(lang){
   }
   window.addEventListener('scroll',upd,{passive:true});
   upd();
+})();
+
+// Panels: accordion toggle + deep-link via hash
+(function(){
+  document.querySelectorAll('.panel-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var panel=btn.closest('.panel');
+      if(!panel)return;
+      var isOpen=panel.getAttribute('data-open')==='true';
+      panel.setAttribute('data-open', isOpen?'false':'true');
+      btn.setAttribute('aria-expanded', isOpen?'false':'true');
+      if(!isOpen){
+        panel.querySelectorAll('.rv').forEach(function(el){el.classList.add('on');});
+      }
+    });
+  });
+  function openFromHash(){
+    var id=(location.hash||'').slice(1);
+    if(!id)return;
+    var p=document.getElementById(id);
+    if(p&&p.classList.contains('panel')){
+      p.setAttribute('data-open','true');
+      var btn=p.querySelector('.panel-btn');
+      if(btn)btn.setAttribute('aria-expanded','true');
+      p.querySelectorAll('.rv').forEach(function(el){el.classList.add('on');});
+      setTimeout(function(){p.scrollIntoView({behavior:'smooth',block:'start'});},50);
+    }
+  }
+  window.addEventListener('hashchange',openFromHash);
+  openFromHash();
 })();
 
 // Reveal
