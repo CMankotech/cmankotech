@@ -317,10 +317,6 @@ nav{padding:1rem 1.5rem}
         <span class="badge b3">PSPO I &middot; SAFe</span>
         <span class="badge b4">CrewAI &middot; n8n</span>
       </div>
-      <a href="#architecture" class="built-pill" data-i18n="hero.built">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        Architecture du site &rarr;
-      </a>
     </div>
   </div>
 </section>
@@ -352,8 +348,7 @@ nav{padding:1rem 1.5rem}
       <div class="proj-intro-stats">
         <div class="proj-stat"><span class="proj-stat-num grad" id="stat0" data-val="0">0</span><span class="proj-stat-lbl" data-i18n="proj.stat.tools">Outils live</span></div>
         <div class="proj-stat"><span class="proj-stat-num grad" id="stat1" data-val="100" data-suffix="%">100%</span><span class="proj-stat-lbl" data-i18n="proj.stat.open">Open access</span></div>
-        <div class="proj-stat"><span class="proj-stat-num grad" id="stat2" data-val="1">1</span><span class="proj-stat-lbl" data-i18n="proj.stat.llm">LLM providers</span></div>
-        <div class="proj-stat"><span class="proj-stat-num grad" id="stat3" data-val="0">—</span><span class="proj-stat-lbl" data-i18n="proj.stat.reqs">Requêtes IA</span></div>
+        <div class="proj-stat"><span class="proj-stat-num grad" style="font-size:1.4rem">Groq</span><span class="proj-stat-lbl">llama-3.3-70b</span></div>
       </div>
     </div>
     <div class="proj-grid rv">
@@ -948,39 +943,19 @@ function animCounter(el){
 }
 
 var _statsTriggered=false;
-var _usageTotal=null;
-
-// Prefetch usage counter early (non-blocking)
-fetch('https://groq-proxy.cmankotech.workers.dev/stats')
-  .then(function(r){return r.json();})
-  .then(function(d){
-    _usageTotal=d.total||0;
-    var el=document.getElementById('stat3');
-    if(el){
-      el.setAttribute('data-val',_usageTotal);
-      if(_statsTriggered) animCounter(el);
-    }
-  })
-  .catch(function(){});
 
 var _statsObs=new IntersectionObserver(function(entries){
   if(entries[0].isIntersecting && !_statsTriggered){
     _statsTriggered=true;
-    // stat0: count live proj-cards dynamically
     var stat0 = document.getElementById('stat0');
     if(stat0){
       var toolCount = document.querySelectorAll('.proj-card').length;
       stat0.setAttribute('data-val', toolCount);
     }
-    [0,1,2].forEach(function(i){
+    [0,1].forEach(function(i){
       var el=document.getElementById('stat'+i);
       if(el) setTimeout(function(){animCounter(el);},i*180);
     });
-    // stat3: animate immediately if usage already fetched
-    if(_usageTotal !== null){
-      var el3=document.getElementById('stat3');
-      if(el3) setTimeout(function(){animCounter(el3);},3*180);
-    }
     _statsObs.disconnect();
   }
 },{threshold:0.5});
