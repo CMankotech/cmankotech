@@ -61,21 +61,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hero-video-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,15,0.35) 0%,rgba(8,8,15,0.55) 55%,rgba(8,8,15,0.9) 100%);z-index:1;pointer-events:none}
 .hero-wrap{padding:3rem 3rem 4rem;position:relative;z-index:2}
 .hero-compact{display:flex;flex-direction:column;gap:1.5rem;max-width:860px}
-.hero-portfolio-label{display:inline-block;font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:#fff;background:rgba(34,211,238,0.15);border:1px solid rgba(34,211,238,0.3);padding:0.35rem 1rem;border-radius:99px;width:fit-content}
-.hero-subtitle{display:flex;align-items:center;gap:0.6rem;font-size:0.75rem;font-weight:500;color:var(--muted);letter-spacing:0.08em}
-.hero-sub-sep{color:var(--line)}
 .hero-headline{display:flex;flex-direction:column;gap:0.15rem;margin:0}
-.hero-hl-1{font-family:'DM Sans',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;line-height:1.05;letter-spacing:-0.035em;color:var(--dim)}
-.hero-hl-2{font-family:'DM Sans',sans-serif;font-style:italic;font-weight:500;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.05;letter-spacing:-0.03em}
+.hero-hl-1{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em;background:linear-gradient(135deg,#94a3b8 0%,#e2e8f0 30%,#64748b 55%,#cbd5e1 80%,#94a3b8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-hl-2{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.05;letter-spacing:-0.02em}
+.hero-name-row{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap}
+.hero-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);letter-spacing:-0.01em}
+.hero-name-dash{color:var(--line);font-size:0.9rem}
+.hero-sub-role{font-size:0.78rem;font-weight:500;color:var(--muted);letter-spacing:0.04em}
 .hero-bio{font-size:0.92rem;line-height:1.75;color:var(--dim);max-width:640px}
-.hero-bio strong{color:var(--text);font-weight:600}
 .hero-ctas{display:flex;gap:1rem;align-items:center}
 .hero-cta-primary{font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.65rem 1.4rem;border:1px solid rgba(255,255,255,0.15);border-radius:99px;color:var(--text);text-decoration:none;transition:all .25s}
 .hero-cta-primary:hover{border-color:rgba(34,211,238,0.4);color:#67e8f9}
 .hero-cta-secondary{font-size:0.72rem;font-weight:600;letter-spacing:0.06em;color:var(--muted);text-decoration:none;transition:color .2s}
 .hero-cta-secondary:hover{color:var(--text)}
-.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:1rem}
-.hero-stat-box{display:flex;flex-direction:column;gap:0.25rem;padding:1.25rem 1.5rem;background:var(--bg)}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+.hero-stat-box{display:flex;flex-direction:column;gap:0.25rem;padding:1.25rem 1.5rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:14px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:border-color 0.3s}
+.hero-stat-box:hover{border-color:rgba(34,211,238,0.25)}
 .hero-stat-label{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted)}
 .hero-stat-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--text);line-height:1;letter-spacing:-0.03em}
 .hero-stat-text{font-size:1.15rem;font-weight:700}
@@ -194,7 +195,7 @@ nav{padding:1rem 1.5rem}
 .nav-links{display:none}
 #nav-hamburger{display:flex}
 .hero-wrap{padding:5rem 1.5rem 3rem}
-.hero-stats{grid-template-columns:repeat(2,1fr)}
+.hero-stats{grid-template-columns:repeat(1,1fr)}
 .hero-hl-1,.hero-hl-2{font-size:clamp(1.6rem,6vw,2.4rem)!important}
 .hero-ctas{flex-direction:column;align-items:flex-start}
 .wrap{padding:3rem 1.5rem}
@@ -214,7 +215,7 @@ nav{padding:1rem 1.5rem}
 .panel-btn{width:100%;display:flex;align-items:center;gap:1.25rem;padding:2rem 0;background:none;border:none;color:inherit;cursor:pointer;font-family:inherit;text-align:left;transition:opacity .2s}
 .panel-btn:hover{opacity:0.85}
 .panel-btn .sec-num{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.1em;flex-shrink:0}
-.panel-btn .sec-name{font-family:'Syne',sans-serif;font-size:1.85rem;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1}
+.panel-btn .sec-name{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.85rem;line-height:1;color:#fff;letter-spacing:-0.01em}
 .panel-btn .panel-sub{font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-left:0.5rem}
 .panel-chev{margin-left:auto;flex-shrink:0;transition:transform .4s cubic-bezier(.4,0,.2,1),color .25s ease;color:var(--muted)}
 .panel-btn:hover .panel-chev{color:var(--text)}
@@ -326,17 +327,16 @@ nav{padding:1rem 1.5rem}
   <canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:0.35"></canvas>
   <div class="wrap hero-wrap a1">
     <div class="hero-compact">
-      <div class="hero-portfolio-label" data-i18n="hero.portfolio">Portfolio &middot; 2026</div>
-      <div class="hero-subtitle">
-        <span class="hero-sub-meta">6 outils live &middot; open access</span>
-        <span class="hero-sub-sep">&mdash;</span>
-        <span class="hero-sub-role" id="heroRole" data-i18n="hero.role">AI Product Manager &middot; Builder</span>
-      </div>
       <h1 class="hero-headline">
         <span class="hero-hl-1" data-i18n="hero.hl1">Des outils IA concrets</span>
         <span class="hero-hl-2 grad" data-i18n="hero.hl2">pour les product people.</span>
       </h1>
-      <p class="hero-bio" id="heroLine"><strong>Carlin Mankoto</strong> &mdash; AI Product Manager bas&eacute; &agrave; Paris. PM le jour, builder la nuit. Je construis des outils concrets avec l&rsquo;IA parce que les meilleurs outils sont ceux qu&rsquo;on cr&eacute;e soi-m&ecirc;me. Chaque projet ici r&eacute;pond &agrave; un vrai probl&egrave;me que j&rsquo;ai rencontr&eacute; en tant que PM.</p>
+      <div class="hero-name-row">
+        <span class="hero-name">Carlin Mankoto</span>
+        <span class="hero-name-dash">&mdash;</span>
+        <span class="hero-sub-role" id="heroRole" data-i18n="hero.role">AI Product Manager</span>
+      </div>
+      <p class="hero-bio" id="heroLine">PM le jour, builder la nuit. Je construis des outils concrets avec l&rsquo;IA parce que les meilleurs outils sont ceux qu&rsquo;on cr&eacute;e soi-m&ecirc;me. Chaque projet ici r&eacute;pond &agrave; un vrai probl&egrave;me que j&rsquo;ai rencontr&eacute; en tant que PM.</p>
       <div class="hero-ctas">
         <a href="#projects" class="hero-cta-primary" data-i18n="hero.cta1">Voir les projets &rarr;</a>
         <a href="#architecture" class="hero-cta-secondary" data-i18n="hero.cta2">&bull; Architecture du site</a>
@@ -356,11 +356,6 @@ nav{padding:1rem 1.5rem}
           <div class="hero-stat-label" data-i18n="hero.s3.label">Mod&egrave;le</div>
           <div class="hero-stat-val hero-stat-text">llama-3.3-70b</div>
           <div class="hero-stat-sub">Groq &middot; versatile</div>
-        </div>
-        <div class="hero-stat-box">
-          <div class="hero-stat-label" data-i18n="hero.s4.label">Certifications</div>
-          <div class="hero-stat-val">13</div>
-          <div class="hero-stat-sub">PSPO &middot; SAFe &middot; AI</div>
         </div>
       </div>
     </div>
@@ -668,7 +663,6 @@ nav{padding:1rem 1.5rem}
   <div class="footer-wrap">
     <div class="footer-hl"><span data-i18n="footer.hl">On construit<br></span><span class="grad" data-i18n="footer.hl2">quelque chose ?</span></div>
     <div class="footer-links">
-      <a href="mailto:carlinmankoto@proton.me" class="footer-link">&#9993; carlinmankoto@proton.me</a>
       <a href="https://linkedin.com/in/carlinmankoto" target="_blank" class="footer-link">&#8599; LinkedIn</a>
       <a href="https://www.credly.com/users/carlin-mankoto" target="_blank" class="footer-link">&#8599; Credly</a>
       <a href="#architecture" class="footer-link" data-i18n="footer.built">&#8599; Architecture du site</a>
