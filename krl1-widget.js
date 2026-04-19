@@ -5,18 +5,18 @@
   // ── CSS ────────────────────────────────────────────────────────────────────
   var styleEl = document.createElement('style');
   styleEl.textContent = [
-    '#chat-fab{position:fixed;bottom:1.75rem;right:1.75rem;z-index:9999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#a78bfa);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(34,211,238,0.35);transition:transform 0.2s,box-shadow 0.2s}',
-    '#chat-fab:hover{transform:scale(1.08);box-shadow:0 6px 32px rgba(34,211,238,0.5)}',
+    '#chat-fab{position:fixed;bottom:1.75rem;right:1.75rem;z-index:9999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#60a5fa,#a78bfa,#22d3ee);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(96,165,250,0.35);transition:transform 0.2s,box-shadow 0.2s}',
+    '#chat-fab:hover{transform:scale(1.08);box-shadow:0 6px 32px rgba(96,165,250,0.5)}',
     '#chat-fab svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}',
     '#chat-window{position:fixed;bottom:5.5rem;right:1.75rem;z-index:9998;width:340px;max-height:480px;background:rgba(8,8,15,0.82);border:1px solid rgba(255,255,255,0.09);border-radius:16px;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,0.6);overflow:hidden;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transform:scale(0.92) translateY(16px);opacity:0;pointer-events:none;transition:transform 0.22s cubic-bezier(.34,1.56,.64,1),opacity 0.18s,width 0.22s,max-height 0.22s}',
     '#chat-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}',
     '#chat-window.expanded{width:520px;max-height:660px}',
-    '#chat-header{padding:0.9rem 1.1rem;background:rgba(34,211,238,0.05);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:0.6rem}',
-    '#chat-header .ch-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,0.18);box-shadow:0 0 0 2px rgba(34,211,238,0.18);flex-shrink:0}',
+    '#chat-header{padding:0.9rem 1.1rem;background:rgba(96,165,250,0.05);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:0.6rem}',
+    '#chat-header .ch-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,0.18);box-shadow:0 0 0 2px rgba(96,165,250,0.18);flex-shrink:0}',
     '#chat-header .ch-info{flex:1}',
     '#chat-header .ch-name{font-size:0.8rem;font-weight:500;color:#fff;font-family:"DM Sans",sans-serif;letter-spacing:-0.02em}',
-    '#chat-header .ch-status{font-size:0.65rem;color:#22d3ee;display:flex;align-items:center;gap:0.3rem}',
-    '#chat-header .ch-status::before{content:"";width:6px;height:6px;border-radius:50%;background:#22d3ee;display:inline-block}',
+    '#chat-header .ch-status{font-size:0.65rem;color:#60a5fa;display:flex;align-items:center;gap:0.3rem}',
+    '#chat-header .ch-status::before{content:"";width:6px;height:6px;border-radius:50%;background:#60a5fa;display:inline-block}',
     '#chat-resize{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.35);padding:0.2rem 0.3rem;line-height:1;transition:color 0.15s}',
     '#chat-resize:hover{color:#fff}',
     '#chat-resize svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}',
@@ -28,11 +28,11 @@
     '.msg.bot{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);color:rgba(255,255,255,0.88);border-radius:4px 12px 12px 12px;align-self:flex-start}',
     '.msg.bot.streaming::after{content:"▋";display:inline-block;animation:krl1blink 0.9s step-end infinite;color:#60a5fa;margin-left:2px}',
     '@keyframes krl1blink{50%{opacity:0}}',
-    '.msg.user{background:linear-gradient(135deg,rgba(34,211,238,0.18),rgba(167,139,250,0.18));color:#fff;border-radius:12px 4px 12px 12px;align-self:flex-end}',
-    '.msg a{color:#22d3ee;text-decoration:underline;text-underline-offset:2px}',
+    '.msg.user{background:linear-gradient(135deg,rgba(96,165,250,0.18),rgba(167,139,250,0.18));color:#fff;border-radius:12px 4px 12px 12px;align-self:flex-end}',
+    '.msg a{color:#60a5fa;text-decoration:underline;text-underline-offset:2px}',
     '.msg .chips{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem}',
-    '.chip{font-size:0.7rem;padding:0.25rem 0.65rem;border-radius:99px;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.25);color:#22d3ee;cursor:pointer;transition:background 0.15s;white-space:nowrap;font-family:"DM Sans",sans-serif}',
-    '.chip:hover{background:rgba(34,211,238,0.2)}',
+    '.chip{font-size:0.7rem;padding:0.25rem 0.65rem;border-radius:99px;background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.25);color:#60a5fa;cursor:pointer;transition:background 0.15s;white-space:nowrap;font-family:"DM Sans",sans-serif}',
+    '.chip:hover{background:rgba(96,165,250,0.2)}',
     '#chat-typing{display:none;align-self:flex-start;padding:0.5rem 0.85rem;background:rgba(255,255,255,0.06);border-radius:4px 12px 12px 12px}',
     '#chat-typing span{display:inline-block;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.4);margin:0 2px;animation:bounce 1.2s infinite}',
     '#chat-typing span:nth-child(2){animation-delay:0.2s}',
@@ -40,9 +40,9 @@
     '@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}',
     '#chat-input-row{padding:0.75rem;border-top:1px solid rgba(255,255,255,0.06);display:flex;gap:0.5rem}',
     '#chat-input{flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:0.5rem 0.75rem;color:#fff;font-size:0.78rem;font-family:"DM Sans",sans-serif;outline:none;transition:border-color 0.15s}',
-    '#chat-input:focus{border-color:rgba(34,211,238,0.4)}',
+    '#chat-input:focus{border-color:rgba(96,165,250,0.4)}',
     '#chat-input::placeholder{color:rgba(255,255,255,0.3)}',
-    '#chat-send{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#22d3ee,#a78bfa);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity 0.15s}',
+    '#chat-send{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#60a5fa,#a78bfa,#22d3ee);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity 0.15s}',
     '#chat-send:hover{opacity:0.85}',
     '#chat-send svg{width:14px;height:14px;fill:none;stroke:#07070f;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}',
     '@media(max-width:480px){#chat-window,#chat-window.expanded{width:calc(100vw - 2rem);right:1rem;bottom:5rem}}',
@@ -104,14 +104,14 @@
   var I18N = {
     fr: {
       welcome: "Bonjour 👋 Je suis KRL1. Je peux t'aider sur tes défis PM : priorisation, OKRs, discovery, roadmap, ou te présenter le portfolio de Carlin. Par où on commence ?",
-      chips: ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs", "🔍 Préparer une discovery", "👤 Profil de Carlin"],
+      chips: ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs", "🔍 Préparer une discovery"],
       placeholder: "Ex : comment prioriser entre 3 features ?",
       status: "En ligne",
       error: "Désolé, une erreur s'est produite. Contacte Carlin sur <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> 👋"
     },
     en: {
       welcome: "Hi 👋 I'm KRL1. I can help with your PM challenges: prioritisation, OKRs, discovery, roadmap, or walk you through Carlin's portfolio. Where do you want to start?",
-      chips: ["🎯 Prioritise my backlog", "📊 Structure my OKRs", "🔍 Prepare a discovery", "👤 Carlin's profile"],
+      chips: ["🎯 Prioritise my backlog", "📊 Structure my OKRs", "🔍 Prepare a discovery"],
       placeholder: "E.g. how to prioritise between 3 features?",
       status: "Online",
       error: "Sorry, an error occurred. Reach Carlin on <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> 👋"
@@ -122,38 +122,38 @@
     'okr-builder': {
       fr: "Je vois que tu utilises le **OKR Builder** 🎯 Je peux t'aider à formuler tes objectifs, calibrer tes Key Results ou débloquer une situation. Qu'est-ce qui te bloque ?",
       en: "I see you're using the **OKR Builder** 🎯 I can help you frame your objectives, calibrate your Key Results or unblock any situation. What's stopping you?",
-      chips_fr: ["💡 Comment formuler un bon OKR ?", "📊 OKRs vs KPIs, c'est quoi la diff ?", "👤 Profil de Carlin"],
-      chips_en: ["💡 How to write a good OKR?", "📊 OKRs vs KPIs, what's the diff?", "👤 Carlin's profile"]
+      chips_fr: ["💡 Comment formuler un bon OKR ?", "📊 OKRs vs KPIs, c'est quoi la diff ?"],
+      chips_en: ["💡 How to write a good OKR?", "📊 OKRs vs KPIs, what's the diff?"]
     },
     'backlog-prioritizer': {
       fr: "Je vois que tu utilises le **Backlog Prioritizer** 🗂️ Je peux t'aider à choisir entre RICE et MoSCoW, scorer tes items ou expliquer tes choix à tes parties prenantes. C'est quoi ton challenge ?",
       en: "I see you're using the **Backlog Prioritizer** 🗂️ I can help you choose between RICE and MoSCoW, score your items or explain your decisions to stakeholders. What's your challenge?",
-      chips_fr: ["⚖️ RICE ou MoSCoW, quand choisir ?", "🗣️ Comment pitcher ma priorisation ?", "👤 Profil de Carlin"],
-      chips_en: ["⚖️ RICE or MoSCoW, when to pick?", "🗣️ How to pitch my prioritisation?", "👤 Carlin's profile"]
+      chips_fr: ["⚖️ RICE ou MoSCoW, quand choisir ?", "🗣️ Comment pitcher ma priorisation ?"],
+      chips_en: ["⚖️ RICE or MoSCoW, when to pick?", "🗣️ How to pitch my prioritisation?"]
     },
     'discovery-assistant': {
       fr: "Je vois que tu utilises le **Discovery Assistant** 🔍 Je peux t'aider à reformuler ton problème, valider tes hypothèses ou préparer tes questions d'interview. Par où commencer ?",
       en: "I see you're using the **Discovery Assistant** 🔍 I can help you reframe your problem, validate your hypotheses or prepare interview questions. Where to start?",
-      chips_fr: ["🔍 C'est quoi une bonne hypothèse ?", "🎙️ Questions d'interview à éviter ?", "👤 Profil de Carlin"],
-      chips_en: ["🔍 What makes a good hypothesis?", "🎙️ Interview questions to avoid?", "👤 Carlin's profile"]
+      chips_fr: ["🔍 C'est quoi une bonne hypothèse ?", "🎙️ Questions d'interview à éviter ?"],
+      chips_en: ["🔍 What makes a good hypothesis?", "🎙️ Interview questions to avoid?"]
     },
     'user-interview-analyzer': {
       fr: "Je vois que tu utilises le **User Interview Analyzer** 🎙️ Je peux t'aider à structurer tes verbatims, identifier les patterns ou transformer tes insights en actions concrètes. C'est quoi le contexte ?",
       en: "I see you're using the **User Interview Analyzer** 🎙️ I can help you structure your verbatims, identify patterns or turn insights into concrete actions. What's the context?",
-      chips_fr: ["📊 Comment identifier les patterns ?", "🗂️ Jobs-to-be-done vs personas ?", "👤 Profil de Carlin"],
-      chips_en: ["📊 How to identify patterns?", "🗂️ Jobs-to-be-done vs personas?", "👤 Carlin's profile"]
+      chips_fr: ["📊 Comment identifier les patterns ?", "🗂️ Jobs-to-be-done vs personas ?"],
+      chips_en: ["📊 How to identify patterns?", "🗂️ Jobs-to-be-done vs personas?"]
     },
     'epic-to-userstories': {
       fr: "Je vois que tu utilises **Epic to User Stories** 📋 Je peux t'aider à décomposer ton epic, rédiger des critères d'acceptance INVEST ou estimer la complexité. Quel est ton epic ?",
       en: "I see you're using **Epic to User Stories** 📋 I can help you break down your epic, write INVEST acceptance criteria or estimate complexity. What's your epic?",
-      chips_fr: ["✅ Qu'est-ce que les critères INVEST ?", "📋 Quand découper une User Story ?", "👤 Profil de Carlin"],
-      chips_en: ["✅ What are INVEST criteria?", "📋 When to split a User Story?", "👤 Carlin's profile"]
+      chips_fr: ["✅ Qu'est-ce que les critères INVEST ?", "📋 Quand découper une User Story ?"],
+      chips_en: ["✅ What are INVEST criteria?", "📋 When to split a User Story?"]
     },
     'roadmap-storyteller': {
       fr: "Je vois que tu utilises le **Roadmap Storyteller** 🗺️ Je peux t'aider à adapter ton message à ton audience (C-level, tech, sales) ou structurer ton narrative. Pour qui tu pitches ?",
       en: "I see you're using the **Roadmap Storyteller** 🗺️ I can help you tailor your message to your audience (C-level, tech, sales) or structure your narrative. Who are you pitching to?",
-      chips_fr: ["🗺️ Roadmap par thèmes vs dates ?", "💼 Comment adapter au C-level ?", "👤 Profil de Carlin"],
-      chips_en: ["🗺️ Theme-based vs date-based roadmap?", "💼 How to adapt for C-level?", "👤 Carlin's profile"]
+      chips_fr: ["🗺️ Roadmap par thèmes vs dates ?", "💼 Comment adapter au C-level ?"],
+      chips_en: ["🗺️ Theme-based vs date-based roadmap?", "💼 How to adapt for C-level?"]
     },
     'how-i-built-this': {
       fr: "Tu explores **Comment j'ai construit ce site** 🛠️ Je peux t'expliquer les choix techniques, l'architecture IA ou la stack en détail. Qu'est-ce qui t'intéresse ?",
@@ -265,13 +265,13 @@
     fr: { rules: [
       { k: ["que peux","peux-tu","tu fais","tu sais","aide","capacité","faire pour"],
         r: "Je peux t'aider sur deux axes :\n\n<strong>Tes défis PM</strong> :\n• Prioriser ton backlog (RICE / MoSCoW)\n• Structurer tes OKRs et Key Results\n• Préparer une discovery ou analyser des interviews\n• Construire une roadmap narrative\n\n<strong>Le portfolio de Carlin</strong> :\n• Son profil, son parcours, ses certifications\n• Ses 6 outils IA PM\n• Le contacter pour CDI ou freelance",
-        chips: ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs", "👤 Profil de Carlin"] },
+        chips: ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs", "📩 Contacter Carlin"] },
       { k: ["qui","carlin","profil","présente","présentation","c'est qui"],
         r: "Carlin Mankoto est AI Product Manager avec 3 ans d'expérience (AXA, Airbus, Casino, OAIO/Infotel). Certifié PSPO I, SAFe POPM. Il couvre tout le spectre produit et build ses propres outils IA en vibe coding.",
         chips: ["🛠️ Ses outils IA ?", "📋 Ses certifications ?", "📩 Le contacter"] },
       { k: ["outil","build","projet","app","tool","6 outil","ses outil"],
         r: "Carlin a développé 6 outils IA pour les PMs :\n\n• <a href='https://cmankotech.github.io/cmankotech/okr-builder.html' target='_blank'>OKR Builder</a>\n• <a href='https://cmankotech.github.io/cmankotech/discovery-assistant.html' target='_blank'>Discovery Assistant</a>\n• <a href='https://cmankotech.github.io/cmankotech/user-interview-analyzer.html' target='_blank'>User Interview Analyzer</a>\n• <a href='https://cmankotech.github.io/cmankotech/backlog-prioritizer.html' target='_blank'>Backlog Prioritizer</a>\n• <a href='https://cmankotech.github.io/cmankotech/epic-to-userstories.html' target='_blank'>Epic to User Stories</a>\n• <a href='https://cmankotech.github.io/cmankotech/roadmap-storyteller.html' target='_blank'>Roadmap Storyteller</a>",
-        chips: ["🎯 Prioriser mon backlog", "👤 Profil de Carlin"] },
+        chips: ["🎯 Prioriser mon backlog", "📩 Contacter Carlin"] },
       { k: ["expérience","parcours","travail","poste","mission","axa","airbus","casino","oaio","infotel"],
         r: "Son parcours :\n\n• <strong>OAIO/Infotel</strong> (2026) : stratégie LMS + outils IA pour 3500 collaborateurs\n• <strong>AXA</strong> : AI PO, SecureGPT (RAG), Microsoft Copilot, SAFe\n• <strong>Airbus D&S</strong> : PO, app mobile sécurisée JO Paris 2024\n• <strong>Groupe Casino</strong> : transformation Scrum",
         chips: ["📋 Ses certifications ?", "📩 Le contacter"] },
@@ -280,30 +280,30 @@
         chips: ["💼 Son expérience ?", "📩 Le contacter"] },
       { k: ["contact","linkedin","email","recrut","freelance","cdi","disponible","embauche"],
         r: "Carlin est disponible pour des missions CDI ou freelance. <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> ou carlinmankoto@proton.me",
-        chips: ["👤 Profil de Carlin", "🛠️ Ses outils IA ?"] },
+        chips: ["📩 Contacter Carlin", "🛠️ Ses outils IA ?"] },
       { k: ["krl1","comment tu","tu fonctionnes","qui es-tu","comment ça marche","t'as été construit","créé comment"],
         r: "Je suis <strong>KRL1</strong>, l'assistant IA du portfolio de Carlin Mankoto. Je suis construit avec :\n\n• <strong>LangGraph</strong> : orchestrateur Python (nœuds planner + synthesis) pour des réponses structurées\n• <strong>Groq API</strong> : inférence LLM ultra-rapide sur LPU, 1-2s de latence\n• <strong>Cloudflare Worker</strong> : proxy serverless qui sécurise la clé API et route les requêtes\n\nJe peux t'aider sur tes défis PM ou te présenter le portfolio de Carlin.",
-        chips: ["🏗️ Pourquoi Cloudflare Workers ?", "⚡ Pourquoi pas de backend ?", "👤 Profil de Carlin"] },
+        chips: ["🏗️ Pourquoi Cloudflare Workers ?", "⚡ Pourquoi pas de backend ?", "📩 Contacter Carlin"] },
       { k: ["stack","architecture","comment c'est construit","langgraph","fastapi","technique","comment ce site"],
         r: "La stack du site :\n\n• <strong>Frontend</strong> : HTML/CSS/JS vanilla, déployé sur GitHub Pages\n• <strong>Proxy</strong> : Cloudflare Worker (clé API sécurisée, double routing)\n• <strong>LLM</strong> : Groq API + llama-3.3-70b-versatile (1-2s sur LPU)\n• <strong>Orchestration</strong> : FastAPI + LangGraph (planner → synthesis)\n\nTous les détails sur <a href='https://cmankotech.github.io/cmankotech/how-i-built-this.html' target='_blank'>Comment j'ai construit ce site →</a>",
-        chips: ["🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?", "👤 Profil de Carlin"] },
+        chips: ["🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?", "📩 Contacter Carlin"] },
       { k: ["pourquoi cloudflare","pourquoi worker","cloudflare worker"],
         r: "<strong>Cloudflare Workers</strong> résout le problème clé : appeler l'API Groq depuis le navigateur sans exposer la clé API côté client. Le Worker intercepte, injecte la clé côté serveur, gère les CORS. Plan gratuit : 100 000 req/jour, déployé en quelques minutes avec Wrangler CLI.",
-        chips: ["🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?", "👤 Profil de Carlin"] },
+        chips: ["🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?", "📩 Contacter Carlin"] },
       { k: ["pourquoi pas de backend","pas de backend","sans backend","pourquoi pas de serveur","no backend"],
         r: "Le site est 100% statique (HTML/JS vanilla). Pas de base de données, pas de sessions côté serveur. Le Cloudflare Worker suffit comme couche API. Avantages : zéro infra à maintenir, zéro coût serveur, déploiement via un simple git push.",
-        chips: ["🤖 Comment fonctionne KRL1 ?", "🏗️ Pourquoi Cloudflare Workers ?", "👤 Profil de Carlin"] }
+        chips: ["🤖 Comment fonctionne KRL1 ?", "🏗️ Pourquoi Cloudflare Workers ?", "📩 Contacter Carlin"] }
     ]},
     en: { rules: [
       { k: ["what can","can you","you do","help me","capabilities"],
         r: "I can help on two fronts:\n\n<strong>Your PM challenges</strong>:\n• Prioritise your backlog (RICE / MoSCoW)\n• Structure your OKRs and Key Results\n• Prepare a discovery or analyse user interviews\n• Build a narrative roadmap\n\n<strong>Carlin's portfolio</strong>:\n• His profile, background and certifications\n• His 6 AI PM tools\n• Reach him for a CDI or freelance opportunity",
-        chips: ["🎯 Prioritise my backlog", "📊 Structure my OKRs", "👤 Carlin's profile"] },
+        chips: ["🎯 Prioritise my backlog", "📊 Structure my OKRs", "📩 Contact Carlin"] },
       { k: ["who","carlin","profile","about","introduce"],
         r: "Carlin Mankoto is an AI Product Manager with 3 years of experience (AXA, Airbus, Casino, OAIO/Infotel). PSPO I and SAFe POPM certified. He covers the full product spectrum and builds his own AI tools via vibe coding.",
         chips: ["🛠️ His AI tools?", "📋 His certifications?", "📩 Reach him"] },
       { k: ["tool","build","project","app","6 tool","his tool"],
         r: "Carlin built 6 AI tools for PMs:\n\n• <a href='https://cmankotech.github.io/cmankotech/okr-builder.html' target='_blank'>OKR Builder</a>\n• <a href='https://cmankotech.github.io/cmankotech/discovery-assistant.html' target='_blank'>Discovery Assistant</a>\n• <a href='https://cmankotech.github.io/cmankotech/user-interview-analyzer.html' target='_blank'>User Interview Analyzer</a>\n• <a href='https://cmankotech.github.io/cmankotech/backlog-prioritizer.html' target='_blank'>Backlog Prioritizer</a>\n• <a href='https://cmankotech.github.io/cmankotech/epic-to-userstories.html' target='_blank'>Epic to User Stories</a>\n• <a href='https://cmankotech.github.io/cmankotech/roadmap-storyteller.html' target='_blank'>Roadmap Storyteller</a>",
-        chips: ["🎯 Prioritise my backlog", "👤 Carlin's profile"] },
+        chips: ["🎯 Prioritise my backlog", "📩 Contact Carlin"] },
       { k: ["experience","background","job","axa","airbus","casino","oaio"],
         r: "His background:\n\n• <strong>OAIO/Infotel</strong> (2026): LMS strategy + AI tools for 3,500 employees\n• <strong>AXA</strong>: AI PO, SecureGPT (RAG), Microsoft Copilot, SAFe\n• <strong>Airbus D&S</strong>: PO, secure mobile app for Paris 2024 Olympics\n• <strong>Groupe Casino</strong>: Agile/Scrum transformation",
         chips: ["📋 His certifications?", "📩 Reach him"] },
@@ -312,19 +312,19 @@
         chips: ["💼 His experience?", "📩 Reach him"] },
       { k: ["contact","linkedin","email","hire","recruit","freelance","available"],
         r: "Carlin is open to CDI or freelance opportunities. <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> or carlinmankoto@proton.me",
-        chips: ["👤 Carlin's profile", "🛠️ His AI tools?"] },
+        chips: ["📩 Contact Carlin", "🛠️ His AI tools?"] },
       { k: ["krl1","how do you work","what are you","who are you","how were you built","how is it built","how does it work"],
         r: "I'm <strong>KRL1</strong>, Carlin Mankoto's portfolio AI assistant. My stack:\n\n• <strong>LangGraph</strong>: Python orchestrator (planner + synthesis nodes) for structured responses\n• <strong>Groq API</strong>: ultra-fast LPU inference, 1-2s latency\n• <strong>Cloudflare Worker</strong>: serverless proxy securing the API key and routing requests\n\nI can help with PM challenges or walk you through Carlin's portfolio.",
-        chips: ["🏗️ Why Cloudflare Workers?", "⚡ Why no backend?", "👤 Carlin's profile"] },
+        chips: ["🏗️ Why Cloudflare Workers?", "⚡ Why no backend?", "📩 Contact Carlin"] },
       { k: ["tech stack","architecture","how was this built","langgraph","fastapi","technical"],
         r: "Site stack:\n\n• <strong>Frontend</strong>: vanilla HTML/CSS/JS, deployed on GitHub Pages\n• <strong>Proxy</strong>: Cloudflare Worker (API key secured, dual routing)\n• <strong>LLM</strong>: Groq API + llama-3.3-70b-versatile (1-2s on LPU)\n• <strong>Orchestration</strong>: FastAPI + LangGraph (planner → synthesis)\n\nFull details on <a href='https://cmankotech.github.io/cmankotech/how-i-built-this.html' target='_blank'>How I Built This →</a>",
-        chips: ["🤖 How does KRL1 work?", "⚡ Why no backend?", "👤 Carlin's profile"] },
+        chips: ["🤖 How does KRL1 work?", "⚡ Why no backend?", "📩 Contact Carlin"] },
       { k: ["why cloudflare","why worker","cloudflare worker"],
         r: "<strong>Cloudflare Workers</strong> solves the key issue: calling the Groq API from the browser without exposing the API key client-side. The Worker intercepts, injects the key server-side, handles CORS. Free plan: 100,000 req/day, deployed in minutes with Wrangler CLI.",
-        chips: ["🤖 How does KRL1 work?", "⚡ Why no backend?", "👤 Carlin's profile"] },
+        chips: ["🤖 How does KRL1 work?", "⚡ Why no backend?", "📩 Contact Carlin"] },
       { k: ["why no backend","no backend","without backend","why no server","serverless"],
         r: "The site is 100% static (vanilla HTML/JS). No database, no server-side sessions. The Cloudflare Worker handles the API layer. Benefits: zero infrastructure to maintain, zero server cost, deployment via a simple git push.",
-        chips: ["🤖 How does KRL1 work?", "🏗️ Why Cloudflare Workers?", "👤 Carlin's profile"] }
+        chips: ["🤖 How does KRL1 work?", "🏗️ Why Cloudflare Workers?", "📩 Contact Carlin"] }
     ]}
   };
 
@@ -341,19 +341,19 @@
     var t = text.toLowerCase();
     var fr = _lang === 'fr';
     if (/backlog|priorit|rice|moscow|epic|user stor/.test(t))
-      return fr ? ["🔍 Préparer une discovery", "📊 Structurer mes OKRs", "👤 Profil de Carlin"]
-                : ["🔍 Prepare a discovery", "📊 Structure my OKRs", "👤 Carlin's profile"];
+      return fr ? ["🔍 Préparer une discovery", "📊 Structurer mes OKRs", "📩 Contacter Carlin"]
+                : ["🔍 Prepare a discovery", "📊 Structure my OKRs", "📩 Contact Carlin"];
     if (/okr|objectif|kpi|key result/.test(t))
-      return fr ? ["🗺️ Construire ma roadmap", "🎯 Prioriser mon backlog", "👤 Profil de Carlin"]
-                : ["🗺️ Build my roadmap", "🎯 Prioritise my backlog", "👤 Carlin's profile"];
+      return fr ? ["🗺️ Construire ma roadmap", "🎯 Prioriser mon backlog", "📩 Contacter Carlin"]
+                : ["🗺️ Build my roadmap", "🎯 Prioritise my backlog", "📩 Contact Carlin"];
     if (/discovery|interview|utilisateur|hypothès|entretien/.test(t))
-      return fr ? ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs", "👤 Profil de Carlin"]
-                : ["🎯 Prioritise my backlog", "📊 Structure my OKRs", "👤 Carlin's profile"];
+      return fr ? ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs", "📩 Contacter Carlin"]
+                : ["🎯 Prioritise my backlog", "📊 Structure my OKRs", "📩 Contact Carlin"];
     if (/roadmap|pitch|stratég|narrative|audience/.test(t))
-      return fr ? ["📊 Structurer mes OKRs", "🎯 Prioriser mon backlog", "👤 Profil de Carlin"]
-                : ["📊 Structure my OKRs", "🎯 Prioritise my backlog", "👤 Carlin's profile"];
-    return fr ? ["🎯 Prioriser mon backlog", "👤 Profil de Carlin"]
-              : ["🎯 Prioritise my backlog", "👤 Carlin's profile"];
+      return fr ? ["📊 Structurer mes OKRs", "🎯 Prioriser mon backlog", "📩 Contacter Carlin"]
+                : ["📊 Structure my OKRs", "🎯 Prioritise my backlog", "📩 Contact Carlin"];
+    return fr ? ["🎯 Prioriser mon backlog", "📩 Contacter Carlin"]
+              : ["🎯 Prioritise my backlog", "📩 Contact Carlin"];
   }
 
   // ── DOM HELPERS ────────────────────────────────────────────────────────────
