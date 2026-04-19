@@ -253,6 +253,12 @@ nav{padding:1rem 1.5rem}
 .arch-node.n-worker .arch-node-label{color:#fb923c;background:rgba(251,146,60,0.1)}
 .arch-node.n-lg .arch-node-label{color:#a78bfa;background:rgba(167,139,250,0.1)}
 .arch-node.n-groq .arch-node-label{color:#60a5fa;background:rgba(96,165,250,0.1)}
+.arch-node.n-gh .arch-node-label{color:#4ade80;background:rgba(74,222,128,0.1)}
+.arch-bidir{display:flex;flex-direction:column;align-items:center;gap:0.2rem;margin:0.3rem 0}
+.arch-bidir-arrow{color:var(--muted);font-size:1.1rem;line-height:1}
+.arch-route-lbl{font-size:0.55rem;color:var(--dim);letter-spacing:0.08em;white-space:nowrap;text-align:center}
+.arch-browser-inner{display:flex;gap:0.5rem;margin-top:0.5rem;flex-wrap:wrap;justify-content:center}
+.arch-browser-sub{font-size:0.58rem;font-weight:600;color:var(--muted);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:5px;padding:0.18rem 0.5rem;white-space:nowrap}
 .arch-diagram{display:flex;flex-direction:column;align-items:center;padding:2rem 1.5rem 1.5rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;margin:0 0 2rem}
 .arch-top{display:flex;align-items:center;gap:0.6rem}
 .arch-h-arrow{color:var(--muted);font-size:1rem;flex-shrink:0}
@@ -455,20 +461,48 @@ nav{padding:1rem 1.5rem}
       <div class="panel-body" id="body-architecture" role="region"><div class="panel-body-inner">
 
         <div class="arch-sub-h" data-i18n="s1.title">Stack technique</div>
-        <div class="arch-diagram rv" role="img" aria-label="Architecture: Browser &rarr; CF Worker &rarr; deux routes &rarr; Groq API">
-          <div class="arch-top">
-            <div class="arch-node n-user">
-              <div class="arch-node-name">Browser</div>
-              <div class="arch-node-label">User</div>
-            </div>
-            <div class="arch-h-arrow">&rarr;</div>
-            <div class="arch-node n-worker">
-              <div class="arch-node-name">Cloudflare Worker</div>
-              <div class="arch-node-label">API Proxy</div>
-            </div>
+        <div class="arch-diagram rv" role="img" aria-label="Architecture complète : GitHub Pages → Browser → CF Worker → Groq / LangGraph">
+
+          <!-- Couche 0 : hébergement statique -->
+          <div class="arch-node n-gh">
+            <div class="arch-node-name">GitHub Pages</div>
+            <div class="arch-node-label">CDN &middot; H&eacute;bergement statique</div>
           </div>
+
+          <!-- Chargement initial -->
+          <div class="arch-bidir">
+            <div class="arch-route-lbl">chargement initial &bull; HTML / CSS / JS</div>
+            <div class="arch-bidir-arrow">&#8597;</div>
+          </div>
+
+          <!-- Couche 1 : Browser + sous-composants JS -->
+          <div class="arch-node n-user">
+            <div class="arch-node-name">Browser</div>
+            <div class="arch-browser-inner">
+              <span class="arch-browser-sub">KRL1 Widget (JS)</span>
+              <span class="arch-browser-sub">6 Outils PM (JS)</span>
+            </div>
+            <div class="arch-node-label">User</div>
+          </div>
+
+          <!-- Appels API bidirectionnels -->
+          <div class="arch-bidir">
+            <div class="arch-bidir-arrow">&#8597;</div>
+            <div class="arch-route-lbl">HTTPS &bull; appels API &bull; r&eacute;ponse JSON / SSE</div>
+          </div>
+
+          <!-- Couche 2 : Cloudflare Worker -->
+          <div class="arch-node n-worker">
+            <div class="arch-node-name">Cloudflare Worker</div>
+            <div class="arch-node-label">API Proxy &middot; cl&eacute; s&eacute;curis&eacute;e</div>
+          </div>
+
           <div class="arch-vline"></div>
+
+          <!-- Couche 3 : double route -->
           <div class="arch-fork-bar">
+
+            <!-- Route A : 6 outils PM direct -->
             <div class="arch-branch">
               <span class="arch-branch-tag">POST /</span>
               <div class="arch-vline"></div>
@@ -476,13 +510,16 @@ nav{padding:1rem 1.5rem}
                 <div class="arch-node-name">Groq API</div>
                 <div class="arch-node-label">6 outils PM</div>
               </div>
+              <div class="arch-fallback-note">llama-3.3-70b &bull; LPU &bull; 1&ndash;2s</div>
             </div>
+
+            <!-- Route B : KRL1 via LangGraph -->
             <div class="arch-branch">
               <span class="arch-branch-tag">POST /orchestrate[-stream]</span>
               <div class="arch-vline"></div>
               <div class="arch-node n-lg">
                 <div class="arch-node-name">FastAPI &middot; LangGraph</div>
-                <div class="arch-node-label">KRL1</div>
+                <div class="arch-node-label">planner &rarr; synthesis</div>
               </div>
               <div class="arch-vline"></div>
               <div class="arch-node n-groq">
@@ -491,6 +528,7 @@ nav{padding:1rem 1.5rem}
               </div>
               <div class="arch-fallback-note" data-i18n="arch.fallback">&crarr; fallback Worker direct si FastAPI offline</div>
             </div>
+
           </div>
         </div>
 
