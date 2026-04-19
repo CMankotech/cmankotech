@@ -66,7 +66,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hero-hl-2{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.05;letter-spacing:-0.02em}
 .hero-name-row{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap}
 .hero-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);letter-spacing:-0.01em}
-.hero-name-dash{color:var(--muted);font-size:0.9rem}
 .hero-sub-role{font-size:0.75rem;font-weight:500;color:#67e8f9;letter-spacing:0.04em;font-family:'DM Sans',sans-serif}
 .hero-sub-role::before{content:'';display:inline-block;width:14px;height:1px;background:#67e8f9;margin-right:0.5rem;vertical-align:middle}
 .hero-bio{font-size:0.92rem;line-height:1.75;color:var(--dim);max-width:640px}
@@ -76,12 +75,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hero-cta-secondary{font-size:0.72rem;font-weight:600;letter-spacing:0.06em;color:var(--muted);text-decoration:none;transition:color .2s}
 .hero-cta-secondary:hover{color:var(--text)}
 .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
-.hero-stat-box{display:flex;flex-direction:column;gap:0.25rem;padding:1.25rem 1.5rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:14px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:border-color 0.3s}
-.hero-stat-box:hover{border-color:rgba(34,211,238,0.25)}
+.hero-stat-box{display:flex;flex-direction:column;gap:0.25rem;padding:1.25rem 1.5rem;background:linear-gradient(135deg,rgba(96,165,250,0.06),rgba(167,139,250,0.05),rgba(34,211,238,0.05));border:1px solid rgba(96,165,250,0.12);border-radius:14px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:border-color 0.3s}
+.hero-stat-box:hover{border-color:rgba(96,165,250,0.28)}
 .hero-stat-label{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted)}
-.hero-stat-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--text);line-height:1;letter-spacing:-0.03em}
-.hero-stat-text{font-size:1.15rem;font-weight:700}
-.hero-stat-unit{font-size:1rem;font-weight:600;color:var(--dim)}
+.hero-stat-val{font-family:'DM Sans',sans-serif;font-size:1.8rem;font-weight:500;line-height:1;letter-spacing:-0.04em;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-stat-text{font-size:1.1rem;font-weight:500}
+.hero-stat-unit{font-size:1rem;font-weight:500}
 .hero-stat-sub{font-size:0.65rem;color:var(--muted);letter-spacing:0.04em}
 
 /* SECTIONS */
@@ -334,7 +333,6 @@ nav{padding:1rem 1.5rem}
       </h1>
       <div class="hero-name-row">
         <span class="hero-name">Carlin Mankoto</span>
-        <span class="hero-name-dash">&mdash;</span>
         <span class="hero-sub-role" id="heroRole" data-i18n="hero.role">AI Product Manager</span>
       </div>
       <p class="hero-bio" id="heroLine">PM le jour, builder la nuit. Je construis des outils concrets avec l&rsquo;IA parce que les meilleurs outils sont ceux qu&rsquo;on cr&eacute;e soi-m&ecirc;me. Chaque projet ici r&eacute;pond &agrave; un vrai probl&egrave;me que j&rsquo;ai rencontr&eacute; en tant que PM.</p>
