@@ -1,6 +1,6 @@
 # KRL1 — AI Product Management Portfolio
 
-Portfolio interactif de **Carlin Mankoto**, AI Product Manager, intégrant une suite d'outils IA dédiés au product management.
+Portfolio interactif de **Carlin Mankoto**, AI Product Manager, intégrant une suite de projets : 6 outils IA pour le product management + 1 mini-jeu web.
 
 **Live :** [cmankotech.github.io](https://cmankotech.github.io)
 
@@ -14,15 +14,16 @@ Portfolio interactif de **Carlin Mankoto**, AI Product Manager, intégrant une s
 | **OKR Builder** | Génération d'Objectives & Key Results à partir d'un contexte stratégique |
 | **Roadmap Storyteller** | Transformation de listes de features en narratifs de roadmap adaptés à l'audience |
 | **User Interview Analyzer** | Analyse d'interviews utilisateur : personas, pain points, opportunités |
+| **Pixel Runner** | Mini-jeu arcade en JavaScript (esquive d'obstacles, score local) |
 
-Chaque outil est une SPA autonome (HTML/CSS/JS vanilla), bilingue FR/EN.
+Chaque outil IA est une SPA autonome (HTML/CSS/JS vanilla), bilingue FR/EN. Le mini-jeu est aussi une page statique autonome.
 
 ## Architecture
 
 ```
 ┌─────────────────────────────────┐
 │   GitHub Pages (frontend)       │
-│   index.html + 6 outils HTML   │
+│   index.html + 7 projets HTML  │
 │   krl1-widget.js (chat IA)     │
 └──────────┬──────────────────────┘
            │ HTTPS
@@ -61,6 +62,7 @@ Chaque outil est une SPA autonome (HTML/CSS/JS vanilla), bilingue FR/EN.
 ├── okr-builder.html            # Outil OKR
 ├── roadmap-storyteller.html    # Outil narratif roadmap
 ├── user-interview-analyzer.html# Outil analyse d'interviews
+├── pixel-runner.html           # Mini-jeu arcade
 ├── how-i-built-this.html       # Documentation technique du projet
 ├── krl1-widget.js              # Widget chat IA (44KB, autonome)
 ├── orchestrator/               # Service LangGraph (Python)
