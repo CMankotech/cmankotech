@@ -137,6 +137,9 @@ section{border-bottom:1px solid var(--line);position:relative;z-index:1}
 
 
 .proj-block-text{font-size:0.78rem;color:var(--dim);line-height:1.6}
+.proj-sep{display:flex;align-items:center;gap:1rem;margin:2rem 0 1.5rem}
+.proj-sep::before,.proj-sep::after{content:'';flex:1;height:1px;background:var(--line)}
+.proj-sep-label{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);white-space:nowrap}
 
 /* EDUCATION */
 .edu{display:grid;grid-template-columns:70px 1fr;gap:3rem;padding:2.5rem 0;border-top:1px solid var(--line)}
@@ -447,6 +450,9 @@ nav{padding:1rem 1.5rem}
           <div class="proj-summary"><p class="proj-summary-text" data-i18n="proj.rs.sum">Transforme des features en roadmap narrative avec pitch et messages clés adaptés à chaque audience.</p></div>
           <a href="https://cmankotech.github.io/cmankotech/roadmap-storyteller.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#f472b6" data-i18n="proj.link">Voir le projet &rarr;</a>
         </div>
+    </div>
+    <div class="proj-sep rv"><span class="proj-sep-label">Mini-jeu</span></div>
+    <div class="proj-grid rv">
         <div class="proj-card" style="border-color:rgba(255,255,255,0.08)" onclick="window.open('https://cmankotech.github.io/cmankotech/pixel-runner.html','_blank')" data-card="game">
           <div class="proj-top-row">
             <span class="proj-tag" style="color:#38bdf8">Mini-Game</span>
