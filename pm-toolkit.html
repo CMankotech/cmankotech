@@ -73,7 +73,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 
 .flow-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.95rem;position:relative}
 
-.tool-card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.35rem 1.4rem;text-decoration:none;color:inherit;transition:all 0.25s;display:flex;flex-direction:column;min-height:200px;overflow:hidden}
+.tool-card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem 1.4rem;text-decoration:none;color:inherit;transition:all 0.25s;display:flex;flex-direction:column;min-height:200px;overflow:hidden}
 .tool-card::before{content:'';position:absolute;inset:0;border-radius:14px;padding:1px;background:linear-gradient(135deg,var(--tool-color),transparent 55%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity 0.25s;pointer-events:none}
 .tool-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.12)}
 .tool-card:hover::before{opacity:0.7}
@@ -84,8 +84,13 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .tool-status{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.11em;padding:0.22rem 0.6rem;border-radius:99px;background:rgba(52,211,153,0.12);color:#86efac;border:1px solid rgba(52,211,153,0.25);display:none}
 .tool-card.completed .tool-status{display:inline-block}
 
-.tool-title{font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:500;margin-bottom:0.45rem;letter-spacing:-0.01em}
-.tool-subtitle{font-size:0.78rem;color:var(--dim);line-height:1.55;margin-bottom:0.9rem;flex:1}
+.tool-title{font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:500;margin-bottom:0.3rem;letter-spacing:-0.01em}
+.tool-tagline{font-size:0.8rem;color:var(--text);font-weight:400;line-height:1.5;margin-bottom:0.7rem}
+.tool-purpose{font-size:0.73rem;color:var(--dim);line-height:1.6;margin-bottom:0.9rem;flex:1}
+
+.tool-when{display:flex;flex-direction:column;gap:0.25rem;margin-bottom:0.9rem;padding:0.55rem 0.7rem;background:rgba(255,255,255,0.015);border-left:2px solid var(--tool-color);border-radius:0 6px 6px 0}
+.tool-when-lbl{font-size:0.52rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--tool-color);opacity:0.85}
+.tool-when-val{font-size:0.7rem;color:var(--dim);line-height:1.45}
 
 .tool-io{display:flex;flex-direction:column;gap:0.32rem;margin-bottom:1rem;padding:0.6rem 0.75rem;background:rgba(0,0,0,0.18);border-radius:7px}
 .tool-io-row{display:flex;gap:0.5rem;font-size:0.68rem;line-height:1.35}
@@ -195,33 +200,117 @@ footer{text-align:center;margin-top:3.5rem;padding-top:2rem;border-top:1px solid
 var TOOLS = [
   {
     id:'discovery', step:1, url:'discovery-assistant.html', color:'#60a5fa',
-    fr:{title:'Discovery Assistant', sub:'Structure un problème utilisateur en hypothèses, questions d\'interview et plan de test.', inLbl:'Input', inVal:'Problème flou, cible utilisateur', outLbl:'Output', outVal:'3 hypothèses · 5 questions · plan test'},
-    en:{title:'Discovery Assistant', sub:'Turn a fuzzy user problem into hypotheses, interview questions and a test plan.', inLbl:'Input', inVal:'Vague problem, target user', outLbl:'Output', outVal:'3 hypotheses · 5 questions · test plan'}
+    fr:{
+      title:'Discovery Assistant',
+      tagline:'Structure une intuition floue en hypothèses testables.',
+      purpose:"Tu pars d'un problème utilisateur mal cerné. L'outil le transforme en 3 hypothèses formulées (belief + signal observable), 5 questions d'interview ouvertes et un plan de test structuré avec méthode, participants, durée et critère de succès.",
+      when:"À lancer en tout début de cycle, quand tu n'as pas encore d'entretiens à synthétiser.",
+      inLbl:'Input', inVal:'Problème flou, cible, contexte produit',
+      outLbl:'Output', outVal:'Hypothèses · questions d\'interview · plan de test'
+    },
+    en:{
+      title:'Discovery Assistant',
+      tagline:'Turn a fuzzy gut-feel into testable hypotheses.',
+      purpose:"Start from a messy user problem. The tool turns it into 3 formulated hypotheses (belief + observable signal), 5 open interview questions, and a structured test plan with method, participants, duration and success criterion.",
+      when:"Run this at the very start of a cycle, before you have interviews to synthesise.",
+      inLbl:'Input', inVal:'Fuzzy problem, target, product context',
+      outLbl:'Output', outVal:'Hypotheses · interview questions · test plan'
+    }
   },
   {
     id:'interview', step:2, url:'user-interview-analyzer.html', color:'#34d399',
-    fr:{title:'Interview Analyzer', sub:'Synthétise tes notes d\'entretien en persona, pain points et opportunités produit.', inLbl:'Input', inVal:'Notes brutes d\'entretien(s)', outLbl:'Output', outVal:'Persona · pain points · opportunités'},
-    en:{title:'Interview Analyzer', sub:'Turn raw interview notes into persona, pain points and product opportunities.', inLbl:'Input', inVal:'Raw interview notes', outLbl:'Output', outVal:'Persona · pain points · opportunities'}
+    fr:{
+      title:'Interview Analyzer',
+      tagline:'Transforme tes notes d\'entretien en insights actionnables.',
+      purpose:"Colle tes notes brutes (1 entretien ou plusieurs en bulk). L'IA extrait les pain points groupés par thème, les citations marquantes, les opportunités produit classées par impact, et reconstruit un persona synthétique avec tags.",
+      when:"Juste après tes entretiens utilisateurs, pour sauter l'étape post-its sur Miro.",
+      inLbl:'Input', inVal:'Notes brutes, verbatims, transcriptions',
+      outLbl:'Output', outVal:'Persona · pain points · citations · opportunités'
+    },
+    en:{
+      title:'Interview Analyzer',
+      tagline:'Turn raw interview notes into actionable insights.',
+      purpose:"Paste your raw notes (one interview or several in bulk). The AI extracts pain points grouped by theme, notable quotes, product opportunities ranked by impact, and rebuilds a synthetic persona with tags.",
+      when:"Right after your user interviews, to skip the post-it stage on Miro.",
+      inLbl:'Input', inVal:'Raw notes, verbatims, transcripts',
+      outLbl:'Output', outVal:'Persona · pain points · quotes · opportunities'
+    }
   },
   {
     id:'okr', step:3, url:'okr-builder.html', color:'#a78bfa',
-    fr:{title:'OKR Builder', sub:'Dérive des objectifs et KRs mesurables à partir de tes ambitions stratégiques.', inLbl:'Input', inVal:'Ambitions, métriques actuelles', outLbl:'Output', outVal:'Objectives + Key Results typés'},
-    en:{title:'OKR Builder', sub:'Derive measurable objectives and Key Results from your strategic ambitions.', inLbl:'Input', inVal:'Ambitions, current metrics', outLbl:'Output', outVal:'Typed Objectives + Key Results'}
+    fr:{
+      title:'OKR Builder',
+      tagline:'Dérive des OKRs mesurables de tes ambitions stratégiques.',
+      purpose:"Tu décris ton contexte produit et tes ambitions pour le trimestre ou l'année. L'IA génère 2 à 4 Objectives qualitatifs et inspirants, avec 3 Key Results chacun — typés metric / milestone / health — et ancrés sur les métriques réelles que tu fournis.",
+      when:"Pour ton planning trimestriel, une fois les opportunités de la discovery clarifiées.",
+      inLbl:'Input', inVal:'Produit, ambitions, métriques actuelles',
+      outLbl:'Output', outVal:'Objectives + Key Results typés + baselines'
+    },
+    en:{
+      title:'OKR Builder',
+      tagline:'Derive measurable OKRs from your strategic ambitions.',
+      purpose:"Describe your product context and ambitions for the quarter or year. The AI generates 2–4 inspiring qualitative Objectives with 3 Key Results each — typed metric / milestone / health — anchored on the real metrics you provide.",
+      when:"For quarterly planning, once discovery opportunities are clarified.",
+      inLbl:'Input', inVal:'Product, ambitions, current metrics',
+      outLbl:'Output', outVal:'Typed Objectives + Key Results + baselines'
+    }
   },
   {
     id:'backlog', step:4, url:'backlog-prioritizer.html', color:'#fb923c',
-    fr:{title:'Backlog Prioritizer', sub:'Score tes user stories en RICE ou MoSCoW pour arbitrer ton backlog.', inLbl:'Input', inVal:'Liste de user stories', outLbl:'Output', outVal:'Stories classées + justifications'},
-    en:{title:'Backlog Prioritizer', sub:'Score your user stories with RICE or MoSCoW to arbitrate your backlog.', inLbl:'Input', inVal:'List of user stories', outLbl:'Output', outVal:'Ranked stories + rationale'}
+    fr:{
+      title:'Backlog Prioritizer',
+      tagline:'Arbitre ton backlog en RICE ou MoSCoW avec justification.',
+      purpose:"Colle tes user stories en vrac ou par champ. Choisis RICE (scoring numérique : Reach × Impact × Confidence / Effort) ou MoSCoW (Must / Should / Could / Won't). L'IA note chaque story et fournit une justification explicite, prête à défendre en comité.",
+      when:"Avant le grooming ou la sprint planning, surtout quand tu dois arbitrer devant des stakeholders.",
+      inLbl:'Input', inVal:'User stories + contexte produit',
+      outLbl:'Output', outVal:'Stories classées · scores · justifications'
+    },
+    en:{
+      title:'Backlog Prioritizer',
+      tagline:'Arbitrate your backlog with RICE or MoSCoW + rationale.',
+      purpose:"Paste your user stories as bulk text or field by field. Pick RICE (numeric scoring: Reach × Impact × Confidence / Effort) or MoSCoW (Must / Should / Could / Won't). The AI scores each story and provides explicit rationale, ready to defend in review.",
+      when:"Before grooming or sprint planning, especially when you need to arbitrate in front of stakeholders.",
+      inLbl:'Input', inVal:'User stories + product context',
+      outLbl:'Output', outVal:'Ranked stories · scores · rationale'
+    }
   },
   {
     id:'epic', step:5, url:'epic-to-userstories.html', color:'#f472b6',
-    fr:{title:'Epic → User Stories', sub:'Décompose un epic en user stories INVEST avec critères d\'acceptance.', inLbl:'Input', inVal:'Epic, persona, contexte tech', outLbl:'Output', outVal:'Stories INVEST + AC + effort'},
-    en:{title:'Epic → User Stories', sub:'Break an epic into INVEST user stories with acceptance criteria.', inLbl:'Input', inVal:'Epic, persona, tech context', outLbl:'Output', outVal:'INVEST stories + AC + effort'}
+    fr:{
+      title:'Epic → User Stories',
+      tagline:'Décompose un epic en user stories INVEST exportables.',
+      purpose:"Tu décris un epic, le persona cible et le contexte tech. L'IA produit 4 à 10 user stories indépendantes formulées en « En tant que / Je veux / Afin de » (ou Job Story), avec 2-3 critères d'acceptance vérifiables, la priorité, le type et l'effort estimé.",
+      when:"En refinement, pour éviter 2h sur Jira à découper à la main. Export Markdown direct.",
+      inLbl:'Input', inVal:'Epic, persona, contexte tech',
+      outLbl:'Output', outVal:'Stories INVEST + critères d\'acceptance + effort'
+    },
+    en:{
+      title:'Epic → User Stories',
+      tagline:'Break an epic into exportable INVEST user stories.',
+      purpose:"Describe an epic, the target persona and the tech context. The AI produces 4 to 10 independent user stories in \"As a / I want / So that\" (or Job Story) format, each with 2-3 verifiable acceptance criteria, priority, type and estimated effort.",
+      when:"In refinement, to avoid 2 hours of manual breakdown in Jira. Markdown export ready.",
+      inLbl:'Input', inVal:'Epic, persona, tech context',
+      outLbl:'Output', outVal:'INVEST stories + acceptance criteria + effort'
+    }
   },
   {
     id:'roadmap', step:6, url:'roadmap-storyteller.html', color:'#fbbf24',
-    fr:{title:'Roadmap Storyteller', sub:'Transforme une liste de features en narratif roadmap adapté à une audience.', inLbl:'Input', inVal:'Features + audience cible', outLbl:'Output', outVal:'Pitch + timeline + talking points'},
-    en:{title:'Roadmap Storyteller', sub:'Turn a feature list into a narrative roadmap tailored to one audience.', inLbl:'Input', inVal:'Features + target audience', outLbl:'Output', outVal:'Pitch + timeline + talking points'}
+    fr:{
+      title:'Roadmap Storyteller',
+      tagline:'Raconte ta roadmap dans le langage de ton audience.',
+      purpose:"Tu listes tes features par période (Now / Next / Later) et tu choisis ton audience (dirigeants, équipes métier, tech, clients). L'IA produit un pitch narratif de 3-4 phrases orienté valeur, une timeline reformulée dans le registre de l'audience, et 3 messages-clés pour convaincre.",
+      when:"Avant une revue de roadmap, un all-hands, ou un RDV commercial stratégique.",
+      inLbl:'Input', inVal:'Features par période + audience cible',
+      outLbl:'Output', outVal:'Pitch narratif · timeline · messages-clés'
+    },
+    en:{
+      title:'Roadmap Storyteller',
+      tagline:"Tell your roadmap in your audience's own language.",
+      purpose:"List your features by horizon (Now / Next / Later) and pick your audience (execs, business teams, tech, customers). The AI produces a 3-4 sentence value-oriented narrative pitch, a timeline rephrased for the audience, and 3 key talking points to drive alignment.",
+      when:"Before a roadmap review, an all-hands, or a strategic sales pitch.",
+      inLbl:'Input', inVal:'Features by horizon + target audience',
+      outLbl:'Output', outVal:'Narrative pitch · timeline · talking points'
+    }
   }
 ];
 
@@ -231,21 +320,27 @@ function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').
 
 function renderFlow(){
   var session = window.PMSession ? PMSession.load() : {};
+  var stepLbl = _lang==='en' ? 'Step' : 'Étape';
+  var doneLbl = _lang==='en' ? 'Completed' : 'Complété';
+  var openLbl = _lang==='en' ? 'Open tool' : 'Ouvrir l\'outil';
+  var whenLbl = _lang==='en' ? 'When to use' : 'Quand l\'utiliser';
   var html = TOOLS.map(function(t){
     var data = t[_lang];
     var done = !!session[t.id];
     return '<a href="'+t.url+'" class="tool-card'+(done?' completed':'')+'" style="--tool-color:'+t.color+'">'
       + '<div class="tool-header">'
-      +   '<span class="tool-step">Étape 0'+t.step+'</span>'
-      +   '<span class="tool-status">✓ '+(_lang==='en'?'Completed':'Complété')+'</span>'
+      +   '<span class="tool-step">'+stepLbl+' 0'+t.step+'</span>'
+      +   '<span class="tool-status">✓ '+doneLbl+'</span>'
       + '</div>'
       + '<div class="tool-title">'+esc(data.title)+'</div>'
-      + '<div class="tool-subtitle">'+esc(data.sub)+'</div>'
+      + '<div class="tool-tagline">'+esc(data.tagline)+'</div>'
+      + '<div class="tool-purpose">'+esc(data.purpose)+'</div>'
+      + '<div class="tool-when"><span class="tool-when-lbl">'+whenLbl+'</span><span class="tool-when-val">'+esc(data.when)+'</span></div>'
       + '<div class="tool-io">'
       +   '<div class="tool-io-row"><span class="tool-io-lbl">'+data.inLbl+'</span><span class="tool-io-val">'+esc(data.inVal)+'</span></div>'
       +   '<div class="tool-io-row"><span class="tool-io-lbl">'+data.outLbl+'</span><span class="tool-io-val">'+esc(data.outVal)+'</span></div>'
       + '</div>'
-      + '<span class="tool-launch">'+(_lang==='en'?'Open tool':'Ouvrir l\'outil')+' →</span>'
+      + '<span class="tool-launch">'+openLbl+' →</span>'
       + '</a>';
   }).join('');
   document.getElementById('flowGrid').innerHTML = html;
