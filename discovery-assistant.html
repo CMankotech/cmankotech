@@ -479,6 +479,12 @@ function renderResults(d) {
   document.getElementById('planBody').innerHTML = planHtml || '<p style="color:var(--muted);font-size:0.8rem">Plan non disponible.</p>';
 
   window._discoveryData = d;
+  if (window.PMSession) PMSession.save('discovery', {
+    problem: document.getElementById('problem').value.trim(),
+    target: document.getElementById('target').value.trim(),
+    context: document.getElementById('context').value.trim(),
+    result: d
+  });
   document.getElementById('results').classList.add('show');
   document.getElementById('launchBtn').disabled = false;
   var _rr3 = document.getElementById('rerunBtn'); if(_rr3) _rr3.disabled = false;
@@ -667,4 +673,6 @@ function applyLangExtras(lang) {
 (function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
 
 </script>
+<script src="pm-session.js"></script>
+<script>if(window.PMSession) PMSession.init();</script>
 <script src="krl1-widget.js"></script>

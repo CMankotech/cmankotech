@@ -495,6 +495,13 @@ function renderResults(d, name, type) {
   }
 
   window._okrData = d;
+  if (window.PMSession) PMSession.save('okr', {
+    productName: document.getElementById('productName').value.trim(),
+    productType: (document.getElementById('productType')||{}).value || '',
+    ambitions: document.getElementById('ambitions').value.trim(),
+    metrics: document.getElementById('metrics').value.trim(),
+    result: d
+  });
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -778,5 +785,39 @@ function applyLangExtras(lang) {
 // Sync on load (IIFE may have fired before this function was defined)
 (function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
 
+</script>
+<script src="pm-session.js"></script>
+<script>
+window.pmImportInsights = function(){
+  if(!window.PMSession) return;
+  var prev = PMSession.get('interview');
+  if(!prev) return;
+  var r = prev.result || {};
+  var persona = r.persona || {};
+  var opps = (r.opportunities || []).slice(0,5);
+  var pains = r.pain_groups || [];
+
+  var lines = [];
+  if(persona.name) lines.push('Persona cible : ' + persona.name + (persona.description ? ' — ' + persona.description : ''));
+  if(pains.length){
+    lines.push('\nPrincipaux pain points identifiés :');
+    pains.slice(0,3).forEach(function(g){ lines.push('- ' + (g.group||'') + ' (' + (g.count||(g.items||[]).length) + ' mentions)'); });
+  }
+  if(opps.length){
+    lines.push('\nOpportunités à adresser ce trimestre :');
+    opps.forEach(function(o,i){ lines.push((i+1) + '. ' + (o.title||'') + (o.description ? ' — ' + o.description : '')); });
+  }
+  var ambEl = document.getElementById('ambitions');
+  if(ambEl) ambEl.value = lines.join('\n');
+  if(persona.name){
+    var prodEl = document.getElementById('productName');
+    if(prodEl && !prodEl.value && prev.context) prodEl.value = prev.context.split(',')[0].trim().slice(0,40);
+  }
+  var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
+  if(ambEl){ ambEl.style.borderColor='rgba(167,139,250,0.5)'; setTimeout(function(){ambEl.style.borderColor='';},900); ambEl.scrollIntoView({behavior:'smooth',block:'center'}); }
+  var hint = document.getElementById('ambitionsHint');
+  if(hint){ var n = ambEl.value.trim().split(/\s+/).filter(Boolean).length; hint.textContent = n + ' mot' + (n>1?'s':''); }
+};
+if(window.PMSession) PMSession.init();
 </script>
 <script src="krl1-widget.js"></script>

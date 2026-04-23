@@ -542,6 +542,11 @@ function renderResults(d, count, context) {
 
   document.getElementById('resultsList').innerHTML = html;
   window._backlogData = { items: items, method: currentMethod };
+  if (window.PMSession) PMSession.save('backlog', {
+    context: document.getElementById('context').value.trim(),
+    method: currentMethod,
+    result: { items: items, method: currentMethod }
+  });
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -744,5 +749,29 @@ function applyLangExtras(lang) {
   if (rrBtn) rrBtn.innerHTML = lang === 'en' ? '&#8634; Re-generate' : '&#8634; R&eacute;-g&eacute;n&eacute;rer';
 }
 
+</script>
+<script src="pm-session.js"></script>
+<script>
+window.pmImportInsights = function(){
+  if(!window.PMSession) return;
+  var prev = PMSession.get('okr');
+  if(!prev) return;
+  var okrs = ((prev.result||{}).okrs) || [];
+  if(!okrs.length) return;
+  var parts = [];
+  if(prev.productName) parts.push('Produit : ' + prev.productName + (prev.productType ? ' (' + prev.productType + ')' : ''));
+  parts.push('Objectifs stratégiques du trimestre :');
+  okrs.forEach(function(o, i){
+    parts.push('• ' + (o.objective||''));
+    var krs = (o.key_results||[]).slice(0,1);
+    krs.forEach(function(kr){ parts.push('  → KR clé : ' + (kr.text||'')); });
+  });
+  if(prev.metrics) parts.push('Métriques à suivre : ' + prev.metrics);
+  var ctxEl = document.getElementById('context');
+  if(ctxEl) ctxEl.value = parts.join(' | ').replace(/ \| (?=•)/g,' · ');
+  var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
+  if(ctxEl){ ctxEl.style.borderColor='rgba(251,146,60,0.5)'; setTimeout(function(){ctxEl.style.borderColor='';},900); ctxEl.scrollIntoView({behavior:'smooth',block:'center'}); }
+};
+if(window.PMSession) PMSession.init();
 </script>
 <script src="krl1-widget.js"></script>

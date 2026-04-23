@@ -666,6 +666,10 @@ function renderResults(d, context) {
   document.getElementById('oppsContainer').innerHTML = oppsHtml;
 
   window._interviewData = d;
+  if (window.PMSession) PMSession.save('interview', {
+    context: document.getElementById('context').value.trim(),
+    result: d
+  });
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -930,6 +934,23 @@ function applyLangExtras(lang) {
   if (rrBtn) rrBtn.innerHTML = lang === 'en' ? '&#8634; Re-generate' : '&#8634; R&eacute;-g&eacute;n&eacute;rer';
 }
 
+</script>
+<script src="pm-session.js"></script>
+<script>
+window.pmImportInsights = function(){
+  if(!window.PMSession) return;
+  var prev = PMSession.get('discovery');
+  if(!prev) return;
+  var parts = [];
+  if(prev.context) parts.push(prev.context);
+  if(prev.target) parts.push('Cible : ' + prev.target);
+  if(prev.problem) parts.push('Problème exploré : ' + prev.problem);
+  var ctxEl = document.getElementById('context');
+  if(ctxEl) ctxEl.value = parts.join(' · ');
+  var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
+  if(ctxEl){ ctxEl.style.borderColor='rgba(52,211,153,0.5)'; setTimeout(function(){ctxEl.style.borderColor='';},900); ctxEl.scrollIntoView({behavior:'smooth',block:'center'}); }
+};
+if(window.PMSession) PMSession.init();
 </script>
 <script src="krl1-widget.js"></script>
 </body>
