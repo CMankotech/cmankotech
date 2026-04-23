@@ -557,6 +557,12 @@ function renderResults(d, name, horizon) {
   }
 
   window._roadmapData = d;
+  if (window.PMSession) PMSession.save('roadmap', {
+    productName: document.getElementById('productName').value.trim(),
+    vision: document.getElementById('vision').value.trim(),
+    audiences: audiences.slice(),
+    result: d
+  });
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -786,5 +792,33 @@ function applyLangExtras(lang) {
 // Sync on load (IIFE may have fired before this function was defined)
 (function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
 
+</script>
+<script src="pm-session.js"></script>
+<script>
+window.pmImportInsights = function(){
+  if(!window.PMSession) return;
+  var prev = PMSession.get('epic');
+  if(!prev) return;
+  var stories = ((prev.result||{}).stories) || [];
+  if(!stories.length) return;
+  var prodEl = document.getElementById('productName');
+  var visEl  = document.getElementById('vision');
+  if(prodEl && !prodEl.value && prev.epicTitle) prodEl.value = prev.epicTitle.split(/[—:·]/)[0].trim().slice(0,40);
+  if(visEl && !visEl.value && (prev.result||{}).epic_summary) visEl.value = prev.result.epic_summary;
+  // Replace feature rows with stories mapped to periods by priority
+  var priorityToPeriod = { high: 'now', medium: 'next', low: 'later' };
+  var list = document.getElementById('featuresList');
+  if(list){
+    list.innerHTML = '';
+    window.featureCount = 0;
+    stories.forEach(function(s){
+      var period = priorityToPeriod[s.priority] || 'next';
+      addFeature(s.title || '', period);
+    });
+  }
+  var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
+  if(prodEl){ prodEl.style.borderColor='rgba(251,191,36,0.5)'; setTimeout(function(){prodEl.style.borderColor='';},900); prodEl.scrollIntoView({behavior:'smooth',block:'center'}); }
+};
+if(window.PMSession) PMSession.init();
 </script>
 <script src="krl1-widget.js"></script>

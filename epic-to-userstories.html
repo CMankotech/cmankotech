@@ -495,6 +495,13 @@ function renderResults(d, epicTitle) {
   // Store for copy
   window._storiesData = stories;
   window._epicTitle = epicTitle;
+  if (window.PMSession) PMSession.save('epic', {
+    epicTitle: document.getElementById('epicTitle').value.trim(),
+    epicDesc: document.getElementById('epicDesc').value.trim(),
+    persona: (document.getElementById('persona')||{}).value || '',
+    techContext: (document.getElementById('techContext')||{}).value || '',
+    result: { epic_summary: d.epic_summary, stories: stories }
+  });
 
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -708,5 +715,35 @@ function applyLangExtras(lang) {
 // Sync on load (IIFE may have fired before this function was defined)
 (function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
 
+</script>
+<script src="pm-session.js"></script>
+<script>
+window.pmImportInsights = function(){
+  if(!window.PMSession) return;
+  var prev = PMSession.get('backlog');
+  if(!prev) return;
+  var items = ((prev.result||{}).items) || [];
+  if(!items.length) return;
+  var top = items[0];
+  var titleEl = document.getElementById('epicTitle');
+  var descEl  = document.getElementById('epicDesc');
+  var ctxEl   = document.getElementById('techContext');
+  var persoEl = document.getElementById('persona');
+  if(titleEl) titleEl.value = (top.story || top.title || '').slice(0,120);
+  if(descEl){
+    var lines = [];
+    if(top.justification) lines.push(top.justification);
+    if(items.length > 1){
+      lines.push('\nContext backlog (top priorités adjacentes) :');
+      items.slice(1,4).forEach(function(it,i){ lines.push('- ' + (it.story||it.title||'') + (it.justification ? ' — ' + it.justification : '')); });
+    }
+    if(prev.context) lines.push('\nContexte produit : ' + prev.context);
+    descEl.value = lines.join('\n');
+  }
+  if(ctxEl && !ctxEl.value && prev.context) ctxEl.value = prev.context.slice(0,100);
+  var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
+  if(titleEl){ titleEl.style.borderColor='rgba(244,114,182,0.5)'; setTimeout(function(){titleEl.style.borderColor='';},900); titleEl.scrollIntoView({behavior:'smooth',block:'center'}); }
+};
+if(window.PMSession) PMSession.init();
 </script>
 <script src="krl1-widget.js"></script>

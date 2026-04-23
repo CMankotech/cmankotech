@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Toolkit — by Carlin Mankoto</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070e;--surface:#0e0e1a;
+  --border:rgba(255,255,255,0.08);--line:rgba(255,255,255,0.05);
+  --text:#e2e8f0;--dim:#94a3b8;--muted:#475569;
+  --blue:#60a5fa;--green:#34d399;--violet:#a78bfa;--orange:#fb923c;--pink:#f472b6;--yellow:#fbbf24;
+  --grad:linear-gradient(135deg,#60a5fa 0%,#34d399 20%,#a78bfa 40%,#fb923c 60%,#f472b6 80%,#fbbf24 100%);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
+h1,h2,h3{font-family:'Syne',sans-serif}
+
+/* GLOWS */
+.glow{position:fixed;border-radius:50%;filter:blur(140px);pointer-events:none;z-index:0;opacity:0.55}
+.g1{width:520px;height:520px;top:-160px;left:-120px;background:rgba(96,165,250,0.12)}
+.g2{width:420px;height:420px;bottom:10%;right:-120px;background:rgba(167,139,250,0.1)}
+.g3{width:360px;height:360px;top:45%;left:30%;background:rgba(52,211,153,0.06)}
+
+/* LAYOUT */
+.container{max-width:1040px;margin:0 auto;padding:2.5rem 1.5rem 4rem;position:relative;z-index:1}
+
+/* LANG */
+.lang-bar{display:flex;justify-content:flex-end;margin-bottom:1.5rem}
+.lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
+.lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.lang-btn.active{background:rgba(96,165,250,0.15);color:var(--blue)}
+
+/* BACK LINK */
+.back-link{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;margin-bottom:1.75rem;transition:color 0.2s}
+.back-link:hover{color:var(--text)}
+
+/* HEADER */
+header{text-align:center;margin-bottom:3.5rem}
+.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--blue);margin-bottom:1.25rem;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.2);padding:0.4rem 1rem;border-radius:99px}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
+h1{font-family:'DM Sans',sans-serif;font-size:clamp(2.1rem,5.2vw,3.2rem);font-weight:500;letter-spacing:-0.045em;line-height:0.98;margin-bottom:0.85rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
+.subtitle{font-size:0.95rem;color:var(--dim);max-width:620px;margin:0 auto;line-height:1.65}
+
+/* SESSION PANEL */
+.session-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.session-panel .sess-left{display:flex;align-items:center;gap:0.9rem;flex:1;min-width:0}
+.sess-title{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text)}
+.sess-desc{font-size:0.76rem;color:var(--dim);margin-top:0.15rem}
+.sess-icon{width:38px;height:38px;border-radius:10px;background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.sess-pills{display:flex;gap:4px;align-items:center}
+.sess-pill{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.12);display:inline-flex;align-items:center;justify-content:center;font-size:0.55rem;font-weight:800;color:rgba(255,255,255,0.25);transition:all 0.25s}
+.sess-pill.done{color:var(--tool-color);border-color:var(--tool-color);background:rgba(255,255,255,0.03)}
+.sess-reset{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.45rem 0.9rem;border-radius:8px;border:1px solid rgba(248,113,113,0.25);background:rgba(248,113,113,0.06);color:#fca5a5;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.sess-reset:hover{background:rgba(248,113,113,0.14)}
+
+/* HOW-IT-WORKS */
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem;margin-bottom:3rem}
+.how-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem}
+.how-num{font-family:'Syne',sans-serif;font-size:0.62rem;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:0.5rem}
+.how-title{font-size:0.85rem;font-weight:500;margin-bottom:0.35rem;color:var(--text)}
+.how-desc{font-size:0.75rem;color:var(--dim);line-height:1.55}
+
+/* FLOW DIAGRAM */
+.flow-section{margin-bottom:2rem}
+.flow-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.8rem}
+.flow-label::after{content:'';flex:1;height:1px;background:var(--line)}
+
+.flow-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.95rem;position:relative}
+
+.tool-card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.35rem 1.4rem;text-decoration:none;color:inherit;transition:all 0.25s;display:flex;flex-direction:column;min-height:200px;overflow:hidden}
+.tool-card::before{content:'';position:absolute;inset:0;border-radius:14px;padding:1px;background:linear-gradient(135deg,var(--tool-color),transparent 55%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity 0.25s;pointer-events:none}
+.tool-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.12)}
+.tool-card:hover::before{opacity:0.7}
+.tool-card:hover .tool-launch{color:var(--tool-color);gap:0.55rem}
+
+.tool-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:0.85rem}
+.tool-step{font-family:'Syne',sans-serif;font-size:0.62rem;font-weight:800;color:var(--tool-color);text-transform:uppercase;letter-spacing:0.14em;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:0.25rem 0.65rem;border-radius:5px}
+.tool-status{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.11em;padding:0.22rem 0.6rem;border-radius:99px;background:rgba(52,211,153,0.12);color:#86efac;border:1px solid rgba(52,211,153,0.25);display:none}
+.tool-card.completed .tool-status{display:inline-block}
+
+.tool-title{font-family:'DM Sans',sans-serif;font-size:1.1rem;font-weight:500;margin-bottom:0.45rem;letter-spacing:-0.01em}
+.tool-subtitle{font-size:0.78rem;color:var(--dim);line-height:1.55;margin-bottom:0.9rem;flex:1}
+
+.tool-io{display:flex;flex-direction:column;gap:0.32rem;margin-bottom:1rem;padding:0.6rem 0.75rem;background:rgba(0,0,0,0.18);border-radius:7px}
+.tool-io-row{display:flex;gap:0.5rem;font-size:0.68rem;line-height:1.35}
+.tool-io-lbl{font-size:0.54rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);min-width:40px;padding-top:0.12rem}
+.tool-io-val{color:var(--dim)}
+
+.tool-launch{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.64rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);transition:all 0.25s;margin-top:auto}
+
+/* Connector line between cards */
+.flow-grid::after{content:'';position:absolute;left:50%;top:9%;bottom:9%;width:1px;background:linear-gradient(180deg,transparent 0%,rgba(255,255,255,0.06) 20%,rgba(255,255,255,0.06) 80%,transparent 100%);pointer-events:none;z-index:-1}
+
+/* START CTA */
+.start-cta{text-align:center;margin-top:2.5rem}
+.btn-start{display:inline-flex;align-items:center;gap:0.6rem;padding:0.95rem 2rem;background:linear-gradient(135deg,#60a5fa,#a78bfa,#f472b6);border:none;border-radius:11px;color:white;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;cursor:pointer;text-decoration:none;transition:all 0.25s;box-shadow:0 10px 40px -10px rgba(167,139,250,0.4)}
+.btn-start:hover{transform:translateY(-1px);box-shadow:0 14px 50px -10px rgba(167,139,250,0.6)}
+.start-note{font-size:0.7rem;color:var(--muted);margin-top:0.85rem}
+
+/* FOOTER */
+footer{text-align:center;margin-top:3.5rem;padding-top:2rem;border-top:1px solid var(--border)}
+.footer-by{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em}
+.footer-by a{color:var(--blue);text-decoration:none}
+.footer-by a:hover{text-decoration:underline}
+
+@media(max-width:820px){
+  .how{grid-template-columns:1fr}
+  .flow-grid{grid-template-columns:1fr}
+  .flow-grid::after{display:none}
+  .session-panel{flex-direction:column;align-items:stretch}
+  .session-panel .sess-left{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+<div class="glow g3"></div>
+
+<div class="container">
+
+  <div class="lang-bar">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lbFr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" id="lbEn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <a href="index.html" class="back-link" id="backLink">← <span id="backLbl">Retour au portfolio</span></a>
+
+  <header>
+    <div class="header-tag"><span class="dot"></span> <span id="tagLbl">Product Management Suite</span></div>
+    <h1><span id="h1Main">Product Management</span><br><span class="grad" id="h1Grad">Toolkit</span></h1>
+    <p class="subtitle" id="subtitleTxt">6 outils de Product Management enchaînés de façon fluide. Chaque insight généré se transfère automatiquement à l'outil suivant — du problème utilisateur à la roadmap racontée aux stakeholders.</p>
+  </header>
+
+  <!-- SESSION (hidden if no session) -->
+  <div class="session-panel" id="sessionPanel" style="display:none">
+    <div class="sess-left">
+      <div class="sess-icon">🔗</div>
+      <div>
+        <div class="sess-title" id="sessTitle">Session en cours</div>
+        <div class="sess-desc" id="sessDesc">Tes insights sont conservés localement entre les outils.</div>
+      </div>
+    </div>
+    <div class="sess-pills" id="sessPills"></div>
+    <button class="sess-reset" id="sessReset" onclick="resetSession()">🗑 <span id="resetLbl">Réinitialiser</span></button>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="flow-label"><span id="howLbl">Comment ça marche</span></div>
+  <div class="how">
+    <div class="how-item">
+      <div class="how-num">01</div>
+      <div class="how-title" id="how1T">Une séquence naturelle</div>
+      <div class="how-desc" id="how1D">Les 6 outils suivent le flow d'un PM : tu démarres sur la discovery, tu finis sur la roadmap.</div>
+    </div>
+    <div class="how-item">
+      <div class="how-num">02</div>
+      <div class="how-title" id="how2T">Insights auto-transférés</div>
+      <div class="how-desc" id="how2D">Dès qu'un outil produit un résultat, le suivant affiche une bannière pour importer le contexte en un clic.</div>
+    </div>
+    <div class="how-item">
+      <div class="how-num">03</div>
+      <div class="how-title" id="how3T">Données locales uniquement</div>
+      <div class="how-desc" id="how3D">Tout reste dans ton navigateur (localStorage). Rien n'est envoyé ni stocké côté serveur.</div>
+    </div>
+  </div>
+
+  <!-- FLOW DIAGRAM -->
+  <div class="flow-label"><span id="flowLbl">Les 6 outils du toolkit</span></div>
+  <div class="flow-grid" id="flowGrid"></div>
+
+  <!-- START CTA -->
+  <div class="start-cta">
+    <a href="discovery-assistant.html" class="btn-start" id="startBtn">▶ <span id="startLbl">Démarrer une session de discovery</span></a>
+    <div class="start-note" id="startNote">L'ordre suggéré t'évite d'oublier une étape — tu peux toutefois ouvrir n'importe quel outil directement.</div>
+  </div>
+
+  <footer>
+    <p class="footer-by"><span id="footerBy">Construit par</span> <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> · <span id="footerRole">AI Product Manager</span></p>
+  </footer>
+
+</div>
+
+<script src="pm-session.js"></script>
+<script>
+/* ─── Tool definitions for the flow diagram ─── */
+var TOOLS = [
+  {
+    id:'discovery', step:1, url:'discovery-assistant.html', color:'#60a5fa',
+    fr:{title:'Discovery Assistant', sub:'Structure un problème utilisateur en hypothèses, questions d\'interview et plan de test.', inLbl:'Input', inVal:'Problème flou, cible utilisateur', outLbl:'Output', outVal:'3 hypothèses · 5 questions · plan test'},
+    en:{title:'Discovery Assistant', sub:'Turn a fuzzy user problem into hypotheses, interview questions and a test plan.', inLbl:'Input', inVal:'Vague problem, target user', outLbl:'Output', outVal:'3 hypotheses · 5 questions · test plan'}
+  },
+  {
+    id:'interview', step:2, url:'user-interview-analyzer.html', color:'#34d399',
+    fr:{title:'Interview Analyzer', sub:'Synthétise tes notes d\'entretien en persona, pain points et opportunités produit.', inLbl:'Input', inVal:'Notes brutes d\'entretien(s)', outLbl:'Output', outVal:'Persona · pain points · opportunités'},
+    en:{title:'Interview Analyzer', sub:'Turn raw interview notes into persona, pain points and product opportunities.', inLbl:'Input', inVal:'Raw interview notes', outLbl:'Output', outVal:'Persona · pain points · opportunities'}
+  },
+  {
+    id:'okr', step:3, url:'okr-builder.html', color:'#a78bfa',
+    fr:{title:'OKR Builder', sub:'Dérive des objectifs et KRs mesurables à partir de tes ambitions stratégiques.', inLbl:'Input', inVal:'Ambitions, métriques actuelles', outLbl:'Output', outVal:'Objectives + Key Results typés'},
+    en:{title:'OKR Builder', sub:'Derive measurable objectives and Key Results from your strategic ambitions.', inLbl:'Input', inVal:'Ambitions, current metrics', outLbl:'Output', outVal:'Typed Objectives + Key Results'}
+  },
+  {
+    id:'backlog', step:4, url:'backlog-prioritizer.html', color:'#fb923c',
+    fr:{title:'Backlog Prioritizer', sub:'Score tes user stories en RICE ou MoSCoW pour arbitrer ton backlog.', inLbl:'Input', inVal:'Liste de user stories', outLbl:'Output', outVal:'Stories classées + justifications'},
+    en:{title:'Backlog Prioritizer', sub:'Score your user stories with RICE or MoSCoW to arbitrate your backlog.', inLbl:'Input', inVal:'List of user stories', outLbl:'Output', outVal:'Ranked stories + rationale'}
+  },
+  {
+    id:'epic', step:5, url:'epic-to-userstories.html', color:'#f472b6',
+    fr:{title:'Epic → User Stories', sub:'Décompose un epic en user stories INVEST avec critères d\'acceptance.', inLbl:'Input', inVal:'Epic, persona, contexte tech', outLbl:'Output', outVal:'Stories INVEST + AC + effort'},
+    en:{title:'Epic → User Stories', sub:'Break an epic into INVEST user stories with acceptance criteria.', inLbl:'Input', inVal:'Epic, persona, tech context', outLbl:'Output', outVal:'INVEST stories + AC + effort'}
+  },
+  {
+    id:'roadmap', step:6, url:'roadmap-storyteller.html', color:'#fbbf24',
+    fr:{title:'Roadmap Storyteller', sub:'Transforme une liste de features en narratif roadmap adapté à une audience.', inLbl:'Input', inVal:'Features + audience cible', outLbl:'Output', outVal:'Pitch + timeline + talking points'},
+    en:{title:'Roadmap Storyteller', sub:'Turn a feature list into a narrative roadmap tailored to one audience.', inLbl:'Input', inVal:'Features + target audience', outLbl:'Output', outVal:'Pitch + timeline + talking points'}
+  }
+];
+
+var _lang = 'fr';
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function renderFlow(){
+  var session = window.PMSession ? PMSession.load() : {};
+  var html = TOOLS.map(function(t){
+    var data = t[_lang];
+    var done = !!session[t.id];
+    return '<a href="'+t.url+'" class="tool-card'+(done?' completed':'')+'" style="--tool-color:'+t.color+'">'
+      + '<div class="tool-header">'
+      +   '<span class="tool-step">Étape 0'+t.step+'</span>'
+      +   '<span class="tool-status">✓ '+(_lang==='en'?'Completed':'Complété')+'</span>'
+      + '</div>'
+      + '<div class="tool-title">'+esc(data.title)+'</div>'
+      + '<div class="tool-subtitle">'+esc(data.sub)+'</div>'
+      + '<div class="tool-io">'
+      +   '<div class="tool-io-row"><span class="tool-io-lbl">'+data.inLbl+'</span><span class="tool-io-val">'+esc(data.inVal)+'</span></div>'
+      +   '<div class="tool-io-row"><span class="tool-io-lbl">'+data.outLbl+'</span><span class="tool-io-val">'+esc(data.outVal)+'</span></div>'
+      + '</div>'
+      + '<span class="tool-launch">'+(_lang==='en'?'Open tool':'Ouvrir l\'outil')+' →</span>'
+      + '</a>';
+  }).join('');
+  document.getElementById('flowGrid').innerHTML = html;
+}
+
+function renderSessionPanel(){
+  if(!window.PMSession) return;
+  var session = PMSession.load();
+  var toolsUsed = TOOLS.filter(function(t){ return !!session[t.id]; });
+  var panel = document.getElementById('sessionPanel');
+  if(toolsUsed.length === 0){ panel.style.display = 'none'; return; }
+  panel.style.display = 'flex';
+  // next step suggestion
+  var nextTool = TOOLS.find(function(t){ return !session[t.id]; });
+  var desc = toolsUsed.length + (_lang==='en'?' tool':' outil') + (toolsUsed.length>1?'s':'') + (_lang==='en'?' used':' utilisé')+(toolsUsed.length>1?'s':'');
+  if(nextTool) desc += ' · ' + (_lang==='en'?'next':'suite') + ' : ' + nextTool[_lang].title;
+  else desc += ' · ' + (_lang==='en'?'all tools completed':'tous les outils sont complétés');
+  document.getElementById('sessDesc').textContent = desc;
+  // pills
+  var pillsHtml = TOOLS.map(function(t){
+    var done = !!session[t.id];
+    return '<span class="sess-pill'+(done?' done':'')+'" style="--tool-color:'+t.color+'" title="'+esc(t[_lang].title)+'">'+t.step+'</span>';
+  }).join('');
+  document.getElementById('sessPills').innerHTML = pillsHtml;
+  // next CTA
+  var startBtn = document.getElementById('startBtn');
+  var startLbl = document.getElementById('startLbl');
+  if(nextTool){
+    startBtn.href = nextTool.url;
+    startLbl.textContent = (_lang==='en'?'Continue with ':'Continuer avec ') + nextTool[_lang].title;
+  }
+}
+
+function resetSession(){
+  var msg = _lang==='en'
+    ? 'Clear all saved insights from this session? This cannot be undone.'
+    : 'Vider tous les insights sauvegardés de cette session ? Cette action est irréversible.';
+  if(!confirm(msg)) return;
+  if(window.PMSession) PMSession.clear();
+  renderFlow();
+  renderSessionPanel();
+  // reset start button
+  document.getElementById('startBtn').href = 'discovery-assistant.html';
+  document.getElementById('startLbl').textContent = _lang==='en'
+    ? 'Start a discovery session'
+    : 'Démarrer une session de discovery';
+}
+
+/* ─── i18n ─── */
+var I18N = {
+  fr:{
+    back:'Retour au portfolio', tag:'Product Management Suite',
+    h1Main:'Product Management', subtitle:'6 outils de Product Management enchaînés de façon fluide. Chaque insight généré se transfère automatiquement à l\'outil suivant — du problème utilisateur à la roadmap racontée aux stakeholders.',
+    sessTitle:'Session en cours', reset:'Réinitialiser',
+    how:'Comment ça marche', flow:'Les 6 outils du toolkit',
+    how1T:'Une séquence naturelle', how1D:'Les 6 outils suivent le flow d\'un PM : tu démarres sur la discovery, tu finis sur la roadmap.',
+    how2T:'Insights auto-transférés', how2D:'Dès qu\'un outil produit un résultat, le suivant affiche une bannière pour importer le contexte en un clic.',
+    how3T:'Données locales uniquement', how3D:'Tout reste dans ton navigateur (localStorage). Rien n\'est envoyé ni stocké côté serveur.',
+    startLbl:'Démarrer une session de discovery',
+    startNote:'L\'ordre suggéré t\'évite d\'oublier une étape — tu peux toutefois ouvrir n\'importe quel outil directement.',
+    footerBy:'Construit par', footerRole:'AI Product Manager'
+  },
+  en:{
+    back:'Back to portfolio', tag:'Product Management Suite',
+    h1Main:'Product Management', subtitle:'6 product management tools chained smoothly. Every insight generated auto-transfers to the next tool — from user problem to stakeholder-ready roadmap.',
+    sessTitle:'Active session', reset:'Reset',
+    how:'How it works', flow:'The 6 tools in the toolkit',
+    how1T:'A natural sequence', how1D:'The 6 tools follow a PM flow: start on discovery, end on roadmap.',
+    how2T:'Insights auto-transferred', how2D:'As soon as a tool produces results, the next one shows a banner to import the context in one click.',
+    how3T:'Local data only', how3D:'Everything stays in your browser (localStorage). Nothing is sent or stored server-side.',
+    startLbl:'Start a discovery session',
+    startNote:'The suggested order prevents skipping a step — you can still open any tool directly.',
+    footerBy:'Built by', footerRole:'AI Product Manager'
+  }
+};
+
+function setLang(lang){
+  _lang = lang;
+  document.getElementById('lbFr').classList.toggle('active', lang==='fr');
+  document.getElementById('lbEn').classList.toggle('active', lang==='en');
+  var T = I18N[lang];
+  document.getElementById('backLbl').textContent = T.back;
+  document.getElementById('tagLbl').textContent = T.tag;
+  document.getElementById('h1Main').textContent = T.h1Main;
+  document.getElementById('subtitleTxt').textContent = T.subtitle;
+  document.getElementById('sessTitle').textContent = T.sessTitle;
+  document.getElementById('resetLbl').textContent = T.reset;
+  document.getElementById('howLbl').textContent = T.how;
+  document.getElementById('flowLbl').textContent = T.flow;
+  document.getElementById('how1T').textContent = T.how1T;
+  document.getElementById('how1D').textContent = T.how1D;
+  document.getElementById('how2T').textContent = T.how2T;
+  document.getElementById('how2D').textContent = T.how2D;
+  document.getElementById('how3T').textContent = T.how3T;
+  document.getElementById('how3D').textContent = T.how3D;
+  document.getElementById('startLbl').textContent = T.startLbl;
+  document.getElementById('startNote').textContent = T.startNote;
+  document.getElementById('footerBy').textContent = T.footerBy;
+  document.getElementById('footerRole').textContent = T.footerRole;
+  localStorage.setItem('lang', lang);
+  renderFlow();
+  renderSessionPanel();
+  document.documentElement.lang = lang;
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  var params = new URLSearchParams(window.location.search);
+  var lang = params.get('lang') || localStorage.getItem('lang') || 'fr';
+  if(lang === 'en') setLang('en');
+  else { renderFlow(); renderSessionPanel(); }
+});
+</script>
+<script src="krl1-widget.js"></script>
+</body>
+</html>
