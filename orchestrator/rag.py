@@ -35,7 +35,10 @@ def build_index():
     from chromadb.config import Settings
 
     client = chromadb.Client(Settings(anonymized_telemetry=False))
-    _collection = client.get_or_create_collection(COLLECTION_NAME)
+    _collection = client.get_or_create_collection(
+        COLLECTION_NAME,
+        metadata={"hnsw:space": "cosine"},
+    )
 
     if _collection.count() > 0:
         return _collection
