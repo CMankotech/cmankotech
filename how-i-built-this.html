@@ -116,6 +116,8 @@ section{margin-bottom:4rem}
 .arch-branch{display:flex;flex-direction:column;align-items:center}
 .arch-branch-tag{font-size:0.58rem;font-weight:700;font-family:monospace;background:rgba(255,255,255,0.06);border:1px solid rgba(196,181,253,0.3);border-radius:4px;padding:0.15rem 0.5rem;color:#c4b5fd;margin:0.5rem 0}
 .arch-fallback-note{font-size:0.6rem;color:var(--muted);font-style:italic;text-align:center;margin-top:0.75rem;padding-top:0.6rem;border-top:1px dashed rgba(255,255,255,0.08);line-height:1.6;max-width:160px}
+.lg-svg-wrap{margin:1.5rem 0;overflow:hidden}
+.lg-svg{width:100%;height:auto;display:block}
 
 /* LANGGRAPH GRID */
 .lg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
@@ -578,6 +580,39 @@ Réponds UNIQUEMENT avec un JSON valide :
       <span class="sec-num">05</span>
       <span class="sec-title" data-i18n="s5.title">Orchestration LangGraph</span>
     </div>
+    <div class="lg-svg-wrap">
+      <svg viewBox="0 0 780 168" class="lg-svg" role="img" aria-label="LangGraph pipeline: Planner → Retriever (conditional) → Synthesis">
+        <defs>
+          <marker id="lgArrW" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,1 L6,3.5 L0,6 Z" fill="rgba(255,255,255,0.2)"/></marker>
+          <marker id="lgArrV" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,1 L6,3.5 L0,6 Z" fill="rgba(167,139,250,0.6)"/></marker>
+          <marker id="lgArrC" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,1 L6,3.5 L0,6 Z" fill="rgba(34,211,238,0.35)"/></marker>
+          <marker id="lgArrD" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,1 L6,3.5 L0,6 Z" fill="rgba(113,128,150,0.5)"/></marker>
+        </defs>
+        <line x1="89" y1="77" x2="141" y2="77" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" marker-end="url(#lgArrW)"/>
+        <line x1="235" y1="77" x2="294" y2="77" stroke="rgba(167,139,250,0.45)" stroke-width="1.5" marker-end="url(#lgArrV)"/>
+        <text x="264" y="52" text-anchor="middle" font-size="8.5" fill="rgba(167,139,250,0.65)" font-family="DM Sans,sans-serif" font-style="italic">pm_workflow</text>
+        <line x1="420" y1="77" x2="478" y2="77" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" marker-end="url(#lgArrW)"/>
+        <line x1="581" y1="77" x2="642" y2="77" stroke="rgba(34,211,238,0.25)" stroke-width="1.5" marker-end="url(#lgArrC)"/>
+        <path d="M 188 97 L 188 133 L 530 133 L 530 97" fill="none" stroke="rgba(113,128,150,0.32)" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#lgArrD)"/>
+        <text x="359" y="150" text-anchor="middle" font-size="8.5" fill="rgba(113,128,150,0.52)" font-family="DM Sans,sans-serif" font-style="italic">other intent (portfolio · tech · contact) → Synthesis directement</text>
+        <rect x="8" y="58" width="80" height="38" rx="8" fill="rgba(14,14,26,0.95)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <text x="48" y="78" text-anchor="middle" font-size="11" fill="#e2e8f0" font-family="DM Sans,sans-serif" font-weight="500">Query</text>
+        <text x="48" y="90" text-anchor="middle" font-size="8" fill="#4a5568" font-family="DM Sans,sans-serif">user input</text>
+        <rect x="143" y="58" width="91" height="38" rx="8" fill="rgba(14,14,26,0.95)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <text x="188" y="78" text-anchor="middle" font-size="11" fill="#e2e8f0" font-family="DM Sans,sans-serif" font-weight="500">Planner</text>
+        <text x="188" y="90" text-anchor="middle" font-size="8" fill="#4a5568" font-family="DM Sans,sans-serif">intent · confidence · T=0.2</text>
+        <rect x="298" y="58" width="121" height="38" rx="8" fill="rgba(167,139,250,0.07)" stroke="rgba(167,139,250,0.3)" stroke-width="1.5"/>
+        <text x="358.5" y="78" text-anchor="middle" font-size="11" fill="#a78bfa" font-family="DM Sans,sans-serif" font-weight="500">Retriever</text>
+        <text x="358.5" y="90" text-anchor="middle" font-size="8" fill="rgba(167,139,250,0.5)" font-family="DM Sans,sans-serif">ChromaDB · cosine sim · top-3</text>
+        <rect x="481" y="58" width="99" height="38" rx="8" fill="rgba(14,14,26,0.95)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <text x="530.5" y="78" text-anchor="middle" font-size="11" fill="#e2e8f0" font-family="DM Sans,sans-serif" font-weight="500">Synthesis</text>
+        <text x="530.5" y="90" text-anchor="middle" font-size="8" fill="#4a5568" font-family="DM Sans,sans-serif">RAG context · T=0.45</text>
+        <rect x="644" y="58" width="110" height="38" rx="8" fill="rgba(34,211,238,0.06)" stroke="rgba(34,211,238,0.2)" stroke-width="1"/>
+        <text x="699" y="78" text-anchor="middle" font-size="11" fill="#22d3ee" font-family="DM Sans,sans-serif" font-weight="500">Reply</text>
+        <text x="699" y="90" text-anchor="middle" font-size="8" fill="rgba(34,211,238,0.45)" font-family="DM Sans,sans-serif">augmented · max 220w</text>
+      </svg>
+    </div>
+
     <div class="decision-card" style="margin-bottom:1.5rem">
       <div class="decision-q" data-i18n="lg.flow.label">Flow d'une requête KRL1</div>
       <div class="decision-why" data-i18n="lg.flow.desc">1 · L'utilisateur envoie un message dans le chat KRL1. 2 · Le JS appelle POST /orchestrate sur le Worker Cloudflare avec {lang, message, history}. 3 · Le Worker tente l'orchestrateur FastAPI externe (si LANGGRAPH_ORCHESTRATOR_URL est défini). 4 · Le planner LangGraph (T=0.2) analyse l'intention → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 5 · Si intent = pm_workflow : le retriever encode la requête (sentence-transformers), cherche les 3 chunks les plus proches dans ChromaDB (similarité cosinus) et injecte le contexte PM récupéré dans l'état du graph. 6 · Le synthesis LangGraph (T=0.45) transforme le plan enrichi en réponse max 220 mots avec liens outils PM. 7 · Fallback si FastAPI indisponible : le Worker exécute ce flow planner→synthesis nativement via Groq. 8 · La réponse {reply, plan, engine} arrive au client — le chat affiche reply, le JSON plan reste disponible.</div>
