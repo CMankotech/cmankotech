@@ -274,7 +274,7 @@ footer a:hover{text-decoration:underline}
     </div>
 
     <!-- INPUT MODE -->
-    <div class="card-title" style="margin-top:1.5rem"><span id="lbl_stories_title">User Stories</span> <button class="btn-random-stories" onclick="randomStories()" type="button">&#127922; Exemple al&eacute;atoire</button></div>
+    <div class="card-title" style="margin-top:1.5rem"><span id="lbl_stories_title">User Stories</span> <button class="btn-random-stories glass-shimmer glass-focus" onclick="randomStories()" type="button">&#127922; Exemple al&eacute;atoire</button></div>
     <div class="input-tabs">
       <button class="input-tab active" id="tabText" onclick="setInputMode('text')"><span id="lbl_textarea_mode"><span id="lbl_textarea_mode">Zone de texte</span></span></button>
       <button class="input-tab" id="tabFields" onclick="setInputMode('fields')"><span id="lbl_fields_mode"><span id="lbl_fields_mode">Champs individuels</span></span></button>
@@ -288,7 +288,7 @@ footer a:hover{text-decoration:underline}
 
     <div id="fieldsMode">
       <div id="storyFields"></div>
-      <button class="btn-add-story" onclick="addField()">+ Ajouter une story</button>
+      <button class="btn-add-story glass-shimmer glass-focus" onclick="addField()">+ Ajouter une story</button>
     </div>
 
     <!-- CONTEXT -->
@@ -404,7 +404,7 @@ function addField(val) {
   div.dataset.id = fieldCount;
   div.innerHTML = '<span class="story-num">' + String(fieldCount).padStart(2,'0') + '</span>'
     + '<input type="text" placeholder="Ex : Permettre l\'export CSV des données..." value="' + esc(val||'') + '">'
-    + '<button class="btn-remove" onclick="removeField(this)" title="Supprimer">&#215;</button>';
+    + '<button class="btn-remove glass-shimmer glass-focus" onclick="removeField(this)" title="Supprimer">&#215;</button>';
   container.appendChild(div);
 }
 

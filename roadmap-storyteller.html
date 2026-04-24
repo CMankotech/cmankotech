@@ -255,7 +255,7 @@ footer a:hover{text-decoration:underline}
   <div class="card">
     <div class="card-title">
       <span id="lbl_ctx_title">Contexte produit</span>
-      <button class="btn-examples" onclick="loadExample()">&#127922; Exemple aléatoire</button>
+      <button class="btn-examples glass-shimmer glass-focus" onclick="loadExample()">&#127922; Exemple aléatoire</button>
     </div>
 
     <div class="form-grid">
@@ -294,11 +294,11 @@ footer a:hover{text-decoration:underline}
   <div class="card">
     <div class="card-title">
       <span id="lbl_features_title">Features &amp; initiatives</span>
-      <button class="btn-examples" onclick="loadFeaturesExample()">&#127922; Exemple aléatoire</button>
+      <button class="btn-examples glass-shimmer glass-focus" onclick="loadFeaturesExample()">&#127922; Exemple aléatoire</button>
     </div>
     <p style="font-size:0.75rem;color:var(--dim);margin-bottom:1rem" id="hint_features_sub">Ajoute tes features ou initiatives. Assigne-leur une p&eacute;riode de livraison.</p>
     <div class="features-list" id="featuresList"></div>
-    <button class="btn-add-feat" onclick="addFeature()"><span id="btn_add_feat">+ Ajouter une feature</span></button>
+    <button class="btn-add-feat glass-shimmer glass-focus" onclick="addFeature()"><span id="btn_add_feat">+ Ajouter une feature</span></button>
     <p class="field-hint" style="margin-top:0.5rem" id="hint_feat_count">Entre 3 et 10 features recommand&eacute;es.</p>
   </div>
 
@@ -426,7 +426,7 @@ function addFeature(text, period) {
     '<option value="next"' + (period==='next'?' selected':'') + '>' + (window._lang==='en'?'Next':'Ensuite') + '</option>' +
     '<option value="later"' + (period==='later'?' selected':'') + '>' + (window._lang==='en'?'Later':'Plus tard') + '</option>' +
     '</select>' +
-    '<button class="btn-remove-feat" onclick="removeFeat(' + id + ')" title="Supprimer">&times;</button>';
+    '<button class="btn-remove-feat glass-shimmer glass-focus" onclick="removeFeat(' + id + ')" title="Supprimer">&times;</button>';
   document.getElementById('featuresList').appendChild(row);
 }
 
