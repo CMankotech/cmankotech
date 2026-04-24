@@ -274,7 +274,7 @@ footer a:hover{text-decoration:underline}
   <div class="card">
     <div class="card-title">
       <span id="lbl_interviews_title">Entretiens utilisateurs</span>
-      <button class="btn-examples" onclick="loadExamples()">&#127922; Exemple aléatoire</button>
+      <button class="btn-examples glass-shimmer glass-focus" onclick="loadExamples()">&#127922; Exemple aléatoire</button>
     </div>
 
     <div class="input-tabs">
@@ -293,7 +293,7 @@ footer a:hover{text-decoration:underline}
     <!-- MULTI -->
     <div id="multiMode">
       <div id="interviewBlocks"></div>
-      <button class="btn-add-interview" onclick="addInterview()">+ Ajouter un entretien</button>
+      <button class="btn-add-interview glass-shimmer glass-focus" onclick="addInterview()">+ Ajouter un entretien</button>
     </div>
 
     <!-- CONTEXT -->
@@ -521,7 +521,7 @@ function addInterview(label, text) {
   div.innerHTML =
     '<div class="interview-block-header">' +
       '<span class="interview-num">Entretien ' + String(interviewCount).padStart(2,'0') + '</span>' +
-      (interviewCount > 2 ? '<button class="btn-remove-block" onclick="removeBlock(this)">&#215;</button>' : '<span></span>') +
+      (interviewCount > 2 ? '<button class="btn-remove-block glass-shimmer glass-focus" onclick="removeBlock(this)">&#215;</button>' : '<span></span>') +
     '</div>' +
     '<input type="text" placeholder="Profil bref (ex : Marie, 34 ans, responsable marketing)" value="' + esc(label||'') + '">' +
     '<textarea rows="5" placeholder="Notes brutes, verbatims, observations...">' + esc(text||'') + '</textarea>';

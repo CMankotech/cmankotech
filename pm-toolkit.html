@@ -42,9 +42,10 @@ header{text-align:center;margin-bottom:3.5rem}
 .header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--blue);margin-bottom:1.25rem;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.2);padding:0.4rem 1rem;border-radius:99px}
 .dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
-h1{font-family:'DM Sans',sans-serif;font-size:clamp(2.1rem,5.2vw,3.2rem);font-weight:500;letter-spacing:-0.045em;line-height:0.98;margin-bottom:0.85rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h1{font-family:'DM Sans',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:500;letter-spacing:-0.045em;line-height:0.98;margin-bottom:0.85rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
+h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.05;letter-spacing:-0.02em}
+@media(max-width:640px){h1,h1 .grad{font-size:clamp(1.6rem,6vw,2.4rem)!important}}
 .subtitle{font-size:0.95rem;color:var(--dim);max-width:620px;margin:0 auto;line-height:1.65}
 
 /* SESSION PANEL */
