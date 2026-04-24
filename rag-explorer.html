@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG Explorer — by Carlin Mankoto</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070e;--surface:#0e0e1a;--surface2:#11111e;
+  --border:rgba(255,255,255,0.07);--line:rgba(255,255,255,0.04);
+  --text:#e2e8f0;--dim:#718096;--muted:#4a5568;
+  --blue:#60a5fa;--violet:#a78bfa;--cyan:#22d3ee;
+  --green:#4ade80;--orange:#fb923c;--red:#f87171;--yellow:#fbbf24;
+  --acc:#a78bfa;--acc-bg:rgba(167,139,250,0.08);--acc-border:rgba(167,139,250,0.22);
+}
+html{font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
+h1,h2,h3{font-family:'Syne',sans-serif}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 80% 0%,rgba(167,139,250,0.07) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 10% 90%,rgba(34,211,238,0.05) 0%,transparent 60%);pointer-events:none;z-index:0}
+.container{max-width:860px;margin:0 auto;padding:3rem 1.5rem;position:relative;z-index:1}
+
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:3rem;padding-bottom:1.25rem;border-bottom:1px solid var(--line)}
+.nav-logo{font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--acc);text-decoration:none}
+.nav-back{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:0.35rem 0.85rem;border-radius:6px;transition:all 0.2s}
+.nav-back:hover{color:var(--text);border-color:rgba(255,255,255,0.18)}
+
+/* HEADER */
+header{text-align:center;margin-bottom:2.75rem}
+.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--acc);background:var(--acc-bg);border:1px solid var(--acc-border);padding:0.4rem 1rem;border-radius:99px;margin-bottom:1.25rem}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--acc);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
+h1{font-family:'DM Sans',sans-serif;font-size:clamp(1.9rem,5vw,2.8rem);font-weight:500;letter-spacing:-0.045em;line-height:0.98;margin-bottom:0.75rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.grad{background:linear-gradient(135deg,#a78bfa,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
+.subtitle{font-size:0.85rem;color:var(--dim);max-width:540px;margin:0 auto}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem}
+.card-title{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.6rem}
+.card-title::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* LANG TOGGLE */
+.lang-row{display:flex;justify-content:flex-end;margin-bottom:1.1rem}
+.lang-toggle{display:flex;gap:0.35rem}
+.lang-btn{padding:0.3rem 0.7rem;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:0.68rem;font-weight:700;cursor:pointer;transition:all 0.2s}
+.lang-btn.active{background:var(--acc-bg);border-color:var(--acc-border);color:var(--acc)}
+
+/* QUERY AREA */
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--dim);margin-bottom:0.45rem}
+.field textarea{width:100%;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:10px;padding:0.85rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:300;outline:none;transition:border-color 0.2s;resize:none;line-height:1.6}
+.field textarea:focus{border-color:var(--acc-border)}
+.field textarea::placeholder{color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.6rem}
+.chip{font-size:0.63rem;padding:0.28rem 0.75rem;border-radius:99px;border:1px solid var(--border);color:var(--dim);background:rgba(255,255,255,0.02);cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.chip:hover{border-color:var(--acc-border);color:var(--acc);background:var(--acc-bg)}
+.btn-launch{width:100%;padding:1rem;background:linear-gradient(135deg,#4c1d95,#6d28d9);border:none;border-radius:10px;color:white;font-family:'Syne',sans-serif;font-size:0.83rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;cursor:pointer;transition:all 0.25s;margin-top:0.5rem}
+.btn-launch:hover:not(:disabled){opacity:0.88;transform:translateY(-1px);box-shadow:0 8px 30px -8px rgba(167,139,250,0.4)}
+.btn-launch:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+
+/* LOADING */
+.loading{display:none;text-align:center;padding:2.5rem 0}
+.loading.show{display:block}
+.spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--acc);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:0.75rem;color:var(--muted)}
+
+/* PIPELINE */
+.pipeline{display:none}
+.pipeline.show{display:block;animation:fadeUp 0.4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.pipeline-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.pipeline-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700}
+.pipeline-meta{font-size:0.68rem;color:var(--dim)}
+.btn-reset{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.9rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.btn-reset:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+
+/* STEP */
+.step{margin-bottom:1.25rem;position:relative}
+.step::before{content:'';position:absolute;left:18px;top:44px;bottom:-1.25rem;width:1px;background:linear-gradient(to bottom,var(--acc-border),transparent);pointer-events:none}
+.step:last-child::before{display:none}
+.step-header{display:flex;align-items:center;gap:0.85rem;margin-bottom:0.85rem}
+.step-num{width:36px;height:36px;border-radius:50%;border:1px solid var(--acc-border);background:var(--acc-bg);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:800;color:var(--acc);flex-shrink:0}
+.step-label{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--acc)}
+.step-desc{font-size:0.68rem;color:var(--dim)}
+.step-body{margin-left:52px}
+
+/* STEP 1 — INTENT */
+.intent-row{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
+.intent-badge{display:inline-flex;align-items:center;gap:0.4rem;font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;padding:0.35rem 0.85rem;border-radius:99px}
+.intent-pm{background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.3);color:#c4b5fd}
+.intent-other{background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.25);color:#93c5fd}
+.confidence-bar-wrap{flex:1;min-width:120px}
+.confidence-label{font-size:0.6rem;color:var(--muted);margin-bottom:0.3rem}
+.confidence-bar{height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+.confidence-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--acc),var(--cyan));transition:width 0.6s ease}
+.goal-box{margin-top:0.75rem;padding:0.75rem 1rem;background:rgba(255,255,255,0.02);border:1px solid var(--line);border-radius:8px;font-size:0.8rem;color:var(--dim)}
+.goal-box strong{color:var(--text);font-weight:400}
+
+/* STEP 2 — CHUNKS */
+.chunk-list{display:flex;flex-direction:column;gap:0.65rem}
+.chunk-card{background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;border-left:3px solid var(--acc-border)}
+.chunk-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem}
+.chunk-source{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--acc)}
+.score-pill{font-size:0.6rem;font-weight:700;padding:0.18rem 0.6rem;border-radius:99px;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.2);color:#86efac}
+.score-pill.mid{background:rgba(251,191,36,0.08);border-color:rgba(251,191,36,0.2);color:#fde68a}
+.score-pill.low{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.08);color:var(--muted)}
+.chunk-text{font-size:0.77rem;color:var(--dim);line-height:1.6;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.chunk-expand{font-size:0.62rem;color:var(--acc);cursor:pointer;margin-top:0.35rem;background:none;border:none;padding:0;font-family:'DM Sans',sans-serif;transition:opacity 0.2s}
+.chunk-expand:hover{opacity:0.7}
+.no-rag-note{font-size:0.78rem;color:var(--dim);padding:0.75rem 1rem;background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.12);border-radius:8px}
+
+/* STEP 3 — REPLY */
+.reply-box{background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.25rem;font-size:0.84rem;line-height:1.75;color:var(--text)}
+.reply-box a{color:var(--acc);text-decoration:none}
+.reply-box a:hover{text-decoration:underline}
+.btn-copy{font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.35rem 0.85rem;border-radius:6px;border:1px solid var(--acc-border);background:var(--acc-bg);color:var(--acc);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;margin-top:0.85rem;display:inline-block}
+.btn-copy:hover{opacity:0.8}
+.btn-copy.copied{color:var(--green);border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.06)}
+
+/* ERROR */
+.error-box{display:none;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);border-radius:10px;padding:0.85rem 1rem;font-size:0.78rem;color:#fca5a5;margin-top:1rem}
+.error-box.show{display:block}
+
+/* ARCHITECTURE NOTE */
+.arch-note{background:rgba(167,139,250,0.04);border:1px solid var(--acc-border);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.arch-note p{font-size:0.78rem;color:var(--dim);margin-bottom:0.75rem}
+.arch-note p:last-child{margin-bottom:0}
+.arch-pipeline{display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;font-size:0.7rem;font-family:'Geist',monospace;color:var(--muted)}
+.arch-node{padding:0.25rem 0.65rem;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text);font-weight:400}
+.arch-node.rag{border-color:var(--acc-border);background:var(--acc-bg);color:var(--acc)}
+.arch-arrow{color:var(--muted);font-size:0.65rem}
+.arch-cond{font-size:0.6rem;color:var(--dim);font-style:italic}
+
+/* FOOTER */
+footer{text-align:center;padding-top:3rem;padding-bottom:2rem;font-size:0.68rem;color:var(--muted)}
+footer a{color:var(--acc);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media(max-width:600px){
+  .intent-row{flex-direction:column;align-items:flex-start}
+  .confidence-bar-wrap{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">KRL1</a>
+    <a href="index.html" class="nav-back">← Retour</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-tag"><span class="dot"></span> RAG · Semantic Retrieval</div>
+    <h1>PM Knowledge <span class="grad">Retriever</span></h1>
+    <p class="subtitle">Démonstration d'un pipeline RAG complet : embedding sémantique, retrieval vectoriel et génération augmentée sur une base de connaissances PM.</p>
+  </header>
+
+  <!-- ARCHITECTURE NOTE -->
+  <div class="arch-note">
+    <p>Pipeline RAG construit sur <strong>sentence-transformers</strong> (all-MiniLM-L6-v2) + <strong>ChromaDB</strong> + <strong>LangGraph</strong>. La base de connaissances couvre 7 frameworks PM (RICE, MoSCoW, INVEST, OKR, JTBD, Discovery, Roadmap), découpés en chunks de 300 mots avec overlap de 50.</p>
+    <div class="arch-pipeline">
+      <span class="arch-node">Planner</span>
+      <span class="arch-arrow">→</span>
+      <span class="arch-cond">[pm_workflow?]</span>
+      <span class="arch-arrow">→</span>
+      <span class="arch-node rag">Retriever</span>
+      <span class="arch-arrow">→</span>
+      <span class="arch-node">Synthesis</span>
+      <span class="arch-arrow">→</span>
+      <span class="arch-node">Réponse augmentée</span>
+    </div>
+  </div>
+
+  <!-- QUERY FORM -->
+  <div class="card" id="form-card">
+    <div class="card-title">Question PM</div>
+
+    <div class="lang-row">
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label id="query-label">Posez une question sur un framework PM</label>
+      <textarea id="query" rows="3" placeholder="Ex : Comment utiliser RICE pour prioriser mon backlog produit ?"></textarea>
+    </div>
+
+    <div class="chips" id="chips-fr">
+      <span class="chip" onclick="useChip(this)">Comment prioriser avec RICE ?</span>
+      <span class="chip" onclick="useChip(this)">Différence entre MoSCoW et RICE</span>
+      <span class="chip" onclick="useChip(this)">Comment rédiger de bonnes user stories INVEST ?</span>
+      <span class="chip" onclick="useChip(this)">Comment construire mes OKRs trimestriels ?</span>
+      <span class="chip" onclick="useChip(this)">C'est quoi le Jobs-to-be-Done ?</span>
+      <span class="chip" onclick="useChip(this)">Comment structurer ma roadmap produit ?</span>
+    </div>
+    <div class="chips" id="chips-en" style="display:none">
+      <span class="chip" onclick="useChip(this)">How to use RICE for backlog prioritization?</span>
+      <span class="chip" onclick="useChip(this)">What is the difference between MoSCoW and RICE?</span>
+      <span class="chip" onclick="useChip(this)">How to write good INVEST user stories?</span>
+      <span class="chip" onclick="useChip(this)">How to set quarterly OKRs?</span>
+      <span class="chip" onclick="useChip(this)">What is Jobs-to-be-Done?</span>
+      <span class="chip" onclick="useChip(this)">How do I build a product roadmap?</span>
+    </div>
+
+    <button class="btn-launch" id="btn-query" onclick="runQuery()">Interroger la KB →</button>
+    <div class="error-box" id="error-box"></div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text" id="loading-text">Planner en cours…</div>
+  </div>
+
+  <!-- PIPELINE RESULTS -->
+  <div class="pipeline" id="pipeline">
+    <div class="pipeline-header">
+      <div>
+        <div class="pipeline-title">Pipeline RAG — Résultats</div>
+        <div class="pipeline-meta" id="pipeline-meta"></div>
+      </div>
+      <button class="btn-reset" onclick="resetForm()">Nouvelle question</button>
+    </div>
+
+    <!-- STEP 1: INTENT -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-label" id="step1-label">Planner — Classification d'intent</div>
+          <div class="step-desc" id="step1-desc">Analyse la requête et détermine si le retriever doit s'activer</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="intent-row">
+          <span class="intent-badge" id="intent-badge">pm_workflow</span>
+          <div class="confidence-bar-wrap">
+            <div class="confidence-label" id="conf-label">Confidence : —</div>
+            <div class="confidence-bar"><div class="confidence-fill" id="conf-fill" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div class="goal-box"><strong id="goal-text">—</strong></div>
+      </div>
+    </div>
+
+    <!-- STEP 2: RETRIEVAL -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-label" id="step2-label">Retriever — Chunks sémantiques</div>
+          <div class="step-desc" id="step2-desc">Top-3 passages les plus proches par similarité cosinus</div>
+        </div>
+      </div>
+      <div class="step-body" id="chunks-body">
+        <div class="chunk-list" id="chunk-list"></div>
+      </div>
+    </div>
+
+    <!-- STEP 3: REPLY -->
+    <div class="step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-label" id="step3-label">Synthesis — Réponse augmentée</div>
+          <div class="step-desc" id="step3-desc">Le LLM génère une réponse ancrée dans les chunks récupérés</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="reply-box" id="reply-box"></div>
+        <button class="btn-copy" id="btn-copy" onclick="copyReply()">Copier la réponse</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Construit par <a href="index.html">Carlin Mankoto</a> · sentence-transformers + ChromaDB + LangGraph + Groq
+  </footer>
+
+</div>
+<script>
+var WORKER_URL = 'https://groq-proxy.cmankotech.workers.dev';
+var currentLang = 'fr';
+var lastReply = '';
+
+var i18n = {
+  fr: {
+    queryLabel: 'Posez une question sur un framework PM',
+    queryPlaceholder: 'Ex : Comment utiliser RICE pour prioriser mon backlog produit ?',
+    btnQuery: 'Interroger la KB →',
+    loadingPlanner: 'Planner en cours…',
+    loadingRetriever: 'Retrieval sémantique…',
+    loadingSynthesis: 'Synthèse augmentée…',
+    step1label: 'Planner — Classification d\'intent',
+    step1desc: 'Analyse la requête et détermine si le retriever doit s\'activer',
+    step2label: 'Retriever — Chunks sémantiques',
+    step2desc: 'Top-3 passages les plus proches par similarité cosinus',
+    step3label: 'Synthesis — Réponse augmentée',
+    step3desc: 'Le LLM génère une réponse ancrée dans les chunks récupérés',
+    noRag: 'Intent non-PM détecté → le Retriever n\'a pas été activé pour cette requête.',
+    pipelineMeta: function(engine){ return 'Moteur : ' + engine; },
+    confLabel: function(pct){ return 'Confidence : ' + pct + '%'; },
+    expand: 'Voir plus',
+    collapse: 'Réduire',
+    copied: 'Copié !',
+    copy: 'Copier la réponse',
+  },
+  en: {
+    queryLabel: 'Ask a question about a PM framework',
+    queryPlaceholder: 'e.g. How do I use RICE to prioritize my product backlog?',
+    btnQuery: 'Query the KB →',
+    loadingPlanner: 'Running planner…',
+    loadingRetriever: 'Semantic retrieval…',
+    loadingSynthesis: 'Augmented synthesis…',
+    step1label: 'Planner — Intent Classification',
+    step1desc: 'Analyses the query and decides whether the retriever should activate',
+    step2label: 'Retriever — Semantic Chunks',
+    step2desc: 'Top-3 closest passages by cosine similarity',
+    step3label: 'Synthesis — Augmented Response',
+    step3desc: 'The LLM generates a response grounded in the retrieved chunks',
+    noRag: 'Non-PM intent detected → the Retriever was not activated for this query.',
+    pipelineMeta: function(engine){ return 'Engine: ' + engine; },
+    confLabel: function(pct){ return 'Confidence: ' + pct + '%'; },
+    expand: 'Read more',
+    collapse: 'Collapse',
+    copied: 'Copied!',
+    copy: 'Copy response',
+  }
+};
+
+function t(key, arg) {
+  var val = i18n[currentLang][key];
+  return typeof val === 'function' ? val(arg) : val;
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.lang === lang); });
+  document.getElementById('query-label').textContent = t('queryLabel');
+  document.getElementById('query').placeholder = t('queryPlaceholder');
+  document.getElementById('btn-query').textContent = t('btnQuery');
+  document.getElementById('chips-fr').style.display = lang === 'fr' ? 'flex' : 'none';
+  document.getElementById('chips-en').style.display = lang === 'en' ? 'flex' : 'none';
+}
+
+function useChip(el) {
+  document.getElementById('query').value = el.textContent.trim();
+  document.getElementById('query').focus();
+}
+
+function scoreClass(score) {
+  if (score >= 0.75) return '';
+  if (score >= 0.55) return 'mid';
+  return 'low';
+}
+
+function sourceName(filename) {
+  return filename.replace('.md', '').toUpperCase();
+}
+
+function setLoading(phase) {
+  var map = { planner: 'loadingPlanner', retriever: 'loadingRetriever', synthesis: 'loadingSynthesis' };
+  document.getElementById('loading-text').textContent = t(map[phase] || 'loadingPlanner');
+}
+
+async function runQuery() {
+  var query = document.getElementById('query').value.trim();
+  if (!query) return;
+
+  document.getElementById('form-card').style.display = 'none';
+  document.getElementById('error-box').classList.remove('show');
+  document.getElementById('pipeline').classList.remove('show');
+  document.getElementById('loading').classList.add('show');
+  setLoading('planner');
+  document.getElementById('btn-query').disabled = true;
+
+  try {
+    setTimeout(function(){ setLoading('retriever'); }, 600);
+    setTimeout(function(){ setLoading('synthesis'); }, 1400);
+
+    var res = await fetch(WORKER_URL + '/rag-query', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lang: currentLang, message: query, history: [] }),
+    });
+
+    var data;
+    if (!res.ok) {
+      var txt = await res.text();
+      throw new Error(txt || 'Erreur ' + res.status);
+    }
+    data = await res.json();
+
+    document.getElementById('loading').classList.remove('show');
+    renderPipeline(data, query);
+
+  } catch(err) {
+    document.getElementById('loading').classList.remove('show');
+    document.getElementById('form-card').style.display = 'block';
+    document.getElementById('btn-query').disabled = false;
+    var errBox = document.getElementById('error-box');
+    errBox.textContent = err.message || 'Une erreur est survenue.';
+    errBox.classList.add('show');
+  }
+}
+
+function renderPipeline(data, query) {
+  var plan = data.plan || {};
+  var chunks = data.chunks || [];
+  var reply = data.reply || '';
+  var engine = data.engine || 'langgraph-rag';
+
+  // Step 1: Intent
+  document.getElementById('step1-label').textContent = t('step1label');
+  document.getElementById('step1-desc').textContent = t('step1desc');
+  var intent = plan.intent || 'other';
+  var confidence = Math.round((plan.confidence || 0) * 100);
+  var badge = document.getElementById('intent-badge');
+  badge.textContent = intent;
+  badge.className = 'intent-badge ' + (intent === 'pm_workflow' ? 'intent-pm' : 'intent-other');
+  document.getElementById('conf-label').textContent = t('confLabel', confidence);
+  document.getElementById('conf-fill').style.width = confidence + '%';
+  document.getElementById('goal-text').textContent = plan.user_goal || query;
+
+  // Step 2: Chunks
+  document.getElementById('step2-label').textContent = t('step2label');
+  document.getElementById('step2-desc').textContent = t('step2desc');
+  var chunkList = document.getElementById('chunk-list');
+  chunkList.innerHTML = '';
+
+  if (!chunks || chunks.length === 0) {
+    chunkList.innerHTML = '<div class="no-rag-note">' + t('noRag') + '</div>';
+  } else {
+    chunks.forEach(function(chunk) {
+      var scoreDisplay = chunk.score !== undefined ? (chunk.score * 100).toFixed(0) + '%' : '—';
+      var sClass = scoreClass(chunk.score || 0);
+      var id = 'chunk-' + Math.random().toString(36).slice(2);
+      var card = document.createElement('div');
+      card.className = 'chunk-card';
+      card.innerHTML =
+        '<div class="chunk-meta">' +
+          '<span class="chunk-source">' + sourceName(chunk.source || '') + '</span>' +
+          '<span class="score-pill ' + sClass + '">sim ' + scoreDisplay + '</span>' +
+        '</div>' +
+        '<div class="chunk-text" id="txt-' + id + '">' + escHtml(chunk.text || '') + '</div>' +
+        '<button class="chunk-expand" id="btn-' + id + '" onclick="toggleChunk(\'' + id + '\')">' + t('expand') + '</button>';
+      chunkList.appendChild(card);
+    });
+  }
+
+  // Step 3: Reply
+  document.getElementById('step3-label').textContent = t('step3label');
+  document.getElementById('step3-desc').textContent = t('step3desc');
+  document.getElementById('reply-box').innerHTML = reply;
+  document.getElementById('btn-copy').textContent = t('copy');
+  document.getElementById('btn-copy').classList.remove('copied');
+  lastReply = reply.replace(/<[^>]+>/g, '');
+
+  // Meta
+  document.getElementById('pipeline-meta').textContent = t('pipelineMeta', engine);
+
+  document.getElementById('pipeline').classList.add('show');
+}
+
+function toggleChunk(id) {
+  var txt = document.getElementById('txt-' + id);
+  var btn = document.getElementById('btn-' + id);
+  if (txt.style.webkitLineClamp === 'unset') {
+    txt.style.webkitLineClamp = '4';
+    txt.style.overflow = 'hidden';
+    btn.textContent = t('expand');
+  } else {
+    txt.style.webkitLineClamp = 'unset';
+    txt.style.overflow = 'visible';
+    btn.textContent = t('collapse');
+  }
+}
+
+function copyReply() {
+  navigator.clipboard.writeText(lastReply).then(function() {
+    var btn = document.getElementById('btn-copy');
+    btn.textContent = t('copied');
+    btn.classList.add('copied');
+    setTimeout(function(){ btn.textContent = t('copy'); btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function resetForm() {
+  document.getElementById('pipeline').classList.remove('show');
+  document.getElementById('form-card').style.display = 'block';
+  document.getElementById('btn-query').disabled = false;
+  document.getElementById('query').value = '';
+  document.getElementById('query').focus();
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+document.getElementById('query').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) runQuery();
+});
+</script>
+</body>
+</html>

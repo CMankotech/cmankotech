@@ -1,11 +1,13 @@
 import json
 import os
-from typing import Any, Dict, List, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 
 from fastapi import FastAPI, HTTPException
 from langchain_openai import ChatOpenAI
 from langgraph.graph import END, StateGraph
 from pydantic import BaseModel, Field
+
+from rag import build_index, retrieve
 
 DEFAULT_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 GROQ_BASE_URL = os.getenv("GROQ_BASE_URL", "https://api.groq.com/openai/v1")
@@ -22,6 +24,7 @@ class GraphState(TypedDict, total=False):
     message: str
     history: List[Dict[str, str]]
     plan: Dict[str, Any]
+    retrieved_context: Optional[str]
     reply: str
 
 
@@ -33,25 +36,20 @@ def normalize_history(history: List[Dict[str, str]]) -> List[Dict[str, str]]:
     for item in history:
         if not isinstance(item, dict):
             continue
-
         role = str(item.get("role", "")).strip()
         content = str(item.get("content", "")).strip()
         if role not in ALLOWED_HISTORY_ROLES or not content:
             continue
-
         normalized.append({"role": role, "content": content})
-
     return normalized
 
 
 def parse_planner_json(raw: str, *, lang: str, user_message: str) -> Dict[str, Any]:
     cleaned_raw = raw.strip()
-
     if cleaned_raw.startswith("```"):
         lines = cleaned_raw.splitlines()
         if len(lines) >= 3:
             cleaned_raw = "\n".join(lines[1:-1]).strip()
-
     try:
         return json.loads(cleaned_raw)
     except json.JSONDecodeError:
@@ -61,7 +59,10 @@ def parse_planner_json(raw: str, *, lang: str, user_message: str) -> Dict[str, A
             "user_goal": user_message,
             "steps": [],
             "risks": ["planner_json_parse_error"],
-            "quick_win": "Clarifier le besoin en une phrase" if lang == "fr" else "Clarify the goal in one sentence",
+            "quick_win": (
+                "Clarifier le besoin en une phrase" if lang == "fr"
+                else "Clarify the goal in one sentence"
+            ),
             "raw": raw,
         }
 
@@ -70,7 +71,6 @@ def get_llm(temperature: float = 0.3):
     api_key = os.getenv("GROQ_KEY")
     if not api_key:
         raise HTTPException(status_code=500, detail="Missing GROQ_KEY")
-
     return ChatOpenAI(
         api_key=api_key,
         model=DEFAULT_MODEL,
@@ -118,9 +118,36 @@ def planner_node(state: GraphState) -> GraphState:
     return {"plan": plan}
 
 
+def retriever_node(state: GraphState) -> GraphState:
+    query = state.get("message", "")
+    chunks = retrieve(query, top_k=3)
+    if not chunks:
+        return {"retrieved_context": None}
+    context = "\n\n---\n\n".join(
+        f"[Source: {src}]\n{doc}" for doc, src, _ in chunks
+    )
+    return {"retrieved_context": context}
+
+
+def route_after_planner(state: GraphState) -> str:
+    intent = state.get("plan", {}).get("intent", "other")
+    return "retriever" if intent == "pm_workflow" else "synthesis"
+
+
 def synthesis_node(state: GraphState) -> GraphState:
     lang = "en" if state.get("lang") == "en" else "fr"
     llm = get_llm(temperature=0.45)
+
+    retrieved = state.get("retrieved_context") or ""
+    rag_instruction = (
+        (
+            "Use the following PM knowledge base excerpts to ground your answer. "
+            "Reference specific frameworks from them when relevant.\n\n"
+            f"PM Knowledge Base:\n{retrieved}\n\n"
+        )
+        if retrieved
+        else ""
+    )
 
     prompt = (
         "You are KRL1, Carlin Mankoto's portfolio assistant. "
@@ -148,6 +175,7 @@ def synthesis_node(state: GraphState) -> GraphState:
     ])
 
     user_payload = (
+        f"{rag_instruction}"
         f"User request:\n{state.get('message', '')}\n\n"
         f"Plan JSON:\n{json.dumps(state.get('plan', {}), ensure_ascii=False)}\n\n"
         f"Tools:\n{tool_links}"
@@ -158,22 +186,37 @@ def synthesis_node(state: GraphState) -> GraphState:
         {"role": "user", "content": user_payload},
     ])
 
-    reply = completion.content if isinstance(completion.content, str) else json.dumps(completion.content, ensure_ascii=False)
+    reply = (
+        completion.content
+        if isinstance(completion.content, str)
+        else json.dumps(completion.content, ensure_ascii=False)
+    )
     return {"reply": reply}
 
 
 def build_graph():
     graph = StateGraph(GraphState)
     graph.add_node("planner", planner_node)
+    graph.add_node("retriever", retriever_node)
     graph.add_node("synthesis", synthesis_node)
     graph.set_entry_point("planner")
-    graph.add_edge("planner", "synthesis")
+    graph.add_conditional_edges(
+        "planner",
+        route_after_planner,
+        {"retriever": "retriever", "synthesis": "synthesis"},
+    )
+    graph.add_edge("retriever", "synthesis")
     graph.add_edge("synthesis", END)
     return graph.compile()
 
 
 app = FastAPI(title="KRL1 LangGraph Orchestrator")
 compiled_graph = build_graph()
+
+
+@app.on_event("startup")
+def startup_event():
+    build_index()
 
 
 @app.get("/health")
@@ -188,10 +231,32 @@ def orchestrate(payload: OrchestrateRequest):
         "message": payload.message,
         "history": payload.history,
     }
-
     result = compiled_graph.invoke(state)
     return {
         "reply": result.get("reply", ""),
         "plan": result.get("plan"),
         "engine": "langgraph",
+    }
+
+
+@app.post("/rag-query")
+def rag_query(payload: OrchestrateRequest):
+    state: GraphState = {
+        "lang": payload.lang,
+        "message": payload.message,
+        "history": payload.history,
+    }
+    result = compiled_graph.invoke(state)
+
+    raw_chunks = retrieve(payload.message, top_k=3)
+    chunks = [
+        {"text": doc, "source": src, "score": score}
+        for doc, src, score in raw_chunks
+    ]
+
+    return {
+        "reply": result.get("reply", ""),
+        "plan": result.get("plan"),
+        "chunks": chunks,
+        "engine": "langgraph-rag",
     }

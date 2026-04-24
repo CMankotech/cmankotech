@@ -39,6 +39,10 @@ export default {
       return handleOrchestratorStream(body, env, ctx);
     }
 
+    if (url.pathname === '/rag-query') {
+      return handleRagQuery(body, env);
+    }
+
     return proxyGroq(body, env, ctx);
   },
 };
@@ -255,6 +259,31 @@ async function handleOrchestratorStream(body, env, ctx) {
       ...corsHeaders(),
     },
   });
+}
+
+async function handleRagQuery(body, env) {
+  if (!env.LANGGRAPH_ORCHESTRATOR_URL) {
+    return jsonResponse(
+      { error: 'RAG endpoint requires the LangGraph orchestrator. Set LANGGRAPH_ORCHESTRATOR_URL.' },
+      503,
+    );
+  }
+
+  const baseUrl = env.LANGGRAPH_ORCHESTRATOR_URL.replace(/\/orchestrate$/, '');
+  try {
+    const res = await fetch(`${baseUrl}/rag-query`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const text = await res.text();
+    return new Response(text, {
+      status: res.status,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+    });
+  } catch {
+    return jsonResponse({ error: 'RAG service unavailable.' }, 503);
+  }
 }
 
 async function forwardToLangGraph(body, env) {
