@@ -31,7 +31,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .subtitle{font-size:0.85rem;color:var(--dim);max-width:520px;margin:0 auto}
 
 /* CARD */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem}
+.card{background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 14px 38px -18px rgba(0,0,0,0.5);}
 .card-title{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.6rem}
 .card-title::after{content:'';flex:1;height:1px;background:var(--line)}
 
@@ -120,7 +120,7 @@ textarea::placeholder{color:var(--muted)}
 .input-hint{font-size:0.68rem;color:var(--muted);margin-top:0.3rem;text-align:right}
 
 /* PERSONA */
-.persona-card{background:linear-gradient(135deg,rgba(167,139,250,0.08),rgba(52,211,153,0.06));border:1px solid rgba(167,139,250,0.2);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem;display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:start}
+.persona-card{background:linear-gradient(180deg,rgba(167,139,250,0.1),rgba(52,211,153,0.06));border:1px solid rgba(167,139,250,0.22);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem;display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:start;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 14px 38px -18px rgba(0,0,0,0.5);}
 .persona-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#34d399);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
 .persona-name{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:0.2rem}
 .persona-desc{font-size:0.78rem;color:var(--dim);margin-bottom:0.75rem;line-height:1.5}
@@ -202,8 +202,8 @@ footer a:hover{text-decoration:underline}
 
   <div class="lang-bar">
     <div class="lang-toggle">
-      <button class="lang-btn active" id="lbFr" onclick="setLang('fr')">FR</button>
-      <button class="lang-btn" id="lbEn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn glass-shimmer glass-focus active" id="lbFr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn glass-shimmer glass-focus" id="lbEn" onclick="setLang('en')">EN</button>
     </div>
   </div>
 
@@ -253,7 +253,7 @@ footer a:hover{text-decoration:underline}
 })();
 </script>
 <div class="howto" style="--about-color:#34d399">
-    <button class="howto-trigger" onclick="toggleHowto(this)" id="howtoTrigger">
+    <button class="howto-trigger glass-focus" onclick="toggleHowto(this)" id="howtoTrigger">
       <span id="howtoLabel">&#9432; En savoir plus</span>
       <span class="arrow">&#9660;</span>
     </button>
@@ -305,7 +305,7 @@ footer a:hover{text-decoration:underline}
 
   <div class="error-box" id="errorBox"></div>
 
-  <button class="btn-launch" id="launchBtn" onclick="launch()">
+  <button class="btn-launch glass-edge glass-pointer glass-focus" id="launchBtn" onclick="launch()">
     &#9654; Analyser les entretiens
   </button>
 
@@ -324,9 +324,9 @@ footer a:hover{text-decoration:underline}
         <div class="results-sub" id="resultsSub"></div>
       </div>
       <div style="display:flex;gap:0.5rem;align-items:center">
-        <button class="btn-copy-all" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
-        <button class="btn-rerun" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
-        <button class="btn-reset" onclick="reset()">&#8635; Recommencer</button>
+        <button class="btn-copy-all glass-shimmer glass-focus" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
+        <button class="btn-rerun glass-shimmer glass-focus" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
+        <button class="btn-reset glass-shimmer glass-focus" onclick="reset()">&#8635; Recommencer</button>
       </div>
     </div>
 
@@ -953,5 +953,6 @@ window.pmImportInsights = function(){
 if(window.PMSession) PMSession.init();
 </script>
 <script src="krl1-widget.js"></script>
+<script src="glass.js"></script>
 </body>
 </html>

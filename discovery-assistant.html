@@ -56,7 +56,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 
 
 /* FORM */
-.form-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;margin-bottom:1.5rem}
+.form-card{background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:16px;padding:2rem;margin-bottom:1.5rem;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 14px 38px -18px rgba(0,0,0,0.5);}
 .field{margin-bottom:1.5rem}
 .field:last-child{margin-bottom:0}
 .field-label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--dim);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.5rem}
@@ -105,7 +105,7 @@ textarea{min-height:100px;line-height:1.6}
 .btn-rerun{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;padding:0.4rem 0.9rem;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--dim);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .btn-rerun:hover{border-color:rgba(96,165,250,0.5);color:var(--blue)}
 
-.result-block{margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.result-block{margin-bottom:1.5rem;background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:14px;overflow:hidden;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 14px 38px -18px rgba(0,0,0,0.5);}
 .result-block-header{display:flex;align-items:center;gap:0.75rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border)}
 .result-block-num{font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:800;width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center}
 .num-hyp{background:rgba(96,165,250,0.15);color:var(--blue)}
@@ -173,8 +173,8 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
 
   <div class="lang-bar">
     <div class="lang-toggle">
-      <button class="lang-btn active" id="lbFr" onclick="setLang('fr')">FR</button>
-      <button class="lang-btn" id="lbEn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn glass-shimmer glass-focus active" id="lbFr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn glass-shimmer glass-focus" id="lbEn" onclick="setLang('en')">EN</button>
     </div>
   </div>
 
@@ -225,7 +225,7 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
 })();
 </script>
 <div class="howto" style="--about-color:#22d3ee">
-    <button class="howto-trigger" onclick="toggleHowto(this)" id="howtoTrigger">
+    <button class="howto-trigger glass-focus" onclick="toggleHowto(this)" id="howtoTrigger">
       <span id="howtoLabel">&#9432; En savoir plus</span>
       <span class="arrow">&#9660;</span>
     </button>
@@ -267,7 +267,7 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
 
   <div class="error-box" id="errorBox"></div>
 
-  <button class="btn-launch" id="launchBtn" onclick="launch()">
+  <button class="btn-launch glass-edge glass-pointer glass-focus" id="launchBtn" onclick="launch()">
     <span class="btn-inner">&#9654; Lancer la discovery</span>
   </button>
 
@@ -287,9 +287,9 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
     <div class="results-header">
       <span class="results-title"><span id="lbl_results_title">R&eacute;sultats de ta discovery</span></span>
       <div style="display:flex;gap:0.5rem;align-items:center">
-        <button class="btn-copy-all" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
-        <button class="btn-rerun" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
-        <button class="btn-reset" onclick="reset()">&#8635; Nouvelle discovery</button>
+        <button class="btn-copy-all glass-shimmer glass-focus" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
+        <button class="btn-rerun glass-shimmer glass-focus" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
+        <button class="btn-reset glass-shimmer glass-focus" onclick="reset()">&#8635; Nouvelle discovery</button>
       </div>
     </div>
 
@@ -676,3 +676,4 @@ function applyLangExtras(lang) {
 <script src="pm-session.js"></script>
 <script>if(window.PMSession) PMSession.init();</script>
 <script src="krl1-widget.js"></script>
+<script src="glass.js"></script>
