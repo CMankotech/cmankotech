@@ -59,8 +59,8 @@ section{margin-bottom:4rem}
 
 /* STACK GRID */
 .stack-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
-.stack-card{padding:1.5rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;transition:all 0.3s;display:flex;flex-direction:column;gap:0.75rem}
-.stack-card:hover{transform:translateY(-2px);border-color:rgba(167,139,250,0.25);box-shadow:0 10px 40px -10px rgba(167,139,250,0.1)}
+.stack-card{padding:1.5rem;background:linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));border:1px solid var(--border);border-radius:14px;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 12px 36px -16px rgba(0,0,0,0.5);transition:all 0.3s;display:flex;flex-direction:column;gap:0.75rem}
+.stack-card:hover{transform:translateY(-2px);border-color:rgba(167,139,250,0.25);box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 14px 44px -10px rgba(167,139,250,0.18),0 0 50px -24px rgba(167,139,250,0.25)}
 .stack-icon{font-size:1.4rem;line-height:1}
 .stack-name{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text)}
 .stack-desc{font-size:0.8rem;color:var(--dim);line-height:1.6}
@@ -76,7 +76,7 @@ section{margin-bottom:4rem}
 .tl-item{display:grid;grid-template-columns:48px 1fr;gap:1.5rem;position:relative}
 .tl-left{position:relative;display:flex;flex-direction:column;align-items:center;padding-top:0.25rem}
 .tl-item:not(:last-child) .tl-left::after{content:'';position:absolute;left:50%;transform:translateX(-50%);top:40px;bottom:0;width:1px;background:var(--line)}
-.tl-num{width:36px;height:36px;border-radius:50%;background:var(--glass);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;color:var(--cyan);flex-shrink:0;transition:all 0.3s;position:relative;z-index:1}
+.tl-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:800;color:var(--cyan);flex-shrink:0;transition:all 0.3s;position:relative;z-index:1;backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 4px 14px -6px rgba(34,211,238,0.25)}
 .tl-item:hover .tl-num{border-color:rgba(34,211,238,0.4);background:rgba(34,211,238,0.08);box-shadow:0 0 16px rgba(34,211,238,0.2)}
 .tl-content{padding:0.5rem 0 2.5rem}
 .tl-step-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--muted);margin-bottom:0.4rem}
@@ -85,29 +85,29 @@ section{margin-bottom:4rem}
 
 /* BUILD TOOLS */
 .tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
-.tool-card{padding:1.75rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;transition:all 0.3s}
-.tool-card:hover{transform:translateY(-2px);border-color:rgba(96,165,250,0.2)}
+.tool-card{padding:1.75rem;background:linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));border:1px solid var(--border);border-radius:14px;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 12px 32px -16px rgba(0,0,0,0.45);transition:all 0.3s}
+.tool-card:hover{transform:translateY(-2px);border-color:rgba(96,165,250,0.2);box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 14px 40px -14px rgba(96,165,250,0.22)}
 .tool-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.25rem;display:flex;align-items:center;gap:0.65rem}
 .tool-role{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.75rem}
 .tool-desc{font-size:0.82rem;color:var(--dim);line-height:1.7}
 
 /* DECISIONS */
 .decision-list{display:flex;flex-direction:column;gap:1rem}
-.decision-card{padding:1.5rem 1.75rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;transition:border-color 0.3s}
+.decision-card{padding:1.5rem 1.75rem;background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:14px;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 14px 36px -18px rgba(0,0,0,0.45);transition:border-color 0.3s,box-shadow 0.3s}
 .decision-card:hover{border-color:rgba(167,139,250,0.2)}
 .decision-q{font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.5rem}
 .decision-a{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:0.5rem}
 .decision-why{font-size:0.82rem;color:var(--dim);line-height:1.7}
 
 /* ARCH DIAGRAM V2 — vertical tree */
-.arch-node{display:flex;flex-direction:column;align-items:center;gap:0.4rem;padding:0.85rem 1.1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;min-width:130px;text-align:center}
+.arch-node{display:flex;flex-direction:column;align-items:center;gap:0.4rem;padding:0.85rem 1.1rem;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:10px;min-width:130px;text-align:center;backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 8px 24px -12px rgba(0,0,0,0.4)}
 .arch-node-name{font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:var(--text);line-height:1.3}
 .arch-node-label{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.18rem 0.5rem;border-radius:4px}
 .arch-node.n-user .arch-node-label{color:var(--cyan);background:rgba(34,211,238,0.1)}
 .arch-node.n-worker .arch-node-label{color:var(--orange);background:rgba(251,146,60,0.1)}
 .arch-node.n-lg .arch-node-label{color:var(--violet);background:rgba(167,139,250,0.1)}
 .arch-node.n-groq .arch-node-label{color:var(--blue);background:rgba(96,165,250,0.1)}
-.arch-diagram{display:flex;flex-direction:column;align-items:center;padding:2rem 1.5rem 1.5rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;margin:0 0 2rem}
+.arch-diagram{display:flex;flex-direction:column;align-items:center;padding:2rem 1.5rem 1.5rem;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:14px;margin:0 0 2rem;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 20px 50px -24px rgba(0,0,0,0.5)}
 .arch-top{display:flex;align-items:center;gap:0.6rem}
 .arch-h-arrow{color:var(--muted);font-size:1rem;flex-shrink:0}
 .arch-vline{width:1px;height:1.5rem;background:var(--border);margin:0 auto}
@@ -125,7 +125,7 @@ section{margin-bottom:4rem}
 .update-item code{color:var(--text);background:rgba(255,255,255,0.08);padding:0.1rem 0.35rem;border-radius:6px;font-size:0.78rem}
 
 /* NARRATIVE */
-.narrative-block{padding:1.75rem;background:var(--glass);border:1px solid var(--border);border-radius:14px;display:flex;flex-direction:column;gap:1.25rem}
+.narrative-block{padding:1.75rem;background:linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:14px;display:flex;flex-direction:column;gap:1.25rem;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 14px 36px -18px rgba(0,0,0,0.45)}
 .narrative-lead{font-size:0.92rem;color:var(--text);line-height:1.8;border-left:2px solid rgba(34,211,238,0.35);padding-left:1.25rem}
 .narrative-p{font-size:0.83rem;color:var(--dim);line-height:1.8}
 .narrative-reasons{display:flex;flex-direction:column;gap:0.75rem}
@@ -200,8 +200,8 @@ section{margin-bottom:4rem}
       <span data-i18n="back">Portfolio</span>
     </a>
     <div class="lang-switcher">
-      <button class="lang-btn active" id="btn-fr" onclick="setLang(‘fr’)">FR</button>
-      <button class="lang-btn" id="btn-en" onclick="setLang(‘en’)">EN</button>
+      <button class="lang-btn glass-shimmer glass-focus active" id="btn-fr" onclick="setLang(‘fr’)">FR</button>
+      <button class="lang-btn glass-shimmer glass-focus" id="btn-en" onclick="setLang(‘en’)">EN</button>
     </div>
   </div>
 
@@ -957,5 +957,6 @@ function setLang(lang){
 
 </script>
 <script src="krl1-widget.js"></script>
+<script src="glass.js"></script>
 </body>
 </html>
