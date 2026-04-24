@@ -307,6 +307,7 @@ var i18n = {
     step3label: 'Synthesis — Réponse augmentée',
     step3desc: 'Le LLM génère une réponse ancrée dans les chunks récupérés',
     noRag: 'Intent non-PM détecté → le Retriever n\'a pas été activé pour cette requête.',
+    noRagBackend: '⚠ Le backend RAG (Python + ChromaDB) n\'est pas déployé. Réponse via l\'orchestrateur de base — les chunks ne sont pas disponibles.',
     pipelineMeta: function(engine){ return 'Moteur : ' + engine; },
     confLabel: function(pct){ return 'Confidence : ' + pct + '%'; },
     expand: 'Voir plus',
@@ -328,6 +329,7 @@ var i18n = {
     step3label: 'Synthesis — Augmented Response',
     step3desc: 'The LLM generates a response grounded in the retrieved chunks',
     noRag: 'Non-PM intent detected → the Retriever was not activated for this query.',
+    noRagBackend: '⚠ RAG backend (Python + ChromaDB) is not deployed. Responding via base orchestrator — chunks are unavailable.',
     pipelineMeta: function(engine){ return 'Engine: ' + engine; },
     confLabel: function(pct){ return 'Confidence: ' + pct + '%'; },
     expand: 'Read more',
@@ -387,18 +389,45 @@ async function runQuery() {
     setTimeout(function(){ setLoading('retriever'); }, 600);
     setTimeout(function(){ setLoading('synthesis'); }, 1400);
 
-    var res = await fetch(WORKER_URL + '/rag-query', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lang: currentLang, message: query, history: [] }),
-    });
+    var data = null;
 
-    var data;
-    if (!res.ok) {
-      var txt = await res.text();
-      throw new Error(txt || 'Erreur ' + res.status);
+    // Try /rag-query first (requires Python orchestrator running)
+    try {
+      var ragRes = await fetch(WORKER_URL + '/rag-query', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ lang: currentLang, message: query }),
+      });
+      if (ragRes.ok) {
+        var ragData = await ragRes.json();
+        // Confirm it's a real RAG response (not an error envelope)
+        if (ragData && !ragData.error) {
+          data = ragData;
+        }
+      }
+    } catch(e) {
+      // RAG backend unreachable — fall through to orchestrate
     }
-    data = await res.json();
+
+    // Fallback: /orchestrate (always available via Cloudflare Worker)
+    if (!data) {
+      var orchRes = await fetch(WORKER_URL + '/orchestrate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ lang: currentLang, message: query, history: [] }),
+      });
+      if (!orchRes.ok) {
+        var txt = await orchRes.text();
+        throw new Error(txt || 'Erreur ' + orchRes.status);
+      }
+      var orchData = await orchRes.json();
+      data = {
+        reply: orchData.reply || '',
+        plan: orchData.plan || {},
+        chunks: null, // null = backend offline, [] = PM intent with no hits
+        engine: 'orchestrate-fallback',
+      };
+    }
 
     document.getElementById('loading').classList.remove('show');
     renderPipeline(data, query);
@@ -415,7 +444,7 @@ async function runQuery() {
 
 function renderPipeline(data, query) {
   var plan = data.plan || {};
-  var chunks = data.chunks || [];
+  var chunks = 'chunks' in data ? data.chunks : [];
   var reply = data.reply || '';
   var engine = data.engine || 'langgraph-rag';
 
@@ -437,7 +466,9 @@ function renderPipeline(data, query) {
   var chunkList = document.getElementById('chunk-list');
   chunkList.innerHTML = '';
 
-  if (!chunks || chunks.length === 0) {
+  if (chunks === null) {
+    chunkList.innerHTML = '<div class="no-rag-note">' + t('noRagBackend') + '</div>';
+  } else if (chunks.length === 0) {
     chunkList.innerHTML = '<div class="no-rag-note">' + t('noRag') + '</div>';
   } else {
     chunks.forEach(function(chunk) {
