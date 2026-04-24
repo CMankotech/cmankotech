@@ -302,7 +302,7 @@ section{margin-bottom:4rem}
         <div class="stack-icon">🌐</div>
         <div class="stack-name">HTML · CSS · JavaScript</div>
         <div class="stack-badge sb-cyan" data-i18n="stack.front.badge">Frontend</div>
-        <div class="stack-desc" data-i18n="stack.front.desc">Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline — pas de composants partagés, pas de routing entre pages. Ce choix permet un déploiement direct sans étape de build, un debug immédiat dans les DevTools navigateur, et un code lisible à plat sans couche d'abstraction. Six pages indépendantes : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller.</div>
+        <div class="stack-desc" data-i18n="stack.front.desc">Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline — pas de composants partagés, pas de routing entre pages. Ce choix permet un déploiement direct sans étape de build, un debug immédiat dans les DevTools navigateur, et un code lisible à plat sans couche d'abstraction. Sept pages autonomes : les 6 outils PM (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) + le hub <code>pm-toolkit.html</code> qui les enchaîne. Un seul point de couplage : <code>pm-session.js</code>, un module léger qui persiste les sorties de chaque outil dans <code>localStorage</code> pour que le suivant puisse les réimporter en un clic.</div>
       </div>
       <div class="stack-card">
         <div class="stack-icon">☁️</div>
@@ -345,7 +345,7 @@ section{margin-bottom:4rem}
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step1.label">Idée & cadrage</div>
           <div class="tl-step-title" data-i18n="step1.title">Partir d'un vrai problème PM</div>
-          <div class="tl-step-desc" data-i18n="step1.desc">Chaque outil répond à une friction réelle vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens utilisateurs à la main, prioriser un backlog sans méthode claire, préparer une roadmap narrative pour des dirigeants. Le site est né de cette liste de frustrations, pas d'une envie de faire un portfolio classique. Six outils ont émergé de ce processus : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories et Roadmap Storyteller.</div>
+          <div class="tl-step-desc" data-i18n="step1.desc">Chaque outil répond à une friction réelle vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens utilisateurs à la main, prioriser un backlog sans méthode claire, préparer une roadmap narrative pour des dirigeants. Le site est né de cette liste de frustrations, pas d'une envie de faire un portfolio classique. Six outils ont émergé de ce processus : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories et Roadmap Storyteller. Plus tard consolidés dans un hub unique — le PM Toolkit — pour refléter le vrai workflow PM : discovery → OKR → stories → roadmap, sans recoller le contexte à la main d'un outil au suivant.</div>
         </div>
       </div>
       <div class="tl-item">
@@ -365,7 +365,7 @@ section{margin-bottom:4rem}
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step3.label">Développement</div>
           <div class="tl-step-title" data-i18n="step3.title">Pages HTML autonomes, JS vanilla</div>
-          <div class="tl-step-desc" data-i18n="step3.desc">Chaque outil est une page HTML indépendante avec son propre CSS et JS. Pas de routing, pas de state management, pas de composants partagés. Simple, lisible, et débuggable sans toolchain. Chaque prompt system est spécialisé (ex : 'Tu es un expert en OKR…') et la réponse attendue est du JSON structuré que le JS parse et injecte dans le DOM. La gestion bilingue FR/EN est faite avec un objet de traductions et des attributs data-i18n.</div>
+          <div class="tl-step-desc" data-i18n="step3.desc">Chaque outil est une page HTML indépendante avec son propre CSS et JS. Pas de routing, pas de state management, pas de composants partagés. Simple, lisible, et débuggable sans toolchain. Chaque prompt system est spécialisé (ex : 'Tu es un expert en OKR…') et la réponse attendue est du JSON structuré que le JS parse et injecte dans le DOM. La gestion bilingue FR/EN est faite avec un objet de traductions et des attributs data-i18n. Le seul état partagé entre outils passe par <code>pm-session.js</code> : chaque outil sauvegarde ses sorties structurées dans <code>localStorage</code> sous une clé commune, et le suivant peut les réimporter en un clic (bordure colorée pour feedback visuel). Zéro backend, zéro compte, zéro friction.</div>
         </div>
       </div>
       <div class="tl-item">
@@ -477,6 +477,11 @@ section{margin-bottom:4rem}
         <div class="decision-q" data-i18n="d4.q">Pourquoi GitHub Pages plutôt qu'un VPS ou Vercel ?</div>
         <div class="decision-a" data-i18n="d4.a">Gratuit, simple, CI/CD natif</div>
         <div class="decision-why" data-i18n="d4.why">Pour des fichiers statiques, GitHub Pages est imbattable : gratuit, CDN mondial, HTTPS automatique, et le déploiement se déclenche simplement avec un git push. Pas besoin d'une infrastructure plus complexe pour ce cas d'usage.</div>
+      </div>
+      <div class="decision-card">
+        <div class="decision-q" data-i18n="d5.q">Pourquoi un hub PM Toolkit plutôt que 6 liens séparés sur le portfolio ?</div>
+        <div class="decision-a" data-i18n="d5.a">Chaîner les outils = refléter le vrai workflow PM</div>
+        <div class="decision-why" data-i18n="d5.why">Un PM enchaîne discovery → OKR → stories → roadmap. Garder les outils en cartes isolées sur le portfolio forçait l'utilisateur à recoller le contexte à la main d'un outil au suivant. Le hub <code>pm-toolkit.html</code> centralise l'entrée, rend la séquence lisible, et <code>pm-session.js</code> fait circuler les insights (problème, persona, top-priorité…) via <code>localStorage</code> — sans backend, sans compte, sans friction.</div>
       </div>
     </div>
   </section>
@@ -665,7 +670,7 @@ var T={
     'subtitle':'Stack vanilla, déploiement statique, LLM via proxy sécurisé. Zéro framework, zéro dépendance inutile — juste du web qui fonctionne.',
     's1.title':'Stack technique',
     'stack.front.badge':'Frontend',
-    'stack.front.desc':'Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline — pas de composants partagés, pas de routing entre pages. Ce choix permet un déploiement direct sans étape de build, un debug immédiat dans les DevTools navigateur, et un code lisible à plat sans couche d\'abstraction. Six pages indépendantes : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller.',
+    'stack.front.desc':'Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline — pas de composants partagés, pas de routing entre pages. Ce choix permet un déploiement direct sans étape de build, un debug immédiat dans les DevTools navigateur, et un code lisible à plat sans couche d\'abstraction. Sept pages autonomes : les 6 outils PM (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) + le hub <code>pm-toolkit.html</code> qui les enchaîne. Un seul point de couplage : <code>pm-session.js</code>, un module léger qui persiste les sorties de chaque outil dans <code>localStorage</code> pour que le suivant puisse les réimporter en un clic.',
     'stack.deploy.badge':'Hébergement',
     'stack.deploy.desc':'Hébergement statique gratuit avec CI/CD natif : chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Zéro coût, zéro infra à gérer — idéal pour un site statique à fichiers HTML/CSS/JS.',
     'stack.proxy.badge':'API Proxy',
@@ -677,13 +682,13 @@ var T={
     's2.title':'Étapes de création',
     'step1.label':'Idée & cadrage',
     'step1.title':'Partir d\'un vrai problème PM',
-    'step1.desc':'Chaque outil répond à une friction réelle vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens utilisateurs à la main, prioriser un backlog sans méthode claire, préparer une roadmap narrative pour des dirigeants. Le site est né de cette liste de frustrations, pas d\'une envie de faire un portfolio classique. Six outils ont émergé de ce processus : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories et Roadmap Storyteller.',
+    'step1.desc':'Chaque outil répond à une friction réelle vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens utilisateurs à la main, prioriser un backlog sans méthode claire, préparer une roadmap narrative pour des dirigeants. Le site est né de cette liste de frustrations, pas d\'une envie de faire un portfolio classique. Six outils ont émergé de ce processus : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories et Roadmap Storyteller. Plus tard consolidés dans un hub unique — le PM Toolkit — pour refléter le vrai workflow PM : discovery → OKR → stories → roadmap, sans recoller le contexte à la main d\'un outil au suivant.',
     'step2.label':'Design',
     'step2.title':'Système de design en CSS variables',
     'step2.desc':'Dark theme pensé dès le départ avec un système de tokens CSS (couleurs, surfaces, borders) cohérent sur toutes les pages. La palette bleue-violette-cyan crée une identité visuelle forte sans recourir à un framework UI. Typographie Syne (titres, weight 800) pour l\'impact, DM Sans (corps, weight 300) pour la lisibilité. Les CSS variables permettent une cohérence automatique — modifier --cyan suffit à mettre à jour l\'accent sur toutes les pages.',
     'step3.label':'Développement',
     'step3.title':'Pages HTML autonomes, JS vanilla',
-    'step3.desc':'Chaque outil est une page HTML indépendante avec son propre CSS et JS. Pas de routing, pas de state management, pas de composants partagés. Simple, lisible, et débuggable sans toolchain. Chaque prompt system est spécialisé (ex : \'Tu es un expert en OKR…\') et la réponse attendue est du JSON structuré que le JS parse et injecte dans le DOM. La gestion bilingue FR/EN est faite avec un objet de traductions et des attributs data-i18n.',
+    'step3.desc':'Chaque outil est une page HTML indépendante avec son propre CSS et JS. Pas de routing, pas de state management, pas de composants partagés. Simple, lisible, et débuggable sans toolchain. Chaque prompt system est spécialisé (ex : \'Tu es un expert en OKR…\') et la réponse attendue est du JSON structuré que le JS parse et injecte dans le DOM. La gestion bilingue FR/EN est faite avec un objet de traductions et des attributs data-i18n. Le seul état partagé entre outils passe par <code>pm-session.js</code> : chaque outil sauvegarde ses sorties structurées dans <code>localStorage</code> sous une clé commune, et le suivant peut les réimporter en un clic (bordure colorée pour feedback visuel). Zéro backend, zéro compte, zéro friction.',
     'step4.label':'Intégration LLM',
     'step4.title':'Proxy Cloudflare pour sécuriser la clé',
     'step4.desc':'Les pages font des requêtes fetch vers un Cloudflare Worker qui proxifie vers l\'API Groq. La clé API ne transite jamais côté client — elle est injectée par le Worker côté serveur. Le Worker valide l\'origine (uniquement cmankotech.github.io), gère les headers CORS et retourne la réponse Groq au format OpenAI. Déployé en quelques minutes avec Wrangler CLI et un wrangler.toml minimaliste.',
@@ -717,6 +722,9 @@ var T={
     'd4.q':'Pourquoi GitHub Pages plutôt qu\'un VPS ou Vercel ?',
     'd4.a':'Gratuit, simple, CI/CD natif',
     'd4.why':'Pour des fichiers statiques, GitHub Pages est imbattable : gratuit, CDN mondial, HTTPS automatique, et le déploiement se déclenche simplement avec un git push. Pas besoin d\'une infrastructure plus complexe pour ce cas d\'usage.',
+    'd5.q':'Pourquoi un hub PM Toolkit plutôt que 6 liens séparés sur le portfolio ?',
+    'd5.a':'Chaîner les outils = refléter le vrai workflow PM',
+    'd5.why':'Un PM enchaîne discovery → OKR → stories → roadmap. Garder les outils en cartes isolées sur le portfolio forçait l\'utilisateur à recoller le contexte à la main d\'un outil au suivant. Le hub <code>pm-toolkit.html</code> centralise l\'entrée, rend la séquence lisible, et <code>pm-session.js</code> fait circuler les insights (problème, persona, top-priorité…) via <code>localStorage</code> — sans backend, sans compte, sans friction.',
     'footer.back':'Retour au portfolio',
     's5.title':'Orchestration LangGraph',
     'lg.front.name':'Frontend statique',
@@ -799,7 +807,7 @@ var T={
     'subtitle':'Vanilla stack, static deployment, LLM via secure proxy. No framework, no unnecessary dependencies — just web that works.',
     's1.title':'Tech stack',
     'stack.front.badge':'Frontend',
-    'stack.front.desc':'100% vanilla. No framework, no bundler, no npm dependencies. Each tool is a standalone HTML page with its own inline CSS and JS — no shared components, no cross-page routing. This allows direct deployment without a build step, instant debugging in browser DevTools, and flat, abstraction-free code. Six independent pages: OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller.',
+    'stack.front.desc':'100% vanilla. No framework, no bundler, no npm dependencies. Each tool is a standalone HTML page with its own inline CSS and JS — no shared components, no cross-page routing. This allows direct deployment without a build step, instant debugging in browser DevTools, and flat, abstraction-free code. Seven standalone pages: the 6 PM tools (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) plus the <code>pm-toolkit.html</code> hub that chains them. Single coupling point: <code>pm-session.js</code>, a lightweight module that persists each tool\'s output into <code>localStorage</code> so the next tool can re-import it in one click.',
     'stack.deploy.badge':'Hosting',
     'stack.deploy.desc':'Free static hosting with native CI/CD: every git push to main triggers an automatic deployment in under 60 seconds. Global CDN, automatic HTTPS, cmankotech.github.io domain with zero configuration. Zero cost, zero infrastructure to manage — ideal for a static HTML/CSS/JS site.',
     'stack.proxy.badge':'API Proxy',
@@ -811,13 +819,13 @@ var T={
     's2.title':'Creation steps',
     'step1.label':'Idea & scoping',
     'step1.title':'Start from a real PM problem',
-    'step1.desc':'Every tool addresses a real friction experienced as a PM: writing vague OKRs, manually synthesising user interviews, prioritising a backlog without a clear method, preparing a narrative roadmap for executives. The site grew from that list of frustrations, not from a desire to build a classic portfolio. Six tools emerged from this process: OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories and Roadmap Storyteller.',
+    'step1.desc':'Every tool addresses a real friction experienced as a PM: writing vague OKRs, manually synthesising user interviews, prioritising a backlog without a clear method, preparing a narrative roadmap for executives. The site grew from that list of frustrations, not from a desire to build a classic portfolio. Six tools emerged from this process: OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories and Roadmap Storyteller. Later consolidated into a single hub — the PM Toolkit — to mirror the real PM workflow: discovery → OKR → stories → roadmap, without manually carrying context from one tool to the next.',
     'step2.label':'Design',
     'step2.title':'Design system via CSS variables',
     'step2.desc':'Dark theme planned from the start with a CSS token system (colors, surfaces, borders) consistent across all pages. The blue-violet-cyan palette creates a strong visual identity without relying on a UI framework. Syne (headings, weight 800) for impact, DM Sans (body, weight 300) for readability. CSS variables ensure automatic consistency — changing --cyan is enough to update the accent across all pages.',
     'step3.label':'Development',
     'step3.title':'Standalone HTML pages, vanilla JS',
-    'step3.desc':'Each tool is an independent HTML page with its own CSS and JS. No routing, no state management, no shared components. Simple, readable, and debuggable without a toolchain. Each system prompt is specialised (e.g. \'You are an OKR expert…\') and the expected output is structured JSON that JS parses and injects into the DOM. FR/EN bilingual support is handled with a translation object and data-i18n attributes.',
+    'step3.desc':'Each tool is an independent HTML page with its own CSS and JS. No routing, no state management, no shared components. Simple, readable, and debuggable without a toolchain. Each system prompt is specialised (e.g. \'You are an OKR expert…\') and the expected output is structured JSON that JS parses and injects into the DOM. FR/EN bilingual support is handled with a translation object and data-i18n attributes. The only shared state across tools goes through <code>pm-session.js</code>: each tool saves its structured outputs into <code>localStorage</code> under a common key, and the next one can re-import them in one click (coloured border for visual feedback). No backend, no account, no friction.',
     'step4.label':'LLM integration',
     'step4.title':'Cloudflare proxy to secure the API key',
     'step4.desc':'Pages send fetch requests to a Cloudflare Worker that proxies to the Groq API. The API key never travels client-side — it is injected by the Worker server-side. The Worker validates the origin (cmankotech.github.io only), handles CORS headers and returns the Groq response in OpenAI format. Deployed in minutes with the Wrangler CLI and a minimal wrangler.toml.',
@@ -851,6 +859,9 @@ var T={
     'd4.q':'Why GitHub Pages instead of a VPS or Vercel?',
     'd4.a':'Free, simple, native CI/CD',
     'd4.why':'For static files, GitHub Pages is unbeatable: free, global CDN, automatic HTTPS, and deployment triggered simply by a git push. No need for more complex infrastructure for this use case.',
+    'd5.q':'Why a PM Toolkit hub rather than 6 separate links on the portfolio?',
+    'd5.a':'Chaining tools mirrors the real PM workflow',
+    'd5.why':'A PM runs discovery → OKR → stories → roadmap. Keeping tools as isolated cards on the portfolio forced users to carry context by hand from one tool to the next. The <code>pm-toolkit.html</code> hub centralises the entry point, makes the sequence legible, and <code>pm-session.js</code> shuttles insights (problem, persona, top priority…) via <code>localStorage</code> — no backend, no account, no friction.',
     'footer.back':'Back to portfolio',
     's5.title':'LangGraph Orchestration',
     'lg.front.name':'Static Frontend',
