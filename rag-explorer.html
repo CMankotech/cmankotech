@@ -38,7 +38,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .subtitle{font-size:0.85rem;color:var(--dim);max-width:540px;margin:0 auto}
 
 /* CARD */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem}
+.card{background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 14px 38px -18px rgba(0,0,0,0.5);}
 .card-title{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.6rem}
 .card-title::after{content:'';flex:1;height:1px;background:var(--line)}
 
@@ -102,7 +102,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 
 /* STEP 2 — CHUNKS */
 .chunk-list{display:flex;flex-direction:column;gap:0.65rem}
-.chunk-card{background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;border-left:3px solid var(--acc-border)}
+.chunk-card{background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(0,0,0,0.15));border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;border-left:3px solid var(--acc-border);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 6px 18px -10px rgba(0,0,0,0.4)}
 .chunk-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem}
 .chunk-source{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--acc)}
 .score-pill{font-size:0.6rem;font-weight:700;padding:0.18rem 0.6rem;border-radius:99px;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.2);color:#86efac}
@@ -152,7 +152,7 @@ footer a:hover{text-decoration:underline}
   <!-- NAV -->
   <nav class="nav">
     <a href="index.html" class="nav-logo">KRL1</a>
-    <a href="index.html" class="nav-back">← Retour</a>
+    <a href="index.html" class="nav-back glass-focus">← Retour</a>
   </nav>
 
   <!-- HEADER -->
@@ -184,8 +184,8 @@ footer a:hover{text-decoration:underline}
 
     <div class="lang-row">
       <div class="lang-toggle">
-        <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
-        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn glass-shimmer glass-focus active" data-lang="fr" onclick="setLang('fr')">FR</button>
+        <button class="lang-btn glass-shimmer glass-focus" data-lang="en" onclick="setLang('en')">EN</button>
       </div>
     </div>
 
@@ -211,7 +211,7 @@ footer a:hover{text-decoration:underline}
       <span class="chip" onclick="useChip(this)">How do I build a product roadmap?</span>
     </div>
 
-    <button class="btn-launch" id="btn-query" onclick="runQuery()">Interroger la KB →</button>
+    <button class="btn-launch glass-edge glass-pointer glass-focus" id="btn-query" onclick="runQuery()">Interroger la KB →</button>
     <div class="error-box" id="error-box"></div>
   </div>
 
@@ -228,7 +228,7 @@ footer a:hover{text-decoration:underline}
         <div class="pipeline-title">Pipeline RAG — Résultats</div>
         <div class="pipeline-meta" id="pipeline-meta"></div>
       </div>
-      <button class="btn-reset" onclick="resetForm()">Nouvelle question</button>
+      <button class="btn-reset glass-shimmer glass-focus" onclick="resetForm()">Nouvelle question</button>
     </div>
 
     <!-- STEP 1: INTENT -->
@@ -277,7 +277,7 @@ footer a:hover{text-decoration:underline}
       </div>
       <div class="step-body">
         <div class="reply-box" id="reply-box"></div>
-        <button class="btn-copy" id="btn-copy" onclick="copyReply()">Copier la réponse</button>
+        <button class="btn-copy glass-shimmer glass-focus" id="btn-copy" onclick="copyReply()">Copier la réponse</button>
       </div>
     </div>
   </div>
@@ -510,5 +510,6 @@ document.getElementById('query').addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) runQuery();
 });
 </script>
+<script src="glass.js"></script>
 </body>
 </html>
