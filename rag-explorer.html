@@ -166,7 +166,7 @@ footer a:hover{text-decoration:underline}
 
   <!-- ARCHITECTURE NOTE -->
   <div class="arch-note">
-    <p>Pipeline RAG construit sur <strong>sentence-transformers</strong> (all-MiniLM-L6-v2) + <strong>ChromaDB</strong> + <strong>LangGraph</strong>. La base de connaissances couvre 7 frameworks PM (RICE, MoSCoW, INVEST, OKR, JTBD, Discovery, Roadmap), découpés en chunks de 300 mots avec overlap de 50.</p>
+    <p>Pipeline RAG embarqué dans un <strong>Cloudflare Worker</strong>. Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) et la similarité cosinus est calculée à l'edge. La base de connaissances couvre 7 frameworks PM (RICE, MoSCoW, INVEST, OKR, JTBD, Discovery, Roadmap), découpés en chunks de 300 mots avec overlap de 50.</p>
     <div class="arch-svg-wrap">
       <svg viewBox="0 0 780 168" class="arch-svg" role="img" aria-label="RAG pipeline diagram">
         <defs>
@@ -193,7 +193,7 @@ footer a:hover{text-decoration:underline}
         <text x="188" y="90" text-anchor="middle" font-size="8" fill="#4a5568" font-family="DM Sans,sans-serif">intent · confidence</text>
         <rect x="298" y="58" width="121" height="38" rx="8" fill="rgba(167,139,250,0.07)" stroke="rgba(167,139,250,0.3)" stroke-width="1.5"/>
         <text x="358.5" y="78" text-anchor="middle" font-size="11" fill="#a78bfa" font-family="DM Sans,sans-serif" font-weight="500">Retriever</text>
-        <text x="358.5" y="90" text-anchor="middle" font-size="8" fill="rgba(167,139,250,0.5)" font-family="DM Sans,sans-serif">ChromaDB · cosine sim</text>
+        <text x="358.5" y="90" text-anchor="middle" font-size="8" fill="rgba(167,139,250,0.5)" font-family="DM Sans,sans-serif">Workers AI · cosine sim</text>
         <rect x="481" y="58" width="99" height="38" rx="8" fill="rgba(14,14,26,0.95)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
         <text x="530.5" y="78" text-anchor="middle" font-size="11" fill="#e2e8f0" font-family="DM Sans,sans-serif" font-weight="500">Synthesis</text>
         <text x="530.5" y="90" text-anchor="middle" font-size="8" fill="#4a5568" font-family="DM Sans,sans-serif">Groq · llama-3.3-70b</text>
@@ -309,7 +309,7 @@ footer a:hover{text-decoration:underline}
   </div>
 
   <footer>
-    Construit par <a href="index.html">Carlin Mankoto</a> · sentence-transformers + ChromaDB + LangGraph + Groq
+    Construit par <a href="index.html">Carlin Mankoto</a> · Cloudflare Workers AI + Groq
   </footer>
 
 </div>
@@ -333,7 +333,7 @@ var i18n = {
     step3label: 'Synthesis — Réponse augmentée',
     step3desc: 'Le LLM génère une réponse ancrée dans les chunks récupérés',
     noRag: 'Intent non-PM détecté → le Retriever n\'a pas été activé pour cette requête.',
-    noRagBackend: '⚠ Le backend RAG (Python + ChromaDB) n\'est pas déployé. Réponse via l\'orchestrateur de base — les chunks ne sont pas disponibles.',
+    noRagBackend: '⚠ Le retriever n\'a pas pu être activé. Réponse via l\'orchestrateur de base — les chunks ne sont pas disponibles.',
     pipelineMeta: function(engine){ return 'Moteur : ' + engine; },
     confLabel: function(pct){ return 'Confidence : ' + pct + '%'; },
     expand: 'Voir plus',
@@ -355,7 +355,7 @@ var i18n = {
     step3label: 'Synthesis — Augmented Response',
     step3desc: 'The LLM generates a response grounded in the retrieved chunks',
     noRag: 'Non-PM intent detected → the Retriever was not activated for this query.',
-    noRagBackend: '⚠ RAG backend (Python + ChromaDB) is not deployed. Responding via base orchestrator — chunks are unavailable.',
+    noRagBackend: '⚠ Retriever could not be activated. Responding via base orchestrator — chunks are unavailable.',
     pipelineMeta: function(engine){ return 'Engine: ' + engine; },
     confLabel: function(pct){ return 'Confidence: ' + pct + '%'; },
     expand: 'Read more',

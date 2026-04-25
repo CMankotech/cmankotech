@@ -11,3 +11,6 @@ compatibility_date = "2024-01-01"
 [[kv_namespaces]]
 binding = "USAGE_COUNTER"
 id = "61e2adfa0a7541fea335e0aa63c479b4"
+
+[ai]
+binding = "AI"
