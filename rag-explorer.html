@@ -417,7 +417,7 @@ async function runQuery() {
 
     var data = null;
 
-    // Try /rag-query first (requires Python orchestrator running)
+    // Try /rag-query first (semantic RAG, native Worker)
     try {
       var ragRes = await fetch(WORKER_URL + '/rag-query', {
         method: 'POST',
@@ -472,7 +472,7 @@ function renderPipeline(data, query) {
   var plan = data.plan || {};
   var chunks = 'chunks' in data ? data.chunks : [];
   var reply = data.reply || '';
-  var engine = data.engine || 'langgraph-rag';
+  var engine = data.engine || 'worker-rag-semantic';
 
   // Step 1: Intent
   document.getElementById('step1-label').textContent = t('step1label');

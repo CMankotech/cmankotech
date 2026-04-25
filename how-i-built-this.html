@@ -119,7 +119,7 @@ section{margin-bottom:4rem}
 .lg-svg-wrap{margin:1.5rem 0;overflow:hidden}
 .lg-svg{width:100%;height:auto;display:block}
 
-/* LANGGRAPH GRID */
+/* WORKER PIPELINE GRID */
 .lg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
 .update-list{display:flex;flex-direction:column;gap:0.5rem;margin:1.5rem 0 0}
 .update-item{display:flex;align-items:baseline;gap:0.75rem;font-size:0.83rem;color:var(--dim);line-height:1.7}
@@ -283,18 +283,17 @@ section{margin-bottom:4rem}
         </div>
         <!-- Route 2 -->
         <div class="arch-branch">
-          <span class="arch-branch-tag">POST /orchestrate[-stream]</span>
+          <span class="arch-branch-tag">POST /orchestrate[-stream] · /rag-query</span>
           <div class="arch-vline"></div>
           <div class="arch-node n-lg">
-            <div class="arch-node-name">FastAPI · LangGraph</div>
-            <div class="arch-node-label">KRL1</div>
+            <div class="arch-node-name">Workers AI · RAG</div>
+            <div class="arch-node-label">embeddings · cosine sim</div>
           </div>
           <div class="arch-vline"></div>
           <div class="arch-node n-groq">
             <div class="arch-node-name">Groq API</div>
-            <div class="arch-node-label">planner · retriever · synthesis</div>
+            <div class="arch-node-label">planner · synthesis</div>
           </div>
-          <div class="arch-fallback-note" data-i18n="arch.fallback">↩ fallback Worker direct si FastAPI offline</div>
         </div>
       </div>
     </div>
@@ -316,7 +315,7 @@ section{margin-bottom:4rem}
         <div class="stack-icon">⚡</div>
         <div class="stack-name">Cloudflare Workers</div>
         <div class="stack-badge sb-orange" data-i18n="stack.proxy.badge">API Proxy</div>
-        <div class="stack-desc" data-i18n="stack.proxy.desc">Worker serverless JavaScript avec triple routing. POST / : passthrough direct vers l'API Groq pour les 6 outils PM — la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, qui tente l'orchestrateur FastAPI externe avant de basculer sur le fallback natif Worker. POST /orchestrate-stream : même flow planner→synthesis mais la réponse synthesis arrive en SSE (Server-Sent Events) pour un affichage progressif. Validation d'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.</div>
+        <div class="stack-desc" data-i18n="stack.proxy.desc">Worker serverless JavaScript avec triple routing. POST / : passthrough direct vers l'API Groq pour les 6 outils PM — la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, planner→synthesis natif. POST /rag-query : pipeline RAG sémantique complet (planner → Workers AI embeddings → cosine similarity → synthesis). POST /orchestrate-stream : même flow planner→synthesis mais la réponse synthesis arrive en SSE pour un affichage progressif. Validation d'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.</div>
       </div>
       <div class="stack-card">
         <div class="stack-icon">🤖</div>
@@ -325,10 +324,10 @@ section{margin-bottom:4rem}
         <div class="stack-desc" data-i18n="stack.llm.desc">Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes — 5 à 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).</div>
       </div>
       <div class="stack-card" style="grid-column:1/-1">
-        <div class="stack-icon">🐍</div>
-        <div class="stack-name">FastAPI · LangGraph</div>
-        <div class="stack-badge sb-violet" data-i18n="stack.lg.badge">Orchestration</div>
-        <div class="stack-desc" data-i18n="stack.lg.desc">Service Python autonome (port 8081) qui ajoute une couche d'intelligence structurée pour KRL1. Le StateGraph LangGraph enchaîne trois nœuds : <strong>planner</strong> (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; <strong>retriever</strong> (conditionnel, activé uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches depuis la base de connaissances PM via sentence-transformers + ChromaDB ; <strong>synthesis</strong> (T=0.45) transforme le plan enrichi du contexte RAG en réponse naturelle max 220 mots. LangSmith optionnel trace chaque run du graph en production. Le Worker bascule en fallback natif si le service est hors ligne.</div>
+        <div class="stack-icon">☁️</div>
+        <div class="stack-name">Workers AI · edge RAG</div>
+        <div class="stack-badge sb-violet" data-i18n="stack.lg.badge">RAG sémantique</div>
+        <div class="stack-desc" data-i18n="stack.lg.desc">Base de connaissances PM embarquée dans le Worker (7 frameworks Markdown). Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) en un seul appel batch ; la similarité cosinus est calculée à l'edge. Le pipeline <strong>handleRagQuery</strong> enchaîne : <strong>planner</strong> (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; <strong>retriever</strong> (conditionnel, uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches par cosine similarity ; <strong>synthesis</strong> (T=0.45) transforme le plan enrichi du contexte PM en réponse naturelle max 220 mots. Zéro dépendance externe, zéro infra Python.</div>
       </div>
     </div>
   </section>
@@ -395,9 +394,9 @@ section{margin-bottom:4rem}
           <div class="tl-num">6</div>
         </div>
         <div class="tl-content">
-          <div class="tl-step-label" data-i18n="step6.label">Orchestration</div>
-          <div class="tl-step-title" data-i18n="step6.title">LangGraph pour structurer KRL1</div>
-          <div class="tl-step-desc" data-i18n="step6.desc">Face aux limites d'un prompt unique pour KRL1 — réponses parfois trop génériques, peu actionnables — j'ai ajouté une couche d'orchestration Python. Le principe : séparer la planification de la synthèse. Le nœud planner (T=0.2) analyse l'intention et produit un plan PM JSON déterministe (intent, user_goal, steps, risks, quick_win). Le nœud synthesis (T=0.45) transforme ce plan en réponse naturelle concise avec liens directs vers les outils. Développé avec Codex en mode agent autonome, testé avec pytest + httpx, tracé avec LangSmith.</div>
+          <div class="tl-step-label" data-i18n="step6.label">RAG sémantique</div>
+          <div class="tl-step-title" data-i18n="step6.title">Pipeline RAG edge-native dans le Worker</div>
+          <div class="tl-step-desc" data-i18n="step6.desc">Le pipeline RAG a d'abord été prototypé en Python (FastAPI + LangGraph + sentence-transformers + ChromaDB). Le free tier Render (512 MB) s'est révélé insuffisant pour charger sentence-transformers — le service ne démarrait jamais. Plutôt qu'upgrader l'hébergement, j'ai porté l'intégralité du pipeline dans le Cloudflare Worker : base de connaissances PM embarquée en JS, embeddings batch via Workers AI (bge-small-en-v1.5), cosine similarity calculée à l'edge. Zéro infra Python, zéro déploiement séparé, même qualité sémantique.</div>
         </div>
       </div>
     </div>
@@ -423,8 +422,8 @@ section{margin-bottom:4rem}
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           Codex
         </div>
-        <div class="tool-role" data-i18n="tool.codex.role">Orchestration LangGraph — agent OpenAI</div>
-        <div class="tool-desc" data-i18n="tool.codex.desc">Utilisé pour concevoir et développer toute la couche d'orchestration LangGraph : service FastAPI, StateGraph planner→synthesis, intégration LangSmith et suite de tests. Opère en mode agent autonome — lit le codebase, écrit le Python et itère sans intervention manuelle.</div>
+        <div class="tool-role" data-i18n="tool.codex.role">Scaffolding orchestrateur Python — agent OpenAI</div>
+        <div class="tool-desc" data-i18n="tool.codex.desc">Utilisé pour construire la couche d'orchestration Python initiale : service FastAPI, StateGraph LangGraph planner→synthesis, intégration LangSmith et suite de tests pytest+httpx. Cette version Python a ensuite été portée dans le Cloudflare Worker pour éliminer la contrainte d'hébergement (Render 512 MB).</div>
       </div>
       <div class="tool-card">
         <div class="tool-name">
@@ -568,20 +567,24 @@ Réponds UNIQUEMENT avec un JSON valide :
       <div class="decision-q" data-i18n="s5b.problem.label">Le problème</div>
       <div class="decision-why" data-i18n="s5b.problem.desc">Les réponses étaient correctes mais génériques. Un utilisateur qui demande "comment prioriser mon backlog" obtenait une explication du RICE en prose : pédagogique, mais pas actionnable. Il n'était pas renvoyé vers le Backlog Prioritizer. Il ne repartait pas avec un plan concret.</div>
     </div>
-    <div class="decision-card">
+    <div class="decision-card" style="margin-bottom:1rem">
       <div class="decision-q" data-i18n="s5b.root.label">La cause racine</div>
-      <div class="decision-why" data-i18n="s5b.root.desc">Un prompt unique demande au modèle de faire deux choses à la fois : analyser l'intention de l'utilisateur de façon rigoureuse ET formuler une réponse naturelle et engageante. Ces deux tâches ont des exigences opposées. L'analyse d'intention demande de la précision et de la cohérence : le modèle doit produire un résultat fiable, structuré, parseable. La formulation d'une réponse demande de la fluidité et un peu de liberté créative pour que ça ne sonne pas robotique. Un seul appel LLM avec un seul paramètre de température ne peut pas satisfaire les deux en même temps. C'est ce problème concret qui a mené à LangGraph : pas une envie de sur-ingénierie, mais la solution minimale à une contrainte réelle.</div>
+      <div class="decision-why" data-i18n="s5b.root.desc">Un prompt unique demande au modèle de faire deux choses à la fois : analyser l'intention de l'utilisateur de façon rigoureuse ET formuler une réponse naturelle et engageante. Ces deux tâches ont des exigences opposées. L'analyse d'intention demande de la précision et de la cohérence : le modèle doit produire un résultat fiable, structuré, parseable. La formulation d'une réponse demande de la fluidité et un peu de liberté créative pour que ça ne sonne pas robotique. Un seul appel LLM avec un seul paramètre de température ne peut pas satisfaire les deux en même temps. C'est ce problème concret qui a mené au double-nœud planner→synthesis : pas une envie de sur-ingénierie, mais la solution minimale à une contrainte réelle.</div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-q" data-i18n="s5b.render.label">Le déploiement Python qui ne démarrait pas</div>
+      <div class="decision-why" data-i18n="s5b.render.desc">Le pipeline RAG a d'abord été construit en Python : FastAPI + LangGraph + sentence-transformers + ChromaDB. En local, tout fonctionnait. Sur Render (free tier), le service ne démarrait jamais : le chargement de sentence-transformers dépasse les 512 MB de RAM alloués. La leçon : une contrainte d'infra peut rendre une bonne architecture non-déployable. Plutôt que d'upgrader l'hébergement, j'ai cherché l'approche zéro-infra. Solution : porter l'intégralité du RAG dans le Cloudflare Worker via Workers AI — les embeddings sont calculés à l'edge, sans serveur Python, sans limite mémoire.</div>
     </div>
   </section>
 
-  <!-- 05 ORCHESTRATION LANGGRAPH -->
+  <!-- 05 ORCHESTRATION WORKER — EDGE-NATIVE RAG -->
   <section>
     <div class="sec-header">
       <span class="sec-num">05</span>
-      <span class="sec-title" data-i18n="s5.title">Orchestration LangGraph</span>
+      <span class="sec-title" data-i18n="s5.title">Orchestration Worker — edge-native RAG</span>
     </div>
     <div class="lg-svg-wrap">
-      <svg viewBox="0 0 780 168" class="lg-svg" role="img" aria-label="LangGraph pipeline: Planner → Retriever (conditional) → Synthesis">
+      <svg viewBox="0 0 780 168" class="lg-svg" role="img" aria-label="Worker pipeline: Planner → Synthesis (KRL1) / Planner → Workers AI → Cosine → Synthesis (RAG)">
         <defs>
           <marker id="lgArrW" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,1 L6,3.5 L0,6 Z" fill="rgba(255,255,255,0.2)"/></marker>
           <marker id="lgArrV" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,1 L6,3.5 L0,6 Z" fill="rgba(167,139,250,0.6)"/></marker>
@@ -603,7 +606,7 @@ Réponds UNIQUEMENT avec un JSON valide :
         <text x="188" y="90" text-anchor="middle" font-size="8" fill="#4a5568" font-family="DM Sans,sans-serif">intent · confidence · T=0.2</text>
         <rect x="298" y="58" width="121" height="38" rx="8" fill="rgba(167,139,250,0.07)" stroke="rgba(167,139,250,0.3)" stroke-width="1.5"/>
         <text x="358.5" y="78" text-anchor="middle" font-size="11" fill="#a78bfa" font-family="DM Sans,sans-serif" font-weight="500">Retriever</text>
-        <text x="358.5" y="90" text-anchor="middle" font-size="8" fill="rgba(167,139,250,0.5)" font-family="DM Sans,sans-serif">ChromaDB · cosine sim · top-3</text>
+        <text x="358.5" y="90" text-anchor="middle" font-size="8" fill="rgba(167,139,250,0.5)" font-family="DM Sans,sans-serif">Workers AI · cosine sim · top-3</text>
         <rect x="481" y="58" width="99" height="38" rx="8" fill="rgba(14,14,26,0.95)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
         <text x="530.5" y="78" text-anchor="middle" font-size="11" fill="#e2e8f0" font-family="DM Sans,sans-serif" font-weight="500">Synthesis</text>
         <text x="530.5" y="90" text-anchor="middle" font-size="8" fill="#4a5568" font-family="DM Sans,sans-serif">RAG context · T=0.45</text>
@@ -614,19 +617,19 @@ Réponds UNIQUEMENT avec un JSON valide :
     </div>
 
     <div class="decision-card" style="margin-bottom:1.5rem">
-      <div class="decision-q" data-i18n="lg.flow.label">Flow d'une requête KRL1</div>
-      <div class="decision-why" data-i18n="lg.flow.desc">1 · L'utilisateur envoie un message dans le chat KRL1. 2 · Le JS appelle POST /orchestrate sur le Worker Cloudflare avec {lang, message, history}. 3 · Le Worker tente l'orchestrateur FastAPI externe (si LANGGRAPH_ORCHESTRATOR_URL est défini). 4 · Le planner LangGraph (T=0.2) analyse l'intention → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 5 · Si intent = pm_workflow : le retriever encode la requête (sentence-transformers), cherche les 3 chunks les plus proches dans ChromaDB (similarité cosinus) et injecte le contexte PM récupéré dans l'état du graph. 6 · Le synthesis LangGraph (T=0.45) transforme le plan enrichi en réponse max 220 mots avec liens outils PM. 7 · Fallback si FastAPI indisponible : le Worker exécute ce flow planner→synthesis nativement via Groq. 8 · La réponse {reply, plan, engine} arrive au client — le chat affiche reply, le JSON plan reste disponible.</div>
+      <div class="decision-q" data-i18n="lg.flow.label">Flow d'une requête KRL1 / RAG Explorer</div>
+      <div class="decision-why" data-i18n="lg.flow.desc">KRL1 (POST /orchestrate) : 1 · L'utilisateur envoie un message. 2 · Le JS appelle POST /orchestrate avec {lang, message, history}. 3 · Le planner (T=0.2) analyse l'intention → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 · Le synthesis (T=0.45) transforme le plan en réponse max 220 mots avec liens outils PM. 5 · La réponse {reply, plan, engine} arrive au client. — RAG Explorer (POST /rag-query) : même planner → Workers AI encode la requête + tous les chunks en un appel batch → cosine similarity → top-3 injectés dans synthesis si intent = pm_workflow → {reply, plan, chunks, engine: "worker-rag-semantic"}.</div>
     </div>
 
     <div class="decision-card" style="margin-top:1.5rem">
       <div class="decision-q" data-i18n="lg.recent.label">Ce qu'on a ajouté récemment</div>
       <div class="update-list">
-        <div class="update-item" data-i18n="lg.r1">La route Worker <code>POST /orchestrate</code>, réservée au chatbot KRL1, tente d'abord l'orchestrateur FastAPI externe puis bascule en fallback natif Worker.</div>
-        <div class="update-item" data-i18n="lg.r2">Un fallback Worker natif (même flow planner→synthesis) si l'orchestrateur FastAPI n'est pas joignable — garantit une réponse structurée même sans service Python déployé.</div>
-        <div class="update-item" data-i18n="lg.r3">Un parsing robuste via <code>strip_json_code_fences()</code> — gère les JSON entourés de blocs <code>```json</code> que le LLM peut produire malgré les instructions strict JSON only.</div>
-        <div class="update-item" data-i18n="lg.r4">Des tests automatiques (pytest + httpx) couvrant : planner JSON invalide, JSON fencé, orchestrateur externe hors ligne, routing /orchestrate vs / — pour sécuriser chaque cas de fallback.</div>
-        <div class="update-item" data-i18n="lg.r5">Le tracing LangSmith optionnel (<code>LANGSMITH_API_KEY</code> + <code>LANGCHAIN_TRACING_V2=true</code>) pour observer le graph en production.</div>
-        <div class="update-item" data-i18n="lg.r6">Un pipeline RAG complet sur l'orchestrateur : base de connaissances PM (7 frameworks Markdown), retriever sémantique (sentence-transformers + ChromaDB), nœud retriever conditionnel dans le StateGraph LangGraph, et endpoint <code>POST /rag-query</code> exposant les chunks récupérés — visualisé dans <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a>.</div>
+        <div class="update-item" data-i18n="lg.r1">La route Worker <code>POST /rag-query</code> : pipeline RAG sémantique complet (planner → retrieval → synthesis), natif dans le Worker, sans aucune dépendance externe.</div>
+        <div class="update-item" data-i18n="lg.r2">Un retrieval sémantique via <strong>Workers AI</strong> (bge-small-en-v1.5) — la base de connaissances PM est embarquée en JS, découpée en chunks de 300 mots, et les 3 passages les plus proches sont récupérés par similarité cosinus à l'edge.</div>
+        <div class="update-item" data-i18n="lg.r3">Un parsing robuste via <code>safeJsonParse()</code> — gère les JSON entourés de blocs <code>```json</code> que le LLM peut produire malgré les instructions strict JSON only.</div>
+        <div class="update-item" data-i18n="lg.r4">Un retriever conditionnel : le retrieval sémantique est activé uniquement si <code>intent === 'pm_workflow'</code> — évite d'invoquer Workers AI pour les questions hors PM (portfolio, contact, tech).</div>
+        <div class="update-item" data-i18n="lg.r5">Un compteur d'usage non-bloquant dans KV (<code>ctx.waitUntil</code>) — trace les appels sans alourdir le temps de réponse.</div>
+        <div class="update-item" data-i18n="lg.r6">La réponse <code>POST /rag-query</code> expose <code>{reply, plan, chunks, engine: 'worker-rag-semantic'}</code> — les chunks sont visualisés dans <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> avec leur source et score de similarité.</div>
       </div>
     </div>
 
@@ -635,9 +638,9 @@ Réponds UNIQUEMENT avec un JSON valide :
       <div class="test-grid">
         <div class="test-case">
           <div class="test-case-num" data-i18n="test.n1">Test 1</div>
-          <div class="test-case-title" data-i18n="test.t1">LangGraph externe actif</div>
-          <div class="test-case-desc" data-i18n="test.d1">LANGGRAPH_ORCHESTRATOR_URL est défini → le Worker forward la requête. Le client reçoit la réponse LangGraph avec engine: "langgraph".</div>
-          <div class="test-case-result" data-i18n="test.r1">assert reply = "via-langgraph", engine = "langgraph"</div>
+          <div class="test-case-title" data-i18n="test.t1">Semantic RAG actif</div>
+          <div class="test-case-desc" data-i18n="test.d1">POST /rag-query → planner Groq + Workers AI embeddings + cosine sim + synthesis. Le client reçoit {reply, plan, chunks, engine: "worker-rag-semantic"}.</div>
+          <div class="test-case-result" data-i18n="test.r1">assert chunks.length = 3, engine = "worker-rag-semantic"</div>
         </div>
         <div class="test-case">
           <div class="test-case-num" data-i18n="test.n2">Test 2</div>
@@ -655,9 +658,9 @@ Réponds UNIQUEMENT avec un JSON valide :
     </div>
 
     <div class="decision-card" style="margin-top:1rem">
-      <div class="decision-q" data-i18n="lg.why.q">Pourquoi LangGraph ?</div>
-      <div class="decision-a" data-i18n="lg.why.a">Plan PM structuré + réponse claire, site rapide et keyless</div>
-      <div class="decision-why" data-i18n="lg.why.desc">Le triple-nœud répond à trois contraintes distinctes. Le planner a besoin d'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. Le retriever s'intercale conditionnellement — uniquement pour les requêtes pm_workflow — pour ancrer la réponse dans des faits précis issus de la base de connaissances PM (RICE, MoSCoW, INVEST, OKR, JTBD, Discovery, Roadmap) plutôt que de dépendre uniquement de la mémoire du LLM. La synthesis a besoin d'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots). LangGraph permet de composer ces comportements en un StateGraph lisible, testable et extensible — le routing conditionnel (pm_workflow → retriever, autres intents → synthesis directe) évite d'invoquer le retriever inutilement.</div>
+      <div class="decision-q" data-i18n="lg.why.q">Pourquoi l'edge-native ?</div>
+      <div class="decision-a" data-i18n="lg.why.a">Plan PM structuré + réponse claire, zéro infra externe</div>
+      <div class="decision-why" data-i18n="lg.why.desc">Le double-nœud répond à deux contraintes opposées. Le planner a besoin d'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. La synthesis a besoin d'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots). Pour le RAG Explorer, une troisième étape s'intercale : les embeddings Workers AI calculent la similarité cosinus entre la requête et la base PM, et le contexte récupéré est injecté dans la synthesis. Cette architecture a d'abord été prototypée en Python (FastAPI + LangGraph) — mais le free tier Render (512 MB) était insuffisant pour charger sentence-transformers. Solution : porter l'intégralité du pipeline dans le Cloudflare Worker via <strong>Workers AI</strong> (bge-small-en-v1.5, 384 dimensions). Embeddings batch à l'edge, cosine similarity en JS, zéro dépendance Python.</div>
     </div>
     <div class="decision-card" style="margin-top:1rem;border-color:rgba(167,139,250,0.2)">
       <div class="decision-q" data-i18n="s5.reflect.label">Ce que ça dit de ma façon de penser en tant que PM</div>
@@ -710,11 +713,11 @@ var T={
     'stack.deploy.badge':'Hébergement',
     'stack.deploy.desc':'Hébergement statique gratuit avec CI/CD natif : chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Zéro coût, zéro infra à gérer — idéal pour un site statique à fichiers HTML/CSS/JS.',
     'stack.proxy.badge':'API Proxy',
-    'stack.proxy.desc':'Worker serverless JavaScript avec triple routing. POST / : passthrough direct vers l\'API Groq pour les 6 outils PM — la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, qui tente l\'orchestrateur FastAPI externe avant de basculer sur le fallback natif Worker. POST /orchestrate-stream : même flow planner→synthesis mais la réponse synthesis arrive en SSE (Server-Sent Events) pour un affichage progressif. Validation d\'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.',
+    'stack.proxy.desc':'Worker serverless JavaScript avec triple routing. POST / : passthrough direct vers l\'API Groq pour les 6 outils PM — la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, planner→synthesis natif. POST /rag-query : pipeline RAG sémantique complet (planner → Workers AI embeddings → cosine similarity → synthesis). POST /orchestrate-stream : même flow planner→synthesis mais la réponse synthesis arrive en SSE pour un affichage progressif. Validation d\'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.',
     'stack.llm.badge':'LLM',
     'stack.llm.desc':'Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L\'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes — 5 à 10x plus rapide que les providers classiques. Chaque outil PM l\'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).',
-    'stack.lg.badge':'Orchestration',
-    'stack.lg.desc':'Service Python autonome (port 8081) qui ajoute une couche d\'intelligence structurée pour KRL1. Le StateGraph LangGraph enchaîne trois nœuds : <strong>planner</strong> (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; <strong>retriever</strong> (conditionnel, activé uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches depuis la base de connaissances PM via sentence-transformers + ChromaDB ; <strong>synthesis</strong> (T=0.45) transforme le plan enrichi du contexte RAG en réponse naturelle max 220 mots. LangSmith optionnel trace chaque run du graph en production. Le Worker bascule en fallback natif si le service est hors ligne.',
+    'stack.lg.badge':'RAG sémantique',
+    'stack.lg.desc':'Base de connaissances PM embarquée dans le Worker (7 frameworks Markdown). Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) en un seul appel batch ; la similarité cosinus est calculée à l\'edge. Le pipeline <strong>handleRagQuery</strong> enchaîne : <strong>planner</strong> (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; <strong>retriever</strong> (conditionnel, uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches par cosine similarity ; <strong>synthesis</strong> (T=0.45) transforme le plan enrichi du contexte PM en réponse naturelle max 220 mots. Zéro dépendance externe, zéro infra Python.',
     's2.title':'Étapes de création',
     'step1.label':'Idée & cadrage',
     'step1.title':'Partir d\'un vrai problème PM',
@@ -731,9 +734,9 @@ var T={
     'step5.label':'Déploiement',
     'step5.title':'GitHub Pages, push = deploy',
     'step5.desc':'Le repo GitHub est directement connecté à GitHub Pages. Chaque git push sur main déclenche un déploiement automatique via GitHub Actions en moins de 60 secondes — aucune configuration CI/CD manuelle. CDN mondial, HTTPS automatique, domaine cmankotech.github.io. Zéro coût d\'hébergement pour des fichiers statiques.',
-    'step6.label':'Orchestration',
-    'step6.title':'LangGraph pour structurer KRL1',
-    'step6.desc':'Face aux limites d\'un prompt unique pour KRL1, j\'ai ajouté une couche d\'orchestration Python. Le nœud planner (T=0.2) analyse l\'intention et produit un plan PM JSON déterministe (intent, user_goal, steps, risks, quick_win). Le nœud synthesis (T=0.45) transforme ce plan en réponse naturelle concise avec liens directs vers les outils. Les tests pytest+httpx sécurisent quatre scénarios critiques : planner JSON invalide, JSON entouré de fences markdown, orchestrateur FastAPI hors ligne, routing /orchestrate vs /. LangSmith trace chaque run en production : durée par nœud, tokens consommés, JSON du planner, réponse finale.',
+    'step6.label':'RAG sémantique',
+    'step6.title':'Pipeline RAG edge-native dans le Worker',
+    'step6.desc':'Le pipeline RAG a d\'abord été prototypé en Python (FastAPI + LangGraph + sentence-transformers + ChromaDB). Le free tier Render (512 MB) s\'est révélé insuffisant pour charger sentence-transformers — le service ne démarrait jamais. Plutôt qu\'upgrader l\'hébergement, j\'ai porté l\'intégralité du pipeline dans le Cloudflare Worker : base de connaissances PM embarquée en JS, embeddings batch via Workers AI (bge-small-en-v1.5), cosine similarity calculée à l\'edge. Zéro infra Python, zéro déploiement séparé, même qualité sémantique.',
     's3.title':'Outils de build',
     'tool.cc.role':'Vibe coding — CLI Anthropic',
     'tool.cc.desc':'Principal outil de développement. J\'écris les specs en langage naturel, Claude Code génère le code, refactorise les sections et gère les commits. Permet de shipper vite sans sacrifier la qualité du code.',
@@ -743,8 +746,8 @@ var T={
     'tool.wrangler.desc':'CLI officiel de Cloudflare pour développer, tester en local et déployer le proxy Worker. Configuration via un fichier wrangler.toml minimaliste, déploiement en une commande.',
     'tool.git.role':'Versioning & déploiement',
     'tool.git.desc':'Gestion de version classique avec Git. Le remote GitHub est la source de vérité et déclenche le déploiement Pages automatiquement à chaque push sur la branche principale.',
-    'tool.codex.role':'Orchestration LangGraph — agent OpenAI',
-    'tool.codex.desc':'Utilisé pour concevoir et développer toute la couche d\'orchestration LangGraph : service FastAPI, StateGraph planner→synthesis, intégration LangSmith et suite de tests. Opère en mode agent autonome — lit le codebase, écrit le Python et itère sans intervention manuelle.',
+    'tool.codex.role':'Scaffolding orchestrateur Python — agent OpenAI',
+    'tool.codex.desc':'Utilisé pour construire la couche d\'orchestration Python initiale : service FastAPI, StateGraph LangGraph planner→synthesis, intégration LangSmith et suite de tests pytest+httpx. Cette version Python a ensuite été portée dans le Cloudflare Worker pour éliminer la contrainte d\'hébergement (Render 512 MB).',
     's4.title':'Décisions d\'architecture',
     'd1.q':'Pourquoi HTML vanilla plutôt que React ou Next.js ?',
     'd1.a':'Zéro dépendance, zéro toolchain, zéro dette',
@@ -762,28 +765,28 @@ var T={
     'd5.a':'Chaîner les outils = refléter le vrai workflow PM',
     'd5.why':'Un PM enchaîne discovery → OKR → stories → roadmap. Garder les outils en cartes isolées sur le portfolio forçait l\'utilisateur à recoller le contexte à la main d\'un outil au suivant. Le hub <code>pm-toolkit.html</code> centralise l\'entrée, rend la séquence lisible, et <code>pm-session.js</code> fait circuler les insights (problème, persona, top-priorité…) via <code>localStorage</code> — sans backend, sans compte, sans friction.',
     'footer.back':'Retour au portfolio',
-    's5.title':'Orchestration LangGraph',
+    's5.title':'Orchestration Worker — edge-native RAG',
     'lg.front.name':'Frontend statique',
     'lg.front.badge':'HTML · JS',
     'lg.front.desc':'Chaque outil est une page HTML/JS autonome, déployée sur GitHub Pages. Aucun secret n\'est exposé dans le navigateur.',
     'lg.proxy.name':'Proxy Cloudflare',
     'lg.proxy.badge':'Worker /orchestrate',
-    'lg.proxy.desc':'Le Worker expose trois routes : <code>POST /</code> passthrough direct Groq (les 6 outils PM), <code>POST /orchestrate</code> avec orchestration LangGraph + fallback natif (KRL1 uniquement), et <code>POST /orchestrate-stream</code> qui streame la réponse synthesis en SSE.',
-    'lg.orch.name':'Orchestrateur LangGraph',
-    'lg.orch.badge':'FastAPI · LangGraph',
-    'lg.orch.desc':'Service Python FastAPI (port 8081) avec un <code>StateGraph</code> LangGraph à trois nœuds : <strong>planner</strong> (T=0.2, JSON strict) → <strong>retriever</strong> (conditionnel, sentence-transformers + ChromaDB) → <strong>synthesis</strong> (T=0.45, max 220 mots). Tracing LangSmith optionnel.',
-    'lg.flow.label':'Flow d\'une requête KRL1',
-    'lg.flow.desc':'1 · L\'utilisateur envoie un message dans le chat KRL1. 2 · Le JS appelle POST /orchestrate sur le Worker Cloudflare avec {lang, message, history}. 3 · Le Worker tente l\'orchestrateur FastAPI externe (si LANGGRAPH_ORCHESTRATOR_URL est défini). 4 · Le planner LangGraph (T=0.2) analyse l\'intention → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 5 · Si intent = pm_workflow : le retriever encode la requête (sentence-transformers), cherche les 3 chunks les plus proches dans ChromaDB (similarité cosinus) et injecte le contexte PM récupéré dans l\'état du graph. 6 · Le synthesis LangGraph (T=0.45) transforme le plan enrichi en réponse max 220 mots avec liens outils PM. 7 · Fallback si FastAPI indisponible : le Worker exécute ce flow planner→synthesis nativement via Groq. 8 · La réponse {reply, plan, engine} arrive au client — le chat affiche reply, le JSON plan reste disponible.',
+    'lg.proxy.desc':'Le Worker expose quatre routes : <code>POST /</code> passthrough direct Groq (les 6 outils PM), <code>POST /orchestrate</code> planner→synthesis natif (KRL1), <code>POST /rag-query</code> pipeline RAG sémantique complet (planner → Workers AI embeddings → cosine sim → synthesis), et <code>POST /orchestrate-stream</code> qui streame la réponse synthesis en SSE.',
+    'lg.orch.name':'Workers AI · edge RAG',
+    'lg.orch.badge':'Workers AI · bge-small-en-v1.5',
+    'lg.orch.desc':'Base de connaissances PM (7 frameworks Markdown) embarquée en JS. Embeddings batch via Workers AI (bge-small-en-v1.5, 384 dims). Cosine similarity calculée à l\'edge. Retriever conditionnel (pm_workflow uniquement). Réponse : {reply, plan, chunks, engine: "worker-rag-semantic"}.',
+    'lg.flow.label':'Flow d\'une requête KRL1 / RAG Explorer',
+    'lg.flow.desc':'KRL1 (POST /orchestrate) : 1 · L\'utilisateur envoie un message. 2 · Le JS appelle POST /orchestrate avec {lang, message, history}. 3 · Le planner (T=0.2) analyse l\'intention → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 · Le synthesis (T=0.45) transforme le plan en réponse max 220 mots avec liens outils PM. 5 · La réponse {reply, plan, engine} arrive au client. — RAG Explorer (POST /rag-query) : même planner → Workers AI encode la requête + tous les chunks en un appel batch → cosine similarity → top-3 injectés dans synthesis si intent = pm_workflow → {reply, plan, chunks, engine: "worker-rag-semantic"}.',
     'lg.recent.label':'Ce qu\'on a ajouté récemment',
-    'lg.r1':'La route Worker <code>POST /orchestrate</code>, réservée au chatbot KRL1, tente d\'abord l\'orchestrateur FastAPI externe puis bascule en fallback natif Worker.',
-    'lg.r2':'Un fallback Worker natif (même flow planner→synthesis) si l\'orchestrateur FastAPI n\'est pas joignable — garantit une réponse structurée même sans service Python déployé.',
-    'lg.r3':'Un parsing robuste via <code>strip_json_code_fences()</code> — gère les JSON entourés de blocs <code>```json</code> que le LLM peut produire malgré les instructions strict JSON only.',
-    'lg.r4':'Des tests automatiques (pytest + httpx) couvrant : planner JSON invalide, JSON fencé, orchestrateur externe hors ligne, routing /orchestrate vs / — pour sécuriser chaque cas de fallback.',
-    'lg.r5':'Le tracing LangSmith optionnel (<code>LANGSMITH_API_KEY</code> + <code>LANGCHAIN_TRACING_V2=true</code>) pour observer le graph en production.',
-    'lg.r6':'Un pipeline RAG complet sur l\'orchestrateur : base de connaissances PM (7 frameworks Markdown), retriever sémantique (sentence-transformers + ChromaDB), nœud retriever conditionnel dans le StateGraph LangGraph, et endpoint <code>POST /rag-query</code> exposant les chunks récupérés — visualisé dans <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a>.',
-    'lg.why.q':'Pourquoi LangGraph ?',
-    'lg.why.a':'Plan PM structuré + réponse claire, site rapide et keyless',
-    'lg.why.desc':'Le triple-nœud répond à trois contraintes distinctes. Le planner a besoin d\'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. Le retriever s\'intercale conditionnellement — uniquement pour les requêtes pm_workflow — pour ancrer la réponse dans des faits précis issus de la base de connaissances PM (RICE, MoSCoW, INVEST, OKR, JTBD, Discovery, Roadmap) plutôt que de dépendre uniquement de la mémoire du LLM. La synthesis a besoin d\'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots). LangGraph permet de composer ces comportements en un StateGraph lisible, testable et extensible — le routing conditionnel (pm_workflow → retriever, autres intents → synthesis directe) évite d\'invoquer le retriever inutilement.',
+    'lg.r1':'La route Worker <code>POST /rag-query</code> : pipeline RAG sémantique complet (planner → retrieval → synthesis), natif dans le Worker, sans aucune dépendance externe.',
+    'lg.r2':'Un retrieval sémantique via <strong>Workers AI</strong> (bge-small-en-v1.5) — la base de connaissances PM est embarquée en JS, découpée en chunks de 300 mots, et les 3 passages les plus proches sont récupérés par similarité cosinus à l\'edge.',
+    'lg.r3':'Un parsing robuste via <code>safeJsonParse()</code> — gère les JSON entourés de blocs <code>```json</code> que le LLM peut produire malgré les instructions strict JSON only.',
+    'lg.r4':'Un retriever conditionnel : le retrieval sémantique est activé uniquement si <code>intent === \'pm_workflow\'</code> — évite d\'invoquer Workers AI pour les questions hors PM (portfolio, contact, tech).',
+    'lg.r5':'Un compteur d\'usage non-bloquant dans KV (<code>ctx.waitUntil</code>) — trace les appels sans alourdir le temps de réponse.',
+    'lg.r6':'La réponse <code>POST /rag-query</code> expose <code>{reply, plan, chunks, engine: \'worker-rag-semantic\'}</code> — les chunks sont visualisés dans <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> avec leur source et score de similarité.',
+    'lg.why.q':'Pourquoi l\'edge-native ?',
+    'lg.why.a':'Plan PM structuré + réponse claire, zéro infra externe',
+    'lg.why.desc':'Le double-nœud répond à deux contraintes opposées. Le planner a besoin d\'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. La synthesis a besoin d\'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots). Pour le RAG Explorer, une troisième étape s\'intercale : les embeddings Workers AI calculent la similarité cosinus entre la requête et la base PM, et le contexte récupéré est injecté dans la synthesis. Cette architecture a d\'abord été prototypée en Python (FastAPI + LangGraph) — mais le free tier Render (512 MB) était insuffisant pour charger sentence-transformers. Solution : porter l\'intégralité du pipeline dans le Cloudflare Worker via <strong>Workers AI</strong> (bge-small-en-v1.5, 384 dimensions). Embeddings batch à l\'edge, cosine similarity en JS, zéro dépendance Python.',
     's0.title':'Pourquoi ce site existe',
     's0.lead':'En cherchant un poste d\'AI PM, j\'ai réalisé que tout le monde dit "je maîtrise l\'IA". Personne ne le montre. Ce site est ma réponse à ça.',
     's0.intro':'Trois raisons l\'ont fait naître en même temps.',
@@ -796,7 +799,9 @@ var T={
     's5b.problem.label':'Le problème',
     's5b.problem.desc':'Les réponses étaient correctes mais génériques. Un utilisateur qui demande "comment prioriser mon backlog" obtenait une explication du RICE en prose : pédagogique, mais pas actionnable. Il n\'était pas renvoyé vers le Backlog Prioritizer. Il ne repartait pas avec un plan concret.',
     's5b.root.label':'La cause racine',
-    's5b.root.desc':'Un prompt unique demande au modèle de faire deux choses à la fois : analyser l\'intention de l\'utilisateur de façon rigoureuse ET formuler une réponse naturelle et engageante. Ces deux tâches ont des exigences opposées. L\'analyse d\'intention demande de la précision et de la cohérence : le modèle doit produire un résultat fiable, structuré, parseable. La formulation d\'une réponse demande de la fluidité et un peu de liberté créative pour que ça ne sonne pas robotique. Un seul appel LLM avec un seul paramètre de température ne peut pas satisfaire les deux en même temps. C\'est ce problème concret qui a mené à LangGraph : pas une envie de sur-ingénierie, mais la solution minimale à une contrainte réelle.',
+    's5b.root.desc':'Un prompt unique demande au modèle de faire deux choses à la fois : analyser l\'intention de l\'utilisateur de façon rigoureuse ET formuler une réponse naturelle et engageante. Ces deux tâches ont des exigences opposées. L\'analyse d\'intention demande de la précision et de la cohérence : le modèle doit produire un résultat fiable, structuré, parseable. La formulation d\'une réponse demande de la fluidité et un peu de liberté créative pour que ça ne sonne pas robotique. Un seul appel LLM avec un seul paramètre de température ne peut pas satisfaire les deux en même temps. C\'est ce problème concret qui a mené au double-nœud planner→synthesis : pas une envie de sur-ingénierie, mais la solution minimale à une contrainte réelle.',
+    's5b.render.label':'Le déploiement Python qui ne démarrait pas',
+    's5b.render.desc':'Le pipeline RAG a d\'abord été construit en Python : FastAPI + LangGraph + sentence-transformers + ChromaDB. En local, tout fonctionnait. Sur Render (free tier), le service ne démarrait jamais : le chargement de sentence-transformers dépasse les 512 MB de RAM alloués. La leçon : une contrainte d\'infra peut rendre une bonne architecture non-déployable. Plutôt que d\'upgrader l\'hébergement, j\'ai cherché l\'approche zéro-infra. Solution : porter l\'intégralité du RAG dans le Cloudflare Worker via Workers AI — les embeddings sont calculés à l\'edge, sans serveur Python, sans limite mémoire.',
     's5.reflect.label':'Ce que ça dit de ma façon de penser en tant que PM',
     's5.reflect.desc':'Ce choix d\'architecture reflète directement ma façon de penser : identifier la vraie contrainte avant de choisir la solution. Ici la contrainte n\'était pas "KRL1 répond mal". C\'était "un seul nœud ne peut pas être déterministe et créatif à la fois". Une fois la contrainte bien posée, la solution devient évidente. Le graph est testable indépendamment nœud par nœud, extensible sans tout réécrire, et chaque composant a une responsabilité claire. C\'est exactement ce qu\'on attend d\'un bon design produit.',
     's6.title':'Et maintenant ?',
@@ -810,7 +815,7 @@ var T={
     'stat.tools':'outils PM',
     'stat.cost':'/ mois d\'infra',
     'stat.weeks':'sem. en spare time',
-    'arch.fallback':'↩ fallback Worker direct si FastAPI offline',
+    'arch.fallback':'↩ RAG sémantique natif Workers AI',
     's4b.title':'Prompt engineering',
     's4b.okr.label':'Prompt system — OKR Builder (extrait réel)',
     's4b.okr.why':'T=0.5 est délibéré : assez bas pour que le JSON soit fiable et parseable, assez haut pour que les libellés d\'OKR soient variés et inspirants. À T=0.2, les OKRs seraient trop uniformes. À T=0.7, le JSON devient parfois invalide. L\'example JSON dans le prompt sert de guardrail de format — il contraint la structure de sortie plus efficacement qu\'une description textuelle.',
@@ -824,9 +829,9 @@ var T={
     'params.th.out':'Output',
     'lg.tests.label':'Tests automatiques — proxy.test.mjs',
     'test.n1':'Test 1',
-    'test.t1':'LangGraph externe actif',
-    'test.d1':'LANGGRAPH_ORCHESTRATOR_URL est défini → le Worker forward la requête. Le client reçoit la réponse LangGraph avec engine: "langgraph".',
-    'test.r1':'assert reply = "via-langgraph", engine = "langgraph"',
+    'test.t1':'Semantic RAG actif',
+    'test.d1':'POST /rag-query → planner Groq + Workers AI embeddings + cosine sim + synthesis. Le client reçoit {reply, plan, chunks, engine: "worker-rag-semantic"}.',
+    'test.r1':'assert chunks.length = 3, engine = "worker-rag-semantic"',
     'test.n2':'Test 2',
     'test.t2':'Orchestrateur natif Worker',
     'test.d2':'Sans URL externe : 2 appels Groq séquentiels — planner (JSON strict) puis synthesis (texte). Le client reçoit {reply, plan}.',
@@ -848,11 +853,11 @@ var T={
     'stack.deploy.badge':'Hosting',
     'stack.deploy.desc':'Free static hosting with native CI/CD: every git push to main triggers an automatic deployment in under 60 seconds. Global CDN, automatic HTTPS, cmankotech.github.io domain with zero configuration. Zero cost, zero infrastructure to manage — ideal for a static HTML/CSS/JS site.',
     'stack.proxy.badge':'API Proxy',
-    'stack.proxy.desc':'Serverless JavaScript Worker with triple routing. POST /: direct passthrough to the Groq API for the 6 PM tools — the API key is injected Worker-side, never exposed to the browser. POST /orchestrate: dedicated route for the KRL1 chatbot, which tries the external FastAPI orchestrator before falling back to native Worker orchestration. POST /orchestrate-stream: same planner→synthesis flow but the synthesis response arrives as SSE (Server-Sent Events) for progressive display. Origin validation, automatic CORS, Cloudflare free plan: 100,000 req/day.',
+    'stack.proxy.desc':'Serverless JavaScript Worker with four routes. POST /: direct passthrough to the Groq API for the 6 PM tools — the API key is injected Worker-side, never exposed to the browser. POST /orchestrate: dedicated route for the KRL1 chatbot, native planner→synthesis. POST /rag-query: full semantic RAG pipeline (planner → Workers AI embeddings → cosine similarity → synthesis). POST /orchestrate-stream: same planner→synthesis flow but synthesis response arrives as SSE for progressive display. Origin validation, automatic CORS, Cloudflare free plan: 100,000 req/day.',
     'stack.llm.badge':'LLM',
     'stack.llm.desc':'Access to the llama-3.3-70b-versatile model via an OpenAI-compatible REST API. LPU (Language Processing Unit) inference delivers responses in 1–2 seconds — 5 to 10x faster than classic providers. Each PM tool calls it with tailored parameters: temperatures between 0.3 and 0.7 depending on the task, max_tokens between 2,000 and 4,000, specialised system prompts (OKR strategist, discovery analyst, prioritisation expert…).',
-    'stack.lg.badge':'Orchestration',
-    'stack.lg.desc':'Standalone Python service (port 8081) that adds a structured intelligence layer for KRL1. The LangGraph StateGraph chains three nodes: <strong>planner</strong> (T=0.2) generates strict JSON with intent, user_goal, actionable steps, risks and quick_win; <strong>retriever</strong> (conditional, activated only when intent = pm_workflow) fetches the 3 closest chunks from the PM knowledge base via sentence-transformers + ChromaDB; <strong>synthesis</strong> (T=0.45) transforms the RAG-enriched plan into a natural response max 220 words with PM tool links. Optional LangSmith traces each graph run in production. The Worker falls back to native orchestration if the service is offline.',
+    'stack.lg.badge':'Semantic RAG',
+    'stack.lg.desc':'PM knowledge base embedded in the Worker (7 Markdown frameworks). Semantic embeddings generated by <strong>Workers AI</strong> (bge-small-en-v1.5) in a single batch call; cosine similarity computed at the edge. The <strong>handleRagQuery</strong> pipeline chains: <strong>planner</strong> (T=0.2) generates strict JSON; <strong>retriever</strong> (conditional, only when intent = pm_workflow) fetches the 3 closest chunks by cosine similarity; <strong>synthesis</strong> (T=0.45) transforms the PM-enriched plan into a natural response max 220 words. Zero external dependencies, zero Python infrastructure.',
     's2.title':'Creation steps',
     'step1.label':'Idea & scoping',
     'step1.title':'Start from a real PM problem',
@@ -869,9 +874,9 @@ var T={
     'step5.label':'Deployment',
     'step5.title':'GitHub Pages, push = deploy',
     'step5.desc':'The GitHub repo is directly connected to GitHub Pages. Every git push to main triggers an automatic deployment via GitHub Actions in under 60 seconds — no manual CI/CD configuration. Global CDN, automatic HTTPS, cmankotech.github.io domain. Zero hosting cost for static files.',
-    'step6.label':'Orchestration',
-    'step6.title':'LangGraph to structure KRL1',
-    'step6.desc':'Faced with the limits of a single prompt for KRL1, I added a Python orchestration layer. The planner node (T=0.2) analyses intent and produces a deterministic JSON PM plan (intent, user_goal, steps, risks, quick_win). The synthesis node (T=0.45) transforms this plan into a concise natural response with direct tool links. Pytest+httpx tests cover four critical scenarios: invalid planner JSON, markdown-fenced JSON, FastAPI orchestrator offline, /orchestrate vs / routing. LangSmith traces each graph run in production: per-node duration, tokens consumed, planner JSON, final response.',
+    'step6.label':'Semantic RAG',
+    'step6.title':'Edge-native RAG pipeline in the Worker',
+    'step6.desc':'The RAG pipeline was first prototyped in Python (FastAPI + LangGraph + sentence-transformers + ChromaDB). Render\'s free tier (512 MB) proved insufficient to load sentence-transformers — the service never started. Rather than upgrade hosting, I ported the entire pipeline into the Cloudflare Worker: PM knowledge base embedded as JS, batch embeddings via Workers AI (bge-small-en-v1.5), cosine similarity computed at the edge. Zero Python infrastructure, zero separate deployment, same semantic quality.',
     's3.title':'Build tools',
     'tool.cc.role':'Vibe coding — Anthropic CLI',
     'tool.cc.desc':'Primary development tool. I write specs in plain language, Claude Code generates the code, refactors sections and manages commits. Lets you ship fast without sacrificing code quality.',
@@ -881,8 +886,8 @@ var T={
     'tool.wrangler.desc':'Cloudflare\'s official CLI to develop, test locally and deploy the proxy Worker. Configured via a minimal wrangler.toml file, deployed with a single command.',
     'tool.git.role':'Versioning & deployment',
     'tool.git.desc':'Classic version control with Git. The GitHub remote is the source of truth and triggers Pages deployment automatically on every push to the main branch.',
-    'tool.codex.role':'LangGraph orchestration — OpenAI agent',
-    'tool.codex.desc':'Used to design and build the entire LangGraph orchestration layer: FastAPI service, planner→synthesis StateGraph, LangSmith integration and test suite. Operates as an autonomous agent — reads the codebase, writes Python and iterates without manual intervention.',
+    'tool.codex.role':'Initial Python scaffolding — OpenAI agent',
+    'tool.codex.desc':'Used to build the initial Python orchestration layer: FastAPI service, LangGraph planner→synthesis StateGraph, LangSmith integration and pytest+httpx test suite. This Python version was later ported into the Cloudflare Worker to eliminate the hosting constraint (Render 512 MB).',
     's4.title':'Architecture decisions',
     'd1.q':'Why vanilla HTML instead of React or Next.js?',
     'd1.a':'Zero dependencies, zero toolchain, zero technical debt',
@@ -900,28 +905,28 @@ var T={
     'd5.a':'Chaining tools mirrors the real PM workflow',
     'd5.why':'A PM runs discovery → OKR → stories → roadmap. Keeping tools as isolated cards on the portfolio forced users to carry context by hand from one tool to the next. The <code>pm-toolkit.html</code> hub centralises the entry point, makes the sequence legible, and <code>pm-session.js</code> shuttles insights (problem, persona, top priority…) via <code>localStorage</code> — no backend, no account, no friction.',
     'footer.back':'Back to portfolio',
-    's5.title':'LangGraph Orchestration',
+    's5.title':'Worker Orchestration — edge-native RAG',
     'lg.front.name':'Static Frontend',
     'lg.front.badge':'HTML · JS',
     'lg.front.desc':'Each tool is a standalone HTML/JS page deployed on GitHub Pages. No secret is ever exposed in the browser.',
     'lg.proxy.name':'Cloudflare Proxy',
-    'lg.proxy.badge':'Worker /orchestrate',
-    'lg.proxy.desc':'The Worker exposes three routes: <code>POST /</code> direct Groq passthrough (the 6 PM tools), <code>POST /orchestrate</code> with LangGraph orchestration + native fallback (KRL1 only), and <code>POST /orchestrate-stream</code> which streams the synthesis response via SSE.',
-    'lg.orch.name':'LangGraph Orchestrator',
-    'lg.orch.badge':'FastAPI · LangGraph',
-    'lg.orch.desc':'Python FastAPI service (port 8081) with a three-node LangGraph <code>StateGraph</code>: <strong>planner</strong> (T=0.2, strict JSON) → <strong>retriever</strong> (conditional, sentence-transformers + ChromaDB) → <strong>synthesis</strong> (T=0.45, max 220 words). Optional LangSmith tracing.',
-    'lg.flow.label':'KRL1 request flow',
-    'lg.flow.desc':'1 · User sends a message in the KRL1 chat. 2 · JS calls POST /orchestrate on the Cloudflare Worker with {lang, message, history}. 3 · Worker tries the external FastAPI orchestrator (if LANGGRAPH_ORCHESTRATOR_URL is set). 4 · LangGraph planner (T=0.2) analyses intent → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 5 · If intent = pm_workflow: the retriever encodes the query (sentence-transformers), fetches the 3 closest chunks from ChromaDB (cosine similarity) and injects the retrieved PM context into the graph state. 6 · LangGraph synthesis (T=0.45) transforms the RAG-enriched plan into a max 220-word response with PM tool links. 7 · Fallback if FastAPI unavailable: Worker runs the planner→synthesis flow natively via Groq. 8 · Response {reply, plan, engine} arrives at client — chat displays reply, JSON plan remains available.',
+    'lg.proxy.badge':'Worker /orchestrate · /rag-query',
+    'lg.proxy.desc':'The Worker exposes four routes: <code>POST /</code> direct Groq passthrough (the 6 PM tools), <code>POST /orchestrate</code> native planner→synthesis (KRL1), <code>POST /rag-query</code> full semantic RAG pipeline (planner → Workers AI embeddings → cosine sim → synthesis), and <code>POST /orchestrate-stream</code> which streams the synthesis response via SSE.',
+    'lg.orch.name':'Workers AI · edge RAG',
+    'lg.orch.badge':'Workers AI · bge-small-en-v1.5',
+    'lg.orch.desc':'PM knowledge base (7 Markdown frameworks) embedded as JS. Batch embeddings via Workers AI (bge-small-en-v1.5, 384 dims). Cosine similarity at the edge. Conditional retriever (pm_workflow only). Response: {reply, plan, chunks, engine: "worker-rag-semantic"}.',
+    'lg.flow.label':'KRL1 / RAG Explorer request flow',
+    'lg.flow.desc':'KRL1 (POST /orchestrate): 1 · User sends a message. 2 · JS calls POST /orchestrate with {lang, message, history}. 3 · Planner (T=0.2) analyses intent → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 · Synthesis (T=0.45) transforms the plan into a max 220-word response with PM tool links. 5 · Response {reply, plan, engine} arrives at client. — RAG Explorer (POST /rag-query): same planner → Workers AI encodes query + all chunks in one batch call → cosine similarity → top-3 injected into synthesis if intent = pm_workflow → {reply, plan, chunks, engine: "worker-rag-semantic"}.',
     'lg.recent.label':'What we added recently',
-    'lg.r1':'The Worker route <code>POST /orchestrate</code>, reserved for the KRL1 chatbot, first tries the external FastAPI orchestrator then falls back to native Worker orchestration.',
-    'lg.r2':'A native Worker fallback (same planner→synthesis flow) if the FastAPI orchestrator is unreachable — guarantees a structured response even without a deployed Python service.',
-    'lg.r3':'Robust parsing via <code>strip_json_code_fences()</code> — handles JSON wrapped in <code>```json</code> blocks that the LLM may produce despite strict JSON only instructions.',
-    'lg.r4':'Automated tests (pytest + httpx) covering: invalid planner JSON, fenced JSON, external orchestrator offline, /orchestrate vs / routing — to secure every fallback scenario.',
-    'lg.r5':'Optional LangSmith tracing (<code>LANGSMITH_API_KEY</code> + <code>LANGCHAIN_TRACING_V2=true</code>) to observe the graph in production.',
-    'lg.r6':'A full RAG pipeline on the orchestrator: PM knowledge base (7 Markdown frameworks), semantic retriever (sentence-transformers + ChromaDB), conditional retriever node in the LangGraph StateGraph, and <code>POST /rag-query</code> endpoint exposing retrieved chunks — visualised in <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a>.',
-    'lg.why.q':'Why LangGraph?',
-    'lg.why.a':'Structured PM plan + clear response, fast & keyless site',
-    'lg.why.desc':'The three-node design addresses three distinct constraints. The planner needs a low temperature (T=0.2) to produce deterministic, reliable JSON: intent, user_goal, actionable steps, identified risks, quick_win. The retriever sits conditionally between planner and synthesis — only for pm_workflow queries — to ground the response in precise facts from the PM knowledge base (RICE, MoSCoW, INVEST, OKR, JTBD, Discovery, Roadmap) rather than relying solely on the LLM\'s training memory. The synthesis needs a more creative temperature (T=0.45) to produce a natural, concise response (max 220 words) with PM tool links. LangGraph allows these behaviours to be composed into a readable, testable and extensible StateGraph — conditional routing (pm_workflow → retriever, other intents → synthesis directly) avoids invoking the retriever unnecessarily.',
+    'lg.r1':'The Worker route <code>POST /rag-query</code>: full semantic RAG pipeline (planner → retrieval → synthesis), native to the Worker, with no external dependencies.',
+    'lg.r2':'Semantic retrieval via <strong>Workers AI</strong> (bge-small-en-v1.5) — the PM knowledge base is embedded as JS, split into 300-word chunks, and the 3 closest passages are retrieved by cosine similarity at the edge.',
+    'lg.r3':'Robust parsing via <code>safeJsonParse()</code> — handles JSON wrapped in <code>```json</code> blocks that the LLM may produce despite strict JSON only instructions.',
+    'lg.r4':'Conditional retriever: semantic retrieval is activated only when <code>intent === \'pm_workflow\'</code> — avoids invoking Workers AI for non-PM queries (portfolio, contact, tech).',
+    'lg.r5':'Non-blocking usage counter in KV (<code>ctx.waitUntil</code>) — tracks calls without adding to response time.',
+    'lg.r6':'The <code>POST /rag-query</code> response exposes <code>{reply, plan, chunks, engine: \'worker-rag-semantic\'}</code> — chunks are visualised in <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> with their source and similarity score.',
+    'lg.why.q':'Why edge-native?',
+    'lg.why.a':'Structured PM plan + clear response, zero external infrastructure',
+    'lg.why.desc':'The two-node design addresses two opposing constraints. The planner needs a low temperature (T=0.2) to produce deterministic, reliable JSON: intent, user_goal, actionable steps, identified risks, quick_win. The synthesis needs a more creative temperature (T=0.45) to produce a natural, concise response (max 220 words). For the RAG Explorer, a third step is added: Workers AI embeddings compute cosine similarity between the query and the PM knowledge base, and the retrieved context is injected into the synthesis. This architecture was first prototyped in Python (FastAPI + LangGraph) — but Render\'s free tier (512 MB) was insufficient to load sentence-transformers. Solution: port the entire pipeline into the Cloudflare Worker via <strong>Workers AI</strong> (bge-small-en-v1.5, 384 dimensions). Batch embeddings at the edge, cosine similarity in JS, zero Python dependency.',
     's0.title':'Why this site exists',
     's0.lead':'Looking for an AI PM position, I realised everyone says "I know AI". Nobody shows it. This site is my answer to that.',
     's0.intro':'Three reasons brought it to life at the same time.',
@@ -934,7 +939,9 @@ var T={
     's5b.problem.label':'The problem',
     's5b.problem.desc':'Responses were correct but generic. A user asking "how do I prioritise my backlog" got a prose explanation of RICE: educational, but not actionable. They were not redirected to the Backlog Prioritiser. They did not leave with a concrete plan.',
     's5b.root.label':'The root cause',
-    's5b.root.desc':'A single prompt asks the model to do two things at once: analyse the user\'s intent rigorously AND formulate a natural, engaging response. These two tasks have opposing requirements. Intent analysis demands precision and consistency: the model must produce a reliable, structured, parseable output. Response formulation demands fluency and some creative freedom so it does not sound robotic. A single LLM call with a single temperature parameter cannot satisfy both at the same time. This concrete problem led to LangGraph: not a desire for over-engineering, but the minimal solution to a real constraint.',
+    's5b.root.desc':'A single prompt asks the model to do two things at once: analyse the user\'s intent rigorously AND formulate a natural, engaging response. These two tasks have opposing requirements. Intent analysis demands precision and consistency: the model must produce a reliable, structured, parseable output. Response formulation demands fluency and some creative freedom so it does not sound robotic. A single LLM call with a single temperature parameter cannot satisfy both at the same time. This concrete problem led to the planner→synthesis two-node design: not over-engineering, but the minimal solution to a real constraint.',
+    's5b.render.label':'The Python deployment that never started',
+    's5b.render.desc':'The RAG pipeline was first built in Python: FastAPI + LangGraph + sentence-transformers + ChromaDB. Locally, everything worked. On Render (free tier), the service never started: loading sentence-transformers exceeds the 512 MB RAM allocation. The lesson: an infrastructure constraint can make a good architecture undeployable. Rather than upgrade hosting, I looked for a zero-infrastructure approach. Solution: port the entire RAG into the Cloudflare Worker via Workers AI — embeddings are computed at the edge, no Python server, no memory limit.',
     's5.reflect.label':'What this says about my PM thinking',
     's5.reflect.desc':'This architectural choice directly reflects how I think: identify the real constraint before choosing the solution. Here the constraint was not "KRL1 responds poorly". It was "a single node cannot be deterministic and creative at the same time". Once the constraint is clearly stated, the solution becomes obvious. The graph is testable node by node independently, extensible without rewriting everything, and each component has a single clear responsibility. That is exactly what good product design looks like.',
     's6.title':'What\'s next',
@@ -948,7 +955,7 @@ var T={
     'stat.tools':'PM tools',
     'stat.cost':'/ month infra cost',
     'stat.weeks':'weeks in spare time',
-    'arch.fallback':'↩ direct Worker fallback if FastAPI offline',
+    'arch.fallback':'↩ native Workers AI semantic RAG',
     's4b.title':'Prompt engineering',
     's4b.okr.label':'System prompt — OKR Builder (real extract)',
     's4b.okr.why':'T=0.5 is deliberate: low enough that the JSON is reliable and parseable, high enough that the OKR labels are varied and inspiring. At T=0.2, OKRs would be too uniform. At T=0.7, the JSON occasionally becomes invalid. The example JSON in the prompt acts as a format guardrail — it constrains the output structure more effectively than a textual description.',
@@ -962,9 +969,9 @@ var T={
     'params.th.out':'Output',
     'lg.tests.label':'Automated tests — proxy.test.mjs',
     'test.n1':'Test 1',
-    'test.t1':'External LangGraph active',
-    'test.d1':'LANGGRAPH_ORCHESTRATOR_URL is set → Worker forwards the request. Client receives the LangGraph response with engine: "langgraph".',
-    'test.r1':'assert reply = "via-langgraph", engine = "langgraph"',
+    'test.t1':'Semantic RAG active',
+    'test.d1':'POST /rag-query → Groq planner + Workers AI embeddings + cosine sim + synthesis. Client receives {reply, plan, chunks, engine: "worker-rag-semantic"}.',
+    'test.r1':'assert chunks.length = 3, engine = "worker-rag-semantic"',
     'test.n2':'Test 2',
     'test.t2':'Native Worker orchestrator',
     'test.d2':'Without external URL: 2 sequential Groq calls — planner (strict JSON) then synthesis (text). Client receives {reply, plan}.',

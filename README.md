@@ -36,10 +36,11 @@ Chaque outil IA est une SPA autonome (HTML/CSS/JS vanilla), bilingue FR/EN. Le m
 ┌──────────▼──────────────────────┐
 │   Groq API (LLama 3.3 70B)     │
 └─────────────────────────────────┘
-           │ (optionnel)
-┌──────────▼──────────────────────┐
-│   LangGraph Orchestrator        │
-│   (orchestrator/)               │
+
+┌─────────────────────────────────┐
+│   Workers AI (edge, gratuit)    │
+│   bge-small-en-v1.5 embeddings │
+│   RAG sémantique natif Worker  │
 └─────────────────────────────────┘
 ```
 
@@ -48,7 +49,7 @@ Chaque outil IA est une SPA autonome (HTML/CSS/JS vanilla), bilingue FR/EN. Le m
 - **Frontend :** HTML/CSS/JS vanilla, Google Fonts (Syne, DM Sans), thème sombre
 - **Chat widget :** `krl1-widget.js` — assistant conversationnel flottant avec détection d'intent et routage contextuel
 - **Proxy :** Cloudflare Workers (JavaScript), KV pour compteur d'usage
-- **Orchestrateur :** FastAPI + LangGraph (Python), optionnel
+- **RAG sémantique :** Workers AI (Cloudflare, bge-small-en-v1.5) — embeddings batch + cosine similarity, natif dans le Worker
 - **LLM :** Groq API (llama-3.3-70b-versatile)
 - **Déploiement :** GitHub Pages (front) + Cloudflare Workers (proxy)
 
@@ -65,7 +66,7 @@ Chaque outil IA est une SPA autonome (HTML/CSS/JS vanilla), bilingue FR/EN. Le m
 ├── pixel-runner.html           # Mini-jeu arcade
 ├── how-i-built-this.html       # Documentation technique du projet
 ├── krl1-widget.js              # Widget chat IA (44KB, autonome)
-├── orchestrator/               # Service LangGraph (Python)
+├── orchestrator/               # Archive Python (non déployé — RAG porté dans le Worker)
 ├── proxy/                      # Cloudflare Worker (JavaScript)
 └── tests/                      # Tests du proxy
 ```
@@ -87,13 +88,16 @@ cd proxy
 npx wrangler dev
 ```
 
-### Orchestrateur (optionnel)
+### RAG sémantique
+
+Le pipeline RAG est natif dans le Worker (`proxy/src/index.js`). Aucune infra locale nécessaire — `POST /rag-query` fonctionne dès que le Worker est lancé avec `npx wrangler dev`.
+
+Pour déployer en production :
 
 ```bash
-cd orchestrator
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app:app --host 0.0.0.0 --port 8081 --reload
+npx wrangler deploy --config proxy/wrangler.toml
 ```
 
-Voir [`orchestrator/README.md`](orchestrator/README.md) et [`proxy/README.md`](proxy/README.md) pour plus de détails.
+Le flag `--config` est obligatoire : sans lui, wrangler détecte le `wrangler.jsonc` racine (Cloudflare Pages) plutôt que le Worker.
+
+Voir [`proxy/README.md`](proxy/README.md) pour plus de détails.
