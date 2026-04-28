@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -n '220,250p' \"C:/Users/Manks/Desktop/cmankotech/discovery-assistant.html\")",
+      "Bash(sed -n '170,195p' \"C:/Users/Manks/Desktop/cmankotech/epic-to-userstories.html\")",
+      "Bash(sed -n '220,230p' \"C:/Users/Manks/Desktop/cmankotech/okr-builder.html\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git stash *)",
+      "Bash(git pull *)"
+    ]
+  }
+}
