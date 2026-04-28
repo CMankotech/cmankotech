@@ -28,7 +28,7 @@ h1,h2,h3{font-family:'Syne',sans-serif}
 .container{max-width:1040px;margin:0 auto;padding:2.5rem 1.5rem 4rem;position:relative;z-index:1}
 
 /* LANG */
-.lang-bar{display:flex;justify-content:flex-end;margin-bottom:1.5rem}
+.lang-bar{display:flex;justify-content:flex-end;align-items:center;gap:0.5rem;margin-bottom:1.5rem}
 .lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
 .lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .lang-btn.active{background:rgba(96,165,250,0.15);color:var(--blue)}
@@ -125,6 +125,45 @@ footer{text-align:center;margin-top:3.5rem;padding-top:2rem;border-top:1px solid
   .session-panel{flex-direction:column;align-items:stretch}
   .session-panel .sess-left{width:100%}
 }
+
+/* THEME TOGGLE */
+.theme-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:99px;border:1px solid var(--border);background:var(--glass);cursor:pointer;color:var(--muted);transition:all 0.2s;padding:0;flex-shrink:0}
+.theme-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.18)}
+.theme-btn-fixed{position:fixed;top:0.9rem;right:1.25rem;z-index:300;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+/* LIGHT MODE */
+[data-theme="light"]{--bg:#f4f6fb;--surface:#fff;--surface2:#eef1f8;--text:#0f172a;--dim:#475569;--muted:#94a3b8;--border:rgba(15,23,42,0.1);--line:rgba(15,23,42,0.08);--glass:rgba(15,23,42,0.04)}
+[data-theme="light"] body{background:#f4f6fb;color:#0f172a}
+[data-theme="light"] .glow{opacity:0.15;mix-blend-mode:multiply}
+[data-theme="light"] .theme-btn:hover{border-color:rgba(15,23,42,0.2)}
+[data-theme="light"] h1{background:linear-gradient(180deg,#1e293b 0%,#475569 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+[data-theme="light"] .hero-hl-1,[data-theme="light"] .hero-stat-val{background:linear-gradient(180deg,#1e293b 0%,#475569 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+[data-theme="light"] .sec-name{color:#0f172a}
+[data-theme="light"] .card,[data-theme="light"] .form-card,[data-theme="light"] .setup-card,[data-theme="light"] .stack-card,[data-theme="light"] .arch-card{background:rgba(255,255,255,0.9);box-shadow:0 2px 14px rgba(15,23,42,0.07),inset 0 1px 0 #fff;border-color:rgba(15,23,42,0.09)}
+[data-theme="light"] .session-panel{background:rgba(255,255,255,0.85);border-color:rgba(15,23,42,0.09)}
+[data-theme="light"] .hero-stat-box{background:linear-gradient(180deg,rgba(96,165,250,0.07),rgba(167,139,250,0.04));border-color:rgba(96,165,250,0.15)}
+[data-theme="light"] input,[data-theme="light"] textarea,[data-theme="light"] select{background:rgba(15,23,42,0.04);color:#0f172a;border-color:rgba(15,23,42,0.12)}
+[data-theme="light"] .lang-switcher,[data-theme="light"] .lang-toggle{background:rgba(15,23,42,0.04);border-color:rgba(15,23,42,0.1)}
+[data-theme="light"] .lang-btn{color:#64748b}
+[data-theme="light"] .lang-btn.active{background:rgba(59,130,246,0.12);color:#3b82f6}
+[data-theme="light"] nav{background:rgba(244,246,251,0.9);border-bottom-color:rgba(15,23,42,0.08)}
+[data-theme="light"] #hero::after{background:linear-gradient(180deg,rgba(244,246,251,0) 0%,#f4f6fb 100%)}
+[data-theme="light"] .hero-video-overlay{background:linear-gradient(180deg,rgba(244,246,251,0.6) 0%,rgba(244,246,251,0.8) 55%,rgba(244,246,251,0.97) 100%)}
+[data-theme="light"] .hero-cta-primary{border-color:rgba(15,23,42,0.15);color:#0f172a}
+[data-theme="light"] .hero-cta-primary:hover{border-color:rgba(59,130,246,0.4);color:#3b82f6}
+[data-theme="light"] .panel-btn{background:transparent}
+[data-theme="light"] .panel-btn:hover{background:rgba(15,23,42,0.03)}
+[data-theme="light"] .tag{background:rgba(15,23,42,0.04);border-color:rgba(15,23,42,0.08);color:#475569}
+[data-theme="light"] .exp{border-top-color:rgba(15,23,42,0.07)}
+[data-theme="light"] .exp:hover{background:rgba(59,130,246,0.02)}
+[data-theme="light"] section{border-bottom-color:rgba(15,23,42,0.07)}
+[data-theme="light"] .nav-back{border-color:rgba(15,23,42,0.15)}
+[data-theme="light"] .nav-back:hover{border-color:rgba(15,23,42,0.25)}
+[data-theme="light"] .back-link{color:#94a3b8}
+[data-theme="light"] .back-link:hover{color:#0f172a}
+[data-theme="light"] .arch-node{background:rgba(255,255,255,0.8);border-color:rgba(15,23,42,0.1)}
+[data-theme="light"] .decision-card{background:rgba(255,255,255,0.8);border-color:rgba(15,23,42,0.08)}
+[data-theme="light"] .arch-diagram{border-color:rgba(15,23,42,0.08)}
+[data-theme="light"] .top-bar,[data-theme="light"] .lang-bar{gap:0.5rem}
 </style>
 </head>
 <body>
@@ -135,6 +174,7 @@ footer{text-align:center;margin-top:3.5rem;padding-top:2rem;border-top:1px solid
 <div class="container">
 
   <div class="lang-bar">
+    <button class="theme-btn" aria-label="Passer en mode clair"></button>
     <div class="lang-toggle">
       <button class="lang-btn glass-shimmer glass-focus active" id="lbFr" onclick="setLang('fr')">FR</button>
       <button class="lang-btn glass-shimmer glass-focus" id="lbEn" onclick="setLang('en')">EN</button>
@@ -459,5 +499,26 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 <script src="krl1-widget.js"></script>
 <script src="glass.js"></script>
+<script>
+(function(){
+  var SUN='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  var MOON='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  function applyTheme(t){
+    if(t==='light') document.documentElement.setAttribute('data-theme','light');
+    else document.documentElement.removeAttribute('data-theme');
+    document.querySelectorAll('.theme-btn').forEach(function(b){
+      b.innerHTML=t==='light'?MOON:SUN;
+      b.setAttribute('aria-label',t==='light'?'Passer en mode sombre':'Passer en mode clair');
+    });
+    localStorage.setItem('theme',t);
+  }
+  var saved=localStorage.getItem('theme')||'dark';
+  applyTheme(saved);
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest?e.target.closest('.theme-btn'):null;
+    if(btn){var cur=document.documentElement.getAttribute('data-theme');applyTheme(cur==='light'?'dark':'light');}
+  });
+})();
+</script>
 </body>
 </html>
