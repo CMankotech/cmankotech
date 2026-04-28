@@ -34,7 +34,7 @@ body.glows-hidden .glow{opacity:0}
 .grad-blue{background:linear-gradient(to right,#60a5fa,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 3rem;background:rgba(8,8,15,0.8);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 4rem;background:rgba(8,8,15,0.8);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
 .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem}
 .nav-right{display:flex;align-items:center;gap:1.5rem}
 .nav-links{display:flex;gap:2.5rem}
@@ -55,20 +55,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .lang-btn:hover:not(.active){color:var(--text)}
 
 /* HERO */
-#hero{position:relative;z-index:1;padding-top:8rem;min-height:100vh;display:flex;align-items:center}
+#hero{position:relative;z-index:1;padding-top:10rem;min-height:100vh;display:flex;align-items:center}
 #hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:140px;background:linear-gradient(180deg,rgba(8,8,15,0) 0%,var(--bg) 100%);z-index:1;pointer-events:none}
 .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05);transition:transform 2s cubic-bezier(.16,1,.3,1);z-index:0;pointer-events:none}
-.hero-video-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,15,0.35) 0%,rgba(8,8,15,0.55) 55%,rgba(8,8,15,0.9) 100%);z-index:1;pointer-events:none}
-.hero-wrap{padding:3rem 3rem 4rem;position:relative;z-index:2}
-.hero-compact{display:flex;flex-direction:column;gap:1.5rem;max-width:860px}
+.hero-video-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,15,0.65) 0%,rgba(8,8,15,0.78) 55%,rgba(8,8,15,0.95) 100%);z-index:1;pointer-events:none}
+.hero-wrap{padding:4rem 4rem 6rem;position:relative;z-index:2}
+.hero-compact{display:flex;flex-direction:column;gap:1.5rem;max-width:1100px}
 .hero-headline{display:flex;flex-direction:column;gap:0.15rem;margin:0}
-.hero-hl-1{font-family:'DM Sans',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:500;line-height:0.98;letter-spacing:-0.045em;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-hl-2{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.05;letter-spacing:-0.02em}
+.hero-hl-1{font-family:'DM Sans',sans-serif;font-size:clamp(2.6rem,5.5vw,4.8rem);font-weight:500;line-height:0.98;letter-spacing:-0.045em;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-hl-2{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-size:clamp(2.6rem,5.5vw,4.8rem);line-height:1.05;letter-spacing:-0.02em}
 .hero-name-row{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap}
 .hero-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);letter-spacing:-0.01em}
 .hero-sub-role{font-size:0.75rem;font-weight:500;color:#67e8f9;letter-spacing:0.04em;font-family:'DM Sans',sans-serif}
 .hero-sub-role::before{content:'';display:inline-block;width:14px;height:1px;background:#67e8f9;margin-right:0.5rem;vertical-align:middle}
-.hero-bio{font-size:0.92rem;line-height:1.75;color:var(--dim);max-width:640px}
+.hero-bio{font-size:0.92rem;line-height:1.75;color:var(--dim);max-width:780px}
 .hero-ctas{display:flex;gap:1rem;align-items:center}
 .hero-cta-primary{font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.65rem 1.4rem;border:1px solid rgba(255,255,255,0.15);border-radius:99px;color:var(--text);text-decoration:none;transition:all .25s}
 .hero-cta-primary:hover{border-color:rgba(34,211,238,0.4);color:#67e8f9}
@@ -85,7 +85,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
 /* SECTIONS */
 section{border-bottom:1px solid var(--line);position:relative;z-index:1}
-.wrap{max-width:1200px;margin:0 auto;padding:3.5rem 3rem}
+.wrap{max-width:1440px;margin:0 auto;padding:3.5rem 4rem}
 .sec-label{display:flex;align-items:center;gap:1.25rem;margin-bottom:2rem}.sec-num{font-family:"Syne",sans-serif;font-size:0.72rem;font-weight:700;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.1em}.sec-name{font-family:"Syne",sans-serif;font-size:1.85rem;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1}.sec-label::after{content:"";flex:1;height:1px;background:var(--line)}
 .sec-label::after{content:'';flex:1;height:1px;background:var(--line)}
 
@@ -150,17 +150,17 @@ section{border-bottom:1px solid var(--line);position:relative;z-index:1}
 .edu-thesis-label{font-style:normal;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);display:block;margin-bottom:0.25rem}
 
 /* FOOTER */
-.footer-wrap{max-width:1200px;margin:0 auto;padding:6rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:end;position:relative;z-index:1}
+.footer-wrap{max-width:1440px;margin:0 auto;padding:6rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:end;position:relative;z-index:1}
 .footer-hl{display:flex;flex-direction:column;gap:0.15rem;line-height:1}
 .footer-links{display:flex;flex-direction:column;align-items:flex-end;gap:1rem}
 .footer-link{font-size:0.78rem;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);text-decoration:none;transition:color 0.2s}
 .footer-link:hover{color:#60a5fa}
-.footer-copy{border-top:1px solid var(--line);padding:1.5rem 3rem;text-align:center;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;position:relative;z-index:1}
+.footer-copy{border-top:1px solid var(--line);padding:1.5rem 4rem;text-align:center;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;position:relative;z-index:1}
 
 
 /* PROJ INTRO */
 .proj-intro{display:flex;flex-direction:column;gap:1.25rem;margin-bottom:2rem}
-.proj-intro-text{font-size:1rem;line-height:1.8;color:var(--dim);max-width:680px;border-left:2px solid #22d3ee;padding-left:1.5rem}
+.proj-intro-text{font-size:1rem;line-height:1.8;color:var(--dim);max-width:820px;border-left:2px solid #22d3ee;padding-left:1.5rem}
 .proj-intro-stats{display:flex;gap:3rem}
 .proj-stat{display:flex;flex-direction:column;gap:0.2rem}
 .proj-stat-num{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;line-height:1;letter-spacing:-0.04em}
@@ -446,7 +446,6 @@ nav{padding:1rem 1.5rem}
           <a href="https://cmankotech.github.io/cmankotech/pm-toolkit.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#a78bfa" data-i18n="proj.link">Ouvrir le toolkit &rarr;</a>
         </div>
     </div>
-    <div class="proj-sep rv"><span class="proj-sep-label">RAG Demo</span></div>
     <div class="proj-grid rv">
         <div class="proj-card glass-edge glass-pointer" style="border-color:rgba(167,139,250,0.2)" onclick="window.open('https://cmankotech.github.io/cmankotech/rag-explorer.html','_blank')" data-card="rag">
           <div class="proj-top-row">
@@ -457,9 +456,6 @@ nav{padding:1rem 1.5rem}
           <div class="proj-summary"><p class="proj-summary-text" data-i18n="proj.rag.sum">Pipeline RAG sémantique edge-native : embeddings via Workers AI (bge-small-en-v1.5), cosine similarity à l&rsquo;edge, génération augmentée — visualisé étape par étape.</p></div>
           <a href="https://cmankotech.github.io/cmankotech/rag-explorer.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#a78bfa" data-i18n="proj.link">Voir le projet &rarr;</a>
         </div>
-    </div>
-    <div class="proj-sep rv"><span class="proj-sep-label">Mini-jeu</span></div>
-    <div class="proj-grid rv">
         <div class="proj-card glass-edge glass-pointer" style="border-color:rgba(255,255,255,0.08)" onclick="window.open('https://cmankotech.github.io/cmankotech/pixel-runner.html','_blank')" data-card="game">
           <div class="proj-top-row">
             <span class="proj-tag" style="color:#38bdf8">Mini-Game</span>
