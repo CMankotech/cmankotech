@@ -760,9 +760,9 @@ function applyLangExtras(lang) {
 <script>
 window.pmImportInsights = function(){
   if(!window.PMSession) return;
-  var prev = PMSession.get('backlog');
-  if(!prev) return;
-  var items = ((prev.result||{}).items) || [];
+  var backlogData = PMSession.get('backlog');
+  if(!backlogData) return;
+  var items = ((backlogData.result||{}).items) || [];
   if(!items.length) return;
   var top = items[0];
   var titleEl = document.getElementById('epicTitle');
@@ -774,13 +774,20 @@ window.pmImportInsights = function(){
     var lines = [];
     if(top.justification) lines.push(top.justification);
     if(items.length > 1){
-      lines.push('\nContext backlog (top priorités adjacentes) :');
-      items.slice(1,4).forEach(function(it,i){ lines.push('- ' + (it.story||it.title||'') + (it.justification ? ' — ' + it.justification : '')); });
+      lines.push('\nTop priorités adjacentes :');
+      items.slice(1,4).forEach(function(it){ lines.push('- ' + (it.story||it.title||'') + (it.justification ? ' — ' + it.justification : '')); });
     }
-    if(prev.context) lines.push('\nContexte produit : ' + prev.context);
+    if(backlogData.context) lines.push('\nContexte produit : ' + backlogData.context);
     descEl.value = lines.join('\n');
   }
-  if(ctxEl && !ctxEl.value && prev.context) ctxEl.value = prev.context.slice(0,100);
+  if(ctxEl && !ctxEl.value && backlogData.context) ctxEl.value = backlogData.context.slice(0,100);
+  if(persoEl && !persoEl.value){
+    var interviewData = PMSession.get('interview');
+    if(interviewData){
+      var p = ((interviewData.result||{}).persona)||{};
+      if(p.name) persoEl.value = p.name + (p.description ? ' — ' + p.description : '') + (p.tags&&p.tags.length ? ' (' + p.tags.slice(0,3).join(', ') + ')' : '');
+    }
+  }
   var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
   if(titleEl){ titleEl.style.borderColor='rgba(244,114,182,0.5)'; setTimeout(function(){titleEl.style.borderColor='';},900); titleEl.scrollIntoView({behavior:'smooth',block:'center'}); }
 };

@@ -837,14 +837,29 @@ function applyLangExtras(lang) {
 <script>
 window.pmImportInsights = function(){
   if(!window.PMSession) return;
-  var prev = PMSession.get('epic');
-  if(!prev) return;
-  var stories = ((prev.result||{}).stories) || [];
+  var epicData = PMSession.get('epic');
+  if(!epicData) return;
+  var stories = ((epicData.result||{}).stories) || [];
   if(!stories.length) return;
   var prodEl = document.getElementById('productName');
   var visEl  = document.getElementById('vision');
-  if(prodEl && !prodEl.value && prev.epicTitle) prodEl.value = prev.epicTitle.split(/[—:·]/)[0].trim().slice(0,40);
-  if(visEl && !visEl.value && (prev.result||{}).epic_summary) visEl.value = prev.result.epic_summary;
+  // Product name: prefer OKR productName, then epic title
+  if(prodEl && !prodEl.value){
+    var okrData = PMSession.get('okr');
+    if(okrData && okrData.productName) prodEl.value = okrData.productName;
+    else if(epicData.epicTitle) prodEl.value = epicData.epicTitle.split(/[—:·]/)[0].trim().slice(0,40);
+  }
+  // Vision: epic summary + first OKR objective as strategic anchor
+  if(visEl && !visEl.value){
+    var visionParts = [];
+    if((epicData.result||{}).epic_summary) visionParts.push(epicData.result.epic_summary);
+    var okrD = PMSession.get('okr');
+    if(okrD){
+      var firstObj = (((okrD.result||{}).okrs||[])[0]||{}).objective||'';
+      if(firstObj) visionParts.push('Objectif stratégique : ' + firstObj);
+    }
+    if(visionParts.length) visEl.value = visionParts.join('\n');
+  }
   // Replace feature rows with stories mapped to periods by priority
   var priorityToPeriod = { high: 'now', medium: 'next', low: 'later' };
   var list = document.getElementById('featuresList');
