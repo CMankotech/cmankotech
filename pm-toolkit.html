@@ -84,7 +84,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 .tool-card:hover .tool-launch{color:var(--tool-color);gap:0.55rem}
 
 .tool-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:0.85rem}
-.tool-step{font-family:'DM Mono','Courier New',monospace;font-size:0.6rem;font-weight:400;color:var(--tool-color);text-transform:lowercase;letter-spacing:0.04em;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:0.25rem 0.65rem;border-radius:5px}
+.tool-step{font-family:'DM Mono','Courier New',monospace;font-size:0.6rem;font-weight:700;color:var(--tool-color);letter-spacing:0.04em;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:0.25rem 0.65rem;border-radius:5px}
 .tool-status{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.11em;padding:0.22rem 0.6rem;border-radius:99px;background:rgba(52,211,153,0.12);color:#86efac;border:1px solid rgba(52,211,153,0.25);display:none}
 .tool-card.completed .tool-status{display:inline-block}
 
@@ -387,7 +387,7 @@ function renderFlow(){
     var done = !!session[t.id];
     return '<a href="'+t.url+'" class="tool-card glass-pointer'+(done?' completed':'')+'" style="--tool-color:'+t.color+'">'
       + '<div class="tool-header">'
-      +   '<span class="tool-step">#0'+t.step+'</span>'
+      +   '<span class="tool-step">0'+t.step+'</span>'
       +   '<span class="tool-status">✓ '+doneLbl+'</span>'
       + '</div>'
       + '<div class="tool-title">'+esc(data.title)+'</div>'
