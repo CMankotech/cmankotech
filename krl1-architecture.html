@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KRL1 — Architecture de décision · Carlin Mankoto</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070e;--surface:#0e0e1a;--glass:rgba(255,255,255,0.03);
+  --border:rgba(255,255,255,0.08);--line:rgba(255,255,255,0.05);
+  --text:#e2e8f0;--dim:#94a3b8;--muted:#475569;
+  --blue:#60a5fa;--green:#34d399;--violet:#a78bfa;--orange:#fb923c;--pink:#f472b6;--yellow:#fbbf24;--cyan:#22d3ee;
+  --grad:linear-gradient(135deg,#60a5fa 0%,#a78bfa 50%,#22d3ee 100%);
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+
+/* GLOWS */
+.glow{position:fixed;border-radius:50%;filter:blur(140px);pointer-events:none;z-index:0;opacity:0.55}
+.g1{width:520px;height:520px;top:-160px;left:-120px;background:rgba(34,211,238,0.1)}
+.g2{width:420px;height:420px;bottom:10%;right:-120px;background:rgba(167,139,250,0.1)}
+.g3{width:360px;height:360px;top:45%;left:30%;background:rgba(96,165,250,0.06)}
+
+/* LAYOUT */
+.container{max-width:860px;margin:0 auto;padding:2.5rem 1.5rem 4rem;position:relative;z-index:1}
+
+/* TOP BAR */
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.back-link{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.back-link:hover{color:var(--text)}
+.lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
+.lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.lang-btn.active{background:rgba(34,211,238,0.15);color:var(--cyan)}
+.theme-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:99px;border:1px solid var(--border);background:transparent;cursor:pointer;color:var(--muted);transition:all 0.2s;padding:0;flex-shrink:0}
+.theme-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.18)}
+
+/* HEADER */
+header{margin-bottom:3rem}
+.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--cyan);margin-bottom:1.25rem;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.2);padding:0.4rem 1rem;border-radius:99px}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
+h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.85rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h1 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
+.subtitle{font-size:0.9rem;color:var(--dim);max-width:600px;line-height:1.65;margin-bottom:1.5rem}
+.header-meta{display:flex;gap:0.75rem;flex-wrap:wrap}
+.meta-tag{font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.25rem 0.7rem;border-radius:5px;border:1px solid var(--border);color:var(--muted);background:rgba(255,255,255,0.02)}
+
+/* SECTION DIVIDER */
+.sec-divider{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.8rem}
+.sec-divider::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* CARDS */
+.card{background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:14px;padding:1.5rem 1.4rem;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 14px 36px -18px rgba(0,0,0,0.5)}
+
+/* DECISION LAYERS */
+.layers{display:flex;flex-direction:column;gap:0;margin-bottom:2.5rem;position:relative}
+.layer-card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.4rem;display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:start;margin-bottom:0}
+.layer-card+.layer-card{margin-top:0.75rem}
+.layer-connector{width:1px;height:0.75rem;background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.06));margin:0 auto;display:block}
+.layer-num{font-family:'DM Mono','Courier New',monospace;font-size:1.2rem;font-weight:700;color:var(--layer-color);line-height:1;padding-top:0.1rem;min-width:1.8rem}
+.layer-body{min-width:0}
+.layer-title{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;letter-spacing:-0.01em}
+.layer-desc{font-size:0.78rem;color:var(--dim);line-height:1.55;margin-bottom:0.6rem}
+.layer-tech{display:flex;gap:0.4rem;flex-wrap:wrap}
+.tech-pill{font-family:'DM Mono','Courier New',monospace;font-size:0.6rem;font-weight:400;padding:0.2rem 0.55rem;border-radius:4px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:var(--dim)}
+.layer-badge{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.22rem 0.6rem;border-radius:99px;background:color-mix(in srgb, var(--layer-color) 12%, transparent);color:var(--layer-color);border:1px solid color-mix(in srgb, var(--layer-color) 25%, transparent);white-space:nowrap;align-self:start;margin-top:0.1rem}
+
+/* SYSTEM PROMPT */
+.prompt-block{margin-bottom:2.5rem}
+.prompt-section{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;align-items:start}
+@media(max-width:680px){.prompt-section{grid-template-columns:1fr}}
+.prompt-code{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:0.9rem 1rem;font-family:'DM Mono','Courier New',monospace;font-size:0.68rem;line-height:1.6;color:rgba(255,255,255,0.75);position:relative;overflow:hidden}
+.prompt-code::before{content:attr(data-label);position:absolute;top:0.55rem;right:0.7rem;font-size:0.5rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);opacity:0.7}
+.prompt-annot{background:linear-gradient(180deg,rgba(34,211,238,0.04),rgba(34,211,238,0.01));border:1px solid rgba(34,211,238,0.12);border-left:3px solid var(--cyan);border-radius:0 10px 10px 0;padding:0.85rem 1rem;display:flex;flex-direction:column;gap:0.4rem}
+.annot-label{font-size:0.56rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--cyan)}
+.annot-text{font-size:0.75rem;color:var(--dim);line-height:1.55}
+.annot-decision{font-size:0.7rem;color:var(--text);font-weight:500;margin-top:0.1rem}
+
+/* KB RULES */
+.kb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0.7rem;margin-bottom:2.5rem}
+.kb-card{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;padding:0.85rem 1rem}
+.kb-card-keys{font-family:'DM Mono','Courier New',monospace;font-size:0.62rem;color:var(--cyan);margin-bottom:0.4rem;opacity:0.85;line-height:1.5}
+.kb-card-desc{font-size:0.72rem;color:var(--dim);line-height:1.5}
+
+/* TRADEOFFS */
+.tradeoff-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-bottom:2.5rem}
+@media(max-width:600px){.tradeoff-grid{grid-template-columns:1fr}}
+.tradeoff-card{background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-left:3px solid var(--tradeoff-color);border-radius:0 12px 12px 0;padding:1.1rem 1.2rem}
+.tradeoff-decision{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--tradeoff-color);margin-bottom:0.4rem}
+.tradeoff-q{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.5rem;line-height:1.3}
+.tradeoff-a{font-size:0.75rem;color:var(--dim);line-height:1.55}
+
+/* FOOTER */
+footer{text-align:center;margin-top:3.5rem;padding-top:2rem;border-top:1px solid var(--border)}
+.footer-by{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em}
+.footer-by a{color:var(--cyan);text-decoration:none}
+.footer-by a:hover{text-decoration:underline}
+
+/* LIGHT MODE */
+[data-theme="light"]{--bg:#f4f6fb;--surface:#fff;--text:#0f172a;--dim:#475569;--muted:#94a3b8;--border:rgba(15,23,42,0.1);--line:rgba(15,23,42,0.08);--glass:rgba(15,23,42,0.04)}
+[data-theme="light"] body{background:#f4f6fb;color:#0f172a}
+[data-theme="light"] .glow{opacity:0.12;mix-blend-mode:multiply}
+[data-theme="light"] h1{background:linear-gradient(180deg,#1e293b 0%,#475569 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+[data-theme="light"] .prompt-code{background:rgba(15,23,42,0.05);border-color:rgba(15,23,42,0.1);color:#334155}
+[data-theme="light"] .card,[data-theme="light"] .layer-card,[data-theme="light"] .tradeoff-card{background:rgba(255,255,255,0.85);border-color:rgba(15,23,42,0.09)}
+[data-theme="light"] .kb-card{background:rgba(15,23,42,0.025)}
+
+@media(max-width:640px){h1{font-size:clamp(1.5rem,6vw,2rem)!important}.layer-card{grid-template-columns:auto 1fr}}
+</style>
+</head>
+<body>
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+<div class="glow g3"></div>
+
+<div class="container">
+
+  <div class="top-bar">
+    <a href="index.html" class="back-link" id="backLink">← <span id="backLbl">Retour au portfolio</span></a>
+    <div style="display:flex;gap:0.5rem;align-items:center">
+      <button class="theme-btn" aria-label="Passer en mode clair"></button>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="lbFr" onclick="setLang('fr')">FR</button>
+        <button class="lang-btn" id="lbEn" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="header-tag"><span class="dot"></span> <span id="tagLbl">KRL1 · Architecture de décision</span></div>
+    <h1 id="h1Main">Comment <span class="grad">KRL1</span><br id="h1br">décide quoi répondre</h1>
+    <p class="subtitle" id="subtitleTxt">KRL1 n'est pas un simple chatbot connecté à un LLM. Chaque réponse passe par 4 couches de décision — du contexte de page à l'orchestration LLM. Voici la logique produit derrière chaque choix.</p>
+    <div class="header-meta">
+      <span class="meta-tag">Groq API · llama-3.3-70b</span>
+      <span class="meta-tag">Cloudflare Workers</span>
+      <span class="meta-tag">Vanilla JS</span>
+      <span class="meta-tag" id="metaKB">KB fast-path</span>
+    </div>
+  </header>
+
+  <!-- DECISION LAYERS -->
+  <div class="sec-divider"><span id="layersLbl">Les 4 couches de décision</span></div>
+
+  <div class="layers">
+
+    <div class="layer-card" style="--layer-color:#22d3ee">
+      <span class="layer-num">01</span>
+      <div class="layer-body">
+        <div class="layer-title" id="l1t">Détection du contexte de page</div>
+        <div class="layer-desc" id="l1d">KRL1 lit l'URL dès l'ouverture et adapte son message d'accueil à l'outil PM en cours d'utilisation. 6 messages différents selon la page — OKR Builder, Discovery Assistant, Backlog Prioritizer, etc.</div>
+        <div class="layer-tech">
+          <span class="tech-pill">window.location.pathname</span>
+          <span class="tech-pill">TOOL_CONTEXT map</span>
+          <span class="tech-pill">TOOL_ID matching</span>
+        </div>
+      </div>
+      <span class="layer-badge" id="l1b">Contextualisation</span>
+    </div>
+
+    <div class="layer-connector"></div>
+
+    <div class="layer-card" style="--layer-color:#60a5fa">
+      <span class="layer-num">02</span>
+      <div class="layer-body">
+        <div class="layer-title" id="l2t">KB fast-path — matching local</div>
+        <div class="layer-desc" id="l2d">Avant tout appel API, KRL1 cherche un pattern dans sa base de connaissances locale (~10 catégories). Si un mot-clé matche, la réponse est servie instantanément depuis le client — 0 latence réseau, 0 coût LLM.</div>
+        <div class="layer-tech">
+          <span class="tech-pill">keyword matching</span>
+          <span class="tech-pill">FR + EN rules</span>
+          <span class="tech-pill">chip suggestions</span>
+        </div>
+      </div>
+      <span class="layer-badge" id="l2b">Performance &amp; coût</span>
+    </div>
+
+    <div class="layer-connector"></div>
+
+    <div class="layer-card" style="--layer-color:#a78bfa">
+      <span class="layer-num">03</span>
+      <div class="layer-body">
+        <div class="layer-title" id="l3t">Appel LLM via Groq + system prompt</div>
+        <div class="layer-desc" id="l3d">Si aucun pattern KB ne matche, la question est envoyée à l'API Groq (llama-3.3-70b sur LPU) avec le system prompt complet + l'historique de conversation. Un Cloudflare Worker proxy sécurise la clé API côté serveur.</div>
+        <div class="layer-tech">
+          <span class="tech-pill">Groq API</span>
+          <span class="tech-pill">llama-3.3-70b</span>
+          <span class="tech-pill">Cloudflare Worker</span>
+          <span class="tech-pill">conversation history</span>
+        </div>
+      </div>
+      <span class="layer-badge" id="l3b">Intelligence générative</span>
+    </div>
+
+    <div class="layer-connector"></div>
+
+    <div class="layer-card" style="--layer-color:#34d399">
+      <span class="layer-num">04</span>
+      <div class="layer-body">
+        <div class="layer-title" id="l4t">PM Journey — injection post-résultat</div>
+        <div class="layer-desc" id="l4d">Un MutationObserver surveille l'apparition du div #results sur chaque outil PM. Dès qu'un résultat est généré, KRL1 injecte automatiquement un CTA "prochaine étape" dans le flux — sans intervention manuelle de l'utilisateur.</div>
+        <div class="layer-tech">
+          <span class="tech-pill">MutationObserver</span>
+          <span class="tech-pill">JOURNEY map</span>
+          <span class="tech-pill">DOM injection</span>
+        </div>
+      </div>
+      <span class="layer-badge" id="l4b">PLG nudge</span>
+    </div>
+
+  </div>
+
+  <!-- SYSTEM PROMPT -->
+  <div class="sec-divider"><span id="promptLbl">Le system prompt annoté</span></div>
+  <div class="prompt-block">
+
+    <div class="prompt-section">
+      <div class="prompt-code" data-label="persona">Tu es KRL1, l'assistant portfolio
+de Carlin Mankoto, AI Product Manager.
+Réponds de façon concise et
+professionnelle en français par défaut
+(en anglais si on te parle en anglais).</div>
+      <div class="prompt-annot">
+        <span class="annot-label" id="pa1l">Persona &amp; contrainte de langue</span>
+        <span class="annot-text" id="pa1t">Le LLM doit savoir qui il est avant tout. La contrainte de langue évite des réponses mixtes FR/EN sur les questions ambiguës.</span>
+        <span class="annot-decision" id="pa1d">Décision : nommer l'assistant "KRL1" renforce l'identité de marque plutôt que "un assistant IA générique".</span>
+      </div>
+    </div>
+
+    <div class="prompt-section">
+      <div class="prompt-code" data-label="scope guard">Ne réponds qu'aux questions liées
+à Carlin ou à ses outils.
+Si la question est hors sujet,
+redirige poliment.</div>
+      <div class="prompt-annot">
+        <span class="annot-label" id="pa2l">Scope guard</span>
+        <span class="annot-text" id="pa2t">Sans cette règle, le LLM répond à tout — recettes de cuisine, code Python, etc. Le scope guard maintient KRL1 focalisé sur son objectif : conversion recruteur.</span>
+        <span class="annot-decision" id="pa2d">Décision : "redirige poliment" plutôt que "refuse" — moins agressif pour l'UX.</span>
+      </div>
+    </div>
+
+    <div class="prompt-section">
+      <div class="prompt-code" data-label="profil">PROFIL :
+- 3 ans d'expérience PM/PO : OAIO/
+  Infotel, AXA (AI PO, SecureGPT RAG),
+  Airbus D&S (JO Paris 2024), Casino
+- PSPO I, SAFe POPM + SSM,
+  Product School, Elements of AI
+- Master 2 Innovation Digitale
+  (Paris-Saclay)
+- LLM, RAG, Prompt Engineering,
+  Agentic AI, CrewAI, n8n, Make,
+  Vibe Coding (Claude Code, Lovable)</div>
+      <div class="prompt-annot">
+        <span class="annot-label" id="pa3l">Contexte en raw text</span>
+        <span class="annot-text" id="pa3t">Le CV complet est injecté en clair dans le contexte. Le LLM n'a jamais à inférer ou deviner — 0 risque d'hallucination sur les faits biographiques.</span>
+        <span class="annot-decision" id="pa3d">Décision : raw text plutôt que JSON structuré — les LLMs consomment mieux le langage naturel pour ce type d'information factuelle.</span>
+      </div>
+    </div>
+
+    <div class="prompt-section">
+      <div class="prompt-code" data-label="instruction critique">INSTRUCTION CRITIQUE :
+Quand l'utilisateur mentionne un sujet
+PM (backlog, OKR, discovery, roadmap,
+user story, epic), inclus TOUJOURS
+un lien HTML cliquable vers l'outil
+PM correspondant.
+Réponse actionnable et concise
+(max 200 mots).
+N'utilise jamais de tirets longs (—).
+N'utilise jamais l'élision 'l''
+devant un nom d'outil.</div>
+      <div class="prompt-annot">
+        <span class="annot-label" id="pa4l">Funnel &amp; règles de rendu</span>
+        <span class="annot-text" id="pa4t">Chaque réponse PM devient un point d'entrée vers les 6 outils — c'est du product-led growth par prompt. La limite de 200 mots évite les réponses essay.</span>
+        <span class="annot-decision" id="pa4d">Décision : les règles typographiques (tirets, élision) sont des guardrails qualité découverts après test — pas d'a priori, ajoutés itérativement.</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- KB FAST-PATH -->
+  <div class="sec-divider"><span id="kbLbl">KB fast-path — les 10 catégories locales</span></div>
+  <div class="kb-grid">
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb1k">que peux · peux-tu · aide · capacité</div>
+      <div class="kb-card-desc" id="kb1d">Présentation des 2 axes d'aide : défis PM + portfolio Carlin</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb2k">qui · carlin · profil · présente</div>
+      <div class="kb-card-desc" id="kb2d">Résumé du profil en 3 lignes : expérience, certifications, vibe coding</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb3k">outil · build · projet · app · tool</div>
+      <div class="kb-card-desc" id="kb3d">Liste des 6 outils PM avec liens cliquables</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb4k">expérience · parcours · axa · airbus</div>
+      <div class="kb-card-desc" id="kb4d">Détail du parcours professionnel chronologique</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb5k">certif · pspo · safe · formation</div>
+      <div class="kb-card-desc" id="kb5d">Certifications + diplômes</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb6k">contact · linkedin · email · recrut</div>
+      <div class="kb-card-desc" id="kb6d">Liens de contact direct, disponibilité CDI/freelance</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb7k">krl1 · comment tu · qui es-tu · construit</div>
+      <div class="kb-card-desc" id="kb7d">Explication de l'architecture KRL1 (cette page)</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb8k">stack · architecture · technique · langgraph</div>
+      <div class="kb-card-desc" id="kb8d">Stack technique complète du site + lien vers how-i-built-this</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb9k">pourquoi cloudflare · cloudflare worker</div>
+      <div class="kb-card-desc" id="kb9d">Explication du choix Cloudflare Workers comme proxy API</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb10k">pourquoi pas de backend · sans backend</div>
+      <div class="kb-card-desc" id="kb10d">Justification de l'architecture 100% statique</div>
+    </div>
+  </div>
+
+  <!-- TRADE-OFFS -->
+  <div class="sec-divider"><span id="tradeoffsLbl">Décisions produit &amp; trade-offs</span></div>
+  <div class="tradeoff-grid">
+
+    <div class="tradeoff-card" style="--tradeoff-color:#22d3ee">
+      <div class="tradeoff-decision" id="t1d">Décision 01</div>
+      <div class="tradeoff-q" id="t1q">KB local avant LLM — pourquoi ne pas tout envoyer à l'API ?</div>
+      <div class="tradeoff-a" id="t1a">95% des questions sont récurrentes (qui es-tu, contact, outils). Un appel Groq coûte ~0.5s de latence et un quota API. Le KB répond en &lt;10ms depuis le navigateur. Le LLM est réservé aux questions réellement ouvertes.</div>
+    </div>
+
+    <div class="tradeoff-card" style="--tradeoff-color:#a78bfa">
+      <div class="tradeoff-decision" id="t2d">Décision 02</div>
+      <div class="tradeoff-q" id="t2q">Cloudflare Worker plutôt qu'un backend Node/FastAPI</div>
+      <div class="tradeoff-a" id="t2a">Un Worker serverless résout le seul vrai problème : ne pas exposer la clé API côté client. Zéro infra à maintenir, 100 000 req/jour sur le plan gratuit, déployé en 2 min avec Wrangler. Un backend complet aurait été over-engineered.</div>
+    </div>
+
+    <div class="tradeoff-card" style="--tradeoff-color:#60a5fa">
+      <div class="tradeoff-decision" id="t3d">Décision 03</div>
+      <div class="tradeoff-q" id="t3q">MutationObserver pour le PM Journey — pourquoi pas un event ?</div>
+      <div class="tradeoff-a" id="t3a">Les outils PM sont des pages indépendantes avec des structures DOM différentes. Un event custom aurait nécessité de modifier 6 fichiers. Le MutationObserver observe #results depuis krl1-widget.js sans toucher aux pages — couplage zéro.</div>
+    </div>
+
+    <div class="tradeoff-card" style="--tradeoff-color:#34d399">
+      <div class="tradeoff-decision" id="t4d">Décision 04</div>
+      <div class="tradeoff-q" id="t4q">Profil en raw text dans le prompt — pas de RAG ?</div>
+      <div class="tradeoff-a" id="t4a">Le profil de Carlin tient en ~300 tokens. Un système RAG aurait ajouté une couche d'embedding + vector DB pour récupérer les mêmes informations. Règle YAGNI : la solution la plus simple qui fonctionne est la bonne.</div>
+    </div>
+
+    <div class="tradeoff-card" style="--tradeoff-color:#fb923c">
+      <div class="tradeoff-decision" id="t5d">Décision 05</div>
+      <div class="tradeoff-q" id="t5q">Groq + llama plutôt qu'OpenAI GPT-4 ?</div>
+      <div class="tradeoff-a" id="t5a">Pour un assistant portfolio, la latence perçue est plus importante que la profondeur de raisonnement. Groq sur LPU donne 1-2s de réponse vs 4-6s sur GPT-4. llama-3.3-70b couvre largement les besoins pour des questions PM + profil.</div>
+    </div>
+
+    <div class="tradeoff-card" style="--tradeoff-color:#f472b6">
+      <div class="tradeoff-decision" id="t6d">Décision 06</div>
+      <div class="tradeoff-q" id="t6q">Auto-ouverture après 6 secondes — pourquoi ce délai ?</div>
+      <div class="tradeoff-a" id="t6a">Le visiteur a besoin de temps pour lire le hero avant qu'une popup ne s'ouvre — trop tôt crée de la friction. 6s correspond au temps moyen de lecture du titre + subtitle mesuré sur sessions analytics. L'engagement monte sans nuire à l'expérience.</div>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="card" style="text-align:center;padding:2rem">
+    <div style="font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--cyan);margin-bottom:0.75rem" id="ctaTag">Voir en action</div>
+    <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.5rem" id="ctaTitle">KRL1 est disponible sur chaque page du portfolio</div>
+    <div style="font-size:0.8rem;color:var(--dim);margin-bottom:1.5rem;max-width:460px;margin-left:auto;margin-right:auto" id="ctaDesc">Ouvre n'importe quel outil PM et clique sur le bouton bleu en bas à droite — l'assistant s'adapte automatiquement au contexte de la page.</div>
+    <a href="pm-toolkit.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.85rem 1.75rem;background:linear-gradient(135deg,#22d3ee,#60a5fa,#a78bfa);border:none;border-radius:10px;color:white;font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;text-decoration:none;transition:all 0.25s;box-shadow:0 10px 40px -10px rgba(34,211,238,0.4)" id="ctaBtn">▶ <span id="ctaBtnLbl">Ouvrir le PM Toolkit</span></a>
+  </div>
+
+  <footer>
+    <p class="footer-by"><span id="footerBy">Construit par</span> <a href="index.html">Carlin Mankoto</a> · <span id="footerRole">AI Product Manager</span></p>
+  </footer>
+
+</div>
+
+<script src="krl1-widget.js"></script>
+<script>
+var _lang = 'fr';
+
+var I18N = {
+  fr: {
+    back: 'Retour au portfolio',
+    tag: 'KRL1 · Architecture de décision',
+    h1: 'Comment <span class="grad">KRL1</span><br>décide quoi répondre',
+    subtitle: "KRL1 n'est pas un simple chatbot connecté à un LLM. Chaque réponse passe par 4 couches de décision — du contexte de page à l'orchestration LLM. Voici la logique produit derrière chaque choix.",
+    metaKB: 'KB fast-path',
+    layersLbl: 'Les 4 couches de décision',
+    l1t: 'Détection du contexte de page',
+    l1d: "KRL1 lit l'URL dès l'ouverture et adapte son message d'accueil à l'outil PM en cours d'utilisation. 6 messages différents selon la page — OKR Builder, Discovery Assistant, Backlog Prioritizer, etc.",
+    l1b: 'Contextualisation',
+    l2t: 'KB fast-path — matching local',
+    l2d: "Avant tout appel API, KRL1 cherche un pattern dans sa base de connaissances locale (~10 catégories). Si un mot-clé matche, la réponse est servie instantanément depuis le client — 0 latence réseau, 0 coût LLM.",
+    l2b: 'Performance & coût',
+    l3t: 'Appel LLM via Groq + system prompt',
+    l3d: "Si aucun pattern KB ne matche, la question est envoyée à l'API Groq (llama-3.3-70b sur LPU) avec le system prompt complet + l'historique de conversation. Un Cloudflare Worker proxy sécurise la clé API côté serveur.",
+    l3b: 'Intelligence générative',
+    l4t: 'PM Journey — injection post-résultat',
+    l4d: "Un MutationObserver surveille l'apparition du div #results sur chaque outil PM. Dès qu'un résultat est généré, KRL1 injecte automatiquement un CTA \"prochaine étape\" dans le flux — sans intervention manuelle.",
+    l4b: 'PLG nudge',
+    promptLbl: 'Le system prompt annoté',
+    pa1l: 'Persona & contrainte de langue', pa1t: "Le LLM doit savoir qui il est avant tout. La contrainte de langue évite des réponses mixtes FR/EN sur les questions ambiguës.", pa1d: 'Décision : nommer l\'assistant "KRL1" renforce l\'identité de marque plutôt que "un assistant IA générique".',
+    pa2l: 'Scope guard', pa2t: "Sans cette règle, le LLM répond à tout — recettes de cuisine, code Python, etc. Le scope guard maintient KRL1 focalisé sur son objectif : conversion recruteur.", pa2d: 'Décision : "redirige poliment" plutôt que "refuse" — moins agressif pour l\'UX.',
+    pa3l: 'Contexte en raw text', pa3t: "Le CV complet est injecté en clair dans le contexte. Le LLM n'a jamais à inférer — 0 risque d'hallucination sur les faits biographiques.", pa3d: 'Décision : raw text plutôt que JSON structuré — les LLMs consomment mieux le langage naturel pour ce type d\'information factuelle.',
+    pa4l: 'Funnel & règles de rendu', pa4t: "Chaque réponse PM devient un point d'entrée vers les 6 outils — c'est du product-led growth par prompt. La limite de 200 mots évite les réponses essay.", pa4d: 'Décision : les règles typographiques sont des guardrails qualité découverts après test — ajoutés itérativement.',
+    kbLbl: 'KB fast-path — les 10 catégories locales',
+    kb1k:'que peux · peux-tu · aide · capacité', kb1d:"Présentation des 2 axes d'aide : défis PM + portfolio Carlin",
+    kb2k:'qui · carlin · profil · présente', kb2d:'Résumé du profil en 3 lignes',
+    kb3k:'outil · build · projet · app · tool', kb3d:'Liste des 6 outils PM avec liens cliquables',
+    kb4k:'expérience · parcours · axa · airbus', kb4d:'Détail du parcours professionnel',
+    kb5k:'certif · pspo · safe · formation', kb5d:'Certifications + diplômes',
+    kb6k:'contact · linkedin · email · recrut', kb6d:'Liens de contact, disponibilité CDI/freelance',
+    kb7k:'krl1 · comment tu · qui es-tu · construit', kb7d:'Architecture KRL1 (cette page)',
+    kb8k:'stack · architecture · technique · langgraph', kb8d:'Stack technique du site',
+    kb9k:'pourquoi cloudflare · cloudflare worker', kb9d:'Justification du choix Cloudflare Workers',
+    kb10k:'pourquoi pas de backend · sans backend', kb10d:'Architecture 100% statique',
+    tradeoffsLbl: 'Décisions produit & trade-offs',
+    t1d:'Décision 01', t1q:'KB local avant LLM — pourquoi ne pas tout envoyer à l\'API ?', t1a:"95% des questions sont récurrentes. Le KB répond en <10ms depuis le navigateur. Le LLM est réservé aux questions réellement ouvertes.",
+    t2d:'Décision 02', t2q:'Cloudflare Worker plutôt qu\'un backend Node/FastAPI', t2a:"Un Worker serverless résout le seul vrai problème : ne pas exposer la clé API côté client. Zéro infra, 100k req/jour gratuit, déployé en 2 min.",
+    t3d:'Décision 03', t3q:'MutationObserver pour le PM Journey — pourquoi pas un event ?', t3a:"Les outils PM sont des pages indépendantes. Le MutationObserver observe #results depuis krl1-widget.js sans toucher aux 6 pages — couplage zéro.",
+    t4d:'Décision 04', t4q:'Profil en raw text dans le prompt — pas de RAG ?', t4a:"Le profil tient en ~300 tokens. Un système RAG aurait ajouté embedding + vector DB pour récupérer les mêmes infos. Règle YAGNI appliquée.",
+    t5d:'Décision 05', t5q:'Groq + llama plutôt qu\'OpenAI GPT-4 ?', t5a:"Pour un assistant portfolio, la latence perçue prime sur la profondeur. Groq sur LPU donne 1-2s vs 4-6s sur GPT-4. llama-3.3-70b couvre largement les besoins.",
+    t6d:'Décision 06', t6q:'Auto-ouverture après 6 secondes — pourquoi ce délai ?', t6a:"6s correspond au temps de lecture du hero. Trop tôt crée de la friction. L'engagement monte sans nuire à l'expérience de découverte.",
+    ctaTag:'Voir en action', ctaTitle:'KRL1 est disponible sur chaque page du portfolio', ctaDesc:"Ouvre n'importe quel outil PM et clique sur le bouton bleu en bas à droite — l'assistant s'adapte automatiquement au contexte de la page.", ctaBtnLbl:'Ouvrir le PM Toolkit',
+    footerBy:'Construit par', footerRole:'AI Product Manager'
+  },
+  en: {
+    back: 'Back to portfolio',
+    tag: 'KRL1 · Decision Architecture',
+    h1: 'How <span class="grad">KRL1</span><br>decides what to answer',
+    subtitle: "KRL1 isn't a simple chatbot connected to an LLM. Every response goes through 4 decision layers — from page context to LLM orchestration. Here's the product logic behind each choice.",
+    metaKB: 'KB fast-path',
+    layersLbl: 'The 4 decision layers',
+    l1t: 'Page context detection',
+    l1d: "KRL1 reads the URL on open and adapts its welcome message to the current PM tool. 6 different messages depending on the page — OKR Builder, Discovery Assistant, Backlog Prioritizer, etc.",
+    l1b: 'Contextualisation',
+    l2t: 'KB fast-path — local matching',
+    l2d: "Before any API call, KRL1 checks its local knowledge base (~10 categories). If a keyword matches, the answer is served instantly from the client — 0 network latency, 0 LLM cost.",
+    l2b: 'Performance & cost',
+    l3t: 'LLM call via Groq + system prompt',
+    l3d: "If no KB pattern matches, the question is sent to the Groq API (llama-3.3-70b on LPU) with the full system prompt + conversation history. A Cloudflare Worker proxy secures the API key server-side.",
+    l3b: 'Generative intelligence',
+    l4t: 'PM Journey — post-result injection',
+    l4d: 'A MutationObserver watches the #results div on each PM tool. As soon as a result is generated, KRL1 automatically injects a "next step" CTA into the flow — no manual user intervention.',
+    l4b: 'PLG nudge',
+    promptLbl: 'The annotated system prompt',
+    pa1l: 'Persona & language constraint', pa1t: "The LLM needs to know who it is first. The language constraint prevents mixed FR/EN responses on ambiguous questions.", pa1d: 'Decision: naming the assistant "KRL1" reinforces brand identity rather than "a generic AI assistant".',
+    pa2l: 'Scope guard', pa2t: "Without this rule, the LLM answers everything — recipes, Python code, etc. The scope guard keeps KRL1 focused on its goal: recruiter conversion.", pa2d: 'Decision: "redirect politely" rather than "refuse" — less aggressive UX.',
+    pa3l: 'Raw text context', pa3t: "The full CV is injected as plain text. The LLM never has to infer — 0 risk of hallucination on biographical facts.", pa3d: 'Decision: raw text over structured JSON — LLMs process natural language better for this type of factual information.',
+    pa4l: 'Funnel & rendering rules', pa4t: "Every PM response becomes an entry point to the 6 tools — product-led growth via prompt. The 200-word limit prevents essay-style answers.", pa4d: 'Decision: typographic rules are quality guardrails discovered through testing — added iteratively.',
+    kbLbl: 'KB fast-path — the 10 local categories',
+    kb1k:'what can · can you · help · capabilities', kb1d:'Presentation of 2 help axes: PM challenges + Carlin portfolio',
+    kb2k:'who · carlin · profile · about', kb2d:'Profile summary in 3 lines',
+    kb3k:'tool · build · project · app', kb3d:'List of 6 PM tools with clickable links',
+    kb4k:'experience · background · axa · airbus', kb4d:'Detailed professional background',
+    kb5k:'certif · pspo · safe · degree', kb5d:'Certifications + degrees',
+    kb6k:'contact · linkedin · email · hire', kb6d:'Contact links, CDI/freelance availability',
+    kb7k:'krl1 · how do you · who are you', kb7d:'KRL1 architecture (this page)',
+    kb8k:'stack · architecture · technical · langgraph', kb8d:'Full site tech stack',
+    kb9k:'why cloudflare · cloudflare worker', kb9d:'Cloudflare Workers decision rationale',
+    kb10k:'why no backend · without backend', kb10d:'100% static architecture rationale',
+    tradeoffsLbl: 'Product decisions & trade-offs',
+    t1d:'Decision 01', t1q:'KB local before LLM — why not send everything to the API?', t1a:"95% of questions are recurring. The KB answers in <10ms from the browser. The LLM is reserved for genuinely open questions.",
+    t2d:'Decision 02', t2q:'Cloudflare Worker over a Node/FastAPI backend', t2a:"A serverless Worker solves the one real problem: not exposing the API key client-side. Zero infra, 100k req/day free, deployed in 2 min.",
+    t3d:'Decision 03', t3q:'MutationObserver for PM Journey — why not an event?', t3a:"PM tools are independent pages. The MutationObserver watches #results from krl1-widget.js without touching the 6 pages — zero coupling.",
+    t4d:'Decision 04', t4q:'Raw text profile in prompt — why no RAG?', t4a:"The profile fits in ~300 tokens. A RAG system would add embedding + vector DB to retrieve the same info. YAGNI rule applied.",
+    t5d:'Decision 05', t5q:'Groq + llama over OpenAI GPT-4?', t5a:"For a portfolio assistant, perceived latency matters more than reasoning depth. Groq on LPU gives 1-2s vs 4-6s on GPT-4. llama-3.3-70b covers the needs.",
+    t6d:'Decision 06', t6q:'Auto-open after 6 seconds — why this delay?', t6a:"6s matches hero reading time. Too early creates friction. Engagement increases without disrupting the discovery experience.",
+    ctaTag:'See it in action', ctaTitle:'KRL1 is available on every portfolio page', ctaDesc:"Open any PM tool and click the blue button in the bottom right — the assistant automatically adapts to the page context.", ctaBtnLbl:'Open the PM Toolkit',
+    footerBy:'Built by', footerRole:'AI Product Manager'
+  }
+};
+
+function setLang(lang){
+  _lang = lang;
+  document.getElementById('lbFr').classList.toggle('active', lang==='fr');
+  document.getElementById('lbEn').classList.toggle('active', lang==='en');
+  document.documentElement.lang = lang;
+  var T = I18N[lang];
+  document.getElementById('backLbl').textContent = T.back;
+  document.getElementById('tagLbl').textContent = T.tag;
+  document.getElementById('h1Main').innerHTML = T.h1;
+  document.getElementById('subtitleTxt').textContent = T.subtitle;
+  document.getElementById('metaKB').textContent = T.metaKB;
+  document.getElementById('layersLbl').textContent = T.layersLbl;
+  ['l1t','l1d','l1b','l2t','l2d','l2b','l3t','l3d','l3b','l4t','l4d','l4b'].forEach(function(id){ document.getElementById(id).textContent = T[id]; });
+  document.getElementById('promptLbl').textContent = T.promptLbl;
+  ['pa1l','pa1t','pa1d','pa2l','pa2t','pa2d','pa3l','pa3t','pa3d','pa4l','pa4t','pa4d'].forEach(function(id){ document.getElementById(id).textContent = T[id]; });
+  document.getElementById('kbLbl').textContent = T.kbLbl;
+  for(var i=1;i<=10;i++){ document.getElementById('kb'+i+'k').textContent=T['kb'+i+'k']; document.getElementById('kb'+i+'d').textContent=T['kb'+i+'d']; }
+  document.getElementById('tradeoffsLbl').textContent = T.tradeoffsLbl;
+  for(var j=1;j<=6;j++){ ['t'+j+'d','t'+j+'q','t'+j+'a'].forEach(function(id){ document.getElementById(id).innerHTML = T[id]; }); }
+  document.getElementById('ctaTag').textContent = T.ctaTag;
+  document.getElementById('ctaTitle').textContent = T.ctaTitle;
+  document.getElementById('ctaDesc').textContent = T.ctaDesc;
+  document.getElementById('ctaBtnLbl').textContent = T.ctaBtnLbl;
+  document.getElementById('footerBy').textContent = T.footerBy;
+  document.getElementById('footerRole').textContent = T.footerRole;
+  localStorage.setItem('lang', lang);
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  var params = new URLSearchParams(window.location.search);
+  var lang = params.get('lang') || localStorage.getItem('lang') || 'fr';
+  if(lang==='en') setLang('en');
+});
+</script>
+<script src="glass.js"></script>
+<script>
+(function(){
+  var SUN='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  var MOON='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  function applyTheme(t){
+    if(t==='light') document.documentElement.setAttribute('data-theme','light');
+    else document.documentElement.removeAttribute('data-theme');
+    document.querySelectorAll('.theme-btn').forEach(function(b){ b.innerHTML=t==='light'?MOON:SUN; });
+    localStorage.setItem('theme',t);
+  }
+  var saved=localStorage.getItem('theme')||'dark';
+  applyTheme(saved);
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest?e.target.closest('.theme-btn'):null;
+    if(btn){var cur=document.documentElement.getAttribute('data-theme');applyTheme(cur==='light'?'dark':'light');}
+  });
+})();
+</script>
+</body>
+</html>
