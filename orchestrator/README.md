@@ -1,6 +1,10 @@
-# KRL1 LangGraph Orchestrator
+# KRL1 LangGraph Orchestrator — prototype optionnel
 
-Ce service fournit un endpoint `/orchestrate` basé sur **LangGraph** pour KRL1.
+Ce dossier contient le prototype Python/LangGraph initial de l'orchestrateur KRL1.
+
+Il n'est pas nécessaire pour le site en production : l'orchestration et le RAG sémantique ont été portés dans le Cloudflare Worker (`proxy/src/index.js`). Ce service reste utile pour expérimenter avec LangGraph, LangSmith et une architecture Python externe.
+
+Pour le connecter au Worker, déployez ce service séparément puis configurez le secret Cloudflare `LANGGRAPH_ORCHESTRATOR_URL` avec l'URL de son endpoint `/orchestrate`.
 
 ## Setup
 
@@ -30,6 +34,7 @@ uvicorn app:app --host 0.0.0.0 --port 8081 --reload
 
 - `GET /health`
 - `POST /orchestrate`
+- `POST /rag-query`
 
 Exemple payload:
 
@@ -50,3 +55,8 @@ Réponse:
   "engine": "langgraph"
 }
 ```
+
+## Statut
+
+- **Production actuelle :** Cloudflare Worker natif (`proxy/`)
+- **Ce dossier :** prototype / fallback expérimental non déployé par défaut
