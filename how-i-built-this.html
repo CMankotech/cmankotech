@@ -231,7 +231,11 @@ section{margin-bottom:4rem}
 .mermaid svg{max-width:100%;height:auto;display:block;margin:0 auto}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-<script>mermaid.initialize({startOnLoad:true,theme:'dark',themeVariables:{background:'#07070e',primaryColor:'#0e0e1a',primaryTextColor:'#e2e8f0',primaryBorderColor:'#374151',lineColor:'#4b5563',fontFamily:'DM Sans,sans-serif',fontSize:'12px',edgeLabelBackground:'#07070e',secondaryColor:'#0e0e1a',tertiaryColor:'#0e0e1a'}});</script>
+<script>
+if (window.mermaid) {
+  mermaid.initialize({startOnLoad:true,theme:'dark',themeVariables:{background:'#07070e',primaryColor:'#0e0e1a',primaryTextColor:'#e2e8f0',primaryBorderColor:'#374151',lineColor:'#4b5563',fontFamily:'DM Sans,sans-serif',fontSize:'12px',edgeLabelBackground:'#07070e',secondaryColor:'#0e0e1a',tertiaryColor:'#0e0e1a'}});
+}
+</script>
 </head>
 <body>
 <div class="glow g1"></div>
@@ -247,8 +251,8 @@ section{margin-bottom:4rem}
     </a>
     <button class="theme-btn" aria-label="Passer en mode clair"></button>
     <div class="lang-switcher">
-      <button class="lang-btn glass-shimmer glass-focus active" id="btn-fr" onclick="setLang(‘fr’)">FR</button>
-      <button class="lang-btn glass-shimmer glass-focus" id="btn-en" onclick="setLang(‘en’)">EN</button>
+      <button class="lang-btn glass-shimmer glass-focus active" id="btn-fr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn glass-shimmer glass-focus" id="btn-en" onclick="setLang('en')">EN</button>
     </div>
   </div>
 
@@ -373,6 +377,12 @@ section{margin-bottom:4rem}
         <div class="stack-name">Workers AI · edge RAG</div>
         <div class="stack-badge sb-violet" data-i18n="stack.lg.badge">RAG sémantique</div>
         <div class="stack-desc" data-i18n="stack.lg.desc">Base de connaissances PM embarquée dans le Worker (7 frameworks Markdown). Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) en un seul appel batch ; la similarité cosinus est calculée à l'edge. Le pipeline <strong>handleRagQuery</strong> enchaîne : <strong>planner</strong> (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; <strong>retriever</strong> (conditionnel, uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches par cosine similarity ; <strong>synthesis</strong> (T=0.45) transforme le plan enrichi du contexte PM en réponse naturelle max 220 mots. Zéro dépendance externe, zéro infra Python.</div>
+      </div>
+      <div class="stack-card" style="grid-column:1/-1">
+        <div class="stack-icon">🔭</div>
+        <div class="stack-name">Langfuse · LLM Observability</div>
+        <div class="stack-badge sb-green" data-i18n="stack.lf.badge">Observabilité</div>
+        <div class="stack-desc" data-i18n="stack.lf.desc">Traces LLM en production via l'API REST Langfuse intégrée directement dans le Worker (no npm, fetch natif). Chaque appel KRL1 génère une trace avec 2 générations — planner (intent JSON, T=0.2) et synthesis (réponse naturelle, T=0.45) — enrichies du token usage Groq et des latences par étape. La route RAG ajoute un span retriever Workers AI. Non-bloquant via <code>ctx.waitUntil</code>, zéro impact sur les temps de réponse. Plan gratuit Langfuse Cloud : 50 000 observations/mois.</div>
       </div>
     </div>
   </section>
@@ -743,12 +753,12 @@ flowchart LR
     </div>
     <div class="decision-card" style="margin-bottom:1rem">
       <div class="decision-q" data-i18n="s6.next.label">La prochaine étape</div>
-      <div class="decision-why" data-i18n="s6.next.desc">Ouvrir le site et mesurer. Quels outils sont utilisés ? Lesquels sont ouverts mais abandonnés avant de générer quoi que ce soit : signe que l'UX d'input est trop complexe ou que la promesse n'est pas claire ? Est-ce que KRL1 renvoie vers les bons outils au bon moment, ou est-ce que les utilisateurs repartent sans cliquer sur un lien ? Ces questions ne peuvent pas être répondues sans données réelles.</div>
+      <div class="decision-why" data-i18n="s6.next.desc">L'observabilité LLM est en place avec Langfuse : chaque appel KRL1 génère une trace avec token usage, latences planner/synthesis et intent détecté. La prochaine étape est d'ouvrir le site et utiliser ces données — quels outils génèrent le plus de résultats, est-ce que KRL1 renvoie vers les bons outils au bon moment, où s'arrêtent les utilisateurs avant de générer ?</div>
     </div>
     <div class="decision-card">
       <div class="decision-q" data-i18n="s6.pm.label">Ce que ça démontre</div>
       <div class="decision-a" data-i18n="s6.pm.a">Builder, mesurer, décider</div>
-      <div class="decision-why" data-i18n="s6.pm.desc">Ajouter un système d'analytics léger, même juste des événements custom sur les clics de génération et les liens KRL1, est la prochaine priorité technique. Ensuite itérer sur les outils les moins performants. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.</div>
+      <div class="decision-why" data-i18n="s6.pm.desc">L'analytics est en place : Langfuse trace chaque appel LLM en production — intent détecté, tokens consommés, latence par step. La boucle est fermée : builder → mesurer (Langfuse) → décider → itérer. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.</div>
     </div>
   </section>
 
@@ -780,6 +790,8 @@ var T={
     'stack.llm.badge':'LLM',
     'stack.llm.desc':'Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L\'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes — 5 à 10x plus rapide que les providers classiques. Chaque outil PM l\'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).',
     'stack.lg.badge':'RAG sémantique',
+    'stack.lf.badge':'Observabilité',
+    'stack.lf.desc':'Traces LLM en production via l\'API REST Langfuse intégrée directement dans le Worker (no npm, fetch natif). Chaque appel KRL1 génère une trace avec 2 générations — planner (intent JSON, T=0.2) et synthesis (réponse naturelle, T=0.45) — enrichies du token usage Groq et des latences par étape. La route RAG ajoute un span retriever Workers AI. Non-bloquant via <code>ctx.waitUntil</code>, zéro impact sur les temps de réponse. Plan gratuit Langfuse Cloud : 50 000 observations/mois.',
     'stack.lg.desc':'Base de connaissances PM embarquée dans le Worker (7 frameworks Markdown). Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) en un seul appel batch ; la similarité cosinus est calculée à l\'edge. Le pipeline <strong>handleRagQuery</strong> enchaîne : <strong>planner</strong> (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; <strong>retriever</strong> (conditionnel, uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches par cosine similarity ; <strong>synthesis</strong> (T=0.45) transforme le plan enrichi du contexte PM en réponse naturelle max 220 mots. Zéro dépendance externe, zéro infra Python.',
     's2.title':'Étapes de création',
     'step1.label':'Idée & cadrage',
@@ -871,10 +883,10 @@ var T={
     's6.status.label':'Où en est le site',
     's6.status.desc':'Le site n\'est pas encore vraiment partagé. C\'est volontaire : je voulais d\'abord que l\'architecture soit solide, les cas de fallback couverts, les tests en place. Shipper quelque chose de cassé à des recruteurs ou à des PMs de mon réseau aurait fait plus de mal que de bien.',
     's6.next.label':'La prochaine étape',
-    's6.next.desc':'Ouvrir le site et mesurer. Quels outils sont utilisés ? Lesquels sont ouverts mais abandonnés avant de générer quoi que ce soit : signe que l\'UX d\'input est trop complexe ou que la promesse n\'est pas claire ? Est-ce que KRL1 renvoie vers les bons outils au bon moment, ou est-ce que les utilisateurs repartent sans cliquer sur un lien ? Ces questions ne peuvent pas être répondues sans données réelles.',
+    's6.next.desc':'L\'observabilité LLM est en place avec Langfuse : chaque appel KRL1 génère une trace avec token usage, latences planner/synthesis et intent détecté. La prochaine étape est d\'ouvrir le site et utiliser ces données — quels outils génèrent le plus de résultats, est-ce que KRL1 renvoie vers les bons outils au bon moment, où s\'arrêtent les utilisateurs avant de générer ?',
     's6.pm.label':'Ce que ça démontre',
     's6.pm.a':'Builder, mesurer, décider',
-    's6.pm.desc':'Ajouter un système d\'analytics léger, même juste des événements custom sur les clics de génération et les liens KRL1, est la prochaine priorité technique. Ensuite itérer sur les outils les moins performants. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.',
+    's6.pm.desc':'L\'analytics est en place : Langfuse trace chaque appel LLM en production — intent détecté, tokens consommés, latence par step. La boucle est fermée : builder → mesurer (Langfuse) → décider → itérer. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.',
     'stat.tools':'outils PM',
     'stat.cost':'/ mois d\'infra',
     'stat.weeks':'sem. en spare time',
@@ -920,6 +932,8 @@ var T={
     'stack.llm.badge':'LLM',
     'stack.llm.desc':'Access to the llama-3.3-70b-versatile model via an OpenAI-compatible REST API. LPU (Language Processing Unit) inference delivers responses in 1–2 seconds — 5 to 10x faster than classic providers. Each PM tool calls it with tailored parameters: temperatures between 0.3 and 0.7 depending on the task, max_tokens between 2,000 and 4,000, specialised system prompts (OKR strategist, discovery analyst, prioritisation expert…).',
     'stack.lg.badge':'Semantic RAG',
+    'stack.lf.badge':'Observability',
+    'stack.lf.desc':'Production LLM tracing via Langfuse REST API integrated directly in the Worker (no npm, native fetch). Each KRL1 call generates a trace with 2 generations — planner (intent JSON, T=0.2) and synthesis (natural response, T=0.45) — enriched with Groq token usage and per-step latencies. The RAG route adds a Workers AI retriever span. Non-blocking via <code>ctx.waitUntil</code>, zero impact on response times. Langfuse Cloud free tier: 50,000 observations/month.',
     'stack.lg.desc':'PM knowledge base embedded in the Worker (7 Markdown frameworks). Semantic embeddings generated by <strong>Workers AI</strong> (bge-small-en-v1.5) in a single batch call; cosine similarity computed at the edge. The <strong>handleRagQuery</strong> pipeline chains: <strong>planner</strong> (T=0.2) generates strict JSON; <strong>retriever</strong> (conditional, only when intent = pm_workflow) fetches the 3 closest chunks by cosine similarity; <strong>synthesis</strong> (T=0.45) transforms the PM-enriched plan into a natural response max 220 words. Zero external dependencies, zero Python infrastructure.',
     's2.title':'Creation steps',
     'step1.label':'Idea & scoping',
@@ -1011,10 +1025,10 @@ var T={
     's6.status.label':'Where the site stands',
     's6.status.desc':'The site has not really been shared yet. That is intentional: I wanted the architecture to be solid first, the fallback cases covered, the tests in place. Shipping something broken to recruiters or PMs in my network would have done more harm than good.',
     's6.next.label':'The next step',
-    's6.next.desc':'Open the site and measure. Which tools are used? Which ones are opened but abandoned before generating anything: a sign that the input UX is too complex or the value proposition is unclear? Does KRL1 redirect to the right tools at the right moment, or do users leave without clicking a link? These questions cannot be answered without real data.',
+    's6.next.desc':'LLM observability is live with Langfuse: every KRL1 call generates a trace with token usage, planner/synthesis latencies, and detected intent. The next step is to open the site and use that data — which tools generate the most results, does KRL1 redirect to the right tools at the right moment, where do users drop off before generating?',
     's6.pm.label':'What this demonstrates',
     's6.pm.a':'Build, measure, decide',
-    's6.pm.desc':'Adding a lightweight analytics system, even just custom events on generation clicks and KRL1 links, is the next technical priority. Then iterate on the weakest-performing tools. This cycle is exactly what I advocate as a PM. It made sense for this portfolio to be a demonstration of it.',
+    's6.pm.desc':'Analytics is in place: Langfuse traces every LLM call in production — detected intent, tokens consumed, latency per step. The loop is closed: build → measure (Langfuse) → decide → iterate. This cycle is exactly what I advocate as a PM. It made sense for this portfolio to be a live demonstration of it.',
     'stat.tools':'PM tools',
     'stat.cost':'/ month infra cost',
     'stat.weeks':'weeks in spare time',
@@ -1059,8 +1073,8 @@ function setLang(lang){
 // Init from URL param
 (function(){
   var params = new URLSearchParams(window.location.search);
-  var lang = params.get(‘lang’);
-  if(lang === ‘en’) setLang(‘en’);
+  var lang = params.get('lang');
+  if(lang === 'en') setLang('en');
 })();
 
 </script>

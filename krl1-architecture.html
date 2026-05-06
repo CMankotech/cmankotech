@@ -112,9 +112,16 @@ footer{text-align:center;margin-top:3.5rem;padding-top:2rem;border-top:1px solid
 .mermaid-wrap{background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:14px;padding:1.5rem 1rem;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 14px 36px -18px rgba(0,0,0,0.5);overflow-x:auto;margin-bottom:2rem}
 .mermaid-label{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:0.75rem}
 .mermaid svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.mermaid-wrap[data-diagram-lang="en"]{display:none}
+html[lang="en"] .mermaid-wrap[data-diagram-lang="fr"]{display:none}
+html[lang="en"] .mermaid-wrap[data-diagram-lang="en"]{display:block}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-<script>mermaid.initialize({startOnLoad:true,theme:'dark',themeVariables:{background:'#07070e',primaryColor:'#0e0e1a',primaryTextColor:'#e2e8f0',primaryBorderColor:'#374151',lineColor:'#4b5563',fontFamily:'DM Sans,sans-serif',fontSize:'12px',edgeLabelBackground:'#07070e',secondaryColor:'#0e0e1a',tertiaryColor:'#0e0e1a'}});</script>
+<script>
+if (window.mermaid) {
+  mermaid.initialize({startOnLoad:true,theme:'dark',themeVariables:{background:'#07070e',primaryColor:'#0e0e1a',primaryTextColor:'#e2e8f0',primaryBorderColor:'#374151',lineColor:'#4b5563',fontFamily:'DM Sans,sans-serif',fontSize:'12px',edgeLabelBackground:'#07070e',secondaryColor:'#0e0e1a',tertiaryColor:'#0e0e1a'}});
+}
+</script>
 </head>
 <body>
 <div class="glow g1"></div>
@@ -143,13 +150,14 @@ footer{text-align:center;margin-top:3.5rem;padding-top:2rem;border-top:1px solid
       <span class="meta-tag">Cloudflare Workers</span>
       <span class="meta-tag">Vanilla JS</span>
       <span class="meta-tag" id="metaKB">KB fast-path</span>
+      <span class="meta-tag">Langfuse · Observability</span>
     </div>
   </header>
 
   <!-- DECISION LAYERS -->
   <div class="sec-divider"><span id="layersLbl">Les 4 couches de décision</span></div>
 
-  <div class="mermaid-wrap">
+  <div class="mermaid-wrap" data-diagram-lang="fr">
     <div class="mermaid-label">Flux de décision — vue flowchart</div>
     <div class="mermaid">
 %%{init: {'theme': 'dark', 'themeVariables': {'background': '#07070e', 'primaryColor': '#0e0e1a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#374151', 'lineColor': '#4b5563', 'fontFamily': 'DM Sans, sans-serif', 'fontSize': '13px', 'edgeLabelBackground': '#07070e'}}}%%
@@ -161,12 +169,34 @@ flowchart TD
 
     A([Message reçu]):::cyan --> B[01 · Page Context · URL]:::cyan
     B --> C{02 · KB fast-path · match?}:::gray
-    C -->|Oui ~35%| D([Réponse · sous 10ms · 0 token]):::cyan
+    C -->|Oui ~30-40%| D([Réponse · sous 10ms · 0 token]):::cyan
     C -->|Non| E[03 · Groq LLM · llama-3.3-70b]:::violet
     E --> F([Réponse générée]):::violet
     F --> G{04 · PM Journey · #results?}:::gray
     G -->|Oui| H[Inject CTA · next step]:::green
     G -->|Non| I([Affichage]):::cyan
+    H --> I
+    </div>
+  </div>
+
+  <div class="mermaid-wrap" data-diagram-lang="en">
+    <div class="mermaid-label">Decision flow — flowchart view</div>
+    <div class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': {'background': '#07070e', 'primaryColor': '#0e0e1a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#374151', 'lineColor': '#4b5563', 'fontFamily': 'DM Sans, sans-serif', 'fontSize': '13px', 'edgeLabelBackground': '#07070e'}}}%%
+flowchart TD
+    classDef cyan fill:#07141a,stroke:#22d3ee,color:#22d3ee
+    classDef gray fill:#0e0e1a,stroke:#374151,color:#d1d5db
+    classDef violet fill:#1a0e2e,stroke:#a78bfa,color:#c4b5fd
+    classDef green fill:#071a0a,stroke:#4ade80,color:#86efac
+
+    A([Message received]):::cyan --> B[01 - Page Context - URL]:::cyan
+    B --> C{02 - KB fast-path - match?}:::gray
+    C -->|Yes ~30-40%| D([Answer - under 10ms - 0 token]):::cyan
+    C -->|No| E[03 - Groq LLM - llama-3.3-70b]:::violet
+    E --> F([Generated answer]):::violet
+    F --> G{04 - PM Journey - #results?}:::gray
+    G -->|Yes| H[Inject CTA - next step]:::green
+    G -->|No| I([Display]):::cyan
     H --> I
     </div>
   </div>
