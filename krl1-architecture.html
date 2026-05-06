@@ -167,6 +167,8 @@ flowchart TD
     classDef violet fill:#1a0e2e,stroke:#a78bfa,color:#c4b5fd
     classDef green fill:#071a0a,stroke:#4ade80,color:#86efac
 
+    classDef lf fill:#071a0a,stroke:#4ade80,color:#86efac
+
     A([Message reçu]):::cyan --> B[01 · Page Context · URL]:::cyan
     B --> C{02 · KB fast-path · match?}:::gray
     C -->|Oui ~30-40%| D([Réponse · sous 10ms · 0 token]):::cyan
@@ -174,6 +176,7 @@ flowchart TD
     E --> F([Réponse générée]):::violet
     F --> G{04 · PM Journey · #results?}:::gray
     G -->|Oui| H[Inject CTA · next step]:::green
+    E -.->|ctx.waitUntil| LF[(Langfuse\nTrace)]:::lf
     G -->|Non| I([Affichage]):::cyan
     H --> I
     </div>

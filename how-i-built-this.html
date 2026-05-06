@@ -680,12 +680,15 @@ flowchart LR
     classDef gray fill:#0e0e1a,stroke:#374151,color:#d1d5db
     classDef violet fill:#1a0e2e,stroke:#a78bfa,color:#c4b5fd
 
+    classDef green fill:#071a0a,stroke:#4ade80,color:#86efac
+
     Q([Query]):::cyan --> PL[Planner · T=0.2]:::gray
     PL -->|pm_workflow| RI[Workers AI · embeddings]:::violet
     RI --> CS[Cosine Sim · top-3 chunks]:::violet
     CS --> SY[Synthesis · T=0.45]:::gray
     PL -->|autre intent| SY
     SY --> RP([Reply · max 220w]):::cyan
+    PL & RI & SY -.->|ctx.waitUntil| LF[(Langfuse\nObservability)]:::green
       </div>
     </div>
 
