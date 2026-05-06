@@ -785,6 +785,34 @@ async function incrementCounter(env) {
   }
 }
 
+// ─── Langfuse tracing (non-blocking, opt-in via secrets) ─────────────────────
+
+function lf_id() { return crypto.randomUUID(); }
+
+function lf_event(type, body) {
+  return { id: lf_id(), type, timestamp: new Date().toISOString(), body };
+}
+
+async function lf_flush(env, events) {
+  if (!env.LANGFUSE_PUBLIC_KEY || !env.LANGFUSE_SECRET_KEY) return;
+  try {
+    await fetch('https://cloud.langfuse.com/api/public/ingestion', {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${btoa(env.LANGFUSE_PUBLIC_KEY + ':' + env.LANGFUSE_SECRET_KEY)}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ batch: events }),
+    });
+  } catch { /* non-blocking */ }
+}
+
+function lf_usage(groqData) {
+  const u = groqData?.usage;
+  if (!u) return undefined;
+  return { input: u.prompt_tokens, output: u.completion_tokens, total: u.total_tokens, unit: 'TOKENS' };
+}
+
 function normalizeHistory(history) {
   if (!Array.isArray(history)) return [];
   return history
@@ -842,6 +870,8 @@ async function handleOrchestrator(body, env, ctx) {
     { role: 'user', content: userMessage },
   ];
 
+  const traceId = lf_id();
+  const plannerStart = Date.now();
   const plannerRes = await callGroq(env, {
     model: DEFAULT_MODEL,
     messages: plannerMessages,
@@ -854,6 +884,7 @@ async function handleOrchestrator(body, env, ctx) {
     return plannerRes.response;
   }
 
+  const plannerEnd = Date.now();
   const planText = extractContent(plannerRes.data);
 
   const toolLinks = [
@@ -873,6 +904,7 @@ async function handleOrchestrator(body, env, ctx) {
     },
   ];
 
+  const synthesisStart = Date.now();
   const synthesisRes = await callGroq(env, {
     model: DEFAULT_MODEL,
     messages: synthesisMessages,
@@ -884,9 +916,45 @@ async function handleOrchestrator(body, env, ctx) {
     return synthesisRes.response;
   }
 
+  const synthesisEnd = Date.now();
   const reply = extractContent(synthesisRes.data);
-  ctx?.waitUntil?.(incrementCounter(env));
-  return jsonResponse({ reply, plan: safeJsonParse(planText) || null });
+  const plan = safeJsonParse(planText);
+  const lfEvents = [
+    lf_event('trace-create', {
+      id: traceId,
+      name: 'krl1-orchestrate',
+      input: { message: userMessage, lang },
+      output: { reply, intent: plan?.intent, confidence: plan?.confidence },
+      metadata: { route: '/orchestrate', model: DEFAULT_MODEL },
+      tags: ['krl1'],
+    }),
+    lf_event('generation-create', {
+      id: lf_id(),
+      traceId,
+      name: 'planner',
+      model: DEFAULT_MODEL,
+      modelParameters: { temperature: 0.2, maxTokens: 500 },
+      input: plannerMessages,
+      output: planText,
+      startTime: new Date(plannerStart).toISOString(),
+      endTime: new Date(plannerEnd).toISOString(),
+      usage: lf_usage(plannerRes.data),
+    }),
+    lf_event('generation-create', {
+      id: lf_id(),
+      traceId,
+      name: 'synthesis',
+      model: DEFAULT_MODEL,
+      modelParameters: { temperature: 0.45, maxTokens: 450 },
+      input: synthesisMessages,
+      output: reply,
+      startTime: new Date(synthesisStart).toISOString(),
+      endTime: new Date(synthesisEnd).toISOString(),
+      usage: lf_usage(synthesisRes.data),
+    }),
+  ];
+  ctx?.waitUntil?.(Promise.all([incrementCounter(env), lf_flush(env, lfEvents)]));
+  return jsonResponse({ reply, plan: plan || null });
 }
 
 // ─── Streaming orchestrator ───────────────────────────────────────────────────
@@ -1005,6 +1073,8 @@ async function handleRagQuery(body, env, ctx) {
       'Valeurs d\'intent : "pm_workflow" (backlog/OKR/discovery/roadmap/epic/userStory), "portfolio" (profil/expérience/certifs de Carlin), "tech" (stack/architecture/questions techniques sur KRL1), "contact", "other". ' +
       'Clés : intent, confidence (0-1), user_goal, steps (tableau {tool, objective, output} — seulement pour pm_workflow, sinon []), risks (tableau), quick_win.';
 
+  const traceId = lf_id();
+  const plannerStart = Date.now();
   const plannerRes = await callGroq(env, {
     model: DEFAULT_MODEL,
     messages: [{ role: 'system', content: plannerPrompt }, { role: 'user', content: userMessage }],
@@ -1015,11 +1085,14 @@ async function handleRagQuery(body, env, ctx) {
 
   if (!plannerRes.ok) return plannerRes.response;
 
+  const plannerEnd = Date.now();
   const planText = extractContent(plannerRes.data);
   const plan = safeJsonParse(planText) || {};
 
   // Step 2: Semantic retrieval (always, regardless of intent)
+  const retrievalStart = Date.now();
   const chunks = await retrieveSemantic(userMessage, env, 3);
+  const retrievalEnd = Date.now();
 
   // Step 3: Synthesis — inject retrieved context only for pm_workflow
   const intent = plan.intent || 'other';
@@ -1049,6 +1122,7 @@ async function handleRagQuery(body, env, ctx) {
     'Roadmap Storyteller: https://cmankotech.github.io/cmankotech/roadmap-storyteller.html',
   ].join('\n');
 
+  const synthesisStart = Date.now();
   const synthesisRes = await callGroq(env, {
     model: DEFAULT_MODEL,
     messages: [
@@ -1061,8 +1135,56 @@ async function handleRagQuery(body, env, ctx) {
 
   if (!synthesisRes.ok) return synthesisRes.response;
 
+  const synthesisEnd = Date.now();
   const reply = extractContent(synthesisRes.data);
-  ctx?.waitUntil?.(incrementCounter(env));
+  const lfEvents = [
+    lf_event('trace-create', {
+      id: traceId,
+      name: 'rag-query',
+      input: { message: userMessage, lang },
+      output: { reply, intent: plan.intent, confidence: plan.confidence, chunksRetrieved: chunks.length },
+      metadata: { route: '/rag-query', model: DEFAULT_MODEL, ragActive: plan.intent === 'pm_workflow' },
+      tags: ['rag', 'krl1'],
+    }),
+    lf_event('generation-create', {
+      id: lf_id(),
+      traceId,
+      name: 'planner',
+      model: DEFAULT_MODEL,
+      modelParameters: { temperature: 0.2, maxTokens: 500 },
+      input: [{ role: 'system', content: plannerPrompt }, { role: 'user', content: userMessage }],
+      output: planText,
+      startTime: new Date(plannerStart).toISOString(),
+      endTime: new Date(plannerEnd).toISOString(),
+      usage: lf_usage(plannerRes.data),
+    }),
+    lf_event('span-create', {
+      id: lf_id(),
+      traceId,
+      name: 'retriever',
+      startTime: new Date(retrievalStart).toISOString(),
+      endTime: new Date(retrievalEnd).toISOString(),
+      input: { query: userMessage },
+      output: { chunks: chunks.length, sources: chunks.map(c => c.source) },
+      metadata: { model: 'bge-small-en-v1.5', topK: 3, ragActive: plan.intent === 'pm_workflow' },
+    }),
+    lf_event('generation-create', {
+      id: lf_id(),
+      traceId,
+      name: 'synthesis',
+      model: DEFAULT_MODEL,
+      modelParameters: { temperature: 0.45, maxTokens: 450 },
+      input: [
+        { role: 'system', content: synthesisPrompt },
+        { role: 'user', content: `${ragSection}User request:\n${userMessage}\n\nPlan JSON:\n${planText}` },
+      ],
+      output: reply,
+      startTime: new Date(synthesisStart).toISOString(),
+      endTime: new Date(synthesisEnd).toISOString(),
+      usage: lf_usage(synthesisRes.data),
+    }),
+  ];
+  ctx?.waitUntil?.(Promise.all([incrementCounter(env), lf_flush(env, lfEvents)]));
 
   return jsonResponse({ reply, plan, chunks, engine: 'worker-rag-semantic' });
 }
