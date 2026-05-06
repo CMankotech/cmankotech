@@ -150,14 +150,14 @@
       chips: ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs", "🔍 Préparer une discovery"],
       placeholder: "Ex : comment prioriser entre 3 features ?",
       status: "En ligne",
-      error: "Désolé, une erreur s'est produite. Contacte Carlin sur <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> 👋"
+      error: "Désolé, une erreur s'est produite. Réessaie dans un instant."
     },
     en: {
       welcome: "Hi 👋 I'm KRL1. I can help with your PM challenges: prioritisation, OKRs, discovery, roadmap, or walk you through Carlin's portfolio. Where do you want to start?",
       chips: ["🎯 Prioritise my backlog", "📊 Structure my OKRs", "🔍 Prepare a discovery"],
       placeholder: "E.g. how to prioritise between 3 features?",
       status: "Online",
-      error: "Sorry, an error occurred. Reach Carlin on <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> 👋"
+      error: "Sorry, an error occurred. Please try again in a moment."
     }
   };
 
@@ -201,8 +201,8 @@
     'how-i-built-this': {
       fr: "Tu explores **Comment j'ai construit ce site** 🛠️ Je peux t'expliquer les choix techniques, l'architecture IA ou la stack en détail. Qu'est-ce qui t'intéresse ?",
       en: "You're reading **How I Built This** 🛠️ I can explain the technical choices, AI architecture or the full stack in detail. What are you curious about?",
-      chips_fr: ["🏗️ Pourquoi Cloudflare Workers ?", "🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?", "📩 Contacter Carlin"],
-      chips_en: ["🏗️ Why Cloudflare Workers?", "🤖 How does KRL1 work?", "⚡ Why no backend?", "📩 Contact Carlin"]
+      chips_fr: ["🏗️ Pourquoi Cloudflare Workers ?", "🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?"],
+      chips_en: ["🏗️ Why Cloudflare Workers?", "🤖 How does KRL1 work?", "⚡ Why no backend?"]
     }
   };
 
@@ -301,73 +301,73 @@
     "6. Roadmap Storyteller : https://cmankotech.github.io/cmankotech/roadmap-storyteller.html\n\n" +
     "CONTACT : LinkedIn https://linkedin.com/in/carlinmankoto | Email carlinmankoto@proton.me\n" +
     "Disponible pour CDI ou missions freelance.\n\n" +
-    "INSTRUCTION CRITIQUE : Quand l'utilisateur mentionne un sujet PM (backlog, prioritisation, OKR, discovery, interview, roadmap, user story, epic), inclus TOUJOURS un lien HTML cliquable vers l'outil PM correspondant. Réponse actionnable et concise (max 200 mots). N'utilise jamais de tirets longs (—) : utilise des virgules ou des deux-points à la place. N'utilise jamais l'élision 'l'' devant un nom d'outil : écris toujours 'le OKR Builder', 'le Discovery Assistant', etc.";
+    "INSTRUCTION CRITIQUE : Quand l'utilisateur mentionne un sujet PM (backlog, prioritisation, OKR, discovery, interview, roadmap, user story, epic), inclus TOUJOURS un lien HTML cliquable vers l'outil PM correspondant. Réponse actionnable et concise (max 200 mots). Ne propose les coordonnées de Carlin que si l'utilisateur demande explicitement comment le joindre. N'utilise jamais de tirets longs (—) : utilise des virgules ou des deux-points à la place. N'utilise jamais l'élision 'l'' devant un nom d'outil : écris toujours 'le OKR Builder', 'le Discovery Assistant', etc.";
 
   // ── KB FAST-PATH ───────────────────────────────────────────────────────────
   var KB = {
     fr: { rules: [
       { k: ["que peux","peux-tu","tu fais","tu sais","aide","capacité","faire pour"],
-        r: "Je peux t'aider sur deux axes :\n\n<strong>Tes défis PM</strong> :\n• Prioriser ton backlog (RICE / MoSCoW)\n• Structurer tes OKRs et Key Results\n• Préparer une discovery ou analyser des interviews\n• Construire une roadmap narrative\n\n<strong>Le portfolio de Carlin</strong> :\n• Son profil, son parcours, ses certifications\n• Ses 6 outils IA PM\n• Le contacter pour CDI ou freelance",
-        chips: ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs", "📩 Contacter Carlin"] },
+        r: "Je peux t'aider sur deux axes :\n\n<strong>Tes défis PM</strong> :\n• Prioriser ton backlog (RICE / MoSCoW)\n• Structurer tes OKRs et Key Results\n• Préparer une discovery ou analyser des interviews\n• Construire une roadmap narrative\n\n<strong>Le portfolio de Carlin</strong> :\n• Son profil, son parcours, ses certifications\n• Ses 6 outils IA PM",
+        chips: ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs"] },
       { k: ["qui","carlin","profil","présente","présentation","c'est qui"],
         r: "Carlin Mankoto est AI Product Manager avec 3 ans d'expérience (AXA, Airbus, Casino, OAIO/Infotel). Certifié PSPO I, SAFe POPM. Il couvre tout le spectre produit et build ses propres outils IA en vibe coding.",
-        chips: ["🛠️ Ses outils IA ?", "📋 Ses certifications ?", "📩 Le contacter"] },
+        chips: ["🛠️ Ses outils IA ?", "📋 Ses certifications ?"] },
       { k: ["outil","build","projet","app","tool","6 outil","ses outil"],
         r: "Carlin a développé 6 outils IA pour les PMs :\n\n• <a href='https://cmankotech.github.io/cmankotech/okr-builder.html' target='_blank'>OKR Builder</a>\n• <a href='https://cmankotech.github.io/cmankotech/discovery-assistant.html' target='_blank'>Discovery Assistant</a>\n• <a href='https://cmankotech.github.io/cmankotech/user-interview-analyzer.html' target='_blank'>User Interview Analyzer</a>\n• <a href='https://cmankotech.github.io/cmankotech/backlog-prioritizer.html' target='_blank'>Backlog Prioritizer</a>\n• <a href='https://cmankotech.github.io/cmankotech/epic-to-userstories.html' target='_blank'>Epic to User Stories</a>\n• <a href='https://cmankotech.github.io/cmankotech/roadmap-storyteller.html' target='_blank'>Roadmap Storyteller</a>",
-        chips: ["🎯 Prioriser mon backlog", "📩 Contacter Carlin"] },
+        chips: ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs"] },
       { k: ["expérience","parcours","travail","poste","mission","axa","airbus","casino","oaio","infotel"],
         r: "Son parcours :\n\n• <strong>OAIO/Infotel</strong> (2026) : stratégie LMS + outils IA pour 3500 collaborateurs\n• <strong>AXA</strong> : AI PO, SecureGPT (RAG), Microsoft Copilot, SAFe\n• <strong>Airbus D&S</strong> : PO, app mobile sécurisée JO Paris 2024\n• <strong>Groupe Casino</strong> : transformation Scrum",
-        chips: ["📋 Ses certifications ?", "📩 Le contacter"] },
+        chips: ["📋 Ses certifications ?", "🛠️ Ses outils IA ?"] },
       { k: ["certif","pspo","safe","formation","diplôme","master","scrum"],
         r: "Certifications : PSPO I (Scrum.org), SAFe POPM + SSM (Scaled Agile), Product School (Discovery, Strategy, Roadmapping, Analytics). Formation : Master 2 Innovation Digitale (Paris-Saclay), Master 1 Management Stratégique.",
-        chips: ["💼 Son expérience ?", "📩 Le contacter"] },
+        chips: ["💼 Son expérience ?", "🛠️ Ses outils IA ?"] },
       { k: ["contact","linkedin","email","recrut","freelance","cdi","disponible","embauche"],
         r: "Carlin est disponible pour des missions CDI ou freelance. <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> ou carlinmankoto@proton.me",
-        chips: ["📩 Contacter Carlin", "🛠️ Ses outils IA ?"] },
+        chips: ["🛠️ Ses outils IA ?", "💼 Son expérience ?"] },
       { k: ["krl1","comment tu","tu fonctionnes","qui es-tu","comment ça marche","t'as été construit","créé comment"],
         r: "Je suis <strong>KRL1</strong>, l'assistant IA du portfolio de Carlin Mankoto. Ma logique de décision passe par 4 couches :\n\n• Détection du contexte de page\n• KB fast-path (matching local, 0 appel API)\n• LLM via Groq + system prompt annoté\n• PM Journey injection (MutationObserver)\n\n<a href='https://cmankotech.github.io/cmankotech/krl1-architecture.html' target='_blank'>Voir l'architecture de décision complète →</a>",
-        chips: ["🏗️ Pourquoi Cloudflare Workers ?", "⚡ Pourquoi pas de backend ?", "📩 Contacter Carlin"] },
+        chips: ["🏗️ Pourquoi Cloudflare Workers ?", "⚡ Pourquoi pas de backend ?"] },
       { k: ["stack","architecture","comment c'est construit","langgraph","fastapi","technique","comment ce site"],
         r: "La stack du site :\n\n• <strong>Frontend</strong> : HTML/CSS/JS vanilla, déployé sur GitHub Pages\n• <strong>Proxy</strong> : Cloudflare Worker (clé API sécurisée, double routing)\n• <strong>LLM</strong> : Groq API + llama-3.3-70b-versatile (1-2s sur LPU)\n• <strong>Orchestration</strong> : FastAPI + LangGraph (planner → synthesis)\n\nTous les détails sur <a href='https://cmankotech.github.io/cmankotech/how-i-built-this.html' target='_blank'>Comment j'ai construit ce site →</a>",
-        chips: ["🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?", "📩 Contacter Carlin"] },
+        chips: ["🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?"] },
       { k: ["pourquoi cloudflare","pourquoi worker","cloudflare worker"],
         r: "<strong>Cloudflare Workers</strong> résout le problème clé : appeler l'API Groq depuis le navigateur sans exposer la clé API côté client. Le Worker intercepte, injecte la clé côté serveur, gère les CORS. Plan gratuit : 100 000 req/jour, déployé en quelques minutes avec Wrangler CLI.",
-        chips: ["🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?", "📩 Contacter Carlin"] },
+        chips: ["🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?"] },
       { k: ["pourquoi pas de backend","pas de backend","sans backend","pourquoi pas de serveur","no backend"],
         r: "Le site est 100% statique (HTML/JS vanilla). Pas de base de données, pas de sessions côté serveur. Le Cloudflare Worker suffit comme couche API. Avantages : zéro infra à maintenir, zéro coût serveur, déploiement via un simple git push.",
-        chips: ["🤖 Comment fonctionne KRL1 ?", "🏗️ Pourquoi Cloudflare Workers ?", "📩 Contacter Carlin"] }
+        chips: ["🤖 Comment fonctionne KRL1 ?", "🏗️ Pourquoi Cloudflare Workers ?"] }
     ]},
     en: { rules: [
       { k: ["what can","can you","you do","help me","capabilities"],
-        r: "I can help on two fronts:\n\n<strong>Your PM challenges</strong>:\n• Prioritise your backlog (RICE / MoSCoW)\n• Structure your OKRs and Key Results\n• Prepare a discovery or analyse user interviews\n• Build a narrative roadmap\n\n<strong>Carlin's portfolio</strong>:\n• His profile, background and certifications\n• His 6 AI PM tools\n• Reach him for a CDI or freelance opportunity",
-        chips: ["🎯 Prioritise my backlog", "📊 Structure my OKRs", "📩 Contact Carlin"] },
+        r: "I can help on two fronts:\n\n<strong>Your PM challenges</strong>:\n• Prioritise your backlog (RICE / MoSCoW)\n• Structure your OKRs and Key Results\n• Prepare a discovery or analyse user interviews\n• Build a narrative roadmap\n\n<strong>Carlin's portfolio</strong>:\n• His profile, background and certifications\n• His 6 AI PM tools",
+        chips: ["🎯 Prioritise my backlog", "📊 Structure my OKRs"] },
       { k: ["who","carlin","profile","about","introduce"],
         r: "Carlin Mankoto is an AI Product Manager with 3 years of experience (AXA, Airbus, Casino, OAIO/Infotel). PSPO I and SAFe POPM certified. He covers the full product spectrum and builds his own AI tools via vibe coding.",
-        chips: ["🛠️ His AI tools?", "📋 His certifications?", "📩 Reach him"] },
+        chips: ["🛠️ His AI tools?", "📋 His certifications?"] },
       { k: ["tool","build","project","app","6 tool","his tool"],
         r: "Carlin built 6 AI tools for PMs:\n\n• <a href='https://cmankotech.github.io/cmankotech/okr-builder.html' target='_blank'>OKR Builder</a>\n• <a href='https://cmankotech.github.io/cmankotech/discovery-assistant.html' target='_blank'>Discovery Assistant</a>\n• <a href='https://cmankotech.github.io/cmankotech/user-interview-analyzer.html' target='_blank'>User Interview Analyzer</a>\n• <a href='https://cmankotech.github.io/cmankotech/backlog-prioritizer.html' target='_blank'>Backlog Prioritizer</a>\n• <a href='https://cmankotech.github.io/cmankotech/epic-to-userstories.html' target='_blank'>Epic to User Stories</a>\n• <a href='https://cmankotech.github.io/cmankotech/roadmap-storyteller.html' target='_blank'>Roadmap Storyteller</a>",
-        chips: ["🎯 Prioritise my backlog", "📩 Contact Carlin"] },
+        chips: ["🎯 Prioritise my backlog", "📊 Structure my OKRs"] },
       { k: ["experience","background","job","axa","airbus","casino","oaio"],
         r: "His background:\n\n• <strong>OAIO/Infotel</strong> (2026): LMS strategy + AI tools for 3,500 employees\n• <strong>AXA</strong>: AI PO, SecureGPT (RAG), Microsoft Copilot, SAFe\n• <strong>Airbus D&S</strong>: PO, secure mobile app for Paris 2024 Olympics\n• <strong>Groupe Casino</strong>: Agile/Scrum transformation",
-        chips: ["📋 His certifications?", "📩 Reach him"] },
+        chips: ["📋 His certifications?", "🛠️ His AI tools?"] },
       { k: ["certif","pspo","safe","degree","master","scrum"],
         r: "Certifications: PSPO I (Scrum.org), SAFe POPM + SSM (Scaled Agile), multiple Product School certs. Education: Master 2 Digital Innovation (Paris-Saclay), Master 1 Strategic Management.",
-        chips: ["💼 His experience?", "📩 Reach him"] },
+        chips: ["💼 His experience?", "🛠️ His AI tools?"] },
       { k: ["contact","linkedin","email","hire","recruit","freelance","available"],
         r: "Carlin is open to CDI or freelance opportunities. <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> or carlinmankoto@proton.me",
-        chips: ["📩 Contact Carlin", "🛠️ His AI tools?"] },
+        chips: ["🛠️ His AI tools?", "💼 His experience?"] },
       { k: ["krl1","how do you work","what are you","who are you","how were you built","how is it built","how does it work"],
         r: "I'm <strong>KRL1</strong>, Carlin Mankoto's portfolio AI assistant. My decision logic goes through 4 layers:\n\n• Page context detection\n• KB fast-path (local matching, 0 API call)\n• LLM via Groq + annotated system prompt\n• PM Journey injection (MutationObserver)\n\n<a href='https://cmankotech.github.io/cmankotech/krl1-architecture.html' target='_blank'>See the full decision architecture →</a>",
-        chips: ["🏗️ Why Cloudflare Workers?", "⚡ Why no backend?", "📩 Contact Carlin"] },
+        chips: ["🏗️ Why Cloudflare Workers?", "⚡ Why no backend?"] },
       { k: ["tech stack","architecture","how was this built","langgraph","fastapi","technical"],
         r: "Site stack:\n\n• <strong>Frontend</strong>: vanilla HTML/CSS/JS, deployed on GitHub Pages\n• <strong>Proxy</strong>: Cloudflare Worker (API key secured, dual routing)\n• <strong>LLM</strong>: Groq API + llama-3.3-70b-versatile (1-2s on LPU)\n• <strong>Orchestration</strong>: FastAPI + LangGraph (planner → synthesis)\n\nFull details on <a href='https://cmankotech.github.io/cmankotech/how-i-built-this.html' target='_blank'>How I Built This →</a>",
-        chips: ["🤖 How does KRL1 work?", "⚡ Why no backend?", "📩 Contact Carlin"] },
+        chips: ["🤖 How does KRL1 work?", "⚡ Why no backend?"] },
       { k: ["why cloudflare","why worker","cloudflare worker"],
         r: "<strong>Cloudflare Workers</strong> solves the key issue: calling the Groq API from the browser without exposing the API key client-side. The Worker intercepts, injects the key server-side, handles CORS. Free plan: 100,000 req/day, deployed in minutes with Wrangler CLI.",
-        chips: ["🤖 How does KRL1 work?", "⚡ Why no backend?", "📩 Contact Carlin"] },
+        chips: ["🤖 How does KRL1 work?", "⚡ Why no backend?"] },
       { k: ["why no backend","no backend","without backend","why no server","serverless"],
         r: "The site is 100% static (vanilla HTML/JS). No database, no server-side sessions. The Cloudflare Worker handles the API layer. Benefits: zero infrastructure to maintain, zero server cost, deployment via a simple git push.",
-        chips: ["🤖 How does KRL1 work?", "🏗️ Why Cloudflare Workers?", "📩 Contact Carlin"] }
+        chips: ["🤖 How does KRL1 work?", "🏗️ Why Cloudflare Workers?"] }
     ]}
   };
 
@@ -384,19 +384,19 @@
     var t = text.toLowerCase();
     var fr = _lang === 'fr';
     if (/backlog|priorit|rice|moscow|epic|user stor/.test(t))
-      return fr ? ["🔍 Préparer une discovery", "📊 Structurer mes OKRs", "📩 Contacter Carlin"]
-                : ["🔍 Prepare a discovery", "📊 Structure my OKRs", "📩 Contact Carlin"];
+      return fr ? ["🔍 Préparer une discovery", "📊 Structurer mes OKRs"]
+                : ["🔍 Prepare a discovery", "📊 Structure my OKRs"];
     if (/okr|objectif|kpi|key result/.test(t))
-      return fr ? ["🗺️ Construire ma roadmap", "🎯 Prioriser mon backlog", "📩 Contacter Carlin"]
-                : ["🗺️ Build my roadmap", "🎯 Prioritise my backlog", "📩 Contact Carlin"];
+      return fr ? ["🗺️ Construire ma roadmap", "🎯 Prioriser mon backlog"]
+                : ["🗺️ Build my roadmap", "🎯 Prioritise my backlog"];
     if (/discovery|interview|utilisateur|hypothès|entretien/.test(t))
-      return fr ? ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs", "📩 Contacter Carlin"]
-                : ["🎯 Prioritise my backlog", "📊 Structure my OKRs", "📩 Contact Carlin"];
+      return fr ? ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs"]
+                : ["🎯 Prioritise my backlog", "📊 Structure my OKRs"];
     if (/roadmap|pitch|stratég|narrative|audience/.test(t))
-      return fr ? ["📊 Structurer mes OKRs", "🎯 Prioriser mon backlog", "📩 Contacter Carlin"]
-                : ["📊 Structure my OKRs", "🎯 Prioritise my backlog", "📩 Contact Carlin"];
-    return fr ? ["🎯 Prioriser mon backlog", "📩 Contacter Carlin"]
-              : ["🎯 Prioritise my backlog", "📩 Contact Carlin"];
+      return fr ? ["📊 Structurer mes OKRs", "🎯 Prioriser mon backlog"]
+                : ["📊 Structure my OKRs", "🎯 Prioritise my backlog"];
+    return fr ? ["🎯 Prioriser mon backlog", "📊 Structurer mes OKRs"]
+              : ["🎯 Prioritise my backlog", "📊 Structure my OKRs"];
   }
 
   // ── DOM HELPERS ────────────────────────────────────────────────────────────
