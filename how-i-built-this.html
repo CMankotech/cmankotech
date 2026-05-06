@@ -169,6 +169,18 @@ section{margin-bottom:4rem}
 .test-case-desc{font-size:0.74rem;color:var(--dim);line-height:1.6}
 .test-case-result{font-size:0.62rem;font-family:monospace;color:#4ade80;margin-top:auto;padding-top:0.4rem;border-top:1px solid rgba(74,222,128,0.1)}
 
+/* DIAGRAM LANG SWITCH */
+.mermaid-wrap[data-diagram-lang="en"]{display:none}
+html[lang="en"] .mermaid-wrap[data-diagram-lang="fr"]{display:none}
+html[lang="en"] .mermaid-wrap[data-diagram-lang="en"]{display:block}
+/* TOOLTIP */
+.tt{border-bottom:1px dashed rgba(34,211,238,0.4);cursor:help;transition:color 0.15s,border-color 0.15s}
+.tt:hover{color:var(--cyan);border-bottom-color:var(--cyan)}
+#tt-bubble{position:fixed;z-index:9999;max-width:260px;background:rgba(7,7,14,0.97);border:1px solid rgba(34,211,238,0.2);border-radius:10px;padding:0.8rem 1rem;box-shadow:0 16px 40px -10px rgba(0,0,0,0.7);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity 0.15s,transform 0.15s;font-size:0.77rem;color:var(--dim);line-height:1.6;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+#tt-bubble.show{opacity:1;transform:translateY(0)}
+#tt-bubble strong{display:block;font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:var(--text);margin-bottom:0.3rem}
+[data-theme="light"] #tt-bubble{background:rgba(255,255,255,0.97);border-color:rgba(59,130,246,0.2);color:#475569}
+[data-theme="light"] #tt-bubble strong{color:#0f172a}
 /* GLOSSAIRE */
 .gloss-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.85rem}
 .gloss-card{padding:1.1rem 1.25rem;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:12px;backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%)}
@@ -246,7 +258,7 @@ section{margin-bottom:4rem}
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <script>
 if (window.mermaid) {
-  mermaid.initialize({startOnLoad:true,theme:'dark',themeVariables:{background:'#07070e',primaryColor:'#0e0e1a',primaryTextColor:'#e2e8f0',primaryBorderColor:'#374151',lineColor:'#4b5563',fontFamily:'DM Sans,sans-serif',fontSize:'12px',edgeLabelBackground:'#07070e',secondaryColor:'#0e0e1a',tertiaryColor:'#0e0e1a'}});
+  mermaid.initialize({startOnLoad:false,theme:'dark',themeVariables:{background:'#07070e',primaryColor:'#0e0e1a',primaryTextColor:'#e2e8f0',primaryBorderColor:'#374151',lineColor:'#4b5563',fontFamily:'DM Sans,sans-serif',fontSize:'12px',edgeLabelBackground:'#07070e',secondaryColor:'#0e0e1a',tertiaryColor:'#0e0e1a'}});
 }
 </script>
 </head>
@@ -684,7 +696,7 @@ Réponds UNIQUEMENT avec un JSON valide :
       </svg>
     </div>
 
-    <div class="mermaid-wrap">
+    <div class="mermaid-wrap" data-diagram-lang="fr">
       <div class="mermaid-label">RAG pipeline — flowchart interactif</div>
       <div class="mermaid">
 %%{init: {'theme': 'dark', 'themeVariables': {'background': '#07070e', 'primaryColor': '#0e0e1a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#374151', 'lineColor': '#4b5563', 'fontFamily': 'DM Sans, sans-serif', 'fontSize': '13px', 'edgeLabelBackground': '#07070e'}}}%%
@@ -701,6 +713,29 @@ flowchart LR
     RI --> CS[Cosine Sim · top-3 chunks]:::violet
     CS --> SY[Synthesis · T=0.45]:::gray
     PL -->|autre intent| SY
+    SY --> RP([Reply · max 220w]):::cyan
+    PL & RI & SY -.->|ctx.waitUntil| LF[(Langfuse\nObservability)]:::green
+    SY -.->|ctx.waitUntil| KV[(KV Store\nUsage counter)]:::gray
+      </div>
+    </div>
+
+    <div class="mermaid-wrap" data-diagram-lang="en">
+      <div class="mermaid-label">RAG pipeline — interactive flowchart</div>
+      <div class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': {'background': '#07070e', 'primaryColor': '#0e0e1a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#374151', 'lineColor': '#4b5563', 'fontFamily': 'DM Sans, sans-serif', 'fontSize': '13px', 'edgeLabelBackground': '#07070e'}}}%%
+flowchart LR
+    classDef cyan fill:#07141a,stroke:#22d3ee,color:#22d3ee
+    classDef gray fill:#0e0e1a,stroke:#374151,color:#d1d5db
+    classDef violet fill:#1a0e2e,stroke:#a78bfa,color:#c4b5fd
+    classDef green fill:#071a0a,stroke:#4ade80,color:#86efac
+    classDef orange fill:#1a0e05,stroke:#fb923c,color:#fdba74
+
+    KB[(15 frameworks\nMarkdown)]:::orange --> RI
+    Q([Query]):::cyan --> PL[Planner · T=0.2]:::gray
+    PL -->|pm_workflow| RI[Workers AI · embeddings]:::violet
+    RI --> CS[Cosine Sim · top-3 chunks]:::violet
+    CS --> SY[Synthesis · T=0.45]:::gray
+    PL -->|other intent| SY
     SY --> RP([Reply · max 220w]):::cyan
     PL & RI & SY -.->|ctx.waitUntil| LF[(Langfuse\nObservability)]:::green
     SY -.->|ctx.waitUntil| KV[(KV Store\nUsage counter)]:::gray
@@ -1168,13 +1203,19 @@ function setLang(lang){
     var k = el.getAttribute('data-i18n');
     if(T[lang] && T[lang][k] !== undefined) el.innerHTML = T[lang][k];
   });
+  document.querySelectorAll('.mermaid-wrap[data-diagram-lang="en"]').forEach(function(el){ el.style.display = lang==='en' ? '' : 'none'; });
+  document.querySelectorAll('.mermaid-wrap[data-diagram-lang="fr"]').forEach(function(el){ el.style.display = lang==='fr' ? '' : 'none'; });
+  if(lang==='en') document.querySelectorAll('.mermaid-wrap[data-diagram-lang="en"] .mermaid:not([data-processed])').forEach(function(el){ mermaid.run({nodes:[el]}); });
+  setTimeout(function(){ if(typeof applyTooltips==='function') applyTooltips(lang); }, 50);
 }
 
 // Init from URL param
 (function(){
   var params = new URLSearchParams(window.location.search);
   var lang = params.get('lang');
+  mermaid.run({querySelector: '.mermaid-wrap[data-diagram-lang="fr"] .mermaid'});
   if(lang === 'en') setLang('en');
+  setTimeout(function(){ if(typeof applyTooltips==='function') applyTooltips(document.documentElement.lang||'fr'); }, 150);
 })();
 
 </script>
@@ -1200,6 +1241,70 @@ function setLang(lang){
     if(btn){var cur=document.documentElement.getAttribute('data-theme');applyTheme(cur==='light'?'dark':'light');}
   });
 })();
+</script>
+
+<div id="tt-bubble"></div>
+<script>
+var TT_GLOSSARY = {
+  rag:{fr:'Retrieval-Augmented Generation : enrichir un LLM avec du contexte récupéré dynamiquement au moment de la requête. Permet d\'ancrer les réponses sans retraining.',en:'Retrieval-Augmented Generation: enriching an LLM with context retrieved at query time. Grounds responses without retraining.'},
+  llm:{fr:'Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : llama-3.3-70b de Meta, servi par Groq sur LPU.',en:'Large Language Model: trained on large amounts of text. Here: Meta\'s llama-3.3-70b, served by Groq on LPU hardware.'},
+  embedding:{fr:'Représentation vectorielle d\'un texte encodant son sens sémantique. Deux textes proches en sens ont des vecteurs proches — permet la recherche par similarité.',en:'Vector representation of text encoding its semantic meaning. Similar texts have similar vectors — enables similarity-based search.'},
+  sse:{fr:'Server-Sent Events : streaming HTTP unidirectionnel (serveur → client). Affiche la réponse LLM progressivement dès les premiers tokens.',en:'Server-Sent Events: unidirectional HTTP streaming (server → client). Displays LLM responses progressively as the first tokens arrive.'},
+  kv:{fr:'Key-Value Store distribué Cloudflare. Stockage ultra-rapide pour données simples. Ici : compteur d\'usage global via /stats.',en:'Cloudflare distributed Key-Value Store. Ultra-fast storage for simple data. Here: global usage counter via /stats.'},
+  waituntil:{fr:'Mécanisme Cloudflare pour travail asynchrone non-bloquant après envoi de la réponse. Utilisé ici pour Langfuse et le compteur KV.',en:'Cloudflare mechanism for non-blocking async work after the response is sent. Used here for Langfuse and KV counter.'},
+  intent:{fr:'Classification de l\'intention derrière un message. KRL1 détecte 5 intents : pm_workflow, portfolio, tech, contact, other.',en:'Classification of the purpose behind a message. KRL1 detects 5 intents: pm_workflow, portfolio, tech, contact, other.'},
+  planner:{fr:'Premier appel LLM (T=0.2) qui produit un JSON structuré d\'analyse : intent, confidence, steps, risks, quick_win.',en:'First LLM call (T=0.2) that produces structured analysis JSON: intent, confidence, steps, risks, quick_win.'},
+};
+
+var TT_PATTERNS = [
+  {rx:/ctx\.waitUntil/g, key:'waituntil'},
+  {rx:/\bKV\s+Store/g, key:'kv'},
+  {rx:/\bembeddings?\b/gi, key:'embedding'},
+  {rx:/\bSSE\b/g, key:'sse'},
+  {rx:/\bRAG\b/g, key:'rag'},
+  {rx:/\bLLMs?\b/g, key:'llm'},
+  {rx:/\bIntent\b/g, key:'intent'},
+];
+
+function applyTooltips(lang) {
+  var sel = '.stack-desc, .decision-why, .tl-step-desc, .narrative-p, .gloss-def';
+  document.querySelectorAll(sel).forEach(function(container) {
+    container.querySelectorAll('.tt').forEach(function(s){ s.outerHTML = s.textContent; });
+    container.normalize();
+    var walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null, false);
+    var nodes = [];
+    while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function(node) {
+      if(!node.textContent.trim()) return;
+      var html = node.textContent, changed = false;
+      TT_PATTERNS.forEach(function(p) {
+        p.rx.lastIndex = 0;
+        if(p.rx.test(html)){ p.rx.lastIndex = 0; html = html.replace(p.rx, function(m){ changed=true; return '<span class="tt" data-key="'+p.key+'">'+m+'</span>'; }); }
+      });
+      if(changed){ var tmp=document.createElement('span'); tmp.innerHTML=html; while(tmp.firstChild) node.parentNode.insertBefore(tmp.firstChild,node); node.parentNode.removeChild(node); }
+    });
+  });
+}
+
+var ttBubble = document.getElementById('tt-bubble');
+var ttActive = null;
+document.addEventListener('click', function(e) {
+  var el = e.target.closest ? e.target.closest('.tt') : null;
+  if(!el){ ttBubble.classList.remove('show'); ttActive=null; return; }
+  if(el===ttActive){ ttBubble.classList.remove('show'); ttActive=null; return; }
+  ttActive = el;
+  var key = el.getAttribute('data-key');
+  var lang = document.documentElement.lang || 'fr';
+  var def = TT_GLOSSARY[key] && TT_GLOSSARY[key][lang];
+  if(!def) return;
+  ttBubble.innerHTML = '<strong>'+el.textContent+'</strong>'+def;
+  var rect = el.getBoundingClientRect(), bw = 268;
+  var x = Math.max(8, Math.min(rect.left + rect.width/2 - bw/2, window.innerWidth - bw - 8));
+  ttBubble.style.left = x+'px';
+  ttBubble.style.top = (rect.bottom + window.scrollY + 6)+'px';
+  ttBubble.classList.add('show');
+  e.stopPropagation();
+});
 </script>
 </body>
 </html>
