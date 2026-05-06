@@ -679,9 +679,10 @@ flowchart LR
     classDef cyan fill:#07141a,stroke:#22d3ee,color:#22d3ee
     classDef gray fill:#0e0e1a,stroke:#374151,color:#d1d5db
     classDef violet fill:#1a0e2e,stroke:#a78bfa,color:#c4b5fd
-
     classDef green fill:#071a0a,stroke:#4ade80,color:#86efac
+    classDef orange fill:#1a0e05,stroke:#fb923c,color:#fdba74
 
+    KB[(15 frameworks\nMarkdown)]:::orange --> RI
     Q([Query]):::cyan --> PL[Planner · T=0.2]:::gray
     PL -->|pm_workflow| RI[Workers AI · embeddings]:::violet
     RI --> CS[Cosine Sim · top-3 chunks]:::violet
@@ -689,6 +690,7 @@ flowchart LR
     PL -->|autre intent| SY
     SY --> RP([Reply · max 220w]):::cyan
     PL & RI & SY -.->|ctx.waitUntil| LF[(Langfuse\nObservability)]:::green
+    SY -.->|ctx.waitUntil| KV[(KV Store\nUsage counter)]:::gray
       </div>
     </div>
 
