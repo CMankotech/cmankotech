@@ -169,6 +169,19 @@ section{margin-bottom:4rem}
 .test-case-desc{font-size:0.74rem;color:var(--dim);line-height:1.6}
 .test-case-result{font-size:0.62rem;font-family:monospace;color:#4ade80;margin-top:auto;padding-top:0.4rem;border-top:1px solid rgba(74,222,128,0.1)}
 
+/* GLOSSAIRE */
+.gloss-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.85rem}
+.gloss-card{padding:1.1rem 1.25rem;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:12px;backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%)}
+.gloss-badge{font-size:0.56rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.15rem 0.5rem;border-radius:99px;display:inline-block;margin-bottom:0.5rem;border:1px solid}
+.gb-infra{background:rgba(251,146,60,0.1);border-color:rgba(251,146,60,0.25);color:#fdba74}
+.gb-ai{background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.25);color:#c4b5fd}
+.gb-protocol{background:rgba(34,211,238,0.07);border-color:rgba(34,211,238,0.2);color:#67e8f9}
+.gb-concept{background:rgba(96,165,250,0.08);border-color:rgba(96,165,250,0.2);color:#93c5fd}
+.gloss-term{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.4rem}
+.gloss-def{font-size:0.78rem;color:var(--dim);line-height:1.65}
+@media(max-width:600px){.gloss-grid{grid-template-columns:1fr}}
+[data-theme="light"] .gloss-card{background:rgba(255,255,255,0.85);border-color:rgba(15,23,42,0.09)}
+
 /* FOOTER */
 .page-footer{border-top:1px solid var(--line);padding-top:3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
 .footer-back{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;transition:color 0.2s}
@@ -364,7 +377,7 @@ if (window.mermaid) {
         <div class="stack-icon">⚡</div>
         <div class="stack-name">Cloudflare Workers</div>
         <div class="stack-badge sb-orange" data-i18n="stack.proxy.badge">API Proxy</div>
-        <div class="stack-desc" data-i18n="stack.proxy.desc">Worker serverless JavaScript avec triple routing. POST / : passthrough direct vers l'API Groq pour les 6 outils PM — la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, planner→synthesis natif. POST /rag-query : pipeline RAG sémantique complet (planner → Workers AI embeddings → cosine similarity → synthesis). POST /orchestrate-stream : même flow planner→synthesis mais la réponse synthesis arrive en SSE pour un affichage progressif. Validation d'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.</div>
+        <div class="stack-desc" data-i18n="stack.proxy.desc">Un Worker est une fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes — pas de VPS, cold start quasi-nul. Ici il fait bien plus que proxifier : il orchestre le pipeline planner→synthesis pour KRL1, calcule les embeddings RAG via Workers AI, et trace les appels via Langfuse — la clé API n'est jamais exposée côté client. Routes : POST / : passthrough direct vers l'API Groq pour les 6 outils PM — la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, planner→synthesis natif. POST /rag-query : pipeline RAG sémantique complet (planner → Workers AI embeddings → cosine similarity → synthesis). POST /orchestrate-stream : même flow planner→synthesis mais la réponse synthesis arrive en SSE pour un affichage progressif. Validation d'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.</div>
       </div>
       <div class="stack-card">
         <div class="stack-icon">🤖</div>
@@ -767,6 +780,66 @@ flowchart LR
     </div>
   </section>
 
+  <!-- 07 GLOSSAIRE -->
+  <section>
+    <div class="sec-header">
+      <span class="sec-num">07</span>
+      <span class="sec-title" data-i18n="s7.title">Glossaire technique</span>
+    </div>
+    <div class="gloss-grid">
+      <div class="gloss-card">
+        <span class="gloss-badge gb-infra">Infra</span>
+        <div class="gloss-term">Cloudflare Worker</div>
+        <div class="gloss-def" data-i18n="gloss.worker">Fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes. Pas de VPS à gérer, cold start quasi-nul, 100 000 req/jour gratuit.</div>
+      </div>
+      <div class="gloss-card">
+        <span class="gloss-badge gb-infra">Infra</span>
+        <div class="gloss-term">Edge computing</div>
+        <div class="gloss-def" data-i18n="gloss.edge">Paradigme qui déplace le traitement des requêtes le plus près possible de l'utilisateur, sur des serveurs distribués mondialement. Réduit la latence en évitant les allers-retours vers un datacenter centralisé.</div>
+      </div>
+      <div class="gloss-card">
+        <span class="gloss-badge gb-ai">AI</span>
+        <div class="gloss-term">RAG</div>
+        <div class="gloss-def" data-i18n="gloss.rag">Retrieval-Augmented Generation : enrichir un LLM avec du contexte récupéré dynamiquement au moment de la requête. Permet d'ancrer les réponses dans une base de connaissances sans retraining.</div>
+      </div>
+      <div class="gloss-card">
+        <span class="gloss-badge gb-ai">AI</span>
+        <div class="gloss-term">Embedding</div>
+        <div class="gloss-def" data-i18n="gloss.embedding">Représentation vectorielle d'un texte qui encode son sens sémantique. Deux textes au sens proche ont des vecteurs proches, ce qui permet la recherche par similarité plutôt que par mots-clés exacts.</div>
+      </div>
+      <div class="gloss-card">
+        <span class="gloss-badge gb-ai">AI</span>
+        <div class="gloss-term">LLM</div>
+        <div class="gloss-def" data-i18n="gloss.llm">Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : llama-3.3-70b de Meta, servi par Groq sur LPU (Language Processing Unit) — inférence en 1-2 secondes.</div>
+      </div>
+      <div class="gloss-card">
+        <span class="gloss-badge gb-concept">Concept</span>
+        <div class="gloss-term">Intent</div>
+        <div class="gloss-def" data-i18n="gloss.intent">Classification de l'intention derrière un message utilisateur. Le planner de KRL1 détecte 5 intents : pm_workflow, portfolio, tech, contact, other — chaque intent déclenche un chemin de réponse différent.</div>
+      </div>
+      <div class="gloss-card">
+        <span class="gloss-badge gb-concept">Concept</span>
+        <div class="gloss-term">Planner → Synthesis</div>
+        <div class="gloss-def" data-i18n="gloss.planner">Pattern d'orchestration en 2 appels LLM séquentiels. Le planner (T=0.2) produit un JSON structuré et déterministe ; la synthesis (T=0.45) le transforme en réponse naturelle. Séparer les deux permet d'optimiser chaque étape indépendamment.</div>
+      </div>
+      <div class="gloss-card">
+        <span class="gloss-badge gb-protocol">Protocole</span>
+        <div class="gloss-term">SSE</div>
+        <div class="gloss-def" data-i18n="gloss.sse">Server-Sent Events : protocole HTTP de streaming unidirectionnel (serveur → client). Permet d'afficher la réponse LLM progressivement dès les premiers tokens, sans attendre la réponse complète.</div>
+      </div>
+      <div class="gloss-card">
+        <span class="gloss-badge gb-infra">Infra</span>
+        <div class="gloss-term">ctx.waitUntil</div>
+        <div class="gloss-def" data-i18n="gloss.waituntil">Mécanisme Cloudflare pour exécuter du travail asynchrone après l'envoi de la réponse, sans bloquer le client. Utilisé ici pour envoyer les traces Langfuse et incrémenter le compteur KV sans ajouter de latence.</div>
+      </div>
+      <div class="gloss-card">
+        <span class="gloss-badge gb-infra">Infra</span>
+        <div class="gloss-term">KV Store</div>
+        <div class="gloss-def" data-i18n="gloss.kv">Key-Value Store distribué de Cloudflare. Stockage ultra-rapide pour des données simples. Ici : compteur d'usage global accessible via l'endpoint /stats.</div>
+      </div>
+    </div>
+  </section>
+
   <footer class="page-footer">
     <a href="https://cmankotech.github.io/cmankotech/" class="footer-back">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -791,7 +864,7 @@ var T={
     'stack.deploy.badge':'Hébergement',
     'stack.deploy.desc':'Hébergement statique gratuit avec CI/CD natif : chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Zéro coût, zéro infra à gérer — idéal pour un site statique à fichiers HTML/CSS/JS.',
     'stack.proxy.badge':'API Proxy',
-    'stack.proxy.desc':'Worker serverless JavaScript avec triple routing. POST / : passthrough direct vers l\'API Groq pour les 6 outils PM — la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, planner→synthesis natif. POST /rag-query : pipeline RAG sémantique complet (planner → Workers AI embeddings → cosine similarity → synthesis). POST /orchestrate-stream : même flow planner→synthesis mais la réponse synthesis arrive en SSE pour un affichage progressif. Validation d\'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.',
+    'stack.proxy.desc':'Un Worker est une fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes — pas de VPS, cold start quasi-nul. Ici il fait bien plus que proxifier : il orchestre le pipeline planner→synthesis pour KRL1, calcule les embeddings RAG via Workers AI, et trace les appels via Langfuse — la clé API n\'est jamais exposée côté client. Routes : POST / : passthrough direct vers l\'API Groq pour les 6 outils PM — la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, planner→synthesis natif. POST /rag-query : pipeline RAG sémantique complet (planner → Workers AI embeddings → cosine similarity → synthesis). POST /orchestrate-stream : même flow planner→synthesis mais la réponse synthesis arrive en SSE pour un affichage progressif. Validation d\'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.',
     'stack.llm.badge':'LLM',
     'stack.llm.desc':'Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L\'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes — 5 à 10x plus rapide que les providers classiques. Chaque outil PM l\'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).',
     'stack.lg.badge':'RAG sémantique',
@@ -895,6 +968,17 @@ var T={
     'stat.tools':'outils PM',
     'stat.cost':'/ mois d\'infra',
     'stat.weeks':'sem. en spare time',
+    's7.title':'Glossaire technique',
+    'gloss.worker':'Fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes. Pas de VPS à gérer, cold start quasi-nul, 100 000 req/jour gratuit.',
+    'gloss.edge':'Paradigme qui déplace le traitement des requêtes le plus près possible de l\'utilisateur, sur des serveurs distribués mondialement. Réduit la latence en évitant les allers-retours vers un datacenter centralisé.',
+    'gloss.rag':'Retrieval-Augmented Generation : enrichir un LLM avec du contexte récupéré dynamiquement au moment de la requête. Permet d\'ancrer les réponses dans une base de connaissances sans retraining.',
+    'gloss.embedding':'Représentation vectorielle d\'un texte qui encode son sens sémantique. Deux textes au sens proche ont des vecteurs proches, ce qui permet la recherche par similarité plutôt que par mots-clés exacts.',
+    'gloss.llm':'Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : llama-3.3-70b de Meta, servi par Groq sur LPU — inférence en 1-2 secondes.',
+    'gloss.intent':'Classification de l\'intention derrière un message utilisateur. Le planner de KRL1 détecte 5 intents : pm_workflow, portfolio, tech, contact, other — chaque intent déclenche un chemin de réponse différent.',
+    'gloss.planner':'Pattern d\'orchestration en 2 appels LLM séquentiels. Le planner (T=0.2) produit un JSON structuré ; la synthesis (T=0.45) le transforme en réponse naturelle. Séparer les deux permet d\'optimiser chaque étape indépendamment.',
+    'gloss.sse':'Server-Sent Events : protocole HTTP de streaming unidirectionnel (serveur → client). Permet d\'afficher la réponse LLM progressivement dès les premiers tokens, sans attendre la réponse complète.',
+    'gloss.waituntil':'Mécanisme Cloudflare pour exécuter du travail asynchrone après l\'envoi de la réponse, sans bloquer le client. Utilisé ici pour envoyer les traces Langfuse et incrémenter le compteur KV sans ajouter de latence.',
+    'gloss.kv':'Key-Value Store distribué de Cloudflare. Stockage ultra-rapide pour des données simples. Ici : compteur d\'usage global accessible via l\'endpoint /stats.',
     'arch.fallback':'↩ RAG sémantique natif Workers AI',
     's4b.title':'Prompt engineering',
     's4b.okr.label':'Prompt system — OKR Builder (extrait réel)',
@@ -933,7 +1017,7 @@ var T={
     'stack.deploy.badge':'Hosting',
     'stack.deploy.desc':'Free static hosting with native CI/CD: every git push to main triggers an automatic deployment in under 60 seconds. Global CDN, automatic HTTPS, cmankotech.github.io domain with zero configuration. Zero cost, zero infrastructure to manage — ideal for a static HTML/CSS/JS site.',
     'stack.proxy.badge':'API Proxy',
-    'stack.proxy.desc':'Serverless JavaScript Worker with four routes. POST /: direct passthrough to the Groq API for the 6 PM tools — the API key is injected Worker-side, never exposed to the browser. POST /orchestrate: dedicated route for the KRL1 chatbot, native planner→synthesis. POST /rag-query: full semantic RAG pipeline (planner → Workers AI embeddings → cosine similarity → synthesis). POST /orchestrate-stream: same planner→synthesis flow but synthesis response arrives as SSE for progressive display. Origin validation, automatic CORS, Cloudflare free plan: 100,000 req/day.',
+    'stack.proxy.desc':'A Worker is a serverless JavaScript function deployed across ~300 Cloudflare data centers, between the browser and external APIs — no server to manage, near-zero cold start. Here it does far more than proxy: it orchestrates the planner→synthesis pipeline for KRL1, computes RAG embeddings via Workers AI, and traces calls via Langfuse — the API key is never exposed client-side. Routes: POST / passthrough to Groq for the 6 PM tools. POST /orchestrate[-stream] KRL1 planner→synthesis orchestration. POST /rag-query full semantic RAG pipeline. Origin validation, automatic CORS, free plan: 100,000 req/day.',
     'stack.llm.badge':'LLM',
     'stack.llm.desc':'Access to the llama-3.3-70b-versatile model via an OpenAI-compatible REST API. LPU (Language Processing Unit) inference delivers responses in 1–2 seconds — 5 to 10x faster than classic providers. Each PM tool calls it with tailored parameters: temperatures between 0.3 and 0.7 depending on the task, max_tokens between 2,000 and 4,000, specialised system prompts (OKR strategist, discovery analyst, prioritisation expert…).',
     'stack.lg.badge':'Semantic RAG',
@@ -1037,6 +1121,17 @@ var T={
     'stat.tools':'PM tools',
     'stat.cost':'/ month infra cost',
     'stat.weeks':'weeks in spare time',
+    's7.title':'Technical Glossary',
+    'gloss.worker':'Serverless JavaScript function deployed across ~300 Cloudflare data centers, between the browser and external APIs. No server to manage, near-zero cold start, 100,000 req/day free.',
+    'gloss.edge':'Paradigm that moves request processing as close as possible to the user, on globally distributed servers. Reduces latency by avoiding round trips to a central datacenter.',
+    'gloss.rag':'Retrieval-Augmented Generation: enriching an LLM with context dynamically retrieved at query time. Grounds responses in a specific knowledge base without retraining.',
+    'gloss.embedding':'Vector representation of text that encodes its semantic meaning. Two semantically similar texts have similar vectors, enabling similarity-based search rather than exact keyword matching.',
+    'gloss.llm':'Large Language Model: language model trained on large amounts of text. Here: Meta\'s llama-3.3-70b, served by Groq on LPU (Language Processing Unit) — inference in 1-2 seconds.',
+    'gloss.intent':'Classification of the purpose behind a user message. KRL1\'s planner detects 5 intents: pm_workflow, portfolio, tech, contact, other — each triggering a different response path.',
+    'gloss.planner':'Orchestration pattern using 2 sequential LLM calls. The planner (T=0.2) produces structured JSON; synthesis (T=0.45) transforms it into a natural response. Separating them enables independent optimization of each step.',
+    'gloss.sse':'Server-Sent Events: unidirectional HTTP streaming protocol (server → client). Displays LLM responses progressively as the first tokens arrive, without waiting for the complete response.',
+    'gloss.waituntil':'Cloudflare mechanism for executing async work after the response is sent, without blocking the client. Used here to send Langfuse traces and increment the KV counter without adding latency.',
+    'gloss.kv':'Cloudflare\'s distributed Key-Value Store. Ultra-fast storage for simple data. Here: global usage counter accessible via the /stats endpoint.',
     'arch.fallback':'↩ native Workers AI semantic RAG',
     's4b.title':'Prompt engineering',
     's4b.okr.label':'System prompt — OKR Builder (real extract)',
