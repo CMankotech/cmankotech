@@ -794,9 +794,12 @@ function lf_event(type, body) {
 }
 
 async function lf_flush(env, events) {
-  if (!env.LANGFUSE_PUBLIC_KEY || !env.LANGFUSE_SECRET_KEY) return;
+  if (!env.LANGFUSE_PUBLIC_KEY || !env.LANGFUSE_SECRET_KEY) {
+    console.log('[langfuse] skipped — no keys in env');
+    return;
+  }
   try {
-    await fetch('https://cloud.langfuse.com/api/public/ingestion', {
+    const res = await fetch('https://cloud.langfuse.com/api/public/ingestion', {
       method: 'POST',
       headers: {
         Authorization: `Basic ${btoa(env.LANGFUSE_PUBLIC_KEY + ':' + env.LANGFUSE_SECRET_KEY)}`,
@@ -804,7 +807,15 @@ async function lf_flush(env, events) {
       },
       body: JSON.stringify({ batch: events }),
     });
-  } catch { /* non-blocking */ }
+    const text = await res.text();
+    if (!res.ok) {
+      console.error(`[langfuse] error ${res.status}:`, text);
+    } else {
+      console.log(`[langfuse] ok — ${events.length} events sent`);
+    }
+  } catch (e) {
+    console.error('[langfuse] fetch failed:', e?.message);
+  }
 }
 
 function lf_usage(groqData) {
