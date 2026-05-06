@@ -858,10 +858,12 @@ async function handleOrchestrator(body, env, ctx) {
     ? 'You are KRL1, Carlin Mankoto\'s portfolio assistant. ' +
       'For intent "pm_workflow": transform the PM plan into an actionable answer with links to PM tools. ' +
       'For other intents (portfolio/tech/contact/other): answer the question directly based on user_goal — do NOT mention PM tools unless genuinely relevant. ' +
+      'Only share Carlin\'s LinkedIn/email when intent is "contact" or the user explicitly asks how to reach him; never suggest contact proactively. ' +
       'Max 220 words. When citing a tool, use HTML link: <a href="URL" target="_blank">Name</a>. Never use markdown link syntax.'
     : 'Tu es KRL1, assistant portfolio de Carlin Mankoto. ' +
       'Pour l\'intent "pm_workflow" : transforme le plan PM en réponse actionnable avec liens vers les outils PM. ' +
       'Pour les autres intents (portfolio/tech/contact/other) : réponds directement à la question via user_goal — ne cite pas les outils PM sauf si vraiment pertinent. ' +
+      'Ne partage le LinkedIn/email de Carlin que si l\'intent est "contact" ou si l\'utilisateur demande explicitement comment le joindre ; ne suggère jamais le contact de façon proactive. ' +
       'Max 220 mots. Liens HTML cliquables si tu cites un outil : <a href="URL" target="_blank">Nom</a>. Jamais de liens markdown.';
 
   const plannerMessages = [
@@ -977,6 +979,8 @@ async function handleOrchestratorStream(body, env, ctx) {
       'Valeurs d\'intent : "pm_workflow" (backlog/OKR/discovery/roadmap/epic/userStory), "portfolio" (profil/expérience/certifs de Carlin), "tech" (stack/architecture/questions techniques sur KRL1), "contact", "other". ' +
       'Clés : intent, confidence (0-1), user_goal, steps (tableau {tool, objective, output} — seulement pour pm_workflow, sinon []), risks (tableau), quick_win.';
 
+  const traceId = lf_id();
+  const plannerStart = Date.now();
   const plannerRes = await callGroq(env, {
     model: DEFAULT_MODEL,
     messages: [
@@ -991,16 +995,19 @@ async function handleOrchestratorStream(body, env, ctx) {
 
   if (!plannerRes.ok) return plannerRes.response;
 
+  const plannerEnd = Date.now();
   const planText = extractContent(plannerRes.data);
 
   const synthesisPrompt = lang === 'en'
     ? 'You are KRL1, Carlin Mankoto\'s portfolio assistant. ' +
       'For intent "pm_workflow": transform the PM plan into an actionable answer with links to PM tools. ' +
       'For other intents (portfolio/tech/contact/other): answer the question directly based on user_goal — do NOT mention PM tools unless genuinely relevant. ' +
+      'Only share Carlin\'s LinkedIn/email when intent is "contact" or the user explicitly asks how to reach him; never suggest contact proactively. ' +
       'Max 220 words. When citing a tool, use HTML link: <a href="URL" target="_blank">Name</a>. Never use markdown link syntax.'
     : 'Tu es KRL1, assistant portfolio de Carlin Mankoto. ' +
       'Pour l\'intent "pm_workflow" : transforme le plan PM en réponse actionnable avec liens vers les outils PM. ' +
       'Pour les autres intents (portfolio/tech/contact/other) : réponds directement à la question via user_goal — ne cite pas les outils PM sauf si vraiment pertinent. ' +
+      'Ne partage le LinkedIn/email de Carlin que si l\'intent est "contact" ou si l\'utilisateur demande explicitement comment le joindre ; ne suggère jamais le contact de façon proactive. ' +
       'Max 220 mots. Liens HTML cliquables si tu cites un outil : <a href="URL" target="_blank">Nom</a>. Jamais de liens markdown.';
 
   const toolLinks = [
@@ -1012,6 +1019,7 @@ async function handleOrchestratorStream(body, env, ctx) {
     'Roadmap Storyteller: https://cmankotech.github.io/cmankotech/roadmap-storyteller.html',
   ].join('\n');
 
+  const synthesisStart = Date.now();
   const groqRes = await fetch(GROQ_URL, {
     method: 'POST',
     headers: {
@@ -1038,7 +1046,43 @@ async function handleOrchestratorStream(body, env, ctx) {
     });
   }
 
-  ctx?.waitUntil?.(incrementCounter(env));
+  const plan = safeJsonParse(planText);
+  const lfEvents = [
+    lf_event('trace-create', {
+      id: traceId,
+      name: 'krl1-orchestrate-stream',
+      input: { message: userMessage, lang },
+      output: { intent: plan?.intent, confidence: plan?.confidence },
+      metadata: { route: '/orchestrate-stream', model: DEFAULT_MODEL },
+      tags: ['krl1', 'stream'],
+    }),
+    lf_event('generation-create', {
+      id: lf_id(),
+      traceId,
+      name: 'planner',
+      model: DEFAULT_MODEL,
+      modelParameters: { temperature: 0.2, maxTokens: 500 },
+      input: [{ role: 'system', content: plannerPrompt }, ...history, { role: 'user', content: userMessage }],
+      output: planText,
+      startTime: new Date(plannerStart).toISOString(),
+      endTime: new Date(plannerEnd).toISOString(),
+      usage: lf_usage(plannerRes.data),
+    }),
+    lf_event('generation-create', {
+      id: lf_id(),
+      traceId,
+      name: 'synthesis',
+      model: DEFAULT_MODEL,
+      modelParameters: { temperature: 0.45, maxTokens: 450, stream: true },
+      input: [
+        { role: 'system', content: synthesisPrompt },
+        { role: 'user', content: `User request:\n${userMessage}\n\nPlan JSON:\n${planText}` },
+      ],
+      output: '[streaming]',
+      startTime: new Date(synthesisStart).toISOString(),
+    }),
+  ];
+  ctx?.waitUntil?.(Promise.all([incrementCounter(env), lf_flush(env, lfEvents)]));
 
   return new Response(groqRes.body, {
     status: 200,
@@ -1107,10 +1151,12 @@ async function handleRagQuery(body, env, ctx) {
     ? 'You are KRL1, Carlin Mankoto\'s portfolio assistant. ' +
       'For intent "pm_workflow": transform the PM plan into an actionable answer with links to PM tools. ' +
       'For other intents (portfolio/tech/contact/other): answer the question directly based on user_goal — do NOT mention PM tools unless genuinely relevant. ' +
+      'Only share Carlin\'s LinkedIn/email when intent is "contact" or the user explicitly asks how to reach him; never suggest contact proactively. ' +
       'Max 220 words. When citing a tool, use HTML link: <a href="URL" target="_blank">Name</a>. Never use markdown link syntax.'
     : 'Tu es KRL1, assistant portfolio de Carlin Mankoto. ' +
       'Pour l\'intent "pm_workflow" : transforme le plan PM en réponse actionnable avec liens vers les outils PM. ' +
       'Pour les autres intents (portfolio/tech/contact/other) : réponds directement à la question via user_goal — ne cite pas les outils PM sauf si vraiment pertinent. ' +
+      'Ne partage le LinkedIn/email de Carlin que si l\'intent est "contact" ou si l\'utilisateur demande explicitement comment le joindre ; ne suggère jamais le contact de façon proactive. ' +
       'Max 220 mots. Liens HTML cliquables si tu cites un outil : <a href="URL" target="_blank">Nom</a>. Jamais de liens markdown.';
 
   const toolLinks = [
