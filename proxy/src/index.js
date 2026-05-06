@@ -712,6 +712,538 @@ LATER: B2B portal (opportunity validated, design TBD)
 3. **Not updating the roadmap** — a stale roadmap erodes trust
 4. **One roadmap for all audiences** — tailor the detail level and framing to the audience
 5. **Ignoring technical debt** — roadmaps should allocate explicit capacity for non-feature work`,
+
+  'kano.md': `# Kano Model — Feature Prioritization by Satisfaction
+
+## Definition
+
+The Kano Model (Noriaki Kano, 1984) classifies features by their impact on customer satisfaction. Unlike effort-based frameworks, Kano focuses on the emotional response features trigger — helping teams decide what to build next by understanding what customers truly value vs what they merely expect.
+
+## The Five Categories
+
+### Must-Be (Basic Expectations)
+Features customers expect as a baseline. Their presence doesn't increase satisfaction, but their absence causes severe dissatisfaction.
+- Login/logout on any app
+- No crashes, basic performance
+- Cannot be used as differentiators — they're table stakes
+
+### Performance (Linear Satisfiers)
+More is better. The more you deliver, the more satisfied customers are. These directly affect competitive positioning.
+- Load time: faster = more satisfied
+- Storage space, battery life, pricing
+- Invest here when you want measurable NPS improvement
+
+### Attractive / Delighters
+Unexpected features that create disproportionate delight. Customers don't know they want them, but love them when present.
+- iPhone's pinch-to-zoom in 2007
+- Slack's emoji reactions
+- Over-invest in delighters to create word-of-mouth
+
+### Indifferent
+Features most users don't care about either way. Often technical requirements with no user-facing value.
+
+### Reverse
+Features that increase satisfaction for some users but frustrate others (advanced settings, complex configurability).
+
+## How to Run a Kano Survey
+
+1. For each feature, ask two questions:
+   - "How would you feel if this feature **was present**?" → Functional question
+   - "How would you feel if this feature **was absent**?" → Dysfunctional question
+2. Both answers use a 5-point scale: Love it / Expect it / Neutral / Can live with it / Dislike it
+3. Map each answer pair to a Kano category using the standard evaluation table
+
+## When to Use Kano
+
+- Deciding which features to include in a release
+- Understanding why a product feels "flat" despite many features (too many Must-Be, not enough Delighters)
+- Prioritizing between competing features with similar RICE scores
+- Validating feature concepts during discovery
+
+## Common Mistakes to Avoid
+
+1. **Treating Must-Be as priorities** — they're hygiene, not differentiators
+2. **Over-investing in Indifferent features** — common trap when engineers drive roadmap
+3. **Forgetting Kano shifts over time** — yesterday's Delighter becomes tomorrow's Must-Be (e.g., HTTPS, dark mode)
+4. **Running Kano too late** — it's a discovery tool, not a post-build evaluation`,
+
+  'heart.md': `# HEART Framework — User-Centered Metrics
+
+## Definition
+
+HEART is a user experience metrics framework developed at Google by Kerry Rodden (2010). It provides a structured approach to measuring product quality from the user's perspective, complementing business metrics (revenue, retention) with experience metrics.
+
+**HEART stands for:** Happiness, Engagement, Adoption, Retention, Task Success.
+
+## The Five Dimensions
+
+### Happiness
+Subjective satisfaction, often measured through surveys.
+- NPS (Net Promoter Score)
+- CSAT (Customer Satisfaction Score)
+- App store ratings
+- "How satisfied are you with this feature?" (1-5 scale)
+
+### Engagement
+Frequency and depth of user interaction.
+- DAU/MAU ratio (stickiness)
+- Sessions per user per week
+- Actions per session
+- Pages/screens visited per visit
+
+### Adoption
+New users or features being picked up.
+- % of new users activating within 7 days
+- % of existing users enabling a new feature within 30 days
+- Time-to-first-value for new users
+
+### Retention
+Users coming back over time.
+- D1/D7/D30 retention cohorts
+- Monthly churn rate
+- Subscription renewal rate
+- "Did users who activated in month X still use the product in month X+3?"
+
+### Task Success
+Efficiency and effectiveness of user flows.
+- Completion rate for a key flow (e.g., checkout)
+- Time-on-task
+- Error rate
+- Abandonment rate at each step
+
+## GSM — Goals, Signals, Metrics
+
+HEART works best with the GSM framework:
+1. **Goal** — What user behavior are you trying to change?
+2. **Signal** — What user action indicates success or failure?
+3. **Metric** — How do you quantify that signal?
+
+Example for Adoption:
+- Goal: More users discover and use the new collaboration feature
+- Signal: User invites a teammate within 7 days of signing up
+- Metric: % of new signups who send ≥1 invite in week 1
+
+## When to Use HEART
+
+- Establishing a measurement plan before launching a feature
+- OKR definition — translating product goals into measurable KRs
+- Post-launch health check: is the new feature improving experience?
+- Prioritizing instrumentation in a data-poor environment
+
+## Common Mistakes to Avoid
+
+1. **Measuring all 5 dimensions always** — pick 2-3 relevant to your current focus
+2. **Confusing Engagement with Addiction** — high engagement on a frustrating feature isn't good
+3. **No baseline** — always establish a pre-launch baseline before measuring change
+4. **Ignoring Task Success** — the most direct measure of UX quality, yet often skipped`,
+
+  'north-star.md': `# North Star Metric — Product Strategy Alignment
+
+## Definition
+
+A North Star Metric (NSM) is a single metric that best captures the core value your product delivers to customers. It sits between leading indicators (features shipped, DAU) and lagging indicators (revenue, profit) — it measures value delivered, not just activity or financial output.
+
+The concept was popularized by Sean Ellis and is central to product-led growth (PLG) strategy.
+
+## What Makes a Good North Star Metric
+
+A strong NSM:
+- **Reflects customer value** — not just business value (revenue is a consequence, not the NSM)
+- **Leads revenue** — moves before revenue does; predicts long-term business health
+- **Is measurable** — trackable in your analytics stack
+- **Is actionable** — teams can influence it through product decisions
+- **Is singular** — one number, not a composite score
+
+| Company | North Star Metric |
+|---------|------------------|
+| Spotify | Time spent listening |
+| Airbnb | Nights booked |
+| Slack | Messages sent per active team |
+| LinkedIn | Endorsements given |
+| Duolingo | Daily active learners |
+| Notion | Blocks created |
+
+## North Star + Input Metrics Tree
+
+The NSM sits at the top of a metric tree. Below it are **input metrics** (levers teams can pull):
+
+\`\`\`
+NSM: Weekly active users completing core action
+  ├── Acquisition: New signups per week
+  ├── Activation: % users completing onboarding
+  ├── Engagement: % activated users returning week 2
+  └── Breadth: Avg. features used per active user
+\`\`\`
+
+Each squad owns one or more input metrics. The NSM gives alignment; input metrics give autonomy.
+
+## NSM vs OKR
+
+- **NSM** is a company/product-level constant (changes rarely, maybe once a year)
+- **OKRs** are quarterly goals that move input metrics toward the NSM
+- The NSM is the "why" behind your OKRs
+
+## When to Use
+
+- Product strategy workshops to align cross-functional teams
+- Evaluating whether a proposed feature moves the NSM
+- Quarterly planning: "Does this OKR move our North Star?"
+- Diagnosing product-market fit: if you can't define an NSM, you may not have PMF
+
+## Common Mistakes to Avoid
+
+1. **Revenue as NSM** — revenue is an output; choose a metric that predicts it
+2. **Vanity metrics** — page views, total registered users (don't reflect value)
+3. **Multiple NSMs** — defeats the purpose; if you have two, you have none
+4. **NSM that optimizes engagement over value** — maximize time-in-app ≠ maximize value`,
+
+  'story-mapping.md': `# User Story Mapping — Backlog Organization
+
+## Definition
+
+User Story Mapping (Jeff Patton, 2014) is a collaborative technique for organizing user stories into a two-dimensional map that represents the user's journey. Unlike a flat backlog, a story map preserves the narrative of how users interact with the product — making it easier to scope releases and identify gaps.
+
+## Structure of a Story Map
+
+\`\`\`
+BACKBONE (horizontal, top row)
+Activities → Tasks → Tasks → Tasks → Activities → ...
+
+WALKING SKELETON (first release)
+├── Story (must-have)
+├── Story (must-have)
+
+RELEASE 2
+├── Story (should-have)
+├── Story (enhancement)
+
+FUTURE
+└── Story (nice-to-have)
+\`\`\`
+
+- **Activities** (top level): High-level user goals ("Set up account", "Find a product", "Checkout")
+- **Tasks** (middle level): Steps within each activity ("Enter email", "Choose password", "Confirm email")
+- **Stories** (vertical, below tasks): Specific implementations, ordered by priority
+
+## How to Build a Story Map
+
+1. **Define the user** — one persona per map
+2. **Write the narrative** — walk through what the user does from left to right (activities)
+3. **Decompose activities into tasks** — the backbone
+4. **Add stories below each task** — specific implementations, variations, edge cases
+5. **Draw release slices** — horizontal cuts define what ships in each release
+6. **Identify the walking skeleton** — smallest end-to-end experience that delivers core value
+
+## Story Mapping vs Flat Backlog
+
+| Flat Backlog | Story Map |
+|-------------|-----------|
+| Stories in isolation | Stories in context of user journey |
+| Priority = single dimension | Priority = release slice |
+| Hard to see gaps | Gaps are visually obvious |
+| Stakeholders don't understand it | Stakeholders can navigate it |
+
+## When to Use
+
+- Kicking off a new product or major feature
+- Sprint 0 / discovery workshops with stakeholders
+- Scoping an MVP: draw the walking skeleton first
+- Onboarding new team members: the map tells the product story
+
+## Common Mistakes to Avoid
+
+1. **Mapping features, not user actions** — activities should be verbs ("Find a product"), not nouns ("Product search")
+2. **Too many levels of decomposition** — activities → tasks → stories is enough; don't add sub-tasks
+3. **Building the map alone** — story mapping is a collaborative workshop, not a PM artifact
+4. **Forgetting to draw release slices** — without slices, a story map is just a wall of post-its`,
+
+  'sprint-ceremonies.md': `# Agile Sprint Ceremonies — Scrum Rituals
+
+## Definition
+
+Scrum ceremonies (or events) are structured meetings that create a regular cadence for planning, transparency, and continuous improvement. In a standard 2-week sprint, five ceremonies guide the team from planning to retrospection.
+
+## The Five Ceremonies
+
+### 1. Sprint Planning (start of sprint, ~4h for 2-week sprint)
+
+**Purpose:** Define what the team will build this sprint and how.
+
+Two parts:
+- **What:** Product Owner presents prioritized backlog items; team selects stories that fit sprint capacity
+- **How:** Team breaks selected stories into tasks; each task estimated in hours
+
+Output: Sprint Goal (a single sentence summarizing the sprint's objective) + Sprint Backlog
+
+### 2. Daily Standup (every day, 15 minutes max)
+
+**Purpose:** Synchronize the team, surface blockers early.
+
+Three questions per team member:
+1. What did I complete yesterday?
+2. What will I work on today?
+3. What's blocking me?
+
+**Key:** Standups are for the team, not a status report to the Scrum Master or PO.
+
+### 3. Sprint Review (end of sprint, ~2h)
+
+**Purpose:** Demonstrate completed work to stakeholders and gather feedback.
+
+- Team demos potentially shippable increment
+- Stakeholders give feedback → input for next sprint backlog
+- Focus on outcomes, not just output
+- Only "Done" stories are demoed (no WIP)
+
+### 4. Sprint Retrospective (end of sprint, ~1.5h)
+
+**Purpose:** Continuous improvement of the team's process.
+
+Classic format: What went well? / What didn't? / What will we try next sprint?
+
+Output: 1-3 action items owned by specific people, reviewed next retro.
+
+### 5. Backlog Refinement / Grooming (mid-sprint, ~1h)
+
+**Purpose:** Keep the backlog healthy for future sprints.
+
+Activities:
+- Break down large stories into smaller ones
+- Estimate upcoming stories (story points or T-shirt sizes)
+- Clarify acceptance criteria
+- Remove or deprioritize obsolete items
+
+**Not in original Scrum** but universal in practice. Keeps Sprint Planning short.
+
+## Story Points vs Hours
+
+| Story Points | Hours |
+|-------------|-------|
+| Relative complexity | Absolute time |
+| Team-calibrated | Individual estimate |
+| Stable across team changes | Varies by person |
+| Fibonacci scale (1,2,3,5,8,13) | Decimal hours |
+
+## Velocity
+
+Average story points completed per sprint. Use velocity for capacity planning, not as a performance metric.
+
+## Common Mistakes to Avoid
+
+1. **Standups as status reports** — this kills psychological safety and slows the meeting
+2. **Skipping retrospectives** — the most valuable ceremony; skipping it kills improvement culture
+3. **No sprint goal** — without a goal, the sprint is just a list of tasks, not a commitment
+4. **Demoing unfinished work in Review** — erodes trust with stakeholders
+5. **Velocity as a KPI** — velocity is a planning tool, not a productivity measure`,
+
+  'dod.md': `# Definition of Done & Definition of Ready
+
+## Definition of Done (DoD)
+
+The Definition of Done is a shared agreement on what "complete" means for any user story or increment. It ensures quality consistency and prevents partially-done work from being called finished.
+
+### What a DoD Typically Includes
+
+\`\`\`
+□ Code written and peer-reviewed
+□ Unit tests written and passing
+□ Integration tests passing
+□ Acceptance criteria met and verified
+□ Feature tested in staging environment
+□ No critical bugs introduced
+□ Documentation updated (if applicable)
+□ Product Owner has accepted the story
+□ Feature flagged / ready to deploy
+\`\`\`
+
+### Why DoD Matters
+
+- Creates shared quality standards across the team
+- Prevents "90% done" syndrome where stories sit in QA forever
+- Makes velocity meaningful: only DoD-compliant stories count toward velocity
+- Builds trust with stakeholders: "done" means deployable
+
+### DoD at Different Levels
+
+| Level | Definition |
+|-------|-----------|
+| Story DoD | Individual story complete and accepted |
+| Sprint DoD | All sprint stories done + sprint goal met |
+| Release DoD | Full regression, performance tested, release notes written |
+
+## Definition of Ready (DoR)
+
+The Definition of Ready is the inverse: criteria a user story must meet before it can be pulled into a sprint. It prevents teams from starting work on underspecified stories.
+
+### What a DoR Typically Includes
+
+\`\`\`
+□ Story written in user story format (As a... I want... So that...)
+□ Acceptance criteria defined and agreed
+□ Story sized by the team (story points)
+□ Dependencies identified
+□ Designs/mockups available (if UI story)
+□ Business value clear
+□ Story fits within one sprint (if not, split it)
+\`\`\`
+
+### DoR vs DoD
+
+| Definition of Ready | Definition of Done |
+|--------------------|-------------------|
+| Entry criteria for sprint | Exit criteria for story |
+| PO responsibility | Team responsibility |
+| Prevents starting bad stories | Prevents shipping bad work |
+| Checked at refinement | Checked at sprint review |
+
+## When to Create/Update DoD and DoR
+
+- Team kickoff / Sprint 0
+- After retrospectives that surface quality issues
+- When onboarding new team members
+- When starting a new workstream with different quality standards
+
+## Common Mistakes
+
+1. **Too long DoD** — if the DoD has 20 items, half will be ignored
+2. **DoD as a checkbox ritual** — it should be internalized, not mechanical
+3. **No DoR** — leads to sprint planning chaos when stories are unclear
+4. **PO accepting DoD-non-compliant stories** — "we'll fix it next sprint" is how tech debt accumulates`,
+
+  'rag-llm.md': `# RAG & LLMs — AI Product Management Fundamentals
+
+## What is RAG (Retrieval-Augmented Generation)
+
+RAG is an AI architecture pattern that enhances LLM responses with relevant external knowledge retrieved at query time. Instead of relying solely on a model's training data (which may be outdated or too general), RAG pulls specific, up-to-date context before generating a response.
+
+\`\`\`
+User Query
+    ↓
+Embedding Model → Query Vector
+    ↓
+Vector Search → Top-K Relevant Chunks (from your knowledge base)
+    ↓
+LLM (query + retrieved context) → Grounded Response
+\`\`\`
+
+## RAG vs Fine-Tuning — When to Use What
+
+| Dimension | RAG | Fine-Tuning |
+|-----------|-----|-------------|
+| **Use case** | Up-to-date knowledge, grounding | Tone, style, domain behavior |
+| **Data freshness** | Real-time (update the KB) | Requires retraining |
+| **Cost** | Low (inference + retrieval) | High (training compute) |
+| **Transparency** | Can cite sources | Black box |
+| **Hallucination control** | High (grounded in retrieved facts) | Medium |
+| **When to choose** | Company docs, product KB, support | Writing style, specialized domain |
+
+## Key Concepts for AI PMs
+
+### Chunking Strategy
+How documents are split before embedding. Chunk size affects retrieval quality:
+- Too large: irrelevant text dilutes relevance
+- Too small: loss of context
+- Typical: 200-500 tokens with 10-20% overlap
+
+### Embedding Models
+Convert text to vectors for semantic search. Key tradeoffs:
+- **Size vs quality**: bge-small (fast, cheap) vs text-embedding-3-large (better quality, more expensive)
+- **Multilingual**: multilingual-e5, cohere-multilingual for non-English content
+
+### Vector Databases
+Store and query embeddings at scale: Pinecone, Qdrant, Weaviate, pgvector, Chroma.
+For prototypes: in-memory cosine similarity is sufficient (no vector DB needed).
+
+### Evaluation Metrics
+- **Retrieval precision**: are the retrieved chunks relevant?
+- **Answer faithfulness**: does the answer stay grounded in retrieved context? (no hallucination)
+- **Answer relevance**: does the answer address the question?
+
+Tools: Langfuse evals, Ragas, TruLens.
+
+## LLM Parameters Every AI PM Should Know
+
+| Parameter | Effect | PM Implication |
+|-----------|--------|----------------|
+| Temperature (0-2) | Randomness of output | 0.2 for structured tasks, 0.7 for creative |
+| max_tokens | Output length limit | Cost + latency control |
+| top_p | Nucleus sampling | Alternative to temperature |
+| system prompt | LLM persona + constraints | Your primary quality lever |
+
+## AI PM-Specific Considerations
+
+- **Latency budget**: users tolerate ~2-3s for AI features; stream responses for longer generations
+- **Cost per query**: track token usage by feature; some features need expensive models, others don't
+- **Fallback strategy**: what happens when the LLM API is down?
+- **Guardrails**: scope the LLM's behavior with clear system prompt constraints + output validation
+- **Observability**: trace every LLM call (Langfuse, LangSmith) to debug quality regressions`,
+
+  'ai-product.md': `# AI Product Strategy — Building with LLMs
+
+## The AI PM's Core Decision Framework
+
+AI product strategy starts with one question: **what problem are we solving, and is AI the right tool?**
+
+AI is a means to an end. The product manager's job is to identify where AI unlocks value that was previously impossible or impractical — not to add AI for its own sake.
+
+## Build vs Buy vs Fine-Tune
+
+\`\`\`
+Off-the-shelf LLM API (GPT-4, Claude, Groq)
+├── Pros: Fast to ship, no ML expertise needed, best model quality
+├── Cons: Ongoing cost per call, data sent to third party, limited control
+└── Use when: Prototyping, general tasks, tight deadlines
+
+RAG on top of existing LLM
+├── Pros: Grounds responses in your data, updatable without retraining
+├── Cons: Retrieval quality depends on chunking + embedding strategy
+└── Use when: Company knowledge base, support, documentation search
+
+Fine-tuned model
+├── Pros: Domain-specific behavior, style consistency, potentially cheaper at scale
+├── Cons: Requires training data + compute, retraining cycle, expertise needed
+└── Use when: Very specific domain, high volume, style/persona requirements
+
+Custom model (from scratch)
+└── Use when: Never, unless you're a frontier lab
+\`\`\`
+
+## AI Feature Lifecycle
+
+**Discovery → Design → Build → Evaluate → Monitor → Iterate**
+
+Key difference from traditional product: the **Evaluate** and **Monitor** phases are much more important.
+
+- **Evaluate before shipping**: benchmark the AI feature against a test set (golden dataset of inputs + expected outputs)
+- **Monitor in production**: track hallucination rate, user satisfaction on AI outputs, latency, cost per query
+- **Detect regression**: model updates or prompt changes can silently degrade quality
+
+## Responsible AI Considerations for PMs
+
+| Risk | Mitigation |
+|------|-----------|
+| Hallucination | RAG grounding, output validation, confidence thresholds |
+| Bias in outputs | Diverse test sets, human review of edge cases |
+| Data privacy | Avoid sending PII to third-party APIs, use self-hosted models for sensitive data |
+| Over-reliance | Design UI to show AI uncertainty, offer human fallback |
+| Cost blowout | Token budgets per feature, caching, model tiering |
+
+## AI Product Metrics
+
+Beyond standard product metrics, AI features need:
+- **Quality rate**: % of responses rated good by users (thumbs up/down)
+- **Hallucination rate**: % of responses containing factual errors (eval pipeline)
+- **Cost per successful query**: tokens × price, only counting queries that led to user value
+- **Latency p50/p95**: especially important for streaming vs blocking responses
+- **Fallback rate**: how often the AI fails and a fallback is triggered
+
+## Key Principles for AI PMs
+
+1. **Start with the user problem, not the AI capability** — "users struggle to X" before "we could use LLMs to"
+2. **Prototype fast, evaluate honestly** — AI quality is hard to predict; test on real data early
+3. **Ship the simplest AI** — a well-prompted GPT-4 beats a complex pipeline for most use cases
+4. **Design for failure** — AI features will fail; the UX needs graceful degradation
+5. **Measure what matters** — token count is not a product metric; user value delivered is`,
 };
 
 // ─── Chunk cache (built once per isolate) ────────────────────────────────────

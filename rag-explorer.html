@@ -137,6 +137,15 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .arch-svg-wrap{margin-top:0.9rem;overflow:hidden}
 .arch-svg{width:100%;height:auto;display:block}
 
+/* KB OVERVIEW */
+.kb-overview{margin-bottom:1.25rem}
+.kb-overview-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:0.65rem}
+.kb-pills{display:flex;flex-wrap:wrap;gap:0.4rem}
+.kb-pill{font-size:0.62rem;font-weight:600;padding:0.22rem 0.65rem;border-radius:99px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--dim);white-space:nowrap}
+.kb-pill-cat{background:rgba(167,139,250,0.08);border-color:rgba(167,139,250,0.25);color:#c4b5fd;font-weight:700}
+.kb-pill-cat-agile{background:rgba(34,211,238,0.07);border-color:rgba(34,211,238,0.2);color:#67e8f9;font-weight:700}
+.kb-pill-cat-ai{background:rgba(74,222,128,0.07);border-color:rgba(74,222,128,0.2);color:#86efac;font-weight:700}
+
 /* FOOTER */
 footer{text-align:center;padding-top:3rem;padding-bottom:2rem;font-size:0.68rem;color:var(--muted)}
 footer a{color:var(--acc);text-decoration:none}
@@ -206,7 +215,7 @@ footer a:hover{text-decoration:underline}
 
   <!-- ARCHITECTURE NOTE -->
   <div class="arch-note">
-    <p>Pipeline RAG embarqué dans un <strong>Cloudflare Worker</strong>. Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) et la similarité cosinus est calculée à l'edge. La base de connaissances couvre 7 frameworks PM (RICE, MoSCoW, INVEST, OKR, JTBD, Discovery, Roadmap), découpés en chunks de 300 mots avec overlap de 50.</p>
+    <p>Pipeline RAG embarqué dans un <strong>Cloudflare Worker</strong>. Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) et la similarité cosinus est calculée à l'edge. La base de connaissances couvre <strong>15 frameworks</strong> (PM, PO/Agile, AI), découpés en chunks de 300 mots avec overlap de 50.</p>
     <div class="arch-svg-wrap">
       <svg viewBox="0 0 780 168" class="arch-svg" role="img" aria-label="RAG pipeline diagram">
         <defs>
@@ -244,6 +253,31 @@ footer a:hover{text-decoration:underline}
     </div>
   </div>
 
+  <!-- KB OVERVIEW -->
+  <div class="kb-overview">
+    <div class="kb-overview-label">15 frameworks dans la base</div>
+    <div class="kb-pills">
+      <span class="kb-pill kb-pill-cat">PM</span>
+      <span class="kb-pill">RICE</span>
+      <span class="kb-pill">MoSCoW</span>
+      <span class="kb-pill">OKR</span>
+      <span class="kb-pill">Kano</span>
+      <span class="kb-pill">HEART</span>
+      <span class="kb-pill">North Star</span>
+      <span class="kb-pill">JTBD</span>
+      <span class="kb-pill">Discovery</span>
+      <span class="kb-pill">Roadmap</span>
+      <span class="kb-pill kb-pill-cat-agile">PO / Agile</span>
+      <span class="kb-pill">INVEST</span>
+      <span class="kb-pill">Story Mapping</span>
+      <span class="kb-pill">Sprint Ceremonies</span>
+      <span class="kb-pill">Déf. of Done</span>
+      <span class="kb-pill kb-pill-cat-ai">AI</span>
+      <span class="kb-pill">RAG &amp; LLM</span>
+      <span class="kb-pill">AI Product Strategy</span>
+    </div>
+  </div>
+
   <!-- QUERY FORM -->
   <div class="card" id="form-card">
     <div class="card-title">Question PM</div>
@@ -262,19 +296,23 @@ footer a:hover{text-decoration:underline}
 
     <div class="chips" id="chips-fr">
       <span class="chip" onclick="useChip(this)">Comment prioriser avec RICE ?</span>
-      <span class="chip" onclick="useChip(this)">Différence entre MoSCoW et RICE</span>
-      <span class="chip" onclick="useChip(this)">Comment rédiger de bonnes user stories INVEST ?</span>
+      <span class="chip" onclick="useChip(this)">Comment utiliser le modèle Kano ?</span>
+      <span class="chip" onclick="useChip(this)">C'est quoi une North Star Metric ?</span>
       <span class="chip" onclick="useChip(this)">Comment construire mes OKRs trimestriels ?</span>
-      <span class="chip" onclick="useChip(this)">C'est quoi le Jobs-to-be-Done ?</span>
-      <span class="chip" onclick="useChip(this)">Comment structurer ma roadmap produit ?</span>
+      <span class="chip" onclick="useChip(this)">Comment faire un Story Mapping ?</span>
+      <span class="chip" onclick="useChip(this)">Différence entre RAG et fine-tuning ?</span>
+      <span class="chip" onclick="useChip(this)">C'est quoi une Definition of Done ?</span>
+      <span class="chip" onclick="useChip(this)">Comment mesurer l'expérience avec HEART ?</span>
     </div>
     <div class="chips" id="chips-en" style="display:none">
       <span class="chip" onclick="useChip(this)">How to use RICE for backlog prioritization?</span>
-      <span class="chip" onclick="useChip(this)">What is the difference between MoSCoW and RICE?</span>
-      <span class="chip" onclick="useChip(this)">How to write good INVEST user stories?</span>
+      <span class="chip" onclick="useChip(this)">How to use the Kano model?</span>
+      <span class="chip" onclick="useChip(this)">What is a North Star Metric?</span>
       <span class="chip" onclick="useChip(this)">How to set quarterly OKRs?</span>
-      <span class="chip" onclick="useChip(this)">What is Jobs-to-be-Done?</span>
-      <span class="chip" onclick="useChip(this)">How do I build a product roadmap?</span>
+      <span class="chip" onclick="useChip(this)">How to run a story mapping session?</span>
+      <span class="chip" onclick="useChip(this)">RAG vs fine-tuning — when to use what?</span>
+      <span class="chip" onclick="useChip(this)">What is a Definition of Done?</span>
+      <span class="chip" onclick="useChip(this)">How to measure UX with the HEART framework?</span>
     </div>
 
     <button class="btn-launch glass-edge glass-pointer glass-focus" id="btn-query" onclick="runQuery()">Interroger la KB →</button>
@@ -432,7 +470,14 @@ function scoreClass(score) {
 }
 
 function sourceName(filename) {
-  return filename.replace('.md', '').toUpperCase();
+  var map = {
+    'rice.md':'RICE','okr.md':'OKR','discovery.md':'Discovery',
+    'invest.md':'INVEST','jtbd.md':'JTBD','moscow.md':'MoSCoW','roadmap.md':'Roadmap',
+    'kano.md':'Kano','heart.md':'HEART','north-star.md':'North Star',
+    'story-mapping.md':'Story Mapping','sprint-ceremonies.md':'Sprint Ceremonies',
+    'dod.md':'DoD','rag-llm.md':'RAG & LLM','ai-product.md':'AI Product Strategy'
+  };
+  return map[filename] || filename.replace('.md','').toUpperCase();
 }
 
 function setLoading(phase) {
