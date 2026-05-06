@@ -226,7 +226,12 @@ section{margin-bottom:4rem}
 [data-theme="light"] .decision-card{background:rgba(255,255,255,0.8);border-color:rgba(15,23,42,0.08)}
 [data-theme="light"] .arch-diagram{border-color:rgba(15,23,42,0.08)}
 [data-theme="light"] .top-bar,[data-theme="light"] .lang-bar{gap:0.5rem}
+.mermaid-wrap{background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:14px;padding:1.5rem 1rem;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 14px 36px -18px rgba(0,0,0,0.5);overflow-x:auto;margin:1.5rem 0}
+.mermaid-label{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:0.75rem}
+.mermaid svg{max-width:100%;height:auto;display:block;margin:0 auto}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'dark',themeVariables:{background:'#07070e',primaryColor:'#0e0e1a',primaryTextColor:'#e2e8f0',primaryBorderColor:'#374151',lineColor:'#4b5563',fontFamily:'DM Sans,sans-serif',fontSize:'12px',edgeLabelBackground:'#07070e',secondaryColor:'#0e0e1a',tertiaryColor:'#0e0e1a'}});</script>
 </head>
 <body>
 <div class="glow g1"></div>
@@ -654,6 +659,24 @@ Réponds UNIQUEMENT avec un JSON valide :
         <text x="699" y="78" text-anchor="middle" font-size="11" fill="#22d3ee" font-family="DM Sans,sans-serif" font-weight="500">Reply</text>
         <text x="699" y="90" text-anchor="middle" font-size="8" fill="rgba(34,211,238,0.45)" font-family="DM Sans,sans-serif">augmented · max 220w</text>
       </svg>
+    </div>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid-label">RAG pipeline — flowchart interactif</div>
+      <div class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': {'background': '#07070e', 'primaryColor': '#0e0e1a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#374151', 'lineColor': '#4b5563', 'fontFamily': 'DM Sans, sans-serif', 'fontSize': '13px', 'edgeLabelBackground': '#07070e'}}}%%
+flowchart LR
+    classDef cyan fill:#07141a,stroke:#22d3ee,color:#22d3ee
+    classDef gray fill:#0e0e1a,stroke:#374151,color:#d1d5db
+    classDef violet fill:#1a0e2e,stroke:#a78bfa,color:#c4b5fd
+
+    Q([Query]):::cyan --> PL[Planner · T=0.2]:::gray
+    PL -->|pm_workflow| RI[Workers AI · embeddings]:::violet
+    RI --> CS[Cosine Sim · top-3 chunks]:::violet
+    CS --> SY[Synthesis · T=0.45]:::gray
+    PL -->|autre intent| SY
+    SY --> RP([Reply · max 220w]):::cyan
+      </div>
     </div>
 
     <div class="decision-card" style="margin-bottom:1.5rem">
