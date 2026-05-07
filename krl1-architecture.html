@@ -327,15 +327,14 @@ redirige poliment.</div>
 
     <div class="prompt-section">
       <div class="prompt-code" data-label="profil">PROFIL :
-- 3 ans d'expérience PM/PO : OAIO/
-  Infotel, AXA (AI PO, SecureGPT RAG),
-  Airbus D&S (JO Paris 2024), Casino
+- AI PM @ Hymaia (avr. 2026+)
+- OAIO/Infotel, AXA (SecureGPT RAG),
+  Airbus D&S (JO Paris 2024)
 - PSPO I, SAFe POPM + SSM,
   Product School, Elements of AI
 - Master 2 Innovation Digitale
   (Paris-Saclay)
-- LLM, RAG, Prompt Engineering,
-  Agentic AI, CrewAI, n8n, Make,
+- LLM, RAG, LangGraph, Langfuse,
   Vibe Coding (Claude Code, Lovable)</div>
       <div class="prompt-annot">
         <span class="annot-label" id="pa3l">Contexte en raw text</span>
@@ -440,8 +439,8 @@ devant un nom d'outil.</div>
 
     <div class="tradeoff-card" style="--tradeoff-color:#fb923c">
       <div class="tradeoff-decision" id="t5d">Décision 05</div>
-      <div class="tradeoff-q" id="t5q">Groq + llama plutôt qu'OpenAI GPT-4 ?</div>
-      <div class="tradeoff-a" id="t5a">Pour un assistant portfolio, la latence perçue est plus importante que la profondeur de raisonnement. Groq sur LPU donne 1-2s de réponse vs 4-6s sur GPT-4. llama-3.3-70b couvre largement les besoins pour des questions PM + profil.</div>
+      <div class="tradeoff-q" id="t5q">Groq + llama plutôt qu'un provider propriétaire ?</div>
+      <div class="tradeoff-a" id="t5a">Pour un assistant portfolio, la latence perçue prime sur la profondeur. Groq sur LPU livre 1-2s de réponse, là ou les providers cloud standard prennent 3-6s sur des modèles de taille équivalente. llama-3.3-70b de Meta couvre les besoins pour des questions PM et profil, avec un plan gratuit généreux.</div>
     </div>
 
     <div class="tradeoff-card" style="--tradeoff-color:#f472b6">
@@ -511,7 +510,7 @@ var I18N = {
     t2d:'Décision 02', t2q:'Cloudflare Worker plutôt qu\'un backend Node/FastAPI', t2a:"Un Worker serverless résout le seul vrai problème : ne pas exposer la clé API côté client. Zéro infra, 100k req/jour gratuit, déployé en 2 min.",
     t3d:'Décision 03', t3q:'MutationObserver pour le PM Journey — pourquoi pas un event ?', t3a:"Les outils PM sont des pages indépendantes. Le MutationObserver observe #results depuis krl1-widget.js sans toucher aux 6 pages — couplage zéro.",
     t4d:'Décision 04', t4q:'Profil en raw text dans le prompt — pas de RAG ?', t4a:"Le profil tient en ~300 tokens. Un système RAG aurait ajouté embedding + vector DB pour récupérer les mêmes infos. Règle YAGNI appliquée.",
-    t5d:'Décision 05', t5q:'Groq + llama plutôt qu\'OpenAI GPT-4 ?', t5a:"Pour un assistant portfolio, la latence perçue prime sur la profondeur. Groq sur LPU donne 1-2s vs 4-6s sur GPT-4. llama-3.3-70b couvre largement les besoins.",
+    t5d:'Décision 05', t5q:'Groq + llama plutôt qu\'un provider propriétaire ?', t5a:"Pour un assistant portfolio, la latence perçue prime sur la profondeur. Groq sur LPU livre 1-2s de réponse, là ou les providers cloud standard prennent 3-6s sur des modèles de taille équivalente. llama-3.3-70b couvre les besoins, plan gratuit généreux.",
     t6d:'Décision 06', t6q:'Auto-ouverture après 6 secondes — pourquoi ce délai ?', t6a:"6s correspond au temps de lecture du hero. Trop tôt crée de la friction. L'engagement monte sans nuire à l'expérience de découverte.",
     ctaTag:'Voir en action', ctaTitle:'KRL1 est disponible sur chaque page du portfolio', ctaDesc:"Ouvre n'importe quel outil PM et clique sur le bouton bleu en bas à droite — l'assistant s'adapte automatiquement au contexte de la page.", ctaBtnLbl:'Ouvrir le PM Toolkit',
     footerBy:'Construit par', footerRole:'AI Product Manager'
@@ -556,7 +555,7 @@ var I18N = {
     t2d:'Decision 02', t2q:'Cloudflare Worker over a Node/FastAPI backend', t2a:"A serverless Worker solves the one real problem: not exposing the API key client-side. Zero infra, 100k req/day free, deployed in 2 min.",
     t3d:'Decision 03', t3q:'MutationObserver for PM Journey — why not an event?', t3a:"PM tools are independent pages. The MutationObserver watches #results from krl1-widget.js without touching the 6 pages — zero coupling.",
     t4d:'Decision 04', t4q:'Raw text profile in prompt — why no RAG?', t4a:"The profile fits in ~300 tokens. A RAG system would add embedding + vector DB to retrieve the same info. YAGNI rule applied.",
-    t5d:'Decision 05', t5q:'Groq + llama over OpenAI GPT-4?', t5a:"For a portfolio assistant, perceived latency matters more than reasoning depth. Groq on LPU gives 1-2s vs 4-6s on GPT-4. llama-3.3-70b covers the needs.",
+    t5d:'Decision 05', t5q:'Groq + llama over proprietary providers?', t5a:"For a portfolio assistant, perceived latency matters more than reasoning depth. Groq on LPU delivers 1-2s responses, where standard cloud providers take 3-6s for models of equivalent size. Meta\'s llama-3.3-70b covers PM and profile questions well, with a generous free tier.",
     t6d:'Decision 06', t6q:'Auto-open after 6 seconds — why this delay?', t6a:"6s matches hero reading time. Too early creates friction. Engagement increases without disrupting the discovery experience.",
     ctaTag:'See it in action', ctaTitle:'KRL1 is available on every portfolio page', ctaDesc:"Open any PM tool and click the blue button in the bottom right — the assistant automatically adapts to the page context.", ctaBtnLbl:'Open the PM Toolkit',
     footerBy:'Built by', footerRole:'AI Product Manager'
