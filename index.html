@@ -1114,7 +1114,7 @@ var TT_GLOSSARY={
   worker:{fr:'Fonction serverless Cloudflare entre le navigateur et les APIs, pas de VPS, cold start quasi-nul.',en:'Cloudflare serverless function between browser and APIs, no server, near-zero cold start.'},
   intent:{fr:'Classification de l\'intention derrière un message. KRL1 détecte 5 intents : pm_workflow, portfolio, tech, contact, other.',en:'Classification of the purpose behind a message. KRL1 detects 5 intents: pm_workflow, portfolio, tech, contact, other.'},
 };
-var TT_PATTERNS=[
+var TT_PATTERNS=[{rx:/cosine\s+sim(?:ilarity)?/gi,key:'cosine'},{rx:/Workers\s+AI/g,key:'workersai'},{rx:/\bSynthesis\b/g,key:'synthesis'},{rx:/T=0\.\d+/g,key:'temperature'},{rx:/\bchunks?\b/gi,key:'chunk'},{rx:/\bvectors?\b/gi,key:'vector'},
   {rx:/ctx\.waitUntil/g,key:'waituntil'},
   {rx:/\bKV\s+Store/g,key:'kv'},
   {rx:/\bembeddings?\b/gi,key:'embedding'},

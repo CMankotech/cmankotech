@@ -1305,10 +1305,22 @@ var TT_GLOSSARY = {
   waituntil:{fr:'Mécanisme Cloudflare pour travail asynchrone non-bloquant après envoi de la réponse. Utilisé ici pour Langfuse et le compteur KV.',en:'Cloudflare mechanism for non-blocking async work after the response is sent. Used here for Langfuse and KV counter.'},
   intent:{fr:'Classification de l\'intention derrière un message. KRL1 détecte 5 intents : pm_workflow, portfolio, tech, contact, other.',en:'Classification of the purpose behind a message. KRL1 detects 5 intents: pm_workflow, portfolio, tech, contact, other.'},
   planner:{fr:'Premier appel LLM (T=0.2) qui produit un JSON structuré d\'analyse : intent, confidence, steps, risks, quick_win.',en:'First LLM call (T=0.2) that produces structured analysis JSON: intent, confidence, steps, risks, quick_win.'},
+  synthesis:{fr:'Deuxième appel LLM (T=0.45) qui transforme le plan du Planner en réponse naturelle, max 220 mots.',en:'Second LLM call (T=0.45) that transforms the Planner\'s plan into a natural response, max 220 words.'},
+  cosine:{fr:'Mesure de similarité entre deux vecteurs (0 = aucun lien, 1 = identiques). Utilisée pour trouver les chunks les plus proches d\'une requête.',en:'Similarity measure between two vectors (0 = unrelated, 1 = identical). Used to find the closest chunks to a query.'},
+  workersai:{fr:'Service d\'IA de Cloudflare exécuté sur serveurs edge. Ici : bge-small-en-v1.5 pour générer des embeddings sémantiques en batch.',en:'Cloudflare\'s AI service on edge servers. Here: bge-small-en-v1.5 to generate semantic embeddings in a batch call.'},
+  temperature:{fr:'Paramètre LLM qui contrôle l\'aléatoire. T=0.2 : déterministe, JSON fiable. T=0.45 : plus créatif, texte naturel.',en:'LLM parameter controlling randomness. T=0.2: deterministic, reliable JSON. T=0.45: more creative, natural text.'},
+  chunk:{fr:'Fragment de texte découpé depuis la base de connaissances (300 mots, overlap 50). Unité récupérée par le retriever RAG.',en:'Text fragment sliced from the knowledge base (300 words, 50 overlap). Unit retrieved by the RAG retriever.'},
+  vector:{fr:'Tableau de nombres (384 dimensions) encodant le sens sémantique d\'un texte. Deux textes proches en sens ont des vecteurs proches.',en:'Array of numbers (384 dimensions) encoding the semantic meaning of text. Similar texts have similar vectors.'},
 };
 
 var TT_PATTERNS = [
   {rx:/ctx\.waitUntil/g, key:'waituntil'},
+  {rx:/cosine\s+sim(?:ilarity)?/gi, key:'cosine'},
+  {rx:/Workers\s+AI/g, key:'workersai'},
+  {rx:/\bSynthesis\b/g, key:'synthesis'},
+  {rx:/T=0\.\d+/g, key:'temperature'},
+  {rx:/\bchunks?\b/gi, key:'chunk'},
+  {rx:/\bvectors?\b/gi, key:'vector'},
   {rx:/\bKV\s+Store/g, key:'kv'},
   {rx:/\bembeddings?\b/gi, key:'embedding'},
   {rx:/\bSSE\b/g, key:'sse'},
