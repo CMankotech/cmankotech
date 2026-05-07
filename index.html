@@ -25,6 +25,9 @@ body.glows-hidden .glow{opacity:0}
 .g2{width:700px;height:700px;top:30%;right:-12%;background:radial-gradient(ellipse 55% 60%,rgba(167,139,250,0.38),transparent 70%);animation:drift2 26s ease-in-out infinite}
 .g3{width:750px;height:450px;bottom:0;left:10%;background:radial-gradient(ellipse 70% 45%,rgba(34,211,238,0.30),transparent 70%);animation:drift3 30s ease-in-out infinite}
 .g4{width:500px;height:500px;top:20%;left:45%;background:radial-gradient(ellipse 50% 55%,rgba(96,165,250,0.22),transparent 70%);animation:drift4 28s ease-in-out infinite}
+.g5{width:620px;height:620px;top:60%;left:-12%;background:radial-gradient(ellipse 58% 55%,rgba(129,140,248,0.32),transparent 70%);animation:drift1 18s ease-in-out infinite reverse}
+.g6{width:560px;height:560px;bottom:-15%;right:-8%;background:radial-gradient(ellipse 55% 60%,rgba(34,211,238,0.28),transparent 70%);animation:drift2 17s ease-in-out infinite reverse}
+.g7{width:500px;height:500px;top:75%;left:55%;background:radial-gradient(ellipse 52% 55%,rgba(167,139,250,0.28),transparent 70%);animation:drift3 19s ease-in-out infinite}
 body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:200px 200px;opacity:0.45}
 @keyframes drift1{0%{transform:translate(0,0) scale(1) rotate(0deg)}25%{transform:translate(80px,60px) scale(1.12) rotate(5deg)}50%{transform:translate(-40px,120px) scale(0.95) rotate(-3deg)}75%{transform:translate(60px,-30px) scale(1.08) rotate(4deg)}100%{transform:translate(0,0) scale(1) rotate(0deg)}}
 @keyframes drift2{0%{transform:translate(0,0) scale(1) rotate(0deg)}25%{transform:translate(-70px,-50px) scale(1.1) rotate(-4deg)}50%{transform:translate(50px,-90px) scale(0.92) rotate(6deg)}75%{transform:translate(-60px,40px) scale(1.05) rotate(-2deg)}100%{transform:translate(0,0) scale(1) rotate(0deg)}}
@@ -58,8 +61,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 /* HERO */
 #hero{position:relative;z-index:1;padding-top:10rem;min-height:100vh;display:flex;align-items:center}
 #hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:140px;background:linear-gradient(180deg,rgba(8,8,15,0) 0%,var(--bg) 100%);z-index:1;pointer-events:none}
-.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05);transition:transform 2s cubic-bezier(.16,1,.3,1);z-index:0;pointer-events:none}
-.hero-video-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,15,0.65) 0%,rgba(8,8,15,0.78) 55%,rgba(8,8,15,0.95) 100%);z-index:1;pointer-events:none}
+.hero-bg-svg{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
+.hero-bg-svg svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-bg-grain{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0.18;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");background-size:160px 160px}
+.hero-orb{transform-origin:center;mix-blend-mode:screen;will-change:transform}
+.hero-mesh-rot{transform-origin:50% 50%;animation:meshSlow 50s linear infinite;will-change:transform}
+.hero-video-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,15,0.55) 0%,rgba(8,8,15,0.7) 55%,rgba(8,8,15,0.95) 100%);z-index:2;pointer-events:none}
+@keyframes orbDrift1{0%,100%{transform:translate(-14%,-10%) scale(1)}33%{transform:translate(12%,6%) scale(1.18)}66%{transform:translate(-6%,14%) scale(0.9)}}
+@keyframes orbDrift2{0%,100%{transform:translate(12%,8%) scale(1.05)}33%{transform:translate(-8%,-12%) scale(0.92)}66%{transform:translate(16%,-6%) scale(1.22)}}
+@keyframes orbDrift3{0%,100%{transform:translate(0%,12%) scale(0.92)}50%{transform:translate(-12%,-8%) scale(1.25)}}
+@keyframes orbDrift4{0%,100%{transform:translate(10%,-14%) scale(1.12)}50%{transform:translate(-16%,10%) scale(0.88)}}
+@keyframes meshSlow{0%{transform:translate3d(0,0,0) rotate(0deg)}100%{transform:translate3d(0,-3%,0) rotate(360deg)}}
+@keyframes ringPulse{0%,100%{opacity:0.15;transform:scale(1)}50%{opacity:0.5;transform:scale(1.06)}}
+@media(prefers-reduced-motion:reduce){.hero-orb,.hero-mesh-rot,#heroBgRing1,#heroBgRing2{animation:none!important}}
 .hero-wrap{padding:4rem 4rem 6rem;position:relative;z-index:2}
 .hero-compact{display:flex;flex-direction:column;gap:1.5rem;max-width:1100px}
 .hero-headline{display:flex;flex-direction:column;gap:0.15rem;margin:0}
@@ -222,7 +236,10 @@ nav{padding:1rem 1.5rem}
 /* PANELS (accordéon uniforme) */
 .panels-wrap{border-bottom:1px solid var(--line);position:relative;z-index:1}
 .panels-wrap .wrap{padding-top:2rem;padding-bottom:2rem}
-.panel{border-top:1px solid var(--line);transition:box-shadow .4s ease}
+.panel{position:relative;transition:box-shadow .4s ease}
+.panel+.panel::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(70%,520px);height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,0.07) 30%,rgba(255,255,255,0.07) 70%,transparent);opacity:0.8}
+.panel[data-open="true"]{box-shadow:none}
+.panel[data-open="true"]+.panel::before,.panel[data-open="true"]::before{opacity:0;transition:opacity .4s ease}
 .panel:first-child{border-top:none}
 .panel[data-open="true"]{box-shadow:inset 0 1px 0 rgba(34,211,238,0.25), 0 0 40px -10px rgba(34,211,238,0.08)}
 .panel-btn{width:100%;display:flex;align-items:center;gap:1.25rem;padding:2rem 0;background:none;border:none;color:inherit;cursor:pointer;font-family:inherit;text-align:left;transition:opacity .2s}
@@ -349,6 +366,9 @@ nav{padding:1rem 1.5rem}
 <div class="glow g2"></div>
 <div class="glow g3"></div>
 <div class="glow g4"></div>
+<div class="glow g5"></div>
+<div class="glow g6"></div>
+<div class="glow g7"></div>
 
 <nav>
   <div class="nav-logo grad">CARLIN M.</div>
@@ -379,9 +399,29 @@ nav{padding:1rem 1.5rem}
 </div>
 
 <section id="hero" style="position:relative;overflow:hidden">
-  <video class="hero-video" autoplay loop muted playsinline preload="auto">
-    <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/agentic-hero-9yW3wnTNMfn2U6lsVhTTZSJFEvAoSj.mp4" type="video/mp4">
-  </video>
+  <div class="hero-bg-svg" aria-hidden="true">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="orbBlue" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#60a5fa" stop-opacity="0.85"/><stop offset="45%" stop-color="#3b82f6" stop-opacity="0.35"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/></radialGradient>
+        <radialGradient id="orbViolet" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#c4b5fd" stop-opacity="0.8"/><stop offset="50%" stop-color="#a78bfa" stop-opacity="0.32"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/></radialGradient>
+        <radialGradient id="orbCyan" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#67e8f9" stop-opacity="0.75"/><stop offset="50%" stop-color="#22d3ee" stop-opacity="0.28"/><stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
+        <radialGradient id="orbPink" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f9a8d4" stop-opacity="0.55"/><stop offset="55%" stop-color="#f472b6" stop-opacity="0.22"/><stop offset="100%" stop-color="#f472b6" stop-opacity="0"/></radialGradient>
+        <radialGradient id="ringGrad" cx="50%" cy="50%" r="50%"><stop offset="78%" stop-color="#22d3ee" stop-opacity="0"/><stop offset="92%" stop-color="#22d3ee" stop-opacity="0.35"/><stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
+        <radialGradient id="ringGrad2" cx="50%" cy="50%" r="50%"><stop offset="80%" stop-color="#a78bfa" stop-opacity="0"/><stop offset="93%" stop-color="#a78bfa" stop-opacity="0.28"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/></radialGradient>
+        <linearGradient id="meshGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0b1224"/><stop offset="50%" stop-color="#0a0a1a"/><stop offset="100%" stop-color="#10081f"/></linearGradient>
+      </defs>
+      <rect width="1600" height="900" fill="url(#meshGrad)"/>
+      <g class="hero-mesh-rot">
+        <circle class="hero-orb" cx="300" cy="250" r="520" fill="url(#orbBlue)" style="animation:orbDrift1 14s ease-in-out infinite"/>
+        <circle class="hero-orb" cx="1280" cy="380" r="560" fill="url(#orbViolet)" style="animation:orbDrift2 17s ease-in-out infinite"/>
+        <circle class="hero-orb" cx="780" cy="780" r="480" fill="url(#orbCyan)" style="animation:orbDrift3 13s ease-in-out infinite"/>
+        <circle class="hero-orb" cx="1100" cy="120" r="380" fill="url(#orbPink)" style="animation:orbDrift4 16s ease-in-out infinite"/>
+      </g>
+      <circle id="heroBgRing1" cx="800" cy="450" r="380" fill="url(#ringGrad)" style="transform-origin:50% 50%;animation:ringPulse 4.5s ease-in-out infinite"/>
+      <circle id="heroBgRing2" cx="800" cy="450" r="560" fill="url(#ringGrad2)" style="transform-origin:50% 50%;animation:ringPulse 6.5s ease-in-out infinite reverse"/>
+    </svg>
+    <div class="hero-bg-grain"></div>
+  </div>
   <div class="hero-video-overlay"></div>
   <canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:0.35"></canvas>
   <div class="wrap hero-wrap a1">
