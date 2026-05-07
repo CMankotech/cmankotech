@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comment j'ai construit ce site — Carlin Mankoto</title>
 <meta name="description" content="Stack technique, étapes de création et décisions d'architecture derrière le portfolio de Carlin Mankoto.">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -18,6 +18,10 @@
 html{font-size:16px;scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
 h1,h2,h3,h4{font-family:'Syne',sans-serif}
+.hero-headline-page{display:flex;flex-direction:column;gap:0;margin-bottom:1rem}
+.hero-hl-1{font-family:'DM Sans',sans-serif;font-size:clamp(2.2rem,4.5vw,3.8rem);font-weight:500;line-height:0.98;letter-spacing:-0.045em;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-hl-2{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-size:clamp(2.2rem,4.5vw,3.8rem);line-height:1.1;letter-spacing:-0.02em}
+[data-theme="light"] .hero-hl-1{background:linear-gradient(180deg,#1e293b 0%,#475569 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
 /* GLOWS */
 .glow{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;opacity:0.6}
@@ -282,7 +286,10 @@ if (window.mermaid) {
 
   <header>
     <div class="header-tag"><span class="dot"></span><span data-i18n="tag">Behind the build</span></div>
-    <h1 data-i18n="h1.line1">Comment j'ai<br><span class="grad" data-i18n="h1.grad">construit ce site</span></h1>
+    <h1 class="hero-headline-page">
+      <span class="hero-hl-1" data-i18n="h1.line1">Comment j'ai</span>
+      <span class="hero-hl-2 grad" data-i18n="h1.grad">construit ce site</span>
+    </h1>
     <p class="subtitle" data-i18n="subtitle">Tu veux savoir comment c'est construit en vrai ? Architecture edge-native, pipeline RAG, orchestration LLM, observabilité Langfuse — tout est ici. Sans abstractions inutiles.</p>
   </header>
 
@@ -936,7 +943,7 @@ var T={
   fr:{
     'back':'Portfolio',
     'tag':'Behind the build',
-    'h1.line1':'Comment j\'ai<br>',
+    'h1.line1':'Comment j\'ai',
     'h1.grad':'construit ce site',
     'subtitle':'Tu veux savoir comment c\'est construit en vrai ? Architecture edge-native, pipeline RAG, orchestration LLM, observabilité Langfuse — tout est ici. Sans abstractions inutiles.',
     's1.title':'Stack technique',
@@ -1086,7 +1093,7 @@ var T={
   en:{
     'back':'Portfolio',
     'tag':'Behind the build',
-    'h1.line1':'How I<br>',
+    'h1.line1':'How I',
     'h1.grad':'built this site',
     'subtitle':'Want to know how it\'s actually built? Edge-native architecture, RAG pipeline, LLM orchestration, Langfuse observability — all here. No unnecessary abstractions.',
     's1.title':'Tech stack',
