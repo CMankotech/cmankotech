@@ -1335,22 +1335,36 @@ function applyTooltips(lang) {
 
 var ttBubble = document.getElementById('tt-bubble');
 var ttActive = null;
-document.addEventListener('click', function(e) {
-  var el = e.target.closest ? e.target.closest('.tt') : null;
-  if(!el){ ttBubble.classList.remove('show'); ttActive=null; return; }
-  if(el===ttActive){ ttBubble.classList.remove('show'); ttActive=null; return; }
-  ttActive = el;
+
+function showTT(el) {
   var key = el.getAttribute('data-key');
   var lang = document.documentElement.lang || 'fr';
   var def = TT_GLOSSARY[key] && TT_GLOSSARY[key][lang];
-  if(!def) return;
-  ttBubble.innerHTML = '<strong>'+el.textContent+'</strong>'+def;
+  if (!def) return;
+  ttBubble.innerHTML = '<strong>' + el.textContent + '</strong>' + def;
   var rect = el.getBoundingClientRect(), bw = 268;
-  var x = Math.max(8, Math.min(rect.left + rect.width/2 - bw/2, window.innerWidth - bw - 8));
-  ttBubble.style.left = x+'px';
-  ttBubble.style.top = (rect.bottom + window.scrollY + 6)+'px';
+  var x = Math.max(8, Math.min(rect.left + rect.width / 2 - bw / 2, window.innerWidth - bw - 8));
+  var y = rect.bottom + 6;
+  if (y + 140 > window.innerHeight) y = rect.top - 140;
+  ttBubble.style.left = x + 'px';
+  ttBubble.style.top = y + 'px';
   ttBubble.classList.add('show');
-  e.stopPropagation();
+  ttActive = el;
+}
+
+document.addEventListener('mouseover', function(e) {
+  var el = e.target.closest ? e.target.closest('.tt') : null;
+  if (el && el !== ttActive) { showTT(el); }
+  else if (!el && ttActive) { ttBubble.classList.remove('show'); ttActive = null; }
+});
+
+document.addEventListener('click', function(e) {
+  var el = e.target.closest ? e.target.closest('.tt') : null;
+  if (el) {
+    if (el === ttActive && ttBubble.classList.contains('show')) { ttBubble.classList.remove('show'); ttActive = null; }
+    else showTT(el);
+    e.stopPropagation();
+  } else { ttBubble.classList.remove('show'); ttActive = null; }
 });
 </script>
 </body>
