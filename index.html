@@ -19,12 +19,13 @@
 html{font-size:16px}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden}
 h1,h2,h3,h4{font-family:'Syne',sans-serif}
-.glow{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0;will-change:transform;mix-blend-mode:screen;transition:opacity .6s ease}
+.glow{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0;will-change:transform;opacity:0.7;transition:opacity .6s ease}
 body.glows-hidden .glow{opacity:0}
-.g1{width:700px;height:700px;top:-15%;left:-10%;background:radial-gradient(circle,rgba(59,130,246,0.15),rgba(59,130,246,0) 70%);animation:drift1 22s ease-in-out infinite}
-.g2{width:600px;height:600px;top:35%;right:-12%;background:radial-gradient(circle,rgba(167,139,250,0.12),rgba(167,139,250,0) 70%);animation:drift2 26s ease-in-out infinite}
-.g3{width:550px;height:550px;bottom:5%;left:15%;background:radial-gradient(circle,rgba(34,211,238,0.10),rgba(34,211,238,0) 70%);animation:drift3 30s ease-in-out infinite}
-.g4{width:500px;height:500px;top:20%;left:40%;background:radial-gradient(circle,rgba(244,114,182,0.08),rgba(244,114,182,0) 70%);animation:drift4 28s ease-in-out infinite}
+.g1{width:800px;height:600px;top:-15%;left:-10%;background:radial-gradient(ellipse 60% 55%,rgba(59,130,246,0.42),transparent 70%);animation:drift1 22s ease-in-out infinite}
+.g2{width:700px;height:700px;top:30%;right:-12%;background:radial-gradient(ellipse 55% 60%,rgba(167,139,250,0.38),transparent 70%);animation:drift2 26s ease-in-out infinite}
+.g3{width:750px;height:450px;bottom:0;left:10%;background:radial-gradient(ellipse 70% 45%,rgba(34,211,238,0.30),transparent 70%);animation:drift3 30s ease-in-out infinite}
+.g4{width:500px;height:500px;top:20%;left:45%;background:radial-gradient(ellipse 50% 55%,rgba(96,165,250,0.22),transparent 70%);animation:drift4 28s ease-in-out infinite}
+body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:200px 200px;opacity:0.45}
 @keyframes drift1{0%{transform:translate(0,0) scale(1) rotate(0deg)}25%{transform:translate(80px,60px) scale(1.12) rotate(5deg)}50%{transform:translate(-40px,120px) scale(0.95) rotate(-3deg)}75%{transform:translate(60px,-30px) scale(1.08) rotate(4deg)}100%{transform:translate(0,0) scale(1) rotate(0deg)}}
 @keyframes drift2{0%{transform:translate(0,0) scale(1) rotate(0deg)}25%{transform:translate(-70px,-50px) scale(1.1) rotate(-4deg)}50%{transform:translate(50px,-90px) scale(0.92) rotate(6deg)}75%{transform:translate(-60px,40px) scale(1.05) rotate(-2deg)}100%{transform:translate(0,0) scale(1) rotate(0deg)}}
 @keyframes drift3{0%{transform:translate(0,0) scale(1) rotate(0deg)}25%{transform:translate(90px,-40px) scale(1.08) rotate(3deg)}50%{transform:translate(-30px,-80px) scale(1.15) rotate(-5deg)}75%{transform:translate(-70px,50px) scale(0.9) rotate(2deg)}100%{transform:translate(0,0) scale(1) rotate(0deg)}}
