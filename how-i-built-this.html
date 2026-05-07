@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Comment j'ai construit ce site — Carlin Mankoto</title>
+<title>Comment j'ai construit ce site, Carlin Mankoto</title>
 <meta name="description" content="Stack technique, étapes de création et décisions d'architecture derrière le portfolio de Carlin Mankoto.">
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
@@ -103,7 +103,7 @@ section{margin-bottom:4rem}
 .decision-a{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:0.5rem}
 .decision-why{font-size:0.82rem;color:var(--dim);line-height:1.7}
 
-/* ARCH DIAGRAM V2 — vertical tree */
+/* ARCH DIAGRAM V2, vertical tree */
 .arch-node{display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:1rem 1.4rem;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:10px;min-width:160px;text-align:center;backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 8px 24px -12px rgba(0,0,0,0.4)}
 .arch-node-name{font-family:'Syne',sans-serif;font-size:0.92rem;font-weight:700;color:var(--text);line-height:1.3}
 .arch-node-label{font-size:0.64rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.2rem 0.6rem;border-radius:4px}
@@ -259,6 +259,8 @@ html[lang="en"] .mermaid-wrap[data-diagram-lang="en"]{display:block}
 .mermaid svg{width:100%;height:auto;display:block}
 body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:200px 200px;opacity:0.45}
 @keyframes drift1{0%{transform:translate(0,0) scale(1)}25%{transform:translate(80px,60px) scale(1.12)}50%{transform:translate(-40px,120px) scale(0.95)}75%{transform:translate(60px,-30px) scale(1.08)}100%{transform:translate(0,0) scale(1)}}@keyframes drift2{0%{transform:translate(0,0) scale(1)}25%{transform:translate(-70px,-50px) scale(1.1)}50%{transform:translate(50px,-90px) scale(0.92)}75%{transform:translate(-60px,40px) scale(1.05)}100%{transform:translate(0,0) scale(1)}}@keyframes drift3{0%{transform:translate(0,0) scale(1)}25%{transform:translate(90px,-40px) scale(1.08)}50%{transform:translate(-30px,-80px) scale(1.15)}75%{transform:translate(-70px,50px) scale(0.9)}100%{transform:translate(0,0) scale(1)}}
+.page-cta-pill{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.55rem 1.25rem;border:1px solid rgba(255,255,255,0.12);border-radius:99px;color:var(--muted);text-decoration:none;transition:all 0.2s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.page-cta-pill:hover{color:var(--text);border-color:rgba(255,255,255,0.25)}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <script>
@@ -275,7 +277,7 @@ if (window.mermaid) {
 <div class="container">
 
   <div class="top-bar">
-    <a href="https://cmankotech.github.io/cmankotech/" class="back-link">
+    <a href="https://cmankotech.github.io/cmankotech/" class="back-link page-cta-pill">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
       <span data-i18n="back">Portfolio</span>
     </a>
@@ -292,7 +294,7 @@ if (window.mermaid) {
       <span class="hero-hl-1" data-i18n="h1.line1">Comment j'ai</span>
       <span class="hero-hl-2 grad" data-i18n="h1.grad">construit ce site</span>
     </h1>
-    <p class="subtitle" data-i18n="subtitle">Tu veux savoir comment c'est construit en vrai ? Architecture edge-native, pipeline RAG, orchestration LLM, observabilité Langfuse — tout est ici. Sans abstractions inutiles.</p>
+    <p class="subtitle" data-i18n="subtitle">Tu veux savoir comment c'est construit en vrai ? Architecture edge-native, pipeline RAG, orchestration LLM, observabilité Langfuse, tout est ici. Sans abstractions inutiles.</p>
   </header>
 
   <!-- 00 POURQUOI CE SITE EXISTE -->
@@ -302,7 +304,7 @@ if (window.mermaid) {
       <span class="sec-title" data-i18n="s0.title">Pourquoi ce site existe</span>
     </div>
     <div class="narrative-block">
-      <p class="narrative-lead" data-i18n="s0.lead">J'ai toujours eu un esprit innovant et une volonté naturelle de me tourner vers les sujets techniques. Ce site est mon laboratoire — un bac à sable où je teste des technos et des hypothèses en tant que builder.</p>
+      <p class="narrative-lead" data-i18n="s0.lead">J'ai toujours eu un esprit innovant et une volonté naturelle de me tourner vers les sujets techniques. Ce site est mon laboratoire, un bac à sable où je teste des technos et des hypothèses en tant que builder.</p>
       <p class="narrative-p" data-i18n="s0.body">Je l'utilise pour explorer l'IA, développer mes compétences de builder et valider des patterns en conditions réelles. Avec passion et curiosité. Chaque feature ici est une vraie expérience : une architecture qu'on pousse pour voir jusqu'où elle tient, un pipeline qu'on conçoit pour comprendre ses limites, un pattern qu'on découvre en le construisant. Ce n'est pas un portfolio de présentation. C'est un système vivant.</p>
     </div>
   </section>
@@ -362,25 +364,25 @@ if (window.mermaid) {
         <div class="stack-icon">🌐</div>
         <div class="stack-name">HTML · CSS · JavaScript</div>
         <div class="stack-badge sb-cyan" data-i18n="stack.front.badge">Frontend</div>
-        <div class="stack-desc" data-i18n="stack.front.desc">Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline — pas de composants partagés, pas de routing entre pages. Ce choix permet un déploiement direct sans étape de build, un debug immédiat dans les DevTools navigateur, et un code lisible à plat sans couche d'abstraction. Sept pages autonomes : les 6 outils PM (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) + le hub <code>pm-toolkit.html</code> qui les enchaîne. Un seul point de couplage : <code>pm-session.js</code>, un module léger qui persiste les sorties de chaque outil dans <code>localStorage</code> pour que le suivant puisse les réimporter en un clic.</div>
+        <div class="stack-desc" data-i18n="stack.front.desc">Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline, pas de composants partagés, pas de routing entre pages. Ce choix permet un déploiement direct sans étape de build, un debug immédiat dans les DevTools navigateur, et un code lisible à plat sans couche d'abstraction. Sept pages autonomes : les 6 outils PM (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) + le hub <code>pm-toolkit.html</code> qui les enchaîne. Un seul point de couplage : <code>pm-session.js</code>, un module léger qui persiste les sorties de chaque outil dans <code>localStorage</code> pour que le suivant puisse les réimporter en un clic.</div>
       </div>
       <div class="stack-card">
         <div class="stack-icon">☁️</div>
         <div class="stack-name">GitHub Pages</div>
         <div class="stack-badge sb-blue" data-i18n="stack.deploy.badge">Hébergement</div>
-        <div class="stack-desc" data-i18n="stack.deploy.desc">Hébergement statique gratuit avec CI/CD natif : chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Zéro coût, zéro infra à gérer — idéal pour un site statique à fichiers HTML/CSS/JS.</div>
+        <div class="stack-desc" data-i18n="stack.deploy.desc">Hébergement statique gratuit avec CI/CD natif : chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Zéro coût, zéro infra à gérer, idéal pour un site statique à fichiers HTML/CSS/JS.</div>
       </div>
       <div class="stack-card">
         <div class="stack-icon">⚡</div>
         <div class="stack-name">Cloudflare Workers</div>
         <div class="stack-badge sb-orange" data-i18n="stack.proxy.badge">API Proxy</div>
-        <div class="stack-desc" data-i18n="stack.proxy.desc">Un Worker est une fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes — pas de VPS, cold start quasi-nul. Ici il fait bien plus que proxifier : il orchestre le pipeline planner→synthesis pour KRL1, calcule les embeddings RAG via Workers AI, et trace les appels via Langfuse — la clé API n'est jamais exposée côté client. Routes : POST / : passthrough direct vers l'API Groq pour les 6 outils PM — la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, planner→synthesis natif. POST /rag-query : pipeline RAG sémantique complet (planner → Workers AI embeddings → cosine similarity → synthesis). POST /orchestrate-stream : même flow planner→synthesis mais la réponse synthesis arrive en SSE pour un affichage progressif. Validation d'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.</div>
+        <div class="stack-desc" data-i18n="stack.proxy.desc">Un Worker est une fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes, pas de VPS, cold start quasi-nul. Ici il fait bien plus que proxifier : il orchestre le pipeline planner→synthesis pour KRL1, calcule les embeddings RAG via Workers AI, et trace les appels via Langfuse, la clé API n'est jamais exposée côté client. Routes : POST / : passthrough direct vers l'API Groq pour les 6 outils PM, la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, planner→synthesis natif. POST /rag-query : pipeline RAG sémantique complet (planner → Workers AI embeddings → cosine similarity → synthesis). POST /orchestrate-stream : même flow planner→synthesis mais la réponse synthesis arrive en SSE pour un affichage progressif. Validation d'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.</div>
       </div>
       <div class="stack-card">
         <div class="stack-icon">🤖</div>
         <div class="stack-name">Groq · llama-3.3-70b-versatile</div>
         <div class="stack-badge sb-violet" data-i18n="stack.llm.badge">LLM</div>
-        <div class="stack-desc" data-i18n="stack.llm.desc">Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes — 5 à 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).</div>
+        <div class="stack-desc" data-i18n="stack.llm.desc">Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes, 5 à 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).</div>
       </div>
       <div class="stack-card" style="grid-column:1/-1">
         <div class="stack-icon">☁️</div>
@@ -392,7 +394,7 @@ if (window.mermaid) {
         <div class="stack-icon">🔭</div>
         <div class="stack-name">Langfuse · LLM Observability</div>
         <div class="stack-badge sb-green" data-i18n="stack.lf.badge">Observabilité</div>
-        <div class="stack-desc" data-i18n="stack.lf.desc">Traces LLM en production via l'API REST Langfuse intégrée directement dans le Worker (no npm, fetch natif). Chaque appel KRL1 génère une trace avec 2 générations — planner (intent JSON, T=0.2) et synthesis (réponse naturelle, T=0.45) — enrichies du token usage Groq et des latences par étape. La route RAG ajoute un span retriever Workers AI. Non-bloquant via <code>ctx.waitUntil</code>, zéro impact sur les temps de réponse. Plan gratuit Langfuse Cloud : 50 000 observations/mois.</div>
+        <div class="stack-desc" data-i18n="stack.lf.desc">Traces LLM en production via l'API REST Langfuse intégrée directement dans le Worker (no npm, fetch natif). Chaque appel KRL1 génère une trace avec 2 générations, planner (intent JSON, T=0.2) et synthesis (réponse naturelle, T=0.45), enrichies du token usage Groq et des latences par étape. La route RAG ajoute un span retriever Workers AI. Non-bloquant via <code>ctx.waitUntil</code>, zéro impact sur les temps de réponse. Plan gratuit Langfuse Cloud : 50 000 observations/mois.</div>
       </div>
     </div>
   </section>
@@ -411,7 +413,7 @@ if (window.mermaid) {
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step1.label">Idée & cadrage</div>
           <div class="tl-step-title" data-i18n="step1.title">Partir d'un vrai problème PM</div>
-          <div class="tl-step-desc" data-i18n="step1.desc">Chaque outil répond à une friction réelle vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens utilisateurs à la main, prioriser un backlog sans méthode claire, préparer une roadmap narrative pour des dirigeants. Le site est né de cette liste de frustrations, pas d'une envie de faire un portfolio classique. Six outils ont émergé de ce processus : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories et Roadmap Storyteller. Plus tard consolidés dans un hub unique — le PM Toolkit — pour refléter le vrai workflow PM : discovery → OKR → stories → roadmap, sans recoller le contexte à la main d'un outil au suivant.</div>
+          <div class="tl-step-desc" data-i18n="step1.desc">Chaque outil répond à une friction réelle vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens utilisateurs à la main, prioriser un backlog sans méthode claire, préparer une roadmap narrative pour des dirigeants. Le site est né de cette liste de frustrations, pas d'une envie de faire un portfolio classique. Six outils ont émergé de ce processus : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories et Roadmap Storyteller. Plus tard consolidés dans un hub unique, le PM Toolkit, pour refléter le vrai workflow PM : discovery → OKR → stories → roadmap, sans recoller le contexte à la main d'un outil au suivant.</div>
         </div>
       </div>
       <div class="tl-item">
@@ -421,7 +423,7 @@ if (window.mermaid) {
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step2.label">Design</div>
           <div class="tl-step-title" data-i18n="step2.title">Système de design en CSS variables</div>
-          <div class="tl-step-desc" data-i18n="step2.desc">Dark theme pensé dès le départ avec un système de tokens CSS (couleurs, surfaces, borders) cohérent sur toutes les pages. La palette bleue-violette-cyan crée une identité visuelle forte sans recourir à un framework UI. Typographie Syne (titres, weight 800) pour l'impact, DM Sans (corps, weight 300) pour la lisibilité. Les CSS variables permettent une cohérence automatique — modifier --cyan suffit à mettre à jour l'accent sur toutes les pages.</div>
+          <div class="tl-step-desc" data-i18n="step2.desc">Dark theme pensé dès le départ avec un système de tokens CSS (couleurs, surfaces, borders) cohérent sur toutes les pages. La palette bleue-violette-cyan crée une identité visuelle forte sans recourir à un framework UI. Typographie Syne (titres, weight 800) pour l'impact, DM Sans (corps, weight 300) pour la lisibilité. Les CSS variables permettent une cohérence automatique, modifier --cyan suffit à mettre à jour l'accent sur toutes les pages.</div>
         </div>
       </div>
       <div class="tl-item">
@@ -441,7 +443,7 @@ if (window.mermaid) {
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step4.label">Intégration LLM</div>
           <div class="tl-step-title" data-i18n="step4.title">Proxy Cloudflare pour sécuriser la clé</div>
-          <div class="tl-step-desc" data-i18n="step4.desc">Les pages font des requêtes fetch vers un Cloudflare Worker qui proxifie vers l'API Groq. La clé API ne transite jamais côté client — elle est injectée par le Worker côté serveur. Le Worker valide l'origine (uniquement cmankotech.github.io), gère les headers CORS et retourne la réponse Groq au format OpenAI. Déployé en quelques minutes avec Wrangler CLI et un wrangler.toml minimaliste.</div>
+          <div class="tl-step-desc" data-i18n="step4.desc">Les pages font des requêtes fetch vers un Cloudflare Worker qui proxifie vers l'API Groq. La clé API ne transite jamais côté client, elle est injectée par le Worker côté serveur. Le Worker valide l'origine (uniquement cmankotech.github.io), gère les headers CORS et retourne la réponse Groq au format OpenAI. Déployé en quelques minutes avec Wrangler CLI et un wrangler.toml minimaliste.</div>
         </div>
       </div>
       <div class="tl-item">
@@ -451,7 +453,7 @@ if (window.mermaid) {
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step5.label">Déploiement</div>
           <div class="tl-step-title" data-i18n="step5.title">GitHub Pages, push = deploy</div>
-          <div class="tl-step-desc" data-i18n="step5.desc">Le repo GitHub est directement connecté à GitHub Pages. Chaque git push sur main déclenche un déploiement automatique via GitHub Actions en moins de 60 secondes — aucune configuration CI/CD manuelle. CDN mondial, HTTPS automatique, domaine cmankotech.github.io. Zéro coût d'hébergement pour des fichiers statiques.</div>
+          <div class="tl-step-desc" data-i18n="step5.desc">Le repo GitHub est directement connecté à GitHub Pages. Chaque git push sur main déclenche un déploiement automatique via GitHub Actions en moins de 60 secondes, aucune configuration CI/CD manuelle. CDN mondial, HTTPS automatique, domaine cmankotech.github.io. Zéro coût d'hébergement pour des fichiers statiques.</div>
         </div>
       </div>
       <div class="tl-item">
@@ -461,7 +463,7 @@ if (window.mermaid) {
         <div class="tl-content">
           <div class="tl-step-label" data-i18n="step6.label">RAG sémantique</div>
           <div class="tl-step-title" data-i18n="step6.title">Pipeline RAG edge-native dans le Worker</div>
-          <div class="tl-step-desc" data-i18n="step6.desc">Le pipeline RAG a d'abord été prototypé en Python (FastAPI + LangGraph + sentence-transformers + ChromaDB). Le free tier Render (512 MB) s'est révélé insuffisant pour charger sentence-transformers — le service ne démarrait jamais. Plutôt qu'upgrader l'hébergement, j'ai porté l'intégralité du pipeline dans le Cloudflare Worker : base de connaissances PM embarquée en JS, embeddings batch via Workers AI (bge-small-en-v1.5), cosine similarity calculée à l'edge. Zéro infra Python, zéro déploiement séparé, même qualité sémantique.</div>
+          <div class="tl-step-desc" data-i18n="step6.desc">Le pipeline RAG a d'abord été prototypé en Python (FastAPI + LangGraph + sentence-transformers + ChromaDB). Le free tier Render (512 MB) s'est révélé insuffisant pour charger sentence-transformers, le service ne démarrait jamais. Plutôt qu'upgrader l'hébergement, j'ai porté l'intégralité du pipeline dans le Cloudflare Worker : base de connaissances PM embarquée en JS, embeddings batch via Workers AI (bge-small-en-v1.5), cosine similarity calculée à l'edge. Zéro infra Python, zéro déploiement séparé, même qualité sémantique.</div>
         </div>
       </div>
     </div>
@@ -479,7 +481,7 @@ if (window.mermaid) {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           Claude Code
         </div>
-        <div class="tool-role" data-i18n="tool.cc.role">Vibe coding — CLI Anthropic</div>
+        <div class="tool-role" data-i18n="tool.cc.role">Vibe coding, CLI Anthropic</div>
         <div class="tool-desc" data-i18n="tool.cc.desc">Principal outil de développement. J'écris les specs en langage naturel, Claude Code génère le code, refactorise les sections et gère les commits. Permet de shipper vite sans sacrifier la qualité du code.</div>
       </div>
       <div class="tool-card">
@@ -487,7 +489,7 @@ if (window.mermaid) {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           Codex
         </div>
-        <div class="tool-role" data-i18n="tool.codex.role">Scaffolding orchestrateur Python — agent OpenAI</div>
+        <div class="tool-role" data-i18n="tool.codex.role">Scaffolding orchestrateur Python, agent OpenAI</div>
         <div class="tool-desc" data-i18n="tool.codex.desc">Utilisé pour construire la couche d'orchestration Python initiale : service FastAPI, StateGraph LangGraph planner→synthesis, intégration LangSmith et suite de tests pytest+httpx. Cette version Python a ensuite été portée dans le Cloudflare Worker pour éliminer la contrainte d'hébergement (Render 512 MB).</div>
       </div>
       <div class="tool-card">
@@ -495,7 +497,7 @@ if (window.mermaid) {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           Lovable
         </div>
-        <div class="tool-role" data-i18n="tool.lovable.role">Prototypage UI — vibe coding</div>
+        <div class="tool-role" data-i18n="tool.lovable.role">Prototypage UI, vibe coding</div>
         <div class="tool-desc" data-i18n="tool.lovable.desc">Utilisé pour explorer rapidement des layouts et des composants visuels. Lovable accélère la phase de design en générant du HTML/CSS propre à partir d'une description.</div>
       </div>
       <div class="tool-card">
@@ -532,7 +534,7 @@ if (window.mermaid) {
       <div class="decision-card">
         <div class="decision-q" data-i18n="d2.q">Pourquoi un proxy Cloudflare Workers plutôt qu'exposer la clé API ?</div>
         <div class="decision-a" data-i18n="d2.a">Sécurité non négociable, plan gratuit généreux</div>
-        <div class="decision-why" data-i18n="d2.why">Exposer une clé API dans du code client-side, c'est l'offrir à n'importe qui. Le Worker intercepte les requêtes, injecte la clé côté serveur et valide l'origine. Plan gratuit Cloudflare : 100 000 requêtes/jour — largement suffisant.</div>
+        <div class="decision-why" data-i18n="d2.why">Exposer une clé API dans du code client-side, c'est l'offrir à n'importe qui. Le Worker intercepte les requêtes, injecte la clé côté serveur et valide l'origine. Plan gratuit Cloudflare : 100 000 requêtes/jour, largement suffisant.</div>
       </div>
       <div class="decision-card">
         <div class="decision-q" data-i18n="d3.q">Pourquoi Groq plutôt qu'OpenAI ou Anthropic directement ?</div>
@@ -547,7 +549,7 @@ if (window.mermaid) {
       <div class="decision-card">
         <div class="decision-q" data-i18n="d5.q">Pourquoi un hub PM Toolkit plutôt que 6 liens séparés sur le portfolio ?</div>
         <div class="decision-a" data-i18n="d5.a">Chaîner les outils = refléter le vrai workflow PM</div>
-        <div class="decision-why" data-i18n="d5.why">Un PM enchaîne discovery → OKR → stories → roadmap. Garder les outils en cartes isolées sur le portfolio forçait l'utilisateur à recoller le contexte à la main d'un outil au suivant. Le hub <code>pm-toolkit.html</code> centralise l'entrée, rend la séquence lisible, et <code>pm-session.js</code> fait circuler les insights (problème, persona, top-priorité…) via <code>localStorage</code> — sans backend, sans compte, sans friction.</div>
+        <div class="decision-why" data-i18n="d5.why">Un PM enchaîne discovery → OKR → stories → roadmap. Garder les outils en cartes isolées sur le portfolio forçait l'utilisateur à recoller le contexte à la main d'un outil au suivant. Le hub <code>pm-toolkit.html</code> centralise l'entrée, rend la séquence lisible, et <code>pm-session.js</code> fait circuler les insights (problème, persona, top-priorité…) via <code>localStorage</code>, sans backend, sans compte, sans friction.</div>
       </div>
     </div>
   </section>
@@ -560,7 +562,7 @@ if (window.mermaid) {
     </div>
 
     <div class="decision-card" style="margin-bottom:1rem">
-      <div class="decision-q" data-i18n="s4b.okr.label">Prompt system — OKR Builder (extrait réel)</div>
+      <div class="decision-q" data-i18n="s4b.okr.label">Prompt system, OKR Builder (extrait réel)</div>
       <div class="prompt-meta">
         <span class="prompt-tag pt-t">T = 0.5</span>
         <span class="prompt-tag pt-mt">max_tokens 3 000</span>
@@ -586,12 +588,12 @@ Réponds UNIQUEMENT avec un JSON valide :
   }],
   "tips": ["conseil 1", "conseil 2", "conseil 3"]
 }</pre>
-      <div class="decision-why" data-i18n="s4b.okr.why">T=0.5 est délibéré : assez bas pour que le JSON soit fiable et parseable, assez haut pour que les libellés d'OKR soient variés et inspirants. À T=0.2, les OKRs seraient trop uniformes. À T=0.7, le JSON devient parfois invalide. L'example JSON dans le prompt sert de guardrail de format — il contraint la structure de sortie plus efficacement qu'une description textuelle.</div>
+      <div class="decision-why" data-i18n="s4b.okr.why">T=0.5 est délibéré : assez bas pour que le JSON soit fiable et parseable, assez haut pour que les libellés d'OKR soient variés et inspirants. À T=0.2, les OKRs seraient trop uniformes. À T=0.7, le JSON devient parfois invalide. L'example JSON dans le prompt sert de guardrail de format, il contraint la structure de sortie plus efficacement qu'une description textuelle.</div>
     </div>
 
     <div class="decision-card" style="margin-bottom:1rem">
-      <div class="decision-q" data-i18n="s4b.kb.label">KB fast-path — KRL1 avant d'appeler le LLM</div>
-      <div class="decision-why" data-i18n="s4b.kb.why">KRL1 vérifie d'abord une base de connaissances locale (6 patterns FR + 6 EN, matching par mots-clés) avant d'envoyer quoi que ce soit à Groq. Si la question correspond — "qu'est-ce que le backlog prioritizer ?", "quel est le profil de Carlin ?" — la réponse part en ~400ms sans consommer un seul token. Cette couche couvre ~30-40% des questions récurrentes. C'est une décision de coût et de perf : réponses plus rapides, plus cohérentes, zéro dépendance API pour les cas les plus fréquents.</div>
+      <div class="decision-q" data-i18n="s4b.kb.label">KB fast-path, KRL1 avant d'appeler le LLM</div>
+      <div class="decision-why" data-i18n="s4b.kb.why">KRL1 vérifie d'abord une base de connaissances locale (6 patterns FR + 6 EN, matching par mots-clés) avant d'envoyer quoi que ce soit à Groq. Si la question correspond, "qu'est-ce que le backlog prioritizer ?", "quel est le profil de Carlin ?", la réponse part en ~400ms sans consommer un seul token. Cette couche couvre ~30-40% des questions récurrentes. C'est une décision de coût et de perf : réponses plus rapides, plus cohérentes, zéro dépendance API pour les cas les plus fréquents.</div>
     </div>
 
     <div class="decision-card">
@@ -638,15 +640,15 @@ Réponds UNIQUEMENT avec un JSON valide :
     </div>
     <div class="decision-card">
       <div class="decision-q" data-i18n="s5b.render.label">Le déploiement Python qui ne démarrait pas</div>
-      <div class="decision-why" data-i18n="s5b.render.desc">Le pipeline RAG a d'abord été construit en Python : FastAPI + LangGraph + sentence-transformers + ChromaDB. En local, tout fonctionnait. Sur Render (free tier), le service ne démarrait jamais : le chargement de sentence-transformers dépasse les 512 MB de RAM alloués. La leçon : une contrainte d'infra peut rendre une bonne architecture non-déployable. Plutôt que d'upgrader l'hébergement, j'ai cherché l'approche zéro-infra. Solution : porter l'intégralité du RAG dans le Cloudflare Worker via Workers AI — les embeddings sont calculés à l'edge, sans serveur Python, sans limite mémoire.</div>
+      <div class="decision-why" data-i18n="s5b.render.desc">Le pipeline RAG a d'abord été construit en Python : FastAPI + LangGraph + sentence-transformers + ChromaDB. En local, tout fonctionnait. Sur Render (free tier), le service ne démarrait jamais : le chargement de sentence-transformers dépasse les 512 MB de RAM alloués. La leçon : une contrainte d'infra peut rendre une bonne architecture non-déployable. Plutôt que d'upgrader l'hébergement, j'ai cherché l'approche zéro-infra. Solution : porter l'intégralité du RAG dans le Cloudflare Worker via Workers AI, les embeddings sont calculés à l'edge, sans serveur Python, sans limite mémoire.</div>
     </div>
   </section>
 
-  <!-- 05 ORCHESTRATION WORKER — EDGE-NATIVE RAG -->
+  <!-- 05 ORCHESTRATION WORKER, EDGE-NATIVE RAG -->
   <section>
     <div class="sec-header">
       <span class="sec-num">05</span>
-      <span class="sec-title" data-i18n="s5.title">Orchestration Worker — edge-native RAG</span>
+      <span class="sec-title" data-i18n="s5.title">Orchestration Worker, edge-native RAG</span>
     </div>
     <div class="lg-svg-wrap">
       <svg viewBox="0 0 780 168" class="lg-svg" role="img" aria-label="Worker pipeline: Planner → Synthesis (KRL1) / Planner → Workers AI → Cosine → Synthesis (RAG)">
@@ -682,7 +684,7 @@ Réponds UNIQUEMENT avec un JSON valide :
     </div>
 
     <div class="mermaid-wrap" data-diagram-lang="fr">
-      <div class="mermaid-label">RAG pipeline — flowchart interactif</div>
+      <div class="mermaid-label">RAG pipeline, flowchart interactif</div>
       <div class="mermaid">
 %%{init: {'theme': 'dark', 'themeVariables': {'background': '#07070e', 'primaryColor': '#0e0e1a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#374151', 'lineColor': '#4b5563', 'fontFamily': 'DM Sans, sans-serif', 'fontSize': '13px', 'edgeLabelBackground': '#07070e'}}}%%
 flowchart LR
@@ -705,7 +707,7 @@ flowchart LR
     </div>
 
     <div class="mermaid-wrap" data-diagram-lang="en">
-      <div class="mermaid-label">RAG pipeline — interactive flowchart</div>
+      <div class="mermaid-label">RAG pipeline, interactive flowchart</div>
       <div class="mermaid">
 %%{init: {'theme': 'dark', 'themeVariables': {'background': '#07070e', 'primaryColor': '#0e0e1a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#374151', 'lineColor': '#4b5563', 'fontFamily': 'DM Sans, sans-serif', 'fontSize': '13px', 'edgeLabelBackground': '#07070e'}}}%%
 flowchart LR
@@ -729,23 +731,23 @@ flowchart LR
 
     <div class="decision-card" style="margin-bottom:1.5rem">
       <div class="decision-q" data-i18n="lg.flow.label">Flow d'une requête KRL1 / RAG Explorer</div>
-      <div class="decision-why" data-i18n="lg.flow.desc">KRL1 (POST /orchestrate) : 1 · L'utilisateur envoie un message. 2 · Le JS appelle POST /orchestrate avec {lang, message, history}. 3 · Le planner (T=0.2) analyse l'intention → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 · Le synthesis (T=0.45) transforme le plan en réponse max 220 mots avec liens outils PM. 5 · La réponse {reply, plan, engine} arrive au client. — RAG Explorer (POST /rag-query) : même planner → Workers AI encode la requête + tous les chunks en un appel batch → cosine similarity → top-3 injectés dans synthesis si intent = pm_workflow → {reply, plan, chunks, engine: "worker-rag-semantic"}.</div>
+      <div class="decision-why" data-i18n="lg.flow.desc">KRL1 (POST /orchestrate) : 1 · L'utilisateur envoie un message. 2 · Le JS appelle POST /orchestrate avec {lang, message, history}. 3 · Le planner (T=0.2) analyse l'intention → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 · Le synthesis (T=0.45) transforme le plan en réponse max 220 mots avec liens outils PM. 5 · La réponse {reply, plan, engine} arrive au client., RAG Explorer (POST /rag-query) : même planner → Workers AI encode la requête + tous les chunks en un appel batch → cosine similarity → top-3 injectés dans synthesis si intent = pm_workflow → {reply, plan, chunks, engine: "worker-rag-semantic"}.</div>
     </div>
 
     <div class="decision-card" style="margin-top:1.5rem">
       <div class="decision-q" data-i18n="lg.recent.label">Ce qu'on a ajouté récemment</div>
       <div class="update-list">
         <div class="update-item" data-i18n="lg.r1">La route Worker <code>POST /rag-query</code> : pipeline RAG sémantique complet (planner → retrieval → synthesis), natif dans le Worker, sans aucune dépendance externe.</div>
-        <div class="update-item" data-i18n="lg.r2">Un retrieval sémantique via <strong>Workers AI</strong> (bge-small-en-v1.5) — la base de connaissances PM est embarquée en JS, découpée en chunks de 300 mots, et les 3 passages les plus proches sont récupérés par similarité cosinus à l'edge.</div>
-        <div class="update-item" data-i18n="lg.r3">Un parsing robuste via <code>safeJsonParse()</code> — gère les JSON entourés de blocs <code>```json</code> que le LLM peut produire malgré les instructions strict JSON only.</div>
-        <div class="update-item" data-i18n="lg.r4">Un retriever conditionnel : le retrieval sémantique est activé uniquement si <code>intent === 'pm_workflow'</code> — évite d'invoquer Workers AI pour les questions hors PM (portfolio, contact, tech).</div>
-        <div class="update-item" data-i18n="lg.r5">Un compteur d'usage non-bloquant dans KV (<code>ctx.waitUntil</code>) — trace les appels sans alourdir le temps de réponse.</div>
-        <div class="update-item" data-i18n="lg.r6">La réponse <code>POST /rag-query</code> expose <code>{reply, plan, chunks, engine: 'worker-rag-semantic'}</code> — les chunks sont visualisés dans <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> avec leur source et score de similarité.</div>
+        <div class="update-item" data-i18n="lg.r2">Un retrieval sémantique via <strong>Workers AI</strong> (bge-small-en-v1.5), la base de connaissances PM est embarquée en JS, découpée en chunks de 300 mots, et les 3 passages les plus proches sont récupérés par similarité cosinus à l'edge.</div>
+        <div class="update-item" data-i18n="lg.r3">Un parsing robuste via <code>safeJsonParse()</code>, gère les JSON entourés de blocs <code>```json</code> que le LLM peut produire malgré les instructions strict JSON only.</div>
+        <div class="update-item" data-i18n="lg.r4">Un retriever conditionnel : le retrieval sémantique est activé uniquement si <code>intent === 'pm_workflow'</code>, évite d'invoquer Workers AI pour les questions hors PM (portfolio, contact, tech).</div>
+        <div class="update-item" data-i18n="lg.r5">Un compteur d'usage non-bloquant dans KV (<code>ctx.waitUntil</code>), trace les appels sans alourdir le temps de réponse.</div>
+        <div class="update-item" data-i18n="lg.r6">La réponse <code>POST /rag-query</code> expose <code>{reply, plan, chunks, engine: 'worker-rag-semantic'}</code>, les chunks sont visualisés dans <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> avec leur source et score de similarité.</div>
       </div>
     </div>
 
     <div class="decision-card" style="margin-top:1.5rem">
-      <div class="decision-q" data-i18n="lg.tests.label">Tests automatiques — proxy.test.mjs</div>
+      <div class="decision-q" data-i18n="lg.tests.label">Tests automatiques, proxy.test.mjs</div>
       <div class="test-grid">
         <div class="test-case">
           <div class="test-case-num" data-i18n="test.n1">Test 1</div>
@@ -756,7 +758,7 @@ flowchart LR
         <div class="test-case">
           <div class="test-case-num" data-i18n="test.n2">Test 2</div>
           <div class="test-case-title" data-i18n="test.t2">Orchestrateur natif Worker</div>
-          <div class="test-case-desc" data-i18n="test.d2">Sans URL externe : 2 appels Groq séquentiels — planner (JSON strict) puis synthesis (texte). Le client reçoit {reply, plan}.</div>
+          <div class="test-case-desc" data-i18n="test.d2">Sans URL externe : 2 appels Groq séquentiels, planner (JSON strict) puis synthesis (texte). Le client reçoit {reply, plan}.</div>
           <div class="test-case-result" data-i18n="test.r2">assert plan.intent = "roadmap", reply = "Synthèse utile"</div>
         </div>
         <div class="test-case">
@@ -771,7 +773,7 @@ flowchart LR
     <div class="decision-card" style="margin-top:1rem">
       <div class="decision-q" data-i18n="lg.why.q">Pourquoi l'edge-native ?</div>
       <div class="decision-a" data-i18n="lg.why.a">Plan PM structuré + réponse claire, zéro infra externe</div>
-      <div class="decision-why" data-i18n="lg.why.desc">Le double-nœud répond à deux contraintes opposées. Le planner a besoin d'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. La synthesis a besoin d'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots). Pour le RAG Explorer, une troisième étape s'intercale : les embeddings Workers AI calculent la similarité cosinus entre la requête et la base PM, et le contexte récupéré est injecté dans la synthesis. Cette architecture a d'abord été prototypée en Python (FastAPI + LangGraph) — mais le free tier Render (512 MB) était insuffisant pour charger sentence-transformers. Solution : porter l'intégralité du pipeline dans le Cloudflare Worker via <strong>Workers AI</strong> (bge-small-en-v1.5, 384 dimensions). Embeddings batch à l'edge, cosine similarity en JS, zéro dépendance Python.</div>
+      <div class="decision-why" data-i18n="lg.why.desc">Le double-nœud répond à deux contraintes opposées. Le planner a besoin d'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. La synthesis a besoin d'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots). Pour le RAG Explorer, une troisième étape s'intercale : les embeddings Workers AI calculent la similarité cosinus entre la requête et la base PM, et le contexte récupéré est injecté dans la synthesis. Cette architecture a d'abord été prototypée en Python (FastAPI + LangGraph), mais le free tier Render (512 MB) était insuffisant pour charger sentence-transformers. Solution : porter l'intégralité du pipeline dans le Cloudflare Worker via <strong>Workers AI</strong> (bge-small-en-v1.5, 384 dimensions). Embeddings batch à l'edge, cosine similarity en JS, zéro dépendance Python.</div>
     </div>
     <div class="decision-card" style="margin-top:1rem;border-color:rgba(167,139,250,0.2)">
       <div class="decision-q" data-i18n="s5.reflect.label">Ce que ça dit de ma façon de penser en tant que PM</div>
@@ -802,9 +804,9 @@ flowchart LR
         <tbody>
           <tr><td class="td-tool">Planner</td><td>llama-3.3-70b</td><td class="td-temp">0.2</td><td class="td-tokens">500</td><td class="td-temp">~600ms</td><td class="td-tokens">~200–400</td></tr>
           <tr><td class="td-tool">Synthesis</td><td>llama-3.3-70b</td><td class="td-temp">0.45</td><td class="td-tokens">450</td><td class="td-temp">~900ms</td><td class="td-tokens">~300–450</td></tr>
-          <tr><td class="td-tool">Workers AI (RAG)</td><td>bge-small-en-v1.5</td><td class="td-temp">—</td><td class="td-tokens">—</td><td class="td-temp">~200–400ms</td><td class="td-tokens">384 dims</td></tr>
-          <tr><td class="td-tool">Total /orchestrate-stream</td><td>—</td><td class="td-temp">—</td><td class="td-tokens">—</td><td class="td-temp">~1.5–2.5s</td><td class="td-tokens">~600–900</td></tr>
-          <tr><td class="td-tool">Total /rag-query</td><td>—</td><td class="td-temp">—</td><td class="td-tokens">—</td><td class="td-temp">~2–4s</td><td class="td-tokens">~700–1000</td></tr>
+          <tr><td class="td-tool">Workers AI (RAG)</td><td>bge-small-en-v1.5</td><td class="td-temp">,</td><td class="td-tokens">,</td><td class="td-temp">~200–400ms</td><td class="td-tokens">384 dims</td></tr>
+          <tr><td class="td-tool">Total /orchestrate-stream</td><td>,</td><td class="td-temp">,</td><td class="td-tokens">,</td><td class="td-temp">~1.5–2.5s</td><td class="td-tokens">~600–900</td></tr>
+          <tr><td class="td-tool">Total /rag-query</td><td>,</td><td class="td-temp">,</td><td class="td-tokens">,</td><td class="td-temp">~2–4s</td><td class="td-tokens">~700–1000</td></tr>
         </tbody>
       </table>
       <div class="decision-why" style="margin-top:0.75rem">Le streaming SSE sur <code>/orchestrate-stream</code> divise la latence perçue par ~3 : les premiers tokens s'affichent en ~400ms pendant que la synthesis continue. Pour <code>/rag-query</code>, l'embedding batch Workers AI ajoute ~200-400ms mais permet un retrieval sémantique sans infrastructure externe.</div>
@@ -828,11 +830,11 @@ flowchart LR
           <tr><td class="td-tool">6 outils PM (avg)</td><td class="td-tokens">~600</td><td class="td-tokens">~1500</td><td class="td-temp">~$0.00154</td><td class="td-temp">~$1.54</td></tr>
         </tbody>
       </table>
-      <div class="decision-why" style="margin-top:0.75rem">Tarifs llama-3.3-70b : $0.59/M input tokens, $0.79/M output tokens. Actuellement 100% sur le plan gratuit Groq (30 req/min, 14 400 req/jour). La migration vers le paid tier n'interviendrait qu'en cas de trafic soutenu — à ce volume, le coût mensuel total resterait sous $5.</div>
+      <div class="decision-why" style="margin-top:0.75rem">Tarifs llama-3.3-70b : $0.59/M input tokens, $0.79/M output tokens. Actuellement 100% sur le plan gratuit Groq (30 req/min, 14 400 req/jour). La migration vers le paid tier n'interviendrait qu'en cas de trafic soutenu, à ce volume, le coût mensuel total resterait sous $5.</div>
     </div>
 
     <div class="decision-card">
-      <div class="decision-q">Free tiers utilisés — zéro coût en prod</div>
+      <div class="decision-q">Free tiers utilisés, zéro coût en prod</div>
       <table class="params-table">
         <thead>
           <tr><th>Service</th><th>Limite gratuite</th><th>Usage actuel</th></tr>
@@ -861,12 +863,12 @@ flowchart LR
     </div>
     <div class="decision-card" style="margin-bottom:1rem">
       <div class="decision-q" data-i18n="s6.next.label">La prochaine étape</div>
-      <div class="decision-why" data-i18n="s6.next.desc">L'observabilité LLM est en place avec Langfuse : chaque appel KRL1 génère une trace avec token usage, latences planner/synthesis et intent détecté. La prochaine étape est d'ouvrir le site et utiliser ces données — quels outils génèrent le plus de résultats, est-ce que KRL1 renvoie vers les bons outils au bon moment, où s'arrêtent les utilisateurs avant de générer ?</div>
+      <div class="decision-why" data-i18n="s6.next.desc">L'observabilité LLM est en place avec Langfuse : chaque appel KRL1 génère une trace avec token usage, latences planner/synthesis et intent détecté. La prochaine étape est d'ouvrir le site et utiliser ces données, quels outils génèrent le plus de résultats, est-ce que KRL1 renvoie vers les bons outils au bon moment, où s'arrêtent les utilisateurs avant de générer ?</div>
     </div>
     <div class="decision-card">
       <div class="decision-q" data-i18n="s6.pm.label">Ce que ça démontre</div>
       <div class="decision-a" data-i18n="s6.pm.a">Builder, mesurer, décider</div>
-      <div class="decision-why" data-i18n="s6.pm.desc">L'analytics est en place : Langfuse trace chaque appel LLM en production — intent détecté, tokens consommés, latence par step. La boucle est fermée : builder → mesurer (Langfuse) → décider → itérer. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.</div>
+      <div class="decision-why" data-i18n="s6.pm.desc">L'analytics est en place : Langfuse trace chaque appel LLM en production, intent détecté, tokens consommés, latence par step. La boucle est fermée : builder → mesurer (Langfuse) → décider → itérer. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.</div>
     </div>
   </section>
 
@@ -900,12 +902,12 @@ flowchart LR
       <div class="gloss-card">
         <span class="gloss-badge gb-ai">AI</span>
         <div class="gloss-term">LLM</div>
-        <div class="gloss-def" data-i18n="gloss.llm">Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : llama-3.3-70b de Meta, servi par Groq sur LPU (Language Processing Unit) — inférence en 1-2 secondes.</div>
+        <div class="gloss-def" data-i18n="gloss.llm">Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : llama-3.3-70b de Meta, servi par Groq sur LPU (Language Processing Unit), inférence en 1-2 secondes.</div>
       </div>
       <div class="gloss-card">
         <span class="gloss-badge gb-concept">Concept</span>
         <div class="gloss-term">Intent</div>
-        <div class="gloss-def" data-i18n="gloss.intent">Classification de l'intention derrière un message utilisateur. Le planner de KRL1 détecte 5 intents : pm_workflow, portfolio, tech, contact, other — chaque intent déclenche un chemin de réponse différent.</div>
+        <div class="gloss-def" data-i18n="gloss.intent">Classification de l'intention derrière un message utilisateur. Le planner de KRL1 détecte 5 intents : pm_workflow, portfolio, tech, contact, other, chaque intent déclenche un chemin de réponse différent.</div>
       </div>
       <div class="gloss-card">
         <span class="gloss-badge gb-concept">Concept</span>
@@ -931,7 +933,7 @@ flowchart LR
   </section>
 
   <footer class="page-footer">
-    <a href="https://cmankotech.github.io/cmankotech/" class="footer-back">
+    <a href="https://cmankotech.github.io/cmankotech/" class="footer-back page-cta-pill">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
       <span data-i18n="footer.back">Retour au portfolio</span>
     </a>
@@ -947,49 +949,49 @@ var T={
     'tag':'Behind the build',
     'h1.line1':'Comment j\'ai',
     'h1.grad':'construit ce site',
-    'subtitle':'Tu veux savoir comment c\'est construit en vrai ? Architecture edge-native, pipeline RAG, orchestration LLM, observabilité Langfuse — tout est ici. Sans abstractions inutiles.',
+    'subtitle':'Tu veux savoir comment c\'est construit en vrai ? Architecture edge-native, pipeline RAG, orchestration LLM, observabilité Langfuse, tout est ici. Sans abstractions inutiles.',
     's1.title':'Stack technique',
     'stack.front.badge':'Frontend',
-    'stack.front.desc':'Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline — pas de composants partagés, pas de routing entre pages. Ce choix permet un déploiement direct sans étape de build, un debug immédiat dans les DevTools navigateur, et un code lisible à plat sans couche d\'abstraction. Sept pages autonomes : les 6 outils PM (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) + le hub <code>pm-toolkit.html</code> qui les enchaîne. Un seul point de couplage : <code>pm-session.js</code>, un module léger qui persiste les sorties de chaque outil dans <code>localStorage</code> pour que le suivant puisse les réimporter en un clic.',
+    'stack.front.desc':'Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline, pas de composants partagés, pas de routing entre pages. Ce choix permet un déploiement direct sans étape de build, un debug immédiat dans les DevTools navigateur, et un code lisible à plat sans couche d\'abstraction. Sept pages autonomes : les 6 outils PM (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) + le hub <code>pm-toolkit.html</code> qui les enchaîne. Un seul point de couplage : <code>pm-session.js</code>, un module léger qui persiste les sorties de chaque outil dans <code>localStorage</code> pour que le suivant puisse les réimporter en un clic.',
     'stack.deploy.badge':'Hébergement',
-    'stack.deploy.desc':'Hébergement statique gratuit avec CI/CD natif : chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Zéro coût, zéro infra à gérer — idéal pour un site statique à fichiers HTML/CSS/JS.',
+    'stack.deploy.desc':'Hébergement statique gratuit avec CI/CD natif : chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Zéro coût, zéro infra à gérer, idéal pour un site statique à fichiers HTML/CSS/JS.',
     'stack.proxy.badge':'API Proxy',
-    'stack.proxy.desc':'Un Worker est une fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes — pas de VPS, cold start quasi-nul. Ici il fait bien plus que proxifier : il orchestre le pipeline planner→synthesis pour KRL1, calcule les embeddings RAG via Workers AI, et trace les appels via Langfuse — la clé API n\'est jamais exposée côté client. Routes : POST / : passthrough direct vers l\'API Groq pour les 6 outils PM — la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, planner→synthesis natif. POST /rag-query : pipeline RAG sémantique complet (planner → Workers AI embeddings → cosine similarity → synthesis). POST /orchestrate-stream : même flow planner→synthesis mais la réponse synthesis arrive en SSE pour un affichage progressif. Validation d\'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.',
+    'stack.proxy.desc':'Un Worker est une fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes, pas de VPS, cold start quasi-nul. Ici il fait bien plus que proxifier : il orchestre le pipeline planner→synthesis pour KRL1, calcule les embeddings RAG via Workers AI, et trace les appels via Langfuse, la clé API n\'est jamais exposée côté client. Routes : POST / : passthrough direct vers l\'API Groq pour les 6 outils PM, la clé API est injectée côté Worker, jamais exposée au navigateur. POST /orchestrate : route dédiée au chatbot KRL1, planner→synthesis natif. POST /rag-query : pipeline RAG sémantique complet (planner → Workers AI embeddings → cosine similarity → synthesis). POST /orchestrate-stream : même flow planner→synthesis mais la réponse synthesis arrive en SSE pour un affichage progressif. Validation d\'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.',
     'stack.llm.badge':'LLM',
-    'stack.llm.desc':'Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L\'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes — 5 à 10x plus rapide que les providers classiques. Chaque outil PM l\'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).',
+    'stack.llm.desc':'Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L\'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes, 5 à 10x plus rapide que les providers classiques. Chaque outil PM l\'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).',
     'stack.lg.badge':'RAG sémantique',
     'stack.lf.badge':'Observabilité',
-    'stack.lf.desc':'Traces LLM en production via l\'API REST Langfuse intégrée directement dans le Worker (no npm, fetch natif). Chaque appel KRL1 génère une trace avec 2 générations — planner (intent JSON, T=0.2) et synthesis (réponse naturelle, T=0.45) — enrichies du token usage Groq et des latences par étape. La route RAG ajoute un span retriever Workers AI. Non-bloquant via <code>ctx.waitUntil</code>, zéro impact sur les temps de réponse. Plan gratuit Langfuse Cloud : 50 000 observations/mois.',
+    'stack.lf.desc':'Traces LLM en production via l\'API REST Langfuse intégrée directement dans le Worker (no npm, fetch natif). Chaque appel KRL1 génère une trace avec 2 générations, planner (intent JSON, T=0.2) et synthesis (réponse naturelle, T=0.45), enrichies du token usage Groq et des latences par étape. La route RAG ajoute un span retriever Workers AI. Non-bloquant via <code>ctx.waitUntil</code>, zéro impact sur les temps de réponse. Plan gratuit Langfuse Cloud : 50 000 observations/mois.',
     'stack.lg.desc':'Base de connaissances embarquée dans le Worker (15 frameworks Markdown : PM, PO/Agile, AI). Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) en un seul appel batch ; la similarité cosinus est calculée à l\'edge. Le pipeline <strong>handleRagQuery</strong> enchaîne : <strong>planner</strong> (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; <strong>retriever</strong> (conditionnel, uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches par cosine similarity ; <strong>synthesis</strong> (T=0.45) transforme le plan enrichi du contexte PM en réponse naturelle max 220 mots. Zéro dépendance externe, zéro infra Python.',
     's2.title':'Étapes de création',
     'step1.label':'Idée & cadrage',
     'step1.title':'Partir d\'un vrai problème PM',
-    'step1.desc':'Chaque outil répond à une friction réelle vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens utilisateurs à la main, prioriser un backlog sans méthode claire, préparer une roadmap narrative pour des dirigeants. Le site est né de cette liste de frustrations, pas d\'une envie de faire un portfolio classique. Six outils ont émergé de ce processus : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories et Roadmap Storyteller. Plus tard consolidés dans un hub unique — le PM Toolkit — pour refléter le vrai workflow PM : discovery → OKR → stories → roadmap, sans recoller le contexte à la main d\'un outil au suivant.',
+    'step1.desc':'Chaque outil répond à une friction réelle vécue en tant que PM : rédiger des OKRs flous, synthétiser des entretiens utilisateurs à la main, prioriser un backlog sans méthode claire, préparer une roadmap narrative pour des dirigeants. Le site est né de cette liste de frustrations, pas d\'une envie de faire un portfolio classique. Six outils ont émergé de ce processus : OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories et Roadmap Storyteller. Plus tard consolidés dans un hub unique, le PM Toolkit, pour refléter le vrai workflow PM : discovery → OKR → stories → roadmap, sans recoller le contexte à la main d\'un outil au suivant.',
     'step2.label':'Design',
     'step2.title':'Système de design en CSS variables',
-    'step2.desc':'Dark theme pensé dès le départ avec un système de tokens CSS (couleurs, surfaces, borders) cohérent sur toutes les pages. La palette bleue-violette-cyan crée une identité visuelle forte sans recourir à un framework UI. Typographie Syne (titres, weight 800) pour l\'impact, DM Sans (corps, weight 300) pour la lisibilité. Les CSS variables permettent une cohérence automatique — modifier --cyan suffit à mettre à jour l\'accent sur toutes les pages.',
+    'step2.desc':'Dark theme pensé dès le départ avec un système de tokens CSS (couleurs, surfaces, borders) cohérent sur toutes les pages. La palette bleue-violette-cyan crée une identité visuelle forte sans recourir à un framework UI. Typographie Syne (titres, weight 800) pour l\'impact, DM Sans (corps, weight 300) pour la lisibilité. Les CSS variables permettent une cohérence automatique, modifier --cyan suffit à mettre à jour l\'accent sur toutes les pages.',
     'step3.label':'Développement',
     'step3.title':'Pages HTML autonomes, JS vanilla',
     'step3.desc':'Chaque outil est une page HTML indépendante avec son propre CSS et JS. Pas de routing, pas de state management, pas de composants partagés. Simple, lisible, et débuggable sans toolchain. Chaque prompt system est spécialisé (ex : \'Tu es un expert en OKR…\') et la réponse attendue est du JSON structuré que le JS parse et injecte dans le DOM. La gestion bilingue FR/EN est faite avec un objet de traductions et des attributs data-i18n. Le seul état partagé entre outils passe par <code>pm-session.js</code> : chaque outil sauvegarde ses sorties structurées dans <code>localStorage</code> sous une clé commune, et le suivant peut les réimporter en un clic (bordure colorée pour feedback visuel). Zéro backend, zéro compte, zéro friction.',
     'step4.label':'Intégration LLM',
     'step4.title':'Proxy Cloudflare pour sécuriser la clé',
-    'step4.desc':'Les pages font des requêtes fetch vers un Cloudflare Worker qui proxifie vers l\'API Groq. La clé API ne transite jamais côté client — elle est injectée par le Worker côté serveur. Le Worker valide l\'origine (uniquement cmankotech.github.io), gère les headers CORS et retourne la réponse Groq au format OpenAI. Déployé en quelques minutes avec Wrangler CLI et un wrangler.toml minimaliste.',
+    'step4.desc':'Les pages font des requêtes fetch vers un Cloudflare Worker qui proxifie vers l\'API Groq. La clé API ne transite jamais côté client, elle est injectée par le Worker côté serveur. Le Worker valide l\'origine (uniquement cmankotech.github.io), gère les headers CORS et retourne la réponse Groq au format OpenAI. Déployé en quelques minutes avec Wrangler CLI et un wrangler.toml minimaliste.',
     'step5.label':'Déploiement',
     'step5.title':'GitHub Pages, push = deploy',
-    'step5.desc':'Le repo GitHub est directement connecté à GitHub Pages. Chaque git push sur main déclenche un déploiement automatique via GitHub Actions en moins de 60 secondes — aucune configuration CI/CD manuelle. CDN mondial, HTTPS automatique, domaine cmankotech.github.io. Zéro coût d\'hébergement pour des fichiers statiques.',
+    'step5.desc':'Le repo GitHub est directement connecté à GitHub Pages. Chaque git push sur main déclenche un déploiement automatique via GitHub Actions en moins de 60 secondes, aucune configuration CI/CD manuelle. CDN mondial, HTTPS automatique, domaine cmankotech.github.io. Zéro coût d\'hébergement pour des fichiers statiques.',
     'step6.label':'RAG sémantique',
     'step6.title':'Pipeline RAG edge-native dans le Worker',
-    'step6.desc':'Le pipeline RAG a d\'abord été prototypé en Python (FastAPI + LangGraph + sentence-transformers + ChromaDB). Le free tier Render (512 MB) s\'est révélé insuffisant pour charger sentence-transformers — le service ne démarrait jamais. Plutôt qu\'upgrader l\'hébergement, j\'ai porté l\'intégralité du pipeline dans le Cloudflare Worker : base de connaissances PM embarquée en JS, embeddings batch via Workers AI (bge-small-en-v1.5), cosine similarity calculée à l\'edge. Zéro infra Python, zéro déploiement séparé, même qualité sémantique.',
+    'step6.desc':'Le pipeline RAG a d\'abord été prototypé en Python (FastAPI + LangGraph + sentence-transformers + ChromaDB). Le free tier Render (512 MB) s\'est révélé insuffisant pour charger sentence-transformers, le service ne démarrait jamais. Plutôt qu\'upgrader l\'hébergement, j\'ai porté l\'intégralité du pipeline dans le Cloudflare Worker : base de connaissances PM embarquée en JS, embeddings batch via Workers AI (bge-small-en-v1.5), cosine similarity calculée à l\'edge. Zéro infra Python, zéro déploiement séparé, même qualité sémantique.',
     's3.title':'Outils de build',
-    'tool.cc.role':'Vibe coding — CLI Anthropic',
+    'tool.cc.role':'Vibe coding, CLI Anthropic',
     'tool.cc.desc':'Principal outil de développement. J\'écris les specs en langage naturel, Claude Code génère le code, refactorise les sections et gère les commits. Permet de shipper vite sans sacrifier la qualité du code.',
-    'tool.lovable.role':'Prototypage UI — vibe coding',
+    'tool.lovable.role':'Prototypage UI, vibe coding',
     'tool.lovable.desc':'Utilisé pour explorer rapidement des layouts et des composants visuels. Lovable accélère la phase de design en générant du HTML/CSS propre à partir d\'une description.',
     'tool.wrangler.role':'Déploiement Cloudflare Workers',
     'tool.wrangler.desc':'CLI officiel de Cloudflare pour développer, tester en local et déployer le proxy Worker. Configuration via un fichier wrangler.toml minimaliste, déploiement en une commande.',
     'tool.git.role':'Versioning & déploiement',
     'tool.git.desc':'Gestion de version classique avec Git. Le remote GitHub est la source de vérité et déclenche le déploiement Pages automatiquement à chaque push sur la branche principale.',
-    'tool.codex.role':'Scaffolding orchestrateur Python — agent OpenAI',
+    'tool.codex.role':'Scaffolding orchestrateur Python, agent OpenAI',
     'tool.codex.desc':'Utilisé pour construire la couche d\'orchestration Python initiale : service FastAPI, StateGraph LangGraph planner→synthesis, intégration LangSmith et suite de tests pytest+httpx. Cette version Python a ensuite été portée dans le Cloudflare Worker pour éliminer la contrainte d\'hébergement (Render 512 MB).',
     's4.title':'Décisions d\'architecture',
     'd1.q':'Pourquoi HTML vanilla plutôt que React ou Next.js ?',
@@ -997,7 +999,7 @@ var T={
     'd1.why':'Un site statique de portfolio et d\'outils simples n\'a pas besoin d\'un framework SPA. HTML vanilla se déploie directement, se lit facilement et ne génère aucune dette technique. Moins de complexité = plus de vélocité.',
     'd2.q':'Pourquoi un proxy Cloudflare Workers plutôt qu\'exposer la clé API ?',
     'd2.a':'Sécurité non négociable, plan gratuit généreux',
-    'd2.why':'Exposer une clé API dans du code client-side, c\'est l\'offrir à n\'importe qui. Le Worker intercepte les requêtes, injecte la clé côté serveur et valide l\'origine. Plan gratuit Cloudflare : 100 000 requêtes/jour — largement suffisant.',
+    'd2.why':'Exposer une clé API dans du code client-side, c\'est l\'offrir à n\'importe qui. Le Worker intercepte les requêtes, injecte la clé côté serveur et valide l\'origine. Plan gratuit Cloudflare : 100 000 requêtes/jour, largement suffisant.',
     'd3.q':'Pourquoi Groq plutôt qu\'OpenAI ou Anthropic directement ?',
     'd3.a':'Vitesse d\'inférence et plan gratuit',
     'd3.why':'Groq tourne les modèles Llama 3 sur du matériel LPU optimisé pour l\'inférence. Résultat : des réponses en 1-2 secondes là où d\'autres providers prennent 5-10s. Et le plan gratuit couvre amplement un usage personnel.',
@@ -1006,9 +1008,9 @@ var T={
     'd4.why':'Pour des fichiers statiques, GitHub Pages est imbattable : gratuit, CDN mondial, HTTPS automatique, et le déploiement se déclenche simplement avec un git push. Pas besoin d\'une infrastructure plus complexe pour ce cas d\'usage.',
     'd5.q':'Pourquoi un hub PM Toolkit plutôt que 6 liens séparés sur le portfolio ?',
     'd5.a':'Chaîner les outils = refléter le vrai workflow PM',
-    'd5.why':'Un PM enchaîne discovery → OKR → stories → roadmap. Garder les outils en cartes isolées sur le portfolio forçait l\'utilisateur à recoller le contexte à la main d\'un outil au suivant. Le hub <code>pm-toolkit.html</code> centralise l\'entrée, rend la séquence lisible, et <code>pm-session.js</code> fait circuler les insights (problème, persona, top-priorité…) via <code>localStorage</code> — sans backend, sans compte, sans friction.',
+    'd5.why':'Un PM enchaîne discovery → OKR → stories → roadmap. Garder les outils en cartes isolées sur le portfolio forçait l\'utilisateur à recoller le contexte à la main d\'un outil au suivant. Le hub <code>pm-toolkit.html</code> centralise l\'entrée, rend la séquence lisible, et <code>pm-session.js</code> fait circuler les insights (problème, persona, top-priorité…) via <code>localStorage</code>, sans backend, sans compte, sans friction.',
     'footer.back':'Retour au portfolio',
-    's5.title':'Orchestration Worker — edge-native RAG',
+    's5.title':'Orchestration Worker, edge-native RAG',
     'lg.front.name':'Frontend statique',
     'lg.front.badge':'HTML · JS',
     'lg.front.desc':'Chaque outil est une page HTML/JS autonome, déployée sur GitHub Pages. Aucun secret n\'est exposé dans le navigateur.',
@@ -1019,19 +1021,19 @@ var T={
     'lg.orch.badge':'Workers AI · bge-small-en-v1.5',
     'lg.orch.desc':'Base de connaissances (15 frameworks Markdown : PM, PO/Agile, AI) embarquée en JS. Embeddings batch via Workers AI (bge-small-en-v1.5, 384 dims). Cosine similarity calculée à l\'edge. Retriever conditionnel (pm_workflow uniquement). Réponse : {reply, plan, chunks, engine: "worker-rag-semantic"}.',
     'lg.flow.label':'Flow d\'une requête KRL1 / RAG Explorer',
-    'lg.flow.desc':'KRL1 (POST /orchestrate) : 1 · L\'utilisateur envoie un message. 2 · Le JS appelle POST /orchestrate avec {lang, message, history}. 3 · Le planner (T=0.2) analyse l\'intention → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 · Le synthesis (T=0.45) transforme le plan en réponse max 220 mots avec liens outils PM. 5 · La réponse {reply, plan, engine} arrive au client. — RAG Explorer (POST /rag-query) : même planner → Workers AI encode la requête + tous les chunks en un appel batch → cosine similarity → top-3 injectés dans synthesis si intent = pm_workflow → {reply, plan, chunks, engine: "worker-rag-semantic"}.',
+    'lg.flow.desc':'KRL1 (POST /orchestrate) : 1 · L\'utilisateur envoie un message. 2 · Le JS appelle POST /orchestrate avec {lang, message, history}. 3 · Le planner (T=0.2) analyse l\'intention → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 · Le synthesis (T=0.45) transforme le plan en réponse max 220 mots avec liens outils PM. 5 · La réponse {reply, plan, engine} arrive au client., RAG Explorer (POST /rag-query) : même planner → Workers AI encode la requête + tous les chunks en un appel batch → cosine similarity → top-3 injectés dans synthesis si intent = pm_workflow → {reply, plan, chunks, engine: "worker-rag-semantic"}.',
     'lg.recent.label':'Ce qu\'on a ajouté récemment',
     'lg.r1':'La route Worker <code>POST /rag-query</code> : pipeline RAG sémantique complet (planner → retrieval → synthesis), natif dans le Worker, sans aucune dépendance externe.',
-    'lg.r2':'Un retrieval sémantique via <strong>Workers AI</strong> (bge-small-en-v1.5) — la base de connaissances PM est embarquée en JS, découpée en chunks de 300 mots, et les 3 passages les plus proches sont récupérés par similarité cosinus à l\'edge.',
-    'lg.r3':'Un parsing robuste via <code>safeJsonParse()</code> — gère les JSON entourés de blocs <code>```json</code> que le LLM peut produire malgré les instructions strict JSON only.',
-    'lg.r4':'Un retriever conditionnel : le retrieval sémantique est activé uniquement si <code>intent === \'pm_workflow\'</code> — évite d\'invoquer Workers AI pour les questions hors PM (portfolio, contact, tech).',
-    'lg.r5':'Un compteur d\'usage non-bloquant dans KV (<code>ctx.waitUntil</code>) — trace les appels sans alourdir le temps de réponse.',
-    'lg.r6':'La réponse <code>POST /rag-query</code> expose <code>{reply, plan, chunks, engine: \'worker-rag-semantic\'}</code> — les chunks sont visualisés dans <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> avec leur source et score de similarité.',
+    'lg.r2':'Un retrieval sémantique via <strong>Workers AI</strong> (bge-small-en-v1.5), la base de connaissances PM est embarquée en JS, découpée en chunks de 300 mots, et les 3 passages les plus proches sont récupérés par similarité cosinus à l\'edge.',
+    'lg.r3':'Un parsing robuste via <code>safeJsonParse()</code>, gère les JSON entourés de blocs <code>```json</code> que le LLM peut produire malgré les instructions strict JSON only.',
+    'lg.r4':'Un retriever conditionnel : le retrieval sémantique est activé uniquement si <code>intent === \'pm_workflow\'</code>, évite d\'invoquer Workers AI pour les questions hors PM (portfolio, contact, tech).',
+    'lg.r5':'Un compteur d\'usage non-bloquant dans KV (<code>ctx.waitUntil</code>), trace les appels sans alourdir le temps de réponse.',
+    'lg.r6':'La réponse <code>POST /rag-query</code> expose <code>{reply, plan, chunks, engine: \'worker-rag-semantic\'}</code>, les chunks sont visualisés dans <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> avec leur source et score de similarité.',
     'lg.why.q':'Pourquoi l\'edge-native ?',
     'lg.why.a':'Plan PM structuré + réponse claire, zéro infra externe',
-    'lg.why.desc':'Le double-nœud répond à deux contraintes opposées. Le planner a besoin d\'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. La synthesis a besoin d\'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots). Pour le RAG Explorer, une troisième étape s\'intercale : les embeddings Workers AI calculent la similarité cosinus entre la requête et la base PM, et le contexte récupéré est injecté dans la synthesis. Cette architecture a d\'abord été prototypée en Python (FastAPI + LangGraph) — mais le free tier Render (512 MB) était insuffisant pour charger sentence-transformers. Solution : porter l\'intégralité du pipeline dans le Cloudflare Worker via <strong>Workers AI</strong> (bge-small-en-v1.5, 384 dimensions). Embeddings batch à l\'edge, cosine similarity en JS, zéro dépendance Python.',
+    'lg.why.desc':'Le double-nœud répond à deux contraintes opposées. Le planner a besoin d\'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. La synthesis a besoin d\'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots). Pour le RAG Explorer, une troisième étape s\'intercale : les embeddings Workers AI calculent la similarité cosinus entre la requête et la base PM, et le contexte récupéré est injecté dans la synthesis. Cette architecture a d\'abord été prototypée en Python (FastAPI + LangGraph), mais le free tier Render (512 MB) était insuffisant pour charger sentence-transformers. Solution : porter l\'intégralité du pipeline dans le Cloudflare Worker via <strong>Workers AI</strong> (bge-small-en-v1.5, 384 dimensions). Embeddings batch à l\'edge, cosine similarity en JS, zéro dépendance Python.',
     's0.title':'Pourquoi ce site existe',
-    's0.lead':'J\'ai toujours eu un esprit innovant et une volonté naturelle de me tourner vers les sujets techniques. Ce site est mon laboratoire — un bac à sable où je teste des technos et des hypothèses en tant que builder.',
+    's0.lead':'J\'ai toujours eu un esprit innovant et une volonté naturelle de me tourner vers les sujets techniques. Ce site est mon laboratoire, un bac à sable où je teste des technos et des hypothèses en tant que builder.',
     's0.body':'Je l\'utilise pour explorer l\'IA, développer mes compétences de builder et valider des patterns en conditions réelles. Avec passion et curiosité. Chaque feature ici est une vraie expérience : une architecture qu\'on pousse pour voir jusqu\'où elle tient, un pipeline qu\'on conçoit pour comprendre ses limites, un pattern qu\'on découvre en le construisant. Ce n\'est pas un portfolio de présentation. C\'est un système vivant.',
     's5b.title':'Ce qui n\'a pas marché',
     's5b.approach.label':'L\'approche initiale : prompt système unique',
@@ -1041,17 +1043,17 @@ var T={
     's5b.root.label':'La cause racine',
     's5b.root.desc':'Un prompt unique demande au modèle de faire deux choses à la fois : analyser l\'intention de l\'utilisateur de façon rigoureuse ET formuler une réponse naturelle et engageante. Ces deux tâches ont des exigences opposées. L\'analyse d\'intention demande de la précision et de la cohérence : le modèle doit produire un résultat fiable, structuré, parseable. La formulation d\'une réponse demande de la fluidité et un peu de liberté créative pour que ça ne sonne pas robotique. Un seul appel LLM avec un seul paramètre de température ne peut pas satisfaire les deux en même temps. C\'est ce problème concret qui a mené au double-nœud planner→synthesis : pas une envie de sur-ingénierie, mais la solution minimale à une contrainte réelle.',
     's5b.render.label':'Le déploiement Python qui ne démarrait pas',
-    's5b.render.desc':'Le pipeline RAG a d\'abord été construit en Python : FastAPI + LangGraph + sentence-transformers + ChromaDB. En local, tout fonctionnait. Sur Render (free tier), le service ne démarrait jamais : le chargement de sentence-transformers dépasse les 512 MB de RAM alloués. La leçon : une contrainte d\'infra peut rendre une bonne architecture non-déployable. Plutôt que d\'upgrader l\'hébergement, j\'ai cherché l\'approche zéro-infra. Solution : porter l\'intégralité du RAG dans le Cloudflare Worker via Workers AI — les embeddings sont calculés à l\'edge, sans serveur Python, sans limite mémoire.',
+    's5b.render.desc':'Le pipeline RAG a d\'abord été construit en Python : FastAPI + LangGraph + sentence-transformers + ChromaDB. En local, tout fonctionnait. Sur Render (free tier), le service ne démarrait jamais : le chargement de sentence-transformers dépasse les 512 MB de RAM alloués. La leçon : une contrainte d\'infra peut rendre une bonne architecture non-déployable. Plutôt que d\'upgrader l\'hébergement, j\'ai cherché l\'approche zéro-infra. Solution : porter l\'intégralité du RAG dans le Cloudflare Worker via Workers AI, les embeddings sont calculés à l\'edge, sans serveur Python, sans limite mémoire.',
     's5.reflect.label':'Ce que ça dit de ma façon de penser en tant que PM',
     's5.reflect.desc':'Ce choix d\'architecture reflète directement ma façon de penser : identifier la vraie contrainte avant de choisir la solution. Ici la contrainte n\'était pas "KRL1 répond mal". C\'était "un seul nœud ne peut pas être déterministe et créatif à la fois". Une fois la contrainte bien posée, la solution devient évidente. Le graph est testable indépendamment nœud par nœud, extensible sans tout réécrire, et chaque composant a une responsabilité claire. C\'est exactement ce qu\'on attend d\'un bon design produit.',
     's6.title':'Et maintenant ?',
     's6.status.label':'Où en est le site',
     's6.status.desc':'Le site n\'est pas encore vraiment partagé. C\'est volontaire : je voulais d\'abord que l\'architecture soit solide, les cas de fallback couverts, les tests en place. Shipper quelque chose de cassé à des recruteurs ou à des PMs de mon réseau aurait fait plus de mal que de bien.',
     's6.next.label':'La prochaine étape',
-    's6.next.desc':'L\'observabilité LLM est en place avec Langfuse : chaque appel KRL1 génère une trace avec token usage, latences planner/synthesis et intent détecté. La prochaine étape est d\'ouvrir le site et utiliser ces données — quels outils génèrent le plus de résultats, est-ce que KRL1 renvoie vers les bons outils au bon moment, où s\'arrêtent les utilisateurs avant de générer ?',
+    's6.next.desc':'L\'observabilité LLM est en place avec Langfuse : chaque appel KRL1 génère une trace avec token usage, latences planner/synthesis et intent détecté. La prochaine étape est d\'ouvrir le site et utiliser ces données, quels outils génèrent le plus de résultats, est-ce que KRL1 renvoie vers les bons outils au bon moment, où s\'arrêtent les utilisateurs avant de générer ?',
     's6.pm.label':'Ce que ça démontre',
     's6.pm.a':'Builder, mesurer, décider',
-    's6.pm.desc':'L\'analytics est en place : Langfuse trace chaque appel LLM en production — intent détecté, tokens consommés, latence par step. La boucle est fermée : builder → mesurer (Langfuse) → décider → itérer. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.',
+    's6.pm.desc':'L\'analytics est en place : Langfuse trace chaque appel LLM en production, intent détecté, tokens consommés, latence par step. La boucle est fermée : builder → mesurer (Langfuse) → décider → itérer. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.',
     'stat.tools':'outils PM',
     'stat.cost':'/ mois d\'infra',
     'stat.weeks':'sem. en spare time',
@@ -1060,32 +1062,32 @@ var T={
     'gloss.edge':'Paradigme qui déplace le traitement des requêtes le plus près possible de l\'utilisateur, sur des serveurs distribués mondialement. Réduit la latence en évitant les allers-retours vers un datacenter centralisé.',
     'gloss.rag':'Retrieval-Augmented Generation : enrichir un LLM avec du contexte récupéré dynamiquement au moment de la requête. Permet d\'ancrer les réponses dans une base de connaissances sans retraining.',
     'gloss.embedding':'Représentation vectorielle d\'un texte qui encode son sens sémantique. Deux textes au sens proche ont des vecteurs proches, ce qui permet la recherche par similarité plutôt que par mots-clés exacts.',
-    'gloss.llm':'Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : llama-3.3-70b de Meta, servi par Groq sur LPU — inférence en 1-2 secondes.',
-    'gloss.intent':'Classification de l\'intention derrière un message utilisateur. Le planner de KRL1 détecte 5 intents : pm_workflow, portfolio, tech, contact, other — chaque intent déclenche un chemin de réponse différent.',
+    'gloss.llm':'Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : llama-3.3-70b de Meta, servi par Groq sur LPU, inférence en 1-2 secondes.',
+    'gloss.intent':'Classification de l\'intention derrière un message utilisateur. Le planner de KRL1 détecte 5 intents : pm_workflow, portfolio, tech, contact, other, chaque intent déclenche un chemin de réponse différent.',
     'gloss.planner':'Pattern d\'orchestration en 2 appels LLM séquentiels. Le planner (T=0.2) produit un JSON structuré ; la synthesis (T=0.45) le transforme en réponse naturelle. Séparer les deux permet d\'optimiser chaque étape indépendamment.',
     'gloss.sse':'Server-Sent Events : protocole HTTP de streaming unidirectionnel (serveur → client). Permet d\'afficher la réponse LLM progressivement dès les premiers tokens, sans attendre la réponse complète.',
     'gloss.waituntil':'Mécanisme Cloudflare pour exécuter du travail asynchrone après l\'envoi de la réponse, sans bloquer le client. Utilisé ici pour envoyer les traces Langfuse et incrémenter le compteur KV sans ajouter de latence.',
     'gloss.kv':'Key-Value Store distribué de Cloudflare. Stockage ultra-rapide pour des données simples. Ici : compteur d\'usage global accessible via l\'endpoint /stats.',
     'arch.fallback':'↩ RAG sémantique natif Workers AI',
     's4b.title':'Prompt engineering',
-    's4b.okr.label':'Prompt system — OKR Builder (extrait réel)',
-    's4b.okr.why':'T=0.5 est délibéré : assez bas pour que le JSON soit fiable et parseable, assez haut pour que les libellés d\'OKR soient variés et inspirants. À T=0.2, les OKRs seraient trop uniformes. À T=0.7, le JSON devient parfois invalide. L\'example JSON dans le prompt sert de guardrail de format — il contraint la structure de sortie plus efficacement qu\'une description textuelle.',
-    's4b.kb.label':'KB fast-path — KRL1 avant d\'appeler le LLM',
-    's4b.kb.why':'KRL1 vérifie d\'abord une base de connaissances locale (6 patterns FR + 6 EN, matching par mots-clés) avant d\'envoyer quoi que ce soit à Groq. Si la question correspond — "qu\'est-ce que le backlog prioritizer ?", "quel est le profil de Carlin ?" — la réponse part en ~400ms sans consommer un seul token. Cette couche couvre ~30-40% des questions récurrentes. C\'est une décision de coût et de perf : réponses plus rapides, plus cohérentes, zéro dépendance API pour les cas les plus fréquents.',
+    's4b.okr.label':'Prompt system, OKR Builder (extrait réel)',
+    's4b.okr.why':'T=0.5 est délibéré : assez bas pour que le JSON soit fiable et parseable, assez haut pour que les libellés d\'OKR soient variés et inspirants. À T=0.2, les OKRs seraient trop uniformes. À T=0.7, le JSON devient parfois invalide. L\'example JSON dans le prompt sert de guardrail de format, il contraint la structure de sortie plus efficacement qu\'une description textuelle.',
+    's4b.kb.label':'KB fast-path, KRL1 avant d\'appeler le LLM',
+    's4b.kb.why':'KRL1 vérifie d\'abord une base de connaissances locale (6 patterns FR + 6 EN, matching par mots-clés) avant d\'envoyer quoi que ce soit à Groq. Si la question correspond, "qu\'est-ce que le backlog prioritizer ?", "quel est le profil de Carlin ?", la réponse part en ~400ms sans consommer un seul token. Cette couche couvre ~30-40% des questions récurrentes. C\'est une décision de coût et de perf : réponses plus rapides, plus cohérentes, zéro dépendance API pour les cas les plus fréquents.',
     's4b.params.label':'Paramètres adaptés par outil',
     's4b.params.intro':'Chaque outil a une contrainte différente. Le Backlog Prioritizer utilise la température la plus basse : le scoring RICE doit être cohérent et reproductible. Le Discovery Assistant utilise la plus haute : reformuler des hypothèses et des questions d\'interview bénéficie de variété.',
     'params.th.tool':'Outil',
     'params.th.t':'Température',
     'params.th.tok':'max_tokens',
     'params.th.out':'Output',
-    'lg.tests.label':'Tests automatiques — proxy.test.mjs',
+    'lg.tests.label':'Tests automatiques, proxy.test.mjs',
     'test.n1':'Test 1',
     'test.t1':'Semantic RAG actif',
     'test.d1':'POST /rag-query → planner Groq + Workers AI embeddings + cosine sim + synthesis. Le client reçoit {reply, plan, chunks, engine: "worker-rag-semantic"}.',
     'test.r1':'assert chunks.length = 3, engine = "worker-rag-semantic"',
     'test.n2':'Test 2',
     'test.t2':'Orchestrateur natif Worker',
-    'test.d2':'Sans URL externe : 2 appels Groq séquentiels — planner (JSON strict) puis synthesis (texte). Le client reçoit {reply, plan}.',
+    'test.d2':'Sans URL externe : 2 appels Groq séquentiels, planner (JSON strict) puis synthesis (texte). Le client reçoit {reply, plan}.',
     'test.r2':'assert plan.intent = "roadmap", reply = "Synthèse utile"',
     'test.n3':'Test 3',
     'test.t3':'Routing POST / intact',
@@ -1097,49 +1099,49 @@ var T={
     'tag':'Behind the build',
     'h1.line1':'How I',
     'h1.grad':'built this site',
-    'subtitle':'Want to know how it\'s actually built? Edge-native architecture, RAG pipeline, LLM orchestration, Langfuse observability — all here. No unnecessary abstractions.',
+    'subtitle':'Want to know how it\'s actually built? Edge-native architecture, RAG pipeline, LLM orchestration, Langfuse observability, all here. No unnecessary abstractions.',
     's1.title':'Tech stack',
     'stack.front.badge':'Frontend',
-    'stack.front.desc':'100% vanilla. No framework, no bundler, no npm dependencies. Each tool is a standalone HTML page with its own inline CSS and JS — no shared components, no cross-page routing. This allows direct deployment without a build step, instant debugging in browser DevTools, and flat, abstraction-free code. Seven standalone pages: the 6 PM tools (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) plus the <code>pm-toolkit.html</code> hub that chains them. Single coupling point: <code>pm-session.js</code>, a lightweight module that persists each tool\'s output into <code>localStorage</code> so the next tool can re-import it in one click.',
+    'stack.front.desc':'100% vanilla. No framework, no bundler, no npm dependencies. Each tool is a standalone HTML page with its own inline CSS and JS, no shared components, no cross-page routing. This allows direct deployment without a build step, instant debugging in browser DevTools, and flat, abstraction-free code. Seven standalone pages: the 6 PM tools (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) plus the <code>pm-toolkit.html</code> hub that chains them. Single coupling point: <code>pm-session.js</code>, a lightweight module that persists each tool\'s output into <code>localStorage</code> so the next tool can re-import it in one click.',
     'stack.deploy.badge':'Hosting',
-    'stack.deploy.desc':'Free static hosting with native CI/CD: every git push to main triggers an automatic deployment in under 60 seconds. Global CDN, automatic HTTPS, cmankotech.github.io domain with zero configuration. Zero cost, zero infrastructure to manage — ideal for a static HTML/CSS/JS site.',
+    'stack.deploy.desc':'Free static hosting with native CI/CD: every git push to main triggers an automatic deployment in under 60 seconds. Global CDN, automatic HTTPS, cmankotech.github.io domain with zero configuration. Zero cost, zero infrastructure to manage, ideal for a static HTML/CSS/JS site.',
     'stack.proxy.badge':'API Proxy',
-    'stack.proxy.desc':'A Worker is a serverless JavaScript function deployed across ~300 Cloudflare data centers, between the browser and external APIs — no server to manage, near-zero cold start. Here it does far more than proxy: it orchestrates the planner→synthesis pipeline for KRL1, computes RAG embeddings via Workers AI, and traces calls via Langfuse — the API key is never exposed client-side. Routes: POST / passthrough to Groq for the 6 PM tools. POST /orchestrate[-stream] KRL1 planner→synthesis orchestration. POST /rag-query full semantic RAG pipeline. Origin validation, automatic CORS, free plan: 100,000 req/day.',
+    'stack.proxy.desc':'A Worker is a serverless JavaScript function deployed across ~300 Cloudflare data centers, between the browser and external APIs, no server to manage, near-zero cold start. Here it does far more than proxy: it orchestrates the planner→synthesis pipeline for KRL1, computes RAG embeddings via Workers AI, and traces calls via Langfuse, the API key is never exposed client-side. Routes: POST / passthrough to Groq for the 6 PM tools. POST /orchestrate[-stream] KRL1 planner→synthesis orchestration. POST /rag-query full semantic RAG pipeline. Origin validation, automatic CORS, free plan: 100,000 req/day.',
     'stack.llm.badge':'LLM',
-    'stack.llm.desc':'Access to the llama-3.3-70b-versatile model via an OpenAI-compatible REST API. LPU (Language Processing Unit) inference delivers responses in 1–2 seconds — 5 to 10x faster than classic providers. Each PM tool calls it with tailored parameters: temperatures between 0.3 and 0.7 depending on the task, max_tokens between 2,000 and 4,000, specialised system prompts (OKR strategist, discovery analyst, prioritisation expert…).',
+    'stack.llm.desc':'Access to the llama-3.3-70b-versatile model via an OpenAI-compatible REST API. LPU (Language Processing Unit) inference delivers responses in 1–2 seconds, 5 to 10x faster than classic providers. Each PM tool calls it with tailored parameters: temperatures between 0.3 and 0.7 depending on the task, max_tokens between 2,000 and 4,000, specialised system prompts (OKR strategist, discovery analyst, prioritisation expert…).',
     'stack.lg.badge':'Semantic RAG',
     'stack.lf.badge':'Observability',
-    'stack.lf.desc':'Production LLM tracing via Langfuse REST API integrated directly in the Worker (no npm, native fetch). Each KRL1 call generates a trace with 2 generations — planner (intent JSON, T=0.2) and synthesis (natural response, T=0.45) — enriched with Groq token usage and per-step latencies. The RAG route adds a Workers AI retriever span. Non-blocking via <code>ctx.waitUntil</code>, zero impact on response times. Langfuse Cloud free tier: 50,000 observations/month.',
+    'stack.lf.desc':'Production LLM tracing via Langfuse REST API integrated directly in the Worker (no npm, native fetch). Each KRL1 call generates a trace with 2 generations, planner (intent JSON, T=0.2) and synthesis (natural response, T=0.45), enriched with Groq token usage and per-step latencies. The RAG route adds a Workers AI retriever span. Non-blocking via <code>ctx.waitUntil</code>, zero impact on response times. Langfuse Cloud free tier: 50,000 observations/month.',
     'stack.lg.desc':'Knowledge base embedded in the Worker (15 Markdown frameworks: PM, PO/Agile, AI). Semantic embeddings generated by <strong>Workers AI</strong> (bge-small-en-v1.5) in a single batch call; cosine similarity computed at the edge. The <strong>handleRagQuery</strong> pipeline chains: <strong>planner</strong> (T=0.2) generates strict JSON; <strong>retriever</strong> (conditional, only when intent = pm_workflow) fetches the 3 closest chunks by cosine similarity; <strong>synthesis</strong> (T=0.45) transforms the PM-enriched plan into a natural response max 220 words. Zero external dependencies, zero Python infrastructure.',
     's2.title':'Creation steps',
     'step1.label':'Idea & scoping',
     'step1.title':'Start from a real PM problem',
-    'step1.desc':'Every tool addresses a real friction experienced as a PM: writing vague OKRs, manually synthesising user interviews, prioritising a backlog without a clear method, preparing a narrative roadmap for executives. The site grew from that list of frustrations, not from a desire to build a classic portfolio. Six tools emerged from this process: OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories and Roadmap Storyteller. Later consolidated into a single hub — the PM Toolkit — to mirror the real PM workflow: discovery → OKR → stories → roadmap, without manually carrying context from one tool to the next.',
+    'step1.desc':'Every tool addresses a real friction experienced as a PM: writing vague OKRs, manually synthesising user interviews, prioritising a backlog without a clear method, preparing a narrative roadmap for executives. The site grew from that list of frustrations, not from a desire to build a classic portfolio. Six tools emerged from this process: OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories and Roadmap Storyteller. Later consolidated into a single hub, the PM Toolkit, to mirror the real PM workflow: discovery → OKR → stories → roadmap, without manually carrying context from one tool to the next.',
     'step2.label':'Design',
     'step2.title':'Design system via CSS variables',
-    'step2.desc':'Dark theme planned from the start with a CSS token system (colors, surfaces, borders) consistent across all pages. The blue-violet-cyan palette creates a strong visual identity without relying on a UI framework. Syne (headings, weight 800) for impact, DM Sans (body, weight 300) for readability. CSS variables ensure automatic consistency — changing --cyan is enough to update the accent across all pages.',
+    'step2.desc':'Dark theme planned from the start with a CSS token system (colors, surfaces, borders) consistent across all pages. The blue-violet-cyan palette creates a strong visual identity without relying on a UI framework. Syne (headings, weight 800) for impact, DM Sans (body, weight 300) for readability. CSS variables ensure automatic consistency, changing --cyan is enough to update the accent across all pages.',
     'step3.label':'Development',
     'step3.title':'Standalone HTML pages, vanilla JS',
     'step3.desc':'Each tool is an independent HTML page with its own CSS and JS. No routing, no state management, no shared components. Simple, readable, and debuggable without a toolchain. Each system prompt is specialised (e.g. \'You are an OKR expert…\') and the expected output is structured JSON that JS parses and injects into the DOM. FR/EN bilingual support is handled with a translation object and data-i18n attributes. The only shared state across tools goes through <code>pm-session.js</code>: each tool saves its structured outputs into <code>localStorage</code> under a common key, and the next one can re-import them in one click (coloured border for visual feedback). No backend, no account, no friction.',
     'step4.label':'LLM integration',
     'step4.title':'Cloudflare proxy to secure the API key',
-    'step4.desc':'Pages send fetch requests to a Cloudflare Worker that proxies to the Groq API. The API key never travels client-side — it is injected by the Worker server-side. The Worker validates the origin (cmankotech.github.io only), handles CORS headers and returns the Groq response in OpenAI format. Deployed in minutes with the Wrangler CLI and a minimal wrangler.toml.',
+    'step4.desc':'Pages send fetch requests to a Cloudflare Worker that proxies to the Groq API. The API key never travels client-side, it is injected by the Worker server-side. The Worker validates the origin (cmankotech.github.io only), handles CORS headers and returns the Groq response in OpenAI format. Deployed in minutes with the Wrangler CLI and a minimal wrangler.toml.',
     'step5.label':'Deployment',
     'step5.title':'GitHub Pages, push = deploy',
-    'step5.desc':'The GitHub repo is directly connected to GitHub Pages. Every git push to main triggers an automatic deployment via GitHub Actions in under 60 seconds — no manual CI/CD configuration. Global CDN, automatic HTTPS, cmankotech.github.io domain. Zero hosting cost for static files.',
+    'step5.desc':'The GitHub repo is directly connected to GitHub Pages. Every git push to main triggers an automatic deployment via GitHub Actions in under 60 seconds, no manual CI/CD configuration. Global CDN, automatic HTTPS, cmankotech.github.io domain. Zero hosting cost for static files.',
     'step6.label':'Semantic RAG',
     'step6.title':'Edge-native RAG pipeline in the Worker',
-    'step6.desc':'The RAG pipeline was first prototyped in Python (FastAPI + LangGraph + sentence-transformers + ChromaDB). Render\'s free tier (512 MB) proved insufficient to load sentence-transformers — the service never started. Rather than upgrade hosting, I ported the entire pipeline into the Cloudflare Worker: PM knowledge base embedded as JS, batch embeddings via Workers AI (bge-small-en-v1.5), cosine similarity computed at the edge. Zero Python infrastructure, zero separate deployment, same semantic quality.',
+    'step6.desc':'The RAG pipeline was first prototyped in Python (FastAPI + LangGraph + sentence-transformers + ChromaDB). Render\'s free tier (512 MB) proved insufficient to load sentence-transformers, the service never started. Rather than upgrade hosting, I ported the entire pipeline into the Cloudflare Worker: PM knowledge base embedded as JS, batch embeddings via Workers AI (bge-small-en-v1.5), cosine similarity computed at the edge. Zero Python infrastructure, zero separate deployment, same semantic quality.',
     's3.title':'Build tools',
-    'tool.cc.role':'Vibe coding — Anthropic CLI',
+    'tool.cc.role':'Vibe coding, Anthropic CLI',
     'tool.cc.desc':'Primary development tool. I write specs in plain language, Claude Code generates the code, refactors sections and manages commits. Lets you ship fast without sacrificing code quality.',
-    'tool.lovable.role':'UI prototyping — vibe coding',
+    'tool.lovable.role':'UI prototyping, vibe coding',
     'tool.lovable.desc':'Used to quickly explore layouts and visual components. Lovable accelerates the design phase by generating clean HTML/CSS from a description.',
     'tool.wrangler.role':'Cloudflare Workers deployment',
     'tool.wrangler.desc':'Cloudflare\'s official CLI to develop, test locally and deploy the proxy Worker. Configured via a minimal wrangler.toml file, deployed with a single command.',
     'tool.git.role':'Versioning & deployment',
     'tool.git.desc':'Classic version control with Git. The GitHub remote is the source of truth and triggers Pages deployment automatically on every push to the main branch.',
-    'tool.codex.role':'Initial Python scaffolding — OpenAI agent',
+    'tool.codex.role':'Initial Python scaffolding, OpenAI agent',
     'tool.codex.desc':'Used to build the initial Python orchestration layer: FastAPI service, LangGraph planner→synthesis StateGraph, LangSmith integration and pytest+httpx test suite. This Python version was later ported into the Cloudflare Worker to eliminate the hosting constraint (Render 512 MB).',
     's4.title':'Architecture decisions',
     'd1.q':'Why vanilla HTML instead of React or Next.js?',
@@ -1147,7 +1149,7 @@ var T={
     'd1.why':'A static portfolio and simple tools site doesn\'t need a SPA framework. Vanilla HTML deploys directly, reads easily, and generates no technical debt. Less complexity = more velocity.',
     'd2.q':'Why a Cloudflare Workers proxy instead of exposing the API key?',
     'd2.a':'Non-negotiable security, generous free plan',
-    'd2.why':'Exposing an API key in client-side code is handing it to anyone. The Worker intercepts requests, injects the key server-side and validates the origin. Cloudflare free plan: 100,000 requests/day — more than enough.',
+    'd2.why':'Exposing an API key in client-side code is handing it to anyone. The Worker intercepts requests, injects the key server-side and validates the origin. Cloudflare free plan: 100,000 requests/day, more than enough.',
     'd3.q':'Why Groq instead of OpenAI or Anthropic directly?',
     'd3.a':'Inference speed and free plan',
     'd3.why':'Groq runs Llama 3 models on LPU hardware optimised for inference. Result: responses in 1-2 seconds where other providers take 5-10s. And the free plan comfortably covers personal use.',
@@ -1156,9 +1158,9 @@ var T={
     'd4.why':'For static files, GitHub Pages is unbeatable: free, global CDN, automatic HTTPS, and deployment triggered simply by a git push. No need for more complex infrastructure for this use case.',
     'd5.q':'Why a PM Toolkit hub rather than 6 separate links on the portfolio?',
     'd5.a':'Chaining tools mirrors the real PM workflow',
-    'd5.why':'A PM runs discovery → OKR → stories → roadmap. Keeping tools as isolated cards on the portfolio forced users to carry context by hand from one tool to the next. The <code>pm-toolkit.html</code> hub centralises the entry point, makes the sequence legible, and <code>pm-session.js</code> shuttles insights (problem, persona, top priority…) via <code>localStorage</code> — no backend, no account, no friction.',
+    'd5.why':'A PM runs discovery → OKR → stories → roadmap. Keeping tools as isolated cards on the portfolio forced users to carry context by hand from one tool to the next. The <code>pm-toolkit.html</code> hub centralises the entry point, makes the sequence legible, and <code>pm-session.js</code> shuttles insights (problem, persona, top priority…) via <code>localStorage</code>, no backend, no account, no friction.',
     'footer.back':'Back to portfolio',
-    's5.title':'Worker Orchestration — edge-native RAG',
+    's5.title':'Worker Orchestration, edge-native RAG',
     'lg.front.name':'Static Frontend',
     'lg.front.badge':'HTML · JS',
     'lg.front.desc':'Each tool is a standalone HTML/JS page deployed on GitHub Pages. No secret is ever exposed in the browser.',
@@ -1169,19 +1171,19 @@ var T={
     'lg.orch.badge':'Workers AI · bge-small-en-v1.5',
     'lg.orch.desc':'Knowledge base (15 Markdown frameworks: PM, PO/Agile, AI) embedded as JS. Batch embeddings via Workers AI (bge-small-en-v1.5, 384 dims). Cosine similarity at the edge. Conditional retriever (pm_workflow only). Response: {reply, plan, chunks, engine: "worker-rag-semantic"}.',
     'lg.flow.label':'KRL1 / RAG Explorer request flow',
-    'lg.flow.desc':'KRL1 (POST /orchestrate): 1 · User sends a message. 2 · JS calls POST /orchestrate with {lang, message, history}. 3 · Planner (T=0.2) analyses intent → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 · Synthesis (T=0.45) transforms the plan into a max 220-word response with PM tool links. 5 · Response {reply, plan, engine} arrives at client. — RAG Explorer (POST /rag-query): same planner → Workers AI encodes query + all chunks in one batch call → cosine similarity → top-3 injected into synthesis if intent = pm_workflow → {reply, plan, chunks, engine: "worker-rag-semantic"}.',
+    'lg.flow.desc':'KRL1 (POST /orchestrate): 1 · User sends a message. 2 · JS calls POST /orchestrate with {lang, message, history}. 3 · Planner (T=0.2) analyses intent → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 · Synthesis (T=0.45) transforms the plan into a max 220-word response with PM tool links. 5 · Response {reply, plan, engine} arrives at client., RAG Explorer (POST /rag-query): same planner → Workers AI encodes query + all chunks in one batch call → cosine similarity → top-3 injected into synthesis if intent = pm_workflow → {reply, plan, chunks, engine: "worker-rag-semantic"}.',
     'lg.recent.label':'What we added recently',
     'lg.r1':'The Worker route <code>POST /rag-query</code>: full semantic RAG pipeline (planner → retrieval → synthesis), native to the Worker, with no external dependencies.',
-    'lg.r2':'Semantic retrieval via <strong>Workers AI</strong> (bge-small-en-v1.5) — the PM knowledge base is embedded as JS, split into 300-word chunks, and the 3 closest passages are retrieved by cosine similarity at the edge.',
-    'lg.r3':'Robust parsing via <code>safeJsonParse()</code> — handles JSON wrapped in <code>```json</code> blocks that the LLM may produce despite strict JSON only instructions.',
-    'lg.r4':'Conditional retriever: semantic retrieval is activated only when <code>intent === \'pm_workflow\'</code> — avoids invoking Workers AI for non-PM queries (portfolio, contact, tech).',
-    'lg.r5':'Non-blocking usage counter in KV (<code>ctx.waitUntil</code>) — tracks calls without adding to response time.',
-    'lg.r6':'The <code>POST /rag-query</code> response exposes <code>{reply, plan, chunks, engine: \'worker-rag-semantic\'}</code> — chunks are visualised in <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> with their source and similarity score.',
+    'lg.r2':'Semantic retrieval via <strong>Workers AI</strong> (bge-small-en-v1.5), the PM knowledge base is embedded as JS, split into 300-word chunks, and the 3 closest passages are retrieved by cosine similarity at the edge.',
+    'lg.r3':'Robust parsing via <code>safeJsonParse()</code>, handles JSON wrapped in <code>```json</code> blocks that the LLM may produce despite strict JSON only instructions.',
+    'lg.r4':'Conditional retriever: semantic retrieval is activated only when <code>intent === \'pm_workflow\'</code>, avoids invoking Workers AI for non-PM queries (portfolio, contact, tech).',
+    'lg.r5':'Non-blocking usage counter in KV (<code>ctx.waitUntil</code>), tracks calls without adding to response time.',
+    'lg.r6':'The <code>POST /rag-query</code> response exposes <code>{reply, plan, chunks, engine: \'worker-rag-semantic\'}</code>, chunks are visualised in <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> with their source and similarity score.',
     'lg.why.q':'Why edge-native?',
     'lg.why.a':'Structured PM plan + clear response, zero external infrastructure',
-    'lg.why.desc':'The two-node design addresses two opposing constraints. The planner needs a low temperature (T=0.2) to produce deterministic, reliable JSON: intent, user_goal, actionable steps, identified risks, quick_win. The synthesis needs a more creative temperature (T=0.45) to produce a natural, concise response (max 220 words). For the RAG Explorer, a third step is added: Workers AI embeddings compute cosine similarity between the query and the PM knowledge base, and the retrieved context is injected into the synthesis. This architecture was first prototyped in Python (FastAPI + LangGraph) — but Render\'s free tier (512 MB) was insufficient to load sentence-transformers. Solution: port the entire pipeline into the Cloudflare Worker via <strong>Workers AI</strong> (bge-small-en-v1.5, 384 dimensions). Batch embeddings at the edge, cosine similarity in JS, zero Python dependency.',
+    'lg.why.desc':'The two-node design addresses two opposing constraints. The planner needs a low temperature (T=0.2) to produce deterministic, reliable JSON: intent, user_goal, actionable steps, identified risks, quick_win. The synthesis needs a more creative temperature (T=0.45) to produce a natural, concise response (max 220 words). For the RAG Explorer, a third step is added: Workers AI embeddings compute cosine similarity between the query and the PM knowledge base, and the retrieved context is injected into the synthesis. This architecture was first prototyped in Python (FastAPI + LangGraph), but Render\'s free tier (512 MB) was insufficient to load sentence-transformers. Solution: port the entire pipeline into the Cloudflare Worker via <strong>Workers AI</strong> (bge-small-en-v1.5, 384 dimensions). Batch embeddings at the edge, cosine similarity in JS, zero Python dependency.',
     's0.title':'Why this site exists',
-    's0.lead':'I\'ve always had an innovative mindset and a natural drive toward technical subjects. This site is my lab — a sandbox where I test technologies and hypotheses as a builder.',
+    's0.lead':'I\'ve always had an innovative mindset and a natural drive toward technical subjects. This site is my lab, a sandbox where I test technologies and hypotheses as a builder.',
     's0.body':'I use it to explore AI, develop my builder skills and validate patterns in real conditions. With passion and curiosity. Every feature here is a genuine experiment: an architecture pushed to see how far it holds, a pipeline designed to understand its limits, a pattern discovered by building it. This is not a showcase portfolio. It\'s a living system.',
     's5b.title':'What did not work',
     's5b.approach.label':'The initial approach: single system prompt',
@@ -1191,17 +1193,17 @@ var T={
     's5b.root.label':'The root cause',
     's5b.root.desc':'A single prompt asks the model to do two things at once: analyse the user\'s intent rigorously AND formulate a natural, engaging response. These two tasks have opposing requirements. Intent analysis demands precision and consistency: the model must produce a reliable, structured, parseable output. Response formulation demands fluency and some creative freedom so it does not sound robotic. A single LLM call with a single temperature parameter cannot satisfy both at the same time. This concrete problem led to the planner→synthesis two-node design: not over-engineering, but the minimal solution to a real constraint.',
     's5b.render.label':'The Python deployment that never started',
-    's5b.render.desc':'The RAG pipeline was first built in Python: FastAPI + LangGraph + sentence-transformers + ChromaDB. Locally, everything worked. On Render (free tier), the service never started: loading sentence-transformers exceeds the 512 MB RAM allocation. The lesson: an infrastructure constraint can make a good architecture undeployable. Rather than upgrade hosting, I looked for a zero-infrastructure approach. Solution: port the entire RAG into the Cloudflare Worker via Workers AI — embeddings are computed at the edge, no Python server, no memory limit.',
+    's5b.render.desc':'The RAG pipeline was first built in Python: FastAPI + LangGraph + sentence-transformers + ChromaDB. Locally, everything worked. On Render (free tier), the service never started: loading sentence-transformers exceeds the 512 MB RAM allocation. The lesson: an infrastructure constraint can make a good architecture undeployable. Rather than upgrade hosting, I looked for a zero-infrastructure approach. Solution: port the entire RAG into the Cloudflare Worker via Workers AI, embeddings are computed at the edge, no Python server, no memory limit.',
     's5.reflect.label':'What this says about my PM thinking',
     's5.reflect.desc':'This architectural choice directly reflects how I think: identify the real constraint before choosing the solution. Here the constraint was not "KRL1 responds poorly". It was "a single node cannot be deterministic and creative at the same time". Once the constraint is clearly stated, the solution becomes obvious. The graph is testable node by node independently, extensible without rewriting everything, and each component has a single clear responsibility. That is exactly what good product design looks like.',
     's6.title':'What\'s next',
     's6.status.label':'Where the site stands',
     's6.status.desc':'The site has not really been shared yet. That is intentional: I wanted the architecture to be solid first, the fallback cases covered, the tests in place. Shipping something broken to recruiters or PMs in my network would have done more harm than good.',
     's6.next.label':'The next step',
-    's6.next.desc':'LLM observability is live with Langfuse: every KRL1 call generates a trace with token usage, planner/synthesis latencies, and detected intent. The next step is to open the site and use that data — which tools generate the most results, does KRL1 redirect to the right tools at the right moment, where do users drop off before generating?',
+    's6.next.desc':'LLM observability is live with Langfuse: every KRL1 call generates a trace with token usage, planner/synthesis latencies, and detected intent. The next step is to open the site and use that data, which tools generate the most results, does KRL1 redirect to the right tools at the right moment, where do users drop off before generating?',
     's6.pm.label':'What this demonstrates',
     's6.pm.a':'Build, measure, decide',
-    's6.pm.desc':'Analytics is in place: Langfuse traces every LLM call in production — detected intent, tokens consumed, latency per step. The loop is closed: build → measure (Langfuse) → decide → iterate. This cycle is exactly what I advocate as a PM. It made sense for this portfolio to be a live demonstration of it.',
+    's6.pm.desc':'Analytics is in place: Langfuse traces every LLM call in production, detected intent, tokens consumed, latency per step. The loop is closed: build → measure (Langfuse) → decide → iterate. This cycle is exactly what I advocate as a PM. It made sense for this portfolio to be a live demonstration of it.',
     'stat.tools':'PM tools',
     'stat.cost':'/ month infra cost',
     'stat.weeks':'weeks in spare time',
@@ -1210,32 +1212,32 @@ var T={
     'gloss.edge':'Paradigm that moves request processing as close as possible to the user, on globally distributed servers. Reduces latency by avoiding round trips to a central datacenter.',
     'gloss.rag':'Retrieval-Augmented Generation: enriching an LLM with context dynamically retrieved at query time. Grounds responses in a specific knowledge base without retraining.',
     'gloss.embedding':'Vector representation of text that encodes its semantic meaning. Two semantically similar texts have similar vectors, enabling similarity-based search rather than exact keyword matching.',
-    'gloss.llm':'Large Language Model: language model trained on large amounts of text. Here: Meta\'s llama-3.3-70b, served by Groq on LPU (Language Processing Unit) — inference in 1-2 seconds.',
-    'gloss.intent':'Classification of the purpose behind a user message. KRL1\'s planner detects 5 intents: pm_workflow, portfolio, tech, contact, other — each triggering a different response path.',
+    'gloss.llm':'Large Language Model: language model trained on large amounts of text. Here: Meta\'s llama-3.3-70b, served by Groq on LPU (Language Processing Unit), inference in 1-2 seconds.',
+    'gloss.intent':'Classification of the purpose behind a user message. KRL1\'s planner detects 5 intents: pm_workflow, portfolio, tech, contact, other, each triggering a different response path.',
     'gloss.planner':'Orchestration pattern using 2 sequential LLM calls. The planner (T=0.2) produces structured JSON; synthesis (T=0.45) transforms it into a natural response. Separating them enables independent optimization of each step.',
     'gloss.sse':'Server-Sent Events: unidirectional HTTP streaming protocol (server → client). Displays LLM responses progressively as the first tokens arrive, without waiting for the complete response.',
     'gloss.waituntil':'Cloudflare mechanism for executing async work after the response is sent, without blocking the client. Used here to send Langfuse traces and increment the KV counter without adding latency.',
     'gloss.kv':'Cloudflare\'s distributed Key-Value Store. Ultra-fast storage for simple data. Here: global usage counter accessible via the /stats endpoint.',
     'arch.fallback':'↩ native Workers AI semantic RAG',
     's4b.title':'Prompt engineering',
-    's4b.okr.label':'System prompt — OKR Builder (real extract)',
-    's4b.okr.why':'T=0.5 is deliberate: low enough that the JSON is reliable and parseable, high enough that the OKR labels are varied and inspiring. At T=0.2, OKRs would be too uniform. At T=0.7, the JSON occasionally becomes invalid. The example JSON in the prompt acts as a format guardrail — it constrains the output structure more effectively than a textual description.',
-    's4b.kb.label':'KB fast-path — KRL1 before hitting the LLM',
-    's4b.kb.why':'KRL1 first checks a local knowledge base (6 FR patterns + 6 EN, keyword matching) before sending anything to Groq. If the question matches a rule — "what is the backlog prioritizer?", "what is Carlin\'s profile?" — the response goes out in ~400ms without consuming a single token. This layer covers ~30-40% of recurring questions. It\'s a cost and performance decision: faster, more consistent responses, zero API dependency for the most common cases.',
+    's4b.okr.label':'System prompt, OKR Builder (real extract)',
+    's4b.okr.why':'T=0.5 is deliberate: low enough that the JSON is reliable and parseable, high enough that the OKR labels are varied and inspiring. At T=0.2, OKRs would be too uniform. At T=0.7, the JSON occasionally becomes invalid. The example JSON in the prompt acts as a format guardrail, it constrains the output structure more effectively than a textual description.',
+    's4b.kb.label':'KB fast-path, KRL1 before hitting the LLM',
+    's4b.kb.why':'KRL1 first checks a local knowledge base (6 FR patterns + 6 EN, keyword matching) before sending anything to Groq. If the question matches a rule, "what is the backlog prioritizer?", "what is Carlin\'s profile?", the response goes out in ~400ms without consuming a single token. This layer covers ~30-40% of recurring questions. It\'s a cost and performance decision: faster, more consistent responses, zero API dependency for the most common cases.',
     's4b.params.label':'Parameters per tool',
     's4b.params.intro':'Each tool has a different constraint. The Backlog Prioritizer uses the lowest temperature: RICE scoring must be consistent and reproducible. The Discovery Assistant uses the highest: reformulating hypotheses and interview questions benefits from more variety.',
     'params.th.tool':'Tool',
     'params.th.t':'Temperature',
     'params.th.tok':'max_tokens',
     'params.th.out':'Output',
-    'lg.tests.label':'Automated tests — proxy.test.mjs',
+    'lg.tests.label':'Automated tests, proxy.test.mjs',
     'test.n1':'Test 1',
     'test.t1':'Semantic RAG active',
     'test.d1':'POST /rag-query → Groq planner + Workers AI embeddings + cosine sim + synthesis. Client receives {reply, plan, chunks, engine: "worker-rag-semantic"}.',
     'test.r1':'assert chunks.length = 3, engine = "worker-rag-semantic"',
     'test.n2':'Test 2',
     'test.t2':'Native Worker orchestrator',
-    'test.d2':'Without external URL: 2 sequential Groq calls — planner (strict JSON) then synthesis (text). Client receives {reply, plan}.',
+    'test.d2':'Without external URL: 2 sequential Groq calls, planner (strict JSON) then synthesis (text). Client receives {reply, plan}.',
     'test.r2':'assert plan.intent = "roadmap", reply = "Synthèse utile"',
     'test.n3':'Test 3',
     'test.t3':'POST / routing intact',
@@ -1297,7 +1299,7 @@ function setLang(lang){
 var TT_GLOSSARY = {
   rag:{fr:'Retrieval-Augmented Generation : enrichir un LLM avec du contexte récupéré dynamiquement au moment de la requête. Permet d\'ancrer les réponses sans retraining.',en:'Retrieval-Augmented Generation: enriching an LLM with context retrieved at query time. Grounds responses without retraining.'},
   llm:{fr:'Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : llama-3.3-70b de Meta, servi par Groq sur LPU.',en:'Large Language Model: trained on large amounts of text. Here: Meta\'s llama-3.3-70b, served by Groq on LPU hardware.'},
-  embedding:{fr:'Représentation vectorielle d\'un texte encodant son sens sémantique. Deux textes proches en sens ont des vecteurs proches — permet la recherche par similarité.',en:'Vector representation of text encoding its semantic meaning. Similar texts have similar vectors — enables similarity-based search.'},
+  embedding:{fr:'Représentation vectorielle d\'un texte encodant son sens sémantique. Deux textes proches en sens ont des vecteurs proches, permet la recherche par similarité.',en:'Vector representation of text encoding its semantic meaning. Similar texts have similar vectors, enables similarity-based search.'},
   sse:{fr:'Server-Sent Events : streaming HTTP unidirectionnel (serveur → client). Affiche la réponse LLM progressivement dès les premiers tokens.',en:'Server-Sent Events: unidirectional HTTP streaming (server → client). Displays LLM responses progressively as the first tokens arrive.'},
   kv:{fr:'Key-Value Store distribué Cloudflare. Stockage ultra-rapide pour données simples. Ici : compteur d\'usage global via /stats.',en:'Cloudflare distributed Key-Value Store. Ultra-fast storage for simple data. Here: global usage counter via /stats.'},
   waituntil:{fr:'Mécanisme Cloudflare pour travail asynchrone non-bloquant après envoi de la réponse. Utilisé ici pour Langfuse et le compteur KV.',en:'Cloudflare mechanism for non-blocking async work after the response is sent. Used here for Langfuse and KV counter.'},
