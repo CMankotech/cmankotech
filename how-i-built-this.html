@@ -26,7 +26,7 @@ h1,h2,h3,h4{font-family:'Syne',sans-serif}
 .g3{width:350px;height:350px;top:50%;left:30%;background:rgba(34,211,238,0.05)}
 
 /* LAYOUT */
-.container{max-width:860px;margin:0 auto;padding:3rem 1.5rem;position:relative;z-index:1}
+.container{max-width:1100px;margin:0 auto;padding:3.5rem 3rem;position:relative;z-index:1}
 
 /* BACK LINK */
 .back-link{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;margin-bottom:2.5rem;transition:color 0.2s}
@@ -200,6 +200,9 @@ html[lang="en"] .mermaid-wrap[data-diagram-lang="en"]{display:block}
 .footer-back:hover{color:var(--cyan)}
 .footer-copy{font-size:0.65rem;color:var(--muted);letter-spacing:0.08em}
 
+@media(max-width:900px){
+  .container{padding:2rem 1.5rem}
+}
 @media(max-width:700px){
   .stack-grid,.tools-grid,.lg-grid{grid-template-columns:1fr}
   .tl-item{grid-template-columns:36px 1fr;gap:1rem}
@@ -207,10 +210,6 @@ html[lang="en"] .mermaid-wrap[data-diagram-lang="en"]{display:block}
   .top-bar{flex-wrap:wrap;gap:0.75rem}
   .page-footer{flex-direction:column;align-items:flex-start}
   .test-grid{grid-template-columns:1fr}
-
-  .stats-bar{flex-wrap:wrap}
-  .stat-item{min-width:45%;flex:none}
-  .stat-sep{display:none}
 }
 
 /* THEME TOGGLE */
@@ -284,26 +283,8 @@ if (window.mermaid) {
   <header>
     <div class="header-tag"><span class="dot"></span><span data-i18n="tag">Behind the build</span></div>
     <h1 data-i18n="h1.line1">Comment j'ai<br><span class="grad" data-i18n="h1.grad">construit ce site</span></h1>
-    <p class="subtitle" data-i18n="subtitle">Stack vanilla, déploiement statique, LLM via proxy sécurisé. Zéro framework, zéro dépendance inutile — juste du web qui fonctionne.</p>
+    <p class="subtitle" data-i18n="subtitle">Tu veux savoir comment c'est construit en vrai ? Architecture edge-native, pipeline RAG, orchestration LLM, observabilité Langfuse — tout est ici. Sans abstractions inutiles.</p>
   </header>
-
-  <!-- STATS BAR -->
-  <div class="stats-bar">
-    <div class="stat-item">
-      <div class="stat-num">6</div>
-      <div class="stat-lbl" data-i18n="stat.tools">outils PM</div>
-    </div>
-    <div class="stat-sep"></div>
-    <div class="stat-item">
-      <div class="stat-num">0€</div>
-      <div class="stat-lbl" data-i18n="stat.cost">/ mois d'infra</div>
-    </div>
-    <div class="stat-sep"></div>
-    <div class="stat-item">
-      <div class="stat-num">~6</div>
-      <div class="stat-lbl" data-i18n="stat.weeks">sem. en spare time</div>
-    </div>
-  </div>
 
   <!-- 00 POURQUOI CE SITE EXISTE -->
   <section>
@@ -312,13 +293,8 @@ if (window.mermaid) {
       <span class="sec-title" data-i18n="s0.title">Pourquoi ce site existe</span>
     </div>
     <div class="narrative-block">
-      <p class="narrative-lead" data-i18n="s0.lead">En cherchant un poste d'AI PM, j'ai réalisé que tout le monde dit "je maîtrise l'IA". Personne ne le montre. Ce site est ma réponse à ça.</p>
-      <p class="narrative-p" data-i18n="s0.intro">Trois raisons l'ont fait naître en même temps.</p>
-      <div class="narrative-reasons">
-        <div class="narrative-reason" data-i18n="s0.r1"><strong>Frustration terrain.</strong> Chez AXA, chez Airbus, chez OAIO, j'aurais eu besoin d'outils comme ceux-ci : un vrai générateur d'OKRs, un analyseur d'entretiens qui synthétise en 10 secondes, un backlog prioritizer qui justifie ses choix. Je les ai construits parce que je les aurais utilisés.</div>
-        <div class="narrative-reason" data-i18n="s0.r2"><strong>Une conviction.</strong> Un PM qui prétend comprendre l'IA sans jamais avoir construit avec, c'est un PM qui parle de ce qu'il n'a pas vécu.</div>
-        <div class="narrative-reason" data-i18n="s0.r3"><strong>Un contexte.</strong> En recherche d'emploi active, j'avais du temps et une vraie raison de shipper vite. Ce site est né de ces trois choses en même temps.</div>
-      </div>
+      <p class="narrative-lead" data-i18n="s0.lead">J'ai toujours eu un esprit innovant et une volonté naturelle de me tourner vers les sujets techniques. Ce site est mon laboratoire — un bac à sable où je teste des technos et des hypothèses en tant que builder.</p>
+      <p class="narrative-p" data-i18n="s0.body">Je l'utilise pour explorer l'IA, développer mes compétences de builder et valider des patterns en conditions réelles. Avec passion et curiosité. Chaque feature ici est une vraie expérience : une architecture qu'on pousse pour voir jusqu'où elle tient, un pipeline qu'on conçoit pour comprendre ses limites, un pattern qu'on découvre en le construisant. Ce n'est pas un portfolio de présentation. C'est un système vivant.</p>
     </div>
   </section>
 
@@ -794,6 +770,76 @@ flowchart LR
     </div>
   </section>
 
+  <!-- 05b PERFORMANCE & MÉTRIQUES -->
+  <section>
+    <div class="sec-header">
+      <span class="sec-num">05b</span>
+      <span class="sec-title">Performance &amp; métriques réelles</span>
+    </div>
+
+    <div class="decision-card" style="margin-bottom:1rem">
+      <div class="decision-q">Latences mesurées en production (Groq LPU)</div>
+      <table class="params-table">
+        <thead>
+          <tr>
+            <th>Étape</th>
+            <th>Modèle</th>
+            <th>Température</th>
+            <th>max_tokens</th>
+            <th>Latence p50</th>
+            <th>Tokens typiques</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-tool">Planner</td><td>llama-3.3-70b</td><td class="td-temp">0.2</td><td class="td-tokens">500</td><td class="td-temp">~600ms</td><td class="td-tokens">~200–400</td></tr>
+          <tr><td class="td-tool">Synthesis</td><td>llama-3.3-70b</td><td class="td-temp">0.45</td><td class="td-tokens">450</td><td class="td-temp">~900ms</td><td class="td-tokens">~300–450</td></tr>
+          <tr><td class="td-tool">Workers AI (RAG)</td><td>bge-small-en-v1.5</td><td class="td-temp">—</td><td class="td-tokens">—</td><td class="td-temp">~200–400ms</td><td class="td-tokens">384 dims</td></tr>
+          <tr><td class="td-tool">Total /orchestrate-stream</td><td>—</td><td class="td-temp">—</td><td class="td-tokens">—</td><td class="td-temp">~1.5–2.5s</td><td class="td-tokens">~600–900</td></tr>
+          <tr><td class="td-tool">Total /rag-query</td><td>—</td><td class="td-temp">—</td><td class="td-tokens">—</td><td class="td-temp">~2–4s</td><td class="td-tokens">~700–1000</td></tr>
+        </tbody>
+      </table>
+      <div class="decision-why" style="margin-top:0.75rem">Le streaming SSE sur <code>/orchestrate-stream</code> divise la latence perçue par ~3 : les premiers tokens s'affichent en ~400ms pendant que la synthesis continue. Pour <code>/rag-query</code>, l'embedding batch Workers AI ajoute ~200-400ms mais permet un retrieval sémantique sans infrastructure externe.</div>
+    </div>
+
+    <div class="decision-card" style="margin-bottom:1rem">
+      <div class="decision-q">Estimation des coûts à l'échelle (Groq paid tier)</div>
+      <table class="params-table">
+        <thead>
+          <tr>
+            <th>Usage</th>
+            <th>Input tokens</th>
+            <th>Output tokens</th>
+            <th>Coût / appel</th>
+            <th>1 000 appels/mois</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-tool">KRL1 orchestrate</td><td class="td-tokens">~500</td><td class="td-tokens">~400</td><td class="td-temp">~$0.00061</td><td class="td-temp">~$0.61</td></tr>
+          <tr><td class="td-tool">RAG query</td><td class="td-tokens">~700</td><td class="td-tokens">~450</td><td class="td-temp">~$0.00077</td><td class="td-temp">~$0.77</td></tr>
+          <tr><td class="td-tool">6 outils PM (avg)</td><td class="td-tokens">~600</td><td class="td-tokens">~1500</td><td class="td-temp">~$0.00154</td><td class="td-temp">~$1.54</td></tr>
+        </tbody>
+      </table>
+      <div class="decision-why" style="margin-top:0.75rem">Tarifs llama-3.3-70b : $0.59/M input tokens, $0.79/M output tokens. Actuellement 100% sur le plan gratuit Groq (30 req/min, 14 400 req/jour). La migration vers le paid tier n'interviendrait qu'en cas de trafic soutenu — à ce volume, le coût mensuel total resterait sous $5.</div>
+    </div>
+
+    <div class="decision-card">
+      <div class="decision-q">Free tiers utilisés — zéro coût en prod</div>
+      <table class="params-table">
+        <thead>
+          <tr><th>Service</th><th>Limite gratuite</th><th>Usage actuel</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-tool">Groq API</td><td>30 req/min · 14 400 req/jour</td><td class="td-temp">Largement suffisant</td></tr>
+          <tr><td class="td-tool">Cloudflare Workers</td><td>100 000 req/jour</td><td class="td-temp">Largement suffisant</td></tr>
+          <tr><td class="td-tool">Workers AI (embeddings)</td><td>10 000 neurons/jour</td><td class="td-temp">~200/req → ~50 appels/jour</td></tr>
+          <tr><td class="td-tool">Cloudflare KV</td><td>100 000 reads + 1 000 writes/jour</td><td class="td-temp">&lt; 100 writes/jour</td></tr>
+          <tr><td class="td-tool">Langfuse Cloud</td><td>50 000 observations/mois</td><td class="td-temp">~3 events/appel KRL1</td></tr>
+          <tr><td class="td-tool">GitHub Pages</td><td>Illimité (fichiers statiques)</td><td class="td-temp">Frontend complet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
   <!-- 06 ET MAINTENANT -->
   <section>
     <div class="sec-header">
@@ -892,7 +938,7 @@ var T={
     'tag':'Behind the build',
     'h1.line1':'Comment j\'ai<br>',
     'h1.grad':'construit ce site',
-    'subtitle':'Stack vanilla, déploiement statique, LLM via proxy sécurisé. Zéro framework, zéro dépendance inutile — juste du web qui fonctionne.',
+    'subtitle':'Tu veux savoir comment c\'est construit en vrai ? Architecture edge-native, pipeline RAG, orchestration LLM, observabilité Langfuse — tout est ici. Sans abstractions inutiles.',
     's1.title':'Stack technique',
     'stack.front.badge':'Frontend',
     'stack.front.desc':'Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline — pas de composants partagés, pas de routing entre pages. Ce choix permet un déploiement direct sans étape de build, un debug immédiat dans les DevTools navigateur, et un code lisible à plat sans couche d\'abstraction. Sept pages autonomes : les 6 outils PM (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) + le hub <code>pm-toolkit.html</code> qui les enchaîne. Un seul point de couplage : <code>pm-session.js</code>, un module léger qui persiste les sorties de chaque outil dans <code>localStorage</code> pour que le suivant puisse les réimporter en un clic.',
@@ -976,11 +1022,8 @@ var T={
     'lg.why.a':'Plan PM structuré + réponse claire, zéro infra externe',
     'lg.why.desc':'Le double-nœud répond à deux contraintes opposées. Le planner a besoin d\'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. La synthesis a besoin d\'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots). Pour le RAG Explorer, une troisième étape s\'intercale : les embeddings Workers AI calculent la similarité cosinus entre la requête et la base PM, et le contexte récupéré est injecté dans la synthesis. Cette architecture a d\'abord été prototypée en Python (FastAPI + LangGraph) — mais le free tier Render (512 MB) était insuffisant pour charger sentence-transformers. Solution : porter l\'intégralité du pipeline dans le Cloudflare Worker via <strong>Workers AI</strong> (bge-small-en-v1.5, 384 dimensions). Embeddings batch à l\'edge, cosine similarity en JS, zéro dépendance Python.',
     's0.title':'Pourquoi ce site existe',
-    's0.lead':'En cherchant un poste d\'AI PM, j\'ai réalisé que tout le monde dit "je maîtrise l\'IA". Personne ne le montre. Ce site est ma réponse à ça.',
-    's0.intro':'Trois raisons l\'ont fait naître en même temps.',
-    's0.r1':'<strong>Frustration terrain.</strong> Chez AXA, chez Airbus, chez OAIO, j\'aurais eu besoin d\'outils comme ceux-ci : un vrai générateur d\'OKRs, un analyseur d\'entretiens qui synthétise en 10 secondes, un backlog prioritizer qui justifie ses choix. Je les ai construits parce que je les aurais utilisés.',
-    's0.r2':'<strong>Une conviction.</strong> Un PM qui prétend comprendre l\'IA sans jamais avoir construit avec, c\'est un PM qui parle de ce qu\'il n\'a pas vécu.',
-    's0.r3':'<strong>Un contexte.</strong> En recherche d\'emploi active, j\'avais du temps et une vraie raison de shipper vite. Ce site est né de ces trois choses en même temps.',
+    's0.lead':'J\'ai toujours eu un esprit innovant et une volonté naturelle de me tourner vers les sujets techniques. Ce site est mon laboratoire — un bac à sable où je teste des technos et des hypothèses en tant que builder.',
+    's0.body':'Je l\'utilise pour explorer l\'IA, développer mes compétences de builder et valider des patterns en conditions réelles. Avec passion et curiosité. Chaque feature ici est une vraie expérience : une architecture qu\'on pousse pour voir jusqu\'où elle tient, un pipeline qu\'on conçoit pour comprendre ses limites, un pattern qu\'on découvre en le construisant. Ce n\'est pas un portfolio de présentation. C\'est un système vivant.',
     's5b.title':'Ce qui n\'a pas marché',
     's5b.approach.label':'L\'approche initiale : prompt système unique',
     's5b.approach.desc':'KRL1 a commencé avec un prompt système unique : une longue instruction envoyée au modèle avant chaque message utilisateur, lui expliquant qui il est, comment répondre, et quels outils recommander. C\'est l\'approche la plus simple et la plus répandue pour construire un chatbot.',
@@ -1045,7 +1088,7 @@ var T={
     'tag':'Behind the build',
     'h1.line1':'How I<br>',
     'h1.grad':'built this site',
-    'subtitle':'Vanilla stack, static deployment, LLM via secure proxy. No framework, no unnecessary dependencies — just web that works.',
+    'subtitle':'Want to know how it\'s actually built? Edge-native architecture, RAG pipeline, LLM orchestration, Langfuse observability — all here. No unnecessary abstractions.',
     's1.title':'Tech stack',
     'stack.front.badge':'Frontend',
     'stack.front.desc':'100% vanilla. No framework, no bundler, no npm dependencies. Each tool is a standalone HTML page with its own inline CSS and JS — no shared components, no cross-page routing. This allows direct deployment without a build step, instant debugging in browser DevTools, and flat, abstraction-free code. Seven standalone pages: the 6 PM tools (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) plus the <code>pm-toolkit.html</code> hub that chains them. Single coupling point: <code>pm-session.js</code>, a lightweight module that persists each tool\'s output into <code>localStorage</code> so the next tool can re-import it in one click.',
@@ -1129,11 +1172,8 @@ var T={
     'lg.why.a':'Structured PM plan + clear response, zero external infrastructure',
     'lg.why.desc':'The two-node design addresses two opposing constraints. The planner needs a low temperature (T=0.2) to produce deterministic, reliable JSON: intent, user_goal, actionable steps, identified risks, quick_win. The synthesis needs a more creative temperature (T=0.45) to produce a natural, concise response (max 220 words). For the RAG Explorer, a third step is added: Workers AI embeddings compute cosine similarity between the query and the PM knowledge base, and the retrieved context is injected into the synthesis. This architecture was first prototyped in Python (FastAPI + LangGraph) — but Render\'s free tier (512 MB) was insufficient to load sentence-transformers. Solution: port the entire pipeline into the Cloudflare Worker via <strong>Workers AI</strong> (bge-small-en-v1.5, 384 dimensions). Batch embeddings at the edge, cosine similarity in JS, zero Python dependency.',
     's0.title':'Why this site exists',
-    's0.lead':'Looking for an AI PM position, I realised everyone says "I know AI". Nobody shows it. This site is my answer to that.',
-    's0.intro':'Three reasons brought it to life at the same time.',
-    's0.r1':'<strong>Field frustration.</strong> At AXA, Airbus and OAIO, I would have needed tools like these: a real OKR generator, an interview analyser that synthesises in 10 seconds, a backlog prioritiser that justifies its choices. I built them because I would have used them.',
-    's0.r2':'<strong>A conviction.</strong> A PM who claims to understand AI without ever having built with it is a PM who talks about what they have not experienced.',
-    's0.r3':'<strong>A context.</strong> Actively looking for a job, I had time and a real reason to ship fast. This site was born from all three things at once.',
+    's0.lead':'I\'ve always had an innovative mindset and a natural drive toward technical subjects. This site is my lab — a sandbox where I test technologies and hypotheses as a builder.',
+    's0.body':'I use it to explore AI, develop my builder skills and validate patterns in real conditions. With passion and curiosity. Every feature here is a genuine experiment: an architecture pushed to see how far it holds, a pipeline designed to understand its limits, a pattern discovered by building it. This is not a showcase portfolio. It\'s a living system.',
     's5b.title':'What did not work',
     's5b.approach.label':'The initial approach: single system prompt',
     's5b.approach.desc':'KRL1 started with a single system prompt: a long instruction sent to the model before every user message, explaining who it is, how to respond, and which tools to recommend. It is the simplest and most common way to build a chatbot.',
