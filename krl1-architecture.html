@@ -42,7 +42,7 @@ header{margin-bottom:3rem}
 .header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--cyan);margin-bottom:1.25rem;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.2);padding:0.4rem 1rem;border-radius:99px}
 .dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite;flex-shrink:0}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
-h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.85rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h1{font-family:'DM Sans',sans-serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:500;letter-spacing:-0.045em;line-height:1;margin-bottom:0.85rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 h1 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .subtitle{font-size:0.9rem;color:var(--dim);max-width:600px;line-height:1.65;margin-bottom:1.5rem}
 .header-meta{display:flex;gap:0.75rem;flex-wrap:wrap}
@@ -116,6 +116,11 @@ footer{text-align:center;margin-top:3.5rem;padding-top:2rem;border-top:1px solid
 html[lang="en"] .mermaid-wrap[data-diagram-lang="fr"]{display:none}
 html[lang="en"] .mermaid-wrap[data-diagram-lang="en"]{display:block}
 body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:200px 200px;opacity:0.45}
+.tt{border-bottom:1px dashed rgba(34,211,238,0.4);cursor:help;transition:color 0.15s,border-color 0.15s}
+.tt:hover{color:var(--cyan);border-bottom-color:var(--cyan)}
+#tt-bubble{position:fixed;z-index:10000;max-width:260px;background:rgba(7,7,14,0.97);border:1px solid rgba(34,211,238,0.2);border-radius:10px;padding:0.8rem 1rem;box-shadow:0 16px 40px -10px rgba(0,0,0,0.7);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity 0.15s,transform 0.15s;font-size:0.77rem;color:var(--dim);line-height:1.6;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+#tt-bubble.show{opacity:1;transform:translateY(0)}
+#tt-bubble strong{display:block;font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:var(--text);margin-bottom:0.3rem}
 @keyframes drift1{0%{transform:translate(0,0) scale(1)}25%{transform:translate(80px,60px) scale(1.12)}50%{transform:translate(-40px,120px) scale(0.95)}75%{transform:translate(60px,-30px) scale(1.08)}100%{transform:translate(0,0) scale(1)}}@keyframes drift2{0%{transform:translate(0,0) scale(1)}25%{transform:translate(-70px,-50px) scale(1.1)}50%{transform:translate(50px,-90px) scale(0.92)}75%{transform:translate(-60px,40px) scale(1.05)}100%{transform:translate(0,0) scale(1)}}@keyframes drift3{0%{transform:translate(0,0) scale(1)}25%{transform:translate(90px,-40px) scale(1.08)}50%{transform:translate(-30px,-80px) scale(1.15)}75%{transform:translate(-70px,50px) scale(0.9)}100%{transform:translate(0,0) scale(1)}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
@@ -591,6 +596,7 @@ function setLang(lang){
   document.querySelectorAll('.mermaid-wrap[data-diagram-lang="fr"]').forEach(function(el){ el.style.display = lang==='fr' ? '' : 'none'; });
   if(lang==='en') document.querySelectorAll('.mermaid-wrap[data-diagram-lang="en"] .mermaid:not([data-processed])').forEach(function(el){ mermaid.run({nodes:[el]}); });
   localStorage.setItem('lang', lang);
+  setTimeout(function(){if(typeof applyTooltipsKrl1==='function')applyTooltipsKrl1(lang);},50);
 }
 
 document.addEventListener('DOMContentLoaded', function(){
@@ -618,6 +624,73 @@ document.addEventListener('DOMContentLoaded', function(){
     if(btn){var cur=document.documentElement.getAttribute('data-theme');applyTheme(cur==='light'?'dark':'light');}
   });
 })();
+</script>
+
+<div id="tt-bubble"></div>
+<script>
+var TT_GLOSSARY_K={
+  rag:{fr:'Retrieval-Augmented Generation : enrichir un LLM avec du contexte récupéré au moment de la requête.',en:'Retrieval-Augmented Generation: enriching an LLM with context retrieved at query time.'},
+  llm:{fr:'Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici llama-3.3-70b sur Groq LPU.',en:'Large Language Model: trained on large amounts of text. Here llama-3.3-70b on Groq LPU.'},
+  embedding:{fr:'Représentation vectorielle d\'un texte encodant son sens sémantique. Permet la recherche par similarité.',en:'Vector representation of text encoding its semantic meaning. Enables similarity-based search.'},
+  sse:{fr:'Server-Sent Events : streaming HTTP unidirectionnel serveur vers client.',en:'Server-Sent Events: unidirectional HTTP streaming server to client.'},
+  kv:{fr:'Key-Value Store distribué Cloudflare — stockage ultra-rapide. Ici : compteur d\'usage via /stats.',en:'Cloudflare distributed Key-Value Store — ultra-fast storage. Here: usage counter via /stats.'},
+  waituntil:{fr:'Mécanisme Cloudflare pour travail asynchrone non-bloquant après envoi de la réponse. Utilisé pour Langfuse et le compteur KV.',en:'Cloudflare mechanism for non-blocking async work after the response is sent. Used for Langfuse and KV counter.'},
+  worker:{fr:'Fonction serverless Cloudflare entre le navigateur et les APIs — pas de VPS, cold start quasi-nul.',en:'Cloudflare serverless function between browser and APIs — no server, near-zero cold start.'},
+  lpu:{fr:'Language Processing Unit : puce d\'Altera/Groq spécialisée pour l\'inférence LLM. Bien plus rapide qu\'un GPU pour ce cas d\'usage.',en:'Language Processing Unit: Altera/Groq chip specialised for LLM inference. Much faster than a GPU for this use case.'},
+  intent:{fr:'Classification de l\'intention derrière un message. KRL1 détecte 5 intents : pm_workflow, portfolio, tech, contact, other.',en:'Classification of the purpose behind a message. KRL1 detects 5 intents: pm_workflow, portfolio, tech, contact, other.'},
+};
+var TT_PATTERNS_K=[
+  {rx:/ctx\.waitUntil/g,key:'waituntil'},
+  {rx:/\bKV\s+Store/g,key:'kv'},
+  {rx:/\bembeddings?\b/gi,key:'embedding'},
+  {rx:/\bSSE\b/g,key:'sse'},
+  {rx:/\bRAG\b/g,key:'rag'},
+  {rx:/\bLLMs?\b/g,key:'llm'},
+  {rx:/\bLPU\b/g,key:'lpu'},
+  {rx:/\bIntent\b/g,key:'intent'},
+];
+function applyTooltipsKrl1(lang){
+  var sel='.layer-desc,.tradeoff-a,.annot-text';
+  document.querySelectorAll(sel).forEach(function(container){
+    container.querySelectorAll('.tt').forEach(function(s){s.outerHTML=s.textContent;});
+    container.normalize();
+    var walker=document.createTreeWalker(container,NodeFilter.SHOW_TEXT,null,false);
+    var nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+    nodes.forEach(function(node){
+      if(!node.textContent.trim())return;
+      var html=node.textContent,changed=false;
+      TT_PATTERNS_K.forEach(function(p){p.rx.lastIndex=0;if(p.rx.test(html)){p.rx.lastIndex=0;html=html.replace(p.rx,function(m){changed=true;return'<span class="tt" data-key="'+p.key+'">'+m+'</span>';});}});
+      if(changed){var tmp=document.createElement('span');tmp.innerHTML=html;while(tmp.firstChild)node.parentNode.insertBefore(tmp.firstChild,node);node.parentNode.removeChild(node);}
+    });
+  });
+}
+var ttBubbleK=document.getElementById('tt-bubble');
+var ttActiveK=null;
+function showTTK(el){
+  var key=el.getAttribute('data-key');
+  var lang=document.documentElement.lang||'fr';
+  var def=TT_GLOSSARY_K[key]&&TT_GLOSSARY_K[key][lang];
+  if(!def)return;
+  ttBubbleK.innerHTML='<strong>'+el.textContent+'</strong>'+def;
+  var rect=el.getBoundingClientRect(),bw=268;
+  var x=Math.max(8,Math.min(rect.left+rect.width/2-bw/2,window.innerWidth-bw-8));
+  var y=rect.bottom+6;if(y+140>window.innerHeight)y=rect.top-140;
+  ttBubbleK.style.left=x+'px';ttBubbleK.style.top=y+'px';
+  ttBubbleK.classList.add('show');ttActiveK=el;
+}
+document.addEventListener('mouseover',function(e){
+  var el=e.target.closest?e.target.closest('.tt'):null;
+  if(el&&el!==ttActiveK)showTTK(el);
+  else if(!el&&ttActiveK){ttBubbleK.classList.remove('show');ttActiveK=null;}
+});
+document.addEventListener('click',function(e){
+  var el=e.target.closest?e.target.closest('.tt'):null;
+  if(el){if(el===ttActiveK&&ttBubbleK.classList.contains('show')){ttBubbleK.classList.remove('show');ttActiveK=null;}else showTTK(el);e.stopPropagation();}
+  else{ttBubbleK.classList.remove('show');ttActiveK=null;}
+});
+document.addEventListener('DOMContentLoaded',function(){
+  setTimeout(function(){applyTooltipsKrl1(document.documentElement.lang||'fr');},200);
+});
 </script>
 </body>
 </html>

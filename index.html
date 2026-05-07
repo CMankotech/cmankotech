@@ -29,6 +29,13 @@ body.glows-hidden .glow{opacity:0}
 .g6{width:560px;height:560px;bottom:-15%;right:-8%;background:radial-gradient(ellipse 55% 60%,rgba(34,211,238,0.28),transparent 70%);animation:drift2 17s ease-in-out infinite reverse}
 .g7{width:500px;height:500px;top:75%;left:55%;background:radial-gradient(ellipse 52% 55%,rgba(167,139,250,0.28),transparent 70%);animation:drift3 19s ease-in-out infinite}
 body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:200px 200px;opacity:0.45}
+.tt{border-bottom:1px dashed rgba(34,211,238,0.4);cursor:help;transition:color 0.15s,border-color 0.15s}
+.tt:hover{color:var(--cyan,#22d3ee);border-bottom-color:var(--cyan,#22d3ee)}
+#tt-bubble{position:fixed;z-index:10000;max-width:260px;background:rgba(7,7,14,0.97);border:1px solid rgba(34,211,238,0.2);border-radius:10px;padding:0.8rem 1rem;box-shadow:0 16px 40px -10px rgba(0,0,0,0.7);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity 0.15s,transform 0.15s;font-size:0.77rem;color:var(--dim);line-height:1.6;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+#tt-bubble.show{opacity:1;transform:translateY(0)}
+#tt-bubble strong{display:block;font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;color:var(--text);margin-bottom:0.3rem}
+[data-theme="light"] #tt-bubble{background:rgba(255,255,255,0.97);border-color:rgba(59,130,246,0.2);color:#475569}
+[data-theme="light"] #tt-bubble strong{color:#0f172a}
 @keyframes drift1{0%{transform:translate(0,0) scale(1) rotate(0deg)}25%{transform:translate(80px,60px) scale(1.12) rotate(5deg)}50%{transform:translate(-40px,120px) scale(0.95) rotate(-3deg)}75%{transform:translate(60px,-30px) scale(1.08) rotate(4deg)}100%{transform:translate(0,0) scale(1) rotate(0deg)}}
 @keyframes drift2{0%{transform:translate(0,0) scale(1) rotate(0deg)}25%{transform:translate(-70px,-50px) scale(1.1) rotate(-4deg)}50%{transform:translate(50px,-90px) scale(0.92) rotate(6deg)}75%{transform:translate(-60px,40px) scale(1.05) rotate(-2deg)}100%{transform:translate(0,0) scale(1) rotate(0deg)}}
 @keyframes drift3{0%{transform:translate(0,0) scale(1) rotate(0deg)}25%{transform:translate(90px,-40px) scale(1.08) rotate(3deg)}50%{transform:translate(-30px,-80px) scale(1.15) rotate(-5deg)}75%{transform:translate(-70px,50px) scale(0.9) rotate(2deg)}100%{transform:translate(0,0) scale(1) rotate(0deg)}}
@@ -796,6 +803,7 @@ window.setLang=function(lang){
       }
     }
   });
+  setTimeout(function(){if(typeof applyTooltipsIndex==='function')applyTooltipsIndex(lang);},50);
 };
 
 // Hamburger menu
@@ -1087,6 +1095,77 @@ function animCounter(el){
     if(btn){var cur=document.documentElement.getAttribute('data-theme');applyTheme(cur==='light'?'dark':'light');}
   });
 })();
+// open all internal .html links in new tab
+document.querySelectorAll('a[href]').forEach(function(a){
+  var h=a.getAttribute('href')||'';
+  if(h.endsWith('.html')&&!h.startsWith('http')){a.setAttribute('target','_blank');a.setAttribute('rel','noopener noreferrer');}
+});
+</script>
+
+<div id="tt-bubble"></div>
+<script>
+var TT_GLOSSARY={
+  rag:{fr:'Retrieval-Augmented Generation : enrichir un LLM avec du contexte récupéré dynamiquement au moment de la requête.',en:'Retrieval-Augmented Generation: enriching an LLM with context retrieved at query time.'},
+  llm:{fr:'Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : llama-3.3-70b de Meta sur Groq LPU.',en:'Large Language Model: trained on large amounts of text. Here: Meta\'s llama-3.3-70b on Groq LPU.'},
+  embedding:{fr:'Représentation vectorielle d\'un texte encodant son sens sémantique. Permet la recherche par similarité.',en:'Vector representation of text encoding its semantic meaning. Enables similarity-based search.'},
+  sse:{fr:'Server-Sent Events : streaming HTTP unidirectionnel (serveur vers client). Affiche la réponse token par token.',en:'Server-Sent Events: unidirectional HTTP streaming (server to client). Displays the response token by token.'},
+  kv:{fr:'Key-Value Store distribué Cloudflare. Stockage ultra-rapide. Ici : compteur d\'usage global.',en:'Cloudflare distributed Key-Value Store. Ultra-fast storage. Here: global usage counter.'},
+  waituntil:{fr:'Mécanisme Cloudflare pour travail asynchrone non-bloquant après envoi de la réponse.',en:'Cloudflare mechanism for non-blocking async work after the response is sent.'},
+  worker:{fr:'Fonction serverless Cloudflare entre le navigateur et les APIs — pas de VPS, cold start quasi-nul.',en:'Cloudflare serverless function between browser and APIs — no server, near-zero cold start.'},
+  intent:{fr:'Classification de l\'intention derrière un message. KRL1 détecte 5 intents : pm_workflow, portfolio, tech, contact, other.',en:'Classification of the purpose behind a message. KRL1 detects 5 intents: pm_workflow, portfolio, tech, contact, other.'},
+};
+var TT_PATTERNS=[
+  {rx:/ctx\.waitUntil/g,key:'waituntil'},
+  {rx:/\bKV\s+Store/g,key:'kv'},
+  {rx:/\bembeddings?\b/gi,key:'embedding'},
+  {rx:/\bSSE\b/g,key:'sse'},
+  {rx:/\bRAG\b/g,key:'rag'},
+  {rx:/\bLLMs?\b/g,key:'llm'},
+  {rx:/\bIntent\b/g,key:'intent'},
+];
+function applyTooltipsIndex(lang){
+  var sel='.stack-desc,.decision-why,.proj-summary-text';
+  document.querySelectorAll(sel).forEach(function(container){
+    container.querySelectorAll('.tt').forEach(function(s){s.outerHTML=s.textContent;});
+    container.normalize();
+    var walker=document.createTreeWalker(container,NodeFilter.SHOW_TEXT,null,false);
+    var nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+    nodes.forEach(function(node){
+      if(!node.textContent.trim())return;
+      var html=node.textContent,changed=false;
+      TT_PATTERNS.forEach(function(p){p.rx.lastIndex=0;if(p.rx.test(html)){p.rx.lastIndex=0;html=html.replace(p.rx,function(m){changed=true;return'<span class="tt" data-key="'+p.key+'">'+m+'</span>';});}});
+      if(changed){var tmp=document.createElement('span');tmp.innerHTML=html;while(tmp.firstChild)node.parentNode.insertBefore(tmp.firstChild,node);node.parentNode.removeChild(node);}
+    });
+  });
+}
+var ttBubbleI=document.getElementById('tt-bubble');
+var ttActiveI=null;
+function showTTI(el){
+  var key=el.getAttribute('data-key');
+  var lang=document.documentElement.lang||'fr';
+  var def=TT_GLOSSARY[key]&&TT_GLOSSARY[key][lang];
+  if(!def)return;
+  ttBubbleI.innerHTML='<strong>'+el.textContent+'</strong>'+def;
+  var rect=el.getBoundingClientRect(),bw=268;
+  var x=Math.max(8,Math.min(rect.left+rect.width/2-bw/2,window.innerWidth-bw-8));
+  var y=rect.bottom+6;if(y+140>window.innerHeight)y=rect.top-140;
+  ttBubbleI.style.left=x+'px';ttBubbleI.style.top=y+'px';
+  ttBubbleI.classList.add('show');ttActiveI=el;
+}
+document.addEventListener('mouseover',function(e){
+  var el=e.target.closest?e.target.closest('.tt'):null;
+  if(el&&el!==ttActiveI)showTTI(el);
+  else if(!el&&ttActiveI){ttBubbleI.classList.remove('show');ttActiveI=null;}
+});
+document.addEventListener('click',function(e){
+  var el=e.target.closest?e.target.closest('.tt'):null;
+  if(el){if(el===ttActiveI&&ttBubbleI.classList.contains('show')){ttBubbleI.classList.remove('show');ttActiveI=null;}else showTTI(el);e.stopPropagation();}
+  else{ttBubbleI.classList.remove('show');ttActiveI=null;}
+});
+document.addEventListener('DOMContentLoaded',function(){
+  var lang=document.documentElement.lang||'fr';
+  setTimeout(function(){applyTooltipsIndex(lang);},200);
+});
 </script>
 </body>
 </html>
