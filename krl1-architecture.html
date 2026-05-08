@@ -258,7 +258,7 @@ flowchart TD
       <span class="layer-num">02</span>
       <div class="layer-body">
         <div class="layer-title" id="l2t">KB fast-path, matching local</div>
-        <div class="layer-desc" id="l2d">Avant tout appel API, KRL1 cherche un pattern dans sa base de connaissances locale (~10 catégories). Si un mot-clé matche, la réponse est servie instantanément depuis le client, 0 latence réseau, 0 coût LLM.</div>
+        <div class="layer-desc" id="l2d">Avant tout appel API, KRL1 cherche un pattern dans sa base de connaissances locale (~16 catégories). Si un mot-clé matche, la réponse est servie instantanément depuis le client, 0 latence réseau, 0 coût LLM.</div>
         <div class="layer-tech">
           <span class="tech-pill">keyword matching</span>
           <span class="tech-pill">FR + EN rules</span>
@@ -372,7 +372,7 @@ devant un nom d'outil.</div>
   </div>
 
   <!-- KB FAST-PATH -->
-  <div class="sec-divider"><span id="kbLbl">KB fast-path, les 10 catégories locales</span></div>
+  <div class="sec-divider"><span id="kbLbl">KB fast-path, les 16 catégories locales</span></div>
   <div class="kb-grid">
     <div class="kb-card">
       <div class="kb-card-keys" id="kb1k">que peux · peux-tu · aide · capacité</div>
@@ -413,6 +413,30 @@ devant un nom d'outil.</div>
     <div class="kb-card">
       <div class="kb-card-keys" id="kb10k">pourquoi pas de backend · sans backend</div>
       <div class="kb-card-desc" id="kb10d">Justification de l'architecture 100% statique</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb11k">rag · retrieval · embedding · cosine</div>
+      <div class="kb-card-desc" id="kb11d">Pipeline RAG : Workers AI bge-small, cosine similarity, top-3 chunks</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb12k">langfuse · observabilit · traces</div>
+      <div class="kb-card-desc" id="kb12d">Langfuse : 3 routes tracées, spans planner + retriever + synthesis</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb13k">stream · sse · server-sent · progressif</div>
+      <div class="kb-card-desc" id="kb13d">Streaming SSE : getReader(), delta parsing, rendu mot par mot</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb14k">orchestr · planner · synthesis · pipeline</div>
+      <div class="kb-card-desc" id="kb14d">Orchestration : planner JSON T=0.2 → synthesis SSE T=0.45</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb15k">groq · llama · lpu · latence</div>
+      <div class="kb-card-desc" id="kb15d">Groq llama-3.3-70b : LPU 1-2s, températures adaptées</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-keys" id="kb16k">route · endpoint · /stats · /veille · /feedback</div>
+      <div class="kb-card-desc" id="kb16d">7 routes Worker : proxy, orchestrate, stream, rag-query, feedback, stats, veille</div>
     </div>
   </div>
 
@@ -488,7 +512,7 @@ var I18N = {
     l1d: "KRL1 lit l'URL dès l'ouverture et adapte son message d'accueil à l'outil PM en cours d'utilisation. 6 messages différents selon la page, OKR Builder, Discovery Assistant, Backlog Prioritizer, etc.",
     l1b: 'Contextualisation',
     l2t: 'KB fast-path, matching local',
-    l2d: "Avant tout appel API, KRL1 cherche un pattern dans sa base de connaissances locale (~10 catégories). Si un mot-clé matche, la réponse est servie instantanément depuis le client, 0 latence réseau, 0 coût LLM.",
+    l2d: "Avant tout appel API, KRL1 cherche un pattern dans sa base de connaissances locale (~16 catégories). Si un mot-clé matche, la réponse est servie instantanément depuis le client, 0 latence réseau, 0 coût LLM.",
     l2b: 'Performance & coût',
     l3t: 'Appel LLM via Groq + system prompt',
     l3d: "Si aucun pattern KB ne matche, la question est envoyée à l'API Groq (llama-3.3-70b sur LPU) avec le system prompt complet + l'historique de conversation. Un Cloudflare Worker proxy sécurise la clé API côté serveur.",
@@ -501,7 +525,7 @@ var I18N = {
     pa2l: 'Scope guard', pa2t: "Sans cette règle, le LLM répond à tout, recettes de cuisine, code Python, etc. Le scope guard maintient KRL1 focalisé sur son objectif : conversion recruteur.", pa2d: 'Décision : "redirige poliment" plutôt que "refuse", moins agressif pour l\'UX.',
     pa3l: 'Contexte en raw text', pa3t: "Le CV complet est injecté en clair dans le contexte. Le LLM n'a jamais à inférer, 0 risque d'hallucination sur les faits biographiques.", pa3d: 'Décision : raw text plutôt que JSON structuré, les LLMs consomment mieux le langage naturel pour ce type d\'information factuelle.',
     pa4l: 'Funnel & règles de rendu', pa4t: "Chaque réponse PM devient un point d'entrée vers les 6 outils, c'est du product-led growth par prompt. La limite de 200 mots évite les réponses essay.", pa4d: 'Décision : les règles typographiques sont des guardrails qualité découverts après test, ajoutés itérativement.',
-    kbLbl: 'KB fast-path, les 10 catégories locales',
+    kbLbl: 'KB fast-path, les 16 catégories locales',
     kb1k:'que peux · peux-tu · aide · capacité', kb1d:"Présentation des 2 axes d'aide : défis PM + portfolio Carlin",
     kb2k:'qui · carlin · profil · présente', kb2d:'Résumé du profil en 3 lignes',
     kb3k:'outil · build · projet · app · tool', kb3d:'Liste des 6 outils PM avec liens cliquables',
@@ -512,6 +536,12 @@ var I18N = {
     kb8k:'stack · architecture · technique · langgraph', kb8d:'Stack technique du site',
     kb9k:'pourquoi cloudflare · cloudflare worker', kb9d:'Justification du choix Cloudflare Workers',
     kb10k:'pourquoi pas de backend · sans backend', kb10d:'Architecture 100% statique',
+    kb11k:'rag · retrieval · embedding · cosine', kb11d:'Pipeline RAG : Workers AI bge-small, cosine similarity, top-3 chunks',
+    kb12k:'langfuse · observabilit · traces', kb12d:'Langfuse : 3 routes tracées, spans planner + retriever + synthesis',
+    kb13k:'stream · sse · server-sent · progressif', kb13d:'Streaming SSE : getReader(), delta parsing, rendu mot par mot',
+    kb14k:'orchestr · planner · synthesis · pipeline', kb14d:'Orchestration : planner JSON T=0.2 → synthesis SSE T=0.45',
+    kb15k:'groq · llama · lpu · latence', kb15d:'Groq llama-3.3-70b : LPU 1-2s, températures adaptées',
+    kb16k:'route · endpoint · /stats · /veille · /feedback', kb16d:'7 routes Worker : proxy, orchestrate, stream, rag-query, feedback, stats, veille',
     tradeoffsLbl: 'Décisions produit & trade-offs',
     t1d:'Décision 01', t1q:'KB local avant LLM, pourquoi ne pas tout envoyer à l\'API ?', t1a:"95% des questions sont récurrentes. Le KB répond en <10ms depuis le navigateur. Le LLM est réservé aux questions réellement ouvertes.",
     t2d:'Décision 02', t2q:'Cloudflare Worker plutôt qu\'un backend Node/FastAPI', t2a:"Un Worker serverless résout le seul vrai problème : ne pas exposer la clé API côté client. Zéro infra, 100k req/jour gratuit, déployé en 2 min.",
@@ -533,7 +563,7 @@ var I18N = {
     l1d: "KRL1 reads the URL on open and adapts its welcome message to the current PM tool. 6 different messages depending on the page, OKR Builder, Discovery Assistant, Backlog Prioritizer, etc.",
     l1b: 'Contextualisation',
     l2t: 'KB fast-path, local matching',
-    l2d: "Before any API call, KRL1 checks its local knowledge base (~10 categories). If a keyword matches, the answer is served instantly from the client, 0 network latency, 0 LLM cost.",
+    l2d: "Before any API call, KRL1 checks its local knowledge base (~16 categories). If a keyword matches, the answer is served instantly from the client, 0 network latency, 0 LLM cost.",
     l2b: 'Performance & cost',
     l3t: 'LLM call via Groq + system prompt',
     l3d: "If no KB pattern matches, the question is sent to the Groq API (llama-3.3-70b on LPU) with the full system prompt + conversation history. A Cloudflare Worker proxy secures the API key server-side.",
@@ -546,7 +576,7 @@ var I18N = {
     pa2l: 'Scope guard', pa2t: "Without this rule, the LLM answers everything, recipes, Python code, etc. The scope guard keeps KRL1 focused on its goal: recruiter conversion.", pa2d: 'Decision: "redirect politely" rather than "refuse", less aggressive UX.',
     pa3l: 'Raw text context', pa3t: "The full CV is injected as plain text. The LLM never has to infer, 0 risk of hallucination on biographical facts.", pa3d: 'Decision: raw text over structured JSON, LLMs process natural language better for this type of factual information.',
     pa4l: 'Funnel & rendering rules', pa4t: "Every PM response becomes an entry point to the 6 tools, product-led growth via prompt. The 200-word limit prevents essay-style answers.", pa4d: 'Decision: typographic rules are quality guardrails discovered through testing, added iteratively.',
-    kbLbl: 'KB fast-path, the 10 local categories',
+    kbLbl: 'KB fast-path, the 16 local categories',
     kb1k:'what can · can you · help · capabilities', kb1d:'Presentation of 2 help axes: PM challenges + Carlin portfolio',
     kb2k:'who · carlin · profile · about', kb2d:'Profile summary in 3 lines',
     kb3k:'tool · build · project · app', kb3d:'List of 6 PM tools with clickable links',
@@ -557,6 +587,12 @@ var I18N = {
     kb8k:'stack · architecture · technical · langgraph', kb8d:'Full site tech stack',
     kb9k:'why cloudflare · cloudflare worker', kb9d:'Cloudflare Workers decision rationale',
     kb10k:'why no backend · without backend', kb10d:'100% static architecture rationale',
+    kb11k:'rag · retrieval · embedding · cosine', kb11d:'RAG pipeline: Workers AI bge-small, cosine similarity, top-3 chunks',
+    kb12k:'langfuse · observability · traces', kb12d:'Langfuse: 3 traced routes, planner + retriever + synthesis spans',
+    kb13k:'stream · sse · server-sent · progressive', kb13d:'SSE streaming: getReader(), delta parsing, word-by-word render',
+    kb14k:'orchestrat · planner · synthesis · pipeline', kb14d:'Orchestration: planner JSON T=0.2 → synthesis SSE T=0.45',
+    kb15k:'groq · llama · lpu · latency', kb15d:'Groq llama-3.3-70b: LPU 1-2s, tailored temperatures',
+    kb16k:'route · endpoint · /stats · /veille · /feedback', kb16d:'7 Worker routes: proxy, orchestrate, stream, rag-query, feedback, stats, veille',
     tradeoffsLbl: 'Product decisions & trade-offs',
     t1d:'Decision 01', t1q:'KB local before LLM, why not send everything to the API?', t1a:"95% of questions are recurring. The KB answers in <10ms from the browser. The LLM is reserved for genuinely open questions.",
     t2d:'Decision 02', t2q:'Cloudflare Worker over a Node/FastAPI backend', t2a:"A serverless Worker solves the one real problem: not exposing the API key client-side. Zero infra, 100k req/day free, deployed in 2 min.",
@@ -585,7 +621,7 @@ function setLang(lang){
   document.getElementById('promptLbl').textContent = T.promptLbl;
   ['pa1l','pa1t','pa1d','pa2l','pa2t','pa2d','pa3l','pa3t','pa3d','pa4l','pa4t','pa4d'].forEach(function(id){ document.getElementById(id).textContent = T[id]; });
   document.getElementById('kbLbl').textContent = T.kbLbl;
-  for(var i=1;i<=10;i++){ document.getElementById('kb'+i+'k').textContent=T['kb'+i+'k']; document.getElementById('kb'+i+'d').textContent=T['kb'+i+'d']; }
+  for(var i=1;i<=16;i++){ document.getElementById('kb'+i+'k').textContent=T['kb'+i+'k']; document.getElementById('kb'+i+'d').textContent=T['kb'+i+'d']; }
   document.getElementById('tradeoffsLbl').textContent = T.tradeoffsLbl;
   for(var j=1;j<=6;j++){ ['t'+j+'d','t'+j+'q','t'+j+'a'].forEach(function(id){ document.getElementById(id).innerHTML = T[id]; }); }
   document.getElementById('ctaTag').textContent = T.ctaTag;
