@@ -261,6 +261,44 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 @keyframes drift1{0%{transform:translate(0,0) scale(1)}25%{transform:translate(80px,60px) scale(1.12)}50%{transform:translate(-40px,120px) scale(0.95)}75%{transform:translate(60px,-30px) scale(1.08)}100%{transform:translate(0,0) scale(1)}}@keyframes drift2{0%{transform:translate(0,0) scale(1)}25%{transform:translate(-70px,-50px) scale(1.1)}50%{transform:translate(50px,-90px) scale(0.92)}75%{transform:translate(-60px,40px) scale(1.05)}100%{transform:translate(0,0) scale(1)}}@keyframes drift3{0%{transform:translate(0,0) scale(1)}25%{transform:translate(90px,-40px) scale(1.08)}50%{transform:translate(-30px,-80px) scale(1.15)}75%{transform:translate(-70px,50px) scale(0.9)}100%{transform:translate(0,0) scale(1)}}
 .page-cta-pill{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.55rem 1.25rem;border:1px solid rgba(255,255,255,0.12);border-radius:99px;color:var(--muted);text-decoration:none;transition:all 0.2s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .page-cta-pill:hover{color:var(--text);border-color:rgba(255,255,255,0.25)}
+
+/* ── TOC sticky ─────────────────────────────────────────────────── */
+.toc-bar{display:flex;gap:0.3rem;flex-wrap:wrap;position:sticky;top:0;z-index:200;background:rgba(7,7,14,0.88);backdrop-filter:blur(16px) saturate(160%);-webkit-backdrop-filter:blur(16px) saturate(160%);padding:0.55rem 3rem;margin:0 -3rem 2.5rem;border-bottom:1px solid var(--line)}
+.toc-item{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.28rem 0.65rem;border-radius:99px;border:1px solid var(--border);color:var(--muted);text-decoration:none;transition:all 0.2s;white-space:nowrap}
+.toc-item:hover,.toc-item.active{color:var(--cyan);border-color:rgba(34,211,238,0.35);background:rgba(34,211,238,0.07)}
+@media(max-width:700px){.toc-bar{padding:0.55rem 1.5rem;margin:0 -1.5rem 2rem;overflow-x:auto;flex-wrap:nowrap}}
+[data-theme="light"] .toc-bar{background:rgba(244,246,251,0.9)}
+
+/* ── Section 05c — KRL1 decision layers ────────────────────────── */
+.s5c-sub{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);margin:2rem 0 1.25rem;display:flex;align-items:center;gap:0.8rem}
+.s5c-sub::after{content:'';flex:1;height:1px;background:var(--line)}
+.layers{display:flex;flex-direction:column;gap:0;margin-bottom:0}
+.layer-card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.4rem;display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:start}
+.layer-card+.layer-card{margin-top:0.75rem}
+.layer-connector{width:1px;height:0.75rem;background:rgba(255,255,255,0.06);margin:0 auto;display:block}
+.layer-num{font-family:'DM Mono','Courier New',monospace;font-size:1.2rem;font-weight:700;color:var(--layer-color,var(--cyan));line-height:1;padding-top:0.1rem;min-width:1.8rem}
+.layer-body{min-width:0}
+.layer-title{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;letter-spacing:-0.01em}
+.layer-desc{font-size:0.78rem;color:var(--dim);line-height:1.55;margin-bottom:0.6rem}
+.layer-tech{display:flex;gap:0.4rem;flex-wrap:wrap}
+.tech-pill{font-family:'DM Mono','Courier New',monospace;font-size:0.6rem;font-weight:400;padding:0.2rem 0.55rem;border-radius:4px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:var(--dim)}
+.layer-badge{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.22rem 0.6rem;border-radius:99px;background:color-mix(in srgb,var(--layer-color,var(--cyan)) 12%,transparent);color:var(--layer-color,var(--cyan));border:1px solid color-mix(in srgb,var(--layer-color,var(--cyan)) 25%,transparent);white-space:nowrap;align-self:start;margin-top:0.1rem}
+.prompt-section{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;align-items:start}
+@media(max-width:680px){.prompt-section{grid-template-columns:1fr}}
+.prompt-code{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:0.9rem 1rem;font-family:'DM Mono','Courier New',monospace;font-size:0.68rem;line-height:1.6;color:rgba(255,255,255,0.75);position:relative;overflow:hidden}
+.prompt-code::before{content:attr(data-label);position:absolute;top:0.55rem;right:0.7rem;font-size:0.5rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);opacity:0.7}
+.prompt-annot{background:linear-gradient(180deg,rgba(34,211,238,0.04),rgba(34,211,238,0.01));border:1px solid rgba(34,211,238,0.12);border-left:3px solid var(--cyan);border-radius:0 10px 10px 0;padding:0.85rem 1rem;display:flex;flex-direction:column;gap:0.4rem}
+.annot-label{font-size:0.56rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--cyan)}
+.annot-text{font-size:0.75rem;color:var(--dim);line-height:1.55}
+.annot-decision{font-size:0.7rem;color:var(--text);font-weight:500;margin-top:0.1rem}
+.kb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.7rem;margin-bottom:2rem}
+.kb-card{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;padding:0.85rem 1rem}
+.kb-card-keys{font-family:'DM Mono','Courier New',monospace;font-size:0.62rem;color:var(--cyan);margin-bottom:0.4rem;opacity:0.85;line-height:1.5}
+.kb-card-desc{font-size:0.72rem;color:var(--dim);line-height:1.5}
+[data-theme="light"] .layer-card{background:rgba(255,255,255,0.8);border-color:rgba(15,23,42,0.1)}
+[data-theme="light"] .prompt-code{background:rgba(15,23,42,0.05);color:#334155}
+[data-theme="light"] .kb-card{background:rgba(15,23,42,0.025)}
+@media(max-width:640px){.layer-card{grid-template-columns:auto 1fr}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <script>
@@ -297,8 +335,23 @@ if (window.mermaid) {
     <p class="subtitle" data-i18n="subtitle">Si vous aimez la technique et que la complexité ne vous fait pas peur, c'est ici que ça se passe.</p>
   </header>
 
+  <nav class="toc-bar" id="tocBar">
+    <a class="toc-item active" href="#s0"  data-i18n="toc.s0">00</a>
+    <a class="toc-item" href="#s1"         data-i18n="toc.s1">01 Stack</a>
+    <a class="toc-item" href="#s2"         data-i18n="toc.s2">02 Étapes</a>
+    <a class="toc-item" href="#s3"         data-i18n="toc.s3">03 Outils</a>
+    <a class="toc-item" href="#s4"         data-i18n="toc.s4">04 Archi</a>
+    <a class="toc-item" href="#s4b"        data-i18n="toc.s4b">04b Prompts</a>
+    <a class="toc-item" href="#s4c"        data-i18n="toc.s4c">04c Raté</a>
+    <a class="toc-item" href="#s5"         data-i18n="toc.s5">05 RAG</a>
+    <a class="toc-item" href="#s5b"        data-i18n="toc.s5b">05b Perf</a>
+    <a class="toc-item" href="#s5c"        data-i18n="toc.s5c">05c KRL1</a>
+    <a class="toc-item" href="#s6"         data-i18n="toc.s6">06 Suite</a>
+    <a class="toc-item" href="#s7"         data-i18n="toc.s7">07 Glossaire</a>
+  </nav>
+
   <!-- 00 POURQUOI CE SITE EXISTE -->
-  <section>
+  <section id="s0">
     <div class="sec-header">
       <span class="sec-num">00</span>
       <span class="sec-title" data-i18n="s0.title">Pourquoi ce site existe</span>
@@ -310,7 +363,7 @@ if (window.mermaid) {
   </section>
 
   <!-- 01 STACK -->
-  <section>
+  <section id="s1">
     <div class="sec-header">
       <span class="sec-num">01</span>
       <span class="sec-title" data-i18n="s1.title">Stack technique</span>
@@ -400,7 +453,7 @@ if (window.mermaid) {
   </section>
 
   <!-- 02 ÉTAPES -->
-  <section>
+  <section id="s2">
     <div class="sec-header">
       <span class="sec-num">02</span>
       <span class="sec-title" data-i18n="s2.title">Étapes de création</span>
@@ -470,7 +523,7 @@ if (window.mermaid) {
   </section>
 
   <!-- 03 OUTILS DE BUILD -->
-  <section>
+  <section id="s3">
     <div class="sec-header">
       <span class="sec-num">03</span>
       <span class="sec-title" data-i18n="s3.title">Outils de build</span>
@@ -520,7 +573,7 @@ if (window.mermaid) {
   </section>
 
   <!-- 04 DÉCISIONS D'ARCHITECTURE -->
-  <section>
+  <section id="s4">
     <div class="sec-header">
       <span class="sec-num">04</span>
       <span class="sec-title" data-i18n="s4.title">Décisions d'architecture</span>
@@ -555,7 +608,7 @@ if (window.mermaid) {
   </section>
 
   <!-- 04b PROMPT ENGINEERING -->
-  <section>
+  <section id="s4b">
     <div class="sec-header">
       <span class="sec-num">04b</span>
       <span class="sec-title" data-i18n="s4b.title">Prompt engineering</span>
@@ -621,7 +674,7 @@ Réponds UNIQUEMENT avec un JSON valide :
   </section>
 
   <!-- 05b CE QUI N'A PAS MARCHÉ -->
-  <section>
+  <section id="s4c">
     <div class="sec-header">
       <span class="sec-num">04c</span>
       <span class="sec-title" data-i18n="s5b.title">Ce qui n'a pas marché</span>
@@ -645,7 +698,7 @@ Réponds UNIQUEMENT avec un JSON valide :
   </section>
 
   <!-- 05 ORCHESTRATION WORKER, EDGE-NATIVE RAG -->
-  <section>
+  <section id="s5">
     <div class="sec-header">
       <span class="sec-num">05</span>
       <span class="sec-title" data-i18n="s5.title">Orchestration Worker, edge-native RAG</span>
@@ -784,7 +837,7 @@ flowchart LR
   </section>
 
   <!-- 05b PERFORMANCE & MÉTRIQUES -->
-  <section>
+  <section id="s5b">
     <div class="sec-header">
       <span class="sec-num">05b</span>
       <span class="sec-title">Performance &amp; métriques réelles</span>
@@ -853,8 +906,218 @@ flowchart LR
     </div>
   </section>
 
+  <!-- 05c KRL1 · ARCHITECTURE DE DÉCISION -->
+  <section id="s5c">
+    <div class="sec-header">
+      <span class="sec-num">05c</span>
+      <span class="sec-title" data-i18n="s5c.title">KRL1 · Architecture de décision</span>
+    </div>
+
+    <div class="s5c-sub"><span data-i18n="layersLbl">Les 4 couches de décision</span></div>
+
+    <div class="mermaid-wrap" data-diagram-lang="fr">
+      <div class="mermaid-label">Flux de décision, vue flowchart</div>
+      <div class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': {'background': '#07070e', 'primaryColor': '#0e0e1a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#374151', 'lineColor': '#4b5563', 'fontFamily': 'DM Sans, sans-serif', 'fontSize': '13px', 'edgeLabelBackground': '#07070e'}}}%%
+flowchart TD
+    classDef cyan fill:#07141a,stroke:#22d3ee,color:#22d3ee
+    classDef gray fill:#0e0e1a,stroke:#374151,color:#d1d5db
+    classDef violet fill:#1a0e2e,stroke:#a78bfa,color:#c4b5fd
+    classDef green fill:#071a0a,stroke:#4ade80,color:#86efac
+
+    A([Message reçu]):::cyan --> B[01 · Page Context · URL]:::cyan
+    B --> C{02 · KB fast-path · match?}:::gray
+    C -->|Oui ~30-40%| D([Réponse · sous 10ms · 0 token]):::cyan
+    C -->|Non| E[03 · Groq LLM · llama-3.3-70b]:::violet
+    E --> F([Réponse générée]):::violet
+    F --> G{04 · PM Journey · #results?}:::gray
+    G -->|Oui| H[Inject CTA · next step]:::green
+    G -->|Non| I([Affichage]):::cyan
+    H --> I
+    E -.->|ctx.waitUntil| LF[(Langfuse\nTrace)]:::green
+    E -.->|ctx.waitUntil| KV[(KV Store\nUsage)]:::gray
+      </div>
+    </div>
+
+    <div class="mermaid-wrap" data-diagram-lang="en" style="display:none">
+      <div class="mermaid-label">Decision flow, flowchart</div>
+      <div class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': {'background': '#07070e', 'primaryColor': '#0e0e1a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#374151', 'lineColor': '#4b5563', 'fontFamily': 'DM Sans, sans-serif', 'fontSize': '13px', 'edgeLabelBackground': '#07070e'}}}%%
+flowchart TD
+    classDef cyan fill:#07141a,stroke:#22d3ee,color:#22d3ee
+    classDef gray fill:#0e0e1a,stroke:#374151,color:#d1d5db
+    classDef violet fill:#1a0e2e,stroke:#a78bfa,color:#c4b5fd
+    classDef green fill:#071a0a,stroke:#4ade80,color:#86efac
+
+    A([Incoming message]):::cyan --> B[01 · Page Context · URL]:::cyan
+    B --> C{02 · KB fast-path · match?}:::gray
+    C -->|Yes ~30-40%| D([Response · under 10ms · 0 token]):::cyan
+    C -->|No| E[03 · Groq LLM · llama-3.3-70b]:::violet
+    E --> F([Generated response]):::violet
+    F --> G{04 · PM Journey · #results?}:::gray
+    G -->|Yes| H[Inject CTA · next step]:::green
+    G -->|No| I([Display]):::cyan
+    H --> I
+    E -.->|ctx.waitUntil| LF[(Langfuse\nTrace)]:::green
+    E -.->|ctx.waitUntil| KV[(KV Store\nUsage)]:::gray
+      </div>
+    </div>
+
+    <div class="layers" style="margin-bottom:2rem">
+
+      <div class="layer-card" style="--layer-color:#22d3ee">
+        <span class="layer-num">01</span>
+        <div class="layer-body">
+          <div class="layer-title" data-i18n="l1t">Détection du contexte de page</div>
+          <div class="layer-desc" data-i18n="l1d">KRL1 lit l'URL dès l'ouverture et adapte son message d'accueil à l'outil PM en cours d'utilisation. 6 messages différents selon la page, OKR Builder, Discovery Assistant, Backlog Prioritizer, etc.</div>
+          <div class="layer-tech">
+            <span class="tech-pill">window.location.pathname</span>
+            <span class="tech-pill">TOOL_CONTEXT map</span>
+            <span class="tech-pill">TOOL_ID matching</span>
+          </div>
+        </div>
+        <span class="layer-badge" data-i18n="l1b">Contextualisation</span>
+      </div>
+
+      <div class="layer-connector"></div>
+
+      <div class="layer-card" style="--layer-color:#60a5fa">
+        <span class="layer-num">02</span>
+        <div class="layer-body">
+          <div class="layer-title" data-i18n="l2t">KB fast-path, matching local</div>
+          <div class="layer-desc" data-i18n="l2d">Avant tout appel API, KRL1 cherche un pattern dans sa base de connaissances locale (~16 catégories). Si un mot-clé matche, la réponse est servie instantanément depuis le client, 0 latence réseau, 0 coût LLM.</div>
+          <div class="layer-tech">
+            <span class="tech-pill">keyword matching</span>
+            <span class="tech-pill">FR + EN rules</span>
+            <span class="tech-pill">chip suggestions</span>
+          </div>
+        </div>
+        <span class="layer-badge" data-i18n="l2b">Performance &amp; coût</span>
+      </div>
+
+      <div class="layer-connector"></div>
+
+      <div class="layer-card" style="--layer-color:#a78bfa">
+        <span class="layer-num">03</span>
+        <div class="layer-body">
+          <div class="layer-title" data-i18n="l3t">Appel LLM via Groq + system prompt</div>
+          <div class="layer-desc" data-i18n="l3d">Si aucun pattern KB ne matche, la question est envoyée à l'API Groq (llama-3.3-70b sur LPU) avec le system prompt complet + l'historique de conversation. Un Cloudflare Worker proxy sécurise la clé API côté serveur.</div>
+          <div class="layer-tech">
+            <span class="tech-pill">Groq API</span>
+            <span class="tech-pill">llama-3.3-70b</span>
+            <span class="tech-pill">Cloudflare Worker</span>
+            <span class="tech-pill">conversation history</span>
+          </div>
+        </div>
+        <span class="layer-badge" data-i18n="l3b">Intelligence générative</span>
+      </div>
+
+      <div class="layer-connector"></div>
+
+      <div class="layer-card" style="--layer-color:#34d399">
+        <span class="layer-num">04</span>
+        <div class="layer-body">
+          <div class="layer-title" data-i18n="l4t">PM Journey, injection post-résultat</div>
+          <div class="layer-desc" data-i18n="l4d">Un MutationObserver surveille l'apparition du div #results sur chaque outil PM. Dès qu'un résultat est généré, KRL1 injecte automatiquement un CTA "prochaine étape" dans le flux, sans intervention manuelle.</div>
+          <div class="layer-tech">
+            <span class="tech-pill">MutationObserver</span>
+            <span class="tech-pill">JOURNEY map</span>
+            <span class="tech-pill">DOM injection</span>
+          </div>
+        </div>
+        <span class="layer-badge" data-i18n="l4b">PLG nudge</span>
+      </div>
+
+    </div>
+
+    <div class="s5c-sub"><span data-i18n="promptLbl">Le system prompt annoté</span></div>
+
+    <div style="margin-bottom:2rem">
+      <div class="prompt-section">
+        <div class="prompt-code" data-label="persona">Tu es KRL1, l'assistant portfolio
+de Carlin Mankoto, AI Product Manager.
+Réponds de façon concise et
+professionnelle en français par défaut
+(en anglais si on te parle en anglais).</div>
+        <div class="prompt-annot">
+          <span class="annot-label" data-i18n="pa1l">Persona &amp; contrainte de langue</span>
+          <span class="annot-text" data-i18n="pa1t">Le LLM doit savoir qui il est avant tout. La contrainte de langue évite des réponses mixtes FR/EN sur les questions ambiguës.</span>
+          <span class="annot-decision" data-i18n="pa1d">Décision : nommer l'assistant "KRL1" renforce l'identité de marque plutôt que "un assistant IA générique".</span>
+        </div>
+      </div>
+      <div class="prompt-section">
+        <div class="prompt-code" data-label="scope guard">Ne réponds qu'aux questions liées
+à Carlin ou à ses outils.
+Si la question est hors sujet,
+redirige poliment.</div>
+        <div class="prompt-annot">
+          <span class="annot-label" data-i18n="pa2l">Scope guard</span>
+          <span class="annot-text" data-i18n="pa2t">Sans cette règle, le LLM répond à tout, recettes de cuisine, code Python, etc. Le scope guard maintient KRL1 focalisé sur son objectif : conversion recruteur.</span>
+          <span class="annot-decision" data-i18n="pa2d">Décision : "redirige poliment" plutôt que "refuse", moins agressif pour l'UX.</span>
+        </div>
+      </div>
+      <div class="prompt-section">
+        <div class="prompt-code" data-label="profil">PROFIL :
+- 3+ ans exp. PM/PO : OAIO/Infotel,
+  AXA (SecureGPT RAG),
+  Airbus D&amp;S (JO Paris 2024)
+- PSPO I, SAFe POPM + SSM,
+  Product School, Elements of AI
+- LLM, RAG, LangGraph, Langfuse,
+  Vibe Coding (Claude Code, Lovable)</div>
+        <div class="prompt-annot">
+          <span class="annot-label" data-i18n="pa3l">Contexte en raw text</span>
+          <span class="annot-text" data-i18n="pa3t">Le CV complet est injecté en clair dans le contexte. Le LLM n'a jamais à inférer, 0 risque d'hallucination sur les faits biographiques.</span>
+          <span class="annot-decision" data-i18n="pa3d">Décision : raw text plutôt que JSON structuré, les LLMs consomment mieux le langage naturel pour ce type d'information factuelle.</span>
+        </div>
+      </div>
+      <div class="prompt-section">
+        <div class="prompt-code" data-label="instruction critique">INSTRUCTION CRITIQUE :
+Quand l'utilisateur mentionne un sujet
+PM (backlog, OKR, discovery, roadmap),
+inclus TOUJOURS un lien HTML cliquable
+vers l'outil PM correspondant.
+Réponse actionnable et concise
+(max 200 mots).</div>
+        <div class="prompt-annot">
+          <span class="annot-label" data-i18n="pa4l">Funnel &amp; règles de rendu</span>
+          <span class="annot-text" data-i18n="pa4t">Chaque réponse PM devient un point d'entrée vers les 6 outils, c'est du product-led growth par prompt. La limite de 200 mots évite les réponses essay.</span>
+          <span class="annot-decision" data-i18n="pa4d">Décision : les règles typographiques sont des guardrails qualité découverts après test, ajoutés itérativement.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="s5c-sub"><span data-i18n="kbLbl">KB fast-path, les 16 catégories locales</span></div>
+
+    <div class="kb-grid">
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb1k">que peux · peux-tu · aide · capacité</div><div class="kb-card-desc" data-i18n="kb1d">Présentation des 2 axes d'aide : défis PM + portfolio Carlin</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb2k">qui · carlin · profil · présente</div><div class="kb-card-desc" data-i18n="kb2d">Résumé du profil en 3 lignes</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb3k">outil · build · projet · app · tool</div><div class="kb-card-desc" data-i18n="kb3d">Liste des 6 outils PM avec liens cliquables</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb4k">expérience · parcours · axa · airbus</div><div class="kb-card-desc" data-i18n="kb4d">Détail du parcours professionnel</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb5k">certif · pspo · safe · formation</div><div class="kb-card-desc" data-i18n="kb5d">Certifications + diplômes</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb6k">contact · linkedin · email · recrut</div><div class="kb-card-desc" data-i18n="kb6d">Liens de contact, disponibilité CDI/freelance</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb7k">krl1 · comment tu · qui es-tu · construit</div><div class="kb-card-desc" data-i18n="kb7d">Architecture KRL1 (cette section)</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb8k">stack · architecture · technique · langgraph</div><div class="kb-card-desc" data-i18n="kb8d">Stack technique du site</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb9k">pourquoi cloudflare · cloudflare worker</div><div class="kb-card-desc" data-i18n="kb9d">Justification du choix Cloudflare Workers</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb10k">pourquoi pas de backend · sans backend</div><div class="kb-card-desc" data-i18n="kb10d">Architecture 100% statique</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb11k">rag · retrieval · embedding · cosine</div><div class="kb-card-desc" data-i18n="kb11d">Pipeline RAG : Workers AI bge-small, cosine similarity, top-3 chunks</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb12k">langfuse · observabilit · traces</div><div class="kb-card-desc" data-i18n="kb12d">Langfuse : 3 routes tracées, spans planner + retriever + synthesis</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb13k">stream · sse · server-sent · progressif</div><div class="kb-card-desc" data-i18n="kb13d">Streaming SSE : getReader(), delta parsing, rendu mot par mot</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb14k">orchestr · planner · synthesis · pipeline</div><div class="kb-card-desc" data-i18n="kb14d">Orchestration : planner JSON T=0.2 → synthesis SSE T=0.45</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb15k">groq · llama · lpu · latence</div><div class="kb-card-desc" data-i18n="kb15d">Groq llama-3.3-70b : LPU 1-2s, températures adaptées</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb16k">route · endpoint · /stats · /veille · /feedback</div><div class="kb-card-desc" data-i18n="kb16d">7 routes Worker : proxy, orchestrate, stream, rag-query, feedback, stats, veille</div></div>
+    </div>
+
+    <div class="decision-card" style="margin-top:1.5rem;text-align:center;padding:1.5rem">
+      <a href="product-decisions.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.75rem 1.5rem;background:linear-gradient(135deg,rgba(251,146,60,0.1),rgba(244,114,182,0.1));border:1px solid rgba(251,146,60,0.25);border-radius:99px;color:#fdba74;font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;transition:all 0.25s" data-i18n="s5c.cta">
+        Les 10 décisions produit derrière ces choix →
+      </a>
+    </div>
+
+  </section>
+
   <!-- 06 ET MAINTENANT -->
-  <section>
+  <section id="s6">
     <div class="sec-header">
       <span class="sec-num">06</span>
       <span class="sec-title" data-i18n="s6.title">Et maintenant ?</span>
@@ -875,7 +1138,7 @@ flowchart LR
   </section>
 
   <!-- 07 GLOSSAIRE -->
-  <section>
+  <section id="s7">
     <div class="sec-header">
       <span class="sec-num">07</span>
       <span class="sec-title" data-i18n="s7.title">Glossaire technique</span>
@@ -1096,7 +1359,56 @@ var T={
     'test.n3':'Test 3',
     'test.t3':'Routing POST / intact',
     'test.d3':'La route racine (6 outils PM) reste un passthrough direct vers Groq, non affectée par l\'orchestration KRL1.',
-    'test.r3':'assert choices[0].content = "legacy"'
+    'test.r3':'assert choices[0].content = "legacy"',
+    'toc.s0':'00','toc.s1':'01 Stack','toc.s2':'02 Étapes','toc.s3':'03 Outils',
+    'toc.s4':'04 Archi','toc.s4b':'04b Prompts','toc.s4c':'04c Raté',
+    'toc.s5':'05 RAG','toc.s5b':'05b Perf','toc.s5c':'05c KRL1',
+    'toc.s6':'06 Suite','toc.s7':'07 Glossaire',
+    's5c.title':'KRL1 · Architecture de décision',
+    's5c.cta':'Les 10 décisions produit derrière ces choix →',
+    'layersLbl':'Les 4 couches de décision',
+    'l1t':'Détection du contexte de page',
+    'l1d':"KRL1 lit l'URL dès l'ouverture et adapte son message d'accueil à l'outil PM en cours d'utilisation. 6 messages différents selon la page.",
+    'l1b':'Contextualisation',
+    'l2t':'KB fast-path, matching local',
+    'l2d':"Avant tout appel API, KRL1 cherche un pattern dans sa base de connaissances locale (~16 catégories). Si un mot-clé matche, la réponse est servie instantanément depuis le client, 0 latence réseau, 0 coût LLM.",
+    'l2b':'Performance & coût',
+    'l3t':'Appel LLM via Groq + system prompt',
+    'l3d':"Si aucun pattern KB ne matche, la question est envoyée à l'API Groq (llama-3.3-70b sur LPU) avec le system prompt complet + l'historique de conversation.",
+    'l3b':'Intelligence générative',
+    'l4t':'PM Journey, injection post-résultat',
+    'l4d':"Un MutationObserver surveille l'apparition du div #results sur chaque outil PM. Dès qu'un résultat est généré, KRL1 injecte automatiquement un CTA \"prochaine étape\" dans le flux.",
+    'l4b':'PLG nudge',
+    'promptLbl':'Le system prompt annoté',
+    'pa1l':'Persona & contrainte de langue',
+    'pa1t':"Le LLM doit savoir qui il est avant tout. La contrainte de langue évite des réponses mixtes FR/EN sur les questions ambiguës.",
+    'pa1d':'Décision : nommer l\'assistant "KRL1" renforce l\'identité de marque plutôt que "un assistant IA générique".',
+    'pa2l':'Scope guard',
+    'pa2t':"Sans cette règle, le LLM répond à tout. Le scope guard maintient KRL1 focalisé sur son objectif : conversion recruteur.",
+    'pa2d':'Décision : "redirige poliment" plutôt que "refuse", moins agressif pour l\'UX.',
+    'pa3l':'Contexte en raw text',
+    'pa3t':"Le CV complet est injecté en clair dans le contexte. Le LLM n'a jamais à inférer, 0 risque d'hallucination sur les faits biographiques.",
+    'pa3d':'Décision : raw text plutôt que JSON structuré, les LLMs consomment mieux le langage naturel pour ce type d\'information factuelle.',
+    'pa4l':'Funnel & règles de rendu',
+    'pa4t':"Chaque réponse PM devient un point d'entrée vers les 6 outils, c'est du product-led growth par prompt. La limite de 200 mots évite les réponses essay.",
+    'pa4d':'Décision : les règles typographiques sont des guardrails qualité découverts après test, ajoutés itérativement.',
+    'kbLbl':'KB fast-path, les 16 catégories locales',
+    'kb1k':'que peux · peux-tu · aide · capacité','kb1d':"Présentation des 2 axes d'aide : défis PM + portfolio Carlin",
+    'kb2k':'qui · carlin · profil · présente','kb2d':'Résumé du profil en 3 lignes',
+    'kb3k':'outil · build · projet · app · tool','kb3d':'Liste des 6 outils PM avec liens cliquables',
+    'kb4k':'expérience · parcours · axa · airbus','kb4d':'Détail du parcours professionnel',
+    'kb5k':'certif · pspo · safe · formation','kb5d':'Certifications + diplômes',
+    'kb6k':'contact · linkedin · email · recrut','kb6d':'Liens de contact, disponibilité CDI/freelance',
+    'kb7k':'krl1 · comment tu · qui es-tu · construit','kb7d':'Architecture KRL1 (cette section)',
+    'kb8k':'stack · architecture · technique · langgraph','kb8d':'Stack technique du site',
+    'kb9k':'pourquoi cloudflare · cloudflare worker','kb9d':'Justification du choix Cloudflare Workers',
+    'kb10k':'pourquoi pas de backend · sans backend','kb10d':'Architecture 100% statique',
+    'kb11k':'rag · retrieval · embedding · cosine','kb11d':'Pipeline RAG : Workers AI bge-small, cosine similarity, top-3 chunks',
+    'kb12k':'langfuse · observabilit · traces','kb12d':'Langfuse : 3 routes tracées, spans planner + retriever + synthesis',
+    'kb13k':'stream · sse · server-sent · progressif','kb13d':'Streaming SSE : getReader(), delta parsing, rendu mot par mot',
+    'kb14k':'orchestr · planner · synthesis · pipeline','kb14d':'Orchestration : planner JSON T=0.2 → synthesis SSE T=0.45',
+    'kb15k':'groq · llama · lpu · latence','kb15d':'Groq llama-3.3-70b : LPU 1-2s, températures adaptées',
+    'kb16k':'route · endpoint · /stats · /veille · /feedback','kb16d':'7 routes Worker : proxy, orchestrate, stream, rag-query, feedback, stats, veille'
   },
   en:{
     'back':'Portfolio',
@@ -1248,7 +1560,56 @@ var T={
     'test.n3':'Test 3',
     'test.t3':'POST / routing intact',
     'test.d3':'The root route (6 PM tools) remains a direct Groq passthrough, unaffected by KRL1 orchestration.',
-    'test.r3':'assert choices[0].content = "legacy"'
+    'test.r3':'assert choices[0].content = "legacy"',
+    'toc.s0':'00','toc.s1':'01 Stack','toc.s2':'02 Steps','toc.s3':'03 Tools',
+    'toc.s4':'04 Arch','toc.s4b':'04b Prompts','toc.s4c':'04c Failed',
+    'toc.s5':'05 RAG','toc.s5b':'05b Perf','toc.s5c':'05c KRL1',
+    'toc.s6':'06 Next','toc.s7':'07 Glossary',
+    's5c.title':'KRL1 · Decision Architecture',
+    's5c.cta':'The 10 product decisions behind these choices →',
+    'layersLbl':'The 4 decision layers',
+    'l1t':'Page context detection',
+    'l1d':"KRL1 reads the URL on open and adapts its welcome message to the current PM tool. 6 different messages depending on the page.",
+    'l1b':'Contextualisation',
+    'l2t':'KB fast-path, local matching',
+    'l2d':"Before any API call, KRL1 checks its local knowledge base (~16 categories). If a keyword matches, the answer is served instantly from the client, 0 network latency, 0 LLM cost.",
+    'l2b':'Performance & cost',
+    'l3t':'LLM call via Groq + system prompt',
+    'l3d':"If no KB pattern matches, the question is sent to the Groq API (llama-3.3-70b on LPU) with the full system prompt + conversation history.",
+    'l3b':'Generative intelligence',
+    'l4t':'PM Journey, post-result injection',
+    'l4d':'A MutationObserver watches the #results div on each PM tool. As soon as a result is generated, KRL1 automatically injects a "next step" CTA into the flow.',
+    'l4b':'PLG nudge',
+    'promptLbl':'The annotated system prompt',
+    'pa1l':'Persona & language constraint',
+    'pa1t':"The LLM needs to know who it is first. The language constraint prevents mixed FR/EN responses on ambiguous questions.",
+    'pa1d':'Decision: naming the assistant "KRL1" reinforces brand identity rather than "a generic AI assistant".',
+    'pa2l':'Scope guard',
+    'pa2t':"Without this rule, the LLM answers everything. The scope guard keeps KRL1 focused on its goal: recruiter conversion.",
+    'pa2d':'Decision: "redirect politely" rather than "refuse", less aggressive UX.',
+    'pa3l':'Raw text context',
+    'pa3t':"The full CV is injected as plain text. The LLM never has to infer, 0 risk of hallucination on biographical facts.",
+    'pa3d':'Decision: raw text over structured JSON, LLMs process natural language better for this type of factual information.',
+    'pa4l':'Funnel & rendering rules',
+    'pa4t':"Every PM response becomes an entry point to the 6 tools, product-led growth via prompt. The 200-word limit prevents essay-style answers.",
+    'pa4d':'Decision: typographic rules are quality guardrails discovered through testing, added iteratively.',
+    'kbLbl':'KB fast-path, the 16 local categories',
+    'kb1k':'what can · can you · help · capabilities','kb1d':'Presentation of 2 help axes: PM challenges + Carlin portfolio',
+    'kb2k':'who · carlin · profile · about','kb2d':'Profile summary in 3 lines',
+    'kb3k':'tool · build · project · app','kb3d':'List of 6 PM tools with clickable links',
+    'kb4k':'experience · background · axa · airbus','kb4d':'Detailed professional background',
+    'kb5k':'certif · pspo · safe · degree','kb5d':'Certifications + degrees',
+    'kb6k':'contact · linkedin · email · hire','kb6d':'Contact links, CDI/freelance availability',
+    'kb7k':'krl1 · how do you · who are you','kb7d':'KRL1 architecture (this section)',
+    'kb8k':'stack · architecture · technical · langgraph','kb8d':'Full site tech stack',
+    'kb9k':'why cloudflare · cloudflare worker','kb9d':'Cloudflare Workers decision rationale',
+    'kb10k':'why no backend · without backend','kb10d':'100% static architecture rationale',
+    'kb11k':'rag · retrieval · embedding · cosine','kb11d':'RAG pipeline: Workers AI bge-small, cosine similarity, top-3 chunks',
+    'kb12k':'langfuse · observability · traces','kb12d':'Langfuse: 3 traced routes, planner + retriever + synthesis spans',
+    'kb13k':'stream · sse · server-sent · progressive','kb13d':'SSE streaming: getReader(), delta parsing, word-by-word render',
+    'kb14k':'orchestrat · planner · synthesis · pipeline','kb14d':'Orchestration: planner JSON T=0.2 → synthesis SSE T=0.45',
+    'kb15k':'groq · llama · lpu · latency','kb15d':'Groq llama-3.3-70b: LPU 1-2s, tailored temperatures',
+    'kb16k':'route · endpoint · /stats · /veille · /feedback','kb16d':'7 Worker routes: proxy, orchestrate, stream, rag-query, feedback, stats, veille'
   }
 };
 
@@ -1269,10 +1630,32 @@ function setLang(lang){
 // Init from URL param
 (function(){
   var params = new URLSearchParams(window.location.search);
-  var lang = params.get('lang');
+  var lang = params.get('lang') || localStorage.getItem('lang') || 'fr';
   mermaid.run({querySelector: '.mermaid-wrap[data-diagram-lang="fr"] .mermaid'});
   if(lang === 'en') setLang('en');
   setTimeout(function(){ if(typeof applyTooltips==='function') applyTooltips(document.documentElement.lang||'fr'); }, 150);
+})();
+
+// TOC IntersectionObserver
+(function(){
+  var tocItems = document.querySelectorAll('.toc-item');
+  var sectionMap = [];
+  tocItems.forEach(function(a){
+    var id = a.getAttribute('href').slice(1);
+    var el = document.getElementById(id);
+    if(el) sectionMap.push({el:el, a:a});
+  });
+  if(!sectionMap.length) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        tocItems.forEach(function(a){ a.classList.remove('active'); });
+        var match = sectionMap.find(function(s){ return s.el===e.target; });
+        if(match) match.a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-15% 0px -60% 0px'});
+  sectionMap.forEach(function(s){ io.observe(s.el); });
 })();
 
 </script>
@@ -1336,7 +1719,7 @@ var TT_PATTERNS = [
 ];
 
 function applyTooltips(lang) {
-  var sel = '.stack-desc, .decision-why, .tl-step-desc, .narrative-p, .gloss-def';
+  var sel = '.stack-desc, .decision-why, .tl-step-desc, .narrative-p, .gloss-def, .layer-desc, .annot-text';
   document.querySelectorAll(sel).forEach(function(container) {
     container.querySelectorAll('.tt').forEach(function(s){ s.outerHTML = s.textContent; });
     container.normalize();

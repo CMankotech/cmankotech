@@ -361,7 +361,10 @@
         chips: ["🏗️ Pourquoi Cloudflare Workers ?", "🤖 Comment fonctionne KRL1 ?"] },
       { k: ["route","endpoint","/orchestrate","/rag-query","/stats","/veille","/feedback","api worker","les routes"],
         r: "Les routes du Worker <strong>groq-proxy</strong> :\n\n• <strong>POST /</strong> : proxy Groq direct (messages passés tels quels)\n• <strong>POST /orchestrate</strong> : planner+synthesis sync (fallback)\n• <strong>POST /orchestrate-stream</strong> : synthesis SSE (route principale)\n• <strong>POST /rag-query</strong> : orchestration + RAG sémantique\n• <strong>POST /feedback</strong> : analyse feedback (Make webhook ou Groq fallback)\n• <strong>GET /stats</strong> : compteur KV (total requêtes toutes routes)\n• <strong>GET|POST /veille</strong> : données veille tech (alimenté par Make)\n\nCORS restreint à cmankotech.github.io uniquement.",
-        chips: ["🤖 Comment fonctionne KRL1 ?", "🏗️ Pourquoi Cloudflare Workers ?"] }
+        chips: ["🤖 Comment fonctionne KRL1 ?", "🏗️ Pourquoi Cloudflare Workers ?"] },
+      { k: ["product decisions","décisions produit","page decisions","pourquoi ces choix","ux decision","plg decision"],
+        r: "La page <strong>Product Decisions</strong> analyse les 10 décisions qui ont guidé la construction de KRL1 :\n\n01 PLG par le produit, 02 scope 6 outils, 03 KB fast-path, 04 auto-ouverture 6s, 05 PM Journey CTAs, 06 streaming SSE, 07 limite 220 mots, 08 budget $0, 09 Langfuse en prod, 10 bilingue FR/EN.\n\nChaque décision inclut les alternatives rejetées et le raisonnement. <a href='https://cmankotech.github.io/cmankotech/product-decisions.html' target='_blank'>Voir Product Decisions →</a>",
+        chips: ["🏗️ Pourquoi Cloudflare Workers ?", "🤖 Comment fonctionne KRL1 ?"] }
     ]},
     en: { rules: [
       { k: ["what can","can you","you do","help me","capabilities"],
@@ -411,7 +414,10 @@
         chips: ["🏗️ Why Cloudflare Workers?", "🤖 How does KRL1 work?"] },
       { k: ["route","endpoint","/orchestrate","/rag-query","/stats","/veille","/feedback","worker api","the routes"],
         r: "<strong>groq-proxy</strong> Worker routes:\n\n• <strong>POST /</strong>: direct Groq proxy\n• <strong>POST /orchestrate</strong>: planner+synthesis sync (fallback)\n• <strong>POST /orchestrate-stream</strong>: synthesis SSE (main route)\n• <strong>POST /rag-query</strong>: orchestration + semantic RAG\n• <strong>POST /feedback</strong>: feedback analysis (Make webhook or Groq fallback)\n• <strong>GET /stats</strong>: KV counter (total requests across all routes)\n• <strong>GET|POST /veille</strong>: tech watch data (fed by Make)\n\nCORS restricted to cmankotech.github.io only.",
-        chips: ["🤖 How does KRL1 work?", "🏗️ Why Cloudflare Workers?"] }
+        chips: ["🤖 How does KRL1 work?", "🏗️ Why Cloudflare Workers?"] },
+      { k: ["product decisions","product decision page","why these choices","ux decisions","plg decisions"],
+        r: "The <strong>Product Decisions</strong> page analyses the 10 decisions behind KRL1:\n\n01 PLG through the product, 02 scope 6 tools, 03 KB fast-path, 04 6s auto-open, 05 PM Journey CTAs, 06 SSE streaming, 07 220-word limit, 08 $0 budget, 09 Langfuse in prod, 10 bilingual FR/EN.\n\nEach decision includes the rejected alternatives and the reasoning. <a href='https://cmankotech.github.io/cmankotech/product-decisions.html' target='_blank'>See Product Decisions →</a>",
+        chips: ["🏗️ Why Cloudflare Workers?", "🤖 How does KRL1 work?"] }
     ]}
   };
 
