@@ -101,9 +101,9 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   </div>
 
   <header>
-    <div class="header-tag"><span class="dot"></span><span id="tagLbl">KRL1 · Product Decisions</span></div>
-    <h1 id="h1Main">Les décisions <span class="grad">produit</span><br id="h1br">derrière KRL1</h1>
-    <p class="subtitle" id="subtitleTxt">Chaque choix d'UX, de PLG et de stratégie — avec les alternatives rejetées et pourquoi elles ne tiennent pas.</p>
+    <div class="header-tag"><span class="dot"></span><span id="tagLbl">Portfolio · Product Decisions</span></div>
+    <h1 id="h1Main">Les décisions <span class="grad">produit</span><br id="h1br">derrière le site</h1>
+    <p class="subtitle" id="subtitleTxt">Chaque choix structurant du site — PM Toolkit, KRL1, architecture statique, PLG, observabilité — avec les alternatives rejetées et pourquoi elles ne tiennent pas.</p>
     <div class="header-meta">
       <span class="meta-tag" id="m1">UX</span>
       <span class="meta-tag" id="m2">PLG</span>
@@ -113,7 +113,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     </div>
   </header>
 
-  <div class="sec-divider"><span id="sectionLbl">10 décisions produit</span></div>
+  <div class="sec-divider"><span id="sectionLbl">13 décisions produit</span></div>
 
   <div class="decision-grid">
 
@@ -267,6 +267,51 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       </div>
     </div>
 
+    <div class="decision-card" style="--dc-color:#f472b6">
+      <div class="decision-num" id="d11n">Décision 11</div>
+      <div class="decision-q" id="d11q">Pourquoi un hub PM Toolkit plutôt que 6 liens séparés sur le portfolio ?</div>
+      <div class="decision-a" id="d11a">Chaîner les outils = refléter le vrai workflow PM</div>
+      <div class="decision-why" id="d11why">Un PM n'utilise jamais un outil de façon isolée. Il enchaîne : discovery → interviews → OKRs → backlog → stories → roadmap. Garder les 6 outils comme des cartes indépendantes forçait l'utilisateur à recoller le contexte à la main d'une session à l'autre. Le hub pm-toolkit.html résout deux problèmes : il rend la séquence lisible et il centralise l'entrée dans le workflow. Le PM Journey CTA (injecté par KRL1 via MutationObserver) suggère automatiquement l'étape suivante après chaque résultat généré. C'est du PLG au niveau du design d'information : le produit guide naturellement le workflow, sans documentation externe, sans friction. Pour le recruteur, naviguer dans le PM Toolkit est une démonstration concrète de pensée workflow — il voit non pas 6 features isolées, mais un produit cohérent avec une logique de bout en bout.</div>
+      <div class="decision-alts">
+        <div class="decision-alts-label" id="d11al">Alternatives rejetées</div>
+        <ul id="d11alts">
+          <li>Liens séparés sur le portfolio — chaque outil vécu comme une feature isolée, pas de séquence visible</li>
+          <li>Navigation header avec 6 entrées — cognitive overload, pas de guidage contextuel</li>
+          <li>Workflow manuel (copier-coller) — friction maximale, perte de contexte garantie</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="decision-card" style="--dc-color:#34d399">
+      <div class="decision-num" id="d12n">Décision 12</div>
+      <div class="decision-q" id="d12q">Pourquoi localStorage pour passer le contexte entre outils PM ?</div>
+      <div class="decision-a" id="d12a">Continuité sans backend, sans compte, sans friction</div>
+      <div class="decision-why" id="d12why">Le problème : comment transférer un insight d'un outil PM au suivant sans que l'utilisateur ait à tout recopier. Les solutions naturelles — base de données, sessions serveur — nécessitent un backend et un compte utilisateur. Avec localStorage et un module léger (pm-session.js), chaque outil sauvegarde ses sorties structurées (problème cadré, persona validé, OKRs générés, top-priorité RICE...) sous des clés communes. L'outil suivant peut les importer en un clic, avec un feedback visuel (bordure colorée) pour signaler qu'un contexte est disponible. Pas de compte, pas de serveur, pas de RGPD à gérer. La contrainte $0 et l'architecture HTML statique ont rendu cette solution non seulement acceptable mais élégante — une contrainte qui a forcé la simplicité plutôt que de la contraindre.</div>
+      <div class="decision-alts">
+        <div class="decision-alts-label" id="d12al">Alternatives rejetées</div>
+        <ul id="d12alts">
+          <li>Base de données + API — nécessite un backend, un compte, de la gestion de sessions</li>
+          <li>URL params — taille limitée, données sensibles potentiellement exposées</li>
+          <li>Copier-coller manuel — friction maximale, erreur de saisie garantie</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="decision-card" style="--dc-color:#fbbf24">
+      <div class="decision-num" id="d13n">Décision 13</div>
+      <div class="decision-q" id="d13q">Pourquoi HTML/JS vanilla sans framework ?</div>
+      <div class="decision-a" id="d13a">Zéro dépendance, zéro dette, déploiement immédiat</div>
+      <div class="decision-why" id="d13why">Le choix de ne pas utiliser React, Vue ou Next.js n'est pas une limitation — c'est une décision explicite. Pour un portfolio de 6 outils PM et quelques pages de documentation, un framework SPA aurait apporté : une étape de build obligatoire, des dépendances npm à maintenir, une complexité d'abstraction sans valeur ajoutée. Chaque page HTML est autonome avec son CSS et son JS inline. Pas de routing, pas de state management global. Le déploiement est un git push qui déclenche GitHub Pages en moins de 60 secondes. Le debug se fait directement dans les DevTools sans source maps. La lisibilité du code est maximale : pas de JSX, pas de hooks, pas de Webpack à comprendre avant de contribuer. Pour un PM qui vibe code en spare time avec Claude Code, la vélocité prime sur l'architecture. Le stack vanilla démontre aussi qu'on peut livrer un produit IA fonctionnel sans dépendre d'un framework.</div>
+      <div class="decision-alts">
+        <div class="decision-alts-label" id="d13al">Alternatives rejetées</div>
+        <ul id="d13alts">
+          <li>React / Next.js — étape de build, config webpack/eslint, overhead pour du contenu statique</li>
+          <li>Vue.js — même problème, complexité non justifiée pour ce cas d'usage</li>
+          <li>Astro — plus adapté, mais paradigme à apprendre, overhead de config initial</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 
   <footer>
@@ -293,11 +338,11 @@ var _lang = 'fr';
 var I18N = {
   fr: {
     back:'Retour au portfolio',
-    tag:'KRL1 · Product Decisions',
-    h1:'Les décisions <span class="grad">produit</span><br>derrière KRL1',
-    subtitle:"Chaque choix d'UX, de PLG et de stratégie — avec les alternatives rejetées et pourquoi elles ne tiennent pas.",
+    tag:'Portfolio · Product Decisions',
+    h1:'Les décisions <span class="grad">produit</span><br>derrière le site',
+    subtitle:"Chaque choix structurant du site — PM Toolkit, KRL1, architecture statique, PLG, observabilité — avec les alternatives rejetées et pourquoi elles ne tiennent pas.",
     m1:'UX', m2:'PLG', m3:'Contraintes', m4:'Arbitrages', m5:'$0 Budget',
-    sectionLbl:'10 décisions produit',
+    sectionLbl:'13 décisions produit',
     altslbl:'Alternatives rejetées',
     d01n:'Décision 01', d01q:"Pourquoi un assistant IA sur un portfolio PM ?", d01a:"PLG par le produit, pas par le CV",
     d01why:"Un portfolio PM classique, c'est un PDF ou une page LinkedIn. Pour démontrer des compétences AI PM, le portfolio doit être lui-même un produit AI. KRL1 est la preuve concrète : un PM qui comprend les LLMs ne le dit pas, il le montre. Quand un recruteur interagit avec KRL1, il n'a pas besoin de lire \"je comprends les systèmes IA\" dans le résumé. Il l'expérimente directement. C'est du Product-Led Growth appliqué à la recherche d'emploi : le produit porte son propre discours commercial. KRL1 qualifie aussi les visiteurs naturellement : quelqu'un qui passe 5 minutes à explorer les outils PM via KRL1 est plus engagé qu'un scanner de CV de 10 secondes. Le message LinkedIn \"j'ai testé KRL1 et...\" est un signal d'engagement fort. L'assistant existe pour le recruteur, pas pour moi.",
@@ -329,17 +374,26 @@ var I18N = {
     d10n:'Décision 10', d10q:"Bilingue FR/EN dès le départ — pourquoi pas ajouter EN plus tard ?", d10a:"Audience recruteur internationale",
     d10why:"La décision de supporter FR et EN dès le premier jour vient d'une expérience produit directe : ajouter l'i18n en retard sur une base existante est douloureux et crée de la dette technique. Partir bilingue impose une discipline de code : chaque string de UI passe par un objet de traductions, zéro text hardcodé dans le HTML. Le surcoût initial est d'environ 20% de temps par page. Le bénéfice : aucun refactoring i18n à prévoir, et surtout une audience élargie. Les recruteurs tech opèrent souvent dans des contextes multilingues. KRL1 détecte la langue via localStorage et URL param (?lang=en), ce qui permet de partager des liens dans une langue spécifique. Le choix de l'i18n vanilla évite toute dépendance externe pour seulement deux langues.",
     d10alts:"<li>FR uniquement — audience limitée à la France, signale peu d'ambition internationale</li><li>Ajouter EN plus tard — dette technique assurée, refactoring douloureux</li><li>Bibliothèque i18n (i18next) — dépendance inutile pour seulement deux langues</li>",
+    d11n:'Décision 11', d11q:"Pourquoi un hub PM Toolkit plutôt que 6 liens séparés ?", d11a:"Chaîner les outils = refléter le vrai workflow PM",
+    d11why:"Un PM n'utilise jamais un outil de façon isolée. Il enchaîne : discovery → interviews → OKRs → backlog → stories → roadmap. Garder les 6 outils comme des cartes indépendantes forçait l'utilisateur à recoller le contexte à la main d'une session à l'autre. Le hub pm-toolkit.html résout deux problèmes : il rend la séquence lisible et centralise l'entrée dans le workflow. Le PM Journey CTA (injecté par KRL1 via MutationObserver) suggère automatiquement l'étape suivante après chaque résultat généré. C'est du PLG au niveau du design d'information : le produit guide naturellement le workflow, sans documentation externe, sans friction. Pour le recruteur, naviguer dans le PM Toolkit est une démonstration concrète de pensée workflow.",
+    d11alts:"<li>Liens séparés sur le portfolio — chaque outil vécu comme une feature isolée, pas de séquence visible</li><li>Navigation header avec 6 entrées — cognitive overload, pas de guidage contextuel</li><li>Workflow manuel (copier-coller) — friction maximale, perte de contexte garantie</li>",
+    d12n:'Décision 12', d12q:"Pourquoi localStorage pour passer le contexte entre outils PM ?", d12a:"Continuité sans backend, sans compte, sans friction",
+    d12why:"Le problème : comment transférer un insight d'un outil PM au suivant sans que l'utilisateur ait à tout recopier. Les solutions naturelles — base de données, sessions serveur — nécessitent un backend et un compte utilisateur. Avec localStorage et pm-session.js, chaque outil sauvegarde ses sorties structurées (problème cadré, persona validé, OKRs générés, top-priorité RICE...) sous des clés communes. L'outil suivant peut les importer en un clic, avec un feedback visuel (bordure colorée). Pas de compte, pas de serveur, pas de RGPD à gérer. La contrainte $0 et l'architecture HTML statique ont rendu cette solution non seulement acceptable mais élégante.",
+    d12alts:"<li>Base de données + API — nécessite un backend, un compte, de la gestion de sessions</li><li>URL params — taille limitée, données sensibles potentiellement exposées</li><li>Copier-coller manuel — friction maximale, erreur de saisie garantie</li>",
+    d13n:'Décision 13', d13q:"Pourquoi HTML/JS vanilla sans framework ?", d13a:"Zéro dépendance, zéro dette, déploiement immédiat",
+    d13why:"Le choix de ne pas utiliser React, Vue ou Next.js n'est pas une limitation — c'est une décision explicite. Pour un portfolio de 6 outils PM et quelques pages de documentation, un framework SPA aurait apporté : une étape de build obligatoire, des dépendances npm à maintenir, une complexité d'abstraction sans valeur ajoutée. Chaque page HTML est autonome avec son CSS et son JS inline. Pas de routing, pas de state management global. Le déploiement est un git push en moins de 60 secondes. Le debug se fait directement dans les DevTools sans source maps. La lisibilité du code est maximale. Pour un PM qui vibe code en spare time avec Claude Code, la vélocité prime sur l'architecture.",
+    d13alts:"<li>React / Next.js — étape de build, config webpack/eslint, overhead pour du contenu statique</li><li>Vue.js — même problème, complexité non justifiée pour ce cas d'usage</li><li>Astro — plus adapté, mais paradigme à apprendre, overhead de config initial</li>",
     footerTech:'Architecture technique',
     footerKrl1:'KRL1 · Couches de décision',
     footerHome:'Portfolio'
   },
   en: {
     back:'Back to portfolio',
-    tag:'KRL1 · Product Decisions',
-    h1:'The <span class="grad">product</span> decisions<br>behind KRL1',
-    subtitle:"Every UX, PLG and strategy choice — with the rejected alternatives and why they don't hold up.",
+    tag:'Portfolio · Product Decisions',
+    h1:'The <span class="grad">product</span> decisions<br>behind the site',
+    subtitle:"Every structural choice in the site — PM Toolkit, KRL1, static architecture, PLG, observability — with the rejected alternatives and why they don't hold up.",
     m1:'UX', m2:'PLG', m3:'Constraints', m4:'Trade-offs', m5:'$0 Budget',
-    sectionLbl:'10 product decisions',
+    sectionLbl:'13 product decisions',
     altslbl:'Rejected alternatives',
     d01n:'Decision 01', d01q:"Why an AI assistant on a PM portfolio?", d01a:"PLG through the product, not the CV",
     d01why:"A classic PM portfolio is a PDF or a LinkedIn page. To demonstrate AI PM skills, the portfolio itself has to be an AI product. KRL1 is the concrete proof: a PM who understands LLMs does not say it, they show it. When a recruiter interacts with KRL1, they do not need to read \"I understand AI systems\" in a summary. They experience it directly. That is Product-Led Growth applied to job searching: the product carries its own sales pitch. KRL1 also qualifies visitors naturally: someone who spends 5 minutes exploring PM tools through KRL1 is more engaged than a 10-second CV scanner. The LinkedIn message \"I tested KRL1 and...\" is a strong engagement signal. The assistant exists for the recruiter, not for me.",
@@ -371,6 +425,15 @@ var I18N = {
     d10n:'Decision 10', d10q:"Bilingual FR/EN from day one — why not add EN later?", d10a:"International recruiter audience",
     d10why:"The decision to support FR and EN from day one comes from direct product experience: retrofitting i18n onto an existing codebase is painful and creates technical debt. Going bilingual from the start imposes code discipline: every UI string goes through a translation object, zero text hardcoded in HTML. The upfront overhead is about 20% extra time per page. The benefit: no i18n refactoring needed, and above all a wider audience. Tech recruiters often operate in multilingual contexts. KRL1 detects language via localStorage and URL param (?lang=en), allowing language-specific link sharing. The vanilla i18n choice avoids any external dependency for just two languages.",
     d10alts:"<li>French only — audience limited to France, signals little international ambition</li><li>Add EN later — technical debt guaranteed, painful refactoring</li><li>i18n library (i18next) — unnecessary dependency for only two languages</li>",
+    d11n:'Decision 11', d11q:"Why a PM Toolkit hub rather than 6 separate links?", d11a:"Chaining tools mirrors the real PM workflow",
+    d11why:"A PM never uses a single tool in isolation. The real workflow is: discovery → interviews → OKRs → backlog → stories → roadmap. Keeping 6 tools as independent cards forced users to carry context by hand between sessions. The pm-toolkit.html hub solves two problems: it makes the sequence legible and centralises entry into the workflow. The PM Journey CTA (injected by KRL1 via MutationObserver) automatically suggests the next step after each generated result. That is PLG at the information design level: the product naturally guides the workflow, without external documentation, without friction. For the recruiter, navigating the PM Toolkit is a concrete demonstration of workflow thinking.",
+    d11alts:"<li>Separate links on the portfolio — each tool feels like an isolated feature, no sequence visible</li><li>Header nav with 6 entries — cognitive overload, no contextual guidance</li><li>Manual workflow (copy-paste) — maximum friction, guaranteed context loss</li>",
+    d12n:'Decision 12', d12q:"Why localStorage to pass context between PM tools?", d12a:"Continuity without backend, account, or friction",
+    d12why:"The problem: how to transfer an insight from one PM tool to the next without the user retyping everything. Natural solutions — database, server sessions — require a backend and a user account. With localStorage and pm-session.js, each tool saves its structured outputs (framed problem, validated persona, generated OKRs, top RICE priority...) under common keys. The next tool can import them in one click, with visual feedback (coloured border) to signal context is available. No account, no server, no GDPR to manage. The $0 constraint and static HTML architecture made this solution not just acceptable but elegant.",
+    d12alts:"<li>Database + API — requires a backend, user account, session management</li><li>URL params — size limited, sensitive data potentially exposed</li><li>Manual copy-paste — maximum friction, guaranteed input error</li>",
+    d13n:'Decision 13', d13q:"Why vanilla HTML/JS without a framework?", d13a:"Zero dependencies, zero debt, immediate deployment",
+    d13why:"Choosing not to use React, Vue or Next.js is not a limitation — it is an explicit decision. For a portfolio of 6 PM tools and a few documentation pages, an SPA framework would have added: a mandatory build step, npm dependencies to maintain, and abstraction overhead with no added value. Each HTML page is standalone with its own inline CSS and JS. No routing, no global state management. Deployment is a git push that triggers GitHub Pages in under 60 seconds. Debugging happens directly in DevTools without source maps. Code readability is maximum. For a PM vibe coding in spare time with Claude Code, velocity beats architecture.",
+    d13alts:"<li>React / Next.js — build step, webpack/eslint config, overhead for static content</li><li>Vue.js — same problem, unjustified complexity for this use case</li><li>Astro — better fit, but paradigm to learn, initial config overhead</li>",
     footerTech:'Technical architecture',
     footerKrl1:'KRL1 · Decision layers',
     footerHome:'Portfolio'
@@ -389,7 +452,7 @@ function setLang(lang){
   document.getElementById('subtitleTxt').textContent = T.subtitle;
   ['m1','m2','m3','m4','m5'].forEach(function(id){ document.getElementById(id).textContent = T[id]; });
   document.getElementById('sectionLbl').textContent = T.sectionLbl;
-  for(var i=1;i<=10;i++){
+  for(var i=1;i<=13;i++){
     var n = ('0'+i).slice(-2);
     ['n','q','a','why'].forEach(function(k){
       var el = document.getElementById('d'+n+k);
