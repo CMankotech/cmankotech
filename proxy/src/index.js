@@ -1265,6 +1265,25 @@ export default {
       return handleStats(env);
     }
 
+    // Veille GET — public, no origin check
+    if (request.method === 'GET' && url.pathname === '/veille') {
+      const data = await env.VEILLE_STORE.get('veille_latest', { type: 'json' });
+      if (!data) return jsonResponse({ empty: true }, 404);
+      return jsonResponse(data);
+    }
+
+    // Veille POST — protected by MAKE_SECRET, called by Make
+    if (request.method === 'POST' && url.pathname === '/veille') {
+      const secret = request.headers.get('x-make-secret');
+      if (!env.MAKE_SECRET || secret !== env.MAKE_SECRET) {
+        return new Response('Forbidden', { status: 403 });
+      }
+      let body;
+      try { body = await request.json(); } catch { return new Response('Bad Request', { status: 400 }); }
+      await env.VEILLE_STORE.put('veille_latest', JSON.stringify(body));
+      return jsonResponse({ ok: true });
+    }
+
     if (request.method !== 'POST') {
       return new Response('Method Not Allowed', { status: 405 });
     }
@@ -1290,6 +1309,10 @@ export default {
 
     if (url.pathname === '/rag-query') {
       return handleRagQuery(body, env, ctx);
+    }
+
+    if (url.pathname === '/feedback') {
+      return handleFeedback(body, env, ctx);
     }
 
     return proxyGroq(body, env, ctx);
@@ -1832,6 +1855,55 @@ async function retrieveSemantic(query, env, topK = 3) {
   if (!top.length) return [];
   const maxScore = top[0].score;
   return top.map(c => ({ text: c.text, source: c.source, score: round4(c.score / maxScore) }));
+}
+
+// ─── Feedback pipeline (Make webhook + Groq fallback) ────────────────────────
+
+async function handleFeedback(body, env, ctx) {
+  const feedback = typeof body.feedback === 'string' ? body.feedback.trim() : '';
+  const source   = typeof body.source   === 'string' ? body.source   : 'Manual';
+  const lang     = body.lang === 'en' ? 'en' : 'fr';
+
+  if (!feedback || feedback.length > 1000) {
+    return jsonResponse({ error: lang === 'en' ? 'Invalid feedback.' : 'Feedback invalide.' }, 400);
+  }
+
+  if (env.MAKE_WEBHOOK_URL) {
+    try {
+      const makeRes = await fetch(env.MAKE_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ feedback, source, lang }),
+      });
+      if (makeRes.ok) {
+        const data = await makeRes.json();
+        ctx?.waitUntil?.(incrementCounter(env));
+        return jsonResponse({ ...data, engine: 'make' });
+      }
+    } catch { /* fallback below */ }
+  }
+
+  const systemPrompt = lang === 'en'
+    ? 'You are a product feedback analyst. Categorize the feedback and return strict JSON only.\n' +
+      'Keys: category (Bug Report|Feature Request|Compliment|Question|Other), sentiment (positive|neutral|negative), priority (high|medium|low), themes (array of 1-3 short strings in English), summary (one sentence, max 15 words).'
+    : 'Tu es un analyste de feedback produit. Catégorise le feedback et retourne uniquement du JSON strict.\n' +
+      'Clés : category (Bug Report|Feature Request|Compliment|Question|Other), sentiment (positive|neutral|negative), priority (high|medium|low), themes (tableau de 1 à 3 courtes chaînes en français), summary (une phrase, 15 mots max).';
+
+  const groqRes = await callGroq(env, {
+    model: DEFAULT_MODEL,
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: `Source: ${source}\n\nFeedback:\n${feedback}` },
+    ],
+    temperature: 0.2,
+    max_tokens: 200,
+    response_format: { type: 'json_object' },
+  });
+
+  if (!groqRes.ok) return groqRes.response;
+  const data = safeJsonParse(extractContent(groqRes.data)) || {};
+  ctx?.waitUntil?.(incrementCounter(env));
+  return jsonResponse({ ...data, engine: 'groq-fallback' });
 }
 
 // ─── LangGraph forward (optional, if LANGGRAPH_ORCHESTRATOR_URL is set) ───────
