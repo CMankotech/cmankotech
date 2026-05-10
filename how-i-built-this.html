@@ -256,7 +256,7 @@ html[lang="en"] .mermaid-wrap[data-diagram-lang="en"]{display:block}
 [data-theme="light"] .top-bar,[data-theme="light"] .lang-bar{gap:0.5rem}
 .mermaid-wrap{background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:14px;padding:1.5rem 1rem;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 14px 36px -18px rgba(0,0,0,0.5);overflow-x:auto;margin:1.5rem 0}
 .mermaid-label{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-bottom:0.75rem}
-.mermaid svg{width:100%;height:auto;display:block}
+.mermaid svg{max-width:100%;height:auto;display:block;margin:0 auto}
 body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:200px 200px;opacity:0.45}
 @keyframes drift1{0%{transform:translate(0,0) scale(1)}25%{transform:translate(80px,60px) scale(1.12)}50%{transform:translate(-40px,120px) scale(0.95)}75%{transform:translate(60px,-30px) scale(1.08)}100%{transform:translate(0,0) scale(1)}}@keyframes drift2{0%{transform:translate(0,0) scale(1)}25%{transform:translate(-70px,-50px) scale(1.1)}50%{transform:translate(50px,-90px) scale(0.92)}75%{transform:translate(-60px,40px) scale(1.05)}100%{transform:translate(0,0) scale(1)}}@keyframes drift3{0%{transform:translate(0,0) scale(1)}25%{transform:translate(90px,-40px) scale(1.08)}50%{transform:translate(-30px,-80px) scale(1.15)}75%{transform:translate(-70px,50px) scale(0.9)}100%{transform:translate(0,0) scale(1)}}
 .page-cta-pill{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.55rem 1.25rem;border:1px solid rgba(255,255,255,0.12);border-radius:99px;color:var(--muted);text-decoration:none;transition:all 0.2s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
@@ -440,7 +440,7 @@ if (window.mermaid) {
         <div class="stack-icon">☁️</div>
         <div class="stack-name">Workers AI · edge RAG</div>
         <div class="stack-badge sb-violet" data-i18n="stack.lg.badge">RAG sémantique</div>
-        <div class="stack-desc" data-i18n="stack.lg.desc">Base de connaissances embarquée dans le Worker (15 frameworks Markdown : PM, PO/Agile, AI). Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) en un seul appel batch ; la similarité cosinus est calculée à l'edge. Le pipeline <strong>handleRagQuery</strong> enchaîne : <strong>planner</strong> (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; <strong>retriever</strong> (conditionnel, uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches par cosine similarity ; <strong>synthesis</strong> (T=0.45) transforme le plan enrichi du contexte PM en réponse naturelle max 220 mots. Zéro dépendance externe, zéro infra Python.</div>
+        <div class="stack-desc" data-i18n="stack.lg.desc">Base de connaissances embarquée dans le Worker (15 documents Markdown : PM, PO/Agile, AI Product). Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) en un seul appel batch ; la similarité cosinus est calculée à l'edge. Le pipeline <strong>handleRagQuery</strong> enchaîne : <strong>planner</strong> (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; <strong>retriever</strong> (conditionnel, uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches par cosine similarity ; <strong>synthesis</strong> (T=0.45) transforme le plan enrichi du contexte PM en réponse naturelle max 220 mots. Zéro dépendance externe, zéro infra Python.</div>
       </div>
       <div class="stack-card" style="grid-column:1/-1">
         <div class="stack-icon">🔭</div>
@@ -645,7 +645,7 @@ Réponds UNIQUEMENT avec un JSON valide :
 
     <div class="decision-card" style="margin-bottom:1rem">
       <div class="decision-q" data-i18n="s4b.kb.label">KB fast-path, KRL1 avant d'appeler le LLM</div>
-      <div class="decision-why" data-i18n="s4b.kb.why">KRL1 vérifie d'abord une base de connaissances locale (16 patterns FR + 16 EN, matching par mots-clés) avant d'envoyer quoi que ce soit à Groq. 10 catégories générales (profil, outils, expérience, contact, stack...) et 6 catégories techniques (RAG pipeline, Langfuse, SSE streaming, orchestration, Groq, routes Worker). Si la question correspond, la réponse part en ~400ms sans consommer un seul token. Cette couche couvre ~30-40% des questions récurrentes. Décision de coût et de perf : réponses plus rapides, plus cohérentes, zéro dépendance API pour les cas les plus fréquents.</div>
+      <div class="decision-why" data-i18n="s4b.kb.why">KRL1 vérifie d'abord une base de connaissances locale (17 règles FR + 17 EN, matching par mots-clés) avant d'envoyer quoi que ce soit à Groq. 10 catégories générales (profil, outils, expérience, contact, stack...) et 7 catégories techniques ou produit (RAG pipeline, Langfuse, SSE streaming, orchestration, Groq, routes Worker, Product Decisions). Si la question correspond, la réponse part en ~400ms sans consommer un seul token. Cette couche couvre ~30-40% des questions récurrentes. Décision de coût et de perf : réponses plus rapides, plus cohérentes, zéro dépendance API pour les cas les plus fréquents.</div>
     </div>
 
     <div class="decision-card">
@@ -746,7 +746,7 @@ flowchart LR
     classDef green fill:#071a0a,stroke:#4ade80,color:#86efac
     classDef orange fill:#1a0e05,stroke:#fb923c,color:#fdba74
 
-    KB[(15 frameworks\nMarkdown)]:::orange --> RI
+    KB[(15 docs\nPM/Agile/AI)]:::orange --> RI
     Q([Query]):::cyan --> PL[Planner · T=0.2]:::gray
     PL -->|pm_workflow| RI[Workers AI · embeddings]:::violet
     RI --> CS[Cosine Sim · top-3 chunks]:::violet
@@ -769,7 +769,7 @@ flowchart LR
     classDef green fill:#071a0a,stroke:#4ade80,color:#86efac
     classDef orange fill:#1a0e05,stroke:#fb923c,color:#fdba74
 
-    KB[(15 frameworks\nMarkdown)]:::orange --> RI
+    KB[(15 docs\nPM/Agile/AI)]:::orange --> RI
     Q([Query]):::cyan --> PL[Planner · T=0.2]:::gray
     PL -->|pm_workflow| RI[Workers AI · embeddings]:::violet
     RI --> CS[Cosine Sim · top-3 chunks]:::violet
@@ -795,7 +795,7 @@ flowchart LR
         <div class="update-item" data-i18n="lg.r4">Un retriever conditionnel : le retrieval sémantique est activé uniquement si <code>intent === 'pm_workflow'</code>, évite d'invoquer Workers AI pour les questions hors PM (portfolio, contact, tech).</div>
         <div class="update-item" data-i18n="lg.r5">Un compteur d'usage non-bloquant dans KV (<code>ctx.waitUntil</code>), trace les appels sans alourdir le temps de réponse.</div>
         <div class="update-item" data-i18n="lg.r6">La réponse <code>POST /rag-query</code> expose <code>{reply, plan, chunks, engine: 'worker-rag-semantic'}</code>, les chunks sont visualisés dans <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> avec leur source et score de similarité.</div>
-        <div class="update-item" data-i18n="lg.r7">KB fast-path étendue à 17 règles (vs 6) : 6 nouvelles catégories techniques couvrant RAG pipeline, Langfuse observabilité, SSE streaming, flow d'orchestration, LLM Groq et routes Worker. Zéro appel API pour ces questions.</div>
+        <div class="update-item" data-i18n="lg.r7">KB fast-path étendue à 17 règles (vs 6) : catégories techniques et produit couvrant RAG pipeline, Langfuse observabilité, SSE streaming, flow d'orchestration, LLM Groq, routes Worker et Product Decisions. Zéro appel API pour ces questions.</div>
         <div class="update-item" data-i18n="lg.r8">Section ARCHITECTURE TECHNIQUE ajoutée dans le system prompt de KRL1 : routes Worker, flow planner→synthesis, RAG bge-small, Langfuse flush, routing widget. Le LLM dispose maintenant du contexte complet pour les questions tech qui ne matchent pas la KB.</div>
       </div>
     </div>
@@ -929,7 +929,7 @@ flowchart TD
     C -->|Oui ~30-40%| D([Réponse · sous 10ms · 0 token]):::cyan
     C -->|Non| E[03 · Groq LLM · llama-3.3-70b]:::violet
     E --> F([Réponse générée]):::violet
-    F --> G{04 · PM Journey · #results?}:::gray
+    F --> G{04 · PM Journey · #35;results?}:::gray
     G -->|Oui| H[Inject CTA · next step]:::green
     G -->|Non| I([Affichage]):::cyan
     H --> I
@@ -953,7 +953,7 @@ flowchart TD
     C -->|Yes ~30-40%| D([Response · under 10ms · 0 token]):::cyan
     C -->|No| E[03 · Groq LLM · llama-3.3-70b]:::violet
     E --> F([Generated response]):::violet
-    F --> G{04 · PM Journey · #results?}:::gray
+    F --> G{04 · PM Journey · #35;results?}:::gray
     G -->|Yes| H[Inject CTA · next step]:::green
     G -->|No| I([Display]):::cyan
     H --> I
@@ -1227,7 +1227,7 @@ var T={
     'stack.lg.badge':'RAG sémantique',
     'stack.lf.badge':'Observabilité',
     'stack.lf.desc':'Traces LLM en production via l\'API REST Langfuse intégrée directement dans le Worker (no npm, fetch natif). Chaque appel KRL1 génère une trace avec 2 générations, planner (intent JSON, T=0.2) et synthesis (réponse naturelle, T=0.45), enrichies du token usage Groq et des latences par étape. La route RAG ajoute un span retriever Workers AI. Non-bloquant via <code>ctx.waitUntil</code>, zéro impact sur les temps de réponse. Plan gratuit Langfuse Cloud : 50 000 observations/mois.',
-    'stack.lg.desc':'Base de connaissances embarquée dans le Worker (15 frameworks Markdown : PM, PO/Agile, AI). Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) en un seul appel batch ; la similarité cosinus est calculée à l\'edge. Le pipeline <strong>handleRagQuery</strong> enchaîne : <strong>planner</strong> (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; <strong>retriever</strong> (conditionnel, uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches par cosine similarity ; <strong>synthesis</strong> (T=0.45) transforme le plan enrichi du contexte PM en réponse naturelle max 220 mots. Zéro dépendance externe, zéro infra Python.',
+    'stack.lg.desc':'Base de connaissances embarquée dans le Worker (15 documents Markdown : PM, PO/Agile, AI Product). Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) en un seul appel batch ; la similarité cosinus est calculée à l\'edge. Le pipeline <strong>handleRagQuery</strong> enchaîne : <strong>planner</strong> (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; <strong>retriever</strong> (conditionnel, uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches par cosine similarity ; <strong>synthesis</strong> (T=0.45) transforme le plan enrichi du contexte PM en réponse naturelle max 220 mots. Zéro dépendance externe, zéro infra Python.',
     's2.title':'Étapes de création',
     'step1.label':'Idée & cadrage',
     'step1.title':'Partir d\'un vrai problème PM',
@@ -1284,7 +1284,7 @@ var T={
     'lg.proxy.desc':'Le Worker expose quatre routes : <code>POST /</code> passthrough direct Groq (les 6 outils PM), <code>POST /orchestrate</code> planner→synthesis natif (KRL1), <code>POST /rag-query</code> pipeline RAG sémantique complet (planner → Workers AI embeddings → cosine sim → synthesis), et <code>POST /orchestrate-stream</code> qui streame la réponse synthesis en SSE.',
     'lg.orch.name':'Workers AI · edge RAG',
     'lg.orch.badge':'Workers AI · bge-small-en-v1.5',
-    'lg.orch.desc':'Base de connaissances (15 frameworks Markdown : PM, PO/Agile, AI) embarquée en JS. Embeddings batch via Workers AI (bge-small-en-v1.5, 384 dims). Cosine similarity calculée à l\'edge. Retriever conditionnel (pm_workflow uniquement). Réponse : {reply, plan, chunks, engine: "worker-rag-semantic"}.',
+    'lg.orch.desc':'Base de connaissances (15 documents Markdown : PM, PO/Agile, AI Product) embarquée en JS. Embeddings batch via Workers AI (bge-small-en-v1.5, 384 dims). Cosine similarity calculée à l\'edge. Retriever conditionnel (pm_workflow uniquement). Réponse : {reply, plan, chunks, engine: "worker-rag-semantic"}.',
     'lg.flow.label':'Flow d\'une requête KRL1 / RAG Explorer',
     'lg.flow.desc':'KRL1 (POST /orchestrate) : 1 · L\'utilisateur envoie un message. 2 · Le JS appelle POST /orchestrate avec {lang, message, history}. 3 · Le planner (T=0.2) analyse l\'intention → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 · Le synthesis (T=0.45) transforme le plan en réponse max 220 mots avec liens outils PM. 5 · La réponse {reply, plan, engine} arrive au client., RAG Explorer (POST /rag-query) : même planner → Workers AI encode la requête + tous les chunks en un appel batch → cosine similarity → top-3 injectés dans synthesis si intent = pm_workflow → {reply, plan, chunks, engine: "worker-rag-semantic"}.',
     'lg.recent.label':'Ce qu\'on a ajouté récemment',
@@ -1294,7 +1294,7 @@ var T={
     'lg.r4':'Un retriever conditionnel : le retrieval sémantique est activé uniquement si <code>intent === \'pm_workflow\'</code>, évite d\'invoquer Workers AI pour les questions hors PM (portfolio, contact, tech).',
     'lg.r5':'Un compteur d\'usage non-bloquant dans KV (<code>ctx.waitUntil</code>), trace les appels sans alourdir le temps de réponse.',
     'lg.r6':'La réponse <code>POST /rag-query</code> expose <code>{reply, plan, chunks, engine: \'worker-rag-semantic\'}</code>, les chunks sont visualisés dans <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> avec leur source et score de similarité.',
-    'lg.r7':'KB fast-path étendue à 17 règles (vs 6) : 6 nouvelles catégories techniques couvrant RAG pipeline, Langfuse observabilité, SSE streaming, flow d\'orchestration, LLM Groq et routes Worker. Zéro appel API pour ces questions.',
+    'lg.r7':'KB fast-path étendue à 17 règles (vs 6) : catégories techniques et produit couvrant RAG pipeline, Langfuse observabilité, SSE streaming, flow d\'orchestration, LLM Groq, routes Worker et Product Decisions. Zéro appel API pour ces questions.',
     'lg.r8':'Section ARCHITECTURE TECHNIQUE ajoutée dans le system prompt de KRL1 : routes Worker, flow planner→synthesis, RAG bge-small, Langfuse flush, routing widget. Le LLM dispose maintenant du contexte complet pour les questions tech qui ne matchent pas la KB.',
     'lg.why.q':'Pourquoi l\'edge-native ?',
     'lg.why.a':'Plan PM structuré + réponse claire, zéro infra externe',
@@ -1340,7 +1340,7 @@ var T={
     's4b.okr.label':'Prompt system, OKR Builder (extrait réel)',
     's4b.okr.why':'T=0.5 est délibéré : assez bas pour que le JSON soit fiable et parseable, assez haut pour que les libellés d\'OKR soient variés et inspirants. À T=0.2, les OKRs seraient trop uniformes. À T=0.7, le JSON devient parfois invalide. L\'example JSON dans le prompt sert de guardrail de format, il contraint la structure de sortie plus efficacement qu\'une description textuelle.',
     's4b.kb.label':'KB fast-path, KRL1 avant d\'appeler le LLM',
-    's4b.kb.why':'KRL1 vérifie d\'abord une base de connaissances locale (16 patterns FR + 16 EN, matching par mots-clés) avant d\'envoyer quoi que ce soit à Groq. 10 catégories générales (profil, outils, expérience, contact, stack...) et 6 catégories techniques (RAG pipeline, Langfuse, SSE streaming, orchestration, Groq, routes Worker). Si la question correspond, la réponse part en ~400ms sans consommer un seul token. Cette couche couvre ~30-40% des questions récurrentes. Décision de coût et de perf : réponses plus rapides, plus cohérentes, zéro dépendance API pour les cas les plus fréquents.',
+    's4b.kb.why':'KRL1 vérifie d\'abord une base de connaissances locale (17 règles FR + 17 EN, matching par mots-clés) avant d\'envoyer quoi que ce soit à Groq. 10 catégories générales (profil, outils, expérience, contact, stack...) et 7 catégories techniques ou produit (RAG pipeline, Langfuse, SSE streaming, orchestration, Groq, routes Worker, Product Decisions). Si la question correspond, la réponse part en ~400ms sans consommer un seul token. Cette couche couvre ~30-40% des questions récurrentes. Décision de coût et de perf : réponses plus rapides, plus cohérentes, zéro dépendance API pour les cas les plus fréquents.',
     's4b.params.label':'Paramètres adaptés par outil',
     's4b.params.intro':'Chaque outil a une contrainte différente. Le Backlog Prioritizer utilise la température la plus basse : le scoring RICE doit être cohérent et reproductible. Le Discovery Assistant utilise la plus haute : reformuler des hypothèses et des questions d\'interview bénéficie de variété.',
     'params.th.tool':'Outil',
@@ -1429,7 +1429,7 @@ var T={
     'stack.lg.badge':'Semantic RAG',
     'stack.lf.badge':'Observability',
     'stack.lf.desc':'Production LLM tracing via Langfuse REST API integrated directly in the Worker (no npm, native fetch). Each KRL1 call generates a trace with 2 generations, planner (intent JSON, T=0.2) and synthesis (natural response, T=0.45), enriched with Groq token usage and per-step latencies. The RAG route adds a Workers AI retriever span. Non-blocking via <code>ctx.waitUntil</code>, zero impact on response times. Langfuse Cloud free tier: 50,000 observations/month.',
-    'stack.lg.desc':'Knowledge base embedded in the Worker (15 Markdown frameworks: PM, PO/Agile, AI). Semantic embeddings generated by <strong>Workers AI</strong> (bge-small-en-v1.5) in a single batch call; cosine similarity computed at the edge. The <strong>handleRagQuery</strong> pipeline chains: <strong>planner</strong> (T=0.2) generates strict JSON; <strong>retriever</strong> (conditional, only when intent = pm_workflow) fetches the 3 closest chunks by cosine similarity; <strong>synthesis</strong> (T=0.45) transforms the PM-enriched plan into a natural response max 220 words. Zero external dependencies, zero Python infrastructure.',
+    'stack.lg.desc':'Knowledge base embedded in the Worker (15 Markdown documents: PM, PO/Agile, AI Product). Semantic embeddings generated by <strong>Workers AI</strong> (bge-small-en-v1.5) in a single batch call; cosine similarity computed at the edge. The <strong>handleRagQuery</strong> pipeline chains: <strong>planner</strong> (T=0.2) generates strict JSON; <strong>retriever</strong> (conditional, only when intent = pm_workflow) fetches the 3 closest chunks by cosine similarity; <strong>synthesis</strong> (T=0.45) transforms the PM-enriched plan into a natural response max 220 words. Zero external dependencies, zero Python infrastructure.',
     's2.title':'Creation steps',
     'step1.label':'Idea & scoping',
     'step1.title':'Start from a real PM problem',
@@ -1486,7 +1486,7 @@ var T={
     'lg.proxy.desc':'The Worker exposes four routes: <code>POST /</code> direct Groq passthrough (the 6 PM tools), <code>POST /orchestrate</code> native planner→synthesis (KRL1), <code>POST /rag-query</code> full semantic RAG pipeline (planner → Workers AI embeddings → cosine sim → synthesis), and <code>POST /orchestrate-stream</code> which streams the synthesis response via SSE.',
     'lg.orch.name':'Workers AI · edge RAG',
     'lg.orch.badge':'Workers AI · bge-small-en-v1.5',
-    'lg.orch.desc':'Knowledge base (15 Markdown frameworks: PM, PO/Agile, AI) embedded as JS. Batch embeddings via Workers AI (bge-small-en-v1.5, 384 dims). Cosine similarity at the edge. Conditional retriever (pm_workflow only). Response: {reply, plan, chunks, engine: "worker-rag-semantic"}.',
+    'lg.orch.desc':'Knowledge base (15 Markdown documents: PM, PO/Agile, AI Product) embedded as JS. Batch embeddings via Workers AI (bge-small-en-v1.5, 384 dims). Cosine similarity at the edge. Conditional retriever (pm_workflow only). Response: {reply, plan, chunks, engine: "worker-rag-semantic"}.',
     'lg.flow.label':'KRL1 / RAG Explorer request flow',
     'lg.flow.desc':'KRL1 (POST /orchestrate): 1 · User sends a message. 2 · JS calls POST /orchestrate with {lang, message, history}. 3 · Planner (T=0.2) analyses intent → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 · Synthesis (T=0.45) transforms the plan into a max 220-word response with PM tool links. 5 · Response {reply, plan, engine} arrives at client., RAG Explorer (POST /rag-query): same planner → Workers AI encodes query + all chunks in one batch call → cosine similarity → top-3 injected into synthesis if intent = pm_workflow → {reply, plan, chunks, engine: "worker-rag-semantic"}.',
     'lg.recent.label':'What we added recently',
@@ -1496,7 +1496,7 @@ var T={
     'lg.r4':'Conditional retriever: semantic retrieval is activated only when <code>intent === \'pm_workflow\'</code>, avoids invoking Workers AI for non-PM queries (portfolio, contact, tech).',
     'lg.r5':'Non-blocking usage counter in KV (<code>ctx.waitUntil</code>), tracks calls without adding to response time.',
     'lg.r6':'The <code>POST /rag-query</code> response exposes <code>{reply, plan, chunks, engine: \'worker-rag-semantic\'}</code>, chunks are visualised in <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> with their source and similarity score.',
-    'lg.r7':'KB fast-path expanded to 17 rules (up from 6): 6 new technical categories covering RAG pipeline, Langfuse observability, SSE streaming, orchestration flow, Groq LLM and Worker routes. Zero API call for these queries.',
+    'lg.r7':'KB fast-path expanded to 17 rules (up from 6): technical and product categories covering RAG pipeline, Langfuse observability, SSE streaming, orchestration flow, Groq LLM, Worker routes and Product Decisions. Zero API call for these queries.',
     'lg.r8':'ARCHITECTURE TECHNIQUE section added to KRL1\'s system prompt: Worker routes, planner→synthesis flow, RAG bge-small, Langfuse flush, widget routing. The LLM now has full context for tech questions that miss the KB.',
     'lg.why.q':'Why edge-native?',
     'lg.why.a':'Structured PM plan + clear response, zero external infrastructure',
@@ -1542,7 +1542,7 @@ var T={
     's4b.okr.label':'System prompt, OKR Builder (real extract)',
     's4b.okr.why':'T=0.5 is deliberate: low enough that the JSON is reliable and parseable, high enough that the OKR labels are varied and inspiring. At T=0.2, OKRs would be too uniform. At T=0.7, the JSON occasionally becomes invalid. The example JSON in the prompt acts as a format guardrail, it constrains the output structure more effectively than a textual description.',
     's4b.kb.label':'KB fast-path, KRL1 before hitting the LLM',
-    's4b.kb.why':'KRL1 first checks a local knowledge base (16 FR patterns + 16 EN, keyword matching) before sending anything to Groq. 10 general categories (profile, tools, experience, contact, stack...) and 6 technical categories (RAG pipeline, Langfuse, SSE streaming, orchestration flow, Groq LLM, Worker routes). If the question matches, the response goes out in ~400ms without consuming a single token. This layer covers ~30-40% of recurring questions. A cost and performance decision: faster, more consistent responses, zero API dependency for the most common cases.',
+    's4b.kb.why':'KRL1 first checks a local knowledge base (17 FR rules + 17 EN, keyword matching) before sending anything to Groq. 10 general categories (profile, tools, experience, contact, stack...) and 7 technical or product categories (RAG pipeline, Langfuse, SSE streaming, orchestration flow, Groq LLM, Worker routes, Product Decisions). If the question matches, the response goes out in ~400ms without consuming a single token. This layer covers ~30-40% of recurring questions. A cost and performance decision: faster, more consistent responses, zero API dependency for the most common cases.',
     's4b.params.label':'Parameters per tool',
     's4b.params.intro':'Each tool has a different constraint. The Backlog Prioritizer uses the lowest temperature: RICE scoring must be consistent and reproducible. The Discovery Assistant uses the highest: reformulating hypotheses and interview questions benefits from more variety.',
     'params.th.tool':'Tool',
