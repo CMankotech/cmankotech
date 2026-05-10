@@ -65,7 +65,8 @@ section{margin-bottom:4rem}
 .stack-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
 .stack-card{padding:1.5rem;background:linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));border:1px solid var(--border);border-radius:14px;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 12px 36px -16px rgba(0,0,0,0.5);transition:all 0.3s;display:flex;flex-direction:column;gap:0.75rem}
 .stack-card:hover{transform:translateY(-2px);border-color:rgba(167,139,250,0.25);box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 14px 44px -10px rgba(167,139,250,0.18),0 0 50px -24px rgba(167,139,250,0.25)}
-.stack-icon{font-size:1.4rem;line-height:1}
+.stack-icon{font-size:1.4rem;line-height:1;display:flex;align-items:center;justify-content:center}
+.stack-icon img,.stack-icon svg{width:28px;height:28px;display:block;filter:brightness(0) invert(1);opacity:0.8}
 .stack-name{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text)}
 .stack-desc{font-size:0.8rem;color:var(--dim);line-height:1.6}
 .stack-badge{display:inline-block;font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.2rem 0.6rem;border-radius:99px;border:1px solid;width:fit-content}
@@ -413,37 +414,37 @@ if (window.mermaid) {
 
     <div class="stack-grid">
       <div class="stack-card">
-        <div class="stack-icon">🌐</div>
+        <div class="stack-icon"><img src="https://cdn.simpleicons.org/html5" alt="HTML5" width="28" height="28"></div>
         <div class="stack-name">HTML · CSS · JavaScript</div>
         <div class="stack-badge sb-cyan" data-i18n="stack.front.badge">Frontend</div>
         <div class="stack-desc" data-i18n="stack.front.desc">Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline, pas de composants partagés, pas de routing entre pages. Ce choix permet un déploiement direct sans étape de build, un debug immédiat dans les DevTools navigateur, et un code lisible à plat sans couche d'abstraction. Sept pages autonomes : les 6 outils PM (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) + le hub <code>pm-toolkit.html</code> qui les enchaîne. Un seul point de couplage : <code>pm-session.js</code>, un module léger qui persiste les sorties de chaque outil dans <code>localStorage</code> pour que le suivant puisse les réimporter en un clic.</div>
       </div>
       <div class="stack-card">
-        <div class="stack-icon">☁️</div>
+        <div class="stack-icon"><img src="https://cdn.simpleicons.org/github" alt="GitHub" width="28" height="28"></div>
         <div class="stack-name">GitHub Pages</div>
         <div class="stack-badge sb-blue" data-i18n="stack.deploy.badge">Hébergement</div>
         <div class="stack-desc" data-i18n="stack.deploy.desc">Hébergement statique gratuit avec CI/CD natif : chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Zéro coût, zéro infra à gérer, idéal pour un site statique à fichiers HTML/CSS/JS.</div>
       </div>
       <div class="stack-card">
-        <div class="stack-icon">⚡</div>
+        <div class="stack-icon"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare" width="28" height="28"></div>
         <div class="stack-name">Cloudflare Workers</div>
         <div class="stack-badge sb-orange" data-i18n="stack.proxy.badge">API Proxy</div>
         <div class="stack-desc" data-i18n="stack.proxy.desc">Un Worker est une fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes, pas de VPS, cold start quasi-nul. Ici il fait bien plus que proxifier : il orchestre le pipeline planner→synthesis pour KRL1, calcule les embeddings RAG via Workers AI, et trace les appels via Langfuse, la clé API n'est jamais exposée côté client. 7 routes : POST / passthrough direct Groq (6 outils PM) ; POST /orchestrate planner→synthesis sync ; POST /orchestrate-stream synthesis SSE ; POST /rag-query RAG sémantique complet ; POST /feedback analyse feedback (Make webhook ou Groq fallback) ; GET /stats compteur KV usage ; GET|POST /veille données veille tech. Validation d'origine (cmankotech.github.io uniquement), CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.</div>
       </div>
       <div class="stack-card">
-        <div class="stack-icon">🤖</div>
+        <div class="stack-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Groq"><path d="M12.036 2c-3.853-.035-7 3-7.036 6.781-.035 3.782 3.055 6.872 6.908 6.907h2.42v-2.566h-2.292c-2.407.028-4.38-1.866-4.408-4.23-.029-2.362 1.901-4.298 4.308-4.326h.1c2.407 0 4.358 1.915 4.365 4.278v6.305c0 2.342-1.944 4.25-4.323 4.279a4.375 4.375 0 01-3.033-1.252l-1.851 1.818A7 7 0 0012.029 22h.092c3.803-.056 6.858-3.083 6.879-6.816v-6.5C18.907 4.963 15.817 2 12.036 2z"/></svg></div>
         <div class="stack-name">Groq · llama-3.3-70b-versatile</div>
         <div class="stack-badge sb-violet" data-i18n="stack.llm.badge">LLM</div>
         <div class="stack-desc" data-i18n="stack.llm.desc">Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes, 5 à 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).</div>
       </div>
       <div class="stack-card" style="grid-column:1/-1">
-        <div class="stack-icon">☁️</div>
+        <div class="stack-icon"><img src="https://cdn.simpleicons.org/cloudflare" alt="Workers AI" width="28" height="28"></div>
         <div class="stack-name">Workers AI · edge RAG</div>
         <div class="stack-badge sb-violet" data-i18n="stack.lg.badge">RAG sémantique</div>
         <div class="stack-desc" data-i18n="stack.lg.desc">Base de connaissances embarquée dans le Worker (15 documents Markdown : PM, PO/Agile, AI Product). Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) en un seul appel batch ; la similarité cosinus est calculée à l'edge. Le pipeline <strong>handleRagQuery</strong> enchaîne : <strong>planner</strong> (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; <strong>retriever</strong> (conditionnel, uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches par cosine similarity ; <strong>synthesis</strong> (T=0.45) transforme le plan enrichi du contexte PM en réponse naturelle max 220 mots. Zéro dépendance externe, zéro infra Python.</div>
       </div>
       <div class="stack-card" style="grid-column:1/-1">
-        <div class="stack-icon">🔭</div>
+        <div class="stack-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Langfuse"><path d="M11.925 14.781l1.823 1.465s1.395-1.036 2.421-1.188c1.076-.16 2.224.44 3.288 1.155 1.607 1.08 2.959 2.451 2.959 2.451L24 17.11s-4.367-4.732-7.83-4.304c-2.272.281-4.245 1.975-4.245 1.975z"/><path d="M1.494 5.757L0 7.401s4.164 3.886 7.442 3.886c1.494 0 3.567-1.171 5.35-2.692 1.016-.867 2.152-1.851 3.288-1.851.763 0 1.77.404 2.72 1.466 0 0 .612-.368.986-.632.328-.232.816-.627.816-.627-1.366-1.458-3.342-2.524-4.522-2.419-1.913 0-3.288 1.191-4.992 2.568-1.703 1.377-2.42 1.945-3.646 1.945-2.062 0-5.948-3.288-5.948-3.288zM1.494 18.278L0 16.635s4.164-3.886 7.442-3.886c1.494 0 3.567 1.17 5.35 2.692 1.016.866 2.152 1.851 3.288 1.851.767 0 1.766-.421 2.72-1.494 0 0 .573.353.926.597.363.252.897.667.897.667-1.367 1.47-3.357 2.547-4.543 2.442-1.913 0-3.049-1.014-4.752-2.391-1.704-1.377-2.66-2.122-3.886-2.122-2.062 0-5.948 3.287-5.948 3.287zM20.981 9.461c-.389.269-1.016.658-1.016.658s.359.777.359 1.823c0 1.046-.329 1.943-.329 1.943s.563.351.927.597c.377.256.956.688.956.688s.687-1.435.687-3.228c0-1.793-.687-3.138-.687-3.138s-.54.41-.897.657z"/><path d="M12.015 9.222l1.733-1.434s1.395 1.003 2.421 1.155c1.076.16 2.224-.44 3.288-1.155 1.607-1.08 2.959-2.451 2.959-2.451L24 6.89s-4.367 4.732-7.83 4.304c-2.272-.28-4.155-1.973-4.155-1.973zM7.83 4.5c2.242 0 4.125 1.913 4.125 1.913s-.524.413-.867.687c-.357.286-.926.747-.926.747S9.176 6.801 7.83 6.801c-.552 0-1.268.332-2.033.987-.59.505-1.203 1.133-1.613 1.912-.356.674-.55 1.468-.568 2.302-.024 1.047.347 2.145.956 3.018.408.586.895 1.027 1.405 1.405.661.491 1.351.837 1.853.837.536 0 1.017-.186 1.375-.358.568-.33 1.016-.718 1.016-.718l1.763 1.465s-.717.717-1.703 1.255c-.638.314-1.456.628-2.451.628-.994 0-2.148-.528-3.228-1.345-.698-.528-1.382-1.154-1.913-1.913-.87-1.244-1.318-2.758-1.315-4.274A7.568 7.568 0 012.75 7.698C4.125 5.905 6.158 4.5 7.83 4.5z"/></svg></div>
         <div class="stack-name">Langfuse · LLM Observability</div>
         <div class="stack-badge sb-green" data-i18n="stack.lf.badge">Observabilité</div>
         <div class="stack-desc" data-i18n="stack.lf.desc">Traces LLM en production via l'API REST Langfuse intégrée directement dans le Worker (no npm, fetch natif). Chaque appel KRL1 génère une trace avec 2 générations, planner (intent JSON, T=0.2) et synthesis (réponse naturelle, T=0.45), enrichies du token usage Groq et des latences par étape. La route RAG ajoute un span retriever Workers AI. Non-bloquant via <code>ctx.waitUntil</code>, zéro impact sur les temps de réponse. Plan gratuit Langfuse Cloud : 50 000 observations/mois.</div>
