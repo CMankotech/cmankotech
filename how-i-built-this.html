@@ -319,7 +319,6 @@ if (window.mermaid) {
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
       <span data-i18n="back">Portfolio</span>
     </a>
-    <button class="theme-btn" aria-label="Passer en mode clair"></button>
     <div class="lang-switcher">
       <button class="lang-btn glass-shimmer glass-focus active" id="btn-fr" onclick="setLang('fr')">FR</button>
       <button class="lang-btn glass-shimmer glass-focus" id="btn-en" onclick="setLang('en')">EN</button>
@@ -796,7 +795,7 @@ flowchart LR
         <div class="update-item" data-i18n="lg.r4">Un retriever conditionnel : le retrieval sémantique est activé uniquement si <code>intent === 'pm_workflow'</code>, évite d'invoquer Workers AI pour les questions hors PM (portfolio, contact, tech).</div>
         <div class="update-item" data-i18n="lg.r5">Un compteur d'usage non-bloquant dans KV (<code>ctx.waitUntil</code>), trace les appels sans alourdir le temps de réponse.</div>
         <div class="update-item" data-i18n="lg.r6">La réponse <code>POST /rag-query</code> expose <code>{reply, plan, chunks, engine: 'worker-rag-semantic'}</code>, les chunks sont visualisés dans <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> avec leur source et score de similarité.</div>
-        <div class="update-item" data-i18n="lg.r7">KB fast-path étendue à 16 règles (vs 6) : 6 nouvelles catégories techniques couvrant RAG pipeline, Langfuse observabilité, SSE streaming, flow d'orchestration, LLM Groq et routes Worker. Zéro appel API pour ces questions.</div>
+        <div class="update-item" data-i18n="lg.r7">KB fast-path étendue à 17 règles (vs 6) : 6 nouvelles catégories techniques couvrant RAG pipeline, Langfuse observabilité, SSE streaming, flow d'orchestration, LLM Groq et routes Worker. Zéro appel API pour ces questions.</div>
         <div class="update-item" data-i18n="lg.r8">Section ARCHITECTURE TECHNIQUE ajoutée dans le system prompt de KRL1 : routes Worker, flow planner→synthesis, RAG bge-small, Langfuse flush, routing widget. Le LLM dispose maintenant du contexte complet pour les questions tech qui ne matchent pas la KB.</div>
       </div>
     </div>
@@ -985,7 +984,7 @@ flowchart TD
         <span class="layer-num">02</span>
         <div class="layer-body">
           <div class="layer-title" data-i18n="l2t">KB fast-path, matching local</div>
-          <div class="layer-desc" data-i18n="l2d">Avant tout appel API, KRL1 cherche un pattern dans sa base de connaissances locale (~16 catégories). Si un mot-clé matche, la réponse est servie instantanément depuis le client, 0 latence réseau, 0 coût LLM.</div>
+          <div class="layer-desc" data-i18n="l2d">Avant tout appel API, KRL1 cherche un pattern dans sa base de connaissances locale (~17 catégories). Si un mot-clé matche, la réponse est servie instantanément depuis le client, 0 latence réseau, 0 coût LLM.</div>
           <div class="layer-tech">
             <span class="tech-pill">keyword matching</span>
             <span class="tech-pill">FR + EN rules</span>
@@ -1106,11 +1105,12 @@ Réponse actionnable et concise
       <div class="kb-card"><div class="kb-card-keys" data-i18n="kb14k">orchestr · planner · synthesis · pipeline</div><div class="kb-card-desc" data-i18n="kb14d">Orchestration : planner JSON T=0.2 → synthesis SSE T=0.45</div></div>
       <div class="kb-card"><div class="kb-card-keys" data-i18n="kb15k">groq · llama · lpu · latence</div><div class="kb-card-desc" data-i18n="kb15d">Groq llama-3.3-70b : LPU 1-2s, températures adaptées</div></div>
       <div class="kb-card"><div class="kb-card-keys" data-i18n="kb16k">route · endpoint · /stats · /veille · /feedback</div><div class="kb-card-desc" data-i18n="kb16d">7 routes Worker : proxy, orchestrate, stream, rag-query, feedback, stats, veille</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb17k">product decisions · décisions produit · pourquoi ces choix</div><div class="kb-card-desc" data-i18n="kb17d">Renvoie vers la page Product Decisions avec les décisions derrière le site</div></div>
     </div>
 
     <div class="decision-card" style="margin-top:1.5rem;text-align:center;padding:1.5rem">
       <a href="product-decisions.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.75rem 1.5rem;background:linear-gradient(135deg,rgba(251,146,60,0.1),rgba(244,114,182,0.1));border:1px solid rgba(251,146,60,0.25);border-radius:99px;color:#fdba74;font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;transition:all 0.25s" data-i18n="s5c.cta">
-        Les 10 décisions produit derrière ces choix →
+        Les décisions produit derrière ces choix →
       </a>
     </div>
 
@@ -1294,7 +1294,7 @@ var T={
     'lg.r4':'Un retriever conditionnel : le retrieval sémantique est activé uniquement si <code>intent === \'pm_workflow\'</code>, évite d\'invoquer Workers AI pour les questions hors PM (portfolio, contact, tech).',
     'lg.r5':'Un compteur d\'usage non-bloquant dans KV (<code>ctx.waitUntil</code>), trace les appels sans alourdir le temps de réponse.',
     'lg.r6':'La réponse <code>POST /rag-query</code> expose <code>{reply, plan, chunks, engine: \'worker-rag-semantic\'}</code>, les chunks sont visualisés dans <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> avec leur source et score de similarité.',
-    'lg.r7':'KB fast-path étendue à 16 règles (vs 6) : 6 nouvelles catégories techniques couvrant RAG pipeline, Langfuse observabilité, SSE streaming, flow d\'orchestration, LLM Groq et routes Worker. Zéro appel API pour ces questions.',
+    'lg.r7':'KB fast-path étendue à 17 règles (vs 6) : 6 nouvelles catégories techniques couvrant RAG pipeline, Langfuse observabilité, SSE streaming, flow d\'orchestration, LLM Groq et routes Worker. Zéro appel API pour ces questions.',
     'lg.r8':'Section ARCHITECTURE TECHNIQUE ajoutée dans le system prompt de KRL1 : routes Worker, flow planner→synthesis, RAG bge-small, Langfuse flush, routing widget. Le LLM dispose maintenant du contexte complet pour les questions tech qui ne matchent pas la KB.',
     'lg.why.q':'Pourquoi l\'edge-native ?',
     'lg.why.a':'Plan PM structuré + réponse claire, zéro infra externe',
@@ -1365,13 +1365,13 @@ var T={
     'toc.s5':'05 RAG','toc.s5b':'05b Perf','toc.s5c':'05c KRL1',
     'toc.s6':'06 Suite','toc.s7':'07 Glossaire',
     's5c.title':'KRL1 · Architecture de décision',
-    's5c.cta':'Les 10 décisions produit derrière ces choix →',
+    's5c.cta':'Les décisions produit derrière ces choix →',
     'layersLbl':'Les 4 couches de décision',
     'l1t':'Détection du contexte de page',
     'l1d':"KRL1 lit l'URL dès l'ouverture et adapte son message d'accueil à l'outil PM en cours d'utilisation. 6 messages différents selon la page.",
     'l1b':'Contextualisation',
     'l2t':'KB fast-path, matching local',
-    'l2d':"Avant tout appel API, KRL1 cherche un pattern dans sa base de connaissances locale (~16 catégories). Si un mot-clé matche, la réponse est servie instantanément depuis le client, 0 latence réseau, 0 coût LLM.",
+    'l2d':"Avant tout appel API, KRL1 cherche un pattern dans sa base de connaissances locale (~17 catégories). Si un mot-clé matche, la réponse est servie instantanément depuis le client, 0 latence réseau, 0 coût LLM.",
     'l2b':'Performance & coût',
     'l3t':'Appel LLM via Groq + system prompt',
     'l3d':"Si aucun pattern KB ne matche, la question est envoyée à l'API Groq (llama-3.3-70b sur LPU) avec le system prompt complet + l'historique de conversation.",
@@ -1392,7 +1392,7 @@ var T={
     'pa4l':'Funnel & règles de rendu',
     'pa4t':"Chaque réponse PM devient un point d'entrée vers les 6 outils, c'est du product-led growth par prompt. La limite de 200 mots évite les réponses essay.",
     'pa4d':'Décision : les règles typographiques sont des guardrails qualité découverts après test, ajoutés itérativement.',
-    'kbLbl':'KB fast-path, les 16 catégories locales',
+    'kbLbl':'KB fast-path, les 17 catégories locales',
     'kb1k':'que peux · peux-tu · aide · capacité','kb1d':"Présentation des 2 axes d'aide : défis PM + portfolio Carlin",
     'kb2k':'qui · carlin · profil · présente','kb2d':'Résumé du profil en 3 lignes',
     'kb3k':'outil · build · projet · app · tool','kb3d':'Liste des 6 outils PM avec liens cliquables',
@@ -1408,7 +1408,8 @@ var T={
     'kb13k':'stream · sse · server-sent · progressif','kb13d':'Streaming SSE : getReader(), delta parsing, rendu mot par mot',
     'kb14k':'orchestr · planner · synthesis · pipeline','kb14d':'Orchestration : planner JSON T=0.2 → synthesis SSE T=0.45',
     'kb15k':'groq · llama · lpu · latence','kb15d':'Groq llama-3.3-70b : LPU 1-2s, températures adaptées',
-    'kb16k':'route · endpoint · /stats · /veille · /feedback','kb16d':'7 routes Worker : proxy, orchestrate, stream, rag-query, feedback, stats, veille'
+    'kb16k':'route · endpoint · /stats · /veille · /feedback','kb16d':'7 routes Worker : proxy, orchestrate, stream, rag-query, feedback, stats, veille',
+    'kb17k':'product decisions · décisions produit · pourquoi ces choix','kb17d':'Renvoie vers la page Product Decisions avec les décisions derrière le site'
   },
   en:{
     'back':'Portfolio',
@@ -1495,7 +1496,7 @@ var T={
     'lg.r4':'Conditional retriever: semantic retrieval is activated only when <code>intent === \'pm_workflow\'</code>, avoids invoking Workers AI for non-PM queries (portfolio, contact, tech).',
     'lg.r5':'Non-blocking usage counter in KV (<code>ctx.waitUntil</code>), tracks calls without adding to response time.',
     'lg.r6':'The <code>POST /rag-query</code> response exposes <code>{reply, plan, chunks, engine: \'worker-rag-semantic\'}</code>, chunks are visualised in <a href="rag-explorer.html" style="color:var(--violet)">RAG Explorer</a> with their source and similarity score.',
-    'lg.r7':'KB fast-path expanded to 16 rules (up from 6): 6 new technical categories covering RAG pipeline, Langfuse observability, SSE streaming, orchestration flow, Groq LLM and Worker routes. Zero API call for these queries.',
+    'lg.r7':'KB fast-path expanded to 17 rules (up from 6): 6 new technical categories covering RAG pipeline, Langfuse observability, SSE streaming, orchestration flow, Groq LLM and Worker routes. Zero API call for these queries.',
     'lg.r8':'ARCHITECTURE TECHNIQUE section added to KRL1\'s system prompt: Worker routes, planner→synthesis flow, RAG bge-small, Langfuse flush, widget routing. The LLM now has full context for tech questions that miss the KB.',
     'lg.why.q':'Why edge-native?',
     'lg.why.a':'Structured PM plan + clear response, zero external infrastructure',
@@ -1566,13 +1567,13 @@ var T={
     'toc.s5':'05 RAG','toc.s5b':'05b Perf','toc.s5c':'05c KRL1',
     'toc.s6':'06 Next','toc.s7':'07 Glossary',
     's5c.title':'KRL1 · Decision Architecture',
-    's5c.cta':'The 10 product decisions behind these choices →',
+    's5c.cta':'The product decisions behind these choices →',
     'layersLbl':'The 4 decision layers',
     'l1t':'Page context detection',
     'l1d':"KRL1 reads the URL on open and adapts its welcome message to the current PM tool. 6 different messages depending on the page.",
     'l1b':'Contextualisation',
     'l2t':'KB fast-path, local matching',
-    'l2d':"Before any API call, KRL1 checks its local knowledge base (~16 categories). If a keyword matches, the answer is served instantly from the client, 0 network latency, 0 LLM cost.",
+    'l2d':"Before any API call, KRL1 checks its local knowledge base (~17 categories). If a keyword matches, the answer is served instantly from the client, 0 network latency, 0 LLM cost.",
     'l2b':'Performance & cost',
     'l3t':'LLM call via Groq + system prompt',
     'l3d':"If no KB pattern matches, the question is sent to the Groq API (llama-3.3-70b on LPU) with the full system prompt + conversation history.",
@@ -1593,7 +1594,7 @@ var T={
     'pa4l':'Funnel & rendering rules',
     'pa4t':"Every PM response becomes an entry point to the 6 tools, product-led growth via prompt. The 200-word limit prevents essay-style answers.",
     'pa4d':'Decision: typographic rules are quality guardrails discovered through testing, added iteratively.',
-    'kbLbl':'KB fast-path, the 16 local categories',
+    'kbLbl':'KB fast-path, the 17 local categories',
     'kb1k':'what can · can you · help · capabilities','kb1d':'Presentation of 2 help axes: PM challenges + Carlin portfolio',
     'kb2k':'who · carlin · profile · about','kb2d':'Profile summary in 3 lines',
     'kb3k':'tool · build · project · app','kb3d':'List of 6 PM tools with clickable links',
@@ -1609,7 +1610,8 @@ var T={
     'kb13k':'stream · sse · server-sent · progressive','kb13d':'SSE streaming: getReader(), delta parsing, word-by-word render',
     'kb14k':'orchestrat · planner · synthesis · pipeline','kb14d':'Orchestration: planner JSON T=0.2 → synthesis SSE T=0.45',
     'kb15k':'groq · llama · lpu · latency','kb15d':'Groq llama-3.3-70b: LPU 1-2s, tailored temperatures',
-    'kb16k':'route · endpoint · /stats · /veille · /feedback','kb16d':'7 Worker routes: proxy, orchestrate, stream, rag-query, feedback, stats, veille'
+    'kb16k':'route · endpoint · /stats · /veille · /feedback','kb16d':'7 Worker routes: proxy, orchestrate, stream, rag-query, feedback, stats, veille',
+    'kb17k':'product decisions · why these choices · plg decisions','kb17d':'Links to the Product Decisions page with the decisions behind the site'
   }
 };
 
