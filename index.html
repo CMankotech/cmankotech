@@ -726,6 +726,30 @@ window.setLang=function(lang){
     document.head.appendChild(s);
   }
 
+  // Scope tout le CSS injecté à #panelId pour éviter tout conflit global
+  function scopeCSS(css,id){
+    var out='';
+    var re=/([^{]*?)\{((?:[^{}]|\{[^{}]*\})*)\}/g;
+    var m;
+    while((m=re.exec(css))!==null){
+      var sel=m[1].trim(),body=m[2];
+      if(!sel)continue;
+      if(/^@(?:keyframes|font-face|charset|import)/.test(sel)){
+        out+=sel+'{'+body+'}';
+      } else if(/^@/.test(sel)){
+        out+=sel+'{'+scopeCSS(body,id)+'}';
+      } else {
+        var scoped=sel.split(',').map(function(s){
+          s=s.trim();
+          if(!s||/^(?:html|body|:root|\*)/.test(s))return'';
+          return'#'+id+' '+s;
+        }).filter(Boolean).join(',');
+        if(scoped)out+=scoped+'{'+body+'}';
+      }
+    }
+    return out;
+  }
+
   function lazyLoad(panelId,pageUrl){
     var panel=document.getElementById(panelId);
     if(panel.dataset.loaded==='true')return;
@@ -739,13 +763,8 @@ window.setLang=function(lang){
           var style=doc.querySelector('style');
           if(style){
             var el=document.createElement('style');el.id=styleId;
-            // Retirer les règles globales qui écraserait les styles du hero/index
-            var css=style.textContent
-              .replace(/\*\s*(?:,\s*\*(?:::before|::after)?\s*)*\{[^}]+\}/g,'')
-              .replace(/(?:html|body)\s*(?:,\s*[^{]*)?\{[^}]+\}/g,'')
-              .replace(/:root\s*\{[^}]+\}/g,'')
-              .replace(/body::after\s*\{[^}]+\}/g,'');
-            el.textContent=css;document.head.appendChild(el);
+            el.textContent=scopeCSS(style.textContent,panelId);
+            document.head.appendChild(el);
           }
         }
         var container=doc.querySelector('.container')||doc.body;
