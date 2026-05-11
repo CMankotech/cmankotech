@@ -348,6 +348,7 @@ if (window.mermaid) {
     <a class="toc-item" href="#s5c"        data-i18n="toc.s5c">05c KRL1</a>
     <a class="toc-item" href="#s6"         data-i18n="toc.s6">06 Suite</a>
     <a class="toc-item" href="#s7"         data-i18n="toc.s7">07 Glossaire</a>
+    <a class="toc-item" href="#s8"         data-i18n="toc.s8">08 Nav</a>
   </nav>
 
   <!-- 00 POURQUOI CE SITE EXISTE -->
@@ -1198,6 +1199,34 @@ Réponse actionnable et concise
     </div>
   </section>
 
+  <section id="s8">
+    <div class="sec-header">
+      <span class="sec-num">08</span>
+      <span class="sec-title" data-i18n="s8.title">Navigation contextuelle &amp; lazy-load</span>
+    </div>
+    <div class="narrative-block">
+      <p class="narrative-lead" data-i18n="s8.lead">Mai 2026 — refonte complète de la navigation : accordéon remplacé par 5 tabs avec chargement à la demande, et des liens nav qui n'apparaissent que lorsque le visiteur a dépassé le hero.</p>
+      <p class="narrative-p" data-i18n="s8.body">Architecture et Décisions produit sont désormais accessibles comme tabs dans l'index, chargées via fetch + DOMParser au premier clic. Chaque page reste une URL autonome. Le CSS injecté passe par scopeCSS(css, panelId) : chaque sélecteur est préfixé de l'ID du tab (#architecture .decision-card) pour confiner les styles — impossible d'écraser les glows du hero ou les variables globales. La navigation contextuelle repose sur un IntersectionObserver sur .tech-strip-label : les 5 liens de section apparaissent en stagger (60 ms par lien) dès que le visiteur dépasse la zone "Stack technique", et disparaissent instantanément au retour vers le hero.</p>
+    </div>
+    <div class="stack-grid" style="grid-template-columns:repeat(3,1fr);margin-top:1.5rem">
+      <div class="stack-card">
+        <div class="stack-name" data-i18n="s8.c1.name">Tabs + lazy-load</div>
+        <div class="stack-badge sb-violet" data-i18n="s8.c1.badge">Navigation</div>
+        <div class="stack-desc" data-i18n="s8.c1.desc">5 tabs dans l'index. Architecture et Décisions produit chargées via fetch + DOMParser au premier clic. Guard dataset.loaded pour éviter les doubles requêtes.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-name" data-i18n="s8.c2.name">scopeCSS()</div>
+        <div class="stack-badge sb-cyan" data-i18n="s8.c2.badge">Isolation CSS</div>
+        <div class="stack-desc" data-i18n="s8.c2.desc">Chaque sélecteur du CSS injecté est préfixé #panelId. Les règles globales (html, body, :root, *) et @keyframes sont exclues. Aucun conflit possible avec le hero ou les autres sections.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-name" data-i18n="s8.c3.name">IntersectionObserver</div>
+        <div class="stack-badge sb-blue" data-i18n="s8.c3.badge">Nav contextuelle</div>
+        <div class="stack-desc" data-i18n="s8.c3.desc">Observe .tech-strip-label. Quand l'élément est dépassé (!isIntersecting &amp;&amp; top &lt; 0), la classe nav-section-visible s'ajoute sur &lt;html&gt; et déclenche l'apparition en stagger des 5 liens de section.</div>
+      </div>
+    </div>
+  </section>
+
   <footer class="page-footer">
     <a href="https://cmankotech.github.io/cmankotech/" class="footer-back page-cta-pill">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -1364,7 +1393,13 @@ var T={
     'toc.s0':'00','toc.s1':'01 Stack','toc.s2':'02 Étapes','toc.s3':'03 Outils',
     'toc.s4':'04 Archi','toc.s4b':'04b Prompts','toc.s4c':'04c Raté',
     'toc.s5':'05 RAG','toc.s5b':'05b Perf','toc.s5c':'05c KRL1',
-    'toc.s6':'06 Suite','toc.s7':'07 Glossaire',
+    'toc.s6':'06 Suite','toc.s7':'07 Glossaire','toc.s8':'08 Nav',
+    's8.title':'Navigation contextuelle & lazy-load',
+    's8.lead':'Mai 2026 — refonte complète de la navigation : accordéon remplacé par 5 tabs avec chargement à la demande, et des liens nav qui n\'apparaissent que lorsque le visiteur a dépassé le hero.',
+    's8.body':'Architecture et Décisions produit sont chargées via fetch + DOMParser au premier clic. Le CSS injecté passe par scopeCSS(css, panelId) : chaque sélecteur est préfixé de l\'ID du tab pour confiner les styles. La navigation contextuelle repose sur un IntersectionObserver sur .tech-strip-label : les 5 liens apparaissent en stagger (60 ms) dès que le visiteur dépasse "Stack technique".',
+    's8.c1.name':'Tabs + lazy-load','s8.c1.badge':'Navigation','s8.c1.desc':'5 tabs dans l\'index. Architecture et Décisions produit chargées via fetch + DOMParser au premier clic. Guard dataset.loaded pour éviter les doubles requêtes.',
+    's8.c2.name':'scopeCSS()','s8.c2.badge':'Isolation CSS','s8.c2.desc':'Chaque sélecteur du CSS injecté est préfixé #panelId. Les règles globales (html, body, :root, *) et @keyframes sont exclues. Aucun conflit possible avec le hero.',
+    's8.c3.name':'IntersectionObserver','s8.c3.badge':'Nav contextuelle','s8.c3.desc':'Observe .tech-strip-label. Quand dépassé (!isIntersecting && top < 0), nav-section-visible s\'ajoute sur <html> et déclenche l\'apparition en stagger des 5 liens de section.',
     's5c.title':'KRL1 · Architecture de décision',
     's5c.cta':'Les décisions produit derrière ces choix →',
     'layersLbl':'Les 4 couches de décision',
@@ -1566,7 +1601,13 @@ var T={
     'toc.s0':'00','toc.s1':'01 Stack','toc.s2':'02 Steps','toc.s3':'03 Tools',
     'toc.s4':'04 Arch','toc.s4b':'04b Prompts','toc.s4c':'04c Failed',
     'toc.s5':'05 RAG','toc.s5b':'05b Perf','toc.s5c':'05c KRL1',
-    'toc.s6':'06 Next','toc.s7':'07 Glossary',
+    'toc.s6':'06 Next','toc.s7':'07 Glossary','toc.s8':'08 Nav',
+    's8.title':'Contextual nav & lazy-load',
+    's8.lead':'May 2026 — full navigation overhaul: accordion replaced by 5 tabs with on-demand loading, and nav links that only appear once the visitor has scrolled past the hero.',
+    's8.body':'Architecture and Product Decisions are now loaded via fetch + DOMParser on first click. Injected CSS goes through scopeCSS(css, panelId): each selector is prefixed with the tab ID to confine styles. The contextual nav uses an IntersectionObserver on .tech-strip-label: the 5 section links appear in stagger (60ms) once the visitor scrolls past "Tech stack".',
+    's8.c1.name':'Tabs + lazy-load','s8.c1.badge':'Navigation','s8.c1.desc':'5 tabs in the index. Architecture and Product Decisions loaded via fetch + DOMParser on first click. dataset.loaded guard prevents double requests.',
+    's8.c2.name':'scopeCSS()','s8.c2.badge':'CSS isolation','s8.c2.desc':'Every selector in the injected CSS is prefixed with #panelId. Global rules (html, body, :root, *) and @keyframes are excluded. No possible conflict with the hero.',
+    's8.c3.name':'IntersectionObserver','s8.c3.badge':'Contextual nav','s8.c3.desc':'Observes .tech-strip-label. When passed (!isIntersecting && top < 0), nav-section-visible is added to <html> and triggers the staggered appearance of the 5 section links.',
     's5c.title':'KRL1 · Decision Architecture',
     's5c.cta':'The product decisions behind these choices →',
     'layersLbl':'The 4 decision layers',

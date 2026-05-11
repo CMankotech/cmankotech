@@ -311,6 +311,36 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       </div>
     </div>
 
+    <div class="decision-card" style="--dc-color:#818cf8">
+      <div class="decision-num" id="d14n">Décision 14</div>
+      <div class="decision-q" id="d14q">Pourquoi remplacer l'accordéon par des tabs ?</div>
+      <div class="decision-a" id="d14a">Navigation immédiate, zéro friction d'exploration</div>
+      <div class="decision-why" id="d14why">L'accordéon avait un défaut fondamental : le contenu était invisible par défaut. Le visiteur devait deviner qu'il y avait quelque chose à déplier, cliquer, puis scroller pour évaluer si ça valait le coup. Les tabs inversent ce rapport : le libellé de l'onglet suffit à savoir ce qu'on va trouver, le switch est instantané, sans reflow ni animation de dépliage. La navigation contextuelle (liens nav qui apparaissent en stagger au scroll via IntersectionObserver) remplace l'accordéon comme affordance de navigation sans dupliquer la barre principale.</div>
+      <div class="decision-alts">
+        <div class="decision-alts-label" id="d14al">Alternatives rejetées</div>
+        <ul id="d14alts">
+          <li>Accordéon — contenu caché par défaut, friction au clic, scroll non prévisible après ouverture</li>
+          <li>Sections toujours visibles — page trop longue, pas de focus, difficile à parcourir rapidement</li>
+          <li>Bento grid cliquable — UX non standard pour du contenu dense et textuel</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="decision-card" style="--dc-color:#34d399">
+      <div class="decision-num" id="d15n">Décision 15</div>
+      <div class="decision-q" id="d15q">Pourquoi charger Architecture et Décisions produit en lazy-load ?</div>
+      <div class="decision-a" id="d15a">Index léger, pages autonomes préservées, styles isolés</div>
+      <div class="decision-why" id="d15why">Intégrer les pages Architecture (1 779 lignes) et Décisions produit (500 lignes) directement dans index.html aurait créé un fichier monolithique dépassant 4 000 lignes, avec des conflits CSS garantis entre les systèmes de styles de chaque page. Le lazy-load (fetch + DOMParser) charge le contenu à la demande, au premier clic seulement. Chaque page reste une URL autonome et partageabl. Le CSS injecté est scopé à l'ID du tab panel (#architecture .decision-card) pour confiner son effet — impossible d'écraser les glows du hero ou les styles des autres sections. Le guard dataset.loaded évite les doubles requêtes si on revient sur un tab déjà chargé.</div>
+      <div class="decision-alts">
+        <div class="decision-alts-label" id="d15al">Alternatives rejetées</div>
+        <ul id="d15alts">
+          <li>Intégration statique — index.html &gt; 4 000 lignes, conflits CSS, maintenance difficile</li>
+          <li>iFrame — pas de thème dark/light partagé, barre de scroll parasite, UX dégradée</li>
+          <li>Pages séparées uniquement — navigation fragmentée, on quitte l'index à chaque clic</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 
   <footer>
@@ -382,6 +412,14 @@ var I18N = {
     d13n:'Décision 13', d13q:"Pourquoi HTML/JS vanilla sans framework ?", d13a:"Zéro dépendance, zéro dette, déploiement immédiat",
     d13why:"Le choix de ne pas utiliser React, Vue ou Next.js n'est pas une limitation — c'est une décision explicite. Pour un portfolio de 6 outils PM et quelques pages de documentation, un framework SPA aurait apporté : une étape de build obligatoire, des dépendances npm à maintenir, une complexité d'abstraction sans valeur ajoutée. Chaque page HTML est autonome avec son CSS et son JS inline. Pas de routing, pas de state management global. Le déploiement est un git push en moins de 60 secondes. Le debug se fait directement dans les DevTools sans source maps. La lisibilité du code est maximale. Pour un PM qui vibe code en spare time avec Claude Code, la vélocité prime sur l'architecture.",
     d13alts:"<li>React / Next.js — étape de build, config webpack/eslint, overhead pour du contenu statique</li><li>Vue.js — même problème, complexité non justifiée pour ce cas d'usage</li><li>Astro — plus adapté, mais paradigme à apprendre, overhead de config initial</li>",
+    d14n:'Décision 14', d14q:"Pourquoi remplacer l'accordéon par des tabs ?", d14a:"Navigation immédiate, zéro friction d'exploration",
+    d14why:"L'accordéon avait un défaut fondamental : le contenu était invisible par défaut. Le visiteur devait deviner qu'il y avait quelque chose à déplier, cliquer, puis scroller pour évaluer si ça valait le coup. Les tabs inversent ce rapport : le libellé de l'onglet suffit à savoir ce qu'on va trouver, le switch est instantané, sans reflow ni animation de dépliage. La navigation contextuelle (liens nav qui apparaissent en stagger au scroll via IntersectionObserver) remplace l'accordéon comme affordance de navigation sans dupliquer la barre principale.",
+    d14al:"Alternatives rejetées",
+    d14alts:"<li>Accordéon — contenu caché par défaut, friction au clic, scroll non prévisible après ouverture</li><li>Sections toujours visibles — page trop longue, pas de focus, difficile à parcourir rapidement</li><li>Bento grid cliquable — UX non standard pour du contenu dense et textuel</li>",
+    d15n:'Décision 15', d15q:"Pourquoi charger Architecture et Décisions produit en lazy-load ?", d15a:"Index léger, pages autonomes préservées, styles isolés",
+    d15why:"Intégrer les pages Architecture (1 779 lignes) et Décisions produit (500 lignes) directement dans index.html aurait créé un fichier monolithique dépassant 4 000 lignes, avec des conflits CSS garantis. Le lazy-load (fetch + DOMParser) charge le contenu à la demande, au premier clic seulement. Chaque page reste une URL autonome et partageable. Le CSS injecté est scopé à l'ID du tab panel (#architecture .decision-card) pour confiner son effet — impossible d'écraser les glows du hero ou les styles des autres sections.",
+    d15al:"Alternatives rejetées",
+    d15alts:"<li>Intégration statique — index.html &gt; 4 000 lignes, conflits CSS, maintenance difficile</li><li>iFrame — pas de thème dark/light partagé, barre de scroll parasite, UX dégradée</li><li>Pages séparées uniquement — navigation fragmentée, on quitte l'index à chaque clic</li>",
     footerTech:'Architecture technique',
     footerKrl1:'KRL1 · Couches de décision',
     footerHome:'Portfolio'
@@ -433,6 +471,14 @@ var I18N = {
     d13n:'Decision 13', d13q:"Why vanilla HTML/JS without a framework?", d13a:"Zero dependencies, zero debt, immediate deployment",
     d13why:"Choosing not to use React, Vue or Next.js is not a limitation — it is an explicit decision. For a portfolio of 6 PM tools and a few documentation pages, an SPA framework would have added: a mandatory build step, npm dependencies to maintain, and abstraction overhead with no added value. Each HTML page is standalone with its own inline CSS and JS. No routing, no global state management. Deployment is a git push that triggers GitHub Pages in under 60 seconds. Debugging happens directly in DevTools without source maps. Code readability is maximum. For a PM vibe coding in spare time with Claude Code, velocity beats architecture.",
     d13alts:"<li>React / Next.js — build step, webpack/eslint config, overhead for static content</li><li>Vue.js — same problem, unjustified complexity for this use case</li><li>Astro — better fit, but paradigm to learn, initial config overhead</li>",
+    d14n:'Decision 14', d14q:"Why replace the accordion with tabs?", d14a:"Instant navigation, zero exploration friction",
+    d14why:"The accordion had a fundamental flaw: content was hidden by default. Visitors had to guess there was something to unfold, click, then scroll to decide if it was worth it. Tabs reverse this: the tab label is enough to know what you'll find, switching is instant with no reflow or unfold animation. The contextual nav (section links that appear in stagger on scroll via IntersectionObserver) replaces the accordion as a navigation affordance without duplicating the main bar.",
+    d14al:"Rejected alternatives",
+    d14alts:"<li>Accordion — content hidden by default, click friction, unpredictable scroll after opening</li><li>Always-visible sections — page too long, no focus, hard to scan quickly</li><li>Clickable bento grid — non-standard UX for dense text content</li>",
+    d15n:'Decision 15', d15q:"Why lazy-load Architecture and Product Decisions?", d15a:"Lightweight index, standalone pages preserved, isolated styles",
+    d15why:"Embedding the Architecture (1,779 lines) and Product Decisions (500 lines) pages directly into index.html would have created a monolithic file exceeding 4,000 lines, with guaranteed CSS conflicts. Lazy-load (fetch + DOMParser) loads content on demand, only on the first click. Each page remains a shareable standalone URL. Injected CSS is scoped to the tab panel ID (#architecture .decision-card) to confine its effect — impossible to override the hero glows or other section styles.",
+    d15al:"Rejected alternatives",
+    d15alts:"<li>Static integration — index.html &gt; 4,000 lines, CSS conflicts, impossible to maintain</li><li>iFrame — no shared dark/light theme, parasitic scrollbar, degraded UX</li><li>Separate pages only — fragmented navigation, leaves index on every click</li>",
     footerTech:'Technical architecture',
     footerKrl1:'KRL1 · Decision layers',
     footerHome:'Portfolio'
