@@ -276,18 +276,16 @@ nav{padding:1rem 1.5rem}
 
 /* TABS */
 .tabs-wrap{position:relative;z-index:1}
-.tabs-bar{display:flex;align-items:stretch;justify-content:center;padding:0 4rem;border-bottom:1px solid var(--line);background:rgba(8,8,15,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);position:sticky;top:62px;z-index:90;gap:0}
-.tab-btn{display:flex;align-items:center;gap:0.5rem;font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;padding:1.25rem 1.5rem;background:none;border:none;color:var(--muted);cursor:pointer;position:relative;transition:color 0.2s;white-space:nowrap}
-.tab-btn::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:linear-gradient(to right,#60a5fa,#a78bfa);transform:scaleX(0);transform-origin:left;transition:transform 0.25s ease}
-.tab-btn:hover{color:var(--text)}
-.tab-btn.active{color:var(--text)}
-.tab-btn.active::after{transform:scaleX(1)}
-.tab-num{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .tab-panel{display:none}
 .tab-panel.active{display:block;animation:tab-in 0.35s ease}
 @keyframes tab-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-[data-theme="light"] .tabs-bar{background:rgba(244,246,251,0.92)}
-@media(max-width:900px){.tabs-bar{padding:0 1.5rem;overflow-x:auto;scrollbar-width:none}.tabs-bar::-webkit-scrollbar{display:none}.tab-btn{padding:1rem 0.85rem;font-size:0.65rem}}
+/* Nav section links — cachés sur le hero, révélés au scroll */
+.nav-links a.nav-section{opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity 0.25s ease,transform 0.25s ease}
+.nav-section-visible .nav-links a.nav-section{opacity:1;transform:translateY(0);pointer-events:auto}
+.nav-section-visible .nav-links a.nav-section:nth-child(1){transition-delay:0ms}
+.nav-section-visible .nav-links a.nav-section:nth-child(2){transition-delay:60ms}
+.nav-section-visible .nav-links a.nav-section:nth-child(3){transition-delay:120ms}
+.nav-section-visible .nav-links a.nav-section:nth-child(4){transition-delay:180ms}
 
 /* ARCHITECTURE PANEL, styles repris de how-i-built-this */
 .arch-sub-h{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);letter-spacing:-0.01em;margin:2.5rem 0 1rem;display:flex;align-items:center;gap:0.75rem}
@@ -400,10 +398,10 @@ nav{padding:1rem 1.5rem}
 <nav>
   <div class="nav-logo grad">CARLIN M.</div>
   <div class="nav-links">
-    <a href="#projects" data-i18n="nav.projects">Projets</a>
-    <a href="#architecture" data-i18n="nav.arch">Architecture</a>
-    <a href="#skills" data-i18n="nav.skills">Comp&eacute;tences</a>
-    <a href="#certs" data-i18n="nav.certs">Certifications</a>
+    <a href="#projects" class="nav-section" data-i18n="nav.projects">Projets</a>
+    <a href="#architecture" class="nav-section" data-i18n="nav.arch">Architecture</a>
+    <a href="#skills" class="nav-section" data-i18n="nav.skills">Comp&eacute;tences</a>
+    <a href="#certs" class="nav-section" data-i18n="nav.certs">Certifications</a>
     <span class="nav-sep">|</span>
     <a href="product-decisions.html" target="_blank" class="nav-ext" data-i18n="nav.dec">D&eacute;cisions produit<svg width="8" height="8" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 9L9 1M5 1h4v4"/></svg></a>
     <a href="how-i-built-this.html" target="_blank" class="nav-ext" data-i18n="nav.build">Build<svg width="8" height="8" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 9L9 1M5 1h4v4"/></svg></a>
@@ -560,24 +558,6 @@ nav{padding:1rem 1.5rem}
 
 <!-- TABS: Projets · Architecture · Compétences · Certifications -->
 <div class="tabs-wrap">
-  <div class="tabs-bar" role="tablist" aria-label="Sections">
-    <button class="tab-btn active" data-tab="projects" role="tab" aria-selected="true" aria-controls="projects">
-      <span class="tab-num">01</span>
-      <span data-i18n="nav.projects">Projets</span>
-    </button>
-    <button class="tab-btn" data-tab="architecture" role="tab" aria-selected="false" aria-controls="architecture">
-      <span class="tab-num">02</span>
-      <span data-i18n="nav.arch">Architecture</span>
-    </button>
-    <button class="tab-btn" data-tab="skills" role="tab" aria-selected="false" aria-controls="skills">
-      <span class="tab-num">03</span>
-      <span data-i18n="nav.skills">Compétences</span>
-    </button>
-    <button class="tab-btn" data-tab="certs" role="tab" aria-selected="false" aria-controls="certs">
-      <span class="tab-num">04</span>
-      <span data-i18n="nav.certs">Certifications</span>
-    </button>
-  </div>
 
   <div class="tab-panel active" id="projects" role="tabpanel">
     <div class="wrap" style="padding-top:2rem;padding-bottom:2rem">
@@ -912,31 +892,61 @@ window.setLang=function(lang){
   });
 })();
 
-// Tabs: switch + deep-link + nav sync
+// Tabs: switch + nav contextuelle + deep-link
 (function(){
   var TABS=['projects','architecture','skills','certs'];
+
   function switchTab(id){
     if(!TABS.includes(id)) id='projects';
-    document.querySelectorAll('.tab-btn').forEach(function(btn){
-      var active=btn.getAttribute('data-tab')===id;
-      btn.classList.toggle('active',active);
-      btn.setAttribute('aria-selected',active?'true':'false');
-    });
     document.querySelectorAll('.tab-panel').forEach(function(panel){
       panel.classList.toggle('active',panel.id===id);
     });
-    document.querySelectorAll('.nav-links a').forEach(function(a){
+    document.querySelectorAll('.nav-links a.nav-section').forEach(function(a){
       a.classList.toggle('active',a.getAttribute('href')==='#'+id);
     });
     document.querySelectorAll('#'+id+' .rv').forEach(function(el){el.classList.add('on');});
     history.replaceState(null,'','#'+id);
   }
-  document.querySelectorAll('.tab-btn').forEach(function(btn){
-    btn.addEventListener('click',function(){switchTab(btn.getAttribute('data-tab'));});
+
+  // Nav desktop → tab switchers (preventDefault = no scroll)
+  document.querySelectorAll('.nav-links a.nav-section').forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      switchTab(a.getAttribute('href').slice(1));
+    });
   });
+
+  // Menu mobile → tab switchers + fermeture menu
+  document.querySelectorAll('#mobile-menu a[href^="#"]').forEach(function(a){
+    var hash=a.getAttribute('href').slice(1);
+    if(!TABS.includes(hash)) return;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var menu=document.getElementById('mobile-menu');
+      var btn=document.getElementById('nav-hamburger');
+      if(menu&&menu.classList.contains('open')){
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+        document.body.style.overflow='';
+      }
+      switchTab(hash);
+    });
+  });
+
   function fromHash(){var h=location.hash.replace('#','');switchTab(TABS.includes(h)?h:'projects');}
   window.addEventListener('hashchange',fromHash);
   fromHash();
+
+  // Révèle les liens nav quand le hero quitte le viewport
+  var hero=document.getElementById('hero');
+  if(hero&&'IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      document.documentElement.classList.toggle('nav-section-visible',!entries[0].isIntersecting);
+    },{threshold:0}).observe(hero);
+  } else {
+    document.documentElement.classList.add('nav-section-visible');
+  }
 })();
 
 // Hide blobs while hero is in view
