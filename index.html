@@ -945,7 +945,7 @@ window.setLang=function(lang){
   if(strip&&'IntersectionObserver' in window){
     new IntersectionObserver(function(entries){
       var e=entries[0];
-      var show=e.isIntersecting||e.boundingClientRect.top<0;
+      var show=!e.isIntersecting&&e.boundingClientRect.top<0;
       document.documentElement.classList.toggle('nav-section-visible',show);
     },{threshold:0}).observe(strip);
   } else {
