@@ -741,7 +741,8 @@ window.setLang=function(lang){
       } else {
         var scoped=sel.split(',').map(function(s){
           s=s.trim();
-          if(!s||/^(?:html|body|:root|\*)/.test(s))return'';
+          if(/^:root$/.test(s))return'#'+id;
+          if(!s||/^(?:html|body|\*)/.test(s))return'';
           return'#'+id+' '+s;
         }).filter(Boolean).join(',');
         if(scoped)out+=scoped+'{'+body+'}';
