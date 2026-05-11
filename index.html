@@ -281,6 +281,9 @@ nav{padding:1rem 1.5rem}
 .tab-panel{display:none}
 .tab-panel.active{display:block;animation:tab-in 0.35s ease}
 @keyframes tab-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.tab-lazy-placeholder{display:flex;align-items:center;justify-content:center;min-height:40vh}
+.tab-spinner{width:28px;height:28px;border:2px solid rgba(255,255,255,0.1);border-top-color:#60a5fa;border-radius:50%;animation:tab-spin 0.8s linear infinite}
+@keyframes tab-spin{to{transform:rotate(360deg)}}
 /* Nav section links — cachés sur le hero, révélés au scroll */
 .nav-links a.nav-section{opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity 0.25s ease,transform 0.25s ease}
 .nav-section-visible .nav-links a.nav-section{opacity:1;transform:translateY(0);pointer-events:auto}
@@ -288,6 +291,7 @@ nav{padding:1rem 1.5rem}
 .nav-section-visible .nav-links a.nav-section:nth-child(2){transition-delay:60ms}
 .nav-section-visible .nav-links a.nav-section:nth-child(3){transition-delay:120ms}
 .nav-section-visible .nav-links a.nav-section:nth-child(4){transition-delay:180ms}
+.nav-section-visible .nav-links a.nav-section:nth-child(5){transition-delay:240ms}
 
 /* ARCHITECTURE PANEL, styles repris de how-i-built-this */
 .arch-sub-h{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);letter-spacing:-0.01em;margin:2.5rem 0 1rem;display:flex;align-items:center;gap:0.75rem}
@@ -402,11 +406,9 @@ nav{padding:1rem 1.5rem}
   <div class="nav-links">
     <a href="#projects" class="nav-section" data-i18n="nav.projects">Projets</a>
     <a href="#architecture" class="nav-section" data-i18n="nav.arch">Architecture</a>
+    <a href="#decisions" class="nav-section" data-i18n="nav.dec">D&eacute;cisions produit</a>
     <a href="#skills" class="nav-section" data-i18n="nav.skills">Comp&eacute;tences</a>
     <a href="#certs" class="nav-section" data-i18n="nav.certs">Certifications</a>
-    <span class="nav-sep">|</span>
-    <a href="how-i-built-this.html" target="_blank" class="nav-ext" data-i18n="nav.build">Archi<svg width="8" height="8" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 9L9 1M5 1h4v4"/></svg></a>
-    <a href="product-decisions.html" target="_blank" class="nav-ext" data-i18n="nav.dec">D&eacute;cisions produit<svg width="8" height="8" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 9L9 1M5 1h4v4"/></svg></a>
   </div>
   <div class="nav-right">
     <div class="lang-switcher">
@@ -423,10 +425,9 @@ nav{padding:1rem 1.5rem}
 <div id="mobile-menu" role="navigation" aria-label="Menu mobile">
   <a href="#projects" data-i18n="nav.projects" onclick="document.getElementById('nav-hamburger').click()">Projets</a>
   <a href="#architecture" data-i18n="nav.arch" onclick="document.getElementById('nav-hamburger').click()">Architecture</a>
+  <a href="#decisions" data-i18n="nav.dec" onclick="document.getElementById('nav-hamburger').click()">D&eacute;cisions produit</a>
   <a href="#skills" data-i18n="nav.skills" onclick="document.getElementById('nav-hamburger').click()">Comp&eacute;tences</a>
   <a href="#certs" data-i18n="nav.certs" onclick="document.getElementById('nav-hamburger').click()">Certifications</a>
-  <a href="product-decisions.html" target="_blank" data-i18n="nav.dec" style="display:inline-flex;align-items:center;gap:0.35rem">D&eacute;cisions produit<svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 9L9 1M5 1h4v4"/></svg></a>
-  <a href="how-i-built-this.html" target="_blank" data-i18n="nav.build" style="display:inline-flex;align-items:center;gap:0.35rem">Build<svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 9L9 1M5 1h4v4"/></svg></a>
 </div>
 
 <section id="hero" style="position:relative;overflow:hidden">
@@ -617,155 +618,11 @@ nav{padding:1rem 1.5rem}
   </div>
 
   <div class="tab-panel" id="architecture" role="tabpanel">
-    <div class="wrap" style="padding-top:2rem;padding-bottom:2rem">
+    <div class="tab-lazy-placeholder"><div class="tab-spinner"></div></div>
+  </div>
 
-        <div class="arch-sub-h" data-i18n="s1.title">Stack technique</div>
-        <div class="arch-diagram rv" role="img" aria-label="Architecture complète : GitHub Pages → Browser → CF Worker → Groq / Workers AI">
-
-          <!-- Couche 0 : hébergement statique -->
-          <div class="arch-node n-gh">
-            <div class="arch-node-name">GitHub Pages</div>
-            <div class="arch-node-label" data-i18n="arch.gh.label">CDN &middot; H&eacute;bergement statique</div>
-          </div>
-
-          <!-- Chargement initial -->
-          <div class="arch-bidir">
-            <div class="arch-route-lbl" data-i18n="arch.load.lbl">chargement initial &bull; HTML / CSS / JS</div>
-            <div class="arch-bidir-arrow">&#8597;</div>
-          </div>
-
-          <!-- Couche 1 : Browser + sous-composants JS -->
-          <div class="arch-node n-user">
-            <div class="arch-node-name">Browser</div>
-            <div class="arch-browser-inner">
-              <span class="arch-browser-sub">KRL1 Widget (JS)</span>
-              <span class="arch-browser-sub" data-i18n="arch.browser.sub">6 Outils PM (JS)</span>
-            </div>
-            <div class="arch-node-label">User</div>
-          </div>
-
-          <!-- Appels API bidirectionnels -->
-          <div class="arch-bidir">
-            <div class="arch-bidir-arrow">&#8597;</div>
-            <div class="arch-route-lbl" data-i18n="arch.api.lbl">HTTPS &bull; appels API &bull; r&eacute;ponse JSON / SSE</div>
-          </div>
-
-          <!-- Couche 2 : Cloudflare Worker -->
-          <div class="arch-node n-worker">
-            <div class="arch-node-name">Cloudflare Worker</div>
-            <div class="arch-node-label" data-i18n="arch.worker.label">API Proxy &middot; cl&eacute; s&eacute;curis&eacute;e</div>
-          </div>
-
-          <div class="arch-vline"></div>
-
-          <!-- Couche 3 : double route -->
-          <div class="arch-fork-bar">
-
-            <!-- Route A : 6 outils PM direct -->
-            <div class="arch-branch">
-              <span class="arch-branch-tag">POST /</span>
-              <div class="arch-vline"></div>
-              <div class="arch-node n-groq">
-                <div class="arch-node-name">Groq API</div>
-                <div class="arch-node-label" data-i18n="arch.groq.label">6 outils PM</div>
-              </div>
-              <div class="arch-fallback-note">llama-3.3-70b &bull; LPU &bull; 1&ndash;2s</div>
-            </div>
-
-            <!-- Route B : KRL1 + RAG -->
-            <div class="arch-branch">
-              <span class="arch-branch-tag">POST /orchestrate[-stream] &bull; /rag-query</span>
-              <div class="arch-vline"></div>
-              <div class="arch-node n-lg">
-                <div class="arch-node-name">Workers AI &middot; RAG natif</div>
-                <div class="arch-node-label">embeddings &rarr; cosine sim</div>
-              </div>
-              <div class="arch-vline"></div>
-              <div class="arch-node n-groq">
-                <div class="arch-node-name">Groq API</div>
-                <div class="arch-node-label">planner + synthesis</div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="stack-grid rv">
-          <div class="stack-card">
-            <div class="stack-icon"><img src="https://cdn.simpleicons.org/html5" alt="HTML5" width="28" height="28"></div>
-            <div class="stack-name">HTML &middot; CSS &middot; JavaScript</div>
-            <div class="stack-badge sb-cyan" data-i18n="stack.front.badge">Frontend</div>
-            <div class="stack-desc" data-i18n="stack.front.desc">Vanilla &agrave; 100%. Pas de framework, pas de bundler, pas de d&eacute;pendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline, pas de composants partag&eacute;s, pas de routing entre pages. Ce choix permet un d&eacute;ploiement direct sans &eacute;tape de build, un debug imm&eacute;diat dans les DevTools navigateur, et un code lisible &agrave; plat sans couche d'abstraction. Sept pages autonomes : les 6 outils PM (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) + le hub <code>pm-toolkit.html</code> qui les encha&icirc;ne. Un seul point de couplage : <code>pm-session.js</code>, un module l&eacute;ger qui persiste les sorties de chaque outil dans <code>localStorage</code> pour que le suivant puisse les r&eacute;importer en un clic.</div>
-          </div>
-          <div class="stack-card">
-            <div class="stack-icon"><img src="https://cdn.simpleicons.org/github" alt="GitHub" width="28" height="28"></div>
-            <div class="stack-name">GitHub Pages</div>
-            <div class="stack-badge sb-blue" data-i18n="stack.deploy.badge">H&eacute;bergement</div>
-            <div class="stack-desc" data-i18n="stack.deploy.desc">H&eacute;bergement statique gratuit avec CI/CD natif : chaque git push sur main d&eacute;clenche un d&eacute;ploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Z&eacute;ro co&ucirc;t, z&eacute;ro infra &agrave; g&eacute;rer, id&eacute;al pour un site statique &agrave; fichiers HTML/CSS/JS.</div>
-          </div>
-          <div class="stack-card">
-            <div class="stack-icon"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare" width="28" height="28"></div>
-            <div class="stack-name">Cloudflare Workers</div>
-            <div class="stack-badge sb-orange" data-i18n="stack.proxy.badge">API Proxy</div>
-            <div class="stack-desc" data-i18n="stack.proxy.desc">Worker serverless JavaScript avec quatre routes. POST / : passthrough direct vers l'API Groq pour les 6 outils PM, la cl&eacute; API est inject&eacute;e c&ocirc;t&eacute; Worker, jamais expos&eacute;e au navigateur. POST /orchestrate : route d&eacute;di&eacute;e au chatbot KRL1, planner&rarr;synthesis natif. POST /rag-query : pipeline RAG s&eacute;mantique complet (planner &rarr; Workers AI embeddings &rarr; cosine similarity &rarr; synthesis). POST /orchestrate-stream : m&ecirc;me flow planner&rarr;synthesis mais la r&eacute;ponse synthesis arrive en SSE pour un affichage progressif. Validation d'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.</div>
-          </div>
-          <div class="stack-card">
-            <div class="stack-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Groq"><path d="M12.036 2c-3.853-.035-7 3-7.036 6.781-.035 3.782 3.055 6.872 6.908 6.907h2.42v-2.566h-2.292c-2.407.028-4.38-1.866-4.408-4.23-.029-2.362 1.901-4.298 4.308-4.326h.1c2.407 0 4.358 1.915 4.365 4.278v6.305c0 2.342-1.944 4.25-4.323 4.279a4.375 4.375 0 01-3.033-1.252l-1.851 1.818A7 7 0 0012.029 22h.092c3.803-.056 6.858-3.083 6.879-6.816v-6.5C18.907 4.963 15.817 2 12.036 2z"/></svg><img src="https://cdn.simpleicons.org/meta" alt="Meta / Llama" width="28" height="28"></div>
-            <div class="stack-name">Groq &middot; llama-3.3-70b-versatile</div>
-            <div class="stack-badge sb-violet" data-i18n="stack.llm.badge">LLM</div>
-            <div class="stack-desc" data-i18n="stack.llm.desc">Acc&egrave;s au mod&egrave;le llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inf&eacute;rence sur LPU (Language Processing Unit) donne des r&eacute;ponses en 1 &agrave; 2 secondes, 5 &agrave; 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des param&egrave;tres adapt&eacute;s : temp&eacute;ratures entre 0.3 et 0.7 selon la t&acirc;che, max_tokens entre 2 000 et 4 000, prompts system sp&eacute;cialis&eacute;s (strat&egrave;ge OKR, analyste discovery, expert priorisation&hellip;).</div>
-          </div>
-          <div class="stack-card" style="grid-column:1/-1">
-            <div class="stack-icon"><img src="https://cdn.simpleicons.org/cloudflare" alt="Workers AI" width="28" height="28"></div>
-            <div class="stack-name">Workers AI &middot; edge RAG</div>
-            <div class="stack-badge sb-violet" data-i18n="stack.lg.badge">RAG s&eacute;mantique</div>
-            <div class="stack-desc" data-i18n="stack.lg.desc">Base de connaissances embarqu&eacute;e dans le Worker (15 documents&nbsp;: PM, PO/Agile, AI Product). Les embeddings s&eacute;mantiques sont g&eacute;n&eacute;r&eacute;s par <strong>Workers AI</strong> (bge-small-en-v1.5) en un seul appel batch ; la similarit&eacute; cosinus est calcul&eacute;e &agrave; l&rsquo;edge. Le pipeline encha&icirc;ne&nbsp;: planner (T=0.2) &rarr; retrieval s&eacute;mantique &rarr; synthesis (T=0.45, contexte PM inject&eacute; si intent&nbsp;= pm_workflow). Z&eacute;ro d&eacute;pendance externe, z&eacute;ro infra Python.</div>
-          </div>
-          <div class="stack-card" style="grid-column:1/-1">
-            <div class="stack-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Langfuse"><path d="M11.925 14.781l1.823 1.465s1.395-1.036 2.421-1.188c1.076-.16 2.224.44 3.288 1.155 1.607 1.08 2.959 2.451 2.959 2.451L24 17.11s-4.367-4.732-7.83-4.304c-2.272.281-4.245 1.975-4.245 1.975z"/><path d="M1.494 5.757L0 7.401s4.164 3.886 7.442 3.886c1.494 0 3.567-1.171 5.35-2.692 1.016-.867 2.152-1.851 3.288-1.851.763 0 1.77.404 2.72 1.466 0 0 .612-.368.986-.632.328-.232.816-.627.816-.627-1.366-1.458-3.342-2.524-4.522-2.419-1.913 0-3.288 1.191-4.992 2.568-1.703 1.377-2.42 1.945-3.646 1.945-2.062 0-5.948-3.288-5.948-3.288zM1.494 18.278L0 16.635s4.164-3.886 7.442-3.886c1.494 0 3.567 1.17 5.35 2.692 1.016.866 2.152 1.851 3.288 1.851.767 0 1.766-.421 2.72-1.494 0 0 .573.353.926.597.363.252.897.667.897.667-1.367 1.47-3.357 2.547-4.543 2.442-1.913 0-3.049-1.014-4.752-2.391-1.704-1.377-2.66-2.122-3.886-2.122-2.062 0-5.948 3.287-5.948 3.287zM20.981 9.461c-.389.269-1.016.658-1.016.658s.359.777.359 1.823c0 1.046-.329 1.943-.329 1.943s.563.351.927.597c.377.256.956.688.956.688s.687-1.435.687-3.228c0-1.793-.687-3.138-.687-3.138s-.54.41-.897.657z"/><path d="M12.015 9.222l1.733-1.434s1.395 1.003 2.421 1.155c1.076.16 2.224-.44 3.288-1.155 1.607-1.08 2.959-2.451 2.959-2.451L24 6.89s-4.367 4.732-7.83 4.304c-2.272-.28-4.155-1.973-4.155-1.973zM7.83 4.5c2.242 0 4.125 1.913 4.125 1.913s-.524.413-.867.687c-.357.286-.926.747-.926.747S9.176 6.801 7.83 6.801c-.552 0-1.268.332-2.033.987-.59.505-1.203 1.133-1.613 1.912-.356.674-.55 1.468-.568 2.302-.024 1.047.347 2.145.956 3.018.408.586.895 1.027 1.405 1.405.661.491 1.351.837 1.853.837.536 0 1.017-.186 1.375-.358.568-.33 1.016-.718 1.016-.718l1.763 1.465s-.717.717-1.703 1.255c-.638.314-1.456.628-2.451.628-.994 0-2.148-.528-3.228-1.345-.698-.528-1.382-1.154-1.913-1.913-.87-1.244-1.318-2.758-1.315-4.274A7.568 7.568 0 012.75 7.698C4.125 5.905 6.158 4.5 7.83 4.5z"/></svg></div>
-            <div class="stack-name">Langfuse &middot; LLM Observability</div>
-            <div class="stack-badge sb-green" data-i18n="stack.lf.badge">Observabilit&eacute;</div>
-            <div class="stack-desc" data-i18n="stack.lf.desc">Traces LLM en production via l&rsquo;API REST Langfuse int&eacute;gr&eacute;e directement dans le Worker (no npm, fetch natif). Chaque appel KRL1 g&eacute;n&egrave;re une trace avec token usage, latences planner/synthesis et intent d&eacute;tect&eacute;. Non-bloquant via <code>ctx.waitUntil</code>, z&eacute;ro impact sur les temps de r&eacute;ponse. Plan gratuit&nbsp;: 50&nbsp;000 observations/mois.</div>
-          </div>
-        </div>
-
-        <div class="arch-sub-h" data-i18n="s4.title">D&eacute;cisions d'architecture</div>
-        <div class="decision-list rv">
-          <div class="decision-card">
-            <div class="decision-q" data-i18n="d1.q">Pourquoi HTML vanilla plut&ocirc;t que React ou Next.js ?</div>
-            <div class="decision-a" data-i18n="d1.a">Z&eacute;ro d&eacute;pendance, z&eacute;ro toolchain, z&eacute;ro dette</div>
-            <div class="decision-why" data-i18n="d1.why">Un site statique de portfolio et d'outils simples n'a pas besoin d'un framework SPA. HTML vanilla se d&eacute;ploie directement, se lit facilement et ne g&eacute;n&egrave;re aucune dette technique. Moins de complexit&eacute; = plus de v&eacute;locit&eacute;.</div>
-          </div>
-          <div class="decision-card">
-            <div class="decision-q" data-i18n="d2.q">Pourquoi un proxy Cloudflare Workers plut&ocirc;t qu'exposer la cl&eacute; API ?</div>
-            <div class="decision-a" data-i18n="d2.a">S&eacute;curit&eacute; non n&eacute;gociable, plan gratuit g&eacute;n&eacute;reux</div>
-            <div class="decision-why" data-i18n="d2.why">Exposer une cl&eacute; API dans du code client-side, c'est l'offrir &agrave; n'importe qui. Le Worker intercepte les requ&ecirc;tes, injecte la cl&eacute; c&ocirc;t&eacute; serveur et valide l'origine. Plan gratuit Cloudflare : 100 000 requ&ecirc;tes/jour, largement suffisant.</div>
-          </div>
-          <div class="decision-card">
-            <div class="decision-q" data-i18n="d3.q">Pourquoi Groq plut&ocirc;t qu'OpenAI ou Anthropic directement ?</div>
-            <div class="decision-a" data-i18n="d3.a">Vitesse d'inf&eacute;rence et plan gratuit</div>
-            <div class="decision-why" data-i18n="d3.why">Groq tourne les mod&egrave;les Llama 3 sur du mat&eacute;riel LPU optimis&eacute; pour l'inf&eacute;rence. R&eacute;sultat : des r&eacute;ponses en 1-2 secondes l&agrave; o&ugrave; d'autres providers prennent 5-10s. Et le plan gratuit couvre amplement un usage personnel.</div>
-          </div>
-          <div class="decision-card">
-            <div class="decision-q" data-i18n="d4.q">Pourquoi GitHub Pages plut&ocirc;t qu'un VPS ou Vercel ?</div>
-            <div class="decision-a" data-i18n="d4.a">Gratuit, simple, CI/CD natif</div>
-            <div class="decision-why" data-i18n="d4.why">Pour des fichiers statiques, GitHub Pages est imbattable : gratuit, CDN mondial, HTTPS automatique, et le d&eacute;ploiement se d&eacute;clenche simplement avec un git push. Pas besoin d'une infrastructure plus complexe pour ce cas d'usage.</div>
-          </div>
-        </div>
-
-        <div class="arch-sub-h" data-i18n="s5.title">Orchestration Worker, edge-native RAG</div>
-        <div class="decision-card rv">
-          <div class="decision-q" data-i18n="lg.flow.label">Flow d'une requ&ecirc;te KRL1</div>
-          <div class="decision-why" data-i18n="lg.flow.desc">1 &middot; L'utilisateur envoie un message dans le chat KRL1. 2 &middot; Le JS appelle POST /orchestrate sur le Worker Cloudflare avec {lang, message, history}. 3 &middot; Le Worker ex&eacute;cute nativement le planner (T=0.2) &rarr; JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 &middot; Le synthesis (T=0.45) transforme le plan en r&eacute;ponse naturelle max 220 mots avec liens outils PM. 5 &middot; La r&eacute;ponse {reply, plan, engine} arrive au client, le chat affiche reply, le JSON plan reste disponible. Pour le RAG Explorer&nbsp;: POST /rag-query ex&eacute;cute planner &rarr; Workers AI embeddings &rarr; cosine similarity &rarr; synthesis avec contexte PM inject&eacute;.</div>
-        </div>
-
-        <div style="margin-top:1.5rem;text-align:center">
-          <a href="how-i-built-this.html" style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.75rem 1.5rem;background:linear-gradient(135deg,rgba(34,211,238,0.1),rgba(167,139,250,0.1));border:1px solid rgba(34,211,238,0.25);border-radius:99px;color:#67e8f9;font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;transition:all 0.25s" data-i18n="arch.details.btn">
-            Tous les d&eacute;tails techniques &rarr;
-          </a>
-        </div>
-
-    </div>
+  <div class="tab-panel" id="decisions" role="tabpanel">
+    <div class="tab-lazy-placeholder"><div class="tab-spinner"></div></div>
   </div>
 
   <div class="tab-panel" id="skills" role="tabpanel">
@@ -896,7 +753,83 @@ window.setLang=function(lang){
 
 // Tabs: switch + nav contextuelle + deep-link
 (function(){
-  var TABS=['projects','architecture','skills','certs'];
+  var TABS=['projects','architecture','decisions','skills','certs'];
+
+  // ── LAZY LOAD ──────────────────────────────────────────────────────────────
+  var _lazyDocs={};
+
+  function applyLazyI18n(doc,panel,lang){
+    var scripts=doc.querySelectorAll('script:not([src])');
+    var tObj=null;
+    for(var i=0;i<scripts.length;i++){
+      var src=scripts[i].textContent;
+      var mT=src.match(/var\s+T\s*=\s*(\{fr:[\s\S]*?\});\s*(?:\n|window)/);
+      var mI=src.match(/var\s+I18N\s*=\s*(\{fr:[\s\S]*?\});\s*(?:\n|window)/);
+      if(mT||mI){try{tObj=(new Function('return '+(mT?mT[1]:mI[1])))();break;}catch(e){}}
+    }
+    if(!tObj||!tObj[lang])return;
+    var tr=tObj[lang];
+    panel.querySelectorAll('[data-i18n]').forEach(function(el){
+      var k=el.getAttribute('data-i18n');
+      if(tr[k]!==undefined)el.innerHTML=tr[k];
+    });
+    Object.keys(tr).forEach(function(k){
+      var el=panel.querySelector('#'+k);
+      if(el)el.innerHTML=tr[k];
+    });
+  }
+
+  function initMermaid(panel){
+    if(window.mermaid){mermaid.init(undefined,panel.querySelectorAll('.mermaid'));return;}
+    var s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+    s.onload=function(){
+      mermaid.initialize({startOnLoad:false,theme:'dark',securityLevel:'loose'});
+      mermaid.init(undefined,panel.querySelectorAll('.mermaid'));
+    };
+    document.head.appendChild(s);
+  }
+
+  function lazyLoad(panelId,pageUrl){
+    var panel=document.getElementById(panelId);
+    if(panel.dataset.loaded==='true')return;
+    fetch(pageUrl)
+      .then(function(r){return r.text();})
+      .then(function(html){
+        var doc=new DOMParser().parseFromString(html,'text/html');
+        _lazyDocs[panelId]=doc;
+        var styleId='lazy-css-'+panelId;
+        if(!document.getElementById(styleId)){
+          var style=doc.querySelector('style');
+          if(style){var el=document.createElement('style');el.id=styleId;el.textContent=style.textContent;document.head.appendChild(el);}
+        }
+        var container=doc.querySelector('.container')||doc.body;
+        ['.top-bar','nav.toc-bar','nav.back-nav','footer.page-footer','footer','.glow','.back-link'].forEach(function(sel){
+          container.querySelectorAll(sel).forEach(function(el){el.remove();});
+        });
+        panel.innerHTML='<div class="wrap" style="padding-top:2rem;padding-bottom:2rem">'+container.innerHTML+'</div>';
+        panel.dataset.loaded='true';
+        applyLazyI18n(doc,panel,document.documentElement.lang||'fr');
+        if(panelId==='architecture')initMermaid(panel);
+      })
+      .catch(function(){
+        var panel=document.getElementById(panelId);
+        panel.innerHTML='<div class="wrap" style="padding-top:2rem"><p style="color:var(--muted);font-size:0.85rem">Contenu indisponible hors-ligne.</p></div>';
+      });
+  }
+
+  // Hook setLang pour re-traduire les tabs chargés
+  var _origTabSetLang=window.setLang;
+  window.setLang=function(lang){
+    if(_origTabSetLang)_origTabSetLang(lang);
+    ['architecture','decisions'].forEach(function(id){
+      var panel=document.getElementById(id);
+      if(panel&&panel.dataset.loaded==='true'&&_lazyDocs[id]){
+        applyLazyI18n(_lazyDocs[id],panel,lang);
+      }
+    });
+  };
+  // ───────────────────────────────────────────────────────────────────────────
 
   function switchTab(id){
     if(!TABS.includes(id)) id='projects';
@@ -908,6 +841,8 @@ window.setLang=function(lang){
     });
     document.querySelectorAll('#'+id+' .rv').forEach(function(el){el.classList.add('on');});
     history.replaceState(null,'','#'+id);
+    if(id==='architecture')lazyLoad('architecture','how-i-built-this.html');
+    if(id==='decisions')lazyLoad('decisions','product-decisions.html');
   }
 
   // Nav desktop → tab switchers (preventDefault = no scroll)
