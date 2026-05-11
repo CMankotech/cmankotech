@@ -1186,7 +1186,9 @@ function animCounter(el){
 </script>
 <style>
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-#heroRole{display:inline-block;will-change:opacity,transform}
+@keyframes role-grad-shift{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+#heroRole{display:inline-block;will-change:opacity,transform;background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee,#60a5fa);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:role-grad-shift 4s linear infinite}
+#heroRole::before{background:linear-gradient(90deg,#60a5fa,#22d3ee)}
 </style>
 
 <script type="application/ld+json">
