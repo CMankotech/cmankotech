@@ -469,8 +469,8 @@ nav{padding:1rem 1.5rem}
       <p class="hero-bio" id="heroLine">PM le jour, builder la nuit. Je construis des outils concrets avec l&rsquo;IA parce que les meilleurs outils sont ceux qu&rsquo;on cr&eacute;e soi-m&ecirc;me. Chaque projet ici r&eacute;pond &agrave; un vrai probl&egrave;me que j&rsquo;ai rencontr&eacute; en tant que PM.</p>
       <div class="hero-ctas">
         <a href="#projects" class="hero-cta-primary glass-edge glass-pointer glass-focus" data-i18n="hero.cta1">Voir les projets &rarr;</a>
-        <a href="how-i-built-this.html" class="hero-cta-primary glass-edge glass-pointer glass-focus" data-i18n="hero.cta2">Architecture du site &rarr;</a>
-        <a href="product-decisions.html" class="hero-cta-primary glass-edge glass-pointer glass-focus" data-i18n="hero.krl1">D&eacute;cisions produit &rarr;</a>
+        <a href="#architecture" class="hero-cta-primary glass-edge glass-pointer glass-focus" data-i18n="hero.cta2">Architecture du site &rarr;</a>
+        <a href="#decisions" class="hero-cta-primary glass-edge glass-pointer glass-focus" data-i18n="hero.krl1">D&eacute;cisions produit &rarr;</a>
       </div>
       <p class="tech-strip-label" data-i18n="stack.strip.label" style="margin-top:1rem">Stack technique</p>
       <div class="tech-groups">
@@ -801,7 +801,16 @@ window.setLang=function(lang){
         var styleId='lazy-css-'+panelId;
         if(!document.getElementById(styleId)){
           var style=doc.querySelector('style');
-          if(style){var el=document.createElement('style');el.id=styleId;el.textContent=style.textContent;document.head.appendChild(el);}
+          if(style){
+            var el=document.createElement('style');el.id=styleId;
+            // Retirer les règles globales qui écraserait les styles du hero/index
+            var css=style.textContent
+              .replace(/\*\s*(?:,\s*\*(?:::before|::after)?\s*)*\{[^}]+\}/g,'')
+              .replace(/(?:html|body)\s*(?:,\s*[^{]*)?\{[^}]+\}/g,'')
+              .replace(/:root\s*\{[^}]+\}/g,'')
+              .replace(/body::after\s*\{[^}]+\}/g,'');
+            el.textContent=css;document.head.appendChild(el);
+          }
         }
         var container=doc.querySelector('.container')||doc.body;
         ['.top-bar','nav.toc-bar','nav.back-nav','footer.page-footer','footer','.glow','.back-link'].forEach(function(sel){
@@ -868,6 +877,19 @@ window.setLang=function(lang){
         document.body.style.overflow='';
       }
       switchTab(hash);
+    });
+  });
+
+  // Liens vers un tab (hors nav + mobile) → switchTab + scroll vers les tabs
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    var hash=a.getAttribute('href').slice(1);
+    if(!TABS.includes(hash)) return;
+    if(a.closest('.nav-links')||a.closest('#mobile-menu')) return;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      switchTab(hash);
+      var tw=document.querySelector('.tabs-wrap');
+      if(tw) setTimeout(function(){tw.scrollIntoView({behavior:'smooth',block:'start'});},50);
     });
   });
 
