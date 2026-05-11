@@ -231,7 +231,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
   <!-- ARCHITECTURE NOTE -->
   <div class="arch-note">
-    <p>Pipeline RAG embarqué dans un <strong>Cloudflare Worker</strong>. Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) et la similarité cosinus est calculée à l'edge. La base de connaissances couvre <strong>15 frameworks</strong> (PM, PO/Agile, AI), découpés en chunks de 300 mots avec overlap de 50.</p>
+    <p>Pipeline RAG embarqué dans un <strong>Cloudflare Worker</strong>. Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) et la similarité cosinus est calculée à l'edge. La base de connaissances couvre <strong>15 documents</strong> (PM, PO/Agile, AI Product), découpés en chunks de 300 mots avec overlap de 50.</p>
     <div class="arch-svg-wrap">
       <svg viewBox="0 0 780 168" class="arch-svg" role="img" aria-label="RAG pipeline diagram">
         <defs>
@@ -271,7 +271,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
   <!-- KB OVERVIEW -->
   <div class="kb-overview">
-    <div class="kb-overview-label">15 frameworks dans la base</div>
+    <div class="kb-overview-label">15 documents dans la base</div>
     <div class="kb-pills">
       <span class="kb-pill kb-pill-cat">PM</span>
       <span class="kb-pill">RICE</span>
