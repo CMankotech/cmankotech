@@ -274,31 +274,20 @@ nav{padding:1rem 1.5rem}
 [data-theme="light"] .tech-logo-img{filter:brightness(0);opacity:0.55}
 @media(max-width:900px){.tech-logos{grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:0.5rem}.tech-logo-card{padding:0.9rem 0.75rem}}
 
-/* PANELS (accordéon uniforme) */
-.panels-wrap{position:relative;z-index:1}
-.panels-wrap .wrap{padding-top:2rem;padding-bottom:2rem}
-.panel{position:relative}
-.panel+.panel::before{display:none}
-.panel[data-open="true"]{box-shadow:none}
-.panel:first-child{border-top:none}
-.panel-btn{width:100%;display:flex;align-items:center;gap:1.25rem;padding:2rem 0;background:none;border:none;color:inherit;cursor:pointer;font-family:inherit;text-align:left;transition:opacity .2s}
-.panel-btn:hover{opacity:0.85}
-.panel-btn .sec-num{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.1em;flex-shrink:0}
-.panel-btn .sec-name{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-size:1.85rem;line-height:1;color:#fff;letter-spacing:-0.02em}
-.panel-btn .panel-sub{font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);margin-left:0.5rem}
-.panel-chev{margin-left:auto;flex-shrink:0;transition:transform .4s cubic-bezier(.4,0,.2,1),color .25s ease;color:var(--muted)}
-.panel-btn:hover .panel-chev{color:var(--text)}
-.panel[data-open="true"] > .panel-btn .panel-chev{transform:rotate(180deg);color:#22d3ee}
-.panel-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.4,0,.2,1),opacity .4s ease;opacity:0}
-.panel-body > .panel-body-inner{overflow:hidden;min-height:0}
-.panel[data-open="true"] > .panel-body{grid-template-rows:1fr;opacity:1}
-.panel[data-open="true"] > .panel-body > .panel-body-inner{padding-bottom:3rem}
-@media (prefers-reduced-motion: reduce){.panel-body{transition:none}.panel-chev{transition:none}}
-@media(max-width:900px){
-.panel-btn{padding:1.5rem 0;gap:0.85rem}
-.panel-btn .sec-name{font-size:1.4rem}
-.panel-btn .panel-sub{display:none}
-}
+/* TABS */
+.tabs-wrap{position:relative;z-index:1}
+.tabs-bar{display:flex;align-items:stretch;padding:0 4rem;border-bottom:1px solid var(--line);background:rgba(8,8,15,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);position:sticky;top:62px;z-index:90;gap:0}
+.tab-btn{display:flex;align-items:center;gap:0.5rem;font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;padding:1.25rem 1.5rem;background:none;border:none;color:var(--muted);cursor:pointer;position:relative;transition:color 0.2s;white-space:nowrap}
+.tab-btn::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:linear-gradient(to right,#60a5fa,#a78bfa);transform:scaleX(0);transform-origin:left;transition:transform 0.25s ease}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--text)}
+.tab-btn.active::after{transform:scaleX(1)}
+.tab-num{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:tab-in 0.35s ease}
+@keyframes tab-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+[data-theme="light"] .tabs-bar{background:rgba(244,246,251,0.92)}
+@media(max-width:900px){.tabs-bar{padding:0 1.5rem;overflow-x:auto;scrollbar-width:none}.tabs-bar::-webkit-scrollbar{display:none}.tab-btn{padding:1rem 0.85rem;font-size:0.65rem}}
 
 /* ARCHITECTURE PANEL, styles repris de how-i-built-this */
 .arch-sub-h{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);letter-spacing:-0.01em;margin:2.5rem 0 1rem;display:flex;align-items:center;gap:0.75rem}
@@ -385,8 +374,6 @@ nav{padding:1rem 1.5rem}
 [data-theme="light"] .hero-video-overlay{background:linear-gradient(180deg,rgba(244,246,251,0.6) 0%,rgba(244,246,251,0.8) 55%,rgba(244,246,251,0.97) 100%)}
 [data-theme="light"] .hero-cta-primary{border-color:rgba(15,23,42,0.15);color:#0f172a}
 [data-theme="light"] .hero-cta-primary:hover{border-color:rgba(59,130,246,0.4);color:#3b82f6}
-[data-theme="light"] .panel-btn{background:transparent}
-[data-theme="light"] .panel-btn:hover{background:rgba(15,23,42,0.03)}
 [data-theme="light"] .tag{background:rgba(15,23,42,0.04);border-color:rgba(15,23,42,0.08);color:#475569}
 [data-theme="light"] .exp{border-top-color:rgba(15,23,42,0.07)}
 [data-theme="light"] .exp:hover{background:rgba(59,130,246,0.02)}
@@ -571,18 +558,29 @@ nav{padding:1rem 1.5rem}
 
 
 
-<!-- PANELS: Projets · Comp. · Certs · Architecture -->
-<section class="panels-wrap">
-  <div class="wrap">
+<!-- TABS: Projets · Architecture · Compétences · Certifications -->
+<div class="tabs-wrap">
+  <div class="tabs-bar" role="tablist" aria-label="Sections">
+    <button class="tab-btn active" data-tab="projects" role="tab" aria-selected="true" aria-controls="projects">
+      <span class="tab-num">01</span>
+      <span data-i18n="nav.projects">Projets</span>
+    </button>
+    <button class="tab-btn" data-tab="architecture" role="tab" aria-selected="false" aria-controls="architecture">
+      <span class="tab-num">02</span>
+      <span data-i18n="nav.arch">Architecture</span>
+    </button>
+    <button class="tab-btn" data-tab="skills" role="tab" aria-selected="false" aria-controls="skills">
+      <span class="tab-num">03</span>
+      <span data-i18n="nav.skills">Compétences</span>
+    </button>
+    <button class="tab-btn" data-tab="certs" role="tab" aria-selected="false" aria-controls="certs">
+      <span class="tab-num">04</span>
+      <span data-i18n="nav.certs">Certifications</span>
+    </button>
+  </div>
 
-    <div class="panel" id="projects" data-open="false">
-      <button class="panel-btn glass-focus" type="button" aria-expanded="false" aria-controls="body-projects">
-        <span class="sec-num">01</span>
-        <span class="sec-name" data-i18n="nav.projects">Projets</span>
-        <span class="panel-sub" data-i18n="panel.sub.projects">PM Toolkit · Mini-jeu</span>
-        <svg class="panel-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-      <div class="panel-body" id="body-projects" role="region"><div class="panel-body-inner">
+  <div class="tab-panel active" id="projects" role="tabpanel">
+    <div class="wrap" style="padding-top:2rem;padding-bottom:2rem">
         <div class="proj-intro rv">
       <p class="proj-intro-text" id="stackLine">Voici mes projets. Open access, sans cl&eacute; API c&ocirc;t&eacute; utilisateur.</p>
     </div>
@@ -633,18 +631,11 @@ nav{padding:1rem 1.5rem}
           <span class="proj-incoming-badge" data-i18n="proj.incoming">Work in progress</span>
         </div>
         </div>
-      </div>
-      </div>
     </div>
+  </div>
 
-    <div class="panel" id="architecture" data-open="false">
-      <button class="panel-btn glass-focus" type="button" aria-expanded="false" aria-controls="body-architecture">
-        <span class="sec-num">02</span>
-        <span class="sec-name" data-i18n="nav.arch">Architecture</span>
-        <span class="panel-sub" data-i18n="panel.sub.arch">Stack &middot; d&eacute;cisions &middot; Workers AI</span>
-        <svg class="panel-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-      <div class="panel-body" id="body-architecture" role="region"><div class="panel-body-inner">
+  <div class="tab-panel" id="architecture" role="tabpanel">
+    <div class="wrap" style="padding-top:2rem;padding-bottom:2rem">
 
         <div class="arch-sub-h" data-i18n="s1.title">Stack technique</div>
         <div class="arch-diagram rv" role="img" aria-label="Architecture complète : GitHub Pages → Browser → CF Worker → Groq / Workers AI">
@@ -792,17 +783,11 @@ nav{padding:1rem 1.5rem}
           </a>
         </div>
 
-      </div></div>
     </div>
+  </div>
 
-    <div class="panel" id="skills" data-open="false">
-      <button class="panel-btn glass-focus" type="button" aria-expanded="false" aria-controls="body-skills">
-        <span class="sec-num">03</span>
-        <span class="sec-name" data-i18n="nav.skills">Comp&eacute;tences</span>
-        <span class="panel-sub" data-i18n="panel.sub.skills">Product &middot; IA &middot; Agilit&eacute;</span>
-        <svg class="panel-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-      <div class="panel-body" id="body-skills" role="region"><div class="panel-body-inner">
+  <div class="tab-panel" id="skills" role="tabpanel">
+    <div class="wrap" style="padding-top:2rem;padding-bottom:2rem">
         <div class="skills-grid rv">
       <div class="skill-block">
         <div class="skill-title grad-blue" data-i18n="skills.product">Product</div>
@@ -817,17 +802,11 @@ nav{padding:1rem 1.5rem}
         <div class="skill-list">SAFe &middot; Scrum &middot; PI Planning<br>JIRA &middot; Confluence &middot; Azure DevOps<br>Power Platform (BI, Automate, Apps)<br>Figma &middot; Miro &middot; Notion &middot; Klaxoon<br>Lean Six Sigma &middot; LACE</div>
       </div>
     </div>
-      </div></div>
     </div>
+  </div>
 
-    <div class="panel" id="certs" data-open="false">
-      <button class="panel-btn glass-focus" type="button" aria-expanded="false" aria-controls="body-certs">
-        <span class="sec-num">04</span>
-        <span class="sec-name" data-i18n="nav.certs">Certifications</span>
-        <span class="panel-sub" data-i18n="panel.sub.certs">13 badges &middot; Scrum &middot; SAFe &middot; AI</span>
-        <svg class="panel-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-      <div class="panel-body" id="body-certs" role="region"><div class="panel-body-inner">
+  <div class="tab-panel" id="certs" role="tabpanel">
+    <div class="wrap" style="padding-top:2rem;padding-bottom:2rem">
         <div style="margin-bottom:1.5rem"><a href="https://www.credly.com/users/carlin-mankoto" target="_blank" style="color:#60a5fa;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none" data-i18n="certs.credly">V&eacute;rifier sur Credly &rarr;</a></div>
         <div class="cert-groups">
       <div class="rv">
@@ -859,11 +838,9 @@ nav{padding:1rem 1.5rem}
         </div>
       </div>
     </div>
-      </div></div>
     </div>
-
   </div>
-</section>
+</div>
 
 <div style="border-top:1px solid var(--line);position:relative;z-index:1">
   <div class="footer-wrap">
@@ -935,47 +912,31 @@ window.setLang=function(lang){
   });
 })();
 
-// Active nav on scroll
+// Tabs: switch + deep-link + nav sync
 (function(){
-  var ids=['hero','projects','architecture','skills','certs'];
-  var links=document.querySelectorAll('.nav-links a');
-  function upd(){
-    var y=window.scrollY+130,cur='hero';
-    ids.forEach(function(id){var el=document.getElementById(id);if(el&&el.offsetTop<=y)cur=id;});
-    links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href').replace('#','')=== cur);});
-  }
-  window.addEventListener('scroll',upd,{passive:true});
-  upd();
-})();
-
-// Panels: accordion toggle + deep-link via hash
-(function(){
-  document.querySelectorAll('.panel-btn').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var panel=btn.closest('.panel');
-      if(!panel)return;
-      var isOpen=panel.getAttribute('data-open')==='true';
-      panel.setAttribute('data-open', isOpen?'false':'true');
-      btn.setAttribute('aria-expanded', isOpen?'false':'true');
-      if(!isOpen){
-        panel.querySelectorAll('.rv').forEach(function(el){el.classList.add('on');});
-      }
+  var TABS=['projects','architecture','skills','certs'];
+  function switchTab(id){
+    if(!TABS.includes(id)) id='projects';
+    document.querySelectorAll('.tab-btn').forEach(function(btn){
+      var active=btn.getAttribute('data-tab')===id;
+      btn.classList.toggle('active',active);
+      btn.setAttribute('aria-selected',active?'true':'false');
     });
-  });
-  function openFromHash(){
-    var id=(location.hash||'').slice(1);
-    if(!id)return;
-    var p=document.getElementById(id);
-    if(p&&p.classList.contains('panel')){
-      p.setAttribute('data-open','true');
-      var btn=p.querySelector('.panel-btn');
-      if(btn)btn.setAttribute('aria-expanded','true');
-      p.querySelectorAll('.rv').forEach(function(el){el.classList.add('on');});
-      setTimeout(function(){p.scrollIntoView({behavior:'smooth',block:'start'});},50);
-    }
+    document.querySelectorAll('.tab-panel').forEach(function(panel){
+      panel.classList.toggle('active',panel.id===id);
+    });
+    document.querySelectorAll('.nav-links a').forEach(function(a){
+      a.classList.toggle('active',a.getAttribute('href')==='#'+id);
+    });
+    document.querySelectorAll('#'+id+' .rv').forEach(function(el){el.classList.add('on');});
+    history.replaceState(null,'','#'+id);
   }
-  window.addEventListener('hashchange',openFromHash);
-  openFromHash();
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){switchTab(btn.getAttribute('data-tab'));});
+  });
+  function fromHash(){var h=location.hash.replace('#','');switchTab(TABS.includes(h)?h:'projects');}
+  window.addEventListener('hashchange',fromHash);
+  fromHash();
 })();
 
 // Hide blobs while hero is in view
