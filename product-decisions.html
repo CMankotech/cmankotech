@@ -50,13 +50,13 @@ h1 .grad{background:linear-gradient(135deg,#fb923c,#f472b6);-webkit-background-c
 .decision-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2.5rem}
 @media(max-width:700px){.decision-grid{grid-template-columns:1fr}}
 
-.decision-card{background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-left:3px solid var(--dc-color,var(--cyan));border-radius:0 12px 12px 0;padding:1.3rem 1.4rem;display:flex;flex-direction:column;gap:0;transition:box-shadow 0.2s;backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.04)}
-.decision-card:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 14px 36px -18px rgba(0,0,0,0.5)}
-.decision-num{font-size:0.57rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--dc-color,var(--cyan));margin-bottom:0.4rem}
+.decision-card{background:linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:1.5rem 1.6rem;display:flex;flex-direction:column;gap:0;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 14px 36px -18px rgba(0,0,0,0.45);transition:border-color 0.3s,box-shadow 0.3s,transform 0.3s}
+.decision-card:hover{border-color:rgba(167,139,250,0.25);box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 14px 36px -18px rgba(0,0,0,0.45),0 0 50px -24px rgba(167,139,250,0.3);transform:translateY(-2px)}
+.decision-num{font-size:0.57rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.4rem}
 .decision-q{font-size:0.71rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);margin-bottom:0.45rem;line-height:1.4}
 .decision-a{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:0.65rem;line-height:1.3}
 .decision-why{font-size:0.79rem;color:var(--dim);line-height:1.75;margin-bottom:0.75rem;flex:1}
-.decision-alts{padding:0.65rem 0.9rem;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.05);border-radius:7px}
+.decision-alts{padding:0.65rem 0.9rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px}
 .decision-alts-label{font-size:0.53rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.45rem}
 .decision-alts ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:0.22rem}
 .decision-alts li{font-size:0.74rem;color:var(--muted);line-height:1.5}
@@ -70,8 +70,9 @@ footer{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-top
 [data-theme="light"] body{background:#f4f6fb;color:#0f172a}
 [data-theme="light"] .glow{opacity:0.12;mix-blend-mode:multiply}
 [data-theme="light"] h1{background:linear-gradient(180deg,#1e293b 0%,#475569 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-[data-theme="light"] .decision-card{background:rgba(255,255,255,0.88);border-color:rgba(15,23,42,0.08)}
-[data-theme="light"] .decision-alts{background:rgba(15,23,42,0.03);border-color:rgba(15,23,42,0.06)}
+[data-theme="light"] .decision-card{background:rgba(255,255,255,0.9);border-color:rgba(15,23,42,0.1);box-shadow:0 2px 14px rgba(15,23,42,0.07),inset 0 1px 0 #fff}
+[data-theme="light"] .decision-card:hover{border-color:rgba(167,139,250,0.3)}
+[data-theme="light"] .decision-alts{background:rgba(15,23,42,0.03);border-color:rgba(15,23,42,0.07)}
 
 body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:200px 200px;opacity:0.45}
 @keyframes drift1{0%{transform:translate(0,0) scale(1)}25%{transform:translate(80px,60px) scale(1.12)}50%{transform:translate(-40px,120px) scale(0.95)}75%{transform:translate(60px,-30px) scale(1.08)}100%{transform:translate(0,0) scale(1)}}
