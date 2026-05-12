@@ -541,10 +541,10 @@ if (window.mermaid) {
       <div class="tool-card">
         <div class="tool-name">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          Codex
+          Codex CLI · Desktop
         </div>
-        <div class="tool-role" data-i18n="tool.codex.role">Scaffolding orchestrateur Python, agent OpenAI</div>
-        <div class="tool-desc" data-i18n="tool.codex.desc">Utilisé pour construire la couche d'orchestration Python initiale : service FastAPI, StateGraph LangGraph planner→synthesis, intégration LangSmith et suite de tests pytest+httpx. Cette version Python a ensuite été portée dans le Cloudflare Worker pour éliminer la contrainte d'hébergement (Render 512 MB).</div>
+        <div class="tool-role" data-i18n="tool.codex.role">Agent coding CLI + Desktop · codex-1 (o3)</div>
+        <div class="tool-desc" data-i18n="tool.codex.desc">Agent OpenAI de coding (2025) basé sur codex-1, une version d'o3 entraînée sur des tâches software réelles. Utilisé pour scaffolder la couche Python initiale (FastAPI + LangGraph), cette version ayant ensuite été portée dans le Cloudflare Worker. Pas à confondre avec l'ancien modèle Codex API (déprécié 2023).</div>
       </div>
       <div class="tool-card">
         <div class="tool-name">
@@ -553,6 +553,22 @@ if (window.mermaid) {
         </div>
         <div class="tool-role" data-i18n="tool.lovable.role">Prototypage UI, vibe coding</div>
         <div class="tool-desc" data-i18n="tool.lovable.desc">Utilisé pour explorer rapidement des layouts et des composants visuels. Lovable accélère la phase de design en générant du HTML/CSS propre à partir d'une description.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Gemini
+        </div>
+        <div class="tool-role" data-i18n="tool.gemini.role">Exploration design, idéation visuelle</div>
+        <div class="tool-desc" data-i18n="tool.gemini.desc">Utilisé en phase d'exploration pour tester des directions visuelles et des idées de layout avant de s'engager sur le design aurora glass. Gemini permettait d'itérer rapidement sur des concepts UI sans écrire de code.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          v0
+        </div>
+        <div class="tool-role" data-i18n="tool.v0.role">Génération de composants UI, Vercel</div>
+        <div class="tool-desc" data-i18n="tool.v0.desc">Générateur de composants UI de Vercel basé sur l'IA. Utilisé pour prototyper rapidement des layouts de cards et de sections, tester des idées de composants avant de les adapter en HTML/CSS vanilla.</div>
       </div>
       <div class="tool-card">
         <div class="tool-name">
@@ -1286,8 +1302,12 @@ var T={
     'tool.wrangler.desc':'CLI officiel de Cloudflare pour développer, tester en local et déployer le proxy Worker. Configuration via un fichier wrangler.toml minimaliste, déploiement en une commande.',
     'tool.git.role':'Versioning & déploiement',
     'tool.git.desc':'Gestion de version classique avec Git. Le remote GitHub est la source de vérité et déclenche le déploiement Pages automatiquement à chaque push sur la branche principale.',
-    'tool.codex.role':'Scaffolding orchestrateur Python, agent OpenAI',
-    'tool.codex.desc':'Utilisé pour construire la couche d\'orchestration Python initiale : service FastAPI, StateGraph LangGraph planner→synthesis, intégration LangSmith et suite de tests pytest+httpx. Cette version Python a ensuite été portée dans le Cloudflare Worker pour éliminer la contrainte d\'hébergement (Render 512 MB).',
+    'tool.codex.role':'Agent coding CLI + Desktop · codex-1 (o3)',
+    'tool.codex.desc':'Agent OpenAI de coding (2025) basé sur codex-1, une version d\'o3 entraînée sur des tâches software réelles. Utilisé pour scaffolder la couche Python initiale (FastAPI + LangGraph), cette version ayant ensuite été portée dans le Cloudflare Worker. Pas à confondre avec l\'ancien modèle Codex API (déprécié 2023).',
+    'tool.gemini.role':'Exploration design, idéation visuelle',
+    'tool.gemini.desc':'Utilisé en phase d\'exploration pour tester des directions visuelles et des idées de layout avant de s\'engager sur le design aurora glass. Gemini permettait d\'itérer rapidement sur des concepts UI sans écrire de code.',
+    'tool.v0.role':'Génération de composants UI, Vercel',
+    'tool.v0.desc':'Générateur de composants UI de Vercel basé sur l\'IA. Utilisé pour prototyper rapidement des layouts de cards et de sections, tester des idées de composants avant de les adapter en HTML/CSS vanilla.',
     's4.title':'Décisions d\'architecture',
     'd1.q':'Pourquoi HTML vanilla plutôt que React ou Next.js ?',
     'd1.a':'Zéro dépendance, zéro toolchain, zéro dette',
@@ -1494,8 +1514,12 @@ var T={
     'tool.wrangler.desc':'Cloudflare\'s official CLI to develop, test locally and deploy the proxy Worker. Configured via a minimal wrangler.toml file, deployed with a single command.',
     'tool.git.role':'Versioning & deployment',
     'tool.git.desc':'Classic version control with Git. The GitHub remote is the source of truth and triggers Pages deployment automatically on every push to the main branch.',
-    'tool.codex.role':'Initial Python scaffolding, OpenAI agent',
-    'tool.codex.desc':'Used to build the initial Python orchestration layer: FastAPI service, LangGraph planner→synthesis StateGraph, LangSmith integration and pytest+httpx test suite. This Python version was later ported into the Cloudflare Worker to eliminate the hosting constraint (Render 512 MB).',
+    'tool.codex.role':'Coding agent CLI + Desktop · codex-1 (o3)',
+    'tool.codex.desc':'OpenAI coding agent (2025) based on codex-1, a version of o3 trained on real-world software tasks. Used to scaffold the initial Python layer (FastAPI + LangGraph), later ported into the Cloudflare Worker. Not to be confused with the old Codex API model (deprecated 2023).',
+    'tool.gemini.role':'Design exploration, visual ideation',
+    'tool.gemini.desc':'Used during the exploration phase to test visual directions and layout ideas before committing to the aurora glass design. Gemini allowed rapid iteration on UI concepts without writing code.',
+    'tool.v0.role':'UI component generation, Vercel',
+    'tool.v0.desc':'Vercel\'s AI-powered UI component generator. Used to quickly prototype card layouts and section structures, testing component ideas before adapting them to vanilla HTML/CSS.',
     's4.title':'Architecture decisions',
     'd1.q':'Why vanilla HTML instead of React or Next.js?',
     'd1.a':'Zero dependencies, zero toolchain, zero technical debt',
