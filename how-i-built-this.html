@@ -529,7 +529,7 @@ if (window.mermaid) {
   <section id="s3">
     <div class="sec-header">
       <span class="sec-num">03</span>
-      <span class="sec-title" data-i18n="s3.title">Outils de build</span>
+      <span class="sec-title" data-i18n="s3.title">Outils de vibe coding</span>
     </div>
     <div class="tools-grid">
       <div class="tool-card">
@@ -571,22 +571,6 @@ if (window.mermaid) {
         </div>
         <div class="tool-role" data-i18n="tool.v0.role">Génération de composants UI, Vercel</div>
         <div class="tool-desc" data-i18n="tool.v0.desc">Générateur de composants UI de Vercel basé sur l'IA. Utilisé pour prototyper rapidement des layouts de cards et de sections, tester des idées de composants avant de les adapter en HTML/CSS vanilla.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-name">
-          <img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare" width="20" height="20">
-          Wrangler CLI
-        </div>
-        <div class="tool-role" data-i18n="tool.wrangler.role">Déploiement Cloudflare Workers</div>
-        <div class="tool-desc" data-i18n="tool.wrangler.desc">CLI officiel de Cloudflare pour développer, tester en local et déployer le proxy Worker. Configuration via un fichier wrangler.toml minimaliste, déploiement en une commande.</div>
-      </div>
-      <div class="tool-card" style="grid-column: 1 / -1">
-        <div class="tool-name">
-          <img src="https://cdn.simpleicons.org/github" alt="GitHub" width="20" height="20">
-          Git · GitHub
-        </div>
-        <div class="tool-role" data-i18n="tool.git.role">Versioning & déploiement</div>
-        <div class="tool-desc" data-i18n="tool.git.desc">Gestion de version classique avec Git. Le remote GitHub est la source de vérité et déclenche le déploiement Pages automatiquement à chaque push sur la branche principale.</div>
       </div>
     </div>
   </section>
@@ -1295,15 +1279,11 @@ var T={
     'step6.label':'RAG sémantique',
     'step6.title':'Pipeline RAG edge-native dans le Worker',
     'step6.desc':'Le pipeline RAG a d\'abord été prototypé en Python (FastAPI + LangGraph + sentence-transformers + ChromaDB). Le free tier Render (512 MB) s\'est révélé insuffisant pour charger sentence-transformers, le service ne démarrait jamais. Plutôt qu\'upgrader l\'hébergement, j\'ai porté l\'intégralité du pipeline dans le Cloudflare Worker : base de connaissances PM embarquée en JS, embeddings batch via Workers AI (bge-small-en-v1.5), cosine similarity calculée à l\'edge. Zéro infra Python, zéro déploiement séparé, même qualité sémantique.',
-    's3.title':'Outils de build',
+    's3.title':'Outils de vibe coding',
     'tool.cc.role':'Vibe coding, CLI Anthropic',
     'tool.cc.desc':'Principal outil de développement. J\'écris les specs en langage naturel, Claude Code génère le code, refactorise les sections et gère les commits. Permet de shipper vite sans sacrifier la qualité du code.',
     'tool.lovable.role':'Prototypage UI, vibe coding',
     'tool.lovable.desc':'Utilisé pour explorer rapidement des layouts et des composants visuels. Lovable accélère la phase de design en générant du HTML/CSS propre à partir d\'une description.',
-    'tool.wrangler.role':'Déploiement Cloudflare Workers',
-    'tool.wrangler.desc':'CLI officiel de Cloudflare pour développer, tester en local et déployer le proxy Worker. Configuration via un fichier wrangler.toml minimaliste, déploiement en une commande.',
-    'tool.git.role':'Versioning & déploiement',
-    'tool.git.desc':'Gestion de version classique avec Git. Le remote GitHub est la source de vérité et déclenche le déploiement Pages automatiquement à chaque push sur la branche principale.',
     'tool.codex.role':'Agent coding CLI + Desktop · codex-1 (o3)',
     'tool.codex.desc':'Agent OpenAI de coding (2025) basé sur codex-1, une version d\'o3 entraînée sur des tâches software réelles. Utilisé pour scaffolder la couche Python initiale (FastAPI + LangGraph), cette version ayant ensuite été portée dans le Cloudflare Worker. Pas à confondre avec l\'ancien modèle Codex API (déprécié 2023).',
     'tool.gemini.role':'Exploration design, idéation visuelle',
@@ -1412,7 +1392,7 @@ var T={
     'test.t3':'Routing POST / intact',
     'test.d3':'La route racine (6 outils PM) reste un passthrough direct vers Groq, non affectée par l\'orchestration KRL1.',
     'test.r3':'assert choices[0].content = "legacy"',
-    'toc.s0':'00','toc.s1':'01 Stack','toc.s2':'02 Étapes','toc.s3':'03 Outils',
+    'toc.s0':'00','toc.s1':'01 Stack','toc.s2':'02 Étapes','toc.s3':'03 Vibe',
     'toc.s4':'04 Archi','toc.s4b':'04b Prompts','toc.s4c':'04c Raté',
     'toc.s5':'05 RAG','toc.s5b':'05b Perf','toc.s5c':'05c KRL1',
     'toc.s6':'06 Suite','toc.s7':'07 Glossaire','toc.s8':'08 Nav',
@@ -1507,15 +1487,11 @@ var T={
     'step6.label':'Semantic RAG',
     'step6.title':'Edge-native RAG pipeline in the Worker',
     'step6.desc':'The RAG pipeline was first prototyped in Python (FastAPI + LangGraph + sentence-transformers + ChromaDB). Render\'s free tier (512 MB) proved insufficient to load sentence-transformers, the service never started. Rather than upgrade hosting, I ported the entire pipeline into the Cloudflare Worker: PM knowledge base embedded as JS, batch embeddings via Workers AI (bge-small-en-v1.5), cosine similarity computed at the edge. Zero Python infrastructure, zero separate deployment, same semantic quality.',
-    's3.title':'Build tools',
+    's3.title':'Vibe coding tools',
     'tool.cc.role':'Vibe coding, Anthropic CLI',
     'tool.cc.desc':'Primary development tool. I write specs in plain language, Claude Code generates the code, refactors sections and manages commits. Lets you ship fast without sacrificing code quality.',
     'tool.lovable.role':'UI prototyping, vibe coding',
     'tool.lovable.desc':'Used to quickly explore layouts and visual components. Lovable accelerates the design phase by generating clean HTML/CSS from a description.',
-    'tool.wrangler.role':'Cloudflare Workers deployment',
-    'tool.wrangler.desc':'Cloudflare\'s official CLI to develop, test locally and deploy the proxy Worker. Configured via a minimal wrangler.toml file, deployed with a single command.',
-    'tool.git.role':'Versioning & deployment',
-    'tool.git.desc':'Classic version control with Git. The GitHub remote is the source of truth and triggers Pages deployment automatically on every push to the main branch.',
     'tool.codex.role':'Coding agent CLI + Desktop · codex-1 (o3)',
     'tool.codex.desc':'OpenAI coding agent (2025) based on codex-1, a version of o3 trained on real-world software tasks. Used to scaffold the initial Python layer (FastAPI + LangGraph), later ported into the Cloudflare Worker. Not to be confused with the old Codex API model (deprecated 2023).',
     'tool.gemini.role':'Design exploration, visual ideation',
@@ -1624,7 +1600,7 @@ var T={
     'test.t3':'POST / routing intact',
     'test.d3':'The root route (6 PM tools) remains a direct Groq passthrough, unaffected by KRL1 orchestration.',
     'test.r3':'assert choices[0].content = "legacy"',
-    'toc.s0':'00','toc.s1':'01 Stack','toc.s2':'02 Steps','toc.s3':'03 Tools',
+    'toc.s0':'00','toc.s1':'01 Stack','toc.s2':'02 Steps','toc.s3':'03 Vibe',
     'toc.s4':'04 Arch','toc.s4b':'04b Prompts','toc.s4c':'04c Failed',
     'toc.s5':'05 RAG','toc.s5b':'05b Perf','toc.s5c':'05c KRL1',
     'toc.s6':'06 Next','toc.s7':'07 Glossary','toc.s8':'08 Nav',
