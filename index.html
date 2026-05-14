@@ -796,7 +796,7 @@ window.setLang=function(lang){
   };
   // ───────────────────────────────────────────────────────────────────────────
 
-  function switchTab(id){
+  function switchTab(id,noHistory){
     if(!TABS.includes(id)) id='projects';
     document.querySelectorAll('.tab-panel').forEach(function(panel){
       panel.classList.toggle('active',panel.id===id);
@@ -805,7 +805,7 @@ window.setLang=function(lang){
       a.classList.toggle('active',a.getAttribute('href')==='#'+id);
     });
     document.querySelectorAll('#'+id+' .rv').forEach(function(el){el.classList.add('on');});
-    history.replaceState(null,'','#'+id);
+    if(!noHistory) history.replaceState(null,'','#'+id);
     if(id==='architecture')lazyLoad('architecture','how-i-built-this.html');
     if(id==='decisions')lazyLoad('decisions','product-decisions.html');
   }
@@ -849,7 +849,11 @@ window.setLang=function(lang){
     });
   });
 
-  function fromHash(){var h=location.hash.replace('#','');switchTab(TABS.includes(h)?h:'projects');}
+  function fromHash(){
+    var h=location.hash.replace('#','');
+    if(TABS.includes(h)){switchTab(h);}
+    else{switchTab('projects',true);}
+  }
   window.addEventListener('hashchange',fromHash);
   fromHash();
 
