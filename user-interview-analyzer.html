@@ -608,7 +608,7 @@ async function launch() {
   hideError();
   var text = getInterviewsText();
   var context = document.getElementById('context').value.trim();
-  if (!text || text.length < 80) { showError('Ajoute des notes d\'entretien plus détaillées (minimum ~80 caractères).'); return; }
+  if (!text || text.length < 80) { showError(currentLang === 'en' ? 'Add more detailed interview notes (minimum ~80 characters).' : 'Ajoute des notes d\'entretien plus détaillées (minimum ~80 caractères).'); return; }
 
   document.getElementById('launchBtn').disabled = true;
   var _rr = document.getElementById('rerunBtn'); if(_rr) _rr.disabled = true;
@@ -623,8 +623,8 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, context);
   } catch(e) {
-    if (e.name === 'AbortError') showError('Délai dépassé (30s) — vérifie ta connexion et réessaie.');
-    else showError('Erreur : ' + e.message);
+    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) — check your connection and try again.' : 'Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    else showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
   }
   document.getElementById('loading').classList.remove('show');
   document.getElementById('launchBtn').disabled = false;
@@ -633,12 +633,13 @@ async function launch() {
 
 function buildPrompt(text, context) {
   var ctx = context ? '\nContexte produit : ' + context : '';
-  return 'Tu es un UX researcher et Product Manager expert. Analyse ces notes d\'entretiens utilisateur.\n\nNotes :\n' + text + ctx + '\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ni après :\n{\n  "interview_count": 1,\n  "persona": {\n    "name": "Marie",\n    "emoji": "👩‍💼",\n    "description": "Responsable marketing, 34 ans, utilise l\'outil au quotidien pour gérer ses reportings et suivre ses projets d\'équipe.",\n    "tags": ["Marketing", "PME", "Power user", "Mobile first"]\n  },\n  "pain_groups": [\n    {\n      "group": "Partage et collaboration",\n      "count": 3,\n      "items": [\n        "Impossible de partager un rapport sans donner accès complet à l\'outil",\n        "Pas de notification lors de modifications par un collègue"\n      ]\n    }\n  ],\n  "quotes": [\n    {\n      "text": "Citation exacte ou reformulée fidèlement depuis les notes",\n      "profile": "Marie, responsable marketing"\n    }\n  ],\n  "opportunities": [\n    {\n      "title": "Export PDF en un clic",\n      "description": "Permettre le partage de rapports sans compte requis, via un lien ou un email avec PDF généré automatiquement.",\n      "impact": "high"\n    }\n  ]\n}\n\nRègles :\n- pain_groups : 2-4 groupes, chacun avec 2-3 items\n- quotes : 3-4 citations marquantes\n- opportunities : 3-4 opportunités, impact parmi high/medium/low\n- Si plusieurs entretiens : synthétise les patterns communs\n- Sois précis, actionnable, ancré dans les notes fournies.';
+  var langRule = currentLang === 'en' ? 'IMPORTANT: Write every generated user-facing string in English. Keep JSON keys unchanged.\\n\\n' : '';
+  return langRule + 'Tu es un UX researcher et Product Manager expert. Analyse ces notes d\'entretiens utilisateur.\n\nNotes :\n' + text + ctx + '\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ni après :\n{\n  "interview_count": 1,\n  "persona": {\n    "name": "Marie",\n    "emoji": "👩‍💼",\n    "description": "Responsable marketing, 34 ans, utilise l\'outil au quotidien pour gérer ses reportings et suivre ses projets d\'équipe.",\n    "tags": ["Marketing", "PME", "Power user", "Mobile first"]\n  },\n  "pain_groups": [\n    {\n      "group": "Partage et collaboration",\n      "count": 3,\n      "items": [\n        "Impossible de partager un rapport sans donner accès complet à l\'outil",\n        "Pas de notification lors de modifications par un collègue"\n      ]\n    }\n  ],\n  "quotes": [\n    {\n      "text": "Citation exacte ou reformulée fidèlement depuis les notes",\n      "profile": "Marie, responsable marketing"\n    }\n  ],\n  "opportunities": [\n    {\n      "title": "Export PDF en un clic",\n      "description": "Permettre le partage de rapports sans compte requis, via un lien ou un email avec PDF généré automatiquement.",\n      "impact": "high"\n    }\n  ]\n}\n\nRègles :\n- pain_groups : 2-4 groupes, chacun avec 2-3 items\n- quotes : 3-4 citations marquantes\n- opportunities : 3-4 opportunités, impact parmi high/medium/low\n- Si plusieurs entretiens : synthétise les patterns communs\n- Sois précis, actionnable, ancré dans les notes fournies.';
 }
 
 function friendlyApiError(err, status) {
-  if (status === 429) return 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return 'Service temporairement indisponible — réessaie dans quelques instants.';
+  if (status === 429) return currentLang === 'en' ? 'Rate limit reached — wait 30 seconds and try again.' : 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable — try again in a moment.' : 'Service temporairement indisponible — réessaie dans quelques instants.';
   if (status === 401) return 'Erreur d\'authentification — contacte le support.';
   if (err && err.message) return err.message;
   return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
@@ -758,7 +759,7 @@ function copyResults() {
     });
   }
   var _text = lines.join('\n');
-  var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
+  var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = currentLang === 'en' ? '\u2713 Copied!' : '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = currentLang === 'en' ? '\u{1F4CB} Copy all' : '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
   var _fb = function() { var ta = document.createElement('textarea'); ta.value = _text; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); _onCopied(); } catch(e) {} document.body.removeChild(ta); };
   if (navigator.clipboard) navigator.clipboard.writeText(_text).then(_onCopied).catch(_fb); else _fb();
 }
@@ -881,7 +882,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (ta && hint) {
     ta.addEventListener('input', function() {
       var n = this.value.trim().split(/\s+/).filter(Boolean).length;
-      hint.textContent = n + ' mot' + (n > 1 ? 's' : '');
+      hint.textContent = n + (currentLang === 'en' ? ' word' : ' mot') + (n > 1 ? 's' : '');
     });
   }
 });
@@ -972,6 +973,18 @@ function applyLangExtras(lang) {
     if(el) el.innerHTML = _t[id];
   });
 
+  document.querySelectorAll('.btn-examples,.btn-random,.btn-random-stories').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '&#127922; Random example' : '&#127922; Exemple al&eacute;atoire';
+  });
+  document.querySelectorAll('.required').forEach(function(el){
+    el.innerHTML = lang === 'en' ? '&#9679; Required' : '&#9679; Requis';
+  });
+  document.querySelectorAll('.btn-add-interview').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '+ Add an interview' : '+ Ajouter un entretien';
+  });
+  document.querySelectorAll('.btn-add-story').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '+ Add a story' : '+ Ajouter une story';
+  });
   var fr = document.getElementById('howtoStepsFr');
   var en = document.getElementById('howtoStepsEn');
   if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';

@@ -113,7 +113,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     </div>
   </header>
 
-  <div class="sec-divider"><span id="sectionLbl">13 décisions produit</span></div>
+  <div class="sec-divider"><span id="sectionLbl">15 décisions produit</span></div>
 
   <div class="decision-grid">
 
@@ -372,7 +372,7 @@ var I18N = {
     h1:'Les décisions <span class="grad">produit</span><br>derrière le site',
     subtitle:"Chaque choix structurant du site — PM Toolkit, KRL1, architecture statique, PLG, observabilité — avec les alternatives rejetées et pourquoi elles ne tiennent pas.",
     m1:'UX', m2:'PLG', m3:'Contraintes', m4:'Arbitrages', m5:'$0 Budget',
-    sectionLbl:'13 décisions produit',
+    sectionLbl:'15 décisions produit',
     altslbl:'Alternatives rejetées',
     d01n:'Décision 01', d01q:"Pourquoi un assistant IA sur un portfolio PM ?", d01a:"PLG par le produit, pas par le CV",
     d01why:"Un portfolio PM classique, c'est un PDF ou une page LinkedIn. Pour démontrer des compétences AI PM, le portfolio doit être lui-même un produit AI. KRL1 est la preuve concrète : un PM qui comprend les LLMs ne le dit pas, il le montre. Quand un recruteur interagit avec KRL1, il n'a pas besoin de lire \"je comprends les systèmes IA\" dans le résumé. Il l'expérimente directement. C'est du Product-Led Growth appliqué à la recherche d'emploi : le produit porte son propre discours commercial. KRL1 qualifie aussi les visiteurs naturellement : quelqu'un qui passe 5 minutes à explorer les outils PM via KRL1 est plus engagé qu'un scanner de CV de 10 secondes. Le message LinkedIn \"j'ai testé KRL1 et...\" est un signal d'engagement fort. L'assistant existe pour le recruteur, pas pour moi.",
@@ -431,7 +431,7 @@ var I18N = {
     h1:'The <span class="grad">product</span> decisions<br>behind the site',
     subtitle:"Every structural choice in the site — PM Toolkit, KRL1, static architecture, PLG, observability — with the rejected alternatives and why they don't hold up.",
     m1:'UX', m2:'PLG', m3:'Constraints', m4:'Trade-offs', m5:'$0 Budget',
-    sectionLbl:'13 product decisions',
+    sectionLbl:'15 product decisions',
     altslbl:'Rejected alternatives',
     d01n:'Decision 01', d01q:"Why an AI assistant on a PM portfolio?", d01a:"PLG through the product, not the CV",
     d01why:"A classic PM portfolio is a PDF or a LinkedIn page. To demonstrate AI PM skills, the portfolio itself has to be an AI product. KRL1 is the concrete proof: a PM who understands LLMs does not say it, they show it. When a recruiter interacts with KRL1, they do not need to read \"I understand AI systems\" in a summary. They experience it directly. That is Product-Led Growth applied to job searching: the product carries its own sales pitch. KRL1 also qualifies visitors naturally: someone who spends 5 minutes exploring PM tools through KRL1 is more engaged than a 10-second CV scanner. The LinkedIn message \"I tested KRL1 and...\" is a strong engagement signal. The assistant exists for the recruiter, not for me.",
@@ -498,7 +498,7 @@ function setLang(lang){
   document.getElementById('subtitleTxt').textContent = T.subtitle;
   ['m1','m2','m3','m4','m5'].forEach(function(id){ document.getElementById(id).textContent = T[id]; });
   document.getElementById('sectionLbl').textContent = T.sectionLbl;
-  for(var i=1;i<=13;i++){
+  for(var i=1;i<=15;i++){
     var n = ('0'+i).slice(-2);
     ['n','q','a','why'].forEach(function(k){
       var el = document.getElementById('d'+n+k);

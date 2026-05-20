@@ -455,8 +455,8 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, title);
   } catch(e) {
-    if (e.name === 'AbortError') showError('Délai dépassé (30s) — vérifie ta connexion et réessaie.');
-    else showError('Erreur : ' + e.message);
+    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) — check your connection and try again.' : 'Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    else showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
   }
   document.getElementById('loading').classList.remove('show');
   document.getElementById('launchBtn').disabled = false;
@@ -470,12 +470,13 @@ function buildPrompt(title, desc, persona, tech) {
   var personaStr = persona ? '\nPersona principal : ' + persona : '';
   var techStr = tech ? '\nContexte technique : ' + tech : '';
 
-  return 'Tu es un expert Product Owner. D\u00e9compose l\u2019epic suivant en ' + nbStories + ' user stories actionables.\n\nEpic : "' + title + '"\nDescription : ' + desc + personaStr + techStr + '\n\nR\u00e8gles :\n- ' + fmtInstruction + '\n- Chaque user story doit \u00eatre ind\u00e9pendante et livrable seule (principe INVEST)\n- 2 \u00e0 3 crit\u00e8res d\u2019acceptance concrets et v\u00e9rifiables par story\n- Priorit\u00e9 : high / medium / low\n- Effort estim\u00e9 : XS (< 1j), S (1-2j), M (3-5j), L (> 5j)\n- Type : feature / tech / ux / bug-fix\n- Varie les types et priorit\u00e9s de fa\u00e7on r\u00e9aliste\n\nR\u00e9ponds UNIQUEMENT en JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "epic_summary": "R\u00e9sum\u00e9 de l\u2019epic en 1 phrase",\n  "stories": [\n    {\n      "id": "US-01",\n      "title": "Titre court de la story",\n      "story": "En tant que... je veux... afin de...",\n      "type": "feature",\n      "priority": "high",\n      "effort": "M",\n      "acceptance_criteria": [\n        "Crit\u00e8re 1 v\u00e9rifiable",\n        "Crit\u00e8re 2 v\u00e9rifiable"\n      ]\n    }\n  ]\n}';
+  var langRule = currentLang === 'en' ? 'IMPORTANT: Write every generated user-facing string in English. Keep JSON keys unchanged.\\n\\n' : '';
+  return langRule + 'Tu es un expert Product Owner. D\u00e9compose l\u2019epic suivant en ' + nbStories + ' user stories actionables.\n\nEpic : "' + title + '"\nDescription : ' + desc + personaStr + techStr + '\n\nR\u00e8gles :\n- ' + fmtInstruction + '\n- Chaque user story doit \u00eatre ind\u00e9pendante et livrable seule (principe INVEST)\n- 2 \u00e0 3 crit\u00e8res d\u2019acceptance concrets et v\u00e9rifiables par story\n- Priorit\u00e9 : high / medium / low\n- Effort estim\u00e9 : XS (< 1j), S (1-2j), M (3-5j), L (> 5j)\n- Type : feature / tech / ux / bug-fix\n- Varie les types et priorit\u00e9s de fa\u00e7on r\u00e9aliste\n\nR\u00e9ponds UNIQUEMENT en JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "epic_summary": "R\u00e9sum\u00e9 de l\u2019epic en 1 phrase",\n  "stories": [\n    {\n      "id": "US-01",\n      "title": "Titre court de la story",\n      "story": "En tant que... je veux... afin de...",\n      "type": "feature",\n      "priority": "high",\n      "effort": "M",\n      "acceptance_criteria": [\n        "Crit\u00e8re 1 v\u00e9rifiable",\n        "Crit\u00e8re 2 v\u00e9rifiable"\n      ]\n    }\n  ]\n}';
 }
 
 function friendlyApiError(err, status) {
-  if (status === 429) return 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return 'Service temporairement indisponible — réessaie dans quelques instants.';
+  if (status === 429) return currentLang === 'en' ? 'Rate limit reached — wait 30 seconds and try again.' : 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable — try again in a moment.' : 'Service temporairement indisponible — réessaie dans quelques instants.';
   if (status === 401) return 'Erreur d\'authentification — contacte le support.';
   if (err && err.message) return err.message;
   return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
@@ -577,7 +578,7 @@ function copyAll() {
     lines.push('');
   });
   var _text = lines.join('\n');
-  var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
+  var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = currentLang === 'en' ? '\u2713 Copied!' : '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = currentLang === 'en' ? '\u{1F4CB} Copy all' : '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
   var _fb = function() { var ta = document.createElement('textarea'); ta.value = _text; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); _onCopied(); } catch(e) {} document.body.removeChild(ta); };
   if (navigator.clipboard) navigator.clipboard.writeText(_text).then(_onCopied).catch(_fb); else _fb();
 }
@@ -751,6 +752,18 @@ function applyLangExtras(lang) {
     if(el) el.innerHTML = _t[id];
   });
 
+  document.querySelectorAll('.btn-examples,.btn-random,.btn-random-stories').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '&#127922; Random example' : '&#127922; Exemple al&eacute;atoire';
+  });
+  document.querySelectorAll('.required').forEach(function(el){
+    el.innerHTML = lang === 'en' ? '&#9679; Required' : '&#9679; Requis';
+  });
+  document.querySelectorAll('.btn-add-interview').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '+ Add an interview' : '+ Ajouter un entretien';
+  });
+  document.querySelectorAll('.btn-add-story').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '+ Add a story' : '+ Ajouter une story';
+  });
   var fr = document.getElementById('howtoStepsFr');
   var en = document.getElementById('howtoStepsEn');
   if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';

@@ -510,8 +510,8 @@ async function launch() {
   var vision = document.getElementById('vision').value.trim();
   var horizon = document.getElementById('horizon').value;
   var features = getFeatures();
-  if(!name){showError('Donne un nom au produit.');return;}
-  if(features.length < 2){showError('Ajoute au moins 2 features.');return;}
+  if(!name){showError(currentLang === 'en' ? 'Give the product a name.' : 'Donne un nom au produit.');return;}
+  if(features.length < 2){showError(currentLang === 'en' ? 'Add at least 2 features.' : 'Ajoute au moins 2 features.');return;}
 
   document.getElementById('launchBtn').disabled = true;
   var _rr = document.getElementById('rerunBtn'); if(_rr) _rr.disabled = true;
@@ -526,8 +526,8 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, name, horizon);
   } catch(e) {
-    if (e.name === 'AbortError') showError('Délai dépassé (30s) — vérifie ta connexion et réessaie.');
-    else showError('Erreur : ' + e.message);
+    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) — check your connection and try again.' : 'Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    else showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
   }
   document.getElementById('loading').classList.remove('show');
   document.getElementById('launchBtn').disabled = false;
@@ -540,12 +540,13 @@ function buildPrompt(name, vision, horizon, features) {
   var horizonStr = {'trimestre':'ce trimestre (3 mois)','semestre':'ce semestre (6 mois)','annee':'cette ann\u00e9e (12 mois)'}[horizon];
   var featStr = features.map(function(f){ return '- [' + f.period.toUpperCase() + '] ' + f.text; }).join('\n');
 
-  return 'Tu es un expert en Product Management et communication produit. G\u00e9n\u00e8re une roadmap narrative pour les stakeholders.\n\nProduit : "' + name + '"\nVision : ' + (vision||'Non pr\u00e9cis\u00e9e') + '\nHorizon : ' + horizonStr + '\nAudience(s) : ' + audStr + '\n\nFeatures (NOW = maintenant, NEXT = ensuite, LATER = plus tard) :\n' + featStr + '\n\nG\u00e9n\u00e8re une roadmap narrative avec :\n1. Un pitch narratif de 3-4 phrases qui raconte l\'histoire du produit (inspir\u00e9, orient\u00e9 impact, pas technique)\n2. La timeline organis\u00e9e en p\u00e9riodes NOW/NEXT/LATER avec pour chaque feature : un titre clair et court (pas celui donn\u00e9 en input, reformule-le) + une phrase "Pourquoi" orient\u00e9e valeur pour l\'audience cible\n3. 3 messages cl\u00e9s adapt\u00e9s \u00e0 l\'audience pour convaincre et aligner\n\nR\u00e9ponds UNIQUEMENT avec un JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "narrative": "Pitch narratif de 3-4 phrases qui raconte l\'histoire...",\n  "periods": [\n    {\n      "key": "now",\n      "label": "Maintenant",\n      "theme": "Un mot-cl\u00e9 ou th\u00e8me de cette p\u00e9riode",\n      "features": [\n        {"title": "Titre reformul\u00e9 de la feature", "why": "Valeur concr\u00e8te pour l\'audience"}\n      ]\n    }\n  ],\n  "talking_points": [\n    "Message cl\u00e9 court et percutant pour cette audience"\n  ]\n}';
+  var langRule = currentLang === 'en' ? 'IMPORTANT: Write every generated user-facing string in English. Keep JSON keys unchanged.\\n\\n' : '';
+  return langRule + 'Tu es un expert en Product Management et communication produit. G\u00e9n\u00e8re une roadmap narrative pour les stakeholders.\n\nProduit : "' + name + '"\nVision : ' + (vision||'Non pr\u00e9cis\u00e9e') + '\nHorizon : ' + horizonStr + '\nAudience(s) : ' + audStr + '\n\nFeatures (NOW = maintenant, NEXT = ensuite, LATER = plus tard) :\n' + featStr + '\n\nG\u00e9n\u00e8re une roadmap narrative avec :\n1. Un pitch narratif de 3-4 phrases qui raconte l\'histoire du produit (inspir\u00e9, orient\u00e9 impact, pas technique)\n2. La timeline organis\u00e9e en p\u00e9riodes NOW/NEXT/LATER avec pour chaque feature : un titre clair et court (pas celui donn\u00e9 en input, reformule-le) + une phrase "Pourquoi" orient\u00e9e valeur pour l\'audience cible\n3. 3 messages cl\u00e9s adapt\u00e9s \u00e0 l\'audience pour convaincre et aligner\n\nR\u00e9ponds UNIQUEMENT avec un JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "narrative": "Pitch narratif de 3-4 phrases qui raconte l\'histoire...",\n  "periods": [\n    {\n      "key": "now",\n      "label": "Maintenant",\n      "theme": "Un mot-cl\u00e9 ou th\u00e8me de cette p\u00e9riode",\n      "features": [\n        {"title": "Titre reformul\u00e9 de la feature", "why": "Valeur concr\u00e8te pour l\'audience"}\n      ]\n    }\n  ],\n  "talking_points": [\n    "Message cl\u00e9 court et percutant pour cette audience"\n  ]\n}';
 }
 
 function friendlyApiError(err, status) {
-  if (status === 429) return 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return 'Service temporairement indisponible — réessaie dans quelques instants.';
+  if (status === 429) return currentLang === 'en' ? 'Rate limit reached — wait 30 seconds and try again.' : 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable — try again in a moment.' : 'Service temporairement indisponible — réessaie dans quelques instants.';
   if (status === 401) return 'Erreur d\'authentification — contacte le support.';
   if (err && err.message) return err.message;
   return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
@@ -638,14 +639,14 @@ function copyResults() {
     pts.forEach(function(p) { lines.push('- ' + p); });
   }
   var _text = lines.join('\n');
-  var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
+  var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = currentLang === 'en' ? '\u2713 Copied!' : '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = currentLang === 'en' ? '\u{1F4CB} Copy all' : '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
   var _fb = function() { var ta = document.createElement('textarea'); ta.value = _text; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); _onCopied(); } catch(e) {} document.body.removeChild(ta); };
   if (navigator.clipboard) navigator.clipboard.writeText(_text).then(_onCopied).catch(_fb); else _fb();
 }
 
 function copyNarrative() {
   var text = window._narrativeText || '';
-  var onCopied = function() { var btn = document.getElementById('copyBtn'); btn.textContent = '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function(){ btn.textContent = '\u{1F4CB} Copier le pitch'; btn.classList.remove('copied'); }, 2000); };
+  var onCopied = function() { var btn = document.getElementById('copyBtn'); btn.textContent = currentLang === 'en' ? '\u2713 Copied!' : '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function(){ btn.textContent = '\u{1F4CB} Copier le pitch'; btn.classList.remove('copied'); }, 2000); };
   var fb = function() { var ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); onCopied(); } catch(e) {} document.body.removeChild(ta); };
   if (navigator.clipboard) navigator.clipboard.writeText(text).then(onCopied).catch(fb); else fb();
 }
@@ -828,6 +829,18 @@ function applyLangExtras(lang) {
     if(el) el.innerHTML = _t[id];
   });
 
+  document.querySelectorAll('.btn-examples,.btn-random,.btn-random-stories').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '&#127922; Random example' : '&#127922; Exemple al&eacute;atoire';
+  });
+  document.querySelectorAll('.required').forEach(function(el){
+    el.innerHTML = lang === 'en' ? '&#9679; Required' : '&#9679; Requis';
+  });
+  document.querySelectorAll('.btn-add-interview').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '+ Add an interview' : '+ Ajouter un entretien';
+  });
+  document.querySelectorAll('.btn-add-story').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '+ Add a story' : '+ Ajouter une story';
+  });
   var fr = document.getElementById('howtoStepsFr');
   var en = document.getElementById('howtoStepsEn');
   if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';

@@ -444,7 +444,7 @@ async function launch() {
   var type = document.getElementById('productType').value;
   var ambitions = document.getElementById('ambitions').value.trim();
   var metrics = document.getElementById('metrics').value.trim();
-  if (!name) { showError('Donne un nom au produit.'); return; }
+  if (!name) { showError(currentLang === 'en' ? 'Give the product a name.' : 'Donne un nom au produit.'); return; }
   if (!ambitions || ambitions.length < 30) { showError('D\u00e9cris tes ambitions plus en d\u00e9tail.'); return; }
 
   document.getElementById('launchBtn').disabled = true;
@@ -460,8 +460,8 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, name, type);
   } catch(e) {
-    if (e.name === 'AbortError') showError('Délai dépassé (30s) — vérifie ta connexion et réessaie.');
-    else showError('Erreur : ' + e.message);
+    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) — check your connection and try again.' : 'Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    else showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
   }
   document.getElementById('loading').classList.remove('show');
   document.getElementById('launchBtn').disabled = false;
@@ -472,12 +472,13 @@ function buildPrompt(name, type, ambitions, metrics) {
   var p = period === 'trimestre' ? 'ce trimestre (Q)' : 'cette ann\u00e9e';
   var m = metrics ? '\nM\u00e9triques actuelles : ' + metrics : '';
   var t = type ? ' (' + type + ')' : '';
-  return 'Tu es un expert en Product Management et strat\u00e9gie OKR. G\u00e9n\u00e8re des OKRs pour le produit suivant.\n\nProduit : "' + name + '"' + t + '\nP\u00e9riode : ' + p + '\nNombre d\'objectifs souhait\u00e9 : ' + nbObjectives + '\nAmbitions : ' + ambitions + m + '\n\nR\u00e8gles importantes :\n- Chaque Objective doit \u00eatre qualitatif, inspirant et m\u00e9morable (pas de chiffres dans l\'objectif)\n- Chaque Key Result doit \u00eatre mesurable, avec une valeur cible pr\u00e9cise et r\u00e9aliste\n- 3 Key Results par objectif\n- Varie les types : metric (KPI \u00e0 atteindre), milestone (\u00e9tape cl\u00e9 \u00e0 franchir), health (indicateur \u00e0 maintenir)\n- Ancre les KRs dans les m\u00e9triques fournies si disponibles\n\nR\u00e9ponds UNIQUEMENT avec un JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "okrs": [\n    {\n      "objective": "Faire de l\'onboarding un acc\u00e9l\u00e9rateur de valeur",\n      "key_results": [\n        {"text": "Augmenter le time-to-value de J14 \u00e0 J7 pour 70% des nouveaux clients", "type": "metric", "baseline": "Actuellement J14 pour 60% des clients"},\n        {"text": "Livrer le nouveau flow d\'onboarding interactif en production", "type": "milestone", "baseline": ""},\n        {"text": "Maintenir le NPS onboarding au-dessus de 40", "type": "health", "baseline": "NPS actuel : 28"}\n      ]\n    }\n  ],\n  "tips": [\n    "Conseil court et actionnable sur l\'utilisation de ces OKRs"\n  ]\n}\n\nG\u00e9n\u00e8re exactement ' + nbObjectives + ' objectif(s). Les tips doivent \u00eatre 3 conseils concrets sur comment utiliser ces OKRs en \u00e9quipe produit.';
+  var langRule = currentLang === 'en' ? 'IMPORTANT: Write every generated user-facing string in English. Keep JSON keys unchanged.\\n\\n' : '';
+  return langRule + 'Tu es un expert en Product Management et strat\u00e9gie OKR. G\u00e9n\u00e8re des OKRs pour le produit suivant.\n\nProduit : "' + name + '"' + t + '\nP\u00e9riode : ' + p + '\nNombre d\'objectifs souhait\u00e9 : ' + nbObjectives + '\nAmbitions : ' + ambitions + m + '\n\nR\u00e8gles importantes :\n- Chaque Objective doit \u00eatre qualitatif, inspirant et m\u00e9morable (pas de chiffres dans l\'objectif)\n- Chaque Key Result doit \u00eatre mesurable, avec une valeur cible pr\u00e9cise et r\u00e9aliste\n- 3 Key Results par objectif\n- Varie les types : metric (KPI \u00e0 atteindre), milestone (\u00e9tape cl\u00e9 \u00e0 franchir), health (indicateur \u00e0 maintenir)\n- Ancre les KRs dans les m\u00e9triques fournies si disponibles\n\nR\u00e9ponds UNIQUEMENT avec un JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "okrs": [\n    {\n      "objective": "Faire de l\'onboarding un acc\u00e9l\u00e9rateur de valeur",\n      "key_results": [\n        {"text": "Augmenter le time-to-value de J14 \u00e0 J7 pour 70% des nouveaux clients", "type": "metric", "baseline": "Actuellement J14 pour 60% des clients"},\n        {"text": "Livrer le nouveau flow d\'onboarding interactif en production", "type": "milestone", "baseline": ""},\n        {"text": "Maintenir le NPS onboarding au-dessus de 40", "type": "health", "baseline": "NPS actuel : 28"}\n      ]\n    }\n  ],\n  "tips": [\n    "Conseil court et actionnable sur l\'utilisation de ces OKRs"\n  ]\n}\n\nG\u00e9n\u00e8re exactement ' + nbObjectives + ' objectif(s). Les tips doivent \u00eatre 3 conseils concrets sur comment utiliser ces OKRs en \u00e9quipe produit.';
 }
 
 function friendlyApiError(err, status) {
-  if (status === 429) return 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return 'Service temporairement indisponible — réessaie dans quelques instants.';
+  if (status === 429) return currentLang === 'en' ? 'Rate limit reached — wait 30 seconds and try again.' : 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable — try again in a moment.' : 'Service temporairement indisponible — réessaie dans quelques instants.';
   if (status === 401) return 'Erreur d\'authentification — contacte le support.';
   if (err && err.message) return err.message;
   return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
@@ -573,7 +574,7 @@ function copyResults() {
     d.tips.forEach(function(t) { lines.push('- ' + t); });
   }
   var _text = lines.join('\n');
-  var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
+  var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = currentLang === 'en' ? '\u2713 Copied!' : '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = currentLang === 'en' ? '\u{1F4CB} Copy all' : '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
   var _fb = function() { var ta = document.createElement('textarea'); ta.value = _text; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); _onCopied(); } catch(e) {} document.body.removeChild(ta); };
   if (navigator.clipboard) navigator.clipboard.writeText(_text).then(_onCopied).catch(_fb); else _fb();
 }
@@ -819,6 +820,18 @@ function applyLangExtras(lang) {
     if(el) el.innerHTML = _t[id];
   });
 
+  document.querySelectorAll('.btn-examples,.btn-random,.btn-random-stories').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '&#127922; Random example' : '&#127922; Exemple al&eacute;atoire';
+  });
+  document.querySelectorAll('.required').forEach(function(el){
+    el.innerHTML = lang === 'en' ? '&#9679; Required' : '&#9679; Requis';
+  });
+  document.querySelectorAll('.btn-add-interview').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '+ Add an interview' : '+ Ajouter un entretien';
+  });
+  document.querySelectorAll('.btn-add-story').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '+ Add a story' : '+ Ajouter une story';
+  });
   var fr = document.getElementById('howtoStepsFr');
   var en = document.getElementById('howtoStepsEn');
   if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';
@@ -879,7 +892,7 @@ window.pmImportInsights = function(){
   var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
   if(ambEl){ ambEl.style.borderColor='rgba(167,139,250,0.5)'; setTimeout(function(){ambEl.style.borderColor='';},900); ambEl.scrollIntoView({behavior:'smooth',block:'center'}); }
   var hint = document.getElementById('ambitionsHint');
-  if(hint){ var n = ambEl.value.trim().split(/\s+/).filter(Boolean).length; hint.textContent = n + ' mot' + (n>1?'s':''); }
+  if(hint){ var n = ambEl.value.trim().split(/\s+/).filter(Boolean).length; hint.textContent = n + (currentLang === 'en' ? ' word' : ' mot') + (n>1?'s':''); }
 };
 if(window.PMSession) PMSession.init();
 </script>

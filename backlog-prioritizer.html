@@ -418,7 +418,7 @@ function setMethod(m) {
   var desc = document.getElementById('methodDesc');
   if (m === 'rice') {
     desc.className = 'method-desc rice';
-    desc.innerHTML = '<strong>RICE</strong> : Reach &times; Impact &times; Confidence / Effort. Donne un score num&eacute;rique pour comparer objectivement les stories.';
+    desc.innerHTML = currentLang === 'en' ? '<strong>RICE</strong>: Reach &times; Impact &times; Confidence / Effort. Gives a numeric score for objective story comparison.' : '<strong>RICE</strong> : Reach &times; Impact &times; Confidence / Effort. Donne un score num&eacute;rique pour comparer objectivement les stories.';
   } else {
     desc.className = 'method-desc moscow';
     desc.innerHTML = '<strong>MoSCoW</strong> : Must Have / Should Have / Could Have / Won\'t Have. Cat&eacute;gorise les stories par niveau d\'obligation.';
@@ -469,8 +469,8 @@ function getStories() {
 
 // ---- LAUNCH ----
 function friendlyApiError(err, status) {
-  if (status === 429) return 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return 'Service temporairement indisponible — réessaie dans quelques instants.';
+  if (status === 429) return currentLang === 'en' ? 'Rate limit reached — wait 30 seconds and try again.' : 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable — try again in a moment.' : 'Service temporairement indisponible — réessaie dans quelques instants.';
   if (status === 401) return 'Erreur d\'authentification — contacte le support.';
   if (err && err.message) return err.message;
   return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
@@ -479,8 +479,8 @@ async function launch() {
   hideError();
   var stories = getStories();
   var context = document.getElementById('context').value.trim();
-  if (stories.length < 2) { showError('Ajoute au moins 2 user stories pour lancer la priorisation.'); return; }
-  if (stories.length > 15) { showError('Maximum 15 stories par session pour garantir la qualité du scoring.'); return; }
+  if (stories.length < 2) { showError(currentLang === 'en' ? 'Add at least 2 user stories to start prioritisation.' : 'Ajoute au moins 2 user stories pour lancer la priorisation.'); return; }
+  if (stories.length > 15) { showError(currentLang === 'en' ? 'Maximum 15 stories per session to keep scoring quality high.' : 'Maximum 15 stories par session pour garantir la qualité du scoring.'); return; }
 
   document.getElementById('launchBtn').disabled = true;
   var _rr = document.getElementById('rerunBtn'); if(_rr) _rr.disabled = true;
@@ -512,8 +512,8 @@ async function launch() {
     renderResults(parsed, stories.length, context);
   } catch(e) {
     clearTimeout(_timeout);
-    if (e.name === 'AbortError') showError('Délai dépassé (30s) — vérifie ta connexion et réessaie.');
-    else showError('Erreur : ' + e.message);
+    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) — check your connection and try again.' : 'Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    else showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
   }
 
   document.getElementById('loading').classList.remove('show');
@@ -524,11 +524,12 @@ async function launch() {
 function buildPrompt(stories, context) {
   var ctx = context ? '\nContexte produit : ' + context : '';
   var list = stories.map((s,i) => (i+1) + '. ' + s).join('\n');
+  var langRule = currentLang === 'en' ? 'IMPORTANT: Write every generated user-facing string in English. Keep JSON keys unchanged.\\n\\n' : '';
 
   if (currentMethod === 'rice') {
-    return 'Tu es un expert en priorisation produit. Analyse ces user stories et attribue un score RICE à chacune.\n\nUser stories :\n' + list + ctx + '\n\nRègles RICE :\n- Reach (1-10) : combien d\'utilisateurs impactés\n- Impact (1-3) : 1=faible, 2=moyen, 3=fort\n- Confidence (0.5/0.8/1.0) : 0.5=faible, 0.8=moyen, 1.0=élevé\n- Effort (1-5) : 1=très faible, 5=très élevé\n- Score = (Reach × Impact × Confidence) / Effort\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ou après :\n{\n  "method": "rice",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "reach": 7,\n      "impact": 2,\n      "confidence": 0.8,\n      "effort": 3,\n      "score": 3.73,\n      "justification": "Justification courte et spécifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items par score décroissant. Sois précis et cohérent avec le contexte produit fourni.';
+    return langRule + 'Tu es un expert en priorisation produit. Analyse ces user stories et attribue un score RICE à chacune.\n\nUser stories :\n' + list + ctx + '\n\nRègles RICE :\n- Reach (1-10) : combien d\'utilisateurs impactés\n- Impact (1-3) : 1=faible, 2=moyen, 3=fort\n- Confidence (0.5/0.8/1.0) : 0.5=faible, 0.8=moyen, 1.0=élevé\n- Effort (1-5) : 1=très faible, 5=très élevé\n- Score = (Reach × Impact × Confidence) / Effort\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ou après :\n{\n  "method": "rice",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "reach": 7,\n      "impact": 2,\n      "confidence": 0.8,\n      "effort": 3,\n      "score": 3.73,\n      "justification": "Justification courte et spécifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items par score décroissant. Sois précis et cohérent avec le contexte produit fourni.';
   } else {
-    return 'Tu es un expert en priorisation produit. Applique la méthode MoSCoW à ces user stories.\n\nUser stories :\n' + list + ctx + '\n\nCatégories MoSCoW :\n- Must Have : critique pour le produit, sans ça il ne fonctionne pas\n- Should Have : important mais pas bloquant\n- Could Have : nice to have, si le temps le permet\n- Won\'t Have : hors scope pour maintenant\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ou après :\n{\n  "method": "moscow",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "category": "Must Have",\n      "justification": "Justification courte et spécifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items : Must > Should > Could > Won\'t. Sois cohérent avec le contexte produit fourni.';
+    return langRule + 'Tu es un expert en priorisation produit. Applique la méthode MoSCoW à ces user stories.\n\nUser stories :\n' + list + ctx + '\n\nCatégories MoSCoW :\n- Must Have : critique pour le produit, sans ça il ne fonctionne pas\n- Should Have : important mais pas bloquant\n- Could Have : nice to have, si le temps le permet\n- Won\'t Have : hors scope pour maintenant\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ou après :\n{\n  "method": "moscow",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "category": "Must Have",\n      "justification": "Justification courte et spécifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items : Must > Should > Could > Won\'t. Sois cohérent avec le contexte produit fourni.';
   }
 }
 
@@ -609,8 +610,8 @@ function copyResults() {
   var _text = lines.join('\n');
   var _onCopied = function() {
     var btn = document.getElementById('copyAllBtn');
-    btn.textContent = '\u2713 Copi\u00e9 !'; btn.classList.add('copied');
-    setTimeout(function() { btn.textContent = '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000);
+    btn.textContent = currentLang === 'en' ? '\u2713 Copied!' : '\u2713 Copi\u00e9 !'; btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = currentLang === 'en' ? '\u{1F4CB} Copy all' : '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000);
   };
   var _fb = function() { var ta = document.createElement('textarea'); ta.value = _text; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); _onCopied(); } catch(e) {} document.body.removeChild(ta); };
   if (navigator.clipboard) navigator.clipboard.writeText(_text).then(_onCopied).catch(_fb); else _fb();
@@ -778,6 +779,18 @@ function applyLangExtras(lang) {
     if(el) el.innerHTML = _t[id];
   });
 
+  document.querySelectorAll('.btn-examples,.btn-random,.btn-random-stories').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '&#127922; Random example' : '&#127922; Exemple al&eacute;atoire';
+  });
+  document.querySelectorAll('.required').forEach(function(el){
+    el.innerHTML = lang === 'en' ? '&#9679; Required' : '&#9679; Requis';
+  });
+  document.querySelectorAll('.btn-add-interview').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '+ Add an interview' : '+ Ajouter un entretien';
+  });
+  document.querySelectorAll('.btn-add-story').forEach(function(btn){
+    btn.innerHTML = lang === 'en' ? '+ Add a story' : '+ Ajouter une story';
+  });
   var fr = document.getElementById('howtoStepsFr');
   var en = document.getElementById('howtoStepsEn');
   if(fr) fr.style.display = lang === 'fr' ? 'flex' : 'none';
