@@ -64,7 +64,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-links a.nav-ext svg{flex-shrink:0;transition:transform 0.2s}
 .nav-links a.nav-ext:hover svg{transform:translate(1px,-1px)}
 .nav-links .nav-sep{transition:opacity 0.25s ease,transform 0.25s ease}
-.nav-section-visible .nav-links a.nav-ext,.nav-section-visible .nav-links .nav-sep{opacity:0;pointer-events:none;transform:translateY(-4px)}
 
 /* LANG */
 .lang-switcher{display:flex;align-items:center;gap:0.25rem;background:var(--glass);border:1px solid var(--border);border-radius:99px;padding:0.2rem}
@@ -256,14 +255,14 @@ nav{padding:1rem 1.5rem}
 .tab-lazy-placeholder{display:flex;align-items:center;justify-content:center;min-height:40vh}
 .tab-spinner{width:28px;height:28px;border:2px solid rgba(255,255,255,0.1);border-top-color:#60a5fa;border-radius:50%;animation:tab-spin 0.8s linear infinite}
 @keyframes tab-spin{to{transform:rotate(360deg)}}
-/* Nav section links — cachés sur le hero, révélés au scroll */
-.nav-links a.nav-section{opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity 0.25s ease,transform 0.25s ease}
-.nav-section-visible .nav-links a.nav-section{opacity:1;transform:translateY(0);pointer-events:auto}
-.nav-section-visible .nav-links a.nav-section:nth-child(1){transition-delay:0ms}
-.nav-section-visible .nav-links a.nav-section:nth-child(2){transition-delay:60ms}
-.nav-section-visible .nav-links a.nav-section:nth-child(3){transition-delay:120ms}
-.nav-section-visible .nav-links a.nav-section:nth-child(4){transition-delay:180ms}
-.nav-section-visible .nav-links a.nav-section:nth-child(5){transition-delay:240ms}
+/* Nav section links — fade-in au chargement */
+@keyframes navFadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.nav-links a.nav-section{opacity:0;animation:navFadeIn 0.4s ease forwards}
+.nav-links a.nav-section:nth-child(1){animation-delay:0.4s}
+.nav-links a.nav-section:nth-child(2){animation-delay:0.5s}
+.nav-links a.nav-section:nth-child(3){animation-delay:0.6s}
+.nav-links a.nav-section:nth-child(4){animation-delay:0.7s}
+.nav-links a.nav-section:nth-child(5){animation-delay:0.8s}
 
 
 /* THEME TOGGLE */
@@ -851,17 +850,6 @@ window.setLang=function(lang){
   window.addEventListener('hashchange',fromHash);
   fromHash();
 
-  // Révèle les liens section dès que "Stack technique" entre dans le viewport (ou est dépassé)
-  var strip=document.querySelector('.tech-strip-label');
-  if(strip&&'IntersectionObserver' in window){
-    new IntersectionObserver(function(entries){
-      var e=entries[0];
-      var show=!e.isIntersecting&&e.boundingClientRect.top<0;
-      document.documentElement.classList.toggle('nav-section-visible',show);
-    },{threshold:0}).observe(strip);
-  } else {
-    document.documentElement.classList.add('nav-section-visible');
-  }
 })();
 
 // Hide blobs while hero is in view
