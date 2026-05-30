@@ -302,6 +302,22 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 [data-theme="light"] .prompt-code{background:rgba(15,23,42,0.05);color:#334155}
 [data-theme="light"] .kb-card{background:rgba(15,23,42,0.025)}
 @media(max-width:640px){.layer-card{grid-template-columns:auto 1fr}}
+
+/* SOMMAIRE ──────────────────────────────────────────────────────── */
+.toc-summary{background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.4rem;margin-bottom:2.5rem;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%)}
+.toc-summary-head{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.9rem}
+.toc-summary-title{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted)}
+.toc-summary-head::after{content:'';flex:1;height:1px;background:var(--line)}
+.toc-summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 1.5rem;list-style:none}
+.toc-summary-grid li{border-bottom:1px solid rgba(255,255,255,0.04)}
+.toc-summary-grid a{display:flex;align-items:baseline;gap:0.6rem;padding:0.38rem 0;font-size:0.78rem;color:var(--dim);text-decoration:none;transition:color 0.15s;line-height:1.4}
+.toc-summary-grid a:hover{color:var(--cyan)}
+.toc-s-num{font-family:'DM Mono','Courier New',monospace;font-size:0.6rem;color:var(--muted);flex-shrink:0;opacity:0.7}
+@media(max-width:600px){.toc-summary-grid{grid-template-columns:1fr}}
+[data-theme="light"] .toc-summary{background:rgba(255,255,255,0.8);border-color:rgba(15,23,42,0.09)}
+[data-theme="light"] .toc-summary-grid li{border-bottom-color:rgba(15,23,42,0.06)}
+/* LIGHT MODE — stack icons (fix invisible icons on light bg) */
+[data-theme="light"] .stack-icon img,[data-theme="light"] .stack-icon svg{filter:brightness(0);opacity:0.65}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <script>
@@ -352,6 +368,26 @@ if (window.mermaid) {
     <a class="toc-item" href="#s7"         data-i18n="toc.s7">07 Glossaire</a>
     <a class="toc-item" href="#s8"         data-i18n="toc.s8">08 Nav</a>
   </nav>
+
+  <!-- SOMMAIRE -->
+  <div class="toc-summary">
+    <div class="toc-summary-head"><span class="toc-summary-title" data-i18n="toc.card.title">Sommaire</span></div>
+    <ul class="toc-summary-grid">
+      <li><a href="#s0"><span class="toc-s-num">00</span><span data-i18n="toc.sum.s0">Pourquoi ce site existe</span></a></li>
+      <li><a href="#s1"><span class="toc-s-num">01</span><span data-i18n="toc.sum.s1">Stack technique</span></a></li>
+      <li><a href="#s2"><span class="toc-s-num">02</span><span data-i18n="toc.sum.s2">Étapes de création</span></a></li>
+      <li><a href="#s3"><span class="toc-s-num">03</span><span data-i18n="toc.sum.s3">Outils de vibe coding</span></a></li>
+      <li><a href="#s4"><span class="toc-s-num">04</span><span data-i18n="toc.sum.s4">Décisions d'architecture</span></a></li>
+      <li><a href="#s4b"><span class="toc-s-num">04b</span><span data-i18n="toc.sum.s4b">Prompt engineering</span></a></li>
+      <li><a href="#s4c"><span class="toc-s-num">04c</span><span data-i18n="toc.sum.s4c">Ce qui n'a pas marché</span></a></li>
+      <li><a href="#s5"><span class="toc-s-num">05</span><span data-i18n="toc.sum.s5">Orchestration Worker, RAG</span></a></li>
+      <li><a href="#s5b"><span class="toc-s-num">05b</span><span data-i18n="toc.sum.s5b">Performance &amp; métriques</span></a></li>
+      <li><a href="#s5c"><span class="toc-s-num">05c</span><span data-i18n="toc.sum.s5c">KRL1 · Architecture de décision</span></a></li>
+      <li><a href="#s6"><span class="toc-s-num">06</span><span data-i18n="toc.sum.s6">Et maintenant ?</span></a></li>
+      <li><a href="#s7"><span class="toc-s-num">07</span><span data-i18n="toc.sum.s7">Glossaire technique</span></a></li>
+      <li><a href="#s8"><span class="toc-s-num">08</span><span data-i18n="toc.sum.s8">Navigation contextuelle</span></a></li>
+    </ul>
+  </div>
 
   <!-- 00 POURQUOI CE SITE EXISTE -->
   <section id="s0">
@@ -550,7 +586,7 @@ if (window.mermaid) {
       </div>
       <div class="tool-card">
         <div class="tool-name">
-          <img src="https://cdn.simpleicons.org/lovable" alt="Lovable" width="20" height="20">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Lovable"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           Lovable
         </div>
         <div class="tool-role" data-i18n="tool.lovable.role">Prototypage UI, vibe coding</div>
@@ -558,7 +594,7 @@ if (window.mermaid) {
       </div>
       <div class="tool-card">
         <div class="tool-name">
-          <img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini" width="20" height="20">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Google Gemini"><path d="M12 1.5C12 7.3 7.3 12 1.5 12 7.3 12 12 16.7 12 22.5 12 16.7 16.7 12 22.5 12 16.7 12 12 7.3 12 1.5z"/></svg>
           Gemini
         </div>
         <div class="tool-role" data-i18n="tool.gemini.role">Exploration design, idéation visuelle</div>
@@ -1447,7 +1483,21 @@ var T={
     'kb14k':'orchestr · planner · synthesis · pipeline','kb14d':'Orchestration : planner JSON T=0.2 → synthesis SSE T=0.45',
     'kb15k':'groq · llama · lpu · latence','kb15d':'Groq llama-3.3-70b : LPU 1-2s, températures adaptées',
     'kb16k':'route · endpoint · /stats · /veille · /feedback','kb16d':'7 routes Worker : proxy, orchestrate, stream, rag-query, feedback, stats, veille',
-    'kb17k':'product decisions · décisions produit · pourquoi ces choix','kb17d':'Renvoie vers la page Product Decisions avec les décisions derrière le site'
+    'kb17k':'product decisions · décisions produit · pourquoi ces choix','kb17d':'Renvoie vers la page Product Decisions avec les décisions derrière le site',
+    'toc.card.title':'Sommaire',
+    'toc.sum.s0':'Pourquoi ce site existe',
+    'toc.sum.s1':'Stack technique',
+    'toc.sum.s2':'Étapes de création',
+    'toc.sum.s3':'Outils de vibe coding',
+    'toc.sum.s4':'Décisions d\'architecture',
+    'toc.sum.s4b':'Prompt engineering',
+    'toc.sum.s4c':'Ce qui n\'a pas marché',
+    'toc.sum.s5':'Orchestration Worker, RAG',
+    'toc.sum.s5b':'Performance & métriques',
+    'toc.sum.s5c':'KRL1 · Architecture de décision',
+    'toc.sum.s6':'Et maintenant ?',
+    'toc.sum.s7':'Glossaire technique',
+    'toc.sum.s8':'Navigation contextuelle'
   },
   en:{
     'back':'Portfolio',
@@ -1655,7 +1705,21 @@ var T={
     'kb14k':'orchestrat · planner · synthesis · pipeline','kb14d':'Orchestration: planner JSON T=0.2 → synthesis SSE T=0.45',
     'kb15k':'groq · llama · lpu · latency','kb15d':'Groq llama-3.3-70b: LPU 1-2s, tailored temperatures',
     'kb16k':'route · endpoint · /stats · /veille · /feedback','kb16d':'7 Worker routes: proxy, orchestrate, stream, rag-query, feedback, stats, veille',
-    'kb17k':'product decisions · why these choices · plg decisions','kb17d':'Links to the Product Decisions page with the decisions behind the site'
+    'kb17k':'product decisions · why these choices · plg decisions','kb17d':'Links to the Product Decisions page with the decisions behind the site',
+    'toc.card.title':'Table of Contents',
+    'toc.sum.s0':'Why this site exists',
+    'toc.sum.s1':'Tech stack',
+    'toc.sum.s2':'Creation steps',
+    'toc.sum.s3':'Vibe coding tools',
+    'toc.sum.s4':'Architecture decisions',
+    'toc.sum.s4b':'Prompt engineering',
+    'toc.sum.s4c':'What did not work',
+    'toc.sum.s5':'Worker Orchestration, RAG',
+    'toc.sum.s5b':'Performance & metrics',
+    'toc.sum.s5c':'KRL1 · Decision architecture',
+    'toc.sum.s6':'What\'s next',
+    'toc.sum.s7':'Technical glossary',
+    'toc.sum.s8':'Contextual navigation'
   }
 };
 
