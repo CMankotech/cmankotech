@@ -120,6 +120,14 @@ Depuis la racine :
 node --test tests/proxy.test.mjs
 ```
 
+### Documentation
+
+Un contrôle automatique vérifie que les README restent alignés avec les pages publiques, les routes Worker, les bindings Cloudflare et les captures GitHub.
+
+```bash
+node tools/check-docs.cjs
+```
+
 Pour déployer le Worker en production :
 
 ```bash
