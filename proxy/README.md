@@ -2,7 +2,7 @@
 
 Proxy serverless qui sécurise la communication entre le frontend et l'API Groq. La clé API n'est jamais exposée côté client.
 
-Le Worker contient aussi l'orchestration native du widget KRL1 et le pipeline RAG sémantique via Workers AI.
+Le Worker contient aussi l'orchestration native du widget KRL1, le pipeline RAG sémantique via Workers AI, la veille hebdo alimentée par Make et un pipeline feedback optionnel.
 
 ## Routes
 
@@ -10,8 +10,11 @@ Le Worker contient aussi l'orchestration native du widget KRL1 et le pipeline RA
 |---|---|---|
 | `POST` | `/` | Proxy pass-through vers Groq (legacy) |
 | `POST` | `/orchestrate` | Orchestrateur 2 étapes : planner → synthesis |
-| `POST` | `/orchestrate-stream` | Version streaming (SSE) de l'orchestrateur |
+| `POST` | `/orchestrate-stream` | Version streaming SSE de l'orchestrateur |
 | `POST` | `/rag-query` | Recherche sémantique dans la base de connaissances PM, puis synthèse LLM |
+| `POST` | `/feedback` | Classification feedback via Make si configuré, sinon fallback Groq |
+| `GET` | `/veille` | Dernière veille hebdo stockée dans KV |
+| `POST` | `/veille` | Mise à jour de la veille par Make, protégée par `x-make-secret` |
 | `GET` | `/stats` | Statistiques d'utilisation publiques |
 
 ## Orchestrateur intégré
@@ -27,11 +30,26 @@ Si `LANGGRAPH_ORCHESTRATOR_URL` est configurée, le Worker peut déléguer `/orc
 
 `POST /rag-query` utilise Workers AI (`@cf/baai/bge-small-en-v1.5`) pour générer l'embedding de la requête, compare ce vecteur à la base PM embarquée dans le Worker, puis transmet le contexte retenu à Groq pour produire une réponse courte et actionnable.
 
+## Veille hebdo
+
+`GET /veille` expose publiquement la dernière édition de veille stockée dans KV.
+
+`POST /veille` est appelé par Make et nécessite le header `x-make-secret`. Le payload reçu est stocké tel quel dans `VEILLE_STORE` sous la clé `veille_latest`.
+
+## Feedback
+
+`POST /feedback` envoie le feedback au webhook Make si `MAKE_WEBHOOK_URL` est configurée. Si Make est indisponible ou non configuré, le Worker utilise Groq pour catégoriser le message et retourne une réponse structurée.
+
+## Observabilité
+
+Langfuse est optionnel. Si `LANGFUSE_PUBLIC_KEY` et `LANGFUSE_SECRET_KEY` sont configurées, le Worker envoie les traces d'orchestration de façon non bloquante via `ctx.waitUntil()`.
+
 ## Sécurité
 
-- Validation de l'origine (whitelist : `https://cmankotech.github.io`)
+- Validation de l'origine pour les routes POST publiques du frontend (`https://cmankotech.github.io`)
 - Headers CORS configurés pour l'origine autorisée uniquement
-- Clé API injectée côté serveur via les secrets Cloudflare
+- Clé Groq injectée côté serveur via les secrets Cloudflare
+- `POST /veille` protégé par secret partagé Make
 
 ## Configuration
 
@@ -39,10 +57,15 @@ Variables d'environnement (secrets Cloudflare) :
 
 - `GROQ_KEY` — Clé API Groq (obligatoire)
 - `LANGGRAPH_ORCHESTRATOR_URL` — URL de l'orchestrateur LangGraph optionnel, par exemple `https://example.com/orchestrate`
+- `MAKE_SECRET` — secret partagé requis pour `POST /veille`
+- `MAKE_WEBHOOK_URL` — webhook Make optionnel pour `/feedback`
+- `LANGFUSE_PUBLIC_KEY` — clé publique Langfuse optionnelle
+- `LANGFUSE_SECRET_KEY` — clé secrète Langfuse optionnelle
 
-KV Namespace :
+KV Namespaces :
 
-- `USAGE_COUNTER` — Compteur d'utilisation (incrémenté de façon asynchrone via `ctx.waitUntil()`)
+- `USAGE_COUNTER` — Compteur d'utilisation incrémenté de façon asynchrone
+- `VEILLE_STORE` — Stockage de la dernière veille hebdomadaire
 
 Bindings Cloudflare :
 

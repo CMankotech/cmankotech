@@ -1,9 +1,11 @@
 # KRL1 — AI Product Management Portfolio
 
-Portfolio interactif de **Carlin Mankoto**, AI Product Manager, construit autour de trois expériences live :
+Portfolio interactif de **Carlin Mankoto**, AI Product Manager, construit autour de plusieurs expériences live :
 
 - un **PM Toolkit** de 6 outils IA pour structurer discovery, priorisation, OKR, user stories, roadmap et analyse d'interviews ;
 - un **RAG Explorer** pour interroger une base de connaissances product management depuis l'edge ;
+- une page **Product Decisions** qui documente les arbitrages produit derrière KRL1 ;
+- une **veille hebdo** Product / IA alimentée par un workflow Make ;
 - un mini-jeu web **Pixel Runner**.
 
 **Live :** [cmankotech.github.io/cmankotech](https://cmankotech.github.io/cmankotech/)
@@ -28,52 +30,50 @@ Portfolio interactif de **Carlin Mankoto**, AI Product Manager, construit autour
 | **Roadmap Storyteller** | Transformation de listes de features en narratifs de roadmap adaptés à l'audience |
 | **User Interview Analyzer** | Analyse d'interviews utilisateur : personas, pain points, opportunités |
 | **RAG Explorer** | Recherche sémantique dans une base de connaissances PM embarquée dans le Worker |
+| **Product Decisions** | 10 décisions produit derrière KRL1 : PLG, UX, contraintes, arbitrages et alternatives rejetées |
+| **Veille hebdo** | Veille Product, IA et AI Builders automatisée avec Make, exposée via le Worker |
 | **KRL1 Chat Widget** | Assistant flottant avec détection d'intent et routage contextuel vers les outils |
-| **Pixel Runner** | Mini-jeu arcade en JavaScript (esquive d'obstacles, score local) |
+| **Pixel Runner** | Mini-jeu arcade en JavaScript : esquive d'obstacles et score local |
 
 Chaque outil IA est une SPA autonome en HTML/CSS/JS vanilla, bilingue FR/EN. Le mini-jeu est aussi une page statique autonome.
 
 ## Architecture
 
-```
-┌─────────────────────────────────┐
-│   GitHub Pages (frontend)       │
-│   Portfolio + PM Toolkit + RAG  │
-│   krl1-widget.js (chat IA)     │
-└──────────┬──────────────────────┘
-           │ HTTPS
-┌──────────▼──────────────────────┐
-│   Cloudflare Worker (proxy/)    │
-│   Sécurise les clés API        │
-│   /orchestrate + /rag-query     │
-└──────────┬──────────────────────┘
-           │
-┌──────────▼──────────────────────┐
-│   Groq API (Llama 3.3 70B)     │
-└─────────────────────────────────┘
-
-┌─────────────────────────────────┐
-│   Workers AI (edge, gratuit)    │
-│   bge-small-en-v1.5 embeddings │
-│   RAG sémantique natif Worker  │
-└─────────────────────────────────┘
+```text
+GitHub Pages (frontend)
+  index.html, PM Toolkit, RAG Explorer, Product Decisions, Veille, Pixel Runner
+  krl1-widget.js
+        │ HTTPS
+        ▼
+Cloudflare Worker (proxy/)
+  /orchestrate, /orchestrate-stream, /rag-query, /feedback, /veille, /stats
+        │
+        ├── Groq API — llama-3.3-70b-versatile
+        ├── Workers AI — bge-small-en-v1.5 embeddings pour le RAG
+        ├── KV — usage counter + stockage de la veille
+        ├── Make — automation veille / feedback optionnel
+        └── Langfuse — observabilité optionnelle
 ```
 
 ## Stack technique
 
-- **Frontend :** HTML/CSS/JS vanilla, Google Fonts (Syne, DM Sans), thème sombre
+- **Frontend :** HTML/CSS/JS vanilla, Google Fonts (Syne, DM Sans, Geist), thème sombre avec mode clair sur certaines pages
 - **Chat widget :** `krl1-widget.js` — assistant conversationnel flottant avec détection d'intent et routage contextuel
-- **Proxy :** Cloudflare Workers (JavaScript), CORS, secrets serveur, KV pour compteur d'usage
+- **Proxy :** Cloudflare Workers (JavaScript), CORS, secrets serveur, KV pour compteur d'usage et stockage de veille
 - **RAG sémantique :** Workers AI (Cloudflare, bge-small-en-v1.5) — embeddings batch + cosine similarity, natif dans le Worker
 - **LLM :** Groq API (llama-3.3-70b-versatile)
+- **Automation :** Make pour la veille hebdomadaire et le pipeline feedback optionnel
+- **Observabilité :** Langfuse optionnel, non bloquant côté Worker
 - **Déploiement :** GitHub Pages (front) + Cloudflare Workers (proxy)
 
 ## Structure du projet
 
-```
+```text
 ├── index.html                  # Page portfolio principale
 ├── pm-toolkit.html             # Hub des 6 outils Product Management
 ├── rag-explorer.html           # Interface de recherche sémantique PM
+├── product-decisions.html      # Décisions produit et arbitrages KRL1
+├── veille.html                 # Veille Product / IA alimentée par Make
 ├── backlog-prioritizer.html    # Outil priorisation backlog
 ├── discovery-assistant.html    # Outil discovery produit
 ├── epic-to-userstories.html    # Outil décomposition d'epics
@@ -84,6 +84,7 @@ Chaque outil IA est une SPA autonome en HTML/CSS/JS vanilla, bilingue FR/EN. Le 
 ├── how-i-built-this.html       # Récit technique et décisions d'architecture
 ├── krl1-architecture.html      # Vue dédiée de l'architecture KRL1
 ├── krl1-widget.js              # Widget chat IA autonome
+├── tools/                      # Scripts de rendu pour les assets visuels
 ├── assets/                     # Fonds, vidéos et captures du README
 ├── orchestrator/               # Prototype Python LangGraph optionnel, non déployé
 ├── proxy/                      # Cloudflare Worker (JavaScript)
@@ -119,7 +120,7 @@ Depuis la racine :
 node --test tests/proxy.test.mjs
 ```
 
-Pour déployer en production :
+Pour déployer le Worker en production :
 
 ```bash
 npx wrangler deploy --config proxy/wrangler.toml
