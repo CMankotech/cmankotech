@@ -1,4 +1,4 @@
-﻿<html lang="fr" class="scroll-smooth">
+<html lang="fr" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,11 @@
 <meta property="og:description" content="PM le jour, builder la nuit. PM Toolkit : 6 outils IA enchaînés par un fil rouge d'insights + 1 mini-jeu web.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://cmankotech.github.io/cmankotech/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://cmankotech.github.io/cmankotech/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cmankotech.github.io/cmankotech/og-image.png">
 <meta name="twitter:title" content="Carlin Mankoto, AI Product Manager & Builder">
 <meta name="twitter:description" content="PM le jour, builder la nuit. PM Toolkit : 6 outils IA enchaînés par un fil rouge d'insights + 1 mini-jeu web.">
 <link rel="canonical" href="https://cmankotech.github.io/cmankotech/">
@@ -203,7 +207,8 @@ section{border-bottom:1px solid var(--line);position:relative;z-index:1}
 .a3{animation:up 0.7s ease 0.4s both}
 .a4{animation:up 0.7s ease 0.55s both}
 
-#nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:0.4rem}
+#nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;cursor:pointer;padding:0.6rem;transition:all 0.2s}
+#nav-hamburger:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.25)}
 #nav-hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all 0.25s}
 #nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 #nav-hamburger.open span:nth-child(2){opacity:0}
@@ -220,6 +225,9 @@ section{border-bottom:1px solid var(--line);position:relative;z-index:1}
 @media(max-width:900px){
 nav{padding:1rem 1.5rem}
 .nav-links{display:none}
+.nav-right{gap:0.75rem}
+.nav-cta{font-size:0.6rem;padding:0.5rem 0.8rem}
+.lang-switcher{display:none}
 #nav-hamburger{display:flex}
 .hero-wrap{padding:5rem 1.5rem 3rem}
 .hero-hl-1,.hero-hl-2{font-size:clamp(1.6rem,6vw,2.4rem)!important}
@@ -887,7 +895,7 @@ window.setLang=function(lang){
 <script>
 (function(){
 
-// ═══════════════════════════════════════════════════════
+// ═══��═══════════════════════════════════════════════════
 // 1. PARTICLES
 // ═══════════════════════════════════════════════════════
 var canvas = document.getElementById('heroCanvas');
