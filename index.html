@@ -768,6 +768,14 @@ window.setLang=function(lang){
         });
         panel.innerHTML='<div class="wrap" style="padding-top:2rem;padding-bottom:2rem">'+container.innerHTML+'</div>';
         panel.dataset.loaded='true';
+        panel.querySelectorAll('a[href^="#"]').forEach(function(a){
+          var h=a.getAttribute('href').slice(1);
+          if(TABS.includes(h))return;
+          a.addEventListener('click',function(e){
+            var target=document.getElementById(h);
+            if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'});}
+          });
+        });
         applyLazyI18n(doc,panel,document.documentElement.lang||'fr');
         if(panelId==='architecture')initMermaid(panel);
       })
