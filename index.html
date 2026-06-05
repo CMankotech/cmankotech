@@ -25,13 +25,13 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 h1,h2,h3,h4{font-family:'Syne',sans-serif}
 .glow{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0;opacity:0.7;transition:opacity .6s ease;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 body.glows-hidden .glow{opacity:0}
-.g1{width:800px;height:600px;top:-15%;left:-10%;background:radial-gradient(ellipse 60% 55%,rgba(59,130,246,0.42),transparent 70%);animation:drift1 22s ease-in-out infinite}
-.g2{width:700px;height:700px;top:30%;right:-12%;background:radial-gradient(ellipse 55% 60%,rgba(167,139,250,0.38),transparent 70%);animation:drift2 26s ease-in-out infinite}
-.g3{width:750px;height:450px;bottom:0;left:10%;background:radial-gradient(ellipse 70% 45%,rgba(34,211,238,0.30),transparent 70%);animation:drift3 30s ease-in-out infinite}
-.g4{width:500px;height:500px;top:20%;left:45%;background:radial-gradient(ellipse 50% 55%,rgba(96,165,250,0.22),transparent 70%);animation:drift4 28s ease-in-out infinite}
-.g5{width:620px;height:620px;top:60%;left:-12%;background:radial-gradient(ellipse 58% 55%,rgba(129,140,248,0.32),transparent 70%);animation:drift1 18s ease-in-out infinite reverse}
-.g6{width:560px;height:560px;bottom:-15%;right:-8%;background:radial-gradient(ellipse 55% 60%,rgba(34,211,238,0.28),transparent 70%);animation:drift2 17s ease-in-out infinite reverse}
-.g7{width:500px;height:500px;top:75%;left:55%;background:radial-gradient(ellipse 52% 55%,rgba(167,139,250,0.28),transparent 70%);animation:drift3 19s ease-in-out infinite}
+.g1{width:900px;height:700px;top:-15%;left:-10%;background:radial-gradient(ellipse 60% 55%,rgba(59,130,246,0.55),transparent 70%);animation:drift1 22s ease-in-out infinite}
+.g2{width:800px;height:800px;top:30%;right:-12%;background:radial-gradient(ellipse 55% 60%,rgba(167,139,250,0.50),transparent 70%);animation:drift2 26s ease-in-out infinite}
+.g3{width:850px;height:550px;bottom:0;left:10%;background:radial-gradient(ellipse 70% 45%,rgba(34,211,238,0.42),transparent 70%);animation:drift3 30s ease-in-out infinite}
+.g4{width:600px;height:600px;top:20%;left:45%;background:radial-gradient(ellipse 50% 55%,rgba(96,165,250,0.35),transparent 70%);animation:drift4 28s ease-in-out infinite}
+.g5{width:720px;height:720px;top:60%;left:-12%;background:radial-gradient(ellipse 58% 55%,rgba(129,140,248,0.45),transparent 70%);animation:drift1 18s ease-in-out infinite reverse}
+.g6{width:660px;height:660px;bottom:-15%;right:-8%;background:radial-gradient(ellipse 55% 60%,rgba(34,211,238,0.40),transparent 70%);animation:drift2 17s ease-in-out infinite reverse}
+.g7{width:600px;height:600px;top:75%;left:55%;background:radial-gradient(ellipse 52% 55%,rgba(167,139,250,0.40),transparent 70%);animation:drift3 19s ease-in-out infinite}
 body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:200px 200px;opacity:0.45}
 .tt{border-bottom:1px dashed rgba(34,211,238,0.4);cursor:help;transition:color 0.15s,border-color 0.15s}
 .tt:hover{color:var(--cyan,#22d3ee);border-bottom-color:var(--cyan,#22d3ee)}
@@ -106,7 +106,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
 /* SECTIONS */
 section{border-bottom:1px solid var(--line);position:relative;z-index:1}
-.wrap{max-width:1440px;margin:0 auto;padding:3.5rem 4rem}
+section::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:200px;height:3px;background:linear-gradient(90deg,transparent,rgba(96,165,250,0.6),rgba(167,139,250,0.6),transparent);border-radius:3px;box-shadow:0 0 20px rgba(96,165,250,0.3),0 0 40px rgba(167,139,250,0.2)}
+.wrap{max-width:1440px;margin:0 auto;padding:5.5rem 4rem}
 .sec-label{display:flex;align-items:center;gap:1.25rem;margin-bottom:2rem}.sec-num{font-family:"Syne",sans-serif;font-size:0.72rem;font-weight:700;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.1em}.sec-name{font-family:"Syne",sans-serif;font-size:1.85rem;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1}.sec-label::after{content:'';flex:1;height:1px;background:var(--line)}
 
 /* SKILLS */
