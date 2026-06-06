@@ -1286,7 +1286,7 @@ export default {
 
       for (const cat of categories) {
         const raw = cat.raw || '';
-        const items = raw.split('\n')
+        const items = raw.split(/;;;|\n/)
           .map(line => line.trim())
           .filter(line => line.includes('|'))
           .map(line => {
