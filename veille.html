@@ -57,6 +57,12 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;backgr
 .cat-item a:hover{color:var(--acc)}
 .cat-item .item-source{font-size:0.62rem;color:var(--muted);flex-shrink:0}
 
+/* LANG TOGGLE */
+.lang-bar{display:flex;justify-content:flex-end;margin-bottom:1rem}
+.lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
+.lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.lang-btn.active{background:rgba(168,85,247,0.15);color:var(--acc)}
+
 /* HISTORY NAV */
 .history-nav{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem;width:100%}
 .history-pill{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:99px;border:1px solid var(--border);color:var(--muted);background:transparent;cursor:pointer;transition:all 0.2s}
@@ -98,15 +104,22 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;backgr
 <body>
 <div class="container">
 
+  <div class="lang-bar">
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
   <nav class="nav">
     <a href="index.html" class="nav-logo">CARLIN M.</a>
     <a href="index.html" class="nav-back">&larr; Retour</a>
   </nav>
 
   <header>
-    <div class="header-tag"><span class="dot"></span>Make &middot; Automation &middot; Veille hebdo</div>
+    <div class="header-tag"><span class="dot"></span><span id="tagLabel">Make &middot; Automation &middot; Veille hebdo</span></div>
     <h1>Veille <span class="grad">Product &amp; IA</span></h1>
-    <p class="subtitle">Veille automatisée sur Product Management, IA g&eacute;n&eacute;rative, AI Builders et No-code. Make tourne chaque lundi matin, agr&egrave;ge les sources, synth&eacute;tise via Groq et publie ici.</p>
+    <p class="subtitle" id="subtitleEl">Veille automatisée sur Product Management, IA g&eacute;n&eacute;rative, AI Builders et No-code. Make tourne chaque lundi matin, agr&egrave;ge les sources, synth&eacute;tise via Groq et publie ici.</p>
     <div class="meta-row" id="metaRow">
       <span class="meta-pill">Chargement...</span>
     </div>
@@ -129,7 +142,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;backgr
 
   <!-- FLOW DIAGRAM -->
   <div class="flow-section">
-    <div class="flow-title">Comment &ccedil;a marche</div>
+    <div class="flow-title" id="flowTitleEl">Comment &ccedil;a marche</div>
     <div class="flow-nodes">
       <div class="flow-node flow-make">
         <div class="flow-node-icon">⚙️</div>
@@ -283,7 +296,46 @@ function renderCategories(cats) {
   }).join('');
 }
 
+const I18N = {
+  fr: {
+    tag: 'Make · Automation · Veille hebdo',
+    subtitle: 'Veille automatisée sur Product Management, IA générative, AI Builders et No-code. Make tourne chaque lundi matin, agrège les sources, synthétise via Groq et publie ici.',
+    noData: 'Pas encore de données',
+    nextEdition: 'Prochaine édition : lundi',
+    updating: 'Mise à jour :',
+    week: 'Semaine',
+    empty: 'Première édition en préparation',
+    emptySub: 'Make tourne chaque lundi matin. La première édition arrivera dès que le scénario sera activé.',
+    noArticles: 'Aucun article cette semaine.',
+    flowTitle: 'Comment ça marche',
+  },
+  en: {
+    tag: 'Make · Automation · Weekly Watch',
+    subtitle: 'Automated watch on Product Management, Generative AI, AI Builders and No-code. Make runs every Monday morning, aggregates sources, synthesizes via Groq and publishes here.',
+    noData: 'No data yet',
+    nextEdition: 'Next edition: Monday',
+    updating: 'Updated:',
+    week: 'Week',
+    empty: 'First edition in progress',
+    emptySub: 'Make runs every Monday morning. The first edition will arrive once the scenario is activated.',
+    noArticles: 'No articles this week.',
+    flowTitle: 'How it works',
+  }
+};
+
+let _lang = 'fr';
+
+function setLang(lang) {
+  _lang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  document.getElementById('tagLabel').textContent = I18N[lang].tag;
+  document.getElementById('subtitleEl').textContent = I18N[lang].subtitle;
+  const flowTitle = document.getElementById('flowTitleEl');
+  if (flowTitle) flowTitle.textContent = I18N[lang].flowTitle;
+}
+
 load();
 </script>
+<script src="krl1-widget.js"></script>
 </body>
 </html>
