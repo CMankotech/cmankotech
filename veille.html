@@ -219,20 +219,23 @@ function renderCategories(cats) {
   const el = document.getElementById('categoriesEl');
   el.innerHTML = cats.map(cat => {
     const style = CAT_COLORS[cat.id] || { color: '#94a3b8', bg: 'rgba(148,163,184,0.06)' };
-    const items = (cat.items || []).map(item => `
+    const itemList = (cat.items || []);
+    const items = itemList.map(item => `
       <div class="cat-item">
         <a href="${item.url}" target="_blank" rel="noopener">${item.title}</a>
         <span class="item-source">${item.source}</span>
       </div>
     `).join('');
+    const digestHtml = cat.digest ? `<div class="cat-digest" style="background:${style.bg};border-color:${style.color};color:var(--dim)">${cat.digest}</div>` : '';
+    const itemsHtml = itemList.length ? `<div class="cat-items">${items}</div>` : `<div style="font-size:0.78rem;color:var(--muted);padding:0.5rem 0">Aucun article cette semaine.</div>`;
     return `
       <div class="cat-block" style="border-color:${style.color}22">
         <div class="cat-header">
           <span class="cat-dot" style="background:${style.color}"></span>
           <span class="cat-label">${cat.label}</span>
         </div>
-        <div class="cat-digest" style="background:${style.bg};border-color:${style.color};color:var(--dim)">${cat.digest}</div>
-        <div class="cat-items">${items}</div>
+        ${digestHtml}
+        ${itemsHtml}
       </div>
     `;
   }).join('');
