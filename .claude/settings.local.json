@@ -21,7 +21,8 @@
       "mcp__Make__validate_scheduling_schema",
       "mcp__Make__validate_epoch_configuration",
       "mcp__Make__scenarios_update",
-      "mcp__Make__scenarios_activate"
+      "mcp__Make__scenarios_activate",
+      "mcp__Make__scenarios_get"
     ]
   }
 }
