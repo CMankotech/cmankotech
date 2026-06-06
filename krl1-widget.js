@@ -203,6 +203,12 @@
       en: "You're reading **How I Built This** 🛠️ I can explain the technical choices, AI architecture or the full stack in detail. What are you curious about?",
       chips_fr: ["🏗️ Pourquoi Cloudflare Workers ?", "🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?"],
       chips_en: ["🏗️ Why Cloudflare Workers?", "🤖 How does KRL1 work?", "⚡ Why no backend?"]
+    },
+    'veille': {
+      fr: "Tu consultes la **Veille Product & IA** 📡 Récap hebdo de 13 flux RSS (Product, IA, Builders, No-code) agrégés par Make, synthétisés par Groq et stockés en KV. Je peux t'expliquer le pipeline, les sources ou comment retrouver les anciennes éditions. Qu'est-ce qui t'intéresse ?",
+      en: "You're browsing the **Product & AI Watch** 📡 Weekly recap of 13 RSS feeds (Product, AI, Builders, No-code) aggregated by Make, synthesized by Groq and stored in KV. I can explain the pipeline, the sources or how to find past editions. What are you curious about?",
+      chips_fr: ["📡 Comment marche le pipeline de veille ?", "🗂️ Où retrouver les éditions passées ?", "🔍 Quelles sources sont suivies ?"],
+      chips_en: ["📡 How does the watch pipeline work?", "🗂️ Where to find past editions?", "🔍 Which sources are tracked?"]
     }
   };
 
