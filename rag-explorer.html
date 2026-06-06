@@ -223,6 +223,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 .sn-links a:hover,.sn-links a.active{color:#e2e8f0}
 .sn-links a:hover::after,.sn-links a.active::after{transform:scaleX(1)}
 @media(max-width:768px){.site-nav{padding:0.85rem 1.25rem}.sn-links{display:none}}
+.sn-right{display:flex;align-items:center;gap:0.75rem}
+@media(max-width:768px){.sn-right{gap:0.5rem}}
 </style>
 </head>
 <body>
@@ -233,6 +235,12 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <a href="pm-toolkit.html">PM Toolkit</a>
     <a href="rag-explorer.html" class="active">RAG</a>
     <a href="veille.html">Veille</a>
+  </div>
+  <div class="sn-right">
+    <div class="lang-toggle">
+      <button class="lang-btn glass-shimmer glass-focus active" data-lang="fr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn glass-shimmer glass-focus" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
   </div>
 </nav>
 <div class="glow g1"></div>
@@ -315,13 +323,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <!-- QUERY FORM -->
   <div class="card" id="form-card">
     <div class="card-title">Question PM</div>
-
-    <div class="lang-row">
-      <div class="lang-toggle">
-        <button class="lang-btn glass-shimmer glass-focus active" data-lang="fr" onclick="setLang('fr')">FR</button>
-        <button class="lang-btn glass-shimmer glass-focus" data-lang="en" onclick="setLang('en')">EN</button>
-      </div>
-    </div>
 
     <div class="field">
       <label id="query-label">Posez une question sur un framework PM</label>
