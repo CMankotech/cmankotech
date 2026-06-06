@@ -86,6 +86,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 .sn-links a:hover,.sn-links a.active{color:#e2e8f0}
 .sn-links a:hover::after,.sn-links a.active::after{transform:scaleX(1)}
 @media(max-width:768px){.site-nav{padding:0.85rem 1.25rem}.sn-links{display:none}}
+.sn-right{display:flex;align-items:center;gap:0.75rem}
+@media(max-width:768px){.sn-right{gap:0.5rem}}
 </style>
 </head>
 <body>
@@ -97,6 +99,12 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <a href="rag-explorer.html">RAG</a>
     <a href="veille.html">Veille</a>
   </div>
+  <div class="sn-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lbFr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" id="lbEn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
 </nav>
 <div class="glow g1"></div>
 <div class="glow g2"></div>
@@ -104,12 +112,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 <div class="container">
 
-  <div style="display:flex;justify-content:flex-end;margin-bottom:1.5rem">
-    <div class="lang-toggle">
-      <button class="lang-btn active" id="lbFr" onclick="setLang('fr')">FR</button>
-      <button class="lang-btn" id="lbEn" onclick="setLang('en')">EN</button>
-    </div>
-  </div>
 
   <header>
     <div class="header-tag"><span class="dot"></span><span id="tagLbl">Portfolio · Product Decisions</span></div>
