@@ -102,7 +102,14 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 
 /* STEP 2 — CHUNKS */
 .chunk-list{display:flex;flex-direction:column;gap:0.65rem}
-.chunk-card{background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(0,0,0,0.15));border:1px solid var(--border);border-radius:10px;padding:0.9rem 1rem;border-left:3px solid var(--acc-border);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 6px 18px -10px rgba(0,0,0,0.4)}
+@property --tc-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
+.chunk-card{position:relative;isolation:isolate;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(0,0,0,0.15));border:1px solid var(--border);border-radius:12px;padding:0.9rem 1rem;overflow:hidden;backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 6px 18px -10px rgba(0,0,0,0.4);transition:transform 0.25s,border-color 0.25s,box-shadow 0.3s}
+.chunk-card::before{content:'';position:absolute;inset:0;border-radius:12px;padding:1px;background:conic-gradient(from var(--tc-angle,0deg),transparent 0deg,var(--acc) 90deg,transparent 180deg,var(--acc) 270deg,transparent 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:0}
+.chunk-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.12);box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 18px 44px -14px rgba(0,0,0,0.5),0 0 60px -22px var(--acc)}
+.chunk-card:hover::before{opacity:0.85;animation:tc-spin 9s linear infinite}
+@keyframes tc-spin{to{--tc-angle:360deg}}
+@media(prefers-reduced-motion:reduce){.chunk-card:hover::before{animation:none;opacity:0.6}}
+.chunk-card>*{position:relative;z-index:1}
 .chunk-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem}
 .chunk-source{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--acc)}
 .score-pill{font-size:0.6rem;font-weight:700;padding:0.18rem 0.6rem;border-radius:99px;background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.2);color:#86efac}
@@ -226,7 +233,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <a href="pm-toolkit.html">PM Toolkit</a>
     <a href="rag-explorer.html" class="active">RAG</a>
     <a href="veille.html">Veille</a>
-    <a href="product-decisions.html">Decisions</a>
   </div>
 </nav>
 <div class="glow g1"></div>
