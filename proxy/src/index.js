@@ -2,6 +2,42 @@ const ALLOWED_ORIGIN = 'https://cmankotech.github.io';
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
 
+// ─── Veille sources ───────────────────────────────────────────────────────────
+
+const VEILLE_SOURCES = [
+  { id: 'product', label: 'Product', url: 'https://www.mindtheproduct.com/feed/' },
+  { id: 'product', label: 'Product', url: 'https://lennysnewsletter.substack.com/feed' },
+  { id: 'product', label: 'Product', url: 'https://www.maddyness.com/feed/' },
+  { id: 'product', label: 'Product', url: 'https://remiguyot.substack.com/feed' },
+  { id: 'ai',      label: 'IA',      url: 'https://bensbites.substack.com/feed' },
+  { id: 'ai',      label: 'IA',      url: 'https://tldr.tech/ai/rss' },
+  { id: 'ai',      label: 'IA',      url: 'https://marilynika.substack.com/feed' },
+  { id: 'ai',      label: 'IA',      url: 'https://generationia.substack.com/feed' },
+  { id: 'builders',label: 'Builders',url: 'https://newsletter.pragmaticengineer.com/feed' },
+  { id: 'builders',label: 'Builders',url: 'https://hnrss.org/frontpage' },
+  { id: 'nocode',  label: 'No-code & FR', url: 'https://leticket.substack.com/feed' },
+  { id: 'nocode',  label: 'No-code & FR', url: 'https://www.frenchweb.fr/feed' },
+  { id: 'nocode',  label: 'No-code & FR', url: 'https://nocodefrance.substack.com/feed' },
+];
+
+function parseRSSItems(xml, limit = 5) {
+  const items = [];
+  const itemRx = /<item[^>]*>([\s\S]*?)<\/item>/gi;
+  const titleRx = /<title[^>]*>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/i;
+  const linkRx = /<link>(https?[^<]*)<\/link>|<link\s[^>]*href="([^"]*)"/i;
+  let m;
+  while ((m = itemRx.exec(xml)) !== null && items.length < limit) {
+    const block = m[1];
+    const t = titleRx.exec(block);
+    const l = linkRx.exec(block);
+    if (!t || !l) continue;
+    const title = (t[1] || '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#\d+;/g, '').trim();
+    const link = (l[1] || l[2] || '').trim();
+    if (title && link && link.startsWith('http')) items.push({ title, url: link });
+  }
+  return items;
+}
+
 // ─── Knowledge Base ───────────────────────────────────────────────────────────
 
 const KB_FILES = {
@@ -1283,6 +1319,70 @@ export default {
       const data = await env.VEILLE_STORE.get('veille_latest', { type: 'json' });
       if (!data) return jsonResponse({ empty: true }, 404);
       return jsonResponse(data);
+    }
+
+    // Veille refresh — Worker fetches RSS feeds directly, no Make RSS modules needed
+    if (request.method === 'POST' && url.pathname === '/veille-refresh') {
+      const secret = request.headers.get('x-make-secret');
+      if (!env.MAKE_SECRET || secret !== env.MAKE_SECRET) {
+        return new Response('Forbidden', { status: 403 });
+      }
+
+      // Fetch all RSS feeds in parallel, ignore failures
+      const results = await Promise.allSettled(
+        VEILLE_SOURCES.map(src =>
+          fetch(src.url, { headers: { 'User-Agent': 'Mozilla/5.0' }, cf: { cacheTtl: 3600 } })
+            .then(r => r.ok ? r.text().then(xml => ({ src, items: parseRSSItems(xml) })) : null)
+            .catch(() => null)
+        )
+      );
+
+      // Group items by category
+      const byCategory = {};
+      for (const r of results) {
+        if (r.status !== 'fulfilled' || !r.value) continue;
+        const { src, items } = r.value;
+        if (!byCategory[src.id]) byCategory[src.id] = { id: src.id, label: src.label, items: [] };
+        byCategory[src.id].items.push(...items.map(i => ({ ...i, source: src.label })));
+      }
+
+      // Synthesize each category with Groq
+      const processed = [];
+      let totalArticles = 0;
+      for (const cat of Object.values(byCategory)) {
+        totalArticles += cat.items.length;
+        let digest = '';
+        if (cat.items.length > 0 && env.GROQ_KEY) {
+          const titles = cat.items.map(i => `- ${i.title}`).join('\n');
+          const groqRes = await callGroq(env, {
+            model: DEFAULT_MODEL,
+            messages: [
+              { role: 'system', content: 'Tu es un assistant de veille technologique. Rédige en 2 phrases maximum en français une synthèse concise et factuelle des articles listés. Sois direct, informatif, sans intro.' },
+              { role: 'user', content: `Articles de la semaine :\n${titles}` },
+            ],
+            temperature: 0.4,
+            max_tokens: 120,
+          });
+          if (groqRes.ok) digest = extractContent(groqRes.data) || '';
+        }
+        processed.push({ id: cat.id, label: cat.label, digest, items: cat.items });
+      }
+
+      const now = new Date();
+      const startOfYear = new Date(now.getFullYear(), 0, 1);
+      const week = String(Math.ceil(((now - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7));
+      const year = String(now.getFullYear());
+      const stored = { updated_at: now.toISOString(), week, categories: processed };
+
+      await env.VEILLE_STORE.put('veille_latest', JSON.stringify(stored));
+      await env.VEILLE_STORE.put(`veille_week_${year}_${week}`, JSON.stringify(stored));
+      const veilleIndex = await env.VEILLE_STORE.get('veille_index', { type: 'json' }) || [];
+      if (!veilleIndex.find(e => e.week === week && e.year === year)) {
+        veilleIndex.unshift({ week, year, updated_at: now.toISOString() });
+        await env.VEILLE_STORE.put('veille_index', JSON.stringify(veilleIndex));
+      }
+
+      return jsonResponse({ ok: true, week, categories: processed.length, articles: totalArticles });
     }
 
     // Veille ingest — Make sends raw articles, Worker synthesizes with Groq and stores
