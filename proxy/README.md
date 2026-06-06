@@ -13,7 +13,8 @@ Le Worker contient aussi l'orchestration native du widget KRL1, le pipeline RAG 
 | `POST` | `/orchestrate-stream` | Version streaming SSE de l'orchestrateur |
 | `POST` | `/rag-query` | Recherche sémantique dans la base de connaissances PM, puis synthèse LLM |
 | `POST` | `/feedback` | Classification feedback via Make si configuré, sinon fallback Groq |
-| `GET` | `/veille` | Dernière veille hebdo stockée dans KV |
+| `GET` | `/veille` | Dernière veille hebdo stockée dans KV (ou édition spécifique via `?week=24&year=2026`) |
+| `GET` | `/veille/history` | Liste des éditions disponibles (index des semaines stockées dans KV) |
 | `POST` | `/veille` | Mise à jour directe de la veille par Make, protégée par `x-make-secret` |
 | `POST` | `/veille-ingest` | Reçoit les articles bruts de Make, synthétise chaque catégorie via Groq, stocke dans KV |
 | `GET` | `/stats` | Statistiques d'utilisation publiques |

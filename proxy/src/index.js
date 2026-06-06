@@ -1265,8 +1265,21 @@ export default {
       return handleStats(env);
     }
 
-    // Veille GET — public, no origin check
+    // Veille history — public, returns list of available weeks
+    if (request.method === 'GET' && url.pathname === '/veille/history') {
+      const index = await env.VEILLE_STORE.get('veille_index', { type: 'json' });
+      return jsonResponse(index || []);
+    }
+
+    // Veille GET — public, no origin check; ?week=24&year=2026 for specific edition
     if (request.method === 'GET' && url.pathname === '/veille') {
+      const week = url.searchParams.get('week');
+      const year = url.searchParams.get('year');
+      if (week && year) {
+        const data = await env.VEILLE_STORE.get(`veille_week_${year}_${week}`, { type: 'json' });
+        if (!data) return jsonResponse({ empty: true }, 404);
+        return jsonResponse(data);
+      }
       const data = await env.VEILLE_STORE.get('veille_latest', { type: 'json' });
       if (!data) return jsonResponse({ empty: true }, 404);
       return jsonResponse(data);
@@ -1322,6 +1335,15 @@ export default {
       const week = String(Math.ceil(((now - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7));
       const stored = { updated_at: now.toISOString(), week, categories: processed };
       await env.VEILLE_STORE.put('veille_latest', JSON.stringify(stored));
+
+      const year = String(now.getFullYear());
+      await env.VEILLE_STORE.put(`veille_week_${year}_${week}`, JSON.stringify(stored));
+      const veilleIndex = await env.VEILLE_STORE.get('veille_index', { type: 'json' }) || [];
+      if (!veilleIndex.find(e => e.week === week && e.year === year)) {
+        veilleIndex.unshift({ week, year, updated_at: now.toISOString() });
+        await env.VEILLE_STORE.put('veille_index', JSON.stringify(veilleIndex));
+      }
+
       return jsonResponse({ ok: true, week, categories: processed.length });
     }
 

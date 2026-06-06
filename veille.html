@@ -57,6 +57,12 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;backgr
 .cat-item a:hover{color:var(--acc)}
 .cat-item .item-source{font-size:0.62rem;color:var(--muted);flex-shrink:0}
 
+/* HISTORY NAV */
+.history-nav{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem;width:100%}
+.history-pill{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:99px;border:1px solid var(--border);color:var(--muted);background:transparent;cursor:pointer;transition:all 0.2s}
+.history-pill:hover{color:var(--text);border-color:rgba(255,255,255,0.18)}
+.history-pill.active{color:var(--acc);border-color:var(--acc-border);background:var(--acc-bg)}
+
 /* EMPTY STATE */
 .empty{text-align:center;padding:4rem 2rem}
 .empty-icon{font-size:2rem;margin-bottom:1rem;opacity:0.3}
@@ -176,10 +182,17 @@ const CAT_COLORS = {
   nocode:   { color: '#fb923c', bg: 'rgba(251,146,60,0.06)'  },
 };
 
+let historyIndex = [];
+let activeWeek = null;
+
 async function load() {
   try {
-    const res = await fetch(`${WORKER}/veille`);
+    const [res, histRes] = await Promise.all([
+      fetch(`${WORKER}/veille`),
+      fetch(`${WORKER}/veille/history`)
+    ]);
     const data = await res.json();
+    historyIndex = await histRes.json().catch(() => []);
 
     document.getElementById('loadingEl').style.display = 'none';
 
@@ -189,6 +202,7 @@ async function load() {
       return;
     }
 
+    activeWeek = data.week && data.updated_at ? { week: data.week, year: new Date(data.updated_at).getFullYear().toString() } : null;
     setMeta(data);
     renderCategories(data.categories || []);
     document.getElementById('contentEl').style.display = 'block';
@@ -200,6 +214,23 @@ async function load() {
   }
 }
 
+async function loadWeek(week, year) {
+  activeWeek = { week, year };
+  document.getElementById('contentEl').style.display = 'none';
+  document.getElementById('loadingEl').style.display = 'block';
+  try {
+    const res = await fetch(`${WORKER}/veille?week=${week}&year=${year}`);
+    const data = await res.json();
+    document.getElementById('loadingEl').style.display = 'none';
+    if (!res.ok || data.empty) return;
+    setMeta(data);
+    renderCategories(data.categories || []);
+    document.getElementById('contentEl').style.display = 'block';
+  } catch {
+    document.getElementById('loadingEl').style.display = 'none';
+  }
+}
+
 function setMeta(data) {
   const row = document.getElementById('metaRow');
   if (!data) {
@@ -208,11 +239,21 @@ function setMeta(data) {
   }
   const date = new Date(data.updated_at);
   const fmt = date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+  const historyPills = historyIndex.length > 1 ? `
+    <div class="history-nav">
+      ${historyIndex.map(e => {
+        const isActive = activeWeek && e.week === activeWeek.week && e.year === activeWeek.year;
+        return `<button class="history-pill${isActive ? ' active' : ''}" onclick="loadWeek('${e.week}','${e.year}')">S${e.week} ${e.year}</button>`;
+      }).join('')}
+    </div>` : '';
+
   row.innerHTML = `
     <span class="meta-pill live"><span class="live-dot"></span>En ligne</span>
     <span class="meta-pill">Mise à jour : ${fmt}</span>
     <span class="meta-pill">Semaine ${data.week || ''}</span>
     <span class="meta-pill">Prochaine édition : lundi</span>
+    ${historyPills}
   `;
 }
 

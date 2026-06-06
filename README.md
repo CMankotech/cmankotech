@@ -46,7 +46,7 @@ GitHub Pages (frontend)
         │ HTTPS
         ▼
 Cloudflare Worker (proxy/)
-  /orchestrate, /orchestrate-stream, /rag-query, /feedback, /veille, /veille-ingest, /stats
+  /orchestrate, /orchestrate-stream, /rag-query, /feedback, /veille, /veille/history, /veille-ingest, /stats
         │
         ├── Groq API — llama-3.3-70b-versatile
         ├── Workers AI — bge-small-en-v1.5 embeddings pour le RAG
