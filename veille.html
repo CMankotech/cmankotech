@@ -18,7 +18,8 @@ html{font-size:16px}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
 h1,h2,h3{font-family:'Syne',sans-serif}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 75% 0%,rgba(168,85,247,0.06) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 15% 85%,rgba(251,146,60,0.04) 0%,transparent 60%);pointer-events:none;z-index:0}
-.container{max-width:860px;margin:0 auto;padding:3rem 1.5rem;position:relative;z-index:1}
+.container{max-width:1200px;margin:0 auto;padding:3.5rem 4rem;position:relative;z-index:1}
+@media(max-width:768px){.container{padding:2rem 1.25rem}}
 
 .nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:3rem;padding-bottom:1.25rem;border-bottom:1px solid var(--line)}
 .nav-logo{font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--acc);text-decoration:none}
@@ -43,7 +44,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;backgr
 .card-title::after{content:'';flex:1;height:1px;background:var(--line)}
 
 /* CATEGORIES */
-.categories{display:flex;flex-direction:column;gap:1.5rem}
+.categories{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem}
 .cat-block{padding:1.5rem;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:14px}
 .cat-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.85rem}
 .cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
@@ -55,6 +56,18 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;backgr
 .cat-item a{color:var(--text);text-decoration:none;transition:color 0.15s}
 .cat-item a:hover{color:var(--acc)}
 .cat-item .item-source{font-size:0.62rem;color:var(--muted);flex-shrink:0}
+
+/* LANG TOGGLE */
+.lang-bar{display:flex;justify-content:flex-end;margin-bottom:1rem}
+.lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
+.lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.lang-btn.active{background:rgba(168,85,247,0.15);color:var(--acc)}
+
+/* HISTORY NAV */
+.history-nav{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem;width:100%}
+.history-pill{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:99px;border:1px solid var(--border);color:var(--muted);background:transparent;cursor:pointer;transition:all 0.2s}
+.history-pill:hover{color:var(--text);border-color:rgba(255,255,255,0.18)}
+.history-pill.active{color:var(--acc);border-color:var(--acc-border);background:var(--acc-bg)}
 
 /* EMPTY STATE */
 .empty{text-align:center;padding:4rem 2rem}
@@ -91,15 +104,22 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;backgr
 <body>
 <div class="container">
 
+  <div class="lang-bar">
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
   <nav class="nav">
     <a href="index.html" class="nav-logo">CARLIN M.</a>
     <a href="index.html" class="nav-back">&larr; Retour</a>
   </nav>
 
   <header>
-    <div class="header-tag"><span class="dot"></span>Make &middot; Automation &middot; Veille hebdo</div>
+    <div class="header-tag"><span class="dot"></span><span id="tagLabel">Make &middot; Automation &middot; Veille hebdo</span></div>
     <h1>Veille <span class="grad">Product &amp; IA</span></h1>
-    <p class="subtitle">Veille automatisée sur Product Management, IA g&eacute;n&eacute;rative, AI Builders et No-code. Make tourne chaque lundi matin, agr&egrave;ge les sources, synth&eacute;tise via Groq et publie ici.</p>
+    <p class="subtitle" id="subtitleEl">Veille automatisée sur Product Management, IA g&eacute;n&eacute;rative, AI Builders et No-code. Make tourne chaque lundi matin, agr&egrave;ge les sources, synth&eacute;tise via Groq et publie ici.</p>
     <div class="meta-row" id="metaRow">
       <span class="meta-pill">Chargement...</span>
     </div>
@@ -122,7 +142,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;backgr
 
   <!-- FLOW DIAGRAM -->
   <div class="flow-section">
-    <div class="flow-title">Comment &ccedil;a marche</div>
+    <div class="flow-title" id="flowTitleEl">Comment &ccedil;a marche</div>
     <div class="flow-nodes">
       <div class="flow-node flow-make">
         <div class="flow-node-icon">⚙️</div>
@@ -175,10 +195,17 @@ const CAT_COLORS = {
   nocode:   { color: '#fb923c', bg: 'rgba(251,146,60,0.06)'  },
 };
 
+let historyIndex = [];
+let activeWeek = null;
+
 async function load() {
   try {
-    const res = await fetch(`${WORKER}/veille`);
+    const [res, histRes] = await Promise.all([
+      fetch(`${WORKER}/veille`),
+      fetch(`${WORKER}/veille/history`)
+    ]);
     const data = await res.json();
+    historyIndex = await histRes.json().catch(() => []);
 
     document.getElementById('loadingEl').style.display = 'none';
 
@@ -188,6 +215,7 @@ async function load() {
       return;
     }
 
+    activeWeek = data.week && data.updated_at ? { week: data.week, year: new Date(data.updated_at).getFullYear().toString() } : null;
     setMeta(data);
     renderCategories(data.categories || []);
     document.getElementById('contentEl').style.display = 'block';
@@ -199,6 +227,23 @@ async function load() {
   }
 }
 
+async function loadWeek(week, year) {
+  activeWeek = { week, year };
+  document.getElementById('contentEl').style.display = 'none';
+  document.getElementById('loadingEl').style.display = 'block';
+  try {
+    const res = await fetch(`${WORKER}/veille?week=${week}&year=${year}`);
+    const data = await res.json();
+    document.getElementById('loadingEl').style.display = 'none';
+    if (!res.ok || data.empty) return;
+    setMeta(data);
+    renderCategories(data.categories || []);
+    document.getElementById('contentEl').style.display = 'block';
+  } catch {
+    document.getElementById('loadingEl').style.display = 'none';
+  }
+}
+
 function setMeta(data) {
   const row = document.getElementById('metaRow');
   if (!data) {
@@ -207,11 +252,21 @@ function setMeta(data) {
   }
   const date = new Date(data.updated_at);
   const fmt = date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+  const historyPills = historyIndex.length > 1 ? `
+    <div class="history-nav">
+      ${historyIndex.map(e => {
+        const isActive = activeWeek && e.week === activeWeek.week && e.year === activeWeek.year;
+        return `<button class="history-pill${isActive ? ' active' : ''}" onclick="loadWeek('${e.week}','${e.year}')">S${e.week} ${e.year}</button>`;
+      }).join('')}
+    </div>` : '';
+
   row.innerHTML = `
     <span class="meta-pill live"><span class="live-dot"></span>En ligne</span>
     <span class="meta-pill">Mise à jour : ${fmt}</span>
     <span class="meta-pill">Semaine ${data.week || ''}</span>
     <span class="meta-pill">Prochaine édition : lundi</span>
+    ${historyPills}
   `;
 }
 
@@ -219,26 +274,68 @@ function renderCategories(cats) {
   const el = document.getElementById('categoriesEl');
   el.innerHTML = cats.map(cat => {
     const style = CAT_COLORS[cat.id] || { color: '#94a3b8', bg: 'rgba(148,163,184,0.06)' };
-    const items = (cat.items || []).map(item => `
+    const itemList = (cat.items || []);
+    const items = itemList.map(item => `
       <div class="cat-item">
         <a href="${item.url}" target="_blank" rel="noopener">${item.title}</a>
         <span class="item-source">${item.source}</span>
       </div>
     `).join('');
+    const digestHtml = cat.digest ? `<div class="cat-digest" style="background:${style.bg};border-color:${style.color};color:var(--dim)">${cat.digest}</div>` : '';
+    const itemsHtml = itemList.length ? `<div class="cat-items">${items}</div>` : `<div style="font-size:0.78rem;color:var(--muted);padding:0.5rem 0">Aucun article cette semaine.</div>`;
     return `
       <div class="cat-block" style="border-color:${style.color}22">
         <div class="cat-header">
           <span class="cat-dot" style="background:${style.color}"></span>
           <span class="cat-label">${cat.label}</span>
         </div>
-        <div class="cat-digest" style="background:${style.bg};border-color:${style.color};color:var(--dim)">${cat.digest}</div>
-        <div class="cat-items">${items}</div>
+        ${digestHtml}
+        ${itemsHtml}
       </div>
     `;
   }).join('');
 }
 
+const I18N = {
+  fr: {
+    tag: 'Make · Automation · Veille hebdo',
+    subtitle: 'Veille automatisée sur Product Management, IA générative, AI Builders et No-code. Make tourne chaque lundi matin, agrège les sources, synthétise via Groq et publie ici.',
+    noData: 'Pas encore de données',
+    nextEdition: 'Prochaine édition : lundi',
+    updating: 'Mise à jour :',
+    week: 'Semaine',
+    empty: 'Première édition en préparation',
+    emptySub: 'Make tourne chaque lundi matin. La première édition arrivera dès que le scénario sera activé.',
+    noArticles: 'Aucun article cette semaine.',
+    flowTitle: 'Comment ça marche',
+  },
+  en: {
+    tag: 'Make · Automation · Weekly Watch',
+    subtitle: 'Automated watch on Product Management, Generative AI, AI Builders and No-code. Make runs every Monday morning, aggregates sources, synthesizes via Groq and publishes here.',
+    noData: 'No data yet',
+    nextEdition: 'Next edition: Monday',
+    updating: 'Updated:',
+    week: 'Week',
+    empty: 'First edition in progress',
+    emptySub: 'Make runs every Monday morning. The first edition will arrive once the scenario is activated.',
+    noArticles: 'No articles this week.',
+    flowTitle: 'How it works',
+  }
+};
+
+let _lang = 'fr';
+
+function setLang(lang) {
+  _lang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  document.getElementById('tagLabel').textContent = I18N[lang].tag;
+  document.getElementById('subtitleEl').textContent = I18N[lang].subtitle;
+  const flowTitle = document.getElementById('flowTitleEl');
+  if (flowTitle) flowTitle.textContent = I18N[lang].flowTitle;
+}
+
 load();
 </script>
+<script src="krl1-widget.js"></script>
 </body>
 </html>
