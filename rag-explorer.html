@@ -225,6 +225,19 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 @media(max-width:768px){.site-nav{padding:0.85rem 1.25rem}.sn-links{display:none}}
 .sn-right{display:flex;align-items:center;gap:0.75rem}
 @media(max-width:768px){.sn-right{gap:0.5rem}}
+.nav-tools{position:relative}
+.nav-tools-btn{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.65rem;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:#475569;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;transition:color 0.2s}
+.nav-tools-btn:hover,.nav-tools.open .nav-tools-btn{color:#e2e8f0}
+.nav-tools-btn svg{transition:transform 0.25s}
+.nav-tools.open .nav-tools-btn svg{transform:rotate(180deg)}
+.nav-tools-menu{position:absolute;top:calc(100% + 0.9rem);left:50%;transform:translateX(-50%) translateY(-6px);display:flex;flex-direction:column;gap:0.1rem;min-width:190px;background:rgba(12,12,20,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:0.4rem;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 20px 50px -16px rgba(0,0,0,0.7);opacity:0;visibility:hidden;transition:opacity 0.2s,transform 0.2s,visibility 0.2s;z-index:300}
+.nav-tools.open .nav-tools-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nav-tools-menu a{display:flex;align-items:center;gap:0.6rem;padding:0.6rem 0.85rem;border-radius:8px;font-size:0.74rem;font-weight:500;letter-spacing:0;text-transform:none;color:#94a3b8;text-decoration:none;transition:background 0.15s,color 0.15s}
+.nav-tools-menu a::after{display:none!important}
+.nav-tools-menu a:hover{background:rgba(255,255,255,0.06);color:#e2e8f0}
+.nav-tools-menu a.active{color:#a78bfa;background:rgba(167,139,250,0.1)}
+.nav-tools-menu .nt-ico{font-size:0.95rem;line-height:1}
+@media(max-width:768px){.nav-tools-menu{left:auto;right:0;transform:translateY(-6px)}.nav-tools.open .nav-tools-menu{transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -232,9 +245,14 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <a href="index.html" class="sn-logo">CARLIN M.</a>
   <div class="sn-links">
     <a href="index.html">Portfolio</a>
-    <a href="pm-toolkit.html">PM Toolkit</a>
-    <a href="rag-explorer.html" class="active">RAG</a>
-    <a href="veille.html">Veille</a>
+    <div class="nav-tools" id="navTools">
+      <button class="nav-tools-btn" onclick="toggleNavTools(event)" aria-haspopup="true"><span id="navToolsLabel">Outils</span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="nav-tools-menu">
+        <a href="pm-toolkit.html"><span class="nt-ico">🧰</span> PM Toolkit</a>
+        <a href="rag-explorer.html" class="active"><span class="nt-ico">🔍</span> RAG Explorer</a>
+        <a href="veille.html"><span class="nt-ico">📡</span> Veille</a>
+      </div>
+    </div>
   </div>
   <div class="sn-right">
     <div class="lang-toggle">
@@ -687,6 +705,13 @@ function escHtml(str) {
 document.getElementById('query').addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) runQuery();
 });
+</script>
+<script>
+function toggleNavTools(e){e.stopPropagation();var d=document.getElementById('navTools');if(d)d.classList.toggle('open');}
+document.addEventListener('click',function(e){var d=document.getElementById('navTools');if(d&&!d.contains(e.target))d.classList.remove('open');});
+function syncNavToolsLang(){var a=document.querySelector('.lang-btn.active');var en=!!a&&/^\s*en\s*$/i.test(a.textContent);var l=document.getElementById('navToolsLabel');if(l)l.textContent=en?'Tools':'Outils';}
+document.addEventListener('DOMContentLoaded',syncNavToolsLang);
+document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.lang-btn'))setTimeout(syncNavToolsLang,0);});
 </script>
 <script src="krl1-widget.js"></script>
 <script src="glass.js"></script>
