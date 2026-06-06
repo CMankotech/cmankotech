@@ -14,7 +14,8 @@ Le Worker contient aussi l'orchestration native du widget KRL1, le pipeline RAG 
 | `POST` | `/rag-query` | Recherche sémantique dans la base de connaissances PM, puis synthèse LLM |
 | `POST` | `/feedback` | Classification feedback via Make si configuré, sinon fallback Groq |
 | `GET` | `/veille` | Dernière veille hebdo stockée dans KV |
-| `POST` | `/veille` | Mise à jour de la veille par Make, protégée par `x-make-secret` |
+| `POST` | `/veille` | Mise à jour directe de la veille par Make, protégée par `x-make-secret` |
+| `POST` | `/veille-ingest` | Reçoit les articles bruts de Make, synthétise chaque catégorie via Groq, stocke dans KV |
 | `GET` | `/stats` | Statistiques d'utilisation publiques |
 
 ## Orchestrateur intégré
@@ -35,6 +36,8 @@ Si `LANGGRAPH_ORCHESTRATOR_URL` est configurée, le Worker peut déléguer `/orc
 `GET /veille` expose publiquement la dernière édition de veille stockée dans KV.
 
 `POST /veille` est appelé par Make et nécessite le header `x-make-secret`. Le payload reçu est stocké tel quel dans `VEILLE_STORE` sous la clé `veille_latest`.
+
+`POST /veille-ingest` est la route principale utilisée par Make. Elle reçoit les articles bruts par catégorie (format `titre|url` séparé par `\n`), synthétise chaque catégorie via Groq (`llama-3.3-70b-versatile`, 2 phrases en français, temp=0.4), puis stocke le résultat structuré avec `updated_at`, `week` et les `categories` dans `VEILLE_STORE`.
 
 ## Feedback
 

@@ -1272,6 +1272,59 @@ export default {
       return jsonResponse(data);
     }
 
+    // Veille ingest — Make sends raw articles, Worker synthesizes with Groq and stores
+    if (request.method === 'POST' && url.pathname === '/veille-ingest') {
+      const secret = request.headers.get('x-make-secret');
+      if (!env.MAKE_SECRET || secret !== env.MAKE_SECRET) {
+        return new Response('Forbidden', { status: 403 });
+      }
+      let body;
+      try { body = await request.json(); } catch { return new Response('Bad Request', { status: 400 }); }
+
+      const categories = Array.isArray(body.categories) ? body.categories : [];
+      const processed = [];
+
+      for (const cat of categories) {
+        const raw = cat.raw || '';
+        const items = raw.split('\n')
+          .map(line => line.trim())
+          .filter(line => line.includes('|'))
+          .map(line => {
+            const idx = line.indexOf('|');
+            return {
+              title: line.slice(0, idx).trim(),
+              url: line.slice(idx + 1).trim(),
+              source: cat.label || cat.id,
+            };
+          })
+          .filter(item => item.title && item.url);
+
+        let digest = '';
+        if (items.length > 0 && env.GROQ_KEY) {
+          const titles = items.map(i => `- ${i.title}`).join('\n');
+          const groqRes = await callGroq(env, {
+            model: DEFAULT_MODEL,
+            messages: [
+              { role: 'system', content: 'Tu es un assistant de veille technologique. Rédige en 2 phrases maximum en français une synthèse concise et factuelle des articles listés. Sois direct, informatif, sans intro.' },
+              { role: 'user', content: `Articles de la semaine :\n${titles}` },
+            ],
+            temperature: 0.4,
+            max_tokens: 120,
+          });
+          if (groqRes.ok) digest = extractContent(groqRes.data) || '';
+        }
+
+        processed.push({ id: cat.id, label: cat.label, digest, items });
+      }
+
+      const now = new Date();
+      const startOfYear = new Date(now.getFullYear(), 0, 1);
+      const week = String(Math.ceil(((now - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7));
+      const stored = { updated_at: now.toISOString(), week, categories: processed };
+      await env.VEILLE_STORE.put('veille_latest', JSON.stringify(stored));
+      return jsonResponse({ ok: true, week, categories: processed.length });
+    }
+
     // Veille POST — protected by MAKE_SECRET, called by Make
     if (request.method === 'POST' && url.pathname === '/veille') {
       const secret = request.headers.get('x-make-secret');
