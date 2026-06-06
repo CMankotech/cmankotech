@@ -9,108 +9,101 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#08080f;--surface:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.07);--line:rgba(255,255,255,0.06);
-  --text:#e2e8f0;--dim:#94a3b8;--muted:#64748b;
-  --blue:#60a5fa;--violet:#a78bfa;--cyan:#22d3ee;--orange:#fb923c;--green:#4ade80;
+  --bg:#07070e;--surface:#0e0e1a;
+  --border:rgba(255,255,255,0.08);--line:rgba(255,255,255,0.05);
+  --text:#e2e8f0;--dim:#94a3b8;--muted:#475569;
+  --blue:#60a5fa;--violet:#a78bfa;--cyan:#22d3ee;--orange:#fb923c;--green:#34d399;
   --acc:#a855f7;--acc-bg:rgba(168,85,247,0.08);--acc-border:rgba(168,85,247,0.25);
 }
 html{font-size:16px;scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden;min-height:100vh}
-h1,h2,h3,h4{font-family:'Syne',sans-serif}
-
-/* GRAIN */
-body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:200px 200px;opacity:0.45}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
+h1,h2,h3{font-family:'Syne',sans-serif}
 
 /* GLOWS */
-.glow{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0;opacity:0.55;backface-visibility:hidden}
-.g1{width:900px;height:700px;top:-15%;left:-10%;background:radial-gradient(ellipse 60% 55%,rgba(59,130,246,0.45),transparent 70%);animation:drift1 22s ease-in-out infinite}
-.g2{width:800px;height:800px;top:30%;right:-12%;background:radial-gradient(ellipse 55% 60%,rgba(167,139,250,0.40),transparent 70%);animation:drift2 26s ease-in-out infinite}
-.g3{width:700px;height:500px;bottom:5%;left:10%;background:radial-gradient(ellipse 70% 45%,rgba(34,211,238,0.32),transparent 70%);animation:drift3 30s ease-in-out infinite}
+.glow{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0;opacity:0.7;will-change:transform}
+.g1{width:750px;height:550px;top:-15%;left:-10%;background:radial-gradient(ellipse 60% 55%,rgba(59,130,246,0.40),transparent 70%);animation:drift1 22s ease-in-out infinite}
+.g2{width:650px;height:650px;top:35%;right:-12%;background:radial-gradient(ellipse 55% 60%,rgba(167,139,250,0.34),transparent 70%);animation:drift2 26s ease-in-out infinite}
+.g3{width:600px;height:450px;bottom:5%;left:15%;background:radial-gradient(ellipse 70% 45%,rgba(34,211,238,0.28),transparent 70%);animation:drift3 30s ease-in-out infinite}
 @keyframes drift1{0%,100%{transform:translate3d(0,0,0) scale(1)}33%{transform:translate3d(60px,50px,0) scale(1.1)}66%{transform:translate3d(-30px,100px,0) scale(0.95)}}
 @keyframes drift2{0%,100%{transform:translate3d(0,0,0) scale(1)}33%{transform:translate3d(-60px,-40px,0) scale(1.08)}66%{transform:translate3d(40px,-70px,0) scale(0.93)}}
 @keyframes drift3{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(70px,-50px,0) scale(1.12)}}
 @media(prefers-reduced-motion:reduce){.glow{animation:none!important}}
-@media(max-width:768px){.g2,.g3{display:none}.glow{filter:blur(80px)}}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 4rem;background:rgba(8,8,15,0.85);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
-.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;color:var(--text);text-decoration:none;letter-spacing:-0.01em}
-.nav-logo span{background:linear-gradient(135deg,var(--blue),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.nav-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:2rem}
-.nav-center a{font-size:0.68rem;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);text-decoration:none;transition:color 0.2s;position:relative;padding-bottom:0.2rem}
-.nav-center a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:linear-gradient(to right,var(--blue),var(--violet));transform:scaleX(0);transform-origin:left;transition:transform 0.25s ease}
-.nav-center a:hover{color:var(--text)}
-.nav-center a:hover::after,.nav-center a.active::after{transform:scaleX(1)}
-.nav-center a.active{color:var(--text)}
-.nav-right{display:flex;align-items:center;gap:1rem}
-.lang-switcher{display:flex;align-items:center;gap:0.2rem;background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:0.2rem}
-.lang-btn{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;padding:0.28rem 0.65rem;border-radius:99px;border:none;cursor:pointer;background:transparent;color:var(--muted);transition:all 0.2s;font-family:'DM Sans',sans-serif}
-.lang-btn.active{background:rgba(96,165,250,0.18);color:#93c5fd}
-.lang-btn:hover:not(.active){color:var(--text)}
-@media(max-width:768px){nav{padding:1rem 1.25rem}.nav-center{display:none}}
 
 /* LAYOUT */
-.page{position:relative;z-index:1;padding-top:6rem}
-.container{max-width:1200px;margin:0 auto;padding:3rem 4rem;position:relative}
-@media(max-width:768px){.container{padding:2rem 1.25rem}}
+.container{max-width:1040px;margin:0 auto;padding:2.5rem 1.5rem 4rem;position:relative;z-index:1}
 
-/* HEADER */
-header{margin-bottom:3rem}
-.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--acc);background:var(--acc-bg);border:1px solid var(--acc-border);padding:0.38rem 1rem;border-radius:99px;margin-bottom:1.25rem}
-.pulsedot{width:5px;height:5px;border-radius:50%;background:var(--acc);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-h1{font-family:'DM Sans',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:500;letter-spacing:-0.045em;line-height:0.98;margin-bottom:0.75rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--blue) 0%,var(--violet) 50%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.subtitle{font-size:0.85rem;color:var(--dim);max-width:580px;line-height:1.75;margin-bottom:1.5rem}
+/* LANG */
+.lang-bar{display:flex;justify-content:flex-end;align-items:center;gap:0.5rem;margin-bottom:1.5rem}
+.lang-toggle{display:flex;gap:0.25rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.25rem}
+.lang-btn{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.75rem;border-radius:5px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.lang-btn.active{background:rgba(96,165,250,0.15);color:var(--blue)}
 
-/* STATUS BAR */
-.status-bar{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
+/* BACK */
+.back-link{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;margin-bottom:1.75rem;transition:color 0.2s}
+.back-link:hover{color:var(--text)}
+
+/* HEADER — centré comme pm-toolkit */
+header{text-align:center;margin-bottom:3rem}
+.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--blue);margin-bottom:1.25rem;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.2);padding:0.4rem 1rem;border-radius:99px}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
+h1{font-family:'DM Sans',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:500;letter-spacing:-0.045em;line-height:0.98;margin-bottom:0.85rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.05;letter-spacing:-0.02em;background:linear-gradient(135deg,var(--blue) 0%,var(--violet) 50%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+@media(max-width:640px){h1,h1 .grad{font-size:clamp(1.6rem,6vw,2.4rem)!important}}
+.subtitle{font-size:0.95rem;color:var(--dim);max-width:600px;margin:0 auto 1.5rem;line-height:1.65}
+
+/* STATUS PILLS */
+.status-bar{display:flex;align-items:center;justify-content:center;gap:0.6rem;flex-wrap:wrap}
 .pill{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.8rem;border-radius:99px;border:1px solid var(--border);color:var(--muted)}
-.pill.live{border-color:rgba(74,222,128,0.3);color:var(--green);background:rgba(74,222,128,0.05)}
-.pill .livedot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+.pill.live{border-color:rgba(52,211,153,0.35);color:var(--green);background:rgba(52,211,153,0.06)}
+.livedot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
 
-/* EDITION SELECTOR */
-.edition-section{margin-bottom:2rem}
-.section-label{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--muted);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.6rem}
+/* HISTORY SECTION — principale feature de navigation */
+.history-section{margin-bottom:2.5rem}
+.section-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:0.8rem}
 .section-label::after{content:'';flex:1;height:1px;background:var(--line)}
-.editions-scroll{display:flex;gap:0.5rem;overflow-x:auto;padding-bottom:0.25rem;scrollbar-width:none}
-.editions-scroll::-webkit-scrollbar{display:none}
-.edition-card{flex-shrink:0;display:flex;flex-direction:column;gap:0.15rem;padding:0.65rem 1rem;border:1px solid var(--border);border-radius:10px;background:var(--surface);cursor:pointer;transition:all 0.2s;text-align:left}
-.edition-card:hover{border-color:rgba(255,255,255,0.15);background:rgba(255,255,255,0.05)}
-.edition-card.active{border-color:var(--acc-border);background:var(--acc-bg)}
-.edition-card .ed-week{font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;color:var(--text)}
-.edition-card.active .ed-week{color:var(--acc)}
-.edition-card .ed-date{font-size:0.58rem;color:var(--muted);white-space:nowrap}
 
-/* CATEGORIES */
-.categories{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem;margin-bottom:3rem}
-.cat-block{padding:1.5rem;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:14px}
-.cat-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem}
-.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.cat-label{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text)}
-.cat-digest{font-size:0.82rem;line-height:1.7;color:var(--dim);margin-bottom:1.1rem;padding:0.75rem 1rem;border-radius:8px;border-left:2px solid}
-.cat-items{display:flex;flex-direction:column;gap:0.5rem}
-.cat-item{display:flex;align-items:baseline;gap:0.6rem;font-size:0.78rem;color:var(--dim);line-height:1.5}
-.cat-item::before{content:'→';flex-shrink:0;font-weight:700;font-size:0.68rem;opacity:0.5}
-.cat-item a{color:var(--text);text-decoration:none;transition:color 0.15s}
-.cat-item a:hover{color:var(--blue)}
-.cat-item .item-source{font-size:0.6rem;color:var(--muted);flex-shrink:0}
+.editions-grid{display:flex;gap:0.6rem;overflow-x:auto;padding-bottom:0.5rem;scrollbar-width:none}
+.editions-grid::-webkit-scrollbar{display:none}
+
+.edition-card{flex-shrink:0;display:flex;flex-direction:column;gap:0.2rem;padding:0.85rem 1.1rem;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));cursor:pointer;transition:all 0.2s;text-align:left;min-width:100px}
+.edition-card:hover{border-color:rgba(255,255,255,0.16);transform:translateY(-1px);box-shadow:0 10px 28px -12px rgba(0,0,0,0.5)}
+.edition-card.active{border-color:rgba(96,165,250,0.4);background:rgba(96,165,250,0.06)}
+.ed-label{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted)}
+.edition-card.active .ed-label{color:var(--blue)}
+.ed-week{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--text)}
+.edition-card.active .ed-week{color:var(--blue)}
+.ed-date{font-size:0.6rem;color:var(--muted)}
 
 /* LOADING / EMPTY */
-.state-card{background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.5rem}
+.state-card{background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.5rem;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%)}
 .loading{text-align:center;padding:3rem}
-.spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--acc);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto}
+.spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto}
 @keyframes spin{to{transform:rotate(360deg)}}
 .empty{text-align:center;padding:4rem 2rem}
 .empty-icon{font-size:2rem;margin-bottom:1rem;opacity:0.3}
 .empty-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--dim);margin-bottom:0.5rem}
 .empty-sub{font-size:0.8rem;color:var(--muted);line-height:1.6}
 
+/* CATEGORIES */
+.categories{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;margin-bottom:3rem}
+.cat-block{padding:1.5rem;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:14px;backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 10px 28px -16px rgba(0,0,0,0.45)}
+.cat-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem}
+.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cat-label{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text)}
+.cat-digest{font-size:0.82rem;line-height:1.7;color:var(--dim);margin-bottom:1.1rem;padding:0.75rem 1rem;border-radius:8px;border-left:2px solid}
+.cat-items{display:flex;flex-direction:column;gap:0.5rem}
+.cat-item{display:flex;align-items:baseline;gap:0.6rem;font-size:0.78rem;color:var(--dim);line-height:1.5}
+.cat-item::before{content:'→';flex-shrink:0;font-weight:700;font-size:0.68rem;opacity:0.45}
+.cat-item a{color:var(--text);text-decoration:none;transition:color 0.15s}
+.cat-item a:hover{color:var(--blue)}
+.cat-item .item-source{font-size:0.6rem;color:var(--muted);flex-shrink:0}
+
 /* FLOW */
-.flow-section{margin-top:1rem;margin-bottom:2rem}
-.flow-label{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--muted);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.6rem}
+.flow-section{margin-bottom:2rem}
+.flow-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.8rem}
 .flow-label::after{content:'';flex:1;height:1px;background:var(--line)}
-.flow-nodes{display:flex;align-items:center;flex-wrap:wrap;gap:0;padding:1.5rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:14px}
+.flow-nodes{display:flex;align-items:center;flex-wrap:wrap;gap:0;padding:1.5rem;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:14px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
 .flow-node{display:flex;flex-direction:column;align-items:center;gap:0.3rem;padding:0.75rem 1rem;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:10px;min-width:110px;text-align:center}
 .flow-icon{font-size:1.1rem;line-height:1}
 .flow-name{font-family:'Syne',sans-serif;font-size:0.66rem;font-weight:700;color:var(--text)}
@@ -119,10 +112,14 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;backgr
 .fn-make{border-color:rgba(168,85,247,0.3)}
 .fn-worker{border-color:rgba(251,146,60,0.3)}
 .fn-kv{border-color:rgba(96,165,250,0.3)}
-.fn-page{border-color:rgba(74,222,128,0.3)}
-@media(max-width:600px){.flow-nodes{flex-direction:column;gap:0.5rem}.flow-arrow{transform:rotate(90deg)}.cat-block{padding:1.1rem}.categories{grid-template-columns:1fr}}
+.fn-page{border-color:rgba(52,211,153,0.3)}
 
-.section-divider{height:1px;background:var(--line);margin:2.5rem 0}
+@media(max-width:600px){
+  .flow-nodes{flex-direction:column;gap:0.5rem}
+  .flow-arrow{transform:rotate(90deg)}
+  .cat-block{padding:1.1rem}
+  .categories{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -131,44 +128,39 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;backgr
 <div class="glow g2"></div>
 <div class="glow g3"></div>
 
-<nav>
-  <a href="index.html" class="nav-logo">CARLIN <span>M.</span></a>
-  <div class="nav-center">
-    <a href="index.html">Portfolio</a>
-    <a href="pm-toolkit.html">PM Toolkit</a>
-    <a href="rag-explorer.html">RAG</a>
-    <a href="veille.html" class="active">Veille</a>
-    <a href="product-decisions.html">Decisions</a>
-  </div>
-  <div class="nav-right">
-    <div class="lang-switcher">
+<div class="container">
+
+  <div class="lang-bar">
+    <div class="lang-toggle">
       <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
       <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
     </div>
   </div>
-</nav>
 
-<div class="page">
-<div class="container">
+  <a href="index.html" class="back-link">← Portfolio</a>
 
+  <!-- HERO centré -->
   <header>
-    <div class="header-tag"><span class="pulsedot"></span><span id="tagLabel">Make · Automation · Veille hebdo</span></div>
+    <div class="header-tag"><span class="dot"></span><span id="tagLabel">Make · Automation · Veille hebdo</span></div>
     <h1>Veille <span class="grad">Product &amp; IA</span></h1>
-    <p class="subtitle" id="subtitleEl">Veille automatisée sur Product Management, IA générative, AI Builders et No-code. Make tourne chaque lundi matin, le Worker récupère 13 flux RSS, synthétise via Groq et publie ici.</p>
+    <p class="subtitle" id="subtitleEl">Veille automatisée sur Product Management, IA générative, AI Builders et No-code. Make tourne chaque lundi, le Worker récupère 13 flux RSS, synthétise via Groq et publie ici.</p>
     <div class="status-bar" id="statusBar">
       <span class="pill">Chargement…</span>
     </div>
   </header>
 
-  <div class="edition-section" id="editionSection" style="display:none">
-    <div class="section-label" id="editionSectionLabel">Éditions disponibles</div>
-    <div class="editions-scroll" id="editionsScroll"></div>
+  <!-- HISTORIQUE — section principale visible avant les articles -->
+  <div class="history-section" id="historySection" style="display:none">
+    <div class="section-label" id="historyLabel">Éditions précédentes</div>
+    <div class="editions-grid" id="editionsGrid"></div>
   </div>
 
+  <!-- LOADING -->
   <div id="loadingEl" class="state-card">
     <div class="loading"><div class="spinner"></div></div>
   </div>
 
+  <!-- EMPTY -->
   <div id="emptyEl" class="state-card" style="display:none">
     <div class="empty">
       <div class="empty-icon">⏳</div>
@@ -177,12 +169,12 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;backgr
     </div>
   </div>
 
+  <!-- ARTICLES -->
   <div id="contentEl" style="display:none">
     <div class="categories" id="categoriesEl"></div>
   </div>
 
-  <div class="section-divider"></div>
-
+  <!-- FLOW -->
   <div class="flow-section">
     <div class="flow-label" id="flowLabel">Comment ça marche</div>
     <div class="flow-nodes">
@@ -225,7 +217,6 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;backgr
   </div>
 
 </div>
-</div>
 
 <script>
 const WORKER = 'https://groq-proxy.cmankotech.workers.dev';
@@ -248,15 +239,17 @@ async function load() {
     const data = await res.json();
     historyIndex = await histRes.json().catch(() => []);
     document.getElementById('loadingEl').style.display = 'none';
+
     if (!res.ok || data.empty) {
       document.getElementById('emptyEl').style.display = 'block';
       renderStatus(null);
       return;
     }
+
     const year = data.updated_at ? new Date(data.updated_at).getFullYear().toString() : new Date().getFullYear().toString();
     activeWeek = data.week ? { week: data.week, year } : null;
     renderStatus(data);
-    renderEditions();
+    renderHistory();
     renderCategories(data.categories || []);
     document.getElementById('contentEl').style.display = 'block';
   } catch {
@@ -268,7 +261,7 @@ async function load() {
 
 async function loadWeek(week, year) {
   activeWeek = { week, year };
-  renderEditions();
+  renderHistory();
   document.getElementById('contentEl').style.display = 'none';
   document.getElementById('loadingEl').style.display = 'block';
   try {
@@ -300,16 +293,20 @@ function renderStatus(data) {
   `;
 }
 
-function renderEditions() {
-  const section = document.getElementById('editionSection');
-  const scroll = document.getElementById('editionsScroll');
+function renderHistory() {
+  const section = document.getElementById('historySection');
+  const grid = document.getElementById('editionsGrid');
   if (historyIndex.length < 2) { section.style.display = 'none'; return; }
   section.style.display = 'block';
-  scroll.innerHTML = historyIndex.map(e => {
+  const locale = _lang === 'fr' ? 'fr-FR' : 'en-GB';
+  grid.innerHTML = historyIndex.map(e => {
     const isActive = activeWeek && e.week === activeWeek.week && e.year === activeWeek.year;
-    const dateLabel = e.updated_at ? new Date(e.updated_at).toLocaleDateString(_lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'short' }) : '';
+    const dateLabel = e.updated_at
+      ? new Date(e.updated_at).toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' })
+      : '';
     return `<button class="edition-card${isActive ? ' active' : ''}" onclick="loadWeek('${e.week}','${e.year}')">
-      <span class="ed-week">S${e.week} ${e.year}</span>
+      <span class="ed-label">${_lang === 'fr' ? 'Semaine' : 'Week'}</span>
+      <span class="ed-week">${e.week} — ${e.year}</span>
       ${dateLabel ? `<span class="ed-date">${dateLabel}</span>` : ''}
     </button>`;
   }).join('');
@@ -345,16 +342,14 @@ function renderCategories(cats) {
 const I18N = {
   fr: {
     tag: 'Make · Automation · Veille hebdo',
-    subtitle: 'Veille automatisée sur Product Management, IA générative, AI Builders et No-code. Make tourne chaque lundi matin, le Worker récupère 13 flux RSS, synthétise via Groq et publie ici.',
+    subtitle: 'Veille automatisée sur Product Management, IA générative, AI Builders et No-code. Make tourne chaque lundi, le Worker récupère 13 flux RSS, synthétise via Groq et publie ici.',
     noData: 'Pas encore de données',
     nextEdition: 'Prochaine édition : lundi',
     updating: 'Mise à jour :',
     week: 'Semaine',
-    empty: 'Première édition en préparation',
-    emptySub: 'Make tourne chaque lundi matin. La première édition arrivera dès que le scénario sera activé.',
     noArticles: 'Aucun article cette semaine.',
     flowLabel: 'Comment ça marche',
-    editionsLabel: 'Éditions disponibles',
+    historyLabel: 'Éditions précédentes',
   },
   en: {
     tag: 'Make · Automation · Weekly Watch',
@@ -363,11 +358,9 @@ const I18N = {
     nextEdition: 'Next edition: Monday',
     updating: 'Updated:',
     week: 'Week',
-    empty: 'First edition coming soon',
-    emptySub: 'Make runs every Monday morning. The first edition will arrive once the scenario is activated.',
     noArticles: 'No articles this week.',
     flowLabel: 'How it works',
-    editionsLabel: 'Available editions',
+    historyLabel: 'Previous editions',
   }
 };
 
@@ -379,12 +372,12 @@ function setLang(lang) {
   document.getElementById('tagLabel').textContent = I18N[lang].tag;
   document.getElementById('subtitleEl').textContent = I18N[lang].subtitle;
   document.getElementById('flowLabel').textContent = I18N[lang].flowLabel;
-  document.getElementById('editionSectionLabel').textContent = I18N[lang].editionsLabel;
-  document.getElementById('emptyTitle').textContent = I18N[lang].empty;
-  document.getElementById('emptySub').textContent = I18N[lang].emptySub;
+  const hl = document.getElementById('historyLabel');
+  if (hl) hl.textContent = I18N[lang].historyLabel;
   document.getElementById('flowSub1').textContent = lang === 'fr' ? '4 catégories' : '4 categories';
   document.getElementById('flowSub2').textContent = lang === 'fr' ? 'Synthèse' : 'Synthesis';
   document.getElementById('flowPageName').textContent = lang === 'fr' ? 'Cette page' : 'This page';
+  renderHistory();
 }
 
 load();
