@@ -23,7 +23,7 @@ h1,h2,h3,h4{font-family:'Syne',sans-serif}
 .g2{width:650px;height:650px;top:35%;right:-12%;background:radial-gradient(ellipse 55% 60%,rgba(244,114,182,0.28),transparent 70%);animation:drift2 26s ease-in-out infinite}
 .g3{width:600px;height:450px;bottom:5%;left:15%;background:radial-gradient(ellipse 70% 45%,rgba(34,211,238,0.22),transparent 70%);animation:drift3 30s ease-in-out infinite}
 
-.container{max-width:1040px;margin:0 auto;padding:2.5rem 1.5rem 4rem;position:relative;z-index:1}
+.container{max-width:1280px;margin:0 auto;padding:5rem 3rem 4rem;position:relative;z-index:1}@media(max-width:768px){.container{padding-left:1.25rem;padding-right:1.25rem}}
 
 .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
 .back-link{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;transition:color 0.2s}
@@ -78,25 +78,37 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 @keyframes drift1{0%{transform:translate(0,0) scale(1)}25%{transform:translate(80px,60px) scale(1.12)}50%{transform:translate(-40px,120px) scale(0.95)}75%{transform:translate(60px,-30px) scale(1.08)}100%{transform:translate(0,0) scale(1)}}
 @keyframes drift2{0%{transform:translate(0,0) scale(1)}25%{transform:translate(-70px,-50px) scale(1.1)}50%{transform:translate(50px,-90px) scale(0.92)}75%{transform:translate(-60px,40px) scale(1.05)}100%{transform:translate(0,0) scale(1)}}
 @keyframes drift3{0%{transform:translate(0,0) scale(1)}25%{transform:translate(90px,-40px) scale(1.08)}50%{transform:translate(-30px,-80px) scale(1.15)}75%{transform:translate(-70px,50px) scale(0.9)}100%{transform:translate(0,0) scale(1)}}
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(7,7,14,0.9);border-bottom:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.sn-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#e2e8f0;text-decoration:none}
+.sn-links{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:2rem}
+.sn-links a{font-size:0.65rem;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:#475569;text-decoration:none;transition:color 0.2s;position:relative;padding-bottom:0.2rem}
+.sn-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:linear-gradient(to right,#60a5fa,#a78bfa);transform:scaleX(0);transform-origin:left;transition:transform 0.25s}
+.sn-links a:hover,.sn-links a.active{color:#e2e8f0}
+.sn-links a:hover::after,.sn-links a.active::after{transform:scaleX(1)}
+@media(max-width:768px){.site-nav{padding:0.85rem 1.25rem}.sn-links{display:none}}
 </style>
 </head>
 <body>
+<nav class="site-nav">
+  <a href="index.html" class="sn-logo">CARLIN M.</a>
+  <div class="sn-links">
+    <a href="index.html">Portfolio</a>
+    <a href="pm-toolkit.html">PM Toolkit</a>
+    <a href="rag-explorer.html">RAG</a>
+    <a href="veille.html">Veille</a>
+    <a href="product-decisions.html" class="active">Decisions</a>
+  </div>
+</nav>
 <div class="glow g1"></div>
 <div class="glow g2"></div>
 <div class="glow g3"></div>
 
 <div class="container">
 
-  <div class="top-bar">
-    <a href="index.html" class="back-link page-cta-pill" id="backLink">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      <span id="backLbl">Retour au portfolio</span>
-    </a>
-    <div style="display:flex;gap:0.5rem;align-items:center">
-      <div class="lang-toggle">
-        <button class="lang-btn active" id="lbFr" onclick="setLang('fr')">FR</button>
-        <button class="lang-btn" id="lbEn" onclick="setLang('en')">EN</button>
-      </div>
+  <div style="display:flex;justify-content:flex-end;margin-bottom:1.5rem">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lbFr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" id="lbEn" onclick="setLang('en')">EN</button>
     </div>
   </div>
 
