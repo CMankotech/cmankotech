@@ -18,7 +18,8 @@ html{font-size:16px}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;min-height:100vh;overflow-x:hidden}
 h1,h2,h3{font-family:'Syne',sans-serif}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 75% 0%,rgba(168,85,247,0.06) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 15% 85%,rgba(251,146,60,0.04) 0%,transparent 60%);pointer-events:none;z-index:0}
-.container{max-width:860px;margin:0 auto;padding:3rem 1.5rem;position:relative;z-index:1}
+.container{max-width:1200px;margin:0 auto;padding:3.5rem 4rem;position:relative;z-index:1}
+@media(max-width:768px){.container{padding:2rem 1.25rem}}
 
 .nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:3rem;padding-bottom:1.25rem;border-bottom:1px solid var(--line)}
 .nav-logo{font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--acc);text-decoration:none}
@@ -43,7 +44,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;backgr
 .card-title::after{content:'';flex:1;height:1px;background:var(--line)}
 
 /* CATEGORIES */
-.categories{display:flex;flex-direction:column;gap:1.5rem}
+.categories{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem}
 .cat-block{padding:1.5rem;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:14px}
 .cat-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.85rem}
 .cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
