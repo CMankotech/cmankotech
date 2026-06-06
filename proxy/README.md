@@ -15,6 +15,7 @@ Le Worker contient aussi l'orchestration native du widget KRL1, le pipeline RAG 
 | `POST` | `/feedback` | Classification feedback via Make si configuré, sinon fallback Groq |
 | `GET` | `/veille` | Dernière veille hebdo stockée dans KV (ou édition spécifique via `?week=24&year=2026`) |
 | `GET` | `/veille/history` | Liste des éditions disponibles (index des semaines stockées dans KV) |
+| `POST` | `/veille-refresh` | Fetch les flux RSS directement depuis le Worker, synthétise via Groq et stocke dans KV |
 | `POST` | `/veille` | Mise à jour directe de la veille par Make, protégée par `x-make-secret` |
 | `POST` | `/veille-ingest` | Reçoit les articles bruts de Make, synthétise chaque catégorie via Groq, stocke dans KV |
 | `GET` | `/stats` | Statistiques d'utilisation publiques |
