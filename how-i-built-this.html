@@ -30,7 +30,7 @@ h1,h2,h3,h4{font-family:'Syne',sans-serif}
 .g3{width:600px;height:450px;bottom:5%;left:15%;background:radial-gradient(ellipse 70% 45%,rgba(34,211,238,0.28),transparent 70%);animation:drift3 30s ease-in-out infinite}
 
 /* LAYOUT */
-.container{max-width:1100px;margin:0 auto;padding:3.5rem 3rem;position:relative;z-index:1}
+.container{max-width:1100px;margin:0 auto;padding:5rem 3rem 3.5rem;position:relative;z-index:1}
 
 /* BACK LINK */
 .back-link{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;margin-bottom:2.5rem;transition:color 0.2s}
@@ -318,6 +318,14 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 [data-theme="light"] .toc-summary-grid li{border-bottom-color:rgba(15,23,42,0.06)}
 /* LIGHT MODE — stack icons (fix invisible icons on light bg) */
 [data-theme="light"] .stack-icon img,[data-theme="light"] .stack-icon svg{filter:brightness(0);opacity:0.65}
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(7,7,14,0.9);border-bottom:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.sn-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#e2e8f0;text-decoration:none}
+.sn-links{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:2rem}
+.sn-links a{font-size:0.65rem;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:#475569;text-decoration:none;transition:color 0.2s;position:relative;padding-bottom:0.2rem}
+.sn-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:linear-gradient(to right,#60a5fa,#a78bfa);transform:scaleX(0);transform-origin:left;transition:transform 0.25s}
+.sn-links a:hover,.sn-links a.active{color:#e2e8f0}
+.sn-links a:hover::after,.sn-links a.active::after{transform:scaleX(1)}
+@media(max-width:768px){.site-nav{padding:0.85rem 1.25rem}.sn-links{display:none}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <script>
@@ -327,17 +335,23 @@ if (window.mermaid) {
 </script>
 </head>
 <body>
+<nav class="site-nav">
+  <a href="index.html" class="sn-logo">CARLIN M.</a>
+  <div class="sn-links">
+    <a href="index.html">Portfolio</a>
+    <a href="pm-toolkit.html">PM Toolkit</a>
+    <a href="rag-explorer.html">RAG</a>
+    <a href="veille.html">Veille</a>
+    <a href="product-decisions.html">Decisions</a>
+  </div>
+</nav>
 <div class="glow g1"></div>
 <div class="glow g2"></div>
 <div class="glow g3"></div>
 
 <div class="container">
 
-  <div class="top-bar">
-    <a href="https://cmankotech.github.io/cmankotech/" class="back-link page-cta-pill">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      <span data-i18n="back">Portfolio</span>
-    </a>
+  <div style="display:flex;justify-content:flex-end;margin-bottom:1.5rem">
     <div class="lang-switcher">
       <button class="lang-btn glass-shimmer glass-focus active" id="btn-fr" onclick="setLang('fr')">FR</button>
       <button class="lang-btn glass-shimmer glass-focus" id="btn-en" onclick="setLang('en')">EN</button>
