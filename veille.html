@@ -38,6 +38,8 @@ h1,h2,h3{font-family:'Syne',sans-serif}
 .sn-links a:hover,.sn-links a.active{color:#e2e8f0}
 .sn-links a:hover::after,.sn-links a.active::after{transform:scaleX(1)}
 @media(max-width:768px){.site-nav{padding:0.85rem 1.25rem}.sn-links{display:none}}
+.sn-right{display:flex;align-items:center;gap:0.75rem}
+@media(max-width:768px){.sn-right{gap:0.5rem}}
 
 /* LAYOUT */
 .container{max-width:1280px;margin:0 auto;padding:5rem 3rem 4rem;position:relative;z-index:1}@media(max-width:768px){.container{padding-left:1.25rem;padding-right:1.25rem}}
@@ -109,7 +111,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 .cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .cat-label{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text)}
 .cat-count{font-family:'DM Mono','Courier New',monospace;font-size:0.62rem;color:var(--muted);margin-left:auto;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:0.2rem 0.5rem;border-radius:5px}
-.cat-digest{font-size:0.82rem;line-height:1.7;color:var(--dim);margin-bottom:1.1rem;padding:0.75rem 1rem;border-radius:8px;border-left:2px solid;background:rgba(0,0,0,0.15)}
+.cat-digest{font-size:0.82rem;line-height:1.7;color:var(--dim);margin-bottom:1.1rem;padding:0.75rem 1rem;border-radius:8px;border:1px solid rgba(255,255,255,0.07);background:rgba(0,0,0,0.15)}
 .cat-items{display:flex;flex-direction:column;gap:0.4rem}
 .cat-item{display:flex;align-items:baseline;gap:0.6rem;font-size:0.77rem;color:var(--dim);line-height:1.5}
 .cat-item::before{content:'→';flex-shrink:0;font-weight:700;font-size:0.66rem;opacity:0.4}
@@ -168,9 +170,11 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
       </div>
     </div>
   </div>
-  <div class="lang-toggle" style="display:flex;gap:0.2rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.2rem">
-    <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
-    <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+  <div class="sn-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
   </div>
 </nav>
 
@@ -363,7 +367,7 @@ function renderCategories(cats) {
         <span class="item-source">${item.source || ''}</span>
       </div>
     `).join('');
-    const digestHtml = cat.digest ? `<div class="cat-digest" style="background:${style.bg};border-color:${style.color}">${cat.digest}</div>` : '';
+    const digestHtml = cat.digest ? `<div class="cat-digest" style="background:${style.bg}">${cat.digest}</div>` : '';
     const itemsHtml = (cat.items || []).length
       ? `<div class="cat-items">${items}</div>`
       : `<div style="font-size:0.78rem;color:var(--muted);padding:0.5rem 0">${I18N[_lang].noArticles}</div>`;
