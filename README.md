@@ -5,7 +5,7 @@ Portfolio interactif de **Carlin Mankoto**, AI Product Manager, construit autour
 - un **PM Toolkit** de 6 outils IA pour structurer discovery, priorisation, OKR, user stories, roadmap et analyse d'interviews ;
 - un **RAG Explorer** pour interroger une base de connaissances product management depuis l'edge ;
 - une page **Product Decisions** qui documente les arbitrages produit derrière KRL1 ;
-- une **veille hebdo** Product / IA alimentée par un workflow Make ;
+- une **veille hebdo** Product / IA dont le Worker fetch nativement 13 flux RSS et synthétise via Groq, déclenchée chaque lundi par un trigger Make ;
 - un mini-jeu web **Pixel Runner**.
 
 **Live :** [cmankotech.github.io/cmankotech](https://cmankotech.github.io/cmankotech/)
@@ -31,7 +31,7 @@ Portfolio interactif de **Carlin Mankoto**, AI Product Manager, construit autour
 | **User Interview Analyzer** | Analyse d'interviews utilisateur : personas, pain points, opportunités |
 | **RAG Explorer** | Recherche sémantique dans une base de connaissances PM embarquée dans le Worker |
 | **Product Decisions** | 10 décisions produit derrière KRL1 : PLG, UX, contraintes, arbitrages et alternatives rejetées |
-| **Veille hebdo** | Veille Product, IA et AI Builders automatisée avec Make, exposée via le Worker |
+| **Veille hebdo** | Veille Product, IA, Builders et No-code : le Worker fetch nativement 13 flux RSS et synthétise via Groq, déclenchée chaque lundi par un simple trigger HTTP Make |
 | **KRL1 Chat Widget** | Assistant flottant avec détection d'intent et routage contextuel vers les outils |
 | **Pixel Runner** | Mini-jeu arcade en JavaScript : esquive d'obstacles et score local |
 

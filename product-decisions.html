@@ -373,6 +373,21 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       </div>
     </div>
 
+    <div class="decision-card" style="--dc-color:#fb923c">
+      <div class="decision-num" id="d16n">Décision 16</div>
+      <div class="decision-q" id="d16q">Pourquoi faire fetcher les flux RSS par le Worker plutôt que par Make ?</div>
+      <div class="decision-a" id="d16a">Scalabilité des sources, zéro config manuelle, Make réduit à un trigger</div>
+      <div class="decision-why" id="d16why">Avec Make, chaque nouvelle source RSS demandait deux modules configurés à la main (RSS + Text Aggregator) — ingérable pour 13 flux répartis en 4 catégories (Product, IA, Builders, No-code/FR). La logique a été déplacée dans le Worker&nbsp;: une constante VEILLE_SOURCES liste les 13 flux, parseRSSItems parse le XML par regex légère sans dépendance externe, les articles sont groupés par catégorie, synthétisés via Groq puis stockés en KV — le tout déclenché par un seul POST /veille-refresh protégé par x-make-secret. Make devient un simple trigger HTTP cron (1 module au lieu d'une quinzaine), et ajouter une source ne demande plus qu'une ligne dans le Worker.</div>
+      <div class="decision-alts">
+        <div class="decision-alts-label" id="d16al">Alternatives rejetées</div>
+        <ul id="d16alts">
+          <li>Garder Make avec 1 module RSS + Aggregator par source — config manuelle x13, fragile au moindre changement de flux</li>
+          <li>Service tiers d'agrégation RSS — coût récurrent, dépendance externe, contraire au choix zéro-infra du site</li>
+          <li>Cron Cloudflare natif sans Make — perd le déclenchement piloté et observable depuis Make sans bénéfice réel</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 
   <footer>
@@ -459,6 +474,10 @@ var I18N = {
     d15why:"Intégrer les pages Architecture (1 779 lignes) et Décisions produit (500 lignes) directement dans index.html aurait créé un fichier monolithique dépassant 4 000 lignes, avec des conflits CSS garantis. Le lazy-load (fetch + DOMParser) charge le contenu à la demande, au premier clic seulement. Chaque page reste une URL autonome et partageable. Le CSS injecté est scopé à l'ID du tab panel (#architecture .decision-card) pour confiner son effet — impossible d'écraser les glows du hero ou les styles des autres sections.",
     d15al:"Alternatives rejetées",
     d15alts:"<li>Intégration statique — index.html &gt; 4 000 lignes, conflits CSS, maintenance difficile</li><li>iFrame — pas de thème dark/light partagé, barre de scroll parasite, UX dégradée</li><li>Pages séparées uniquement — navigation fragmentée, on quitte l'index à chaque clic</li>",
+    d16n:'Décision 16', d16q:"Pourquoi faire fetcher les flux RSS par le Worker plutôt que par Make ?", d16a:"Scalabilité des sources, zéro config manuelle, Make réduit à un trigger",
+    d16why:"Avec Make, chaque nouvelle source RSS demandait deux modules configurés à la main (RSS + Text Aggregator) — ingérable pour 13 flux répartis en 4 catégories (Product, IA, Builders, No-code/FR). La logique a été déplacée dans le Worker : une constante VEILLE_SOURCES liste les 13 flux, parseRSSItems parse le XML par regex légère sans dépendance externe, les articles sont groupés par catégorie, synthétisés via Groq puis stockés en KV — le tout déclenché par un seul POST /veille-refresh protégé par x-make-secret. Make devient un simple trigger HTTP cron (1 module au lieu d'une quinzaine), et ajouter une source ne demande plus qu'une ligne dans le Worker.",
+    d16al:"Alternatives rejetées",
+    d16alts:"<li>Garder Make avec 1 module RSS + Aggregator par source — config manuelle x13, fragile au moindre changement de flux</li><li>Service tiers d'agrégation RSS — coût récurrent, dépendance externe, contraire au choix zéro-infra du site</li><li>Cron Cloudflare natif sans Make — perd le déclenchement piloté et observable depuis Make sans bénéfice réel</li>",
     footerTech:'Architecture technique',
     footerKrl1:'KRL1 · Couches de décision',
     footerHome:'Portfolio'
@@ -518,6 +537,10 @@ var I18N = {
     d15why:"Embedding the Architecture (1,779 lines) and Product Decisions (500 lines) pages directly into index.html would have created a monolithic file exceeding 4,000 lines, with guaranteed CSS conflicts. Lazy-load (fetch + DOMParser) loads content on demand, only on the first click. Each page remains a shareable standalone URL. Injected CSS is scoped to the tab panel ID (#architecture .decision-card) to confine its effect — impossible to override the hero glows or other section styles.",
     d15al:"Rejected alternatives",
     d15alts:"<li>Static integration — index.html &gt; 4,000 lines, CSS conflicts, impossible to maintain</li><li>iFrame — no shared dark/light theme, parasitic scrollbar, degraded UX</li><li>Separate pages only — fragmented navigation, leaves index on every click</li>",
+    d16n:'Decision 16', d16q:"Why have the Worker fetch RSS feeds instead of Make?", d16a:"Source scalability, zero manual config, Make reduced to a trigger",
+    d16why:"With Make, every new RSS source required two manually configured modules (RSS + Text Aggregator) — unmanageable for 13 feeds spread across 4 categories (Product, AI, Builders, No-code/FR). The logic moved into the Worker: a VEILLE_SOURCES constant lists the 13 feeds, parseRSSItems parses the XML with a lightweight regex with no external dependency, articles are grouped by category, synthesised via Groq and stored in KV — all triggered by a single POST /veille-refresh protected by x-make-secret. Make becomes a minimal HTTP cron trigger (1 module instead of around fifteen), and adding a source now only takes one line in the Worker.",
+    d16al:"Rejected alternatives",
+    d16alts:"<li>Keep Make with 1 RSS + Aggregator module per source — manual config x13, fragile to any feed change</li><li>Third-party RSS aggregation service — recurring cost, external dependency, against the site's zero-infra philosophy</li><li>Native Cloudflare cron without Make — loses the Make-driven, observable trigger with no real benefit</li>",
     footerTech:'Technical architecture',
     footerKrl1:'KRL1 · Decision layers',
     footerHome:'Portfolio'
@@ -536,7 +559,7 @@ function setLang(lang){
   document.getElementById('subtitleTxt').textContent = T.subtitle;
   ['m1','m2','m3','m4','m5'].forEach(function(id){ document.getElementById(id).textContent = T[id]; });
   document.getElementById('sectionLbl').textContent = T.sectionLbl;
-  for(var i=1;i<=15;i++){
+  for(var i=1;i<=16;i++){
     var n = ('0'+i).slice(-2);
     ['n','q','a','why'].forEach(function(k){
       var el = document.getElementById('d'+n+k);
