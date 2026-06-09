@@ -331,6 +331,114 @@ nav{padding:1rem 1.5rem}
 </style>
 </head>
 <body>
+<!-- Intro splash (self-contained, plays once per session) -->
+<style id="intro-styles">
+#intro{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;background:#08080f;overflow:hidden;transition:opacity .7s cubic-bezier(.65,0,.35,1),transform .7s cubic-bezier(.65,0,.35,1)}
+#intro.intro-out{opacity:0;transform:translateY(-3%);pointer-events:none}
+#intro::before{content:'';position:absolute;width:900px;height:700px;top:50%;left:50%;transform:translate(-50%,-60%);border-radius:50%;filter:blur(120px);opacity:.5;background:radial-gradient(ellipse 55% 55%,rgba(96,165,250,.45),transparent 70%);animation:introGlow 6s ease-in-out infinite}
+@keyframes introGlow{0%,100%{opacity:.4;transform:translate(-50%,-60%) scale(1)}50%{opacity:.6;transform:translate(-50%,-55%) scale(1.12)}}
+.intro-stage{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:1.2rem;padding:0 2rem;text-align:center}
+.intro-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.6rem,8.5vw,6rem);line-height:.98;letter-spacing:-.01em;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:0;transform:translateY(16px);filter:blur(7px)}
+.intro-name.in{animation:introReveal .8s cubic-bezier(.16,1,.3,1) forwards}
+.intro-roleline{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35rem;opacity:0}
+.intro-roleline.in{animation:introFade .5s ease forwards}
+.intro-roleline .lead{font-family:'DM Sans',sans-serif;font-size:clamp(1rem,3vw,1.5rem);font-weight:300;color:#64748b}
+.intro-roles{position:relative;min-height:1.5em;font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(1.05rem,3.2vw,1.6rem);letter-spacing:-.01em;white-space:nowrap;text-align:center;background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee,#60a5fa);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:role-grad-shift 3s linear infinite alternate;transition:opacity .28s ease,transform .28s ease}
+@keyframes role-grad-shift{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+.intro-bar{position:relative;width:min(220px,55vw);height:2px;border-radius:2px;background:rgba(255,255,255,.08);overflow:hidden;opacity:0;margin-top:.4rem}
+.intro-bar.in{opacity:1}
+.intro-bar::after{content:'';position:absolute;inset:0;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee)}
+.intro-bar.in::after{animation:introFill var(--introdur,2.6s) linear forwards}
+.intro-skip{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-family:ui-monospace,monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:#475569;opacity:0;animation:introFade .5s ease 1.2s forwards}
+@keyframes introReveal{to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes introFade{to{opacity:1}}
+@keyframes introFill{to{transform:scaleX(1)}}
+body.intro-lock{overflow:hidden}
+@media (prefers-reduced-motion:reduce){#intro::before{animation:none}.intro-roles{animation:none}.intro-bar.in::after{animation:none;transform:scaleX(1)}}
+</style>
+<div id="intro" role="status" aria-label="Chargement">
+  <div class="intro-stage">
+    <div class="intro-name" id="introName">CARLIN MANKOTO</div>
+    <div class="intro-roleline" id="introRoleLine"><span class="lead">je suis</span><span class="intro-roles" id="introRoles">AI Product Manager</span></div>
+    <div class="intro-bar" id="introBar"></div>
+  </div>
+  <div class="intro-skip">cliquer pour passer</div>
+</div>
+<script>
+(function(){
+  var intro=document.getElementById('intro');
+  if(!intro) return;
+  // Mode édition : #intro-edit garde l'intro figée pour l'édition directe
+  var editMode=/intro-edit/.test(location.hash)||/intro-edit/.test(location.search);
+  // Ne joue qu'une fois par session
+  var seen=false; try{ seen=sessionStorage.getItem('introSeen')==='1'; }catch(e){}
+  if(seen && !editMode){ intro.parentNode.removeChild(intro); return; }
+  document.body.classList.add('intro-lock');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var done=false;
+  function finish(){
+    if(done||editMode) return; done=true;
+    try{ sessionStorage.setItem('introSeen','1'); }catch(e){}
+    intro.classList.add('intro-out');
+    document.body.classList.remove('intro-lock');
+    setTimeout(function(){ if(intro.parentNode) intro.parentNode.removeChild(intro); },800);
+  }
+  intro.addEventListener('click',finish);
+  window.addEventListener('keydown',finish,{once:true});
+  window.addEventListener('wheel',finish,{once:true,passive:true});
+  window.addEventListener('touchmove',finish,{once:true,passive:true});
+
+  var name=document.getElementById('introName');
+  var roleline=document.getElementById('introRoleLine');
+  var rolesEl=document.getElementById('introRoles');
+  var bar=document.getElementById('introBar');
+
+  // Titres qui défilent (repris du hero)
+  var ROLES=['AI Product Manager','AI Builder','Vibe Coder','Passionn\u00e9 d\'IA'];
+  var dur=3600; // durée totale visée
+
+  if(editMode){
+    // Figé pour l'édition directe : état final, ne sort jamais
+    name.classList.add('in'); roleline.classList.add('in'); bar.classList.add('in');
+    rolesEl.textContent=ROLES[0];
+    document.body.classList.remove('intro-lock');
+    return;
+  }
+
+  if(reduce){
+    name.classList.add('in'); roleline.classList.add('in'); bar.classList.add('in');
+    rolesEl.textContent=ROLES[ROLES.length-1];
+    setTimeout(finish,1500);
+    return;
+  }
+
+  // 1) Nom apparaît
+  name.classList.add('in');
+  // 2) Ligne de rôle + barre démarrent, puis les titres défilent
+  setTimeout(function(){
+    roleline.classList.add('in');
+    bar.classList.add('in');
+    bar.style.setProperty('--introdur',(dur-700)+'ms');
+    var step=680, idx=0;
+    rolesEl.textContent=ROLES[0];
+    var cyc=setInterval(function(){
+      idx++;
+      if(idx>=ROLES.length){ clearInterval(cyc); return; }
+      rolesEl.style.opacity='0';
+      rolesEl.style.transform='translateY(-8px)';
+      setTimeout(function(){
+        rolesEl.textContent=ROLES[idx];
+        rolesEl.style.opacity='1';
+        rolesEl.style.transform='translateY(0)';
+      },180);
+    },step);
+  },700);
+
+  // Sortie auto une fois les titres défilés
+  setTimeout(finish,dur);
+})();
+</script>
+<!-- /Intro splash -->
 <div class="glow g1"></div>
 <div class="glow g2"></div>
 <div class="glow g3"></div>
