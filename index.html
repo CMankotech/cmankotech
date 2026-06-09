@@ -215,9 +215,6 @@ section::before{content:'';position:absolute;top:0;left:50%;transform:translateX
 .built-pill:hover{background:rgba(34,211,238,0.15);border-color:rgba(34,211,238,0.45);box-shadow:0 0 20px rgba(34,211,238,0.15);transform:translateY(-1px)}
 .built-pill svg{flex-shrink:0;transition:transform 0.2s}
 .built-pill:hover svg{transform:translateX(2px)}
-.hero-actions{display:flex;gap:0.7rem;flex-wrap:wrap;margin-top:0.4rem}
-.hero-cta-ghost{background:transparent;border-color:var(--border);color:var(--muted)}
-.hero-cta-ghost:hover{color:var(--text);border-color:rgba(255,255,255,0.25);box-shadow:none}
 
 /* REVEAL - visible par defaut, anime si JS */
 .rv{opacity:1;transform:none;transition:opacity 0.55s ease,transform 0.55s ease}
@@ -514,11 +511,6 @@ body.intro-lock{overflow:hidden}
         <span class="hero-hl-1" data-i18n="hero.hl1">Mon portfolio d&rsquo;outils IA</span>
         <span class="hero-hl-2 grad" data-i18n="hero.hl2">pour les product people.</span>
       </h1>
-      <p class="hero-bio" id="heroLine">PM le jour, builder la nuit. Je construis des outils concrets avec l&rsquo;IA parce que les meilleurs outils sont ceux qu&rsquo;on cr&eacute;e soi-m&ecirc;me. Chaque projet ici r&eacute;pond &agrave; un vrai probl&egrave;me que j&rsquo;ai rencontr&eacute; en tant que PM.</p>
-      <div class="hero-actions">
-        <a href="#projects" class="built-pill" data-i18n="hero.cta1">Voir les projets &rarr;</a>
-        <a href="#architecture" class="built-pill hero-cta-ghost" data-i18n="hero.cta2">Architecture du site &rarr;</a>
-      </div>
 
       <style id="hmock-styles">
       @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
@@ -555,6 +547,7 @@ body.intro-lock{overflow:hidden}
       .htspin{color:var(--tk-accent);font-weight:700}
       .htbar{color:var(--tk-ok);letter-spacing:0.5px}
       .htnote{color:var(--tk-note);font-style:italic}
+      .htlead{color:var(--tk-sub);font-style:italic;opacity:0.92}
       .hmock-theme{position:relative;flex:none}
       .hmock-theme-btn{display:flex;align-items:center;gap:0.42rem;font-family:'Syne',sans-serif;font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:0.3rem 0.5rem 0.3rem 0.6rem;cursor:pointer;transition:color .2s,border-color .2s,background .2s;line-height:1}
       .hmock-theme-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.22);background:rgba(255,255,255,0.08)}
@@ -632,50 +625,56 @@ body.intro-lock{overflow:hidden}
   if(!host||!body) return;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   var spinFrames=['⠋','⠙','⠹','⠸','⠼','⠴','⠦','⠧','⠇','⠏'];
-  var clsMap={t:'htt',k:'htsub',f:'htf',s:'hts',n:'htn',p:'htpath',d:'htdim'};
+  var clsMap={t:'htt',k:'htsub',f:'htf',s:'hts',n:'htn',p:'htpath',d:'htdim',lead:'htlead'};
   function cmd(segs,think){return {type:'cmd',segs:segs,think:think||500};}
   function out(h){return {type:'out',html:h};}
   function spin(label,ms,done){return {type:'spin',label:label,ms:ms,done:done};}
   function prog(label,ms,tail){return {type:'prog',label:label,ms:ms,tail:tail||''};}
   function gap(){return {type:'gap'};}
   function note(t){return {type:'out',html:'<span class="htnote"># '+t+'</span>'};}
-  var SCRIPT=[
-    cmd([['claude','t'],[' ','d'],['"ajoute le scoring RICE + MoSCoW au backlog-prioritizer"','s']],320),
-    spin('édition des fichiers',720,'<span class="hto">✓</span> <span class="htsub">moteur de scoring</span> <span class="htdim">prêt · 142ms</span>'),
-    out('<span class="htdim">→</span> <span class="htpath">backlog-prioritizer.html</span> <span class="htdim">· mis à jour</span>'),
-    note('range tes idées par impact, sans tableur'),
+  function lead(t,think){return {type:'cmd',segs:[['# '+t,'lead']],think:think||700,noPfx:true};}
+    function buildScript(lang){
+    var en = lang==='en';
+    return [
+    lead(en?'PM by day, builder by night. I build concrete tools with AI because the best tools are the ones you create yourself. Every project here solves a real problem I faced as a PM.':'PM le jour, builder la nuit. Je construis des outils concrets avec l’IA parce que les meilleurs outils sont ceux qu’on crée soi-même. Chaque projet ici répond à un vrai problème que j’ai rencontré en tant que PM.'),
     gap(),
-    cmd([['codex','t'],[' ','d'],['"écris l’assistant de discovery (JTBD + personas)"','s']],300),
-    spin('génération',680,'<span class="hto">✓</span> <span class="htn">12</span> insights extraits <span class="htdim">· besoins (JTBD) identifiés</span>'),
-    out('<span class="htdim">→</span> <span class="htpath">discovery-assistant.html</span> <span class="htdim">· en ligne</span>'),
-    note('transforme des interviews en besoins clairs'),
+    cmd([['claude','t'],[' ','d'],[en?'"add RICE + MoSCoW scoring to the backlog-prioritizer"':'"ajoute le scoring RICE + MoSCoW au backlog-prioritizer"','s']],320),
+    spin(en?'editing files':'édition des fichiers',720,'<span class="hto">✓</span> <span class="htsub">'+(en?'scoring engine':'moteur de scoring')+'</span> <span class="htdim">'+(en?'ready · 142ms':'prêt · 142ms')+'</span>'),
+    out('<span class="htdim">→</span> <span class="htpath">backlog-prioritizer.html</span> <span class="htdim">'+(en?'· updated':'· mis à jour')+'</span>'),
+    note(en?'sort your ideas by impact, no spreadsheet':'range tes idées par impact, sans tableur'),
+    gap(),
+    cmd([['codex','t'],[' ','d'],[en?'"write the discovery assistant (JTBD + personas)"':'"écris l’assistant de discovery (JTBD + personas)"','s']],300),
+    spin(en?'generating':'génération',680,'<span class="hto">✓</span> <span class="htn">12</span> '+(en?'insights extracted':'insights extraits')+' <span class="htdim">'+(en?'· needs (JTBD) identified':'· besoins (JTBD) identifiés')+'</span>'),
+    out('<span class="htdim">→</span> <span class="htpath">discovery-assistant.html</span> <span class="htdim">'+(en?'· live':'· en ligne')+'</span>'),
+    note(en?'turn interviews into clear needs':'transforme des interviews en besoins clairs'),
     gap(),
     cmd([['node','t'],[' --test ','f'],['tests/proxy.test.mjs','p']],260),
-    spin('exécution des tests',640,'<span class="hto">✓</span> <span class="htn">14</span> tests <span class="htdim">·</span> <span class="htn">0</span> échec <span class="htdim">· 380ms</span>'),
-    note('chaque route de l’API est vérifiée avant déploiement'),
+    spin(en?'running tests':'exécution des tests',640,'<span class="hto">✓</span> <span class="htn">14</span> tests <span class="htdim">·</span> <span class="htn">0</span> '+(en?'failed':'échec')+' <span class="htdim">· 380ms</span>'),
+    note(en?'every API route is verified before deploy':'chaque route de l’API est vérifiée avant déploiement'),
     gap(),
-    cmd([['curl','t'],[' -s ','f'],['groq-proxy.workers.dev/rag-query','p'],[' -d ','f'],["'{\"message\":\"comment prioriser ?\"}'",'s']],320),
-    spin('requête · edge',560,'<span class="hto">200</span> <span class="htdim">OK · 184ms</span>'),
+    cmd([['curl','t'],[' -s ','f'],['groq-proxy.workers.dev/rag-query','p'],[' -d ','f'],[en?'\'{"message":"how to prioritize?"}\'':'\'{"message":"comment prioriser ?"}\'','s']],320),
+    spin(en?'request · edge':'requête · edge',560,'<span class="hto">200</span> <span class="htdim">OK · 184ms</span>'),
     out('<span class="htdim">{</span>'),
-    out('  <span class="htf">"reply"</span><span class="htdim">:</span> <span class="hts">"RICE pour l’impact, MoSCoW pour trancher"</span><span class="htdim">,</span>'),
+    out('  <span class="htf">"reply"</span><span class="htdim">:</span> <span class="hts">'+(en?'"RICE for impact, MoSCoW to decide"':'"RICE pour l’impact, MoSCoW pour trancher"')+'</span><span class="htdim">,</span>'),
     out('  <span class="htf">"matched_docs"</span><span class="htdim">:</span> <span class="htn">3</span><span class="htdim">,</span> <span class="htf">"llm"</span><span class="htdim">:</span> <span class="hts">"llama-3.3-70b-versatile"</span>'),
     out('<span class="htdim">}</span>'),
-    note('l’API RAG répond en direct, avec ses sources'),
+    note(en?'the RAG API answers live, with its sources':'l’API RAG répond en direct, avec ses sources'),
     gap(),
     cmd([['npx','t'],[' wrangler tail ','k'],['groq-proxy','p'],[' --format ','f'],['pretty','k']],280),
     out('<span class="htdim">POST</span> <span class="htpath">/rag-query</span> <span class="hto">200</span> <span class="htdim">· 184ms</span>'),
-    out('<span class="htdim">trace →</span> Langfuse <span class="htdim">(non bloquant)</span>'),
-    note('je surveille chaque requête en temps réel'),
+    out('<span class="htdim">trace →</span> Langfuse <span class="htdim">'+(en?'(non-blocking)':'(non bloquant)')+'</span>'),
+    note(en?'I monitor every request in real time':'je surveille chaque requête en temps réel'),
     gap(),
     cmd([['npx','t'],[' wrangler deploy ','k'],['--config proxy/wrangler.toml','f']],280),
-    prog('upload du Worker',900,'<span class="htdim">Workers AI · binding AI · bge-small-en-v1.5</span>'),
-    out('<span class="hto">✓</span> déployé <span class="htdim">·</span> <span class="htpath">groq-proxy.workers.dev</span> <span class="htdim">· cold start 28ms</span>'),
-    note('l’API en ligne sur le réseau Cloudflare, rapide partout'),
+    prog(en?'uploading Worker':'upload du Worker',900,'<span class="htdim">Workers AI · binding AI · bge-small-en-v1.5</span>'),
+    out('<span class="hto">✓</span> '+(en?'deployed':'déployé')+' <span class="htdim">·</span> <span class="htpath">groq-proxy.workers.dev</span> <span class="htdim">· cold start 28ms</span>'),
+    note(en?'the API live on Cloudflare’s network, fast everywhere':'l’API en ligne sur le réseau Cloudflare, rapide partout'),
     gap(),
     cmd([['git','t'],[' push ','k'],['origin main','p']],240),
-    spin('build + déploiement Pages',720,'<span class="hto">✓</span> <span class="htn">6</span> outils <span class="htdim">·</span> <span class="htc">en ligne</span>'),
-    note('tout est public, sans clé API côté visiteur')
-  ];
+    spin(en?'build + Pages deploy':'build + déploiement Pages',720,'<span class="hto">✓</span> <span class="htn">6</span> '+(en?'tools':'outils')+' <span class="htdim">·</span> <span class="htc">'+(en?'live':'en ligne')+'</span>'),
+    note(en?'all public, no API key on the visitor side':'tout est public, sans clé API côté visiteur')
+    ];
+  }
   function el(tag,cls,h){var e=document.createElement(tag);if(cls)e.className=cls;if(h!=null)e.innerHTML=h;return e;}
   function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
   var clock=new Date();
@@ -689,14 +688,14 @@ body.intro-lock{overflow:hidden}
   function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
   async function typeCmd(step){
     tick();
-    var line=el('div','hterm-cmd'); line.innerHTML=pfx(); body.appendChild(line); scroll();
+    var line=el('div','hterm-cmd'); line.innerHTML=(step.noPfx?'':pfx()); body.appendChild(line); scroll();
     var cursor=el('span','hterm-cursor'); line.appendChild(cursor);
     for(var s=0;s<step.segs.length;s++){
       var seg=step.segs[s]; var span=el('span',clsMap[seg[1]]); line.insertBefore(span,cursor);
       var txt=seg[0];
       for(var c=0;c<txt.length;c++){
         span.textContent+=txt[c];
-        var d=15+Math.random()*26; if(txt[c]===' ') d+=20; if(c===0) d+=34;
+        var d=10+Math.random()*18; if(txt[c]===' ') d+=14; if(c===0) d+=24;
         await sleep(d);
       }
     }
@@ -717,7 +716,7 @@ body.intro-lock{overflow:hidden}
   async function run(){
     body.style.transition='transform 0.45s cubic-bezier(.22,.61,.36,1), opacity 0.5s ease';
     while(true){
-      resetClock(); body.style.opacity='1'; body.style.transform='translateY(0)'; body.innerHTML='';
+      resetClock(); body.style.opacity='1'; body.style.transform='translateY(0)'; body.innerHTML=''; var SCRIPT=buildScript(document.documentElement.lang||'fr');
       for(var i=0;i<SCRIPT.length;i++){
         var step=SCRIPT[i];
         if(step.type==='cmd'){ await typeCmd(step); }
@@ -732,10 +731,10 @@ body.intro-lock{overflow:hidden}
     }
   }
   function renderStatic(){
-    resetClock(); body.innerHTML='';
+    resetClock(); body.innerHTML=''; var SCRIPT=buildScript(document.documentElement.lang||'fr');
     for(var i=0;i<SCRIPT.length;i++){
       var step=SCRIPT[i];
-      if(step.type==='cmd'){ tick(); var h=pfx(); for(var s=0;s<step.segs.length;s++){h+='<span class="'+clsMap[step.segs[s][1]]+'">'+esc(step.segs[s][0])+'</span>';} body.appendChild(el('div','hterm-cmd',h)); }
+      if(step.type==='cmd'){ tick(); var h=(step.noPfx?'':pfx()); for(var s=0;s<step.segs.length;s++){h+='<span class="'+clsMap[step.segs[s][1]]+'">'+esc(step.segs[s][0])+'</span>';} body.appendChild(el('div','hterm-cmd',h)); }
       else if(step.type==='spin'){ body.appendChild(el('div','hterm-line',step.done)); }
       else if(step.type==='prog'){ body.appendChild(el('div','hterm-line','<span class="htdim">'+step.label+'</span> <span class="htbar">'+bar(14,14)+'</span> <span class="htn">100%</span>'+(step.tail?'  '+step.tail:''))); }
       else if(step.type==='gap'){ body.appendChild(el('div','hterm-line','&nbsp;')); }
