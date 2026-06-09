@@ -530,8 +530,8 @@ body.intro-lock{overflow:hidden}
       .hmock-track img{display:block;height:100%;width:auto;flex:none}
       @keyframes hmockScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
       .hmock-viewport::after{content:'';position:absolute;left:0;right:0;bottom:0;height:30px;z-index:5;pointer-events:none;background:linear-gradient(0deg,rgba(7,9,16,0.92),transparent)}
-      .hterm{position:absolute;inset:0;overflow:hidden;background:var(--tk-bg);font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.82rem;line-height:1.6;color:var(--tk-fg);--tk-bg:radial-gradient(130% 120% at 88% -15%,rgba(34,211,238,0.12),transparent 52%),radial-gradient(120% 120% at 8% 118%,rgba(167,139,250,0.10),transparent 55%),linear-gradient(180deg,#0b1122,#070910);--tk-fg:#c3cdde;--tk-cmd:#22d3ee;--tk-prompt:#22d3ee;--tk-accent:#22d3ee;--tk-flag:#a78bfa;--tk-string:#f472b6;--tk-num:#f0b35e;--tk-path:#67e8f9;--tk-ok:#34d399;--tk-sub:#dbe4f0;--tk-dim:#566377;--tk-note:#8a98ad;--tk-caret:#22d3ee;--tk-caret-glow:rgba(34,211,238,0.85)}
-      .hterm-body{position:absolute;left:0;right:0;top:0;padding:1.25rem 1.45rem 1.5rem;transition:transform 0.45s cubic-bezier(.22,.61,.36,1)}
+      .hterm{position:absolute;inset:0;overflow:hidden;display:flex;flex-direction:column;background:var(--tk-bg);font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.82rem;line-height:1.6;color:var(--tk-fg);--tk-bg:radial-gradient(130% 120% at 88% -15%,rgba(34,211,238,0.12),transparent 52%),radial-gradient(120% 120% at 8% 118%,rgba(167,139,250,0.10),transparent 55%),linear-gradient(180deg,#0b1122,#070910);--tk-fg:#c3cdde;--tk-cmd:#22d3ee;--tk-prompt:#22d3ee;--tk-accent:#22d3ee;--tk-flag:#a78bfa;--tk-string:#f472b6;--tk-num:#f0b35e;--tk-path:#67e8f9;--tk-ok:#34d399;--tk-sub:#dbe4f0;--tk-dim:#566377;--tk-note:#8a98ad;--tk-caret:#22d3ee;--tk-caret-glow:rgba(34,211,238,0.85)}
+      .hterm-body{position:absolute;left:0;right:0;top:0;padding:1.25rem 1.45rem 1.5rem;transition:transform 0.45s cubic-bezier(.22,.61,.36,1)}`r`n      .hterm-pin{flex:0 0 auto;padding:1.05rem 1.45rem 0.7rem;border-bottom:1px solid rgba(255,255,255,0.08);position:relative;z-index:2;white-space:pre-wrap;word-break:break-word}`r`n      .hterm-scroll{flex:1 1 auto;position:relative;overflow:hidden;min-height:0}
       .hterm-cmd{margin-top:0.72em}.hterm-cmd:first-child{margin-top:0}
       .hterm-line{white-space:pre-wrap;word-break:break-word}
       .htt{color:var(--tk-cmd);font-weight:700}
@@ -583,7 +583,7 @@ body.intro-lock{overflow:hidden}
       .hterm-scan{position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.03) 0 1px,transparent 1px 3px);mix-blend-mode:overlay;opacity:0.55}
       .hterm-beam{position:absolute;left:0;right:0;height:38%;z-index:3;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(120,200,255,0.055),transparent);animation:htermBeam 7.5s linear infinite}
       @keyframes htermBeam{0%{transform:translateY(-60%)}100%{transform:translateY(280%)}}
-      @media(max-width:560px){.hterm{font-size:0.7rem;line-height:1.55}.hterm-body{padding:1rem 1.05rem 1.2rem}}
+      @media(max-width:560px){.hterm{font-size:0.7rem;line-height:1.55}.hterm-body{padding:1rem 1.05rem 1.2rem}.hterm-pin{padding:0.85rem 1.05rem 0.6rem}}
       @media(prefers-reduced-motion:reduce){.hterm-beam{animation:none;opacity:0}.hterm-body{transition:none}}
       .hmock-frame:hover .hmock-track{animation-play-state:paused}
       [data-theme="light"] .hmock-frame{background:linear-gradient(180deg,rgba(255,255,255,0.85),rgba(244,247,252,0.9));border-color:rgba(15,23,42,0.1)}
@@ -609,7 +609,8 @@ body.intro-lock{overflow:hidden}
           </div>
           <div class="hmock-viewport" aria-hidden="true">
             <div class="hterm" id="hterm">
-              <div class="hterm-body" id="htermBody"></div>
+              <div class="hterm-pin" id="htermPin"></div>
+              <div class="hterm-scroll" id="htermScroll"><div class="hterm-body" id="htermBody"></div></div>
               <div class="hterm-gloss"></div>
               <div class="hterm-scan"></div>
               <div class="hterm-beam"></div>
@@ -622,6 +623,8 @@ body.intro-lock{overflow:hidden}
 (function(){
   var host=document.getElementById('hterm');
   var body=document.getElementById('htermBody');
+  var pin=document.getElementById('htermPin');
+  var scrollEl=document.getElementById('htermScroll')||host;
   if(!host||!body) return;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   var spinFrames=['⠋','⠙','⠹','⠸','⠼','⠴','⠦','⠧','⠇','⠏'];
@@ -636,8 +639,6 @@ body.intro-lock{overflow:hidden}
     function buildScript(lang){
     var en = lang==='en';
     return [
-    lead(en?'PM by day, builder by night. I build concrete tools with AI because the best tools are the ones you create yourself. Every project here solves a real problem I faced as a PM.':'PM le jour, builder la nuit. Je construis des outils concrets avec l’IA parce que les meilleurs outils sont ceux qu’on crée soi-même. Chaque projet ici répond à un vrai problème que j’ai rencontré en tant que PM.'),
-    gap(),
     cmd([['claude','t'],[' ','d'],[en?'"add RICE + MoSCoW scoring to the backlog-prioritizer"':'"ajoute le scoring RICE + MoSCoW au backlog-prioritizer"','s']],320),
     spin(en?'editing files':'édition des fichiers',720,'<span class="hto">✓</span> <span class="htsub">'+(en?'scoring engine':'moteur de scoring')+'</span> <span class="htdim">'+(en?'ready · 142ms':'prêt · 142ms')+'</span>'),
     out('<span class="htdim">→</span> <span class="htpath">backlog-prioritizer.html</span> <span class="htdim">'+(en?'· updated':'· mis à jour')+'</span>'),
@@ -684,7 +685,7 @@ body.intro-lock{overflow:hidden}
   function tick(){clock.setSeconds(clock.getSeconds()+1+Math.floor(Math.random()*4));}
   function pfx(){return '<span class="htdim">carlin@krl1</span> <span class="htprompt">❯</span> ';}
   function bar(fill,total){var s='';for(var i=0;i<total;i++)s+=(i<fill?'█':'░');return s;}
-  function scroll(){var over=body.scrollHeight-host.clientHeight;body.style.transform= over>6 ? 'translateY('+(-over-6)+'px)' : 'translateY(0)';}
+  function scroll(){var over=body.scrollHeight-scrollEl.clientHeight;body.style.transform= over>6 ? 'translateY('+(-over-6)+'px)' : 'translateY(0)';}
   function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
   async function typeCmd(step){
     tick();
@@ -743,7 +744,22 @@ body.intro-lock{overflow:hidden}
     tick(); var d=el('div','hterm-cmd', pfx()); d.appendChild(el('span','hterm-cursor')); body.appendChild(d);
     requestAnimationFrame(scroll);
   }
-  if(reduce){ renderStatic(); } else { run(); }
+  var LEADTXT={
+    fr:'PM le jour, builder la nuit. Je construis des outils concrets avec l’IA parce que les meilleurs outils sont ceux qu’on crée soi-même. Chaque projet ici répond à un vrai problème que j’ai rencontré en tant que PM.',
+    en:'PM by day, builder by night. I build concrete tools with AI because the best tools are the ones you create yourself. Every project here solves a real problem I faced as a PM.'
+  };
+  function setPin(){ if(!pin) return; var lang=document.documentElement.lang||'fr'; pin.innerHTML='<span class="htlead">'+esc('# '+(LEADTXT[lang]||LEADTXT.fr))+'</span>'; }
+  async function typePin(){
+    if(!pin){ return; }
+    pin.innerHTML=''; var span=el('span','htlead'); pin.appendChild(span);
+    var cur=el('span','hterm-cursor'); pin.appendChild(cur);
+    var lang=document.documentElement.lang||'fr'; var txt='# '+(LEADTXT[lang]||LEADTXT.fr);
+    for(var c=0;c<txt.length;c++){ span.textContent+=txt[c]; var d=10+Math.random()*16; if(txt[c]===' ') d+=12; await sleep(d); }
+    cur.remove();
+  }
+  window.addEventListener('load',function(){ var prev=window.setLang; window.setLang=function(l){ if(prev) prev(l); setPin(); }; });
+  if(reduce){ setPin(); renderStatic(); }
+  else { typePin().then(run); }
 })();
 </script>
 
