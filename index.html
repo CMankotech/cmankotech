@@ -113,10 +113,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hero-headline{display:flex;flex-direction:column;gap:0.15rem;margin:0}
 .hero-hl-1{font-family:'DM Sans',sans-serif;font-size:clamp(2.6rem,5.5vw,4.8rem);font-weight:500;line-height:0.98;letter-spacing:-0.045em;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-hl-2{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-size:clamp(2.6rem,5.5vw,4.8rem);line-height:1.05;letter-spacing:-0.02em}
-.hero-name-row{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap}
-.hero-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);letter-spacing:-0.01em}
-.hero-sub-role{font-size:0.75rem;font-weight:500;color:#67e8f9;letter-spacing:0.04em;font-family:'DM Sans',sans-serif}
-.hero-sub-role::before{content:'';display:inline-block;width:14px;height:1px;background:#67e8f9;margin-right:0.5rem;vertical-align:middle}
 .hero-bio{font-size:0.92rem;line-height:1.75;color:var(--dim);max-width:780px}
 
 /* SECTIONS */
@@ -219,6 +215,9 @@ section::before{content:'';position:absolute;top:0;left:50%;transform:translateX
 .built-pill:hover{background:rgba(34,211,238,0.15);border-color:rgba(34,211,238,0.45);box-shadow:0 0 20px rgba(34,211,238,0.15);transform:translateY(-1px)}
 .built-pill svg{flex-shrink:0;transition:transform 0.2s}
 .built-pill:hover svg{transform:translateX(2px)}
+.hero-actions{display:flex;gap:0.7rem;flex-wrap:wrap;margin-top:0.4rem}
+.hero-cta-ghost{background:transparent;border-color:var(--border);color:var(--muted)}
+.hero-cta-ghost:hover{color:var(--text);border-color:rgba(255,255,255,0.25);box-shadow:none}
 
 /* REVEAL - visible par defaut, anime si JS */
 .rv{opacity:1;transform:none;transition:opacity 0.55s ease,transform 0.55s ease}
@@ -515,11 +514,11 @@ body.intro-lock{overflow:hidden}
         <span class="hero-hl-1" data-i18n="hero.hl1">Mon portfolio d&rsquo;outils IA</span>
         <span class="hero-hl-2 grad" data-i18n="hero.hl2">pour les product people.</span>
       </h1>
-      <div class="hero-name-row">
-        <span class="hero-name">Carlin Mankoto</span>
-        <span class="hero-sub-role" id="heroRole" data-i18n="hero.role">AI Product Manager</span>
-      </div>
       <p class="hero-bio" id="heroLine">PM le jour, builder la nuit. Je construis des outils concrets avec l&rsquo;IA parce que les meilleurs outils sont ceux qu&rsquo;on cr&eacute;e soi-m&ecirc;me. Chaque projet ici r&eacute;pond &agrave; un vrai probl&egrave;me que j&rsquo;ai rencontr&eacute; en tant que PM.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="built-pill" data-i18n="hero.cta1">Voir les projets &rarr;</a>
+        <a href="#architecture" class="built-pill hero-cta-ghost" data-i18n="hero.cta2">Architecture du site &rarr;</a>
+      </div>
 
       <style id="hmock-styles">
       @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
@@ -1407,38 +1406,6 @@ window.setLang = function(lang){
 };
 
 // ═══════════════════════════════════════════════════════
-// 3. ROTATING ROLE BADGE
-// ═══════════════════════════════════════════════════════
-var _roles_fr = ['AI Product Manager','Builder IA','Vibe Coder','Passionné d\'IA'];
-var _roles_en = ['AI Product Manager','Builder','Vibe Coder','AI Enthusiast'];
-var _roleEl = document.getElementById('heroRole');
-var _roleIdx = 0;
-var _roleLang = 'fr';
-
-function rotateRole(){
-  if(!_roleEl) return;
-  var roles = _roleLang==='en' ? _roles_en : _roles_fr;
-  _roleIdx = (_roleIdx+1) % roles.length;
-  _roleEl.style.opacity='0';
-  _roleEl.style.transform='translateY(-8px)';
-  setTimeout(function(){
-    _roleEl.textContent = roles[_roleIdx];
-    _roleEl.style.transition='opacity .4s ease,transform .4s ease';
-    _roleEl.style.opacity='1';
-    _roleEl.style.transform='translateY(0)';
-  }, 350);
-}
-
-_roleEl && (_roleEl.style.transition='opacity .4s ease,transform .4s ease');
-setInterval(rotateRole, 2200);
-
-var _origRoleSetLang = window.setLang;
-window.setLang = function(lang){
-  _roleLang = lang;
-  if(_origRoleSetLang) _origRoleSetLang(lang);
-};
-
-// ═══════════════════════════════════════════════════════
 // 4. ANIMATED COUNTERS
 // ═══════════════════════════════════════════════════════
 function animCounter(el){
@@ -1465,8 +1432,6 @@ function animCounter(el){
 <style>
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 @keyframes role-grad-shift{0%{background-position:0% 50%}100%{background-position:100% 50%}}
-#heroRole{display:inline-block;will-change:opacity,transform;background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee,#60a5fa);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:role-grad-shift 4s linear infinite}
-#heroRole::before{background:linear-gradient(90deg,#60a5fa,#22d3ee)}
 </style>
 
 <script type="application/ld+json">
