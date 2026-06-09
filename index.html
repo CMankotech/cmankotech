@@ -54,7 +54,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 4rem;background:rgba(8,8,15,0.8);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
-.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:-0.06em;line-height:1;text-transform:lowercase}
+.nav-logo{display:inline-flex;align-items:center;cursor:pointer}.nav-logo img{display:block;height:34px;width:34px}
 .nav-right{display:flex;align-items:center;gap:1.5rem}
 .nav-links{display:flex;gap:2.5rem;position:absolute;left:50%;transform:translateX(-50%)}
 .nav-links a{font-size:0.7rem;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);text-decoration:none;transition:color 0.25s;position:relative;padding-bottom:0.25rem}
@@ -445,7 +445,7 @@ body.intro-lock{overflow:hidden}
 <div class="glow g7"></div>
 
 <nav>
-  <div class="nav-logo grad" title="Carlin Mankoto">cm</div>
+  <div class="nav-logo" title="Carlin Mankoto"><img src="logo.svg" alt="Carlin Mankoto" width="34" height="34"></div>
   <div class="nav-links">
     <a href="#projects" class="nav-section" data-i18n="nav.projects">Projets</a>
     <a href="#architecture" class="nav-section" data-i18n="nav.arch">Architecture</a>
@@ -700,7 +700,7 @@ body.intro-lock{overflow:hidden}
       var txt=seg[0];
       for(var c=0;c<txt.length;c++){
         span.textContent+=txt[c];
-        var d=10+Math.random()*18; if(txt[c]===' ') d+=14; if(c===0) d+=24;
+        var d=6+Math.random()*11; if(txt[c]===' ') d+=8; if(c===0) d+=16;
         await sleep(d);
       }
     }
@@ -758,7 +758,7 @@ body.intro-lock{overflow:hidden}
     pin.innerHTML=''; var span=el('span','htlead'); pin.appendChild(span);
     var cur=el('span','hterm-cursor'); pin.appendChild(cur);
     var lang=document.documentElement.lang||'fr'; var txt='# '+(LEADTXT[lang]||LEADTXT.fr);
-    for(var c=0;c<txt.length;c++){ span.textContent+=txt[c]; var d=10+Math.random()*16; if(txt[c]===' ') d+=12; await sleep(d); }
+    for(var c=0;c<txt.length;c++){ span.textContent+=txt[c]; var d=6+Math.random()*10; if(txt[c]===' ') d+=7; await sleep(d); }
     cur.remove(); syncClip();
   }
   window.addEventListener('load',function(){ var prev=window.setLang; window.setLang=function(l){ if(prev) prev(l); setPin(); }; });
