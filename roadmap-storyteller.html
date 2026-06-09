@@ -222,7 +222,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 @keyframes drift1{0%{transform:translate(0,0) scale(1)}25%{transform:translate(80px,60px) scale(1.12)}50%{transform:translate(-40px,120px) scale(0.95)}75%{transform:translate(60px,-30px) scale(1.08)}100%{transform:translate(0,0) scale(1)}}@keyframes drift2{0%{transform:translate(0,0) scale(1)}25%{transform:translate(-70px,-50px) scale(1.1)}50%{transform:translate(50px,-90px) scale(0.92)}75%{transform:translate(-60px,40px) scale(1.05)}100%{transform:translate(0,0) scale(1)}}@keyframes drift3{0%{transform:translate(0,0) scale(1)}25%{transform:translate(90px,-40px) scale(1.08)}50%{transform:translate(-30px,-80px) scale(1.15)}75%{transform:translate(-70px,50px) scale(0.9)}100%{transform:translate(0,0) scale(1)}}
 [data-theme="light"] .glow{opacity:0.12;mix-blend-mode:multiply}
 .site-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(7,7,14,0.9);border-bottom:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
-.sn-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#e2e8f0;text-decoration:none}
+.sn-logo{display:inline-flex;align-items:center;text-decoration:none}.sn-logo img{display:block;height:30px;width:30px}
 .sn-links{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2rem}
 .sn-links a{font-size:0.65rem;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:#475569;text-decoration:none;transition:color 0.2s;position:relative;padding-bottom:0.2rem}
 .sn-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:linear-gradient(to right,#60a5fa,#a78bfa);transform:scaleX(0);transform-origin:left;transition:transform 0.25s}
@@ -245,10 +245,11 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 .nav-tools-menu .nt-ico{font-size:0.95rem;line-height:1}
 @media(max-width:768px){.nav-tools-menu{left:auto;right:0;transform:translateY(-6px)}.nav-tools.open .nav-tools-menu{transform:translateY(0)}}
 </style>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
 <nav class="site-nav">
-  <a href="index.html" class="sn-logo">CARLIN M.</a>
+  <a href="index.html" class="sn-logo" aria-label="Accueil"><img src="logo.svg" alt="Carlin Mankoto" width="30" height="30"></a>
   <div class="sn-links">
     <a href="index.html">Portfolio</a>
     <div class="nav-tools" id="navTools">
