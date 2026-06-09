@@ -320,7 +320,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 [data-theme="light"] .stack-icon img,[data-theme="light"] .stack-icon svg{filter:brightness(0);opacity:0.65}
 .site-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(7,7,14,0.9);border-bottom:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 .sn-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#e2e8f0;text-decoration:none}
-.sn-links{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:2rem}
+.sn-links{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2rem}
 .sn-links a{font-size:0.65rem;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:#475569;text-decoration:none;transition:color 0.2s;position:relative;padding-bottom:0.2rem}
 .sn-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:linear-gradient(to right,#60a5fa,#a78bfa);transform:scaleX(0);transform-origin:left;transition:transform 0.25s}
 .sn-links a:hover,.sn-links a.active{color:#e2e8f0}
@@ -396,9 +396,8 @@ if (window.mermaid) {
     <a class="toc-item" href="#s5"         data-i18n="toc.s5">05 RAG</a>
     <a class="toc-item" href="#s5b"        data-i18n="toc.s5b">05b Perf</a>
     <a class="toc-item" href="#s5c"        data-i18n="toc.s5c">05c KRL1</a>
-    <a class="toc-item" href="#s6"         data-i18n="toc.s6">06 Suite</a>
-    <a class="toc-item" href="#s7"         data-i18n="toc.s7">07 Glossaire</a>
-    <a class="toc-item" href="#s8"         data-i18n="toc.s8">08 Nav</a>
+    <a class="toc-item" href="#s6"         data-i18n="toc.s6">06 Glossaire</a>
+    <a class="toc-item" href="#s7"         data-i18n="toc.s7">07 Nav</a>
   </nav>
 
   <!-- SOMMAIRE -->
@@ -415,9 +414,8 @@ if (window.mermaid) {
       <li><a href="#s5"><span class="toc-s-num">05</span><span data-i18n="toc.sum.s5">Orchestration Worker, RAG</span></a></li>
       <li><a href="#s5b"><span class="toc-s-num">05b</span><span data-i18n="toc.sum.s5b">Performance &amp; métriques</span></a></li>
       <li><a href="#s5c"><span class="toc-s-num">05c</span><span data-i18n="toc.sum.s5c">KRL1 · Architecture de décision</span></a></li>
-      <li><a href="#s6"><span class="toc-s-num">06</span><span data-i18n="toc.sum.s6">Et maintenant ?</span></a></li>
-      <li><a href="#s7"><span class="toc-s-num">07</span><span data-i18n="toc.sum.s7">Glossaire technique</span></a></li>
-      <li><a href="#s8"><span class="toc-s-num">08</span><span data-i18n="toc.sum.s8">Navigation contextuelle</span></a></li>
+      <li><a href="#s6"><span class="toc-s-num">06</span><span data-i18n="toc.sum.s6">Glossaire technique</span></a></li>
+      <li><a href="#s7"><span class="toc-s-num">07</span><span data-i18n="toc.sum.s7">Navigation contextuelle</span></a></li>
     </ul>
   </div>
 
@@ -1188,32 +1186,11 @@ Réponse actionnable et concise
 
   </section>
 
-  <!-- 06 ET MAINTENANT -->
+  <!-- 06 GLOSSAIRE -->
   <section id="s6">
     <div class="sec-header">
       <span class="sec-num">06</span>
-      <span class="sec-title" data-i18n="s6.title">Et maintenant ?</span>
-    </div>
-    <div class="decision-card" style="margin-bottom:1rem">
-      <div class="decision-q" data-i18n="s6.status.label">Où en est le site</div>
-      <div class="decision-why" data-i18n="s6.status.desc">Le site n'est pas encore vraiment partagé. C'est volontaire : je voulais d'abord que l'architecture soit solide, les cas de fallback couverts, les tests en place. Shipper quelque chose de cassé à des recruteurs ou à des PMs de mon réseau aurait fait plus de mal que de bien.</div>
-    </div>
-    <div class="decision-card" style="margin-bottom:1rem">
-      <div class="decision-q" data-i18n="s6.next.label">La prochaine étape</div>
-      <div class="decision-why" data-i18n="s6.next.desc">L'observabilité LLM est en place avec Langfuse : chaque appel KRL1 génère une trace avec token usage, latences planner/synthesis et intent détecté. La prochaine étape est d'ouvrir le site et utiliser ces données, quels outils génèrent le plus de résultats, est-ce que KRL1 renvoie vers les bons outils au bon moment, où s'arrêtent les utilisateurs avant de générer ?</div>
-    </div>
-    <div class="decision-card">
-      <div class="decision-q" data-i18n="s6.pm.label">Ce que ça démontre</div>
-      <div class="decision-a" data-i18n="s6.pm.a">Builder, mesurer, décider</div>
-      <div class="decision-why" data-i18n="s6.pm.desc">L'analytics est en place : Langfuse trace chaque appel LLM en production, intent détecté, tokens consommés, latence par step. La boucle est fermée : builder → mesurer (Langfuse) → décider → itérer. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.</div>
-    </div>
-  </section>
-
-  <!-- 07 GLOSSAIRE -->
-  <section id="s7">
-    <div class="sec-header">
-      <span class="sec-num">07</span>
-      <span class="sec-title" data-i18n="s7.title">Glossaire technique</span>
+      <span class="sec-title" data-i18n="s6.title">Glossaire technique</span>
     </div>
     <div class="gloss-grid">
       <div class="gloss-card">
@@ -1269,30 +1246,30 @@ Réponse actionnable et concise
     </div>
   </section>
 
-  <section id="s8">
+  <section id="s7">
     <div class="sec-header">
-      <span class="sec-num">08</span>
-      <span class="sec-title" data-i18n="s8.title">Navigation contextuelle &amp; lazy-load</span>
+      <span class="sec-num">07</span>
+      <span class="sec-title" data-i18n="s7.title">Navigation contextuelle &amp; lazy-load</span>
     </div>
     <div class="narrative-block">
-      <p class="narrative-lead" data-i18n="s8.lead">Mai 2026 — refonte complète de la navigation : accordéon remplacé par 5 tabs avec chargement à la demande, et des liens nav qui n'apparaissent que lorsque le visiteur a dépassé le hero.</p>
-      <p class="narrative-p" data-i18n="s8.body">Architecture et Décisions produit sont désormais accessibles comme tabs dans l'index, chargées via fetch + DOMParser au premier clic. Chaque page reste une URL autonome. Le CSS injecté passe par scopeCSS(css, panelId) : chaque sélecteur est préfixé de l'ID du tab (#architecture .decision-card) pour confiner les styles — impossible d'écraser les glows du hero ou les variables globales. La navigation contextuelle repose sur un IntersectionObserver sur .tech-strip-label : les 5 liens de section apparaissent en stagger (60 ms par lien) dès que le visiteur dépasse la zone "Stack technique", et disparaissent instantanément au retour vers le hero.</p>
+      <p class="narrative-lead" data-i18n="s7.lead">Mai 2026 — refonte complète de la navigation : accordéon remplacé par 5 tabs avec chargement à la demande, et des liens nav qui n'apparaissent que lorsque le visiteur a dépassé le hero.</p>
+      <p class="narrative-p" data-i18n="s7.body">Architecture et Décisions produit sont désormais accessibles comme tabs dans l'index, chargées via fetch + DOMParser au premier clic. Chaque page reste une URL autonome. Le CSS injecté passe par scopeCSS(css, panelId) : chaque sélecteur est préfixé de l'ID du tab (#architecture .decision-card) pour confiner les styles — impossible d'écraser les glows du hero ou les variables globales. La navigation contextuelle repose sur un IntersectionObserver sur .tech-strip-label : les 5 liens de section apparaissent en stagger (60 ms par lien) dès que le visiteur dépasse la zone "Stack technique", et disparaissent instantanément au retour vers le hero.</p>
     </div>
     <div class="stack-grid" style="grid-template-columns:repeat(3,1fr);margin-top:1.5rem">
       <div class="stack-card">
-        <div class="stack-name" data-i18n="s8.c1.name">Tabs + lazy-load</div>
-        <div class="stack-badge sb-violet" data-i18n="s8.c1.badge">Navigation</div>
-        <div class="stack-desc" data-i18n="s8.c1.desc">5 tabs dans l'index. Architecture et Décisions produit chargées via fetch + DOMParser au premier clic. Guard dataset.loaded pour éviter les doubles requêtes.</div>
+        <div class="stack-name" data-i18n="s7.c1.name">Tabs + lazy-load</div>
+        <div class="stack-badge sb-violet" data-i18n="s7.c1.badge">Navigation</div>
+        <div class="stack-desc" data-i18n="s7.c1.desc">5 tabs dans l'index. Architecture et Décisions produit chargées via fetch + DOMParser au premier clic. Guard dataset.loaded pour éviter les doubles requêtes.</div>
       </div>
       <div class="stack-card">
-        <div class="stack-name" data-i18n="s8.c2.name">scopeCSS()</div>
-        <div class="stack-badge sb-cyan" data-i18n="s8.c2.badge">Isolation CSS</div>
-        <div class="stack-desc" data-i18n="s8.c2.desc">Chaque sélecteur du CSS injecté est préfixé #panelId. Les règles globales (html, body, :root, *) et @keyframes sont exclues. Aucun conflit possible avec le hero ou les autres sections.</div>
+        <div class="stack-name" data-i18n="s7.c2.name">scopeCSS()</div>
+        <div class="stack-badge sb-cyan" data-i18n="s7.c2.badge">Isolation CSS</div>
+        <div class="stack-desc" data-i18n="s7.c2.desc">Chaque sélecteur du CSS injecté est préfixé #panelId. Les règles globales (html, body, :root, *) et @keyframes sont exclues. Aucun conflit possible avec le hero ou les autres sections.</div>
       </div>
       <div class="stack-card">
-        <div class="stack-name" data-i18n="s8.c3.name">IntersectionObserver</div>
-        <div class="stack-badge sb-blue" data-i18n="s8.c3.badge">Nav contextuelle</div>
-        <div class="stack-desc" data-i18n="s8.c3.desc">Observe .tech-strip-label. Quand l'élément est dépassé (!isIntersecting &amp;&amp; top &lt; 0), la classe nav-section-visible s'ajoute sur &lt;html&gt; et déclenche l'apparition en stagger des 5 liens de section.</div>
+        <div class="stack-name" data-i18n="s7.c3.name">IntersectionObserver</div>
+        <div class="stack-badge sb-blue" data-i18n="s7.c3.badge">Nav contextuelle</div>
+        <div class="stack-desc" data-i18n="s7.c3.desc">Observe .tech-strip-label. Quand l'élément est dépassé (!isIntersecting &amp;&amp; top &lt; 0), la classe nav-section-visible s'ajoute sur &lt;html&gt; et déclenche l'apparition en stagger des 5 liens de section.</div>
       </div>
     </div>
   </section>
@@ -1413,18 +1390,10 @@ var T={
     's5b.render.desc':'Le pipeline RAG a d\'abord été construit en Python : FastAPI + LangGraph + sentence-transformers + ChromaDB. En local, tout fonctionnait. Sur Render (free tier), le service ne démarrait jamais : le chargement de sentence-transformers dépasse les 512 MB de RAM alloués. La leçon : une contrainte d\'infra peut rendre une bonne architecture non-déployable. Plutôt que d\'upgrader l\'hébergement, j\'ai cherché l\'approche zéro-infra. Solution : porter l\'intégralité du RAG dans le Cloudflare Worker via Workers AI, les embeddings sont calculés à l\'edge, sans serveur Python, sans limite mémoire.',
     's5.reflect.label':'Ce que ça dit de ma façon de penser en tant que PM',
     's5.reflect.desc':'Ce choix d\'architecture reflète directement ma façon de penser : identifier la vraie contrainte avant de choisir la solution. Ici la contrainte n\'était pas "KRL1 répond mal". C\'était "un seul nœud ne peut pas être déterministe et créatif à la fois". Une fois la contrainte bien posée, la solution devient évidente. Le graph est testable indépendamment nœud par nœud, extensible sans tout réécrire, et chaque composant a une responsabilité claire. C\'est exactement ce qu\'on attend d\'un bon design produit.',
-    's6.title':'Et maintenant ?',
-    's6.status.label':'Où en est le site',
-    's6.status.desc':'Le site n\'est pas encore vraiment partagé. C\'est volontaire : je voulais d\'abord que l\'architecture soit solide, les cas de fallback couverts, les tests en place. Shipper quelque chose de cassé à des recruteurs ou à des PMs de mon réseau aurait fait plus de mal que de bien.',
-    's6.next.label':'La prochaine étape',
-    's6.next.desc':'L\'observabilité LLM est en place avec Langfuse : chaque appel KRL1 génère une trace avec token usage, latences planner/synthesis et intent détecté. La prochaine étape est d\'ouvrir le site et utiliser ces données, quels outils génèrent le plus de résultats, est-ce que KRL1 renvoie vers les bons outils au bon moment, où s\'arrêtent les utilisateurs avant de générer ?',
-    's6.pm.label':'Ce que ça démontre',
-    's6.pm.a':'Builder, mesurer, décider',
-    's6.pm.desc':'L\'analytics est en place : Langfuse trace chaque appel LLM en production, intent détecté, tokens consommés, latence par step. La boucle est fermée : builder → mesurer (Langfuse) → décider → itérer. Ce cycle est exactement ce que je défends comme PM. Il était logique que ce portfolio en soit lui-même la démonstration.',
     'stat.tools':'outils PM',
     'stat.cost':'/ mois d\'infra',
     'stat.weeks':'sem. en spare time',
-    's7.title':'Glossaire technique',
+    's6.title':'Glossaire technique',
     'gloss.worker':'Fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes. Pas de VPS à gérer, cold start quasi-nul, 100 000 req/jour gratuit.',
     'gloss.edge':'Paradigme qui déplace le traitement des requêtes le plus près possible de l\'utilisateur, sur des serveurs distribués mondialement. Réduit la latence en évitant les allers-retours vers un datacenter centralisé.',
     'gloss.rag':'Retrieval-Augmented Generation : enrichir un LLM avec du contexte récupéré dynamiquement au moment de la requête. Permet d\'ancrer les réponses dans une base de connaissances sans retraining.',
@@ -1463,13 +1432,13 @@ var T={
     'toc.s0':'00','toc.s1':'01 Stack','toc.s2':'02 Étapes','toc.s3':'03 Vibe',
     'toc.s4':'04 Archi','toc.s4b':'04b Prompts','toc.s4c':'04c Raté',
     'toc.s5':'05 RAG','toc.s5b':'05b Perf','toc.s5c':'05c KRL1',
-    'toc.s6':'06 Suite','toc.s7':'07 Glossaire','toc.s8':'08 Nav',
-    's8.title':'Navigation contextuelle & lazy-load',
-    's8.lead':'Mai 2026 — refonte complète de la navigation : accordéon remplacé par 5 tabs avec chargement à la demande, et des liens nav qui n\'apparaissent que lorsque le visiteur a dépassé le hero.',
-    's8.body':'Architecture et Décisions produit sont chargées via fetch + DOMParser au premier clic. Le CSS injecté passe par scopeCSS(css, panelId) : chaque sélecteur est préfixé de l\'ID du tab pour confiner les styles. La navigation contextuelle repose sur un IntersectionObserver sur .tech-strip-label : les 5 liens apparaissent en stagger (60 ms) dès que le visiteur dépasse "Stack technique".',
-    's8.c1.name':'Tabs + lazy-load','s8.c1.badge':'Navigation','s8.c1.desc':'5 tabs dans l\'index. Architecture et Décisions produit chargées via fetch + DOMParser au premier clic. Guard dataset.loaded pour éviter les doubles requêtes.',
-    's8.c2.name':'scopeCSS()','s8.c2.badge':'Isolation CSS','s8.c2.desc':'Chaque sélecteur du CSS injecté est préfixé #panelId. Les règles globales (html, body, :root, *) et @keyframes sont exclues. Aucun conflit possible avec le hero.',
-    's8.c3.name':'IntersectionObserver','s8.c3.badge':'Nav contextuelle','s8.c3.desc':'Observe .tech-strip-label. Quand dépassé (!isIntersecting && top < 0), nav-section-visible s\'ajoute sur <html> et déclenche l\'apparition en stagger des 5 liens de section.',
+    'toc.s6':'06 Glossaire','toc.s7':'07 Nav',
+    's7.title':'Navigation contextuelle & lazy-load',
+    's7.lead':'Mai 2026 — refonte complète de la navigation : accordéon remplacé par 5 tabs avec chargement à la demande, et des liens nav qui n\'apparaissent que lorsque le visiteur a dépassé le hero.',
+    's7.body':'Architecture et Décisions produit sont chargées via fetch + DOMParser au premier clic. Le CSS injecté passe par scopeCSS(css, panelId) : chaque sélecteur est préfixé de l\'ID du tab pour confiner les styles. La navigation contextuelle repose sur un IntersectionObserver sur .tech-strip-label : les 5 liens apparaissent en stagger (60 ms) dès que le visiteur dépasse "Stack technique".',
+    's7.c1.name':'Tabs + lazy-load','s7.c1.badge':'Navigation','s7.c1.desc':'5 tabs dans l\'index. Architecture et Décisions produit chargées via fetch + DOMParser au premier clic. Guard dataset.loaded pour éviter les doubles requêtes.',
+    's7.c2.name':'scopeCSS()','s7.c2.badge':'Isolation CSS','s7.c2.desc':'Chaque sélecteur du CSS injecté est préfixé #panelId. Les règles globales (html, body, :root, *) et @keyframes sont exclues. Aucun conflit possible avec le hero.',
+    's7.c3.name':'IntersectionObserver','s7.c3.badge':'Nav contextuelle','s7.c3.desc':'Observe .tech-strip-label. Quand dépassé (!isIntersecting && top < 0), nav-section-visible s\'ajoute sur <html> et déclenche l\'apparition en stagger des 5 liens de section.',
     's5c.title':'KRL1 · Architecture de décision',
     's5c.cta':'Les décisions produit derrière ces choix →',
     'layersLbl':'Les 4 couches de décision',
@@ -1527,9 +1496,8 @@ var T={
     'toc.sum.s5':'Orchestration Worker, RAG',
     'toc.sum.s5b':'Performance & métriques',
     'toc.sum.s5c':'KRL1 · Architecture de décision',
-    'toc.sum.s6':'Et maintenant ?',
-    'toc.sum.s7':'Glossaire technique',
-    'toc.sum.s8':'Navigation contextuelle'
+    'toc.sum.s6':'Glossaire technique',
+    'toc.sum.s7':'Navigation contextuelle'
   },
   en:{
     'back':'Portfolio',
@@ -1635,18 +1603,10 @@ var T={
     's5b.render.desc':'The RAG pipeline was first built in Python: FastAPI + LangGraph + sentence-transformers + ChromaDB. Locally, everything worked. On Render (free tier), the service never started: loading sentence-transformers exceeds the 512 MB RAM allocation. The lesson: an infrastructure constraint can make a good architecture undeployable. Rather than upgrade hosting, I looked for a zero-infrastructure approach. Solution: port the entire RAG into the Cloudflare Worker via Workers AI, embeddings are computed at the edge, no Python server, no memory limit.',
     's5.reflect.label':'What this says about my PM thinking',
     's5.reflect.desc':'This architectural choice directly reflects how I think: identify the real constraint before choosing the solution. Here the constraint was not "KRL1 responds poorly". It was "a single node cannot be deterministic and creative at the same time". Once the constraint is clearly stated, the solution becomes obvious. The graph is testable node by node independently, extensible without rewriting everything, and each component has a single clear responsibility. That is exactly what good product design looks like.',
-    's6.title':'What\'s next',
-    's6.status.label':'Where the site stands',
-    's6.status.desc':'The site has not really been shared yet. That is intentional: I wanted the architecture to be solid first, the fallback cases covered, the tests in place. Shipping something broken to recruiters or PMs in my network would have done more harm than good.',
-    's6.next.label':'The next step',
-    's6.next.desc':'LLM observability is live with Langfuse: every KRL1 call generates a trace with token usage, planner/synthesis latencies, and detected intent. The next step is to open the site and use that data, which tools generate the most results, does KRL1 redirect to the right tools at the right moment, where do users drop off before generating?',
-    's6.pm.label':'What this demonstrates',
-    's6.pm.a':'Build, measure, decide',
-    's6.pm.desc':'Analytics is in place: Langfuse traces every LLM call in production, detected intent, tokens consumed, latency per step. The loop is closed: build → measure (Langfuse) → decide → iterate. This cycle is exactly what I advocate as a PM. It made sense for this portfolio to be a live demonstration of it.',
     'stat.tools':'PM tools',
     'stat.cost':'/ month infra cost',
     'stat.weeks':'weeks in spare time',
-    's7.title':'Technical Glossary',
+    's6.title':'Technical Glossary',
     'gloss.worker':'Serverless JavaScript function deployed across ~300 Cloudflare data centers, between the browser and external APIs. No server to manage, near-zero cold start, 100,000 req/day free.',
     'gloss.edge':'Paradigm that moves request processing as close as possible to the user, on globally distributed servers. Reduces latency by avoiding round trips to a central datacenter.',
     'gloss.rag':'Retrieval-Augmented Generation: enriching an LLM with context dynamically retrieved at query time. Grounds responses in a specific knowledge base without retraining.',
@@ -1685,13 +1645,13 @@ var T={
     'toc.s0':'00','toc.s1':'01 Stack','toc.s2':'02 Steps','toc.s3':'03 Vibe',
     'toc.s4':'04 Arch','toc.s4b':'04b Prompts','toc.s4c':'04c Failed',
     'toc.s5':'05 RAG','toc.s5b':'05b Perf','toc.s5c':'05c KRL1',
-    'toc.s6':'06 Next','toc.s7':'07 Glossary','toc.s8':'08 Nav',
-    's8.title':'Contextual nav & lazy-load',
-    's8.lead':'May 2026 — full navigation overhaul: accordion replaced by 5 tabs with on-demand loading, and nav links that only appear once the visitor has scrolled past the hero.',
-    's8.body':'Architecture and Product Decisions are now loaded via fetch + DOMParser on first click. Injected CSS goes through scopeCSS(css, panelId): each selector is prefixed with the tab ID to confine styles. The contextual nav uses an IntersectionObserver on .tech-strip-label: the 5 section links appear in stagger (60ms) once the visitor scrolls past "Tech stack".',
-    's8.c1.name':'Tabs + lazy-load','s8.c1.badge':'Navigation','s8.c1.desc':'5 tabs in the index. Architecture and Product Decisions loaded via fetch + DOMParser on first click. dataset.loaded guard prevents double requests.',
-    's8.c2.name':'scopeCSS()','s8.c2.badge':'CSS isolation','s8.c2.desc':'Every selector in the injected CSS is prefixed with #panelId. Global rules (html, body, :root, *) and @keyframes are excluded. No possible conflict with the hero.',
-    's8.c3.name':'IntersectionObserver','s8.c3.badge':'Contextual nav','s8.c3.desc':'Observes .tech-strip-label. When passed (!isIntersecting && top < 0), nav-section-visible is added to <html> and triggers the staggered appearance of the 5 section links.',
+    'toc.s6':'06 Glossary','toc.s7':'07 Nav',
+    's7.title':'Contextual nav & lazy-load',
+    's7.lead':'May 2026 — full navigation overhaul: accordion replaced by 5 tabs with on-demand loading, and nav links that only appear once the visitor has scrolled past the hero.',
+    's7.body':'Architecture and Product Decisions are now loaded via fetch + DOMParser on first click. Injected CSS goes through scopeCSS(css, panelId): each selector is prefixed with the tab ID to confine styles. The contextual nav uses an IntersectionObserver on .tech-strip-label: the 5 section links appear in stagger (60ms) once the visitor scrolls past "Tech stack".',
+    's7.c1.name':'Tabs + lazy-load','s7.c1.badge':'Navigation','s7.c1.desc':'5 tabs in the index. Architecture and Product Decisions loaded via fetch + DOMParser on first click. dataset.loaded guard prevents double requests.',
+    's7.c2.name':'scopeCSS()','s7.c2.badge':'CSS isolation','s7.c2.desc':'Every selector in the injected CSS is prefixed with #panelId. Global rules (html, body, :root, *) and @keyframes are excluded. No possible conflict with the hero.',
+    's7.c3.name':'IntersectionObserver','s7.c3.badge':'Contextual nav','s7.c3.desc':'Observes .tech-strip-label. When passed (!isIntersecting && top < 0), nav-section-visible is added to <html> and triggers the staggered appearance of the 5 section links.',
     's5c.title':'KRL1 · Decision Architecture',
     's5c.cta':'The product decisions behind these choices →',
     'layersLbl':'The 4 decision layers',
@@ -1749,9 +1709,8 @@ var T={
     'toc.sum.s5':'Worker Orchestration, RAG',
     'toc.sum.s5b':'Performance & metrics',
     'toc.sum.s5c':'KRL1 · Decision architecture',
-    'toc.sum.s6':'What\'s next',
-    'toc.sum.s7':'Technical glossary',
-    'toc.sum.s8':'Contextual navigation'
+    'toc.sum.s6':'Technical glossary',
+    'toc.sum.s7':'Contextual navigation'
   }
 };
 

@@ -2,9 +2,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Portfolio de Carlin Mankoto, AI Product Manager. PM Toolkit : 6 outils IA open-source reliés par un fil rouge d'insights + 1 mini-jeu web.">
+<meta name="description" content="Portfolio de Carlin Mankoto, AI Product Manager. PM Toolkit : 6 outils IA open-source reliés par un fil rouge d'insights.">
 <meta property="og:title" content="Carlin Mankoto, AI Product Manager & Builder">
-<meta property="og:description" content="PM le jour, builder la nuit. PM Toolkit : 6 outils IA enchaînés par un fil rouge d'insights + 1 mini-jeu web.">
+<meta property="og:description" content="PM le jour, builder la nuit. PM Toolkit : 6 outils IA enchaînés par un fil rouge d'insights.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://cmankotech.github.io/cmankotech/">
 <meta property="og:image" content="https://cmankotech.github.io/cmankotech/og-image.png">
@@ -13,7 +13,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://cmankotech.github.io/cmankotech/og-image.png">
 <meta name="twitter:title" content="Carlin Mankoto, AI Product Manager & Builder">
-<meta name="twitter:description" content="PM le jour, builder la nuit. PM Toolkit : 6 outils IA enchaînés par un fil rouge d'insights + 1 mini-jeu web.">
+<meta name="twitter:description" content="PM le jour, builder la nuit. PM Toolkit : 6 outils IA enchaînés par un fil rouge d'insights.">
 <link rel="canonical" href="https://cmankotech.github.io/cmankotech/">
 <title>Carlin Mankoto, AI Product Manager</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Instrument+Serif:ital@1&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -150,6 +150,14 @@ section::before{content:'';position:absolute;top:0;left:50%;transform:translateX
 .proj-card{min-height:280px;padding:1.75rem;background:linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.1);border-radius:14px;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 18px 46px -24px rgba(0,0,0,0.55),0 0 48px -30px rgba(167,139,250,0.2);transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;display:flex;flex-direction:column;gap:1.05rem;position:relative;overflow:hidden;cursor:pointer}
 .proj-card:hover{border-color:rgba(167,139,250,0.3);transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 22px 52px -18px rgba(0,0,0,0.5),0 0 58px -24px rgba(96,165,250,0.3)}
 
+/* EASTER EGG — hidden Pixel Runner overlay */
+#egg-overlay{position:fixed;inset:0;z-index:9997;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:rgba(8,8,15,0.7);backdrop-filter:blur(10px) saturate(140%);-webkit-backdrop-filter:blur(10px) saturate(140%);opacity:0;pointer-events:none;transition:opacity 0.25s}
+#egg-overlay.open{opacity:1;pointer-events:all}
+#egg-frame{position:relative;width:min(800px,92vw);aspect-ratio:16/9;border-radius:16px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(180deg,rgba(22,22,40,0.6),rgba(8,8,15,0.75));box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 24px 70px -20px rgba(0,0,0,0.6);overflow:hidden;transform:scale(0.94);transition:transform 0.25s cubic-bezier(.34,1.56,.64,1)}
+#egg-overlay.open #egg-frame{transform:scale(1)}
+#egg-frame iframe{width:100%;height:100%;border:0;display:block}
+#egg-close{position:absolute;top:0.6rem;right:0.6rem;z-index:1;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);background:rgba(8,8,15,0.55);color:rgba(255,255,255,0.7);font-size:1.1rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color 0.15s,border-color 0.15s}
+#egg-close:hover{color:#fff;border-color:rgba(255,255,255,0.3)}
 
 .proj-top-row{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;min-height:24px}
 .proj-tag{font-size:0.74rem;font-weight:500;line-height:1.35}
@@ -335,8 +343,6 @@ nav{padding:1rem 1.5rem}
     <a href="#projects" class="nav-section" data-i18n="nav.projects">Projets</a>
     <a href="#architecture" class="nav-section" data-i18n="nav.arch">Architecture</a>
     <a href="#decisions" class="nav-section" data-i18n="nav.dec">D&eacute;cisions produit</a>
-    <a href="#skills" class="nav-section" data-i18n="nav.skills">Comp&eacute;tences</a>
-    <a href="#certs" class="nav-section" data-i18n="nav.certs">Certifications</a>
     <div class="nav-tools" id="navTools">
       <button class="nav-tools-btn" onclick="toggleNavTools(event)" aria-haspopup="true"><span data-i18n="nav.tools">Outils</span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
       <div class="nav-tools-menu">
@@ -362,8 +368,6 @@ nav{padding:1rem 1.5rem}
   <a href="#projects" data-i18n="nav.projects" onclick="document.getElementById('nav-hamburger').click()">Projets</a>
   <a href="#architecture" data-i18n="nav.arch" onclick="document.getElementById('nav-hamburger').click()">Architecture</a>
   <a href="#decisions" data-i18n="nav.dec" onclick="document.getElementById('nav-hamburger').click()">D&eacute;cisions produit</a>
-  <a href="#skills" data-i18n="nav.skills" onclick="document.getElementById('nav-hamburger').click()">Comp&eacute;tences</a>
-  <a href="#certs" data-i18n="nav.certs" onclick="document.getElementById('nav-hamburger').click()">Certifications</a>
   <a href="pm-toolkit.html" onclick="document.getElementById('nav-hamburger').click()">🧰 PM Toolkit</a>
   <a href="rag-explorer.html" onclick="document.getElementById('nav-hamburger').click()">🔍 RAG Explorer</a>
   <a href="veille.html" onclick="document.getElementById('nav-hamburger').click()">📡 Veille</a>
@@ -406,6 +410,280 @@ nav{padding:1rem 1.5rem}
         <span class="hero-sub-role" id="heroRole" data-i18n="hero.role">AI Product Manager</span>
       </div>
       <p class="hero-bio" id="heroLine">PM le jour, builder la nuit. Je construis des outils concrets avec l&rsquo;IA parce que les meilleurs outils sont ceux qu&rsquo;on cr&eacute;e soi-m&ecirc;me. Chaque projet ici r&eacute;pond &agrave; un vrai probl&egrave;me que j&rsquo;ai rencontr&eacute; en tant que PM.</p>
+
+      <style id="hmock-styles">
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+      .hmock{margin:2.25rem 0 0.5rem;max-width:760px}
+      .hmock-frame{position:relative;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.12);background:linear-gradient(180deg,rgba(20,26,46,0.9),rgba(12,15,30,0.92));backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 30px 80px -30px rgba(0,0,0,0.75),0 0 90px -40px rgba(34,211,238,0.4)}
+      .hmock-bar{display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.95rem;border-bottom:1px solid rgba(255,255,255,0.08);background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))}
+      .hmock-dots{display:flex;gap:0.45rem;flex:none}
+      .hmock-dots i{width:11px;height:11px;border-radius:50%;display:block}
+      .hmock-dots i:nth-child(1){background:#ff5f57}.hmock-dots i:nth-child(2){background:#febc2e}.hmock-dots i:nth-child(3){background:#28c840}
+      .hmock-url{flex:1;display:flex;align-items:center;justify-content:center;gap:0.5rem;font-family:'Geist',sans-serif;font-size:0.74rem;color:var(--muted);background:rgba(0,0,0,0.28);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:0.34rem 0.8rem;max-width:340px;margin:0 auto;white-space:nowrap;overflow:hidden}
+      .hmock-url svg{flex:none;opacity:0.65}
+      .hmock-live{display:flex;align-items:center;gap:0.4rem;flex:none;font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.12em;color:#22d3ee}
+      .hmock-live b{width:7px;height:7px;border-radius:50%;background:#22d3ee;box-shadow:0 0 0 0 rgba(34,211,238,0.6);animation:hmockPulse 2s ease-out infinite}
+      @keyframes hmockPulse{0%{box-shadow:0 0 0 0 rgba(34,211,238,0.55)}70%{box-shadow:0 0 0 7px rgba(34,211,238,0)}100%{box-shadow:0 0 0 0 rgba(34,211,238,0)}}
+      .hmock-viewport{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0a0a14}
+      .hmock-track{position:absolute;top:0;left:0;height:100%;display:flex;flex-direction:row;animation:hmockScroll 32s linear infinite;will-change:transform}
+      .hmock-track img{display:block;height:100%;width:auto;flex:none}
+      @keyframes hmockScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+      .hmock-viewport::after{content:'';position:absolute;left:0;right:0;bottom:0;height:30px;z-index:5;pointer-events:none;background:linear-gradient(0deg,rgba(7,9,16,0.92),transparent)}
+      .hterm{position:absolute;inset:0;overflow:hidden;background:var(--tk-bg);font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.82rem;line-height:1.6;color:var(--tk-fg);--tk-bg:radial-gradient(130% 120% at 88% -15%,rgba(34,211,238,0.12),transparent 52%),radial-gradient(120% 120% at 8% 118%,rgba(167,139,250,0.10),transparent 55%),linear-gradient(180deg,#0b1122,#070910);--tk-fg:#c3cdde;--tk-cmd:#22d3ee;--tk-prompt:#22d3ee;--tk-accent:#22d3ee;--tk-flag:#a78bfa;--tk-string:#f472b6;--tk-num:#f0b35e;--tk-path:#67e8f9;--tk-ok:#34d399;--tk-sub:#dbe4f0;--tk-dim:#566377;--tk-note:#8a98ad;--tk-caret:#22d3ee;--tk-caret-glow:rgba(34,211,238,0.85)}
+      .hterm-body{position:absolute;left:0;right:0;top:0;padding:1.25rem 1.45rem 1.5rem;transition:transform 0.45s cubic-bezier(.22,.61,.36,1)}
+      .hterm-cmd{margin-top:0.72em}.hterm-cmd:first-child{margin-top:0}
+      .hterm-line{white-space:pre-wrap;word-break:break-word}
+      .htt{color:var(--tk-cmd);font-weight:700}
+      .htprompt{color:var(--tk-prompt);font-weight:700}
+      .htsub{color:var(--tk-sub)}
+      .htdim,.htd,.htts{color:var(--tk-dim)}
+      .hts,.htp{color:var(--tk-string)}
+      .htf{color:var(--tk-flag)}
+      .htn{color:var(--tk-num)}
+      .htpath{color:var(--tk-path)}
+      .hto{color:var(--tk-ok);font-weight:700}
+      .htc{color:var(--tk-accent)}
+      .htspin{color:var(--tk-accent);font-weight:700}
+      .htbar{color:var(--tk-ok);letter-spacing:0.5px}
+      .htnote{color:var(--tk-note);font-style:italic}
+      .hmock-theme{position:relative;flex:none}
+      .hmock-theme-btn{display:flex;align-items:center;gap:0.42rem;font-family:'Syne',sans-serif;font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:0.3rem 0.5rem 0.3rem 0.6rem;cursor:pointer;transition:color .2s,border-color .2s,background .2s;line-height:1}
+      .hmock-theme-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.22);background:rgba(255,255,255,0.08)}
+      .hmock-theme-btn .dot{width:8px;height:8px;border-radius:50%;flex:none;background:linear-gradient(135deg,#22d3ee,#a78bfa)}
+      .hmock-theme-btn .chev{width:9px;height:9px;flex:none;opacity:0.6;transition:transform .2s}
+      .hmock-theme[data-open="1"] .hmock-theme-btn .chev{transform:rotate(180deg)}
+      .hmock-theme-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:50;min-width:212px;padding:0.35rem;background:rgba(16,18,28,0.97);border:1px solid rgba(255,255,255,0.12);border-radius:12px;backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);box-shadow:0 20px 50px -20px rgba(0,0,0,0.8);flex-direction:column;gap:1px}
+      .hmock-theme-menu[hidden]{display:none}
+      .hmock-theme-menu:not([hidden]){display:flex}
+      .hmock-theme-item{display:flex;align-items:center;gap:0.6rem;padding:0.42rem 0.5rem;border-radius:8px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:'Geist',sans-serif;font-size:0.78rem;color:var(--muted);transition:background .15s,color .15s}
+      .hmock-theme-item:hover{background:rgba(255,255,255,0.07);color:var(--text)}
+      .hmock-theme-item[aria-selected="true"]{color:var(--text)}
+      .hmock-theme-item[aria-selected="true"] .tick{opacity:1}
+      .hmock-theme-item .sw{display:flex;gap:2px;flex:none}
+      .hmock-theme-item .sw i{width:9px;height:9px;border-radius:2px;display:block}
+      .hmock-theme-item .nm{flex:1;white-space:nowrap}
+      .hmock-theme-item .tick{flex:none;opacity:0;color:var(--text);font-size:0.72rem}
+      [data-theme="light"] .hmock-theme-btn{color:#475569;background:rgba(15,23,42,0.05);border-color:rgba(15,23,42,0.12)}
+      [data-theme="light"] .hmock-theme-menu{background:rgba(255,255,255,0.98);border-color:rgba(15,23,42,0.12)}
+      [data-theme="light"] .hmock-theme-item{color:#475569}
+      [data-theme="light"] .hmock-theme-item:hover{background:rgba(15,23,42,0.05);color:#0f172a}
+      #hterm[data-skin="anysphere"]{--tk-bg:radial-gradient(130% 120% at 88% -15%,rgba(130,210,206,0.09),transparent 52%),radial-gradient(120% 120% at 8% 118%,rgba(170,160,250,0.07),transparent 55%),linear-gradient(180deg,#1c1c1e,#161618);--tk-fg:#d6d6dd;--tk-cmd:#efb080;--tk-prompt:#82d2ce;--tk-accent:#82d2ce;--tk-flag:#82d2ce;--tk-string:#e394dc;--tk-num:#ebc88d;--tk-path:#87c3ff;--tk-ok:#a8cc7c;--tk-sub:#d6d6dd;--tk-dim:#6d6d6d;--tk-note:#8a8a93;--tk-caret:#228df2;--tk-caret-glow:rgba(34,141,242,0.85)}
+      #hterm[data-skin="dracula"]{--tk-bg:linear-gradient(180deg,#2d2f3d,#282a36);--tk-fg:#f8f8f2;--tk-cmd:#ff79c6;--tk-prompt:#bd93f9;--tk-accent:#bd93f9;--tk-flag:#bd93f9;--tk-string:#f1fa8c;--tk-num:#ffb86c;--tk-path:#8be9fd;--tk-ok:#50fa7b;--tk-sub:#f8f8f2;--tk-dim:#6272a4;--tk-note:#6272a4;--tk-caret:#f8f8f0;--tk-caret-glow:rgba(248,248,240,0.6)}
+      #hterm[data-skin="tokyonight"]{--tk-bg:linear-gradient(180deg,#1f2233,#1a1b26);--tk-fg:#c0caf5;--tk-cmd:#7aa2f7;--tk-prompt:#7dcfff;--tk-accent:#7dcfff;--tk-flag:#bb9af7;--tk-string:#9ece6a;--tk-num:#ff9e64;--tk-path:#7dcfff;--tk-ok:#9ece6a;--tk-sub:#c0caf5;--tk-dim:#565f89;--tk-note:#565f89;--tk-caret:#c0caf5;--tk-caret-glow:rgba(122,162,247,0.7)}
+      #hterm[data-skin="catppuccin"]{--tk-bg:linear-gradient(180deg,#24243a,#1e1e2e);--tk-fg:#cdd6f4;--tk-cmd:#89b4fa;--tk-prompt:#89dceb;--tk-accent:#89dceb;--tk-flag:#cba6f7;--tk-string:#a6e3a1;--tk-num:#fab387;--tk-path:#89dceb;--tk-ok:#a6e3a1;--tk-sub:#cdd6f4;--tk-dim:#6c7086;--tk-note:#6c7086;--tk-caret:#f5e0dc;--tk-caret-glow:rgba(137,180,250,0.7)}
+      #hterm[data-skin="gruvbox"]{--tk-bg:linear-gradient(180deg,#32302f,#282828);--tk-fg:#ebdbb2;--tk-cmd:#8ec07c;--tk-prompt:#fabd2f;--tk-accent:#fabd2f;--tk-flag:#fabd2f;--tk-string:#b8bb26;--tk-num:#d3869b;--tk-path:#83a598;--tk-ok:#b8bb26;--tk-sub:#ebdbb2;--tk-dim:#928374;--tk-note:#928374;--tk-caret:#ebdbb2;--tk-caret-glow:rgba(235,219,178,0.5)}
+      #hterm[data-skin="nord"]{--tk-bg:linear-gradient(180deg,#343b4c,#2e3440);--tk-fg:#d8dee9;--tk-cmd:#88c0d0;--tk-prompt:#8fbcbb;--tk-accent:#8fbcbb;--tk-flag:#81a1c1;--tk-string:#a3be8c;--tk-num:#b48ead;--tk-path:#8fbcbb;--tk-ok:#a3be8c;--tk-sub:#d8dee9;--tk-dim:#616e88;--tk-note:#616e88;--tk-caret:#d8dee9;--tk-caret-glow:rgba(136,192,208,0.7)}
+      #hterm[data-skin="solarized"]{--tk-bg:linear-gradient(180deg,#073642,#002b36);--tk-fg:#93a1a1;--tk-cmd:#268bd2;--tk-prompt:#2aa198;--tk-accent:#2aa198;--tk-flag:#6c71c4;--tk-string:#2aa198;--tk-num:#d33682;--tk-path:#b58900;--tk-ok:#859900;--tk-sub:#93a1a1;--tk-dim:#586e75;--tk-note:#586e75;--tk-caret:#93a1a1;--tk-caret-glow:rgba(38,139,210,0.7)}
+      @media(max-width:560px){.hmock-theme-btn .lbl{display:none}}
+      .hterm-cursor{display:inline-block;width:0.55ch;height:1.05em;background:var(--tk-caret);vertical-align:-0.16em;margin-left:2px;border-radius:1px;box-shadow:0 0 7px var(--tk-caret-glow);animation:htermBlink 1.05s steps(1) infinite}
+      @keyframes htermBlink{50%{opacity:0}}
+      .hterm-gloss{position:absolute;left:0;right:0;top:0;height:42%;z-index:3;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0.05),transparent)}
+      .hterm-scan{position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.03) 0 1px,transparent 1px 3px);mix-blend-mode:overlay;opacity:0.55}
+      .hterm-beam{position:absolute;left:0;right:0;height:38%;z-index:3;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(120,200,255,0.055),transparent);animation:htermBeam 7.5s linear infinite}
+      @keyframes htermBeam{0%{transform:translateY(-60%)}100%{transform:translateY(280%)}}
+      @media(max-width:560px){.hterm{font-size:0.7rem;line-height:1.55}.hterm-body{padding:1rem 1.05rem 1.2rem}}
+      @media(prefers-reduced-motion:reduce){.hterm-beam{animation:none;opacity:0}.hterm-body{transition:none}}
+      .hmock-frame:hover .hmock-track{animation-play-state:paused}
+      [data-theme="light"] .hmock-frame{background:linear-gradient(180deg,rgba(255,255,255,0.85),rgba(244,247,252,0.9));border-color:rgba(15,23,42,0.1)}
+      [data-theme="light"] .hmock-bar{border-color:rgba(15,23,42,0.08);background:rgba(255,255,255,0.7)}
+      @media(max-width:560px){.hmock-live span{display:none}.hmock-url{max-width:200px;font-size:0.66rem}}
+      @media(prefers-reduced-motion:reduce){.hmock-track{animation:none}}
+      </style>
+      <div class="hmock">
+        <div class="hmock-frame glass-edge">
+          <div class="hmock-bar">
+            <div class="hmock-dots"><i></i><i></i><i></i></div>
+            <div class="hmock-url">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 8 9 12 5 16"/><line x1="12" y1="16" x2="18" y2="16"/></svg>
+              carlin@krl1: ~/builds &mdash; zsh
+            </div>
+            <div class="hmock-theme" id="hmockTheme">
+              <button type="button" class="hmock-theme-btn" id="hmockThemeBtn" aria-haspopup="listbox" aria-expanded="false" title="Thème du terminal">
+                <span class="dot"></span><span class="lbl">Cyan</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="hmock-theme-menu" id="hmockThemeMenu" role="listbox" hidden></div>
+            </div>
+          </div>
+          <div class="hmock-viewport" aria-hidden="true">
+            <div class="hterm" id="hterm">
+              <div class="hterm-body" id="htermBody"></div>
+              <div class="hterm-gloss"></div>
+              <div class="hterm-scan"></div>
+              <div class="hterm-beam"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script id="hterm-script">
+(function(){
+  var host=document.getElementById('hterm');
+  var body=document.getElementById('htermBody');
+  if(!host||!body) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var spinFrames=['⠋','⠙','⠹','⠸','⠼','⠴','⠦','⠧','⠇','⠏'];
+  var clsMap={t:'htt',k:'htsub',f:'htf',s:'hts',n:'htn',p:'htpath',d:'htdim'};
+  function cmd(segs,think){return {type:'cmd',segs:segs,think:think||500};}
+  function out(h){return {type:'out',html:h};}
+  function spin(label,ms,done){return {type:'spin',label:label,ms:ms,done:done};}
+  function prog(label,ms,tail){return {type:'prog',label:label,ms:ms,tail:tail||''};}
+  function gap(){return {type:'gap'};}
+  function note(t){return {type:'out',html:'<span class="htnote"># '+t+'</span>'};}
+  var SCRIPT=[
+    cmd([['claude','t'],[' ','d'],['"ajoute le scoring RICE + MoSCoW au backlog-prioritizer"','s']],320),
+    spin('édition des fichiers',720,'<span class="hto">✓</span> <span class="htsub">moteur de scoring</span> <span class="htdim">prêt · 142ms</span>'),
+    out('<span class="htdim">→</span> <span class="htpath">backlog-prioritizer.html</span> <span class="htdim">· mis à jour</span>'),
+    note('range tes idées par impact, sans tableur'),
+    gap(),
+    cmd([['codex','t'],[' ','d'],['"écris l’assistant de discovery (JTBD + personas)"','s']],300),
+    spin('génération',680,'<span class="hto">✓</span> <span class="htn">12</span> insights extraits <span class="htdim">· besoins (JTBD) identifiés</span>'),
+    out('<span class="htdim">→</span> <span class="htpath">discovery-assistant.html</span> <span class="htdim">· en ligne</span>'),
+    note('transforme des interviews en besoins clairs'),
+    gap(),
+    cmd([['node','t'],[' --test ','f'],['tests/proxy.test.mjs','p']],260),
+    spin('exécution des tests',640,'<span class="hto">✓</span> <span class="htn">14</span> tests <span class="htdim">·</span> <span class="htn">0</span> échec <span class="htdim">· 380ms</span>'),
+    note('chaque route de l’API est vérifiée avant déploiement'),
+    gap(),
+    cmd([['curl','t'],[' -s ','f'],['groq-proxy.workers.dev/rag-query','p'],[' -d ','f'],["'{\"message\":\"comment prioriser ?\"}'",'s']],320),
+    spin('requête · edge',560,'<span class="hto">200</span> <span class="htdim">OK · 184ms</span>'),
+    out('<span class="htdim">{</span>'),
+    out('  <span class="htf">"reply"</span><span class="htdim">:</span> <span class="hts">"RICE pour l’impact, MoSCoW pour trancher"</span><span class="htdim">,</span>'),
+    out('  <span class="htf">"matched_docs"</span><span class="htdim">:</span> <span class="htn">3</span><span class="htdim">,</span> <span class="htf">"llm"</span><span class="htdim">:</span> <span class="hts">"llama-3.3-70b-versatile"</span>'),
+    out('<span class="htdim">}</span>'),
+    note('l’API RAG répond en direct, avec ses sources'),
+    gap(),
+    cmd([['npx','t'],[' wrangler tail ','k'],['groq-proxy','p'],[' --format ','f'],['pretty','k']],280),
+    out('<span class="htdim">POST</span> <span class="htpath">/rag-query</span> <span class="hto">200</span> <span class="htdim">· 184ms</span>'),
+    out('<span class="htdim">trace →</span> Langfuse <span class="htdim">(non bloquant)</span>'),
+    note('je surveille chaque requête en temps réel'),
+    gap(),
+    cmd([['npx','t'],[' wrangler deploy ','k'],['--config proxy/wrangler.toml','f']],280),
+    prog('upload du Worker',900,'<span class="htdim">Workers AI · binding AI · bge-small-en-v1.5</span>'),
+    out('<span class="hto">✓</span> déployé <span class="htdim">·</span> <span class="htpath">groq-proxy.workers.dev</span> <span class="htdim">· cold start 28ms</span>'),
+    note('l’API en ligne sur le réseau Cloudflare, rapide partout'),
+    gap(),
+    cmd([['git','t'],[' push ','k'],['origin main','p']],240),
+    spin('build + déploiement Pages',720,'<span class="hto">✓</span> <span class="htn">6</span> outils <span class="htdim">·</span> <span class="htc">en ligne</span>'),
+    note('tout est public, sans clé API côté visiteur')
+  ];
+  function el(tag,cls,h){var e=document.createElement(tag);if(cls)e.className=cls;if(h!=null)e.innerHTML=h;return e;}
+  function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
+  var clock=new Date();
+  function resetClock(){clock.setHours(9,14,2,0);}
+  function p2(n){return (n<10?'0':'')+n;}
+  function ts(){return '['+p2(clock.getHours())+':'+p2(clock.getMinutes())+':'+p2(clock.getSeconds())+']';}
+  function tick(){clock.setSeconds(clock.getSeconds()+1+Math.floor(Math.random()*4));}
+  function pfx(){return '<span class="htdim">carlin@krl1</span> <span class="htprompt">❯</span> ';}
+  function bar(fill,total){var s='';for(var i=0;i<total;i++)s+=(i<fill?'█':'░');return s;}
+  function scroll(){var over=body.scrollHeight-host.clientHeight;body.style.transform= over>6 ? 'translateY('+(-over-6)+'px)' : 'translateY(0)';}
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+  async function typeCmd(step){
+    tick();
+    var line=el('div','hterm-cmd'); line.innerHTML=pfx(); body.appendChild(line); scroll();
+    var cursor=el('span','hterm-cursor'); line.appendChild(cursor);
+    for(var s=0;s<step.segs.length;s++){
+      var seg=step.segs[s]; var span=el('span',clsMap[seg[1]]); line.insertBefore(span,cursor);
+      var txt=seg[0];
+      for(var c=0;c<txt.length;c++){
+        span.textContent+=txt[c];
+        var d=15+Math.random()*26; if(txt[c]===' ') d+=20; if(c===0) d+=34;
+        await sleep(d);
+      }
+    }
+    await sleep(step.think); cursor.remove();
+  }
+  async function doSpin(step){
+    var line=el('div','hterm-line'); body.appendChild(line); scroll();
+    var t0=Date.now(), i=0;
+    while(Date.now()-t0<step.ms){ line.innerHTML='<span class="htspin">'+spinFrames[i%spinFrames.length]+'</span> <span class="htdim">'+step.label+'…</span>'; i++; await sleep(74); }
+    line.innerHTML=step.done; scroll();
+  }
+  async function doProg(step){
+    var line=el('div','hterm-line'); body.appendChild(line); scroll();
+    var steps=26;
+    for(var k=0;k<=steps;k++){ var pct=Math.round(k/steps*100), fill=Math.round(k/steps*14); line.innerHTML='<span class="htdim">'+step.label+'</span> <span class="htbar">'+bar(fill,14)+'</span> <span class="htn">'+pct+'%</span>'+(step.tail?'  '+step.tail:''); await sleep(step.ms/steps); }
+    scroll();
+  }
+  async function run(){
+    body.style.transition='transform 0.45s cubic-bezier(.22,.61,.36,1), opacity 0.5s ease';
+    while(true){
+      resetClock(); body.style.opacity='1'; body.style.transform='translateY(0)'; body.innerHTML='';
+      for(var i=0;i<SCRIPT.length;i++){
+        var step=SCRIPT[i];
+        if(step.type==='cmd'){ await typeCmd(step); }
+        else if(step.type==='spin'){ await doSpin(step); await sleep(90); }
+        else if(step.type==='prog'){ await doProg(step); await sleep(90); }
+        else if(step.type==='gap'){ body.appendChild(el('div','hterm-line','&nbsp;')); scroll(); await sleep(170); }
+        else { body.appendChild(el('div','hterm-line',step.html)); scroll(); await sleep(120); }
+      }
+      tick(); var done=el('div','hterm-cmd', pfx()); done.appendChild(el('span','hterm-cursor')); body.appendChild(done); scroll();
+      await sleep(3400);
+      body.style.opacity='0'; await sleep(540);
+    }
+  }
+  function renderStatic(){
+    resetClock(); body.innerHTML='';
+    for(var i=0;i<SCRIPT.length;i++){
+      var step=SCRIPT[i];
+      if(step.type==='cmd'){ tick(); var h=pfx(); for(var s=0;s<step.segs.length;s++){h+='<span class="'+clsMap[step.segs[s][1]]+'">'+esc(step.segs[s][0])+'</span>';} body.appendChild(el('div','hterm-cmd',h)); }
+      else if(step.type==='spin'){ body.appendChild(el('div','hterm-line',step.done)); }
+      else if(step.type==='prog'){ body.appendChild(el('div','hterm-line','<span class="htdim">'+step.label+'</span> <span class="htbar">'+bar(14,14)+'</span> <span class="htn">100%</span>'+(step.tail?'  '+step.tail:''))); }
+      else if(step.type==='gap'){ body.appendChild(el('div','hterm-line','&nbsp;')); }
+      else { body.appendChild(el('div','hterm-line',step.html)); }
+    }
+    tick(); var d=el('div','hterm-cmd', pfx()); d.appendChild(el('span','hterm-cursor')); body.appendChild(d);
+    requestAnimationFrame(scroll);
+  }
+  if(reduce){ renderStatic(); } else { run(); }
+})();
+</script>
+
+      <script id="hmock-theme-script">
+      (function(){
+        var term=document.getElementById('hterm');
+        var root=document.getElementById('hmockTheme');
+        var btn=document.getElementById('hmockThemeBtn');
+        var menu=document.getElementById('hmockThemeMenu');
+        if(!term||!root||!btn||!menu) return;
+        var lbl=btn.querySelector('.lbl'), dot=btn.querySelector('.dot');
+        var KEY='krl1-term-skin';
+        var THEMES=[
+          {k:'cyan',n:'Cyan · KRL1',sw:['#22d3ee','#f472b6','#f0b35e','#a78bfa']},
+          {k:'anysphere',n:'Anysphere · Cursor',sw:['#efb080','#e394dc','#ebc88d','#82d2ce']},
+          {k:'dracula',n:'Dracula',sw:['#ff79c6','#f1fa8c','#ffb86c','#bd93f9']},
+          {k:'tokyonight',n:'Tokyo Night',sw:['#7aa2f7','#9ece6a','#ff9e64','#bb9af7']},
+          {k:'catppuccin',n:'Catppuccin Mocha',sw:['#89b4fa','#a6e3a1','#fab387','#cba6f7']},
+          {k:'gruvbox',n:'Gruvbox',sw:['#8ec07c','#b8bb26','#d3869b','#fabd2f']},
+          {k:'nord',n:'Nord',sw:['#88c0d0','#a3be8c','#b48ead','#81a1c1']},
+          {k:'solarized',n:'Solarized Dark',sw:['#268bd2','#2aa198','#d33682','#6c71c4']}
+        ];
+        function metaOf(k){for(var i=0;i<THEMES.length;i++){if(THEMES[i].k===k)return THEMES[i];}return THEMES[0];}
+        function apply(k){
+          var m=metaOf(k); k=m.k;
+          if(k==='cyan') term.removeAttribute('data-skin'); else term.setAttribute('data-skin',k);
+          lbl.textContent=m.n.split(' · ')[0];
+          dot.style.background='linear-gradient(135deg,'+m.sw[0]+','+m.sw[3]+')';
+          var items=menu.querySelectorAll('.hmock-theme-item');
+          for(var i=0;i<items.length;i++){ items[i].setAttribute('aria-selected', items[i].getAttribute('data-k')===k?'true':'false'); }
+        }
+        for(var i=0;i<THEMES.length;i++){(function(t){
+          var it=document.createElement('button');
+          it.type='button'; it.className='hmock-theme-item'; it.setAttribute('data-k',t.k); it.setAttribute('role','option');
+          var sw=''; for(var j=0;j<t.sw.length;j++){ sw+='<i style="background:'+t.sw[j]+'"></i>'; }
+          it.innerHTML='<span class="sw">'+sw+'</span><span class="nm">'+t.n+'</span><span class="tick">✓</span>';
+          it.addEventListener('click',function(){ try{localStorage.setItem(KEY,t.k);}catch(e){} apply(t.k); close(); });
+          menu.appendChild(it);
+        })(THEMES[i]);}
+        function open(){ menu.hidden=false; root.setAttribute('data-open','1'); btn.setAttribute('aria-expanded','true'); }
+        function close(){ menu.hidden=true; root.removeAttribute('data-open'); btn.setAttribute('aria-expanded','false'); }
+        btn.addEventListener('click',function(e){ e.stopPropagation(); if(menu.hidden) open(); else close(); });
+        document.addEventListener('click',function(e){ if(!root.contains(e.target)) close(); });
+        document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+        var cur='cyan'; try{ var s=localStorage.getItem(KEY); if(s) cur=s; }catch(e){}
+        apply(cur);
+      })();
+      </script>
 
       <p class="tech-strip-label" data-i18n="stack.strip.label" style="margin-top:1rem">Stack technique</p>
       <div class="tech-groups">
@@ -531,14 +809,14 @@ nav{padding:1rem 1.5rem}
           <div class="proj-summary"><p class="proj-summary-text" data-i18n="proj.rag.sum">Pipeline RAG sémantique edge-native : embeddings via Workers AI (bge-small-en-v1.5), cosine similarity à l&rsquo;edge, génération augmentée, visualisé étape par étape.</p></div>
           <a href="https://cmankotech.github.io/cmankotech/rag-explorer.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#a78bfa" data-i18n="proj.link">Voir le projet &rarr;</a>
         </div>
-        <div class="proj-card glass-edge glass-pointer" style="border-color:rgba(255,255,255,0.08)" onclick="window.open('https://cmankotech.github.io/cmankotech/pixel-runner.html','_blank')" data-card="game">
+        <div class="proj-card glass-edge glass-pointer" style="border-color:rgba(168,85,247,0.22)" onclick="window.open('https://cmankotech.github.io/cmankotech/veille.html','_blank')" data-card="make">
           <div class="proj-top-row">
-            <span class="proj-tag" style="color:#38bdf8">Mini-Game</span>
-            <span class="proj-icon" style="color:#38bdf855"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></span>
+            <span class="proj-tag" style="color:#a855f7">Automation · Make · Groq</span>
+            <span class="proj-icon" style="color:#a855f755"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg></span>
           </div>
-          <div class="proj-name">Pixel Runner</div>
-          <div class="proj-summary"><p class="proj-summary-text" data-i18n="proj.game.sum">Mini-jeu arcade jouable au clavier : esquive les obstacles, marque des points et bats ton record.</p></div>
-          <a href="https://cmankotech.github.io/cmankotech/pixel-runner.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#38bdf8" data-i18n="proj.link">Voir le projet &rarr;</a>
+          <div class="proj-name" style="background:linear-gradient(135deg,#a855f7,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" data-i18n="proj.make.name">Veille hebdo</div>
+          <div class="proj-summary"><p class="proj-summary-text" data-i18n="proj.make.sum">Veille Product, IA et AI Builders automatis&eacute;e avec Make. Synth&egrave;se Groq, publi&eacute;e chaque lundi.</p></div>
+          <a href="https://cmankotech.github.io/cmankotech/veille.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#a855f7" data-i18n="proj.make.link">Voir la veille &rarr;</a>
         </div>
         <div class="proj-card proj-card-incoming" style="border-color:rgba(251,146,60,0.2)" data-card="mobile">
           <div class="proj-top-row">
@@ -548,15 +826,6 @@ nav{padding:1rem 1.5rem}
           <div class="proj-name" style="color:var(--dim)" data-i18n="proj.mobile.name">App Mobile</div>
           <div class="proj-summary"><p class="proj-summary-text" data-i18n="proj.mobile.sum">Une application mobile iOS / Android.</p></div>
           <span class="proj-incoming-badge" data-i18n="proj.incoming">En cours</span>
-        </div>
-        <div class="proj-card glass-edge glass-pointer" style="border-color:rgba(168,85,247,0.22)" onclick="window.open('https://cmankotech.github.io/cmankotech/veille.html','_blank')" data-card="make">
-          <div class="proj-top-row">
-            <span class="proj-tag" style="color:#a855f7">Automation · Make · Groq</span>
-            <span class="proj-icon" style="color:#a855f755"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg></span>
-          </div>
-          <div class="proj-name" style="background:linear-gradient(135deg,#a855f7,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" data-i18n="proj.make.name">Veille hebdo</div>
-          <div class="proj-summary"><p class="proj-summary-text" data-i18n="proj.make.sum">Veille Product, IA et AI Builders automatis&eacute;e avec Make. Synth&egrave;se Groq, publi&eacute;e chaque lundi.</p></div>
-          <a href="https://cmankotech.github.io/cmankotech/veille.html" target="_blank" class="proj-link" onclick="event.stopPropagation()" style="color:#a855f7" data-i18n="proj.make.link">Voir la veille &rarr;</a>
         </div>
         </div>
     </div>
@@ -568,61 +837,6 @@ nav{padding:1rem 1.5rem}
 
   <div class="tab-panel" id="decisions" role="tabpanel">
     <div class="tab-lazy-placeholder"><div class="tab-spinner"></div></div>
-  </div>
-
-  <div class="tab-panel" id="skills" role="tabpanel">
-    <div class="wrap" style="padding-top:2rem;padding-bottom:2rem">
-        <div class="skills-grid rv">
-      <div class="skill-block">
-        <div class="skill-title grad-blue" data-i18n="skills.product">Product</div>
-        <div class="skill-list">Discovery &middot; Roadmapping &middot; Backlog<br>User Stories &middot; MoSCoW / RICE<br>User Research &middot; Stakeholder Mgmt<br>A/B Testing &middot; Go-to-Market<br>PLG &middot; Continuous Discovery<br>Outcome over Output</div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-title" style="background:linear-gradient(to right,#818cf8,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" data-i18n="skills.ai">IA &amp; Tech</div>
-        <div class="skill-list" data-i18n="skills.ai.list">LLM &middot; RAG &middot; Prompt Engineering<br>Agentic AI &middot; Multi-Agent Systems<br>RLHF &middot; Labelbox &middot; Flowise &middot; Dify<br>CrewAI &middot; Vibe Coding (Cursor, Claude Code, Lovable)<br>n8n &middot; Make &middot; Zapier &middot; Power Automate<br>SQL &middot; Python &middot; JS &middot; API REST</div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-title" style="background:linear-gradient(to right,#a78bfa,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" data-i18n="skills.agile">Agilit&eacute; &amp; Outils</div>
-        <div class="skill-list">SAFe &middot; Scrum &middot; PI Planning<br>JIRA &middot; Confluence &middot; Azure DevOps<br>Power Platform (BI, Automate, Apps)<br>Figma &middot; Miro &middot; Notion &middot; Klaxoon<br>Lean Six Sigma &middot; LACE</div>
-      </div>
-    </div>
-    </div>
-  </div>
-
-  <div class="tab-panel" id="certs" role="tabpanel">
-    <div class="wrap" style="padding-top:2rem;padding-bottom:2rem">
-        <div style="margin-bottom:1.5rem"><a href="https://www.credly.com/users/carlin-mankoto" target="_blank" style="color:#60a5fa;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none" data-i18n="certs.credly">V&eacute;rifier sur Credly &rarr;</a></div>
-        <div class="cert-groups">
-      <div class="rv">
-        <div class="cert-group-title cg-agile" data-i18n="certs.agile">Agilit&eacute;</div>
-        <div class="cert-row cert-row-3">
-          <div class="cert-card ca"><div class="cert-provider">Scrum.org</div><div class="cert-name">Professional Scrum Product Owner I (PSPO I)</div></div>
-          <div class="cert-card ca"><div class="cert-provider">Scaled Agile</div><div class="cert-name">SAFe 6 Product Owner / Product Manager (POPM)</div></div>
-          <div class="cert-card ca"><div class="cert-provider">Scaled Agile</div><div class="cert-name">SAFe 6 Scrum Master (SSM)</div></div>
-        </div>
-      </div>
-      <div class="rv">
-        <div class="cert-group-title cg-product" data-i18n="certs.product">Product Management</div>
-        <div class="cert-row cert-row-6">
-          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Discovery</div></div>
-          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Strategy</div></div>
-          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Roadmapping</div></div>
-          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Experimentation</div></div>
-          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Launches</div></div>
-          <div class="cert-card cp"><div class="cert-provider">Pendo.io</div><div class="cert-name">Product Management Basics</div></div>
-        </div>
-      </div>
-      <div class="rv">
-        <div class="cert-group-title cg-ai" data-i18n="certs.ai">IA &amp; Divers</div>
-        <div class="cert-row cert-row-4">
-          <div class="cert-card ci"><div class="cert-provider">Product School</div><div class="cert-name">AI Certification for Product Managers</div></div>
-          <div class="cert-card ci"><div class="cert-provider">Pendo.io</div><div class="cert-name">AI for Product Management</div></div>
-          <div class="cert-card ci"><div class="cert-provider">University of Helsinki</div><div class="cert-name">Elements of AI</div></div>
-          <div class="cert-card ci"><div class="cert-provider">ORIIONS &middot; Crossthink</div><div class="cert-name" data-i18n="cert.oriions">Conduire un projet innovant &middot; Lean Six Sigma White Belt</div></div>
-        </div>
-      </div>
-    </div>
-    </div>
   </div>
 </div>
 
@@ -646,14 +860,15 @@ nav{padding:1rem 1.5rem}
 </div>
 
 <script>
-var T={fr:{'nav.exp':'Parcours','nav.skills':'Comp\u00e9tences','nav.certs':'Certifications','nav.edu':'Formation','nav.cta':'Me contacter \u2192','nav.projects':'Projets','proj.intro':"Voici mes projets. Open access, sans clé API côté utilisateur.",'proj.stat.tools':'Outils live','proj.stat.open':'Open access','proj.stat.llm':'LLM providers','proj.stat.reqs':'Requêtes IA','hero.portfolio':'Portfolio \u00b7 2026','hero.role':'AI Product Manager \u00b7 Builder','hero.hl1':'Mon portfolio d\u2019outils IA','hero.hl2':'pour les product people.','hero.cta1':'Voir les projets \u2192','hero.cta2':'Architecture du site \u2192','hero.s1.label':'Outils live','hero.s2.label':'Acc\u00e8s','hero.s3.label':'Mod\u00e8le','hero.s4.label':'Certifications','lbl.ctx':'Contexte','lbl.pb':'Probl\u00e8me','lbl.ap':'Approche','lbl.res':'R\u00e9sultat','proj.bnp.ctx':"Mission consulting en Master 2. BNP Paribas cherchait des pistes d\u2019innovation durable pour l\u2019un de ses m\u00e9tiers.",'proj.bnp.pb':"G\u00e9n\u00e9rer des id\u00e9es actionnables en 5 jours avec des parties prenantes aux profils tr\u00e8s h\u00e9t\u00e9rog\u00e8nes.",'proj.bnp.ap':"Facilitation d\u2019un Design Sprint complet : cadrage, id\u00e9ation, prototypage rapide et test utilisateur. Animation des ateliers et synth\u00e8se des insights.",'proj.bnp.res':"3 concepts pr\u00e9sent\u00e9s \u00e0 l\u2019\u00e9quipe BNP avec une recommandation argument\u00e9e sur le concept \u00e0 prototyper en priorit\u00e9.",'proj.shopify.ctx':"Projet de fin de Master 2 en \u00e9quipe \- construire un produit e-commerce fonctionnel de A \u00e0 Z.",'proj.shopify.pb':"R\u00e9duire le taux d\u2019abandon en aidant les visiteurs \u00e0 trouver le bon produit sans intervention humaine.",'proj.shopify.ap':"R\u00f4le de PO sur le backlog + d\u00e9veloppeur sur l\u2019int\u00e9gration du chatbot (Node.js, API, JS). User stories, priorisation et sprints it\u00e9ratifs.",'proj.shopify.res':"Site livr\u00e9 avec chatbot fonctionnel capable de r\u00e9pondre aux questions produit et de rediriger vers les fiches concern\u00e9es.",'proj.geo.ctx':"Projet pratique du Master 2 pour explorer le d\u00e9veloppement low-code sur Microsoft Power Platform.",'proj.geo.pb':"Les \u00e9quipes terrain n\u2019avaient pas d\u2019outil simple pour signaler leur position et l\u2019\u00e9tat des interventions en temps r\u00e9el.",'proj.geo.ap':"Conception UX, mod\u00e9lisation des donn\u00e9es et d\u00e9veloppement complet sur PowerApps, connect\u00e9 \u00e0 SharePoint comme base de donn\u00e9es.",'proj.geo.res':"Application mobile fonctionnelle livr\u00e9e, test\u00e9e et document\u00e9e \- d\u00e9montrant la capacit\u00e9 \u00e0 produire un outil op\u00e9rationnel sans code traditionnel.",'proj.link':'Voir le projet \u2192','proj.mobile.name':'App Mobile','proj.mobile.sum':"Une application mobile iOS / Android.",'proj.make.name':'Veille hebdo','proj.make.sum':"Veille Product, IA et AI Builders automatisée avec Make. Synthèse Groq, publiée chaque lundi.",'proj.make.link':'Voir la veille →','proj.incoming':'In progress','proj.toolkit.sum':"6 outils PM reliés par un fil rouge : chaque insight se transfère automatiquement au suivant. De la discovery utilisateur à la roadmap racontée aux stakeholders, sans perdre un contexte.",'proj.game.sum':'Mini-jeu arcade jouable au clavier : esquive les obstacles, marque des points et bats ton record.','proj.rag.sum':"Pipeline RAG s\u00e9mantique edge-native : embeddings via Workers AI (bge-small-en-v1.5), cosine similarity \u00e0 l\u2019edge, g\u00e9n\u00e9ration augment\u00e9e , visualis\u00e9 \u00e9tape par \u00e9tape.",'hero.intro':"PM/PO avec 3 ans d\u2019exp\u00e9rience dans des environnements exigeants (d\u00e9fense, assurance, conseil). Je couvre l\u2019ensemble du spectre produit de la discovery strat\u00e9gique jusqu\u2019\u00e0 la livraison, avec une expertise marqu\u00e9e en IA g\u00e9n\u00e9rative, syst\u00e8mes multi-agents et vibe coding.",'exp.oaio.date':'Janv. 2026<br>\- Pr\u00e9sent','exp.oaio.role':'Product Manager \u00b7 CDI','exp.oaio.desc':"Pilotage de la strat\u00e9gie produit pour l\u2019impl\u00e9mentation d\u2019une plateforme LMS et d\u2019outils IA pour 3\u00a0500+ collaborateurs. Benchmark de 17 solutions LMS et 44 outils IA avec scoring multicrit\u00e8res. Prototypage en vibe coding (Lovable + Claude Code) pour tester des hypoth\u00e8ses UX. Roadmap en 3 phases align\u00e9e aux objectifs business. Stakeholder management jusqu\u2019\u00e0 la direction.",'exp.outlier.role':'AI Trainer / Data Annotator \u00b7 Freelance','exp.outlier.desc':"Entra\u00eenement de mod\u00e8les d\u2019IA g\u00e9n\u00e9rative via RLHF. Annotation de donn\u00e9es (images, textes, audios) pour cr\u00e9er des datasets structur\u00e9s. Contr\u00f4le qualit\u00e9 rigoureux et classification des donn\u00e9es.",'exp.axa.role':'AI Product Owner \u00b7 Alternance','exp.axa.desc':"Gestion du backlog SecureGPT (RAG interne) et Microsoft Copilot en environnement SAFe. Priorisation MoSCoW, r\u00e9daction d\u2019user stories et animation des c\u00e9r\u00e9monies agiles. Automatisation via Power Automate et AI Builder. R\u00f4le d\u2019AI Evangelist et participation au LACE.",'exp.airbus.role':'Product Owner \u00b7 Alternance','exp.airbus.desc':"Application mobile de messagerie s\u00e9curis\u00e9e mission critique pour les JO Paris 2024. Transition Waterfall vers SAFe, interop\u00e9rabilit\u00e9 TETRA/Broadband. Animation des c\u00e9r\u00e9monies agiles et PI Planning.",'exp.casino.role':'Charg\u00e9 de Projet Change Management \u00b7 Stage','exp.casino.desc':"Accompagnement \u00e0 la transformation agile et impl\u00e9mentation Scrum. D\u00e9finition de la strat\u00e9gie de conduite du changement, d\u00e9ploiement du plan de communication et suivi KPI.",'skills.product':'Product','skills.ai':'IA & Tech','skills.agile':'Agilit\u00e9 & Outils','certs.credly':'V\u00e9rifier sur Credly \u2192','certs.agile':'Agilit\u00e9','certs.product':'Product Management','certs.ai':'IA & Divers','cert.oriions':'Conduire un projet innovant \u00b7 Lean Six Sigma White Belt','proj.bnp.name':'Design Sprint \- Sustainable Innovation','proj.bnp.desc':"Co-construction de solutions \u00e0 impact dans le cadre d\u2019un Design Sprint anim\u00e9 chez BNP Paribas.",'proj.shopify.desc':"Product Owner et d\u00e9veloppeur sur un site e-commerce Shopify avec chatbot IA int\u00e9gr\u00e9 (JavaScript, Node.js, CSS, HTML, API).",'proj.geo.name':'App G\u00e9olocalisation PowerApps','proj.geo.desc':"Application mobile de g\u00e9olocalisation pour la maintenance terrain, d\u00e9velopp\u00e9e sur Microsoft Power Platform.",'edu.bootcamp.degree':'Bootcamp Product Owner / Product Manager','edu.lbl.cert':'Certification obtenue','edu.lbl.thesis':"M\u00e9moire de fin d'\u00e9tudes",'edu.bootcamp.thesis':'\u00ab\u00a0Conduire et piloter un projet innovant avec des m\u00e9thodes agiles\u00a0\u00bb.','edu.m2.degree':"Master 2 \- \u00c9conomie et Management de l\u2019Innovation Digitale",'edu.m2.thesis':"\u00ab\u00a0Du hardware au software, du Waterfall au SAFe\u00a0: Les avantages de l\u2019agilit\u00e9 sur la performance op\u00e9rationnelle en environnement VUCA.\u00a0\u00bb",'edu.m1.degree':'Master 1 \- Management Strat\u00e9gique et Conduite du Changement','edu.m1.thesis':"\u00ab\u00a0L\u2019accompagnement au changement sous le prisme des rapports de domination \u00e9conomique.\u00a0\u00bb",'edu.licence.degree':'Licence Science Politique \- Sp\u00e9cialisation \u00c9conomie Num\u00e9rique','edu.licence.thesis':"\u00ab\u00a0Manipulations et influence\u00a0: Histoire et enjeux de la r\u00e9gulation des donn\u00e9es personnelles.\u00a0\u00bb",'nav.tools':'Outils','nav.arch':'Architecture','nav.dec':'Décisions produit','nav.build':'Archi','panel.sub.projects':'PM Toolkit · Mini-jeu','panel.sub.skills':'Product \u00b7 IA \u00b7 Agilit\u00e9','panel.sub.certs':'13 badges \u00b7 Scrum \u00b7 SAFe \u00b7 AI','panel.sub.arch':'Stack \u00b7 d\u00e9cisions \u00b7 Workers AI','hero.built':'Architecture du site \u2192','footer.built':'\u2197 Architecture du site','stack.strip.label':'Stack technique','stack.cat.vibe':'Vibe Coding','stack.cat.deploy':'Stack déployée','stack.strip.hosting':'Hébergement','stack.strip.proxy':'API Proxy','stack.strip.rag':'Embeddings RAG','stack.strip.llm':'Inférence LPU','stack.strip.model':'Modèle LLM','stack.strip.obs':'Observabilité','stack.strip.back':'Orchestrateur','stack.strip.cursor':'IDE','stack.strip.lovable':'Front','stack.strip.gemini':'Front','stack.strip.v0':'Front','stack.strip.claude':'Front + Back','stack.strip.codex':'Back','s1.title':'Stack technique','stack.front.badge':'Frontend','stack.front.desc':"Vanilla \u00e0 100%. Pas de framework, pas de bundler, pas de d\u00e9pendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline , pas de composants partag\u00e9s, pas de routing entre pages. Ce choix permet un d\u00e9ploiement direct sans \u00e9tape de build, un debug imm\u00e9diat dans les DevTools navigateur, et un code lisible \u00e0 plat sans couche d'abstraction. Sept pages autonomes : les 6 outils PM (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) + le hub <code>pm-toolkit.html</code> qui les encha\u00eene. Un seul point de couplage : <code>pm-session.js</code>, un module l\u00e9ger qui persiste les sorties de chaque outil dans <code>localStorage</code> pour que le suivant puisse les r\u00e9importer en un clic.",'stack.deploy.badge':'H\u00e9bergement','stack.deploy.desc':"H\u00e9bergement statique gratuit avec CI/CD natif : chaque git push sur main d\u00e9clenche un d\u00e9ploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Z\u00e9ro co\u00fbt, z\u00e9ro infra \u00e0 g\u00e9rer , id\u00e9al pour un site statique \u00e0 fichiers HTML/CSS/JS.",'stack.proxy.badge':'API Proxy','stack.proxy.desc':"Un Worker est une fonction serverless Cloudflare entre le navigateur et les APIs, pas de VPS, cold start quasi-nul. Ici il orchestre le pipeline KRL1 (planner→synthesis), calcule les embeddings RAG, trace via Langfuse, la clé API n'est jamais exposée côté client. Routes&nbsp;: POST / : passthrough direct vers l'API Groq pour les 6 outils PM , la cl\u00e9 API est inject\u00e9e c\u00f4t\u00e9 Worker, jamais expos\u00e9e au navigateur. POST /orchestrate : route d\u00e9di\u00e9e au chatbot KRL1, planner\u2192synthesis natif. POST /rag-query : pipeline RAG s\u00e9mantique complet (planner \u2192 Workers AI embeddings \u2192 cosine similarity \u2192 synthesis). POST /orchestrate-stream : m\u00eame flow planner\u2192synthesis mais la r\u00e9ponse synthesis arrive en SSE pour un affichage progressif. POST /veille-refresh : fetch natif de 13 flux RSS, synth\u00e8se par cat\u00e9gorie via Groq et stockage KV \u2014 Make ne fait plus que d\u00e9clencher le pipeline en HTTP. Validation d'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.",'stack.llm.badge':'LLM','stack.llm.desc':"Acc\u00e8s au mod\u00e8le llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inf\u00e9rence sur LPU (Language Processing Unit) donne des r\u00e9ponses en 1 \u00e0 2 secondes , 5 \u00e0 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des param\u00e8tres adapt\u00e9s : temp\u00e9ratures entre 0.3 et 0.7 selon la t\u00e2che, max_tokens entre 2 000 et 4 000, prompts system sp\u00e9cialis\u00e9s (strat\u00e8ge OKR, analyste discovery, expert priorisation\u2026).",'stack.lg.badge':'RAG s\u00e9mantique','stack.lg.desc':"Base de connaissances PM embarqu\u00e9e dans le Worker (7 frameworks Markdown). Les embeddings s\u00e9mantiques sont g\u00e9n\u00e9r\u00e9s par Workers AI (bge-small-en-v1.5) en un seul appel batch ; la similarit\u00e9 cosinus est calcul\u00e9e \u00e0 l'edge. Le pipeline handleRagQuery encha\u00eene : planner (T=0.2) \u2192 retrieval s\u00e9mantique \u2192 synthesis (T=0.45, contexte PM inject\u00e9 si intent = pm_workflow). Z\u00e9ro d\u00e9pendance externe, z\u00e9ro infra Python.",'stack.lf.badge':'Observabilit\u00e9','stack.lf.desc':'Traces LLM en production via l\'API REST Langfuse int\u00e9gr\u00e9e dans le Worker. Chaque appel KRL1 g\u00e9n\u00e8re une trace avec token usage, latences planner/synthesis et intent d\u00e9tect\u00e9. Non-bloquant via ctx.waitUntil, z\u00e9ro impact. Plan gratuit\u00a0: 50\u00a0000 observations/mois.','arch.fallback':'\u21a9 RAG s\u00e9mantique natif Workers AI','s4.title':"D\u00e9cisions d'architecture",'d1.q':'Pourquoi HTML vanilla plut\u00f4t que React ou Next.js ?','d1.a':'Z\u00e9ro d\u00e9pendance, z\u00e9ro toolchain, z\u00e9ro dette','d1.why':"Un site statique de portfolio et d'outils simples n'a pas besoin d'un framework SPA. HTML vanilla se d\u00e9ploie directement, se lit facilement et ne g\u00e9n\u00e8re aucune dette technique. Moins de complexit\u00e9 = plus de v\u00e9locit\u00e9.",'d2.q':"Pourquoi un proxy Cloudflare Workers plut\u00f4t qu'exposer la cl\u00e9 API ?",'d2.a':'S\u00e9curit\u00e9 non n\u00e9gociable, plan gratuit g\u00e9n\u00e9reux','d2.why':"Exposer une cl\u00e9 API dans du code client-side, c'est l'offrir \u00e0 n'importe qui. Le Worker intercepte les requ\u00eates, injecte la cl\u00e9 c\u00f4t\u00e9 serveur et valide l'origine. Plan gratuit Cloudflare : 100 000 requ\u00eates/jour , largement suffisant.",'d3.q':"Pourquoi Groq plut\u00f4t qu'OpenAI ou Anthropic directement ?",'d3.a':"Vitesse d'inf\u00e9rence et plan gratuit",'d3.why':"Groq tourne les mod\u00e8les Llama 3 sur du mat\u00e9riel LPU optimis\u00e9 pour l'inf\u00e9rence. R\u00e9sultat : des r\u00e9ponses en 1-2 secondes l\u00e0 o\u00f9 d'autres providers prennent 5-10s. Et le plan gratuit couvre amplement un usage personnel.",'d4.q':"Pourquoi GitHub Pages plut\u00f4t qu'un VPS ou Vercel ?",'d4.a':'Gratuit, simple, CI/CD natif','d4.why':"Pour des fichiers statiques, GitHub Pages est imbattable : gratuit, CDN mondial, HTTPS automatique, et le d\u00e9ploiement se d\u00e9clenche simplement avec un git push. Pas besoin d'une infrastructure plus complexe pour ce cas d'usage.",'s5.title':'Orchestration Worker , edge-native RAG','lg.flow.label':"Flow d'une requ\u00eate KRL1",'lg.flow.desc':"1 \u00b7 L'utilisateur envoie un message dans le chat KRL1. 2 \u00b7 Le JS appelle POST /orchestrate sur le Worker Cloudflare avec {lang, message, history}. 3 \u00b7 Le Worker ex\u00e9cute nativement le planner (T=0.2) \u2192 JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 \u00b7 Le synthesis (T=0.45) transforme le plan en r\u00e9ponse naturelle max 220 mots avec liens outils PM. 5 \u00b7 La r\u00e9ponse {reply, plan, engine} arrive au client , le chat affiche reply, le JSON plan reste disponible. Pour le RAG Explorer : POST /rag-query ex\u00e9cute planner \u2192 Workers AI embeddings \u2192 cosine similarity \u2192 synthesis avec contexte PM inject\u00e9.",'lg.tests.label':'Tests automatiques , proxy.test.mjs','test.n1':'Test 1','test.t1':'Semantic RAG actif','test.d1':'POST /rag-query \u2192 planner Groq + Workers AI embeddings + cosine sim + synthesis. Le client re\u00e7oit {reply, plan, chunks, engine: "worker-rag-semantic"}.','test.r1':'assert chunks.length = 3, engine = "worker-rag-semantic"','test.n2':'Test 2','test.t2':'Orchestrateur natif Worker','test.d2':'Sans URL externe : 2 appels Groq s\u00e9quentiels , planner (JSON strict) puis synthesis (texte). Le client re\u00e7oit {reply, plan}.','test.r2':'assert plan.intent = "roadmap", reply = "Synth\u00e8se utile"','test.n3':'Test 3','test.t3':'Routing POST / intact','test.d3':"La route racine (6 outils PM) reste un passthrough direct vers Groq, non affect\u00e9e par l'orchestration KRL1.",'test.r3':'assert choices[0].content = "legacy"','lg.why.q':'Pourquoi l\'edge-native ?','lg.why.a':'Plan PM structur\u00e9 + r\u00e9ponse claire, z\u00e9ro infra externe','lg.why.desc':"Le double-n\u0153ud r\u00e9pond \u00e0 deux contraintes oppos\u00e9es. Le planner a besoin d'une temp\u00e9rature basse (T=0.2) pour produire un JSON d\u00e9terministe et fiable. La synthesis a besoin d'une temp\u00e9rature plus cr\u00e9ative (T=0.45) pour formuler une r\u00e9ponse naturelle. Cette architecture a d'abord \u00e9t\u00e9 prototyp\u00e9e en Python (FastAPI + LangGraph) , mais le free tier Render (512 MB) \u00e9tait insuffisant pour charger sentence-transformers. Solution : porter l'int\u00e9gralit\u00e9 du pipeline dans le Cloudflare Worker via Workers AI (bge-small-en-v1.5). Z\u00e9ro infra Python, m\u00eame qualit\u00e9 s\u00e9mantique.",'arch.details.btn':'Tous les détails techniques →','footer.hl':'On construit','footer.hl2':'quelque chose ?','arch.gh.label':'CDN · Hébergement statique','arch.load.lbl':'chargement initial • HTML / CSS / JS','arch.api.lbl':'HTTPS • appels API • réponse JSON / SSE','arch.worker.label':'API Proxy · clé sécurisée','arch.groq.label':'6 outils PM','arch.browser.sub':'6 Outils PM (JS)'} ,en:{'hero.portfolio':'Portfolio \u00b7 2026','hero.hl1':'My AI tools portfolio','hero.hl2':'for product people.','hero.cta1':'See projects \u2192','hero.cta2':'Site architecture \u2192','hero.krl1':'Product Decisions \u2192','hero.s1.label':'Live tools','hero.s2.label':'Access','hero.s3.label':'Model','hero.s4.label':'Certifications','nav.tools':'Tools','nav.exp':'Experience','nav.skills':'Skills','nav.certs':'Certifications','nav.edu':'Education','nav.cta':'Contact me →','nav.projects':'Projects','hero.role':'AI Product Manager · Builder',
+var T={fr:{'nav.exp':'Parcours','nav.skills':'Comp\u00e9tences','nav.certs':'Certifications','nav.edu':'Formation','nav.cta':'Me contacter \u2192','nav.projects':'Projets','proj.intro':"Voici mes projets. Open access, sans clé API côté utilisateur.",'proj.stat.tools':'Outils live','proj.stat.open':'Open access','proj.stat.llm':'LLM providers','proj.stat.reqs':'Requêtes IA','hero.portfolio':'Portfolio \u00b7 2026','hero.role':'AI Product Manager \u00b7 Builder','hero.hl1':'Mon portfolio d\u2019outils IA','hero.hl2':'pour les product people.','hero.cta1':'Voir les projets \u2192','hero.cta2':'Architecture du site \u2192','hero.s1.label':'Outils live','hero.s2.label':'Acc\u00e8s','hero.s3.label':'Mod\u00e8le','hero.s4.label':'Certifications','lbl.ctx':'Contexte','lbl.pb':'Probl\u00e8me','lbl.ap':'Approche','lbl.res':'R\u00e9sultat','proj.bnp.ctx':"Mission consulting en Master 2. BNP Paribas cherchait des pistes d\u2019innovation durable pour l\u2019un de ses m\u00e9tiers.",'proj.bnp.pb':"G\u00e9n\u00e9rer des id\u00e9es actionnables en 5 jours avec des parties prenantes aux profils tr\u00e8s h\u00e9t\u00e9rog\u00e8nes.",'proj.bnp.ap':"Facilitation d\u2019un Design Sprint complet : cadrage, id\u00e9ation, prototypage rapide et test utilisateur. Animation des ateliers et synth\u00e8se des insights.",'proj.bnp.res':"3 concepts pr\u00e9sent\u00e9s \u00e0 l\u2019\u00e9quipe BNP avec une recommandation argument\u00e9e sur le concept \u00e0 prototyper en priorit\u00e9.",'proj.shopify.ctx':"Projet de fin de Master 2 en \u00e9quipe \- construire un produit e-commerce fonctionnel de A \u00e0 Z.",'proj.shopify.pb':"R\u00e9duire le taux d\u2019abandon en aidant les visiteurs \u00e0 trouver le bon produit sans intervention humaine.",'proj.shopify.ap':"R\u00f4le de PO sur le backlog + d\u00e9veloppeur sur l\u2019int\u00e9gration du chatbot (Node.js, API, JS). User stories, priorisation et sprints it\u00e9ratifs.",'proj.shopify.res':"Site livr\u00e9 avec chatbot fonctionnel capable de r\u00e9pondre aux questions produit et de rediriger vers les fiches concern\u00e9es.",'proj.geo.ctx':"Projet pratique du Master 2 pour explorer le d\u00e9veloppement low-code sur Microsoft Power Platform.",'proj.geo.pb':"Les \u00e9quipes terrain n\u2019avaient pas d\u2019outil simple pour signaler leur position et l\u2019\u00e9tat des interventions en temps r\u00e9el.",'proj.geo.ap':"Conception UX, mod\u00e9lisation des donn\u00e9es et d\u00e9veloppement complet sur PowerApps, connect\u00e9 \u00e0 SharePoint comme base de donn\u00e9es.",'proj.geo.res':"Application mobile fonctionnelle livr\u00e9e, test\u00e9e et document\u00e9e \- d\u00e9montrant la capacit\u00e9 \u00e0 produire un outil op\u00e9rationnel sans code traditionnel.",'proj.link':'Voir le projet \u2192','proj.mobile.name':'App Mobile','proj.mobile.sum':"Une application mobile iOS / Android.",'proj.make.name':'Veille hebdo','proj.make.sum':"Veille Product, IA et AI Builders automatisée avec Make. Synthèse Groq, publiée chaque lundi.",'proj.make.link':'Voir la veille →','proj.incoming':'In progress','proj.toolkit.sum':"6 outils PM reliés par un fil rouge : chaque insight se transfère automatiquement au suivant. De la discovery utilisateur à la roadmap racontée aux stakeholders, sans perdre un contexte.",'proj.rag.sum':"Pipeline RAG s\u00e9mantique edge-native : embeddings via Workers AI (bge-small-en-v1.5), cosine similarity \u00e0 l\u2019edge, g\u00e9n\u00e9ration augment\u00e9e , visualis\u00e9 \u00e9tape par \u00e9tape.",'hero.intro':"PM/PO avec 3 ans d\u2019exp\u00e9rience dans des environnements exigeants (d\u00e9fense, assurance, conseil). Je couvre l\u2019ensemble du spectre produit de la discovery strat\u00e9gique jusqu\u2019\u00e0 la livraison, avec une expertise marqu\u00e9e en IA g\u00e9n\u00e9rative, syst\u00e8mes multi-agents et vibe coding.",'exp.oaio.date':'Janv. 2026<br>\- Pr\u00e9sent','exp.oaio.role':'Product Manager \u00b7 CDI','exp.oaio.desc':"Pilotage de la strat\u00e9gie produit pour l\u2019impl\u00e9mentation d\u2019une plateforme LMS et d\u2019outils IA pour 3\u00a0500+ collaborateurs. Benchmark de 17 solutions LMS et 44 outils IA avec scoring multicrit\u00e8res. Prototypage en vibe coding (Lovable + Claude Code) pour tester des hypoth\u00e8ses UX. Roadmap en 3 phases align\u00e9e aux objectifs business. Stakeholder management jusqu\u2019\u00e0 la direction.",'exp.outlier.role':'AI Trainer / Data Annotator \u00b7 Freelance','exp.outlier.desc':"Entra\u00eenement de mod\u00e8les d\u2019IA g\u00e9n\u00e9rative via RLHF. Annotation de donn\u00e9es (images, textes, audios) pour cr\u00e9er des datasets structur\u00e9s. Contr\u00f4le qualit\u00e9 rigoureux et classification des donn\u00e9es.",'exp.axa.role':'AI Product Owner \u00b7 Alternance','exp.axa.desc':"Gestion du backlog SecureGPT (RAG interne) et Microsoft Copilot en environnement SAFe. Priorisation MoSCoW, r\u00e9daction d\u2019user stories et animation des c\u00e9r\u00e9monies agiles. Automatisation via Power Automate et AI Builder. R\u00f4le d\u2019AI Evangelist et participation au LACE.",'exp.airbus.role':'Product Owner \u00b7 Alternance','exp.airbus.desc':"Application mobile de messagerie s\u00e9curis\u00e9e mission critique pour les JO Paris 2024. Transition Waterfall vers SAFe, interop\u00e9rabilit\u00e9 TETRA/Broadband. Animation des c\u00e9r\u00e9monies agiles et PI Planning.",'exp.casino.role':'Charg\u00e9 de Projet Change Management \u00b7 Stage','exp.casino.desc':"Accompagnement \u00e0 la transformation agile et impl\u00e9mentation Scrum. D\u00e9finition de la strat\u00e9gie de conduite du changement, d\u00e9ploiement du plan de communication et suivi KPI.",'skills.product':'Product','skills.ai':'IA & Tech','skills.agile':'Agilit\u00e9 & Outils','certs.credly':'V\u00e9rifier sur Credly \u2192','certs.agile':'Agilit\u00e9','certs.product':'Product Management','certs.ai':'IA & Divers','cert.oriions':'Conduire un projet innovant \u00b7 Lean Six Sigma White Belt','proj.bnp.name':'Design Sprint \- Sustainable Innovation','proj.bnp.desc':"Co-construction de solutions \u00e0 impact dans le cadre d\u2019un Design Sprint anim\u00e9 chez BNP Paribas.",'proj.shopify.desc':"Product Owner et d\u00e9veloppeur sur un site e-commerce Shopify avec chatbot IA int\u00e9gr\u00e9 (JavaScript, Node.js, CSS, HTML, API).",'proj.geo.name':'App G\u00e9olocalisation PowerApps','proj.geo.desc':"Application mobile de g\u00e9olocalisation pour la maintenance terrain, d\u00e9velopp\u00e9e sur Microsoft Power Platform.",'edu.bootcamp.degree':'Bootcamp Product Owner / Product Manager','edu.lbl.cert':'Certification obtenue','edu.lbl.thesis':"M\u00e9moire de fin d'\u00e9tudes",'edu.bootcamp.thesis':'\u00ab\u00a0Conduire et piloter un projet innovant avec des m\u00e9thodes agiles\u00a0\u00bb.','edu.m2.degree':"Master 2 \- \u00c9conomie et Management de l\u2019Innovation Digitale",'edu.m2.thesis':"\u00ab\u00a0Du hardware au software, du Waterfall au SAFe\u00a0: Les avantages de l\u2019agilit\u00e9 sur la performance op\u00e9rationnelle en environnement VUCA.\u00a0\u00bb",'edu.m1.degree':'Master 1 \- Management Strat\u00e9gique et Conduite du Changement','edu.m1.thesis':"\u00ab\u00a0L\u2019accompagnement au changement sous le prisme des rapports de domination \u00e9conomique.\u00a0\u00bb",'edu.licence.degree':'Licence Science Politique \- Sp\u00e9cialisation \u00c9conomie Num\u00e9rique','edu.licence.thesis':"\u00ab\u00a0Manipulations et influence\u00a0: Histoire et enjeux de la r\u00e9gulation des donn\u00e9es personnelles.\u00a0\u00bb",'nav.tools':'Outils','nav.arch':'Architecture','nav.dec':'Décisions produit','nav.build':'Archi','panel.sub.projects':'PM Toolkit · RAG','panel.sub.skills':'Product \u00b7 IA \u00b7 Agilit\u00e9','panel.sub.certs':'13 badges \u00b7 Scrum \u00b7 SAFe \u00b7 AI','panel.sub.arch':'Stack \u00b7 d\u00e9cisions \u00b7 Workers AI','hero.built':'Architecture du site \u2192','footer.built':'\u2197 Architecture du site','stack.strip.label':'Stack technique','stack.cat.vibe':'Vibe Coding','stack.cat.deploy':'Stack déployée','stack.strip.hosting':'Hébergement','stack.strip.proxy':'API Proxy','stack.strip.rag':'Embeddings RAG','stack.strip.llm':'Inférence LPU','stack.strip.model':'Modèle LLM','stack.strip.obs':'Observabilité','stack.strip.back':'Orchestrateur','stack.strip.cursor':'IDE','stack.strip.lovable':'Front','stack.strip.gemini':'Front','stack.strip.v0':'Front','stack.strip.claude':'Front + Back','stack.strip.codex':'Back','s1.title':'Stack technique','stack.front.badge':'Frontend','stack.front.desc':"Vanilla \u00e0 100%. Pas de framework, pas de bundler, pas de d\u00e9pendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline , pas de composants partag\u00e9s, pas de routing entre pages. Ce choix permet un d\u00e9ploiement direct sans \u00e9tape de build, un debug imm\u00e9diat dans les DevTools navigateur, et un code lisible \u00e0 plat sans couche d'abstraction. Sept pages autonomes : les 6 outils PM (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) + le hub <code>pm-toolkit.html</code> qui les encha\u00eene. Un seul point de couplage : <code>pm-session.js</code>, un module l\u00e9ger qui persiste les sorties de chaque outil dans <code>localStorage</code> pour que le suivant puisse les r\u00e9importer en un clic.",'stack.deploy.badge':'H\u00e9bergement','stack.deploy.desc':"H\u00e9bergement statique gratuit avec CI/CD natif : chaque git push sur main d\u00e9clenche un d\u00e9ploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Z\u00e9ro co\u00fbt, z\u00e9ro infra \u00e0 g\u00e9rer , id\u00e9al pour un site statique \u00e0 fichiers HTML/CSS/JS.",'stack.proxy.badge':'API Proxy','stack.proxy.desc':"Un Worker est une fonction serverless Cloudflare entre le navigateur et les APIs, pas de VPS, cold start quasi-nul. Ici il orchestre le pipeline KRL1 (planner→synthesis), calcule les embeddings RAG, trace via Langfuse, la clé API n'est jamais exposée côté client. Routes&nbsp;: POST / : passthrough direct vers l'API Groq pour les 6 outils PM , la cl\u00e9 API est inject\u00e9e c\u00f4t\u00e9 Worker, jamais expos\u00e9e au navigateur. POST /orchestrate : route d\u00e9di\u00e9e au chatbot KRL1, planner\u2192synthesis natif. POST /rag-query : pipeline RAG s\u00e9mantique complet (planner \u2192 Workers AI embeddings \u2192 cosine similarity \u2192 synthesis). POST /orchestrate-stream : m\u00eame flow planner\u2192synthesis mais la r\u00e9ponse synthesis arrive en SSE pour un affichage progressif. POST /veille-refresh : fetch natif de 13 flux RSS, synth\u00e8se par cat\u00e9gorie via Groq et stockage KV \u2014 Make ne fait plus que d\u00e9clencher le pipeline en HTTP. Validation d'origine, CORS automatique, plan gratuit Cloudflare : 100 000 req/jour.",'stack.llm.badge':'LLM','stack.llm.desc':"Acc\u00e8s au mod\u00e8le llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inf\u00e9rence sur LPU (Language Processing Unit) donne des r\u00e9ponses en 1 \u00e0 2 secondes , 5 \u00e0 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des param\u00e8tres adapt\u00e9s : temp\u00e9ratures entre 0.3 et 0.7 selon la t\u00e2che, max_tokens entre 2 000 et 4 000, prompts system sp\u00e9cialis\u00e9s (strat\u00e8ge OKR, analyste discovery, expert priorisation\u2026).",'stack.lg.badge':'RAG s\u00e9mantique','stack.lg.desc':"Base de connaissances PM embarqu\u00e9e dans le Worker (7 frameworks Markdown). Les embeddings s\u00e9mantiques sont g\u00e9n\u00e9r\u00e9s par Workers AI (bge-small-en-v1.5) en un seul appel batch ; la similarit\u00e9 cosinus est calcul\u00e9e \u00e0 l'edge. Le pipeline handleRagQuery encha\u00eene : planner (T=0.2) \u2192 retrieval s\u00e9mantique \u2192 synthesis (T=0.45, contexte PM inject\u00e9 si intent = pm_workflow). Z\u00e9ro d\u00e9pendance externe, z\u00e9ro infra Python.",'stack.lf.badge':'Observabilit\u00e9','stack.lf.desc':'Traces LLM en production via l\'API REST Langfuse int\u00e9gr\u00e9e dans le Worker. Chaque appel KRL1 g\u00e9n\u00e8re une trace avec token usage, latences planner/synthesis et intent d\u00e9tect\u00e9. Non-bloquant via ctx.waitUntil, z\u00e9ro impact. Plan gratuit\u00a0: 50\u00a0000 observations/mois.','arch.fallback':'\u21a9 RAG s\u00e9mantique natif Workers AI','s4.title':"D\u00e9cisions d'architecture",'d1.q':'Pourquoi HTML vanilla plut\u00f4t que React ou Next.js ?','d1.a':'Z\u00e9ro d\u00e9pendance, z\u00e9ro toolchain, z\u00e9ro dette','d1.why':"Un site statique de portfolio et d'outils simples n'a pas besoin d'un framework SPA. HTML vanilla se d\u00e9ploie directement, se lit facilement et ne g\u00e9n\u00e8re aucune dette technique. Moins de complexit\u00e9 = plus de v\u00e9locit\u00e9.",'d2.q':"Pourquoi un proxy Cloudflare Workers plut\u00f4t qu'exposer la cl\u00e9 API ?",'d2.a':'S\u00e9curit\u00e9 non n\u00e9gociable, plan gratuit g\u00e9n\u00e9reux','d2.why':"Exposer une cl\u00e9 API dans du code client-side, c'est l'offrir \u00e0 n'importe qui. Le Worker intercepte les requ\u00eates, injecte la cl\u00e9 c\u00f4t\u00e9 serveur et valide l'origine. Plan gratuit Cloudflare : 100 000 requ\u00eates/jour , largement suffisant.",'d3.q':"Pourquoi Groq plut\u00f4t qu'OpenAI ou Anthropic directement ?",'d3.a':"Vitesse d'inf\u00e9rence et plan gratuit",'d3.why':"Groq tourne les mod\u00e8les Llama 3 sur du mat\u00e9riel LPU optimis\u00e9 pour l'inf\u00e9rence. R\u00e9sultat : des r\u00e9ponses en 1-2 secondes l\u00e0 o\u00f9 d'autres providers prennent 5-10s. Et le plan gratuit couvre amplement un usage personnel.",'d4.q':"Pourquoi GitHub Pages plut\u00f4t qu'un VPS ou Vercel ?",'d4.a':'Gratuit, simple, CI/CD natif','d4.why':"Pour des fichiers statiques, GitHub Pages est imbattable : gratuit, CDN mondial, HTTPS automatique, et le d\u00e9ploiement se d\u00e9clenche simplement avec un git push. Pas besoin d'une infrastructure plus complexe pour ce cas d'usage.",'s5.title':'Orchestration Worker , edge-native RAG','lg.flow.label':"Flow d'une requ\u00eate KRL1",'lg.flow.desc':"1 \u00b7 L'utilisateur envoie un message dans le chat KRL1. 2 \u00b7 Le JS appelle POST /orchestrate sur le Worker Cloudflare avec {lang, message, history}. 3 \u00b7 Le Worker ex\u00e9cute nativement le planner (T=0.2) \u2192 JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 \u00b7 Le synthesis (T=0.45) transforme le plan en r\u00e9ponse naturelle max 220 mots avec liens outils PM. 5 \u00b7 La r\u00e9ponse {reply, plan, engine} arrive au client , le chat affiche reply, le JSON plan reste disponible. Pour le RAG Explorer : POST /rag-query ex\u00e9cute planner \u2192 Workers AI embeddings \u2192 cosine similarity \u2192 synthesis avec contexte PM inject\u00e9.",'lg.tests.label':'Tests automatiques , proxy.test.mjs','test.n1':'Test 1','test.t1':'Semantic RAG actif','test.d1':'POST /rag-query \u2192 planner Groq + Workers AI embeddings + cosine sim + synthesis. Le client re\u00e7oit {reply, plan, chunks, engine: "worker-rag-semantic"}.','test.r1':'assert chunks.length = 3, engine = "worker-rag-semantic"','test.n2':'Test 2','test.t2':'Orchestrateur natif Worker','test.d2':'Sans URL externe : 2 appels Groq s\u00e9quentiels , planner (JSON strict) puis synthesis (texte). Le client re\u00e7oit {reply, plan}.','test.r2':'assert plan.intent = "roadmap", reply = "Synth\u00e8se utile"','test.n3':'Test 3','test.t3':'Routing POST / intact','test.d3':"La route racine (6 outils PM) reste un passthrough direct vers Groq, non affect\u00e9e par l'orchestration KRL1.",'test.r3':'assert choices[0].content = "legacy"','lg.why.q':'Pourquoi l\'edge-native ?','lg.why.a':'Plan PM structur\u00e9 + r\u00e9ponse claire, z\u00e9ro infra externe','lg.why.desc':"Le double-n\u0153ud r\u00e9pond \u00e0 deux contraintes oppos\u00e9es. Le planner a besoin d'une temp\u00e9rature basse (T=0.2) pour produire un JSON d\u00e9terministe et fiable. La synthesis a besoin d'une temp\u00e9rature plus cr\u00e9ative (T=0.45) pour formuler une r\u00e9ponse naturelle. Cette architecture a d'abord \u00e9t\u00e9 prototyp\u00e9e en Python (FastAPI + LangGraph) , mais le free tier Render (512 MB) \u00e9tait insuffisant pour charger sentence-transformers. Solution : porter l'int\u00e9gralit\u00e9 du pipeline dans le Cloudflare Worker via Workers AI (bge-small-en-v1.5). Z\u00e9ro infra Python, m\u00eame qualit\u00e9 s\u00e9mantique.",'arch.details.btn':'Tous les détails techniques →','footer.hl':'On construit','footer.hl2':'quelque chose ?','arch.gh.label':'CDN · Hébergement statique','arch.load.lbl':'chargement initial • HTML / CSS / JS','arch.api.lbl':'HTTPS • appels API • réponse JSON / SSE','arch.worker.label':'API Proxy · clé sécurisée','arch.groq.label':'6 outils PM','arch.browser.sub':'6 Outils PM (JS)'} ,en:{'hero.portfolio':'Portfolio \u00b7 2026','hero.hl1':'My AI tools portfolio','hero.hl2':'for product people.','hero.cta1':'See projects \u2192','hero.cta2':'Site architecture \u2192','hero.krl1':'Product Decisions \u2192','hero.s1.label':'Live tools','hero.s2.label':'Access','hero.s3.label':'Model','hero.s4.label':'Certifications','nav.tools':'Tools','nav.exp':'Experience','nav.skills':'Skills','nav.certs':'Certifications','nav.edu':'Education','nav.cta':'Contact me →','nav.projects':'Projects','hero.role':'AI Product Manager · Builder',
 'hero.intro':"PM by day, builder by night. I build concrete tools with AI because the best tools are the ones you create yourself. Test, learn, iterate. Every project here solves a real problem I faced as a PM.",
 'proj.intro':"Here are my projects. Open access, no API key on the user side.",
 'proj.stat.tools':'Live tools','proj.stat.open':'Open access','proj.stat.llm':'LLM providers','proj.stat.reqs':'AI requests',
-'proj.mobile.name':'Mobile App','proj.mobile.sum':"An iOS / Android mobile app.",'proj.make.name':'Weekly Watch','proj.make.sum':"Product, AI and AI Builders watch automated with Make. Groq synthesis, published every Monday.",'proj.make.link':'See the watch →','proj.incoming':'In progress','proj.link':'View project →','proj.toolkit.sum':"6 PM tools linked by an insight thread: each output feeds the next tool automatically. From user discovery to the roadmap you tell stakeholders, without losing context.",'proj.game.sum':'Arcade keyboard mini-game: dodge obstacles, score points, and beat your high score.','proj.rag.sum':'Edge-native semantic RAG pipeline: Workers AI embeddings (bge-small-en-v1.5), cosine similarity at the edge, augmented generation , visualised step by step.',
+'proj.mobile.name':'Mobile App','proj.mobile.sum':"An iOS / Android mobile app.",'proj.make.name':'Weekly Watch','proj.make.sum':"Product, AI and AI Builders watch automated with Make. Groq synthesis, published every Monday.",'proj.make.link':'See the watch →','proj.incoming':'In progress','proj.link':'View project →','proj.toolkit.sum':"6 PM tools linked by an insight thread: each output feeds the next tool automatically. From user discovery to the roadmap you tell stakeholders, without losing context.",'proj.rag.sum':'Edge-native semantic RAG pipeline: Workers AI embeddings (bge-small-en-v1.5), cosine similarity at the edge, augmented generation , visualised step by step.',
 'lbl.ctx':'Context','lbl.pb':'Problem','lbl.ap':'Approach','lbl.res':'Result',
-'skills.title':'Skills','nav.arch':'Architecture','nav.dec':'Product Decisions','nav.build':'Archi','panel.sub.projects':'PM Toolkit · Mini-game','panel.sub.skills':'Product \u00b7 AI \u00b7 Agile','panel.sub.certs':'13 badges \u00b7 Scrum \u00b7 SAFe \u00b7 AI','arch.details.btn':'All technical details \u2192','panel.sub.arch':'Stack \u00b7 Langfuse \u00b7 15 docs','stack.strip.label':'Tech stack','stack.cat.vibe':'Vibe Coding','stack.cat.deploy':'Deployed stack','stack.strip.hosting':'Hosting','stack.strip.proxy':'API Proxy','stack.strip.rag':'RAG Embeddings','stack.strip.llm':'LPU Inference','stack.strip.model':'LLM Model','stack.strip.obs':'Observability','stack.strip.back':'Orchestrator','stack.strip.cursor':'IDE','stack.strip.lovable':'Front','stack.strip.gemini':'Front','stack.strip.v0':'Front','stack.strip.claude':'Front + Back','stack.strip.codex':'Back','s1.title':'Tech stack','stack.front.badge':'Frontend','stack.front.desc':'100% vanilla. No framework, no bundler, no npm dependencies. Each tool is a standalone HTML page with its own inline CSS and JS , no shared components, no cross-page routing. This allows direct deployment without a build step, instant debugging in browser DevTools, and flat, abstraction-free code. Seven standalone pages: the 6 PM tools (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) plus the <code>pm-toolkit.html</code> hub that chains them. Single coupling point: <code>pm-session.js</code>, a lightweight module that persists each tool\'s output into <code>localStorage</code> so the next tool can re-import it in one click.','stack.deploy.badge':'Hosting','stack.deploy.desc':'Free static hosting with native CI/CD: every git push to main triggers an automatic deployment in under 60 seconds. Global CDN, automatic HTTPS, cmankotech.github.io domain with zero configuration. Zero cost, zero infrastructure to manage , ideal for a static HTML/CSS/JS site.','stack.proxy.badge':'API Proxy','stack.proxy.desc':'A Worker is a serverless Cloudflare function between the browser and APIs, no server to manage, near-zero cold start. Here it orchestrates the KRL1 pipeline (planner→synthesis), computes RAG embeddings, and traces via Langfuse, the API key is never exposed client-side. Routes: POST /: direct passthrough to the Groq API for the 6 PM tools , the API key is injected Worker-side, never exposed to the browser. POST /orchestrate: dedicated route for the KRL1 chatbot, native planner\u2192synthesis. POST /rag-query: full semantic RAG pipeline (planner \u2192 Workers AI embeddings \u2192 cosine similarity \u2192 synthesis). POST /orchestrate-stream: same planner\u2192synthesis flow but the synthesis response arrives as SSE for progressive display. POST /veille-refresh: native fetch of 13 RSS feeds, per-category Groq synthesis and KV storage \u2014 Make now only triggers the pipeline over HTTP. Origin validation, automatic CORS, Cloudflare free plan: 100,000 req/day.','stack.llm.badge':'LLM','stack.llm.desc':"Access to the llama-3.3-70b-versatile model via an OpenAI-compatible REST API. LPU (Language Processing Unit) inference delivers responses in 1\u20132 seconds , 5 to 10x faster than classic providers. Each PM tool calls it with tailored parameters: temperatures between 0.3 and 0.7 depending on the task, max_tokens between 2,000 and 4,000, specialised system prompts (OKR strategist, discovery analyst, prioritisation expert\u2026).",'stack.lg.badge':'Semantic RAG','stack.lg.desc':'Knowledge base embedded in the Worker (15 documents: PM, PO/Agile, AI Product). Semantic embeddings are generated by Workers AI (bge-small-en-v1.5) in a single batch call; cosine similarity is computed at the edge. The handleRagQuery pipeline chains: planner (T=0.2) → semantic retrieval → synthesis (T=0.45, PM context injected if intent = pm_workflow). Zero external dependency, zero Python infrastructure.','stack.lf.badge':'Observability','stack.lf.desc':'Production LLM tracing via Langfuse REST API integrated in the Worker. Each KRL1 call generates a trace with token usage, planner/synthesis latencies and detected intent. Non-blocking via ctx.waitUntil, zero impact on response times. Free tier: 50,000 observations/month.','arch.fallback':'\u21a9 native Workers AI semantic RAG','s4.title':'Architecture decisions','d1.q':'Why vanilla HTML instead of React or Next.js?','d1.a':'Zero dependencies, zero toolchain, zero technical debt','d1.why':"A static portfolio and simple tools site doesn't need a SPA framework. Vanilla HTML deploys directly, reads easily, and generates no technical debt. Less complexity = more velocity.",'d2.q':'Why a Cloudflare Workers proxy instead of exposing the API key?','d2.a':'Non-negotiable security, generous free plan','d2.why':'Exposing an API key in client-side code is handing it to anyone. The Worker intercepts requests, injects the key server-side and validates the origin. Cloudflare free plan: 100,000 requests/day , more than enough.','d3.q':'Why Groq instead of OpenAI or Anthropic directly?','d3.a':'Inference speed and free plan','d3.why':'Groq runs Llama 3 models on LPU hardware optimised for inference. Result: responses in 1-2 seconds where other providers take 5-10s. And the free plan comfortably covers personal use.','d4.q':'Why GitHub Pages instead of a VPS or Vercel?','d4.a':'Free, simple, native CI/CD','d4.why':'For static files, GitHub Pages is unbeatable: free, global CDN, automatic HTTPS, and deployment triggered simply by a git push. No need for more complex infrastructure for this use case.','s5.title':'Worker Orchestration, edge-native RAG','lg.flow.label':'KRL1 request flow','lg.flow.desc':'1 \u00b7 User sends a message in the KRL1 chat. 2 \u00b7 JS calls POST /orchestrate on the Cloudflare Worker with {lang, message, history}. 3 \u00b7 The Worker runs the planner natively (T=0.2) \u2192 JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 \u00b7 The synthesis (T=0.45) transforms the plan into a natural response max 220 words with PM tool links. 5 \u00b7 Response {reply, plan, engine} arrives at client , chat displays reply, JSON plan remains available. For the RAG Explorer: POST /rag-query runs planner \u2192 Workers AI embeddings \u2192 cosine similarity \u2192 synthesis with injected PM context.','lg.tests.label':'Automated tests , proxy.test.mjs','test.n1':'Test 1','test.t1':'Semantic RAG active','test.d1':'POST /rag-query \u2192 Groq planner + Workers AI embeddings + cosine sim + synthesis. Client receives {reply, plan, chunks, engine: "worker-rag-semantic"}.','test.r1':'assert chunks.length = 3, engine = "worker-rag-semantic"','test.n2':'Test 2','test.t2':'Native Worker orchestrator','test.d2':'Without external URL: 2 sequential Groq calls , planner (strict JSON) then synthesis (text). Client receives {reply, plan}.','test.r2':'assert plan.intent = "roadmap", reply = "Synth\u00e8se utile"','test.n3':'Test 3','test.t3':'POST / routing intact','test.d3':'The root route (6 PM tools) remains a direct Groq passthrough, unaffected by KRL1 orchestration.','test.r3':'assert choices[0].content = "legacy"','lg.why.q':'Why edge-native?','lg.why.a':'Structured PM plan + clear response, zero external infrastructure','lg.why.desc':'The dual-node design addresses two opposing constraints. The planner needs a low temperature (T=0.2) to produce deterministic, reliable JSON: intent, user_goal, actionable steps, identified risks, quick_win. The synthesis needs a more creative temperature (T=0.45) to produce a natural, concise response (max 220 words) with PM tool links. This architecture was first prototyped in Python (FastAPI + LangGraph) , but the Render free tier (512 MB) was insufficient to load sentence-transformers. Solution: port the entire pipeline into the Cloudflare Worker via Workers AI (bge-small-en-v1.5). Zero Python infrastructure, same semantic quality.','footer.hl':'Let\'s build','footer.hl2':'something together?','footer.built':'\u2197 Detailed architecture','footer.krl1':'\u2197 Product Decisions','mobile.built':'Site architecture','hero.built':'Site architecture \u2192','skills.product':'Product','skills.ai':'AI & Tech','skills.agile':'Agility & Tools','certs.agile':'Agility','certs.product':'Product Management','certs.ai':'AI & Other','certs.credly':'See all my badges on Credly \u2192','cert.oriions':'Innovative Agile Project Management (Crossthink/ORIIONS)','arch.gh.label':'CDN · Static hosting','arch.load.lbl':'initial load • HTML / CSS / JS','arch.api.lbl':'HTTPS • API calls • JSON / SSE response','arch.worker.label':'API Proxy · secure key','arch.groq.label':'6 PM tools','arch.browser.sub':'6 PM tools (JS)'}};
+'skills.title':'Skills','nav.arch':'Architecture','nav.dec':'Product Decisions','nav.build':'Archi','panel.sub.projects':'PM Toolkit · RAG','panel.sub.skills':'Product \u00b7 AI \u00b7 Agile','panel.sub.certs':'13 badges \u00b7 Scrum \u00b7 SAFe \u00b7 AI','arch.details.btn':'All technical details \u2192','panel.sub.arch':'Stack \u00b7 Langfuse \u00b7 15 docs','stack.strip.label':'Tech stack','stack.cat.vibe':'Vibe Coding','stack.cat.deploy':'Deployed stack','stack.strip.hosting':'Hosting','stack.strip.proxy':'API Proxy','stack.strip.rag':'RAG Embeddings','stack.strip.llm':'LPU Inference','stack.strip.model':'LLM Model','stack.strip.obs':'Observability','stack.strip.back':'Orchestrator','stack.strip.cursor':'IDE','stack.strip.lovable':'Front','stack.strip.gemini':'Front','stack.strip.v0':'Front','stack.strip.claude':'Front + Back','stack.strip.codex':'Back','s1.title':'Tech stack','stack.front.badge':'Frontend','stack.front.desc':'100% vanilla. No framework, no bundler, no npm dependencies. Each tool is a standalone HTML page with its own inline CSS and JS , no shared components, no cross-page routing. This allows direct deployment without a build step, instant debugging in browser DevTools, and flat, abstraction-free code. Seven standalone pages: the 6 PM tools (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller) plus the <code>pm-toolkit.html</code> hub that chains them. Single coupling point: <code>pm-session.js</code>, a lightweight module that persists each tool\'s output into <code>localStorage</code> so the next tool can re-import it in one click.','stack.deploy.badge':'Hosting','stack.deploy.desc':'Free static hosting with native CI/CD: every git push to main triggers an automatic deployment in under 60 seconds. Global CDN, automatic HTTPS, cmankotech.github.io domain with zero configuration. Zero cost, zero infrastructure to manage , ideal for a static HTML/CSS/JS site.','stack.proxy.badge':'API Proxy','stack.proxy.desc':'A Worker is a serverless Cloudflare function between the browser and APIs, no server to manage, near-zero cold start. Here it orchestrates the KRL1 pipeline (planner→synthesis), computes RAG embeddings, and traces via Langfuse, the API key is never exposed client-side. Routes: POST /: direct passthrough to the Groq API for the 6 PM tools , the API key is injected Worker-side, never exposed to the browser. POST /orchestrate: dedicated route for the KRL1 chatbot, native planner\u2192synthesis. POST /rag-query: full semantic RAG pipeline (planner \u2192 Workers AI embeddings \u2192 cosine similarity \u2192 synthesis). POST /orchestrate-stream: same planner\u2192synthesis flow but the synthesis response arrives as SSE for progressive display. POST /veille-refresh: native fetch of 13 RSS feeds, per-category Groq synthesis and KV storage \u2014 Make now only triggers the pipeline over HTTP. Origin validation, automatic CORS, Cloudflare free plan: 100,000 req/day.','stack.llm.badge':'LLM','stack.llm.desc':"Access to the llama-3.3-70b-versatile model via an OpenAI-compatible REST API. LPU (Language Processing Unit) inference delivers responses in 1\u20132 seconds , 5 to 10x faster than classic providers. Each PM tool calls it with tailored parameters: temperatures between 0.3 and 0.7 depending on the task, max_tokens between 2,000 and 4,000, specialised system prompts (OKR strategist, discovery analyst, prioritisation expert\u2026).",'stack.lg.badge':'Semantic RAG','stack.lg.desc':'Knowledge base embedded in the Worker (15 documents: PM, PO/Agile, AI Product). Semantic embeddings are generated by Workers AI (bge-small-en-v1.5) in a single batch call; cosine similarity is computed at the edge. The handleRagQuery pipeline chains: planner (T=0.2) → semantic retrieval → synthesis (T=0.45, PM context injected if intent = pm_workflow). Zero external dependency, zero Python infrastructure.','stack.lf.badge':'Observability','stack.lf.desc':'Production LLM tracing via Langfuse REST API integrated in the Worker. Each KRL1 call generates a trace with token usage, planner/synthesis latencies and detected intent. Non-blocking via ctx.waitUntil, zero impact on response times. Free tier: 50,000 observations/month.','arch.fallback':'\u21a9 native Workers AI semantic RAG','s4.title':'Architecture decisions','d1.q':'Why vanilla HTML instead of React or Next.js?','d1.a':'Zero dependencies, zero toolchain, zero technical debt','d1.why':"A static portfolio and simple tools site doesn't need a SPA framework. Vanilla HTML deploys directly, reads easily, and generates no technical debt. Less complexity = more velocity.",'d2.q':'Why a Cloudflare Workers proxy instead of exposing the API key?','d2.a':'Non-negotiable security, generous free plan','d2.why':'Exposing an API key in client-side code is handing it to anyone. The Worker intercepts requests, injects the key server-side and validates the origin. Cloudflare free plan: 100,000 requests/day , more than enough.','d3.q':'Why Groq instead of OpenAI or Anthropic directly?','d3.a':'Inference speed and free plan','d3.why':'Groq runs Llama 3 models on LPU hardware optimised for inference. Result: responses in 1-2 seconds where other providers take 5-10s. And the free plan comfortably covers personal use.','d4.q':'Why GitHub Pages instead of a VPS or Vercel?','d4.a':'Free, simple, native CI/CD','d4.why':'For static files, GitHub Pages is unbeatable: free, global CDN, automatic HTTPS, and deployment triggered simply by a git push. No need for more complex infrastructure for this use case.','s5.title':'Worker Orchestration, edge-native RAG','lg.flow.label':'KRL1 request flow','lg.flow.desc':'1 \u00b7 User sends a message in the KRL1 chat. 2 \u00b7 JS calls POST /orchestrate on the Cloudflare Worker with {lang, message, history}. 3 \u00b7 The Worker runs the planner natively (T=0.2) \u2192 JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 \u00b7 The synthesis (T=0.45) transforms the plan into a natural response max 220 words with PM tool links. 5 \u00b7 Response {reply, plan, engine} arrives at client , chat displays reply, JSON plan remains available. For the RAG Explorer: POST /rag-query runs planner \u2192 Workers AI embeddings \u2192 cosine similarity \u2192 synthesis with injected PM context.','lg.tests.label':'Automated tests , proxy.test.mjs','test.n1':'Test 1','test.t1':'Semantic RAG active','test.d1':'POST /rag-query \u2192 Groq planner + Workers AI embeddings + cosine sim + synthesis. Client receives {reply, plan, chunks, engine: "worker-rag-semantic"}.','test.r1':'assert chunks.length = 3, engine = "worker-rag-semantic"','test.n2':'Test 2','test.t2':'Native Worker orchestrator','test.d2':'Without external URL: 2 sequential Groq calls , planner (strict JSON) then synthesis (text). Client receives {reply, plan}.','test.r2':'assert plan.intent = "roadmap", reply = "Synth\u00e8se utile"','test.n3':'Test 3','test.t3':'POST / routing intact','test.d3':'The root route (6 PM tools) remains a direct Groq passthrough, unaffected by KRL1 orchestration.','test.r3':'assert choices[0].content = "legacy"','lg.why.q':'Why edge-native?','lg.why.a':'Structured PM plan + clear response, zero external infrastructure','lg.why.desc':'The dual-node design addresses two opposing constraints. The planner needs a low temperature (T=0.2) to produce deterministic, reliable JSON: intent, user_goal, actionable steps, identified risks, quick_win. The synthesis needs a more creative temperature (T=0.45) to produce a natural, concise response (max 220 words) with PM tool links. This architecture was first prototyped in Python (FastAPI + LangGraph) , but the Render free tier (512 MB) was insufficient to load sentence-transformers. Solution: port the entire pipeline into the Cloudflare Worker via Workers AI (bge-small-en-v1.5). Zero Python infrastructure, same semantic quality.','footer.hl':'Let\'s build','footer.hl2':'something together?','footer.built':'\u2197 Detailed architecture','footer.krl1':'\u2197 Product Decisions','mobile.built':'Site architecture','hero.built':'Site architecture \u2192','skills.product':'Product','skills.ai':'AI & Tech','skills.agile':'Agility & Tools','certs.agile':'Agility','certs.product':'Product Management','certs.ai':'AI & Other','certs.credly':'See all my badges on Credly \u2192','cert.oriions':'Innovative Agile Project Management (Crossthink/ORIIONS)','arch.gh.label':'CDN · Static hosting','arch.load.lbl':'initial load • HTML / CSS / JS','arch.api.lbl':'HTTPS • API calls • JSON / SSE response','arch.worker.label':'API Proxy · secure key','arch.groq.label':'6 PM tools','arch.browser.sub':'6 PM tools (JS)'}};
 
+T.fr['footer.krl1']='↗ Décisions produit';
 T.fr['proj.toolkit.tag']='PM Toolkit · Nouveau';
 T.en['proj.toolkit.tag']='PM Toolkit · New';
 T.fr['proj.toolkit.link']='Ouvrir le toolkit →';
@@ -711,7 +926,7 @@ window.setLang=function(lang){
 
 // Tabs: switch + nav contextuelle + deep-link
 (function(){
-  var TABS=['projects','architecture','decisions','skills','certs'];
+  var TABS=['projects','architecture','decisions'];
 
   // ── LAZY LOAD ──────────────────────────────────────────────────────────────
   var _lazyDocs={};
@@ -923,6 +1138,40 @@ window.setLang=function(lang){
 
 <script src="krl1-widget.js"></script>
 <script src="glass.js"></script>
+
+<div id="egg-overlay">
+  <div id="egg-frame" class="glass-edge glass-pointer">
+    <button id="egg-close" aria-label="Close">&times;</button>
+    <iframe id="egg-iframe" title="Pixel Runner"></iframe>
+  </div>
+</div>
+<script>
+(function(){
+  var logo=document.querySelector('.nav-logo'),overlay=document.getElementById('egg-overlay'),
+      iframe=document.getElementById('egg-iframe'),closeBtn=document.getElementById('egg-close');
+  var clicks=0,lastClick=0;
+  function openEgg(){
+    iframe.src='pixel-runner.html';
+    overlay.classList.add('open');
+  }
+  function closeEgg(){
+    overlay.classList.remove('open');
+    iframe.src='';
+    clicks=0;
+  }
+  if(logo){
+    logo.addEventListener('click',function(){
+      var now=Date.now();
+      clicks=(now-lastClick>1500)?1:clicks+1;
+      lastClick=now;
+      if(clicks>=5){clicks=0;openEgg();}
+    });
+  }
+  closeBtn.addEventListener('click',closeEgg);
+  overlay.addEventListener('click',function(e){if(e.target===overlay)closeEgg();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('open'))closeEgg();});
+}());
+</script>
 
 
 <script>
