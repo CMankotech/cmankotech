@@ -343,8 +343,6 @@ nav{padding:1rem 1.5rem}
     <a href="#projects" class="nav-section" data-i18n="nav.projects">Projets</a>
     <a href="#architecture" class="nav-section" data-i18n="nav.arch">Architecture</a>
     <a href="#decisions" class="nav-section" data-i18n="nav.dec">D&eacute;cisions produit</a>
-    <a href="#skills" class="nav-section" data-i18n="nav.skills">Comp&eacute;tences</a>
-    <a href="#certs" class="nav-section" data-i18n="nav.certs">Certifications</a>
     <div class="nav-tools" id="navTools">
       <button class="nav-tools-btn" onclick="toggleNavTools(event)" aria-haspopup="true"><span data-i18n="nav.tools">Outils</span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
       <div class="nav-tools-menu">
@@ -370,8 +368,6 @@ nav{padding:1rem 1.5rem}
   <a href="#projects" data-i18n="nav.projects" onclick="document.getElementById('nav-hamburger').click()">Projets</a>
   <a href="#architecture" data-i18n="nav.arch" onclick="document.getElementById('nav-hamburger').click()">Architecture</a>
   <a href="#decisions" data-i18n="nav.dec" onclick="document.getElementById('nav-hamburger').click()">D&eacute;cisions produit</a>
-  <a href="#skills" data-i18n="nav.skills" onclick="document.getElementById('nav-hamburger').click()">Comp&eacute;tences</a>
-  <a href="#certs" data-i18n="nav.certs" onclick="document.getElementById('nav-hamburger').click()">Certifications</a>
   <a href="pm-toolkit.html" onclick="document.getElementById('nav-hamburger').click()">🧰 PM Toolkit</a>
   <a href="rag-explorer.html" onclick="document.getElementById('nav-hamburger').click()">🔍 RAG Explorer</a>
   <a href="veille.html" onclick="document.getElementById('nav-hamburger').click()">📡 Veille</a>
@@ -414,6 +410,280 @@ nav{padding:1rem 1.5rem}
         <span class="hero-sub-role" id="heroRole" data-i18n="hero.role">AI Product Manager</span>
       </div>
       <p class="hero-bio" id="heroLine">PM le jour, builder la nuit. Je construis des outils concrets avec l&rsquo;IA parce que les meilleurs outils sont ceux qu&rsquo;on cr&eacute;e soi-m&ecirc;me. Chaque projet ici r&eacute;pond &agrave; un vrai probl&egrave;me que j&rsquo;ai rencontr&eacute; en tant que PM.</p>
+
+      <style id="hmock-styles">
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+      .hmock{margin:2.25rem 0 0.5rem;max-width:760px}
+      .hmock-frame{position:relative;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.12);background:linear-gradient(180deg,rgba(20,26,46,0.9),rgba(12,15,30,0.92));backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 30px 80px -30px rgba(0,0,0,0.75),0 0 90px -40px rgba(34,211,238,0.4)}
+      .hmock-bar{display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.95rem;border-bottom:1px solid rgba(255,255,255,0.08);background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))}
+      .hmock-dots{display:flex;gap:0.45rem;flex:none}
+      .hmock-dots i{width:11px;height:11px;border-radius:50%;display:block}
+      .hmock-dots i:nth-child(1){background:#ff5f57}.hmock-dots i:nth-child(2){background:#febc2e}.hmock-dots i:nth-child(3){background:#28c840}
+      .hmock-url{flex:1;display:flex;align-items:center;justify-content:center;gap:0.5rem;font-family:'Geist',sans-serif;font-size:0.74rem;color:var(--muted);background:rgba(0,0,0,0.28);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:0.34rem 0.8rem;max-width:340px;margin:0 auto;white-space:nowrap;overflow:hidden}
+      .hmock-url svg{flex:none;opacity:0.65}
+      .hmock-live{display:flex;align-items:center;gap:0.4rem;flex:none;font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.12em;color:#22d3ee}
+      .hmock-live b{width:7px;height:7px;border-radius:50%;background:#22d3ee;box-shadow:0 0 0 0 rgba(34,211,238,0.6);animation:hmockPulse 2s ease-out infinite}
+      @keyframes hmockPulse{0%{box-shadow:0 0 0 0 rgba(34,211,238,0.55)}70%{box-shadow:0 0 0 7px rgba(34,211,238,0)}100%{box-shadow:0 0 0 0 rgba(34,211,238,0)}}
+      .hmock-viewport{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0a0a14}
+      .hmock-track{position:absolute;top:0;left:0;height:100%;display:flex;flex-direction:row;animation:hmockScroll 32s linear infinite;will-change:transform}
+      .hmock-track img{display:block;height:100%;width:auto;flex:none}
+      @keyframes hmockScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+      .hmock-viewport::after{content:'';position:absolute;left:0;right:0;bottom:0;height:30px;z-index:5;pointer-events:none;background:linear-gradient(0deg,rgba(7,9,16,0.92),transparent)}
+      .hterm{position:absolute;inset:0;overflow:hidden;background:var(--tk-bg);font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.82rem;line-height:1.6;color:var(--tk-fg);--tk-bg:radial-gradient(130% 120% at 88% -15%,rgba(34,211,238,0.12),transparent 52%),radial-gradient(120% 120% at 8% 118%,rgba(167,139,250,0.10),transparent 55%),linear-gradient(180deg,#0b1122,#070910);--tk-fg:#c3cdde;--tk-cmd:#22d3ee;--tk-prompt:#22d3ee;--tk-accent:#22d3ee;--tk-flag:#a78bfa;--tk-string:#f472b6;--tk-num:#f0b35e;--tk-path:#67e8f9;--tk-ok:#34d399;--tk-sub:#dbe4f0;--tk-dim:#566377;--tk-note:#8a98ad;--tk-caret:#22d3ee;--tk-caret-glow:rgba(34,211,238,0.85)}
+      .hterm-body{position:absolute;left:0;right:0;top:0;padding:1.25rem 1.45rem 1.5rem;transition:transform 0.45s cubic-bezier(.22,.61,.36,1)}
+      .hterm-cmd{margin-top:0.72em}.hterm-cmd:first-child{margin-top:0}
+      .hterm-line{white-space:pre-wrap;word-break:break-word}
+      .htt{color:var(--tk-cmd);font-weight:700}
+      .htprompt{color:var(--tk-prompt);font-weight:700}
+      .htsub{color:var(--tk-sub)}
+      .htdim,.htd,.htts{color:var(--tk-dim)}
+      .hts,.htp{color:var(--tk-string)}
+      .htf{color:var(--tk-flag)}
+      .htn{color:var(--tk-num)}
+      .htpath{color:var(--tk-path)}
+      .hto{color:var(--tk-ok);font-weight:700}
+      .htc{color:var(--tk-accent)}
+      .htspin{color:var(--tk-accent);font-weight:700}
+      .htbar{color:var(--tk-ok);letter-spacing:0.5px}
+      .htnote{color:var(--tk-note);font-style:italic}
+      .hmock-theme{position:relative;flex:none}
+      .hmock-theme-btn{display:flex;align-items:center;gap:0.42rem;font-family:'Syne',sans-serif;font-size:0.58rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:0.3rem 0.5rem 0.3rem 0.6rem;cursor:pointer;transition:color .2s,border-color .2s,background .2s;line-height:1}
+      .hmock-theme-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.22);background:rgba(255,255,255,0.08)}
+      .hmock-theme-btn .dot{width:8px;height:8px;border-radius:50%;flex:none;background:linear-gradient(135deg,#22d3ee,#a78bfa)}
+      .hmock-theme-btn .chev{width:9px;height:9px;flex:none;opacity:0.6;transition:transform .2s}
+      .hmock-theme[data-open="1"] .hmock-theme-btn .chev{transform:rotate(180deg)}
+      .hmock-theme-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:50;min-width:212px;padding:0.35rem;background:rgba(16,18,28,0.97);border:1px solid rgba(255,255,255,0.12);border-radius:12px;backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);box-shadow:0 20px 50px -20px rgba(0,0,0,0.8);flex-direction:column;gap:1px}
+      .hmock-theme-menu[hidden]{display:none}
+      .hmock-theme-menu:not([hidden]){display:flex}
+      .hmock-theme-item{display:flex;align-items:center;gap:0.6rem;padding:0.42rem 0.5rem;border-radius:8px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:'Geist',sans-serif;font-size:0.78rem;color:var(--muted);transition:background .15s,color .15s}
+      .hmock-theme-item:hover{background:rgba(255,255,255,0.07);color:var(--text)}
+      .hmock-theme-item[aria-selected="true"]{color:var(--text)}
+      .hmock-theme-item[aria-selected="true"] .tick{opacity:1}
+      .hmock-theme-item .sw{display:flex;gap:2px;flex:none}
+      .hmock-theme-item .sw i{width:9px;height:9px;border-radius:2px;display:block}
+      .hmock-theme-item .nm{flex:1;white-space:nowrap}
+      .hmock-theme-item .tick{flex:none;opacity:0;color:var(--text);font-size:0.72rem}
+      [data-theme="light"] .hmock-theme-btn{color:#475569;background:rgba(15,23,42,0.05);border-color:rgba(15,23,42,0.12)}
+      [data-theme="light"] .hmock-theme-menu{background:rgba(255,255,255,0.98);border-color:rgba(15,23,42,0.12)}
+      [data-theme="light"] .hmock-theme-item{color:#475569}
+      [data-theme="light"] .hmock-theme-item:hover{background:rgba(15,23,42,0.05);color:#0f172a}
+      #hterm[data-skin="anysphere"]{--tk-bg:radial-gradient(130% 120% at 88% -15%,rgba(130,210,206,0.09),transparent 52%),radial-gradient(120% 120% at 8% 118%,rgba(170,160,250,0.07),transparent 55%),linear-gradient(180deg,#1c1c1e,#161618);--tk-fg:#d6d6dd;--tk-cmd:#efb080;--tk-prompt:#82d2ce;--tk-accent:#82d2ce;--tk-flag:#82d2ce;--tk-string:#e394dc;--tk-num:#ebc88d;--tk-path:#87c3ff;--tk-ok:#a8cc7c;--tk-sub:#d6d6dd;--tk-dim:#6d6d6d;--tk-note:#8a8a93;--tk-caret:#228df2;--tk-caret-glow:rgba(34,141,242,0.85)}
+      #hterm[data-skin="dracula"]{--tk-bg:linear-gradient(180deg,#2d2f3d,#282a36);--tk-fg:#f8f8f2;--tk-cmd:#ff79c6;--tk-prompt:#bd93f9;--tk-accent:#bd93f9;--tk-flag:#bd93f9;--tk-string:#f1fa8c;--tk-num:#ffb86c;--tk-path:#8be9fd;--tk-ok:#50fa7b;--tk-sub:#f8f8f2;--tk-dim:#6272a4;--tk-note:#6272a4;--tk-caret:#f8f8f0;--tk-caret-glow:rgba(248,248,240,0.6)}
+      #hterm[data-skin="tokyonight"]{--tk-bg:linear-gradient(180deg,#1f2233,#1a1b26);--tk-fg:#c0caf5;--tk-cmd:#7aa2f7;--tk-prompt:#7dcfff;--tk-accent:#7dcfff;--tk-flag:#bb9af7;--tk-string:#9ece6a;--tk-num:#ff9e64;--tk-path:#7dcfff;--tk-ok:#9ece6a;--tk-sub:#c0caf5;--tk-dim:#565f89;--tk-note:#565f89;--tk-caret:#c0caf5;--tk-caret-glow:rgba(122,162,247,0.7)}
+      #hterm[data-skin="catppuccin"]{--tk-bg:linear-gradient(180deg,#24243a,#1e1e2e);--tk-fg:#cdd6f4;--tk-cmd:#89b4fa;--tk-prompt:#89dceb;--tk-accent:#89dceb;--tk-flag:#cba6f7;--tk-string:#a6e3a1;--tk-num:#fab387;--tk-path:#89dceb;--tk-ok:#a6e3a1;--tk-sub:#cdd6f4;--tk-dim:#6c7086;--tk-note:#6c7086;--tk-caret:#f5e0dc;--tk-caret-glow:rgba(137,180,250,0.7)}
+      #hterm[data-skin="gruvbox"]{--tk-bg:linear-gradient(180deg,#32302f,#282828);--tk-fg:#ebdbb2;--tk-cmd:#8ec07c;--tk-prompt:#fabd2f;--tk-accent:#fabd2f;--tk-flag:#fabd2f;--tk-string:#b8bb26;--tk-num:#d3869b;--tk-path:#83a598;--tk-ok:#b8bb26;--tk-sub:#ebdbb2;--tk-dim:#928374;--tk-note:#928374;--tk-caret:#ebdbb2;--tk-caret-glow:rgba(235,219,178,0.5)}
+      #hterm[data-skin="nord"]{--tk-bg:linear-gradient(180deg,#343b4c,#2e3440);--tk-fg:#d8dee9;--tk-cmd:#88c0d0;--tk-prompt:#8fbcbb;--tk-accent:#8fbcbb;--tk-flag:#81a1c1;--tk-string:#a3be8c;--tk-num:#b48ead;--tk-path:#8fbcbb;--tk-ok:#a3be8c;--tk-sub:#d8dee9;--tk-dim:#616e88;--tk-note:#616e88;--tk-caret:#d8dee9;--tk-caret-glow:rgba(136,192,208,0.7)}
+      #hterm[data-skin="solarized"]{--tk-bg:linear-gradient(180deg,#073642,#002b36);--tk-fg:#93a1a1;--tk-cmd:#268bd2;--tk-prompt:#2aa198;--tk-accent:#2aa198;--tk-flag:#6c71c4;--tk-string:#2aa198;--tk-num:#d33682;--tk-path:#b58900;--tk-ok:#859900;--tk-sub:#93a1a1;--tk-dim:#586e75;--tk-note:#586e75;--tk-caret:#93a1a1;--tk-caret-glow:rgba(38,139,210,0.7)}
+      @media(max-width:560px){.hmock-theme-btn .lbl{display:none}}
+      .hterm-cursor{display:inline-block;width:0.55ch;height:1.05em;background:var(--tk-caret);vertical-align:-0.16em;margin-left:2px;border-radius:1px;box-shadow:0 0 7px var(--tk-caret-glow);animation:htermBlink 1.05s steps(1) infinite}
+      @keyframes htermBlink{50%{opacity:0}}
+      .hterm-gloss{position:absolute;left:0;right:0;top:0;height:42%;z-index:3;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0.05),transparent)}
+      .hterm-scan{position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.03) 0 1px,transparent 1px 3px);mix-blend-mode:overlay;opacity:0.55}
+      .hterm-beam{position:absolute;left:0;right:0;height:38%;z-index:3;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(120,200,255,0.055),transparent);animation:htermBeam 7.5s linear infinite}
+      @keyframes htermBeam{0%{transform:translateY(-60%)}100%{transform:translateY(280%)}}
+      @media(max-width:560px){.hterm{font-size:0.7rem;line-height:1.55}.hterm-body{padding:1rem 1.05rem 1.2rem}}
+      @media(prefers-reduced-motion:reduce){.hterm-beam{animation:none;opacity:0}.hterm-body{transition:none}}
+      .hmock-frame:hover .hmock-track{animation-play-state:paused}
+      [data-theme="light"] .hmock-frame{background:linear-gradient(180deg,rgba(255,255,255,0.85),rgba(244,247,252,0.9));border-color:rgba(15,23,42,0.1)}
+      [data-theme="light"] .hmock-bar{border-color:rgba(15,23,42,0.08);background:rgba(255,255,255,0.7)}
+      @media(max-width:560px){.hmock-live span{display:none}.hmock-url{max-width:200px;font-size:0.66rem}}
+      @media(prefers-reduced-motion:reduce){.hmock-track{animation:none}}
+      </style>
+      <div class="hmock">
+        <div class="hmock-frame glass-edge">
+          <div class="hmock-bar">
+            <div class="hmock-dots"><i></i><i></i><i></i></div>
+            <div class="hmock-url">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 8 9 12 5 16"/><line x1="12" y1="16" x2="18" y2="16"/></svg>
+              carlin@krl1: ~/builds &mdash; zsh
+            </div>
+            <div class="hmock-theme" id="hmockTheme">
+              <button type="button" class="hmock-theme-btn" id="hmockThemeBtn" aria-haspopup="listbox" aria-expanded="false" title="Thème du terminal">
+                <span class="dot"></span><span class="lbl">Cyan</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="hmock-theme-menu" id="hmockThemeMenu" role="listbox" hidden></div>
+            </div>
+          </div>
+          <div class="hmock-viewport" aria-hidden="true">
+            <div class="hterm" id="hterm">
+              <div class="hterm-body" id="htermBody"></div>
+              <div class="hterm-gloss"></div>
+              <div class="hterm-scan"></div>
+              <div class="hterm-beam"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script id="hterm-script">
+(function(){
+  var host=document.getElementById('hterm');
+  var body=document.getElementById('htermBody');
+  if(!host||!body) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var spinFrames=['⠋','⠙','⠹','⠸','⠼','⠴','⠦','⠧','⠇','⠏'];
+  var clsMap={t:'htt',k:'htsub',f:'htf',s:'hts',n:'htn',p:'htpath',d:'htdim'};
+  function cmd(segs,think){return {type:'cmd',segs:segs,think:think||500};}
+  function out(h){return {type:'out',html:h};}
+  function spin(label,ms,done){return {type:'spin',label:label,ms:ms,done:done};}
+  function prog(label,ms,tail){return {type:'prog',label:label,ms:ms,tail:tail||''};}
+  function gap(){return {type:'gap'};}
+  function note(t){return {type:'out',html:'<span class="htnote"># '+t+'</span>'};}
+  var SCRIPT=[
+    cmd([['claude','t'],[' ','d'],['"ajoute le scoring RICE + MoSCoW au backlog-prioritizer"','s']],320),
+    spin('édition des fichiers',720,'<span class="hto">✓</span> <span class="htsub">moteur de scoring</span> <span class="htdim">prêt · 142ms</span>'),
+    out('<span class="htdim">→</span> <span class="htpath">backlog-prioritizer.html</span> <span class="htdim">· mis à jour</span>'),
+    note('range tes idées par impact, sans tableur'),
+    gap(),
+    cmd([['codex','t'],[' ','d'],['"écris l’assistant de discovery (JTBD + personas)"','s']],300),
+    spin('génération',680,'<span class="hto">✓</span> <span class="htn">12</span> insights extraits <span class="htdim">· besoins (JTBD) identifiés</span>'),
+    out('<span class="htdim">→</span> <span class="htpath">discovery-assistant.html</span> <span class="htdim">· en ligne</span>'),
+    note('transforme des interviews en besoins clairs'),
+    gap(),
+    cmd([['node','t'],[' --test ','f'],['tests/proxy.test.mjs','p']],260),
+    spin('exécution des tests',640,'<span class="hto">✓</span> <span class="htn">14</span> tests <span class="htdim">·</span> <span class="htn">0</span> échec <span class="htdim">· 380ms</span>'),
+    note('chaque route de l’API est vérifiée avant déploiement'),
+    gap(),
+    cmd([['curl','t'],[' -s ','f'],['groq-proxy.workers.dev/rag-query','p'],[' -d ','f'],["'{\"message\":\"comment prioriser ?\"}'",'s']],320),
+    spin('requête · edge',560,'<span class="hto">200</span> <span class="htdim">OK · 184ms</span>'),
+    out('<span class="htdim">{</span>'),
+    out('  <span class="htf">"reply"</span><span class="htdim">:</span> <span class="hts">"RICE pour l’impact, MoSCoW pour trancher"</span><span class="htdim">,</span>'),
+    out('  <span class="htf">"matched_docs"</span><span class="htdim">:</span> <span class="htn">3</span><span class="htdim">,</span> <span class="htf">"llm"</span><span class="htdim">:</span> <span class="hts">"llama-3.3-70b-versatile"</span>'),
+    out('<span class="htdim">}</span>'),
+    note('l’API RAG répond en direct, avec ses sources'),
+    gap(),
+    cmd([['npx','t'],[' wrangler tail ','k'],['groq-proxy','p'],[' --format ','f'],['pretty','k']],280),
+    out('<span class="htdim">POST</span> <span class="htpath">/rag-query</span> <span class="hto">200</span> <span class="htdim">· 184ms</span>'),
+    out('<span class="htdim">trace →</span> Langfuse <span class="htdim">(non bloquant)</span>'),
+    note('je surveille chaque requête en temps réel'),
+    gap(),
+    cmd([['npx','t'],[' wrangler deploy ','k'],['--config proxy/wrangler.toml','f']],280),
+    prog('upload du Worker',900,'<span class="htdim">Workers AI · binding AI · bge-small-en-v1.5</span>'),
+    out('<span class="hto">✓</span> déployé <span class="htdim">·</span> <span class="htpath">groq-proxy.workers.dev</span> <span class="htdim">· cold start 28ms</span>'),
+    note('l’API en ligne sur le réseau Cloudflare, rapide partout'),
+    gap(),
+    cmd([['git','t'],[' push ','k'],['origin main','p']],240),
+    spin('build + déploiement Pages',720,'<span class="hto">✓</span> <span class="htn">6</span> outils <span class="htdim">·</span> <span class="htc">en ligne</span>'),
+    note('tout est public, sans clé API côté visiteur')
+  ];
+  function el(tag,cls,h){var e=document.createElement(tag);if(cls)e.className=cls;if(h!=null)e.innerHTML=h;return e;}
+  function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
+  var clock=new Date();
+  function resetClock(){clock.setHours(9,14,2,0);}
+  function p2(n){return (n<10?'0':'')+n;}
+  function ts(){return '['+p2(clock.getHours())+':'+p2(clock.getMinutes())+':'+p2(clock.getSeconds())+']';}
+  function tick(){clock.setSeconds(clock.getSeconds()+1+Math.floor(Math.random()*4));}
+  function pfx(){return '<span class="htdim">carlin@krl1</span> <span class="htprompt">❯</span> ';}
+  function bar(fill,total){var s='';for(var i=0;i<total;i++)s+=(i<fill?'█':'░');return s;}
+  function scroll(){var over=body.scrollHeight-host.clientHeight;body.style.transform= over>6 ? 'translateY('+(-over-6)+'px)' : 'translateY(0)';}
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+  async function typeCmd(step){
+    tick();
+    var line=el('div','hterm-cmd'); line.innerHTML=pfx(); body.appendChild(line); scroll();
+    var cursor=el('span','hterm-cursor'); line.appendChild(cursor);
+    for(var s=0;s<step.segs.length;s++){
+      var seg=step.segs[s]; var span=el('span',clsMap[seg[1]]); line.insertBefore(span,cursor);
+      var txt=seg[0];
+      for(var c=0;c<txt.length;c++){
+        span.textContent+=txt[c];
+        var d=15+Math.random()*26; if(txt[c]===' ') d+=20; if(c===0) d+=34;
+        await sleep(d);
+      }
+    }
+    await sleep(step.think); cursor.remove();
+  }
+  async function doSpin(step){
+    var line=el('div','hterm-line'); body.appendChild(line); scroll();
+    var t0=Date.now(), i=0;
+    while(Date.now()-t0<step.ms){ line.innerHTML='<span class="htspin">'+spinFrames[i%spinFrames.length]+'</span> <span class="htdim">'+step.label+'…</span>'; i++; await sleep(74); }
+    line.innerHTML=step.done; scroll();
+  }
+  async function doProg(step){
+    var line=el('div','hterm-line'); body.appendChild(line); scroll();
+    var steps=26;
+    for(var k=0;k<=steps;k++){ var pct=Math.round(k/steps*100), fill=Math.round(k/steps*14); line.innerHTML='<span class="htdim">'+step.label+'</span> <span class="htbar">'+bar(fill,14)+'</span> <span class="htn">'+pct+'%</span>'+(step.tail?'  '+step.tail:''); await sleep(step.ms/steps); }
+    scroll();
+  }
+  async function run(){
+    body.style.transition='transform 0.45s cubic-bezier(.22,.61,.36,1), opacity 0.5s ease';
+    while(true){
+      resetClock(); body.style.opacity='1'; body.style.transform='translateY(0)'; body.innerHTML='';
+      for(var i=0;i<SCRIPT.length;i++){
+        var step=SCRIPT[i];
+        if(step.type==='cmd'){ await typeCmd(step); }
+        else if(step.type==='spin'){ await doSpin(step); await sleep(90); }
+        else if(step.type==='prog'){ await doProg(step); await sleep(90); }
+        else if(step.type==='gap'){ body.appendChild(el('div','hterm-line','&nbsp;')); scroll(); await sleep(170); }
+        else { body.appendChild(el('div','hterm-line',step.html)); scroll(); await sleep(120); }
+      }
+      tick(); var done=el('div','hterm-cmd', pfx()); done.appendChild(el('span','hterm-cursor')); body.appendChild(done); scroll();
+      await sleep(3400);
+      body.style.opacity='0'; await sleep(540);
+    }
+  }
+  function renderStatic(){
+    resetClock(); body.innerHTML='';
+    for(var i=0;i<SCRIPT.length;i++){
+      var step=SCRIPT[i];
+      if(step.type==='cmd'){ tick(); var h=pfx(); for(var s=0;s<step.segs.length;s++){h+='<span class="'+clsMap[step.segs[s][1]]+'">'+esc(step.segs[s][0])+'</span>';} body.appendChild(el('div','hterm-cmd',h)); }
+      else if(step.type==='spin'){ body.appendChild(el('div','hterm-line',step.done)); }
+      else if(step.type==='prog'){ body.appendChild(el('div','hterm-line','<span class="htdim">'+step.label+'</span> <span class="htbar">'+bar(14,14)+'</span> <span class="htn">100%</span>'+(step.tail?'  '+step.tail:''))); }
+      else if(step.type==='gap'){ body.appendChild(el('div','hterm-line','&nbsp;')); }
+      else { body.appendChild(el('div','hterm-line',step.html)); }
+    }
+    tick(); var d=el('div','hterm-cmd', pfx()); d.appendChild(el('span','hterm-cursor')); body.appendChild(d);
+    requestAnimationFrame(scroll);
+  }
+  if(reduce){ renderStatic(); } else { run(); }
+})();
+</script>
+
+      <script id="hmock-theme-script">
+      (function(){
+        var term=document.getElementById('hterm');
+        var root=document.getElementById('hmockTheme');
+        var btn=document.getElementById('hmockThemeBtn');
+        var menu=document.getElementById('hmockThemeMenu');
+        if(!term||!root||!btn||!menu) return;
+        var lbl=btn.querySelector('.lbl'), dot=btn.querySelector('.dot');
+        var KEY='krl1-term-skin';
+        var THEMES=[
+          {k:'cyan',n:'Cyan · KRL1',sw:['#22d3ee','#f472b6','#f0b35e','#a78bfa']},
+          {k:'anysphere',n:'Anysphere · Cursor',sw:['#efb080','#e394dc','#ebc88d','#82d2ce']},
+          {k:'dracula',n:'Dracula',sw:['#ff79c6','#f1fa8c','#ffb86c','#bd93f9']},
+          {k:'tokyonight',n:'Tokyo Night',sw:['#7aa2f7','#9ece6a','#ff9e64','#bb9af7']},
+          {k:'catppuccin',n:'Catppuccin Mocha',sw:['#89b4fa','#a6e3a1','#fab387','#cba6f7']},
+          {k:'gruvbox',n:'Gruvbox',sw:['#8ec07c','#b8bb26','#d3869b','#fabd2f']},
+          {k:'nord',n:'Nord',sw:['#88c0d0','#a3be8c','#b48ead','#81a1c1']},
+          {k:'solarized',n:'Solarized Dark',sw:['#268bd2','#2aa198','#d33682','#6c71c4']}
+        ];
+        function metaOf(k){for(var i=0;i<THEMES.length;i++){if(THEMES[i].k===k)return THEMES[i];}return THEMES[0];}
+        function apply(k){
+          var m=metaOf(k); k=m.k;
+          if(k==='cyan') term.removeAttribute('data-skin'); else term.setAttribute('data-skin',k);
+          lbl.textContent=m.n.split(' · ')[0];
+          dot.style.background='linear-gradient(135deg,'+m.sw[0]+','+m.sw[3]+')';
+          var items=menu.querySelectorAll('.hmock-theme-item');
+          for(var i=0;i<items.length;i++){ items[i].setAttribute('aria-selected', items[i].getAttribute('data-k')===k?'true':'false'); }
+        }
+        for(var i=0;i<THEMES.length;i++){(function(t){
+          var it=document.createElement('button');
+          it.type='button'; it.className='hmock-theme-item'; it.setAttribute('data-k',t.k); it.setAttribute('role','option');
+          var sw=''; for(var j=0;j<t.sw.length;j++){ sw+='<i style="background:'+t.sw[j]+'"></i>'; }
+          it.innerHTML='<span class="sw">'+sw+'</span><span class="nm">'+t.n+'</span><span class="tick">✓</span>';
+          it.addEventListener('click',function(){ try{localStorage.setItem(KEY,t.k);}catch(e){} apply(t.k); close(); });
+          menu.appendChild(it);
+        })(THEMES[i]);}
+        function open(){ menu.hidden=false; root.setAttribute('data-open','1'); btn.setAttribute('aria-expanded','true'); }
+        function close(){ menu.hidden=true; root.removeAttribute('data-open'); btn.setAttribute('aria-expanded','false'); }
+        btn.addEventListener('click',function(e){ e.stopPropagation(); if(menu.hidden) open(); else close(); });
+        document.addEventListener('click',function(e){ if(!root.contains(e.target)) close(); });
+        document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+        var cur='cyan'; try{ var s=localStorage.getItem(KEY); if(s) cur=s; }catch(e){}
+        apply(cur);
+      })();
+      </script>
 
       <p class="tech-strip-label" data-i18n="stack.strip.label" style="margin-top:1rem">Stack technique</p>
       <div class="tech-groups">
@@ -568,61 +838,6 @@ nav{padding:1rem 1.5rem}
   <div class="tab-panel" id="decisions" role="tabpanel">
     <div class="tab-lazy-placeholder"><div class="tab-spinner"></div></div>
   </div>
-
-  <div class="tab-panel" id="skills" role="tabpanel">
-    <div class="wrap" style="padding-top:2rem;padding-bottom:2rem">
-        <div class="skills-grid rv">
-      <div class="skill-block">
-        <div class="skill-title grad-blue" data-i18n="skills.product">Product</div>
-        <div class="skill-list">Discovery &middot; Roadmapping &middot; Backlog<br>User Stories &middot; MoSCoW / RICE<br>User Research &middot; Stakeholder Mgmt<br>A/B Testing &middot; Go-to-Market<br>PLG &middot; Continuous Discovery<br>Outcome over Output</div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-title" style="background:linear-gradient(to right,#818cf8,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" data-i18n="skills.ai">IA &amp; Tech</div>
-        <div class="skill-list" data-i18n="skills.ai.list">LLM &middot; RAG &middot; Prompt Engineering<br>Agentic AI &middot; Multi-Agent Systems<br>RLHF &middot; Labelbox &middot; Flowise &middot; Dify<br>CrewAI &middot; Vibe Coding (Cursor, Claude Code, Lovable)<br>n8n &middot; Make &middot; Zapier &middot; Power Automate<br>SQL &middot; Python &middot; JS &middot; API REST</div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-title" style="background:linear-gradient(to right,#a78bfa,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" data-i18n="skills.agile">Agilit&eacute; &amp; Outils</div>
-        <div class="skill-list">SAFe &middot; Scrum &middot; PI Planning<br>JIRA &middot; Confluence &middot; Azure DevOps<br>Power Platform (BI, Automate, Apps)<br>Figma &middot; Miro &middot; Notion &middot; Klaxoon<br>Lean Six Sigma &middot; LACE</div>
-      </div>
-    </div>
-    </div>
-  </div>
-
-  <div class="tab-panel" id="certs" role="tabpanel">
-    <div class="wrap" style="padding-top:2rem;padding-bottom:2rem">
-        <div style="margin-bottom:1.5rem"><a href="https://www.credly.com/users/carlin-mankoto" target="_blank" style="color:#60a5fa;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none" data-i18n="certs.credly">V&eacute;rifier sur Credly &rarr;</a></div>
-        <div class="cert-groups">
-      <div class="rv">
-        <div class="cert-group-title cg-agile" data-i18n="certs.agile">Agilit&eacute;</div>
-        <div class="cert-row cert-row-3">
-          <div class="cert-card ca"><div class="cert-provider">Scrum.org</div><div class="cert-name">Professional Scrum Product Owner I (PSPO I)</div></div>
-          <div class="cert-card ca"><div class="cert-provider">Scaled Agile</div><div class="cert-name">SAFe 6 Product Owner / Product Manager (POPM)</div></div>
-          <div class="cert-card ca"><div class="cert-provider">Scaled Agile</div><div class="cert-name">SAFe 6 Scrum Master (SSM)</div></div>
-        </div>
-      </div>
-      <div class="rv">
-        <div class="cert-group-title cg-product" data-i18n="certs.product">Product Management</div>
-        <div class="cert-row cert-row-6">
-          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Discovery</div></div>
-          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Strategy</div></div>
-          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Roadmapping</div></div>
-          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Experimentation</div></div>
-          <div class="cert-card cp"><div class="cert-provider">Product School</div><div class="cert-name">Product Launches</div></div>
-          <div class="cert-card cp"><div class="cert-provider">Pendo.io</div><div class="cert-name">Product Management Basics</div></div>
-        </div>
-      </div>
-      <div class="rv">
-        <div class="cert-group-title cg-ai" data-i18n="certs.ai">IA &amp; Divers</div>
-        <div class="cert-row cert-row-4">
-          <div class="cert-card ci"><div class="cert-provider">Product School</div><div class="cert-name">AI Certification for Product Managers</div></div>
-          <div class="cert-card ci"><div class="cert-provider">Pendo.io</div><div class="cert-name">AI for Product Management</div></div>
-          <div class="cert-card ci"><div class="cert-provider">University of Helsinki</div><div class="cert-name">Elements of AI</div></div>
-          <div class="cert-card ci"><div class="cert-provider">ORIIONS &middot; Crossthink</div><div class="cert-name" data-i18n="cert.oriions">Conduire un projet innovant &middot; Lean Six Sigma White Belt</div></div>
-        </div>
-      </div>
-    </div>
-    </div>
-  </div>
 </div>
 
 <div style="border-top:1px solid var(--line);position:relative;z-index:1">
@@ -711,7 +926,7 @@ window.setLang=function(lang){
 
 // Tabs: switch + nav contextuelle + deep-link
 (function(){
-  var TABS=['projects','architecture','decisions','skills','certs'];
+  var TABS=['projects','architecture','decisions'];
 
   // ── LAZY LOAD ──────────────────────────────────────────────────────────────
   var _lazyDocs={};
