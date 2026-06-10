@@ -4,3 +4,8 @@
 !.dev.vars.example
 .env*
 !.env.example
+
+# node deps (playwright pour les scripts tools/)
+node_modules/
+package.json
+package-lock.json

@@ -338,19 +338,28 @@ async function loadWeek(week, year) {
   document.getElementById('contentEl').style.display = 'block';
 }
 
+function nextEditionLabel() {
+  const d = new Date();
+  let add = (8 - d.getDay()) % 7;   // jours jusqu'au prochain lundi (0=dim, 1=lun)
+  if (add === 0) add = 7;           // si on est lundi, viser le lundi suivant
+  d.setDate(d.getDate() + add);
+  const locale = _lang === 'fr' ? 'fr-FR' : 'en-GB';
+  const fmt = d.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  return `${I18N[_lang].nextEdition} ${fmt}`;
+}
+
 function renderStatus(data) {
   const bar = document.getElementById('statusBar');
   if (!data) {
-    bar.innerHTML = `<span class="pill">${I18N[_lang].noData}</span><span class="pill">${I18N[_lang].nextEdition}</span>`;
+    bar.innerHTML = `<span class="pill">${I18N[_lang].noData}</span><span class="pill">${nextEditionLabel()}</span>`;
     return;
   }
   const date = new Date(data.updated_at);
   const fmt = date.toLocaleDateString(_lang === 'fr' ? 'fr-FR' : 'en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   bar.innerHTML = `
-    <span class="pill live"><span class="livedot"></span>${_lang === 'fr' ? 'En ligne' : 'Live'}</span>
     <span class="pill">${I18N[_lang].updating} ${fmt}</span>
     <span class="pill">${I18N[_lang].week} ${data.week || ''}</span>
-    <span class="pill">${I18N[_lang].nextEdition}</span>
+    <span class="pill">${nextEditionLabel()}</span>
   `;
 }
 
@@ -406,7 +415,7 @@ const I18N = {
     tag: 'Make · Automation · Veille hebdo',
     subtitle: 'Veille automatisée sur Product Management, IA générative, AI Builders et No-code. Make tourne chaque lundi, le Worker récupère 13 flux RSS, synthétise via Groq et publie ici.',
     noData: 'Pas encore de données',
-    nextEdition: 'Prochaine édition : lundi',
+    nextEdition: 'Prochaine édition :',
     updating: 'Mise à jour :',
     week: 'Semaine',
     noArticles: 'Aucun article cette semaine.',
@@ -417,7 +426,7 @@ const I18N = {
     tag: 'Make · Automation · Weekly Watch',
     subtitle: 'Automated watch on Product Management, Generative AI, AI Builders and No-code. Make runs every Monday, the Worker fetches 13 RSS feeds, synthesizes via Groq and publishes here.',
     noData: 'No data yet',
-    nextEdition: 'Next edition: Monday',
+    nextEdition: 'Next edition:',
     updating: 'Updated:',
     week: 'Week',
     noArticles: 'No articles this week.',
