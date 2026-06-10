@@ -381,9 +381,22 @@ body.intro-lock{overflow:hidden}
     setTimeout(function(){ if(intro.parentNode) intro.parentNode.removeChild(intro); },800);
   }
   intro.addEventListener('click',finish);
-  window.addEventListener('keydown',finish,{once:true});
-  window.addEventListener('wheel',finish,{once:true,passive:true});
-  window.addEventListener('touchmove',finish,{once:true,passive:true});
+  // On arme la sortie au scroll/clavier seulement apres un court delai.
+  // En navigation normale, un evenement wheel/scroll parasite au chargement
+  // (extensions, restauration de session, micro-mouvement trackpad) coupait
+  // l'intro avant la fin. La navigation privee n'avait pas ce souci car les
+  // extensions y sont desactivees.
+  setTimeout(function(){
+    if(done) return;
+    window.addEventListener('keydown',finish,{once:true});
+    window.addEventListener('touchmove',finish,{once:true,passive:true});
+    function onWheel(e){
+      if(Math.abs(e.deltaY)<8) return; // ignore les micro-evenements parasites
+      window.removeEventListener('wheel',onWheel);
+      finish();
+    }
+    window.addEventListener('wheel',onWheel,{passive:true});
+  },600);
 
   var name=document.getElementById('introName');
   var roleline=document.getElementById('introRoleLine');
