@@ -38,6 +38,37 @@ function parseRSSItems(xml, limit = 5) {
   return items;
 }
 
+// ─── Veille storage ───────────────────────────────────────────────────────────
+
+// ISO 8601 : la semaine 1 est celle qui contient le premier jeudi de l'année
+function isoWeekYear(date) {
+  const d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  const day = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - day);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const week = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+  return { week: String(week), year: String(d.getUTCFullYear()) };
+}
+
+// Écrit l'édition courante + son archive hebdo + l'index trié (année/semaine desc)
+async function storeEdition(env, categories) {
+  const now = new Date();
+  const { week, year } = isoWeekYear(now);
+  const stored = { updated_at: now.toISOString(), week, year, categories };
+
+  await env.VEILLE_STORE.put('veille_latest', JSON.stringify(stored));
+  await env.VEILLE_STORE.put(`veille_week_${year}_${week}`, JSON.stringify(stored));
+
+  const index = (await env.VEILLE_STORE.get('veille_index', { type: 'json' })) || [];
+  const existing = index.find(e => e.week === week && e.year === year);
+  if (existing) existing.updated_at = stored.updated_at;
+  else index.push({ week, year, updated_at: stored.updated_at });
+  index.sort((a, b) => (Number(b.year) - Number(a.year)) || (Number(b.week) - Number(a.week)));
+  await env.VEILLE_STORE.put('veille_index', JSON.stringify(index));
+
+  return stored;
+}
+
 // ─── Knowledge Base ───────────────────────────────────────────────────────────
 
 const KB_FILES = {
@@ -1368,21 +1399,9 @@ export default {
         processed.push({ id: cat.id, label: cat.label, digest, items: cat.items });
       }
 
-      const now = new Date();
-      const startOfYear = new Date(now.getFullYear(), 0, 1);
-      const week = String(Math.ceil(((now - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7));
-      const year = String(now.getFullYear());
-      const stored = { updated_at: now.toISOString(), week, categories: processed };
+      const stored = await storeEdition(env, processed);
 
-      await env.VEILLE_STORE.put('veille_latest', JSON.stringify(stored));
-      await env.VEILLE_STORE.put(`veille_week_${year}_${week}`, JSON.stringify(stored));
-      const veilleIndex = await env.VEILLE_STORE.get('veille_index', { type: 'json' }) || [];
-      if (!veilleIndex.find(e => e.week === week && e.year === year)) {
-        veilleIndex.unshift({ week, year, updated_at: now.toISOString() });
-        await env.VEILLE_STORE.put('veille_index', JSON.stringify(veilleIndex));
-      }
-
-      return jsonResponse({ ok: true, week, categories: processed.length, articles: totalArticles });
+      return jsonResponse({ ok: true, week: stored.week, categories: processed.length, articles: totalArticles });
     }
 
     // Veille ingest — Make sends raw articles, Worker synthesizes with Groq and stores
@@ -1430,21 +1449,9 @@ export default {
         processed.push({ id: cat.id, label: cat.label, digest, items });
       }
 
-      const now = new Date();
-      const startOfYear = new Date(now.getFullYear(), 0, 1);
-      const week = String(Math.ceil(((now - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7));
-      const stored = { updated_at: now.toISOString(), week, categories: processed };
-      await env.VEILLE_STORE.put('veille_latest', JSON.stringify(stored));
+      const stored = await storeEdition(env, processed);
 
-      const year = String(now.getFullYear());
-      await env.VEILLE_STORE.put(`veille_week_${year}_${week}`, JSON.stringify(stored));
-      const veilleIndex = await env.VEILLE_STORE.get('veille_index', { type: 'json' }) || [];
-      if (!veilleIndex.find(e => e.week === week && e.year === year)) {
-        veilleIndex.unshift({ week, year, updated_at: now.toISOString() });
-        await env.VEILLE_STORE.put('veille_index', JSON.stringify(veilleIndex));
-      }
-
-      return jsonResponse({ ok: true, week, categories: processed.length });
+      return jsonResponse({ ok: true, week: stored.week, categories: processed.length });
     }
 
     // Veille POST — protected by MAKE_SECRET, called by Make
@@ -1455,6 +1462,11 @@ export default {
       }
       let body;
       try { body = await request.json(); } catch { return new Response('Bad Request', { status: 400 }); }
+      if (Array.isArray(body.categories)) {
+        const stored = await storeEdition(env, body.categories);
+        return jsonResponse({ ok: true, week: stored.week });
+      }
+      // payload legacy sans categories : comportement historique, sans archive
       await env.VEILLE_STORE.put('veille_latest', JSON.stringify(body));
       return jsonResponse({ ok: true });
     }

@@ -251,7 +251,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
       <div class="flow-node fn-kv">
         <div class="flow-icon">🗄️</div>
         <div class="flow-name">KV Store</div>
-        <div class="flow-sub">veille_latest</div>
+        <div class="flow-sub">latest + archive</div>
       </div>
       <span class="flow-arrow">→</span>
       <div class="flow-node fn-page">
@@ -276,33 +276,52 @@ const CAT_COLORS = {
 let historyIndex = [];
 let activeWeek = null;
 
-async function load() {
+async function fetchEdition(week, year) {
   try {
-    const [res, histRes] = await Promise.all([
-      fetch(`${WORKER}/veille`),
-      fetch(`${WORKER}/veille/history`)
-    ]);
+    const url = week && year
+      ? `${WORKER}/veille?week=${encodeURIComponent(week)}&year=${encodeURIComponent(year)}`
+      : `${WORKER}/veille`;
+    const res = await fetch(url);
     const data = await res.json();
-    historyIndex = await histRes.json().catch(() => []);
-    document.getElementById('loadingEl').style.display = 'none';
+    if (!res.ok || data.empty) return null;
+    return data;
+  } catch { return null; }
+}
 
-    if (!res.ok || data.empty) {
-      document.getElementById('emptyEl').style.display = 'block';
-      renderStatus(null);
-      return;
-    }
+function editionYear(data) {
+  if (data.year) return data.year;
+  if (data.updated_at) return new Date(data.updated_at).getFullYear().toString();
+  return new Date().getFullYear().toString();
+}
 
-    const year = data.updated_at ? new Date(data.updated_at).getFullYear().toString() : new Date().getFullYear().toString();
-    activeWeek = data.week ? { week: data.week, year } : null;
-    renderStatus(data);
-    renderHistory();
-    renderCategories(data.categories || []);
-    document.getElementById('contentEl').style.display = 'block';
-  } catch {
-    document.getElementById('loadingEl').style.display = 'none';
+async function load() {
+  const params = new URLSearchParams(location.search);
+  const qWeek = params.get('week');
+  const qYear = params.get('year');
+  const histPromise = fetch(`${WORKER}/veille/history`).then(r => r.json()).catch(() => []);
+
+  let data = null;
+  if (qWeek && qYear) {
+    data = await fetchEdition(qWeek, qYear);
+    if (!data) history.replaceState(null, '', location.pathname);
+  }
+  if (!data) data = await fetchEdition();
+
+  historyIndex = await histPromise;
+  if (!Array.isArray(historyIndex)) historyIndex = [];
+  document.getElementById('loadingEl').style.display = 'none';
+
+  if (!data) {
     document.getElementById('emptyEl').style.display = 'block';
     renderStatus(null);
+    return;
   }
+
+  activeWeek = data.week ? { week: data.week, year: editionYear(data) } : null;
+  renderStatus(data);
+  renderHistory();
+  renderCategories(data.categories || []);
+  document.getElementById('contentEl').style.display = 'block';
 }
 
 async function loadWeek(week, year) {
@@ -310,17 +329,13 @@ async function loadWeek(week, year) {
   renderHistory();
   document.getElementById('contentEl').style.display = 'none';
   document.getElementById('loadingEl').style.display = 'block';
-  try {
-    const res = await fetch(`${WORKER}/veille?week=${week}&year=${year}`);
-    const data = await res.json();
-    document.getElementById('loadingEl').style.display = 'none';
-    if (!res.ok || data.empty) return;
-    renderStatus(data);
-    renderCategories(data.categories || []);
-    document.getElementById('contentEl').style.display = 'block';
-  } catch {
-    document.getElementById('loadingEl').style.display = 'none';
-  }
+  const data = await fetchEdition(week, year);
+  document.getElementById('loadingEl').style.display = 'none';
+  if (!data) return;
+  history.replaceState(null, '', `${location.pathname}?week=${encodeURIComponent(week)}&year=${encodeURIComponent(year)}`);
+  renderStatus(data);
+  renderCategories(data.categories || []);
+  document.getElementById('contentEl').style.display = 'block';
 }
 
 function renderStatus(data) {
@@ -342,7 +357,7 @@ function renderStatus(data) {
 function renderHistory() {
   const section = document.getElementById('historySection');
   const grid = document.getElementById('editionsGrid');
-  if (historyIndex.length < 2) { section.style.display = 'none'; return; }
+  if (historyIndex.length < 1) { section.style.display = 'none'; return; }
   section.style.display = 'block';
   const locale = _lang === 'fr' ? 'fr-FR' : 'en-GB';
   grid.innerHTML = historyIndex.map(e => {

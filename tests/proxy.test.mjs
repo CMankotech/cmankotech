@@ -95,6 +95,56 @@ async function run() {
     assert.equal(json.choices[0].message.content, 'legacy');
   }
 
+  // test: POST /veille archives the edition (latest + weekly key + sorted index)
+  {
+    const kv = new Map();
+    kv.set('veille_index', JSON.stringify([{ week: '2', year: '2020', updated_at: '2020-01-08T00:00:00Z' }]));
+    const env = {
+      MAKE_SECRET: 's3cret',
+      VEILLE_STORE: {
+        async get(key, opts) {
+          const v = kv.get(key);
+          if (v === undefined) return null;
+          return opts && opts.type === 'json' ? JSON.parse(v) : v;
+        },
+        async put(key, value) { kv.set(key, value); },
+      },
+    };
+
+    const req = new Request('https://groq-proxy.cmankotech.workers.dev/veille', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-make-secret': 's3cret' },
+      body: JSON.stringify({ categories: [{ id: 'ai', label: 'IA', digest: '', items: [] }] }),
+    });
+    const res = await worker.fetch(req, env);
+    assert.equal(res.status, 200);
+    const json = await res.json();
+    assert.equal(json.ok, true);
+
+    const latest = JSON.parse(kv.get('veille_latest'));
+    assert.equal(latest.week, json.week);
+    assert.ok(latest.year);
+    assert.equal(latest.categories.length, 1);
+    assert.ok(kv.has(`veille_week_${latest.year}_${latest.week}`));
+
+    const index = JSON.parse(kv.get('veille_index'));
+    assert.equal(index.length, 2);
+    assert.equal(index[0].week, latest.week, 'newest edition first');
+    assert.equal(index[0].year, latest.year);
+    assert.equal(index[1].year, '2020', 'older edition kept and sorted last');
+  }
+
+  // test: POST /veille without valid secret is rejected
+  {
+    const req = new Request('https://groq-proxy.cmankotech.workers.dev/veille', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-make-secret': 'wrong' },
+      body: JSON.stringify({ categories: [] }),
+    });
+    const res = await worker.fetch(req, { MAKE_SECRET: 's3cret' });
+    assert.equal(res.status, 403);
+  }
+
   global.fetch = originalFetch;
   console.log('proxy tests passed');
 }

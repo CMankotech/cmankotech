@@ -15,9 +15,9 @@ Le Worker contient aussi l'orchestration native du widget KRL1, le pipeline RAG 
 | `POST` | `/feedback` | Classification feedback via Make si configuré, sinon fallback Groq |
 | `GET` | `/veille` | Dernière veille hebdo stockée dans KV (ou édition spécifique via `?week=24&year=2026`) |
 | `GET` | `/veille/history` | Liste des éditions disponibles (index des semaines stockées dans KV) |
-| `POST` | `/veille-refresh` | Fetch les flux RSS directement depuis le Worker, synthétise via Groq et stocke dans KV |
-| `POST` | `/veille` | Mise à jour directe de la veille par Make, protégée par `x-make-secret` |
-| `POST` | `/veille-ingest` | Reçoit les articles bruts de Make, synthétise chaque catégorie via Groq, stocke dans KV |
+| `POST` | `/veille-refresh` | Fetch les flux RSS directement depuis le Worker, synthétise via Groq et archive l'édition dans KV |
+| `POST` | `/veille` | Mise à jour directe de la veille par Make, protégée par `x-make-secret`, archivée si le payload contient `categories` |
+| `POST` | `/veille-ingest` | Reçoit les articles bruts de Make, synthétise chaque catégorie via Groq, archive l'édition dans KV |
 | `GET` | `/stats` | Statistiques d'utilisation publiques |
 
 ## Orchestrateur intégré
@@ -35,11 +35,13 @@ Si `LANGGRAPH_ORCHESTRATOR_URL` est configurée, le Worker peut déléguer `/orc
 
 ## Veille hebdo
 
-`GET /veille` expose publiquement la dernière édition de veille stockée dans KV.
+`GET /veille` expose publiquement la dernière édition de veille stockée dans KV, ou une édition archivée via `?week=24&year=2026`. `GET /veille/history` retourne l'index des éditions disponibles.
 
-`POST /veille` est appelé par Make et nécessite le header `x-make-secret`. Le payload reçu est stocké tel quel dans `VEILLE_STORE` sous la clé `veille_latest`.
+Chaque écriture d'édition passe par un helper commun `storeEdition` qui stocke trois clés dans `VEILLE_STORE` : `veille_latest` (dernière édition), `veille_week_{year}_{week}` (archive permanente, numéro de semaine ISO 8601), et `veille_index` (liste des éditions triée par année/semaine décroissantes). Les archives n'ont pas de TTL : chaque édition reste accessible définitivement.
 
-`POST /veille-ingest` est la route principale utilisée par Make. Elle reçoit les articles bruts par catégorie (format `titre|url` séparé par `\n`), synthétise chaque catégorie via Groq (`llama-3.3-70b-versatile`, 2 phrases en français, temp=0.4), puis stocke le résultat structuré avec `updated_at`, `week` et les `categories` dans `VEILLE_STORE`.
+`POST /veille` est appelé par Make et nécessite le header `x-make-secret`. Si le payload contient un tableau `categories`, l'édition est archivée via `storeEdition` ; sinon le payload est stocké tel quel sous `veille_latest` (comportement legacy, sans archive).
+
+`POST /veille-ingest` est la route principale utilisée par Make. Elle reçoit les articles bruts par catégorie (format `titre|url` séparé par `\n`), synthétise chaque catégorie via Groq (`llama-3.3-70b-versatile`, 2 phrases en français, temp=0.4), puis archive le résultat structuré (`updated_at`, `week`, `year`, `categories`) via `storeEdition`.
 
 ## Feedback
 
@@ -70,7 +72,7 @@ Variables d'environnement (secrets Cloudflare) :
 KV Namespaces :
 
 - `USAGE_COUNTER` — Compteur d'utilisation incrémenté de façon asynchrone
-- `VEILLE_STORE` — Stockage de la dernière veille hebdomadaire
+- `VEILLE_STORE` — Stockage de la veille hebdo : dernière édition, archives par semaine et index des éditions
 
 Bindings Cloudflare :
 
