@@ -372,21 +372,15 @@ body.intro-lock{overflow:hidden}
   if(seen && !editMode){ intro.parentNode.removeChild(intro); return; }
   document.body.classList.add('intro-lock');
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-  // Diagnostic temporaire : ajouter ?intro-debug a l'URL pour tracer dans la console
-  var debug=/intro-debug/.test(location.hash)||/intro-debug/.test(location.search);
-  var t0=(window.performance&&performance.now)?performance.now():0;
-  function log(m){ if(debug) try{ console.log('[intro] +'+Math.round(((window.performance&&performance.now)?performance.now():0)-t0)+'ms '+m); }catch(e){} }
-  log('start, reduce='+reduce+', visibility='+document.visibilityState);
   var done=false;
-  function finish(reason){
+  function finish(){
     if(done||editMode) return; done=true;
-    log('finish ('+(reason||'?')+')');
     try{ sessionStorage.setItem('introSeen','1'); }catch(e){}
     intro.classList.add('intro-out');
     document.body.classList.remove('intro-lock');
     setTimeout(function(){ if(intro.parentNode) intro.parentNode.removeChild(intro); },800);
   }
-  intro.addEventListener('click',function(){ finish('click'); });
+  intro.addEventListener('click',finish);
   // On arme la sortie au scroll/clavier seulement apres un court delai.
   // En navigation normale, un evenement wheel/scroll parasite au chargement
   // (extensions, restauration de session, micro-mouvement trackpad) coupait
@@ -394,12 +388,12 @@ body.intro-lock{overflow:hidden}
   // extensions y sont desactivees.
   setTimeout(function(){
     if(done) return;
-    window.addEventListener('keydown',function(){ finish('keydown'); },{once:true});
-    window.addEventListener('touchmove',function(){ finish('touchmove'); },{once:true,passive:true});
+    window.addEventListener('keydown',finish,{once:true});
+    window.addEventListener('touchmove',finish,{once:true,passive:true});
     function onWheel(e){
       if(Math.abs(e.deltaY)<8) return; // ignore les micro-evenements parasites
       window.removeEventListener('wheel',onWheel);
-      finish('wheel');
+      finish();
     }
     window.addEventListener('wheel',onWheel,{passive:true});
   },600);
@@ -424,7 +418,7 @@ body.intro-lock{overflow:hidden}
   if(reduce){
     name.classList.add('in'); roleline.classList.add('in'); bar.classList.add('in');
     rolesEl.textContent=ROLES[ROLES.length-1];
-    setTimeout(function(){ finish('reduce-1500'); },1500);
+    setTimeout(finish,1500);
     return;
   }
 
@@ -451,7 +445,7 @@ body.intro-lock{overflow:hidden}
   },700);
 
   // Sortie auto une fois les titres défilés
-  setTimeout(function(){ finish('auto-'+dur); },dur);
+  setTimeout(finish,dur);
 })();
 </script>
 <!-- /Intro splash -->
