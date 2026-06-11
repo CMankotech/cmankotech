@@ -39,8 +39,16 @@ header{margin-bottom:3rem}
 h1{font-family:'DM Sans',sans-serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:500;letter-spacing:-0.045em;line-height:1;margin-bottom:0.85rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 h1 .grad{background:linear-gradient(135deg,#fb923c,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .subtitle{font-size:0.9rem;color:var(--dim);max-width:640px;line-height:1.65;margin-bottom:1.5rem}
-.header-meta{display:flex;gap:0.75rem;flex-wrap:wrap}
-.meta-tag{font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.25rem 0.7rem;border-radius:5px;border:1px solid var(--border);color:var(--muted);background:rgba(255,255,255,0.02)}
+.hero-term{max-width:660px;margin:1.4rem 0 1.5rem;border:1px solid rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;background:radial-gradient(130% 120% at 88% -15%,rgba(34,211,238,0.10),transparent 52%),linear-gradient(180deg,#0b1122,#070910);box-shadow:0 22px 50px -28px rgba(0,0,0,0.85);font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace}
+.hero-term-bar{display:flex;align-items:center;gap:0.7rem;padding:0.55rem 0.85rem;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.07)}
+.hero-term .ht-dots{display:flex;gap:6px;flex:none}
+.hero-term .ht-dots i{width:11px;height:11px;border-radius:50%;display:block}
+.hero-term .ht-dots i:nth-child(1){background:#ff5f57}.hero-term .ht-dots i:nth-child(2){background:#febc2e}.hero-term .ht-dots i:nth-child(3){background:#28c840}
+.hero-term .ht-title{font-size:0.68rem;letter-spacing:0.03em;color:#8a98ad}
+.hero-term-body{padding:1.05rem 1.2rem;font-size:0.88rem;line-height:1.65;color:#c3cdde;white-space:pre-wrap;word-break:break-word}
+.hero-term .ht-prompt{color:#22d3ee;font-weight:700}
+.hero-term .ht-comment{color:#dbe4f0;font-style:italic;opacity:0.94}
+@media(max-width:560px){.hero-term-body{font-size:0.8rem}.hero-term .ht-title{font-size:0.6rem}}
 
 .sec-divider{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.8rem}
 .sec-divider::after{content:'';flex:1;height:1px;background:var(--line)}
@@ -135,13 +143,9 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
   <header>
     <h1 id="h1Main">Les décisions <span class="grad">produit</span><br id="h1br">derrière le site</h1>
-    <p class="subtitle" id="subtitleTxt">Chaque choix structurant du site — PM Toolkit, KRL1, architecture statique, PLG, observabilité — avec les alternatives rejetées et pourquoi elles ne tiennent pas.</p>
-    <div class="header-meta">
-      <span class="meta-tag" id="m1">UX</span>
-      <span class="meta-tag" id="m2">PLG</span>
-      <span class="meta-tag" id="m3">Contraintes</span>
-      <span class="meta-tag" id="m4">Arbitrages</span>
-      <span class="meta-tag" id="m5">$0 Budget</span>
+    <div class="hero-term">
+      <div class="hero-term-bar"><span class="ht-dots"><i></i><i></i><i></i></span><span class="ht-title">carlin@krl1: ~/decisions · zsh</span></div>
+      <div class="hero-term-body"><span class="ht-prompt">carlin@krl1 ❯</span> <span class="ht-comment"># <span id="subtitleTxt">Les choix qui structurent le site : PM Toolkit, KRL1, architecture statique, PLG, observabilité. Pour chacun, les alternatives écartées et la raison.</span></span></div>
     </div>
   </header>
 
@@ -423,8 +427,7 @@ var I18N = {
   fr: {
     back:'Retour au portfolio',
     h1:'Les décisions <span class="grad">produit</span><br>derrière le site',
-    subtitle:"Chaque choix structurant du site — PM Toolkit, KRL1, architecture statique, PLG, observabilité — avec les alternatives rejetées et pourquoi elles ne tiennent pas.",
-    m1:'UX', m2:'PLG', m3:'Contraintes', m4:'Arbitrages', m5:'$0 Budget',
+    subtitle:"Les choix qui structurent le site : PM Toolkit, KRL1, architecture statique, PLG, observabilité. Pour chacun, les alternatives écartées et la raison.",
     sectionLbl:'15 décisions produit',
     altslbl:'Alternatives rejetées',
     d01n:'Décision 01', d01q:"Pourquoi un assistant IA sur un portfolio PM ?", d01a:"PLG par le produit, pas par le CV",
@@ -485,8 +488,7 @@ var I18N = {
   en: {
     back:'Back to portfolio',
     h1:'The <span class="grad">product</span> decisions<br>behind the site',
-    subtitle:"Every structural choice in the site — PM Toolkit, KRL1, static architecture, PLG, observability — with the rejected alternatives and why they don't hold up.",
-    m1:'UX', m2:'PLG', m3:'Constraints', m4:'Trade-offs', m5:'$0 Budget',
+    subtitle:"The choices that shape the site: PM Toolkit, KRL1, static architecture, PLG, observability. For each one, the alternatives I ruled out and why.",
     sectionLbl:'15 product decisions',
     altslbl:'Rejected alternatives',
     d01n:'Decision 01', d01q:"Why an AI assistant on a PM portfolio?", d01a:"PLG through the product, not the CV",
@@ -555,7 +557,6 @@ function setLang(lang){
   var _bk=document.getElementById('backLbl');if(_bk)_bk.textContent = T.back;
   document.getElementById('h1Main').innerHTML = T.h1;
   document.getElementById('subtitleTxt').textContent = T.subtitle;
-  ['m1','m2','m3','m4','m5'].forEach(function(id){ document.getElementById(id).textContent = T[id]; });
   document.getElementById('sectionLbl').textContent = T.sectionLbl;
   for(var i=1;i<=16;i++){
     var n = ('0'+i).slice(-2);

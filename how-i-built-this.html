@@ -53,6 +53,16 @@ header{margin-bottom:4rem}
 h1{font-size:clamp(2rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;line-height:1.05;margin-bottom:1rem}
 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .subtitle{font-size:0.92rem;color:var(--dim);max-width:560px;line-height:1.75;border-left:2px solid var(--cyan);padding-left:1.25rem;margin-top:1.25rem}
+.hero-term{max-width:660px;margin:1.4rem 0 0;border:1px solid rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;background:radial-gradient(130% 120% at 88% -15%,rgba(34,211,238,0.10),transparent 52%),linear-gradient(180deg,#0b1122,#070910);box-shadow:0 22px 50px -28px rgba(0,0,0,0.85);font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace}
+.hero-term-bar{display:flex;align-items:center;gap:0.7rem;padding:0.55rem 0.85rem;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.07)}
+.hero-term .ht-dots{display:flex;gap:6px;flex:none}
+.hero-term .ht-dots i{width:11px;height:11px;border-radius:50%;display:block}
+.hero-term .ht-dots i:nth-child(1){background:#ff5f57}.hero-term .ht-dots i:nth-child(2){background:#febc2e}.hero-term .ht-dots i:nth-child(3){background:#28c840}
+.hero-term .ht-title{font-size:0.68rem;letter-spacing:0.03em;color:#8a98ad}
+.hero-term-body{padding:1.05rem 1.2rem;font-size:0.88rem;line-height:1.65;color:#c3cdde;white-space:pre-wrap;word-break:break-word}
+.hero-term .ht-prompt{color:#22d3ee;font-weight:700}
+.hero-term .ht-comment{color:#dbe4f0;font-style:italic;opacity:0.94}
+@media(max-width:560px){.hero-term-body{font-size:0.8rem}.hero-term .ht-title{font-size:0.6rem}}
 
 /* SECTION TITLES */
 .sec-header{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
@@ -384,7 +394,10 @@ if (window.mermaid) {
       <span class="hero-hl-1" data-i18n="h1.line1">Comment j'ai</span>
       <span class="hero-hl-2 grad" data-i18n="h1.grad">construit ce site</span>
     </h1>
-    <p class="subtitle" data-i18n="subtitle">Si vous aimez la technique et que la complexité ne vous fait pas peur, c'est ici que ça se passe.</p>
+    <div class="hero-term">
+      <div class="hero-term-bar"><span class="ht-dots"><i></i><i></i><i></i></span><span class="ht-title">carlin@krl1: ~/builds · zsh</span></div>
+      <div class="hero-term-body"><span class="ht-prompt">carlin@krl1 ❯</span> <span class="ht-comment"># <span data-i18n="subtitle">Si vous aimez la technique et que la complexité ne vous fait pas peur, c'est ici que ça se passe.</span></span></div>
+    </div>
   </header>
 
   <nav class="toc-bar" id="tocBar">
