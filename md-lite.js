@@ -1,4 +1,4 @@
-/* md-lite.js â€” tiny, safe Markdown â†’ HTML for AI-generated tool results.
+/* md-lite.js — tiny, safe Markdown → HTML for AI-generated tool results.
    Escapes HTML first, then converts a limited, well-known subset.
    Exposes window.mdLite(text) -> HTML string. */
 (function () {
@@ -41,13 +41,13 @@
       var ol = raw.match(/^\d+[.)]\s+(.*)$/);
       if (ol) { if (listType !== 'ol') { closeList(); listType = 'ol'; html += '<ol>'; } html += '<li>' + inline(ol[1]) + '</li>'; continue; }
 
-      var ul = raw.match(/^[-*â€¢]\s+(.*)$/);
+      var ul = raw.match(/^[-*•]\s+(.*)$/);
       if (ul) { if (listType !== 'ul') { closeList(); listType = 'ul'; html += '<ul>'; } html += '<li>' + inline(ul[1]) + '</li>'; continue; }
 
       closeList();
       // group consecutive plain lines into one paragraph with <br>
       var para = [inline(raw)];
-      while (i + 1 < lines.length && lines[i + 1].trim() && !/^(#{1,6}\s|\d+[.)]\s|[-*â€¢]\s)/.test(lines[i + 1].trim())) {
+      while (i + 1 < lines.length && lines[i + 1].trim() && !/^(#{1,6}\s|\d+[.)]\s|[-*•]\s)/.test(lines[i + 1].trim())) {
         i++; para.push(inline(lines[i].trim()));
       }
       html += '<p>' + para.join('<br>') + '</p>';

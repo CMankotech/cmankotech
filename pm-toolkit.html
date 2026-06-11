@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PM Toolkit â€” by Carlin Mankoto</title>
+<title>PM Toolkit — by Carlin Mankoto</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -46,7 +46,7 @@ h1,h2,h3{font-family:'Syne',sans-serif}
 .back-link{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;margin-bottom:1.75rem;transition:color 0.2s}
 .back-link:hover{color:var(--text)}
 
-/* ===== EDITORIAL HERO (alignÃ© sur l'index) ===== */
+/* ===== EDITORIAL HERO (aligné sur l'index) ===== */
 .tool-hero{position:relative;overflow:hidden;padding:9.5rem 0 4.5rem;margin-bottom:1rem}
 .tool-hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:160px;background:linear-gradient(180deg,rgba(8,8,15,0) 0%,var(--bg) 100%);z-index:2;pointer-events:none}
 .hero-bg-svg{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
@@ -255,9 +255,9 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <div class="nav-tools" id="navTools">
       <button class="nav-tools-btn" onclick="toggleNavTools(event)" aria-haspopup="true"><span id="navToolsLabel">Outils</span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
       <div class="nav-tools-menu">
-        <a href="pm-toolkit.html" class="active"><span class="nt-ico">ðŸ§°</span> PM Toolkit</a>
-        <a href="rag-explorer.html"><span class="nt-ico">ðŸ”</span> RAG Explorer</a>
-        <a href="veille.html"><span class="nt-ico">ðŸ“¡</span> Veille</a>
+        <a href="pm-toolkit.html" class="active"><span class="nt-ico">🧰</span> PM Toolkit</a>
+        <a href="rag-explorer.html"><span class="nt-ico">🔍</span> RAG Explorer</a>
+        <a href="veille.html"><span class="nt-ico">📡</span> Veille</a>
       </div>
     </div>
   </div>
@@ -302,7 +302,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <span class="hero-hl-1" id="h1Main">Product Management</span>
       <span class="hero-hl-2 grad" id="h1Grad">Toolkit.</span>
     </h1>
-    <p class="hero-bio" id="subtitleTxt">6 outils de Product Management enchaÃ®nÃ©s de faÃ§on fluide. Chaque insight gÃ©nÃ©rÃ© se transfÃ¨re automatiquement Ã  l'outil suivant : du problÃ¨me utilisateur jusqu'Ã  la roadmap racontÃ©e aux stakeholders.</p>
+    <p class="hero-bio" id="subtitleTxt">6 outils de Product Management enchaînés de façon fluide. Chaque insight généré se transfère automatiquement à l'outil suivant : du problème utilisateur jusqu'à la roadmap racontée aux stakeholders.</p>
   </div>
 </section>
 
@@ -311,39 +311,39 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <!-- SESSION (hidden if no session) -->
   <div class="session-panel" id="sessionPanel" style="display:none">
     <div class="sess-left">
-      <div class="sess-icon">ðŸ”—</div>
+      <div class="sess-icon">🔗</div>
       <div>
         <div class="sess-title" id="sessTitle">Session en cours</div>
-        <div class="sess-desc" id="sessDesc">Tes insights sont conservÃ©s localement entre les outils.</div>
+        <div class="sess-desc" id="sessDesc">Tes insights sont conservés localement entre les outils.</div>
       </div>
     </div>
     <div class="sess-pills" id="sessPills"></div>
-    <button class="sess-reset glass-shimmer glass-focus" id="sessReset" onclick="resetSession()">ðŸ—‘ <span id="resetLbl">RÃ©initialiser</span></button>
+    <button class="sess-reset glass-shimmer glass-focus" id="sessReset" onclick="resetSession()">🗑 <span id="resetLbl">Réinitialiser</span></button>
   </div>
 
   <!-- INSIGHTS SUMMARY -->
   <div id="insightsSummary" style="display:none">
-    <div class="flow-label"><span id="summaryLbl">RÃ©sumÃ© des insights</span></div>
+    <div class="flow-label"><span id="summaryLbl">Résumé des insights</span></div>
     <div class="summary-grid" id="summaryGrid"></div>
   </div>
 
   <!-- HOW IT WORKS -->
-  <div class="flow-label"><span id="howLbl">Comment Ã§a marche</span></div>
+  <div class="flow-label"><span id="howLbl">Comment ça marche</span></div>
   <div class="how">
     <div class="how-item">
       <div class="how-num">01</div>
-      <div class="how-title" id="how1T">Une sÃ©quence naturelle</div>
-      <div class="how-desc" id="how1D">Les 6 outils suivent le flow d'un PM : tu dÃ©marres sur la discovery, tu finis sur la roadmap.</div>
+      <div class="how-title" id="how1T">Une séquence naturelle</div>
+      <div class="how-desc" id="how1D">Les 6 outils suivent le flow d'un PM : tu démarres sur la discovery, tu finis sur la roadmap.</div>
     </div>
     <div class="how-item">
       <div class="how-num">02</div>
-      <div class="how-title" id="how2T">Insights auto-transfÃ©rÃ©s</div>
-      <div class="how-desc" id="how2D">DÃ¨s qu'un outil produit un rÃ©sultat, le suivant affiche une banniÃ¨re pour importer le contexte en un clic.</div>
+      <div class="how-title" id="how2T">Insights auto-transférés</div>
+      <div class="how-desc" id="how2D">Dès qu'un outil produit un résultat, le suivant affiche une bannière pour importer le contexte en un clic.</div>
     </div>
     <div class="how-item">
       <div class="how-num">03</div>
-      <div class="how-title" id="how3T">DonnÃ©es locales uniquement</div>
-      <div class="how-desc" id="how3D">Tout reste dans ton navigateur (localStorage). Rien n'est envoyÃ© ni stockÃ© cÃ´tÃ© serveur.</div>
+      <div class="how-title" id="how3T">Données locales uniquement</div>
+      <div class="how-desc" id="how3D">Tout reste dans ton navigateur (localStorage). Rien n'est envoyé ni stocké côté serveur.</div>
     </div>
   </div>
 
@@ -353,29 +353,29 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
   <!-- START CTA -->
   <div class="start-cta">
-    <a href="discovery-assistant.html" class="btn-start glass-focus" id="startBtn"><span class="btn-ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg></span><span id="startLbl">DÃ©marrer une session de discovery</span><span class="btn-arrow">â†’</span></a>
-    <div class="start-note" id="startNote">L'ordre suggÃ©rÃ© t'Ã©vite d'oublier une Ã©tape, mais tu peux ouvrir n'importe quel outil directement.</div>
+    <a href="discovery-assistant.html" class="btn-start glass-focus" id="startBtn"><span class="btn-ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg></span><span id="startLbl">Démarrer une session de discovery</span><span class="btn-arrow">→</span></a>
+    <div class="start-note" id="startNote">L'ordre suggéré t'évite d'oublier une étape, mais tu peux ouvrir n'importe quel outil directement.</div>
   </div>
 
   <footer>
-    <p class="footer-by"><span id="footerBy">Construit par</span> <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> Â· <span id="footerRole">AI Product Manager</span></p>
+    <p class="footer-by"><span id="footerBy">Construit par</span> <a href="https://cmankotech.github.io/cmankotech" target="_blank">Carlin Mankoto</a> · <span id="footerRole">AI Product Manager</span></p>
   </footer>
 
 </div>
 
 <script src="pm-session.js"></script>
 <script>
-/* â”€â”€â”€ Tool definitions for the flow diagram â”€â”€â”€ */
+/* ─── Tool definitions for the flow diagram ─── */
 var TOOLS = [
   {
     id:'discovery', step:1, url:'discovery-assistant.html', color:'#60a5fa',
     fr:{
       title:'Discovery Assistant',
-      tagline:'Structure une intuition floue en hypothÃ¨ses testables.',
-      purpose:"Tu pars d'un problÃ¨me utilisateur mal cernÃ©. L'outil le transforme en 3 hypothÃ¨ses formulÃ©es (belief + signal observable), 5 questions d'interview ouvertes et un plan de test structurÃ© avec mÃ©thode, participants, durÃ©e et critÃ¨re de succÃ¨s.",
-      when:"Ã€ lancer en tout dÃ©but de cycle, quand tu n'as pas encore d'entretiens Ã  synthÃ©tiser.",
-      inLbl:'Input', inVal:'ProblÃ¨me flou, cible, contexte produit',
-      outLbl:'Output', outVal:'HypothÃ¨ses Â· questions d\'interview Â· plan de test'
+      tagline:'Structure une intuition floue en hypothèses testables.',
+      purpose:"Tu pars d'un problème utilisateur mal cerné. L'outil le transforme en 3 hypothèses formulées (belief + signal observable), 5 questions d'interview ouvertes et un plan de test structuré avec méthode, participants, durée et critère de succès.",
+      when:"À lancer en tout début de cycle, quand tu n'as pas encore d'entretiens à synthétiser.",
+      inLbl:'Input', inVal:'Problème flou, cible, contexte produit',
+      outLbl:'Output', outVal:'Hypothèses · questions d\'interview · plan de test'
     },
     en:{
       title:'Discovery Assistant',
@@ -383,7 +383,7 @@ var TOOLS = [
       purpose:"Start from a messy user problem. The tool turns it into 3 formulated hypotheses (belief + observable signal), 5 open interview questions, and a structured test plan with method, participants, duration and success criterion.",
       when:"Run this at the very start of a cycle, before you have interviews to synthesise.",
       inLbl:'Input', inVal:'Fuzzy problem, target, product context',
-      outLbl:'Output', outVal:'Hypotheses Â· interview questions Â· test plan'
+      outLbl:'Output', outVal:'Hypotheses · interview questions · test plan'
     }
   },
   {
@@ -391,10 +391,10 @@ var TOOLS = [
     fr:{
       title:'Interview Analyzer',
       tagline:'Transforme tes notes d\'entretien en insights actionnables.',
-      purpose:"Colle tes notes brutes (1 entretien ou plusieurs en bulk). L'IA extrait les pain points groupÃ©s par thÃ¨me, les citations marquantes, les opportunitÃ©s produit classÃ©es par impact, et reconstruit un persona synthÃ©tique avec tags.",
-      when:"Juste aprÃ¨s tes entretiens utilisateurs, pour sauter l'Ã©tape post-its sur Miro.",
+      purpose:"Colle tes notes brutes (1 entretien ou plusieurs en bulk). L'IA extrait les pain points groupés par thème, les citations marquantes, les opportunités produit classées par impact, et reconstruit un persona synthétique avec tags.",
+      when:"Juste après tes entretiens utilisateurs, pour sauter l'étape post-its sur Miro.",
       inLbl:'Input', inVal:'Notes brutes, verbatims, transcriptions',
-      outLbl:'Output', outVal:'Persona Â· pain points Â· citations Â· opportunitÃ©s'
+      outLbl:'Output', outVal:'Persona · pain points · citations · opportunités'
     },
     en:{
       title:'Interview Analyzer',
@@ -402,23 +402,23 @@ var TOOLS = [
       purpose:"Paste your raw notes (one interview or several in bulk). The AI extracts pain points grouped by theme, notable quotes, product opportunities ranked by impact, and rebuilds a synthetic persona with tags.",
       when:"Right after your user interviews, to skip the post-it stage on Miro.",
       inLbl:'Input', inVal:'Raw notes, verbatims, transcripts',
-      outLbl:'Output', outVal:'Persona Â· pain points Â· quotes Â· opportunities'
+      outLbl:'Output', outVal:'Persona · pain points · quotes · opportunities'
     }
   },
   {
     id:'okr', step:3, url:'okr-builder.html', color:'#a78bfa',
     fr:{
       title:'OKR Builder',
-      tagline:'DÃ©rive des OKRs mesurables de tes ambitions stratÃ©giques.',
-      purpose:"Tu dÃ©cris ton contexte produit et tes ambitions pour le trimestre ou l'annÃ©e. L'IA gÃ©nÃ¨re 2 Ã  4 Objectives qualitatifs et inspirants, avec 3 Key Results chacun â€” typÃ©s metric / milestone / health â€” et ancrÃ©s sur les mÃ©triques rÃ©elles que tu fournis.",
-      when:"Pour ton planning trimestriel, une fois les opportunitÃ©s de la discovery clarifiÃ©es.",
-      inLbl:'Input', inVal:'Produit, ambitions, mÃ©triques actuelles',
-      outLbl:'Output', outVal:'Objectives + Key Results typÃ©s + baselines'
+      tagline:'Dérive des OKRs mesurables de tes ambitions stratégiques.',
+      purpose:"Tu décris ton contexte produit et tes ambitions pour le trimestre ou l'année. L'IA génère 2 à 4 Objectives qualitatifs et inspirants, avec 3 Key Results chacun — typés metric / milestone / health — et ancrés sur les métriques réelles que tu fournis.",
+      when:"Pour ton planning trimestriel, une fois les opportunités de la discovery clarifiées.",
+      inLbl:'Input', inVal:'Produit, ambitions, métriques actuelles',
+      outLbl:'Output', outVal:'Objectives + Key Results typés + baselines'
     },
     en:{
       title:'OKR Builder',
       tagline:'Derive measurable OKRs from your strategic ambitions.',
-      purpose:"Describe your product context and ambitions for the quarter or year. The AI generates 2â€“4 inspiring qualitative Objectives with 3 Key Results each â€” typed metric / milestone / health â€” anchored on the real metrics you provide.",
+      purpose:"Describe your product context and ambitions for the quarter or year. The AI generates 2–4 inspiring qualitative Objectives with 3 Key Results each — typed metric / milestone / health — anchored on the real metrics you provide.",
       when:"For quarterly planning, once discovery opportunities are clarified.",
       inLbl:'Input', inVal:'Product, ambitions, current metrics',
       outLbl:'Output', outVal:'Typed Objectives + Key Results + baselines'
@@ -429,32 +429,32 @@ var TOOLS = [
     fr:{
       title:'Backlog Prioritizer',
       tagline:'Arbitre ton backlog en RICE ou MoSCoW avec justification.',
-      purpose:"Colle tes user stories en vrac ou par champ. Choisis RICE (scoring numÃ©rique : Reach Ã— Impact Ã— Confidence / Effort) ou MoSCoW (Must / Should / Could / Won't). L'IA note chaque story et fournit une justification explicite, prÃªte Ã  dÃ©fendre en comitÃ©.",
+      purpose:"Colle tes user stories en vrac ou par champ. Choisis RICE (scoring numérique : Reach × Impact × Confidence / Effort) ou MoSCoW (Must / Should / Could / Won't). L'IA note chaque story et fournit une justification explicite, prête à défendre en comité.",
       when:"Avant le grooming ou la sprint planning, surtout quand tu dois arbitrer devant des stakeholders.",
       inLbl:'Input', inVal:'User stories + contexte produit',
-      outLbl:'Output', outVal:'Stories classÃ©es Â· scores Â· justifications'
+      outLbl:'Output', outVal:'Stories classées · scores · justifications'
     },
     en:{
       title:'Backlog Prioritizer',
       tagline:'Arbitrate your backlog with RICE or MoSCoW + rationale.',
-      purpose:"Paste your user stories as bulk text or field by field. Pick RICE (numeric scoring: Reach Ã— Impact Ã— Confidence / Effort) or MoSCoW (Must / Should / Could / Won't). The AI scores each story and provides explicit rationale, ready to defend in review.",
+      purpose:"Paste your user stories as bulk text or field by field. Pick RICE (numeric scoring: Reach × Impact × Confidence / Effort) or MoSCoW (Must / Should / Could / Won't). The AI scores each story and provides explicit rationale, ready to defend in review.",
       when:"Before grooming or sprint planning, especially when you need to arbitrate in front of stakeholders.",
       inLbl:'Input', inVal:'User stories + product context',
-      outLbl:'Output', outVal:'Ranked stories Â· scores Â· rationale'
+      outLbl:'Output', outVal:'Ranked stories · scores · rationale'
     }
   },
   {
     id:'epic', step:5, url:'epic-to-userstories.html', color:'#f472b6',
     fr:{
-      title:'Epic â†’ User Stories',
-      tagline:'DÃ©compose un epic en user stories INVEST exportables.',
-      purpose:"Tu dÃ©cris un epic, le persona cible et le contexte tech. L'IA produit 4 Ã  10 user stories indÃ©pendantes formulÃ©es en Â« En tant que / Je veux / Afin de Â» (ou Job Story), avec 2-3 critÃ¨res d'acceptance vÃ©rifiables, la prioritÃ©, le type et l'effort estimÃ©.",
-      when:"En refinement, pour Ã©viter 2h sur Jira Ã  dÃ©couper Ã  la main. Export Markdown direct.",
+      title:'Epic → User Stories',
+      tagline:'Décompose un epic en user stories INVEST exportables.',
+      purpose:"Tu décris un epic, le persona cible et le contexte tech. L'IA produit 4 à 10 user stories indépendantes formulées en « En tant que / Je veux / Afin de » (ou Job Story), avec 2-3 critères d'acceptance vérifiables, la priorité, le type et l'effort estimé.",
+      when:"En refinement, pour éviter 2h sur Jira à découper à la main. Export Markdown direct.",
       inLbl:'Input', inVal:'Epic, persona, contexte tech',
-      outLbl:'Output', outVal:'Stories INVEST + critÃ¨res d\'acceptance + effort'
+      outLbl:'Output', outVal:'Stories INVEST + critères d\'acceptance + effort'
     },
     en:{
-      title:'Epic â†’ User Stories',
+      title:'Epic → User Stories',
       tagline:'Break an epic into exportable INVEST user stories.',
       purpose:"Describe an epic, the target persona and the tech context. The AI produces 4 to 10 independent user stories in \"As a / I want / So that\" (or Job Story) format, each with 2-3 verifiable acceptance criteria, priority, type and estimated effort.",
       when:"In refinement, to avoid 2 hours of manual breakdown in Jira. Markdown export ready.",
@@ -467,10 +467,10 @@ var TOOLS = [
     fr:{
       title:'Roadmap Storyteller',
       tagline:'Raconte ta roadmap dans le langage de ton audience.',
-      purpose:"Tu listes tes features par pÃ©riode (Now / Next / Later) et tu choisis ton audience (dirigeants, Ã©quipes mÃ©tier, tech, clients). L'IA produit un pitch narratif de 3-4 phrases orientÃ© valeur, une timeline reformulÃ©e dans le registre de l'audience, et 3 messages-clÃ©s pour convaincre.",
-      when:"Avant une revue de roadmap, un all-hands, ou un RDV commercial stratÃ©gique.",
-      inLbl:'Input', inVal:'Features par pÃ©riode + audience cible',
-      outLbl:'Output', outVal:'Pitch narratif Â· timeline Â· messages-clÃ©s'
+      purpose:"Tu listes tes features par période (Now / Next / Later) et tu choisis ton audience (dirigeants, équipes métier, tech, clients). L'IA produit un pitch narratif de 3-4 phrases orienté valeur, une timeline reformulée dans le registre de l'audience, et 3 messages-clés pour convaincre.",
+      when:"Avant une revue de roadmap, un all-hands, ou un RDV commercial stratégique.",
+      inLbl:'Input', inVal:'Features par période + audience cible',
+      outLbl:'Output', outVal:'Pitch narratif · timeline · messages-clés'
     },
     en:{
       title:'Roadmap Storyteller',
@@ -478,7 +478,7 @@ var TOOLS = [
       purpose:"List your features by horizon (Now / Next / Later) and pick your audience (execs, business teams, tech, customers). The AI produces a 3-4 sentence value-oriented narrative pitch, a timeline rephrased for the audience, and 3 key talking points to drive alignment.",
       when:"Before a roadmap review, an all-hands, or a strategic sales pitch.",
       inLbl:'Input', inVal:'Features by horizon + target audience',
-      outLbl:'Output', outVal:'Narrative pitch Â· timeline Â· talking points'
+      outLbl:'Output', outVal:'Narrative pitch · timeline · talking points'
     }
   }
 ];
@@ -489,7 +489,7 @@ function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').
 
 function renderFlow(){
   var session = window.PMSession ? PMSession.load() : {};
-  var doneLbl = _lang==='en' ? 'Completed' : 'ComplÃ©tÃ©';
+  var doneLbl = _lang==='en' ? 'Completed' : 'Complété';
   var openLbl = _lang==='en' ? 'Open tool' : 'Ouvrir l\'outil';
   var whenLbl = _lang==='en' ? 'When to use' : 'Quand l\'utiliser';
   var html = TOOLS.map(function(t){
@@ -498,7 +498,7 @@ function renderFlow(){
     return '<a href="'+t.url+'" class="tool-card glass-pointer'+(done?' completed':'')+'" style="--tool-color:'+t.color+'">'
       + '<div class="tool-header">'
       +   '<span class="tool-step">0'+t.step+'</span>'
-      +   '<span class="tool-status">âœ“ '+doneLbl+'</span>'
+      +   '<span class="tool-status">✓ '+doneLbl+'</span>'
       + '</div>'
       + '<div class="tool-title">'+esc(data.title)+'</div>'
       + '<div class="tool-tagline">'+esc(data.tagline)+'</div>'
@@ -508,7 +508,7 @@ function renderFlow(){
       +   '<div class="tool-io-row"><span class="tool-io-lbl">'+data.inLbl+'</span><span class="tool-io-val">'+esc(data.inVal)+'</span></div>'
       +   '<div class="tool-io-row"><span class="tool-io-lbl">'+data.outLbl+'</span><span class="tool-io-val">'+esc(data.outVal)+'</span></div>'
       + '</div>'
-      + '<span class="tool-launch">'+openLbl+' â†’</span>'
+      + '<span class="tool-launch">'+openLbl+' →</span>'
       + '</a>';
   }).join('');
   document.getElementById('flowGrid').innerHTML = html;
@@ -523,9 +523,9 @@ function renderSessionPanel(){
   panel.style.display = 'flex';
   // next step suggestion
   var nextTool = TOOLS.find(function(t){ return !session[t.id]; });
-  var desc = toolsUsed.length + (_lang==='en'?' tool':' outil') + (toolsUsed.length>1?'s':'') + (_lang==='en'?' used':' utilisÃ©')+(toolsUsed.length>1?'s':'');
-  if(nextTool) desc += ' Â· ' + (_lang==='en'?'next':'suite') + ' : ' + nextTool[_lang].title;
-  else desc += ' Â· ' + (_lang==='en'?'all tools completed':'tous les outils sont complÃ©tÃ©s');
+  var desc = toolsUsed.length + (_lang==='en'?' tool':' outil') + (toolsUsed.length>1?'s':'') + (_lang==='en'?' used':' utilisé')+(toolsUsed.length>1?'s':'');
+  if(nextTool) desc += ' · ' + (_lang==='en'?'next':'suite') + ' : ' + nextTool[_lang].title;
+  else desc += ' · ' + (_lang==='en'?'all tools completed':'tous les outils sont complétés');
   document.getElementById('sessDesc').textContent = desc;
   // pills
   var pillsHtml = TOOLS.map(function(t){
@@ -555,13 +555,13 @@ function renderInsightsSummary(){
     var body = '';
     var r = d.result || {};
     if(t.id==='discovery'){
-      var prob = String(d.problem||'').slice(0,90)+(d.problem&&d.problem.length>90?'â€¦':'');
+      var prob = String(d.problem||'').slice(0,90)+(d.problem&&d.problem.length>90?'…':'');
       var hCount = (r.hypotheses||[]).length;
-      body = (prob ? '<strong>'+esc(prob)+'</strong>' : '') + (hCount ? '<br><span style="margin-top:0.25rem;display:inline-block">'+hCount+' hypothÃ¨se'+(hCount>1?'s':'')+' gÃ©nÃ©rÃ©e'+(hCount>1?'s':'')+'</span>' : '');
+      body = (prob ? '<strong>'+esc(prob)+'</strong>' : '') + (hCount ? '<br><span style="margin-top:0.25rem;display:inline-block">'+hCount+' hypothèse'+(hCount>1?'s':'')+' générée'+(hCount>1?'s':'')+'</span>' : '');
     } else if(t.id==='interview'){
       var pName = ((r.persona||{}).name)||'';
       var opps = (r.opportunities||[]).slice(0,2).map(function(o){return esc(o.title||'');}).filter(Boolean);
-      body = (pName?'Persona : <strong>'+esc(pName)+'</strong>':'') + (opps.length?'<br>'+opps.join(' Â· '):'');
+      body = (pName?'Persona : <strong>'+esc(pName)+'</strong>':'') + (opps.length?'<br>'+opps.join(' · '):'');
     } else if(t.id==='okr'){
       var firstObj = ((r.okrs||[])[0]||{}).objective||'';
       var krCount = (r.okrs||[]).reduce(function(acc,o){return acc+((o.key_results||[]).length);},0);
@@ -576,10 +576,10 @@ function renderInsightsSummary(){
     } else if(t.id==='epic'){
       var stCount = (r.stories||[]).length;
       var firstTitle = ((r.stories||[])[0]||{}).title||'';
-      body = stCount+' user storie'+(stCount>1?'s':'')+' gÃ©nÃ©rÃ©e'+(stCount>1?'s':'')+
+      body = stCount+' user storie'+(stCount>1?'s':'')+' générée'+(stCount>1?'s':'')+
         (firstTitle?'<br><strong>'+esc(String(firstTitle).slice(0,60))+'</strong>':'');
     } else if(t.id==='roadmap'){
-      var narr = String(r.narrative||'').slice(0,80)+(r.narrative&&r.narrative.length>80?'â€¦':'');
+      var narr = String(r.narrative||'').slice(0,80)+(r.narrative&&r.narrative.length>80?'…':'');
       body = narr?'<strong>'+esc(narr)+'</strong>':'';
     }
     if(!body) return;
@@ -599,7 +599,7 @@ function renderInsightsSummary(){
 function resetSession(){
   var msg = _lang==='en'
     ? 'Clear all saved insights from this session? This cannot be undone.'
-    : 'Vider tous les insights sauvegardÃ©s de cette session ? Cette action est irrÃ©versible.';
+    : 'Vider tous les insights sauvegardés de cette session ? Cette action est irréversible.';
   if(!confirm(msg)) return;
   if(window.PMSession) PMSession.clear();
   renderFlow();
@@ -609,22 +609,22 @@ function resetSession(){
   document.getElementById('startBtn').href = 'discovery-assistant.html';
   document.getElementById('startLbl').textContent = _lang==='en'
     ? 'Start a discovery session'
-    : 'DÃ©marrer une session de discovery';
+    : 'Démarrer une session de discovery';
 }
 
-/* â”€â”€â”€ i18n â”€â”€â”€ */
+/* ─── i18n ─── */
 var I18N = {
   fr:{
     back:'Retour au portfolio', tag:'Product Management Suite',
-    h1Main:'Product Management', subtitle:'6 outils de Product Management enchaÃ®nÃ©s de faÃ§on fluide. Chaque insight gÃ©nÃ©rÃ© se transfÃ¨re automatiquement Ã  l\'outil suivant : du problÃ¨me utilisateur jusqu\'Ã  la roadmap racontÃ©e aux stakeholders.',
-    sessTitle:'Session en cours', reset:'RÃ©initialiser',
-    how:'Comment Ã§a marche', flow:'Les 6 outils du toolkit',
-    how1T:'Une sÃ©quence naturelle', how1D:'Les 6 outils suivent le flow d\'un PM : tu dÃ©marres sur la discovery, tu finis sur la roadmap.',
-    how2T:'Insights auto-transfÃ©rÃ©s', how2D:'DÃ¨s qu\'un outil produit un rÃ©sultat, le suivant affiche une banniÃ¨re pour importer le contexte en un clic.',
-    how3T:'DonnÃ©es locales uniquement', how3D:'Tout reste dans ton navigateur (localStorage). Rien n\'est envoyÃ© ni stockÃ© cÃ´tÃ© serveur.',
-    startLbl:'DÃ©marrer une session de discovery',
-    startNote:'L\'ordre suggÃ©rÃ© t\'Ã©vite d\'oublier une Ã©tape, mais tu peux ouvrir n\'importe quel outil directement.',
-    summaryLbl:'RÃ©sumÃ© des insights',
+    h1Main:'Product Management', subtitle:'6 outils de Product Management enchaînés de façon fluide. Chaque insight généré se transfère automatiquement à l\'outil suivant : du problème utilisateur jusqu\'à la roadmap racontée aux stakeholders.',
+    sessTitle:'Session en cours', reset:'Réinitialiser',
+    how:'Comment ça marche', flow:'Les 6 outils du toolkit',
+    how1T:'Une séquence naturelle', how1D:'Les 6 outils suivent le flow d\'un PM : tu démarres sur la discovery, tu finis sur la roadmap.',
+    how2T:'Insights auto-transférés', how2D:'Dès qu\'un outil produit un résultat, le suivant affiche une bannière pour importer le contexte en un clic.',
+    how3T:'Données locales uniquement', how3D:'Tout reste dans ton navigateur (localStorage). Rien n\'est envoyé ni stocké côté serveur.',
+    startLbl:'Démarrer une session de discovery',
+    startNote:'L\'ordre suggéré t\'évite d\'oublier une étape, mais tu peux ouvrir n\'importe quel outil directement.',
+    summaryLbl:'Résumé des insights',
     footerBy:'Construit par', footerRole:'AI Product Manager'
   },
   en:{
@@ -713,7 +713,7 @@ document.addEventListener('click',function(e){if(e.target.closest&&e.target.clos
 
 <div id="tt-bubble"></div>
 <script>
-var TT_G_PM={"cosine":{"fr":"Mesure de similaritÃ© entre deux vecteurs (0 = aucun lien, 1 = identiques). UtilisÃ©e pour trouver les chunks les plus proches d'une requÃªte dans la base PM.","en":"Similarity measure between two vectors (0 = unrelated, 1 = identical). Used to find the closest chunks to a query in the PM knowledge base."},"planner":{"fr":"Premier appel LLM (T=0.2) qui produit un JSON strict : intent, confidence, user_goal, steps, risks, quick_win.","en":"First LLM call (T=0.2) that produces strict JSON: intent, confidence, user_goal, steps, risks, quick_win."},"synthesis":{"fr":"DeuxiÃ¨me appel LLM (T=0.45) qui transforme le plan structurÃ© du Planner en rÃ©ponse naturelle, max 220 mots.","en":"Second LLM call (T=0.45) that transforms the Planner's structured plan into a natural response, max 220 words."},"workersai":{"fr":"Service d'IA de Cloudflare exÃ©cutÃ© sur serveurs edge. Ici : bge-small-en-v1.5 pour gÃ©nÃ©rer des embeddings sÃ©mantiques en un seul appel batch.","en":"Cloudflare's AI service running on edge servers. Here: bge-small-en-v1.5 to generate semantic embeddings in a single batch call."},"temperature":{"fr":"ParamÃ¨tre LLM qui contrÃ´le l'alÃ©atoire. T=0.2 : dÃ©terministe, JSON fiable. T=0.45 : plus crÃ©atif, texte naturel.","en":"LLM parameter controlling randomness. T=0.2: deterministic, reliable JSON. T=0.45: more creative, natural text."},"chunk":{"fr":"Fragment de texte dÃ©coupÃ© depuis la base de connaissances (300 mots, overlap 50). UnitÃ© rÃ©cupÃ©rÃ©e par le retriever RAG lors d'une requÃªte sÃ©mantique.","en":"Text fragment sliced from the knowledge base (300 words, 50 overlap). The unit retrieved by the RAG retriever on a semantic query."},"vector":{"fr":"Tableau de nombres (384 dimensions ici) qui encode le sens sÃ©mantique d'un texte. Deux textes proches en sens ont des vecteurs proches.","en":"Array of numbers (384 dimensions here) encoding the semantic meaning of text. Two texts with similar meaning have similar vectors."},"rice":{"fr":"Reach x Impact x Confidence / Effort. Score numÃ©rique pour comparer des features et prioriser sans dÃ©bat d'opinion.","en":"Reach x Impact x Confidence / Effort. Numeric score to compare features and prioritise without opinion debates."},"okr":{"fr":"Objectives and Key Results. Objectif qualitatif inspirant + 2-5 KR mesurables. Cadence trimestrielle, 70% de rÃ©ussite = bon rÃ©sultat.","en":"Objectives and Key Results. Inspiring qualitative objective + 2-5 measurable KRs. Quarterly cadence, 70% completion = good result."},"jtbd":{"fr":"Jobs-to-be-Done. Cadre centrÃ© sur le travail que l'utilisateur cherche Ã  accomplir, pas ses demandes de features.","en":"Jobs-to-be-Done. Framework focused on the job the user is trying to get done, not their feature requests."},"moscow":{"fr":"Must / Should / Could / Won't. Priorisation par catÃ©gorie de nÃ©cessitÃ© pour un sprint ou une release.","en":"Must / Should / Could / Won't. Prioritisation by necessity category for a sprint or release."},"invest":{"fr":"Independent, Negotiable, Valuable, Estimable, Small, Testable. CritÃ¨res de qualitÃ© d'une user story.","en":"Independent, Negotiable, Valuable, Estimable, Small, Testable. Quality criteria for a user story."},"kano":{"fr":"CatÃ©gorise les features en Must-Be, Performance et Delighters selon l'impact sur la satisfaction. Les Delighters crÃ©ent le wow.","en":"Categorises features as Must-Be, Performance and Delighters by satisfaction impact. Delighters create the wow."},"heart":{"fr":"Happiness, Engagement, Adoption, Retention, Task Success. Framework Google de mÃ©triques UX centrÃ© sur l'expÃ©rience utilisateur.","en":"Happiness, Engagement, Adoption, Retention, Task Success. Google's UX metrics framework centred on user experience."},"northstar":{"fr":"MÃ©trique unique qui capture la valeur crÃ©Ã©e pour l'utilisateur. PrÃ©cÃ¨de le revenu sans le mesurer directement.","en":"Single metric that captures the value created for users. Predicts revenue without measuring it directly."},"discovery":{"fr":"Phase de validation avant de construire. Double Diamond : comprendre le problÃ¨me (diverger) puis cadrer la solution (converger).","en":"Validation phase before building. Double Diamond: understand the problem (diverge) then frame the solution (converge)."}};
+var TT_G_PM={"cosine":{"fr":"Mesure de similarité entre deux vecteurs (0 = aucun lien, 1 = identiques). Utilisée pour trouver les chunks les plus proches d'une requête dans la base PM.","en":"Similarity measure between two vectors (0 = unrelated, 1 = identical). Used to find the closest chunks to a query in the PM knowledge base."},"planner":{"fr":"Premier appel LLM (T=0.2) qui produit un JSON strict : intent, confidence, user_goal, steps, risks, quick_win.","en":"First LLM call (T=0.2) that produces strict JSON: intent, confidence, user_goal, steps, risks, quick_win."},"synthesis":{"fr":"Deuxième appel LLM (T=0.45) qui transforme le plan structuré du Planner en réponse naturelle, max 220 mots.","en":"Second LLM call (T=0.45) that transforms the Planner's structured plan into a natural response, max 220 words."},"workersai":{"fr":"Service d'IA de Cloudflare exécuté sur serveurs edge. Ici : bge-small-en-v1.5 pour générer des embeddings sémantiques en un seul appel batch.","en":"Cloudflare's AI service running on edge servers. Here: bge-small-en-v1.5 to generate semantic embeddings in a single batch call."},"temperature":{"fr":"Paramètre LLM qui contrôle l'aléatoire. T=0.2 : déterministe, JSON fiable. T=0.45 : plus créatif, texte naturel.","en":"LLM parameter controlling randomness. T=0.2: deterministic, reliable JSON. T=0.45: more creative, natural text."},"chunk":{"fr":"Fragment de texte découpé depuis la base de connaissances (300 mots, overlap 50). Unité récupérée par le retriever RAG lors d'une requête sémantique.","en":"Text fragment sliced from the knowledge base (300 words, 50 overlap). The unit retrieved by the RAG retriever on a semantic query."},"vector":{"fr":"Tableau de nombres (384 dimensions ici) qui encode le sens sémantique d'un texte. Deux textes proches en sens ont des vecteurs proches.","en":"Array of numbers (384 dimensions here) encoding the semantic meaning of text. Two texts with similar meaning have similar vectors."},"rice":{"fr":"Reach x Impact x Confidence / Effort. Score numérique pour comparer des features et prioriser sans débat d'opinion.","en":"Reach x Impact x Confidence / Effort. Numeric score to compare features and prioritise without opinion debates."},"okr":{"fr":"Objectives and Key Results. Objectif qualitatif inspirant + 2-5 KR mesurables. Cadence trimestrielle, 70% de réussite = bon résultat.","en":"Objectives and Key Results. Inspiring qualitative objective + 2-5 measurable KRs. Quarterly cadence, 70% completion = good result."},"jtbd":{"fr":"Jobs-to-be-Done. Cadre centré sur le travail que l'utilisateur cherche à accomplir, pas ses demandes de features.","en":"Jobs-to-be-Done. Framework focused on the job the user is trying to get done, not their feature requests."},"moscow":{"fr":"Must / Should / Could / Won't. Priorisation par catégorie de nécessité pour un sprint ou une release.","en":"Must / Should / Could / Won't. Prioritisation by necessity category for a sprint or release."},"invest":{"fr":"Independent, Negotiable, Valuable, Estimable, Small, Testable. Critères de qualité d'une user story.","en":"Independent, Negotiable, Valuable, Estimable, Small, Testable. Quality criteria for a user story."},"kano":{"fr":"Catégorise les features en Must-Be, Performance et Delighters selon l'impact sur la satisfaction. Les Delighters créent le wow.","en":"Categorises features as Must-Be, Performance and Delighters by satisfaction impact. Delighters create the wow."},"heart":{"fr":"Happiness, Engagement, Adoption, Retention, Task Success. Framework Google de métriques UX centré sur l'expérience utilisateur.","en":"Happiness, Engagement, Adoption, Retention, Task Success. Google's UX metrics framework centred on user experience."},"northstar":{"fr":"Métrique unique qui capture la valeur créée pour l'utilisateur. Précède le revenu sans le mesurer directement.","en":"Single metric that captures the value created for users. Predicts revenue without measuring it directly."},"discovery":{"fr":"Phase de validation avant de construire. Double Diamond : comprendre le problème (diverger) puis cadrer la solution (converger).","en":"Validation phase before building. Double Diamond: understand the problem (diverge) then frame the solution (converge)."}};
 var TT_P_PM=[{rx:/cosine\s+sim(?:ilarity)?/gi,key:'cosine'},{rx:/Workers\s+AI/g,key:'workersai'},{rx:/\bPlanner\b/g,key:'planner'},{rx:/\bSynthesis\b/g,key:'synthesis'},{rx:/T=0\.\d+/g,key:'temperature'},{rx:/\bchunks?\b/gi,key:'chunk'},{rx:/\bvectors?\b/gi,key:'vector'},{rx:/ctx\.waitUntil/g,key:'waituntil'},{rx:/\bKV\s+Store/g,key:'kv'},{rx:/\bembeddings?\b/gi,key:'embedding'},{rx:/\bSSE\b/g,key:'sse'},{rx:/\bRAG\b/g,key:'rag'},{rx:/\bLLMs?\b/g,key:'llm'},{rx:/\bIntent\b/g,key:'intent'},{rx:/\bLPU\b/g,key:'lpu'},{rx:/\bRICE\b/g,key:'rice'},{rx:/\bOKRs?\b/g,key:'okr'},{rx:/\bJTBD\b/g,key:'jtbd'},{rx:/\bMoSCoW\b/gi,key:'moscow'},{rx:/\bINVEST\b/g,key:'invest'},{rx:/\bKano\b/gi,key:'kano'},{rx:/\bHEART\b/g,key:'heart'},{rx:/North\s+Star/gi,key:'northstar'},{rx:/\bDiscovery\b/g,key:'discovery'}];
 function applyTTPm(lang){
   document.querySelectorAll('.subtitle,.tool-desc,.proj-summary-text').forEach(function(container){

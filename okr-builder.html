@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OKR Builder â€” by Carlin Mankoto</title>
+<title>OKR Builder — by Carlin Mankoto</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -248,9 +248,9 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <div class="nav-tools" id="navTools">
       <button class="nav-tools-btn" onclick="toggleNavTools(event)" aria-haspopup="true"><span id="navToolsLabel">Outils</span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
       <div class="nav-tools-menu">
-        <a href="pm-toolkit.html" class="active"><span class="nt-ico">ðŸ§°</span> PM Toolkit</a>
-        <a href="rag-explorer.html"><span class="nt-ico">ðŸ”</span> RAG Explorer</a>
-        <a href="veille.html"><span class="nt-ico">ðŸ“¡</span> Veille</a>
+        <a href="pm-toolkit.html" class="active"><span class="nt-ico">🧰</span> PM Toolkit</a>
+        <a href="rag-explorer.html"><span class="nt-ico">🔍</span> RAG Explorer</a>
+        <a href="veille.html"><span class="nt-ico">📡</span> Veille</a>
       </div>
     </div>
   </div>
@@ -288,7 +288,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 <script>
 (function(){
   var _d = {
-    fr:{title:"En savoir plus",lbl:["Contexte","ProblÃ¨me","Approche","RÃ©sultat"],ctx:"ConÃ§u pour accÃ©lÃ©rer la dÃ©finition des OKRs produit, souvent floue ou dÃ©connectÃ©e des vraies mÃ©triques.",pb:"RÃ©diger des OKRs cohÃ©rents, mesurables et alignÃ©s sur la stratÃ©gie produit prend du temps et manque de rigueur.",ap:"L\'utilisateur dÃ©crit son contexte et ses ambitions, l\'IA gÃ©nÃ¨re des OKRs avec Key Results typÃ©s (mÃ©trique, milestone, santÃ©). Stack : HTML/JS + Groq.",res:"OKRs structurÃ©s en quelques secondes, avec baseline et conseils d\'utilisation en Ã©quipe."},
+    fr:{title:"En savoir plus",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour accélérer la définition des OKRs produit, souvent floue ou déconnectée des vraies métriques.",pb:"Rédiger des OKRs cohérents, mesurables et alignés sur la stratégie produit prend du temps et manque de rigueur.",ap:"L\'utilisateur décrit son contexte et ses ambitions, l\'IA génère des OKRs avec Key Results typés (métrique, milestone, santé). Stack : HTML/JS + Groq.",res:"OKRs structurés en quelques secondes, avec baseline et conseils d\'utilisation en équipe."},
     en:{title:"Learn more",lbl:["Context","Problem","Approach","Result"],ctx:"Built to speed up product OKR definition, often vague or disconnected from real metrics.",pb:"Writing coherent, measurable OKRs aligned with product strategy takes time and often lacks rigor.",ap:"The user describes their context and ambitions, the AI generates OKRs with typed Key Results (metric, milestone, health). Stack: HTML/JS + Groq.",res:"Structured OKRs in seconds, with baseline and team usage guidance."}
   };
   function _upAbout(lang){
@@ -319,14 +319,14 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Renseigne le nom du produit, son type, tes ambitions stratÃ©giques et tes mÃ©triques actuelles.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la gÃ©nÃ©ration â€” l'IA construit tes OKRs avec Key Results mesurables.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Fill in the product name, type, your strategic ambitions and current metrics.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run generation â€” the AI builds your OKRs with measurable Key Results.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Renseigne le nom du produit, son type, tes ambitions stratégiques et tes métriques actuelles.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la génération — l'IA construit tes OKRs avec Key Results mesurables.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Fill in the product name, type, your strategic ambitions and current metrics.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run generation — the AI builds your OKRs with measurable Key Results.</div></div></div>
       <div class="about-divider"></div>
       <div class="about-grid">
-        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">ConÃ§u pour accÃ©lÃ©rer la dÃ©finition des OKRs produit, souvent floue ou dÃ©connectÃ©e des vraies mÃ©triques.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblPb">ProblÃ¨me</div><p class="about-text" id="aPb">RÃ©diger des OKRs cohÃ©rents, mesurables et alignÃ©s sur la stratÃ©gie produit prend du temps et manque de rigueur.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur dÃ©crit son contexte et ses ambitions, l'IA gÃ©nÃ¨re des OKRs avec Key Results typÃ©s (mÃ©trique, milestone, santÃ©). Stack : HTML/JS + Groq.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblRes">RÃ©sultat</div><p class="about-text" id="aRes">OKRs structurÃ©s en quelques secondes, avec baseline et conseils d'utilisation en Ã©quipe.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la définition des OKRs produit, souvent floue ou déconnectée des vraies métriques.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblPb">Problème</div><p class="about-text" id="aPb">Rédiger des OKRs cohérents, mesurables et alignés sur la stratégie produit prend du temps et manque de rigueur.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur décrit son contexte et ses ambitions, l'IA génère des OKRs avec Key Results typés (métrique, milestone, santé). Stack : HTML/JS + Groq.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblRes">Résultat</div><p class="about-text" id="aRes">OKRs structurés en quelques secondes, avec baseline et conseils d'utilisation en équipe.</p></div>
       </div>
     </div>
   </div>
@@ -336,7 +336,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="card">
     <div class="card-title">
       <span id="lbl_ctx_title">Contexte produit</span>
-      <button class="btn-examples glass-shimmer glass-focus" onclick="loadExample()">&#127922; Exemple alÃ©atoire</button>
+      <button class="btn-examples glass-shimmer glass-focus" onclick="loadExample()">&#127922; Exemple aléatoire</button>
     </div>
 
     <div class="form-grid">
@@ -438,23 +438,23 @@ var nbObjectives = 3;
 var EXAMPLES = [
   {
     name: 'Flowly', type: 'SaaS B2B',
-    ambitions: "On veut amÃ©liorer la rÃ©tention des utilisateurs et rÃ©duire le churn qui est notre plus gros problÃ¨me. On souhaite aussi accÃ©lÃ©rer l'activation des nouveaux clients et lancer un module de reporting avancÃ© pour les Ã©quipes managers.",
+    ambitions: "On veut améliorer la rétention des utilisateurs et réduire le churn qui est notre plus gros problème. On souhaite aussi accélérer l'activation des nouveaux clients et lancer un module de reporting avancé pour les équipes managers.",
     metrics: 'DAU 6 200, churn mensuel 3.8%, NPS 28, time-to-value J14 pour 60% des nouveaux clients'
   },
   {
     name: 'Mealzy', type: 'Marketplace B2C',
-    ambitions: "Doubler notre base de livreurs partenaires d'ici fin d'annÃ©e et amÃ©liorer la note moyenne des restaurants. RÃ©duire le taux d'annulation des commandes qui dÃ©passe les 8%.",
-    metrics: 'GMV mensuel 1.2Mâ‚¬, 45k commandes/mois, taux annulation 8.3%, note moy. restaurants 3.8/5'
+    ambitions: "Doubler notre base de livreurs partenaires d'ici fin d'année et améliorer la note moyenne des restaurants. Réduire le taux d'annulation des commandes qui dépasse les 8%.",
+    metrics: 'GMV mensuel 1.2M€, 45k commandes/mois, taux annulation 8.3%, note moy. restaurants 3.8/5'
   },
   {
     name: 'HiringPro', type: 'SaaS RH B2B',
-    ambitions: "RÃ©duire le time-to-hire et augmenter le taux d'acceptation des offres. Lancer un module d'analytics pour les RH et monter en gamme sur le segment ETI.",
-    metrics: "Time-to-hire moyen 24 jours, taux d'acceptation 62%, NPS 34, MRR 180kâ‚¬, churn 4.1%"
+    ambitions: "Réduire le time-to-hire et augmenter le taux d'acceptation des offres. Lancer un module d'analytics pour les RH et monter en gamme sur le segment ETI.",
+    metrics: "Time-to-hire moyen 24 jours, taux d'acceptation 62%, NPS 34, MRR 180k€, churn 4.1%"
   },
   {
     name: 'Learnia', type: 'EdTech B2C / B2B',
-    ambitions: "AmÃ©liorer le taux de complÃ©tion des parcours qui est trop bas et lancer une offre entreprise pour diversifier les revenus. RÃ©duire le CAC qui a explosÃ© ces 6 derniers mois.",
-    metrics: 'Taux de complÃ©tion 23%, CAC 42â‚¬, LTV 95â‚¬, 18k utilisateurs actifs, 3 entreprises pilotes'
+    ambitions: "Améliorer le taux de complétion des parcours qui est trop bas et lancer une offre entreprise pour diversifier les revenus. Réduire le CAC qui a explosé ces 6 derniers mois.",
+    metrics: 'Taux de complétion 23%, CAC 42€, LTV 95€, 18k utilisateurs actifs, 3 entreprises pilotes'
   }
 ];
 
@@ -500,7 +500,7 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, name, type);
   } catch(e) {
-    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) â€” check your connection and try again.' : 'DÃ©lai dÃ©passÃ© (30s) â€” vÃ©rifie ta connexion et rÃ©essaie.');
+    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) — check your connection and try again.' : 'Délai dépassé (30s) — vérifie ta connexion et réessaie.');
     else showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
   }
   document.getElementById('loading').classList.remove('show');
@@ -517,11 +517,11 @@ function buildPrompt(name, type, ambitions, metrics) {
 }
 
 function friendlyApiError(err, status) {
-  if (status === 429) return currentLang === 'en' ? 'Rate limit reached â€” wait 30 seconds and try again.' : 'Limite de requÃªtes atteinte â€” attends 30 secondes et rÃ©essaie.';
-  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable â€” try again in a moment.' : 'Service temporairement indisponible â€” rÃ©essaie dans quelques instants.';
-  if (status === 401) return 'Erreur d\'authentification â€” contacte le support.';
+  if (status === 429) return currentLang === 'en' ? 'Rate limit reached — wait 30 seconds and try again.' : 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable — try again in a moment.' : 'Service temporairement indisponible — réessaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
   if (err && err.message) return err.message;
-  return 'Erreur inattendue (' + status + '). RÃ©essaie ou contacte le support.';
+  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
 }
 async function callAI(prompt, maxTokens) {
   var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
@@ -601,7 +601,7 @@ function rerun() { launch(); }
 
 function copyResults() {
   var d = window._okrData || {};
-  var lines = ['# OKRs gÃ©nÃ©rÃ©s\n'];
+  var lines = ['# OKRs générés\n'];
   (d.okrs || []).forEach(function(okr, i) {
     lines.push('## Objectif ' + (i+1) + ' : ' + (okr.objective||''));
     (okr.key_results || []).forEach(function(kr, j) {
@@ -715,7 +715,7 @@ function setLang(lang) {
   var cardTitles = document.querySelectorAll('.card-title');
   if(cardTitles[0]) cardTitles[0].innerHTML = T['config.title'] + '<span style="flex:1;height:1px;background:var(--line);display:inline-block;margin-left:0.6rem"></span>';
   if(cardTitles[1]) {
-    var examplesLabel = lang === 'en' ? 'Random example' : 'Exemple alÃ©atoire';
+    var examplesLabel = lang === 'en' ? 'Random example' : 'Exemple aléatoire';
     cardTitles[1].innerHTML = T['form.title'] + '<button class="btn-examples glass-shimmer glass-focus" onclick="loadExample()">&#127922; ' + examplesLabel + '</button><span style="flex:1;height:1px;background:var(--line);display:inline-block;margin-left:0.6rem"></span>';
   }
   // Field labels
@@ -789,7 +789,7 @@ function applyLangExtras(lang) {
   // Placeholders
   var _phokr = {
     'productName': ['Ex : Kira, Notion, Doctolib...', 'E.g. Kira, Notion, Doctolib...'],
-    'ambitions': ['DÃ©cris ce que tu veux accomplir ce trimestre...', 'Describe what you want to achieve this quarter...'],
+    'ambitions': ['Décris ce que tu veux accomplir ce trimestre...', 'Describe what you want to achieve this quarter...'],
     'metrics': ['Ex : DAU 8k, churn 4.2%, NPS 32...', 'E.g. DAU 8k, churn 4.2%, NPS 32...'],
   };
   Object.keys(_phokr).forEach(function(id){
@@ -820,9 +820,9 @@ function applyLangExtras(lang) {
     'lbl_save_btn': 'Save',
   } : {
     'lbl_ctx_title': 'Contexte produit',
-    'lbl_metrics': 'MÃ©triques actuelles',
+    'lbl_metrics': 'Métriques actuelles',
     'lbl_tips_title': 'Conseils pour utiliser ces OKRs',
-    'lbl_results_title': 'OKRs gÃ©nÃ©rÃ©s',
+    'lbl_results_title': 'OKRs générés',
     'lbl_save_btn': 'Enregistrer',
   };
   Object.keys(_sl4).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_sl4[id];});
@@ -907,22 +907,22 @@ window.pmImportInsights = function(){
     var opps = r.opportunities || [];
     var pains = r.pain_groups || [];
     personaName = persona.name || '';
-    if(personaName) lines.push('Persona cible : ' + personaName + (persona.description ? ' â€” ' + persona.description : ''));
+    if(personaName) lines.push('Persona cible : ' + personaName + (persona.description ? ' — ' + persona.description : ''));
     if(pains.length){
-      lines.push('\nPain points identifiÃ©s :');
+      lines.push('\nPain points identifiés :');
       pains.forEach(function(g){ lines.push('- ' + (g.group||'') + ' (' + (g.count||(g.items||[]).length) + ' mentions)'); });
     }
     if(opps.length){
-      lines.push('\nOpportunitÃ©s Ã  adresser ce trimestre :');
-      opps.forEach(function(o,i){ lines.push((i+1) + '. ' + (o.title||'') + (o.description ? ' â€” ' + o.description : '')); });
+      lines.push('\nOpportunités à adresser ce trimestre :');
+      opps.forEach(function(o,i){ lines.push((i+1) + '. ' + (o.title||'') + (o.description ? ' — ' + o.description : '')); });
     }
     if(prodEl && !prodEl.value && interviewData.context) prodEl.value = interviewData.context.split(',')[0].trim().slice(0,40);
   } else if(discoveryData){
-    if(discoveryData.problem) lines.push('ProblÃ¨me explorÃ© : ' + discoveryData.problem);
+    if(discoveryData.problem) lines.push('Problème exploré : ' + discoveryData.problem);
     if(discoveryData.target) lines.push('Cible : ' + discoveryData.target);
     var hyps = ((discoveryData.result||{}).hypotheses||[]);
     if(hyps.length){
-      lines.push('\nHypothÃ¨ses issues de la discovery :');
+      lines.push('\nHypothèses issues de la discovery :');
       hyps.forEach(function(h,i){ lines.push((i+1) + '. ' + (h.belief||h.statement||String(h).slice(0,100))); });
     }
     if(prodEl && !prodEl.value && discoveryData.context) prodEl.value = discoveryData.context.split(',')[0].trim().slice(0,40);

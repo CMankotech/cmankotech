@@ -1,4 +1,4 @@
-/* tool-prose.css â€” normalises AI-generated result content to the design system.
+/* tool-prose.css — normalises AI-generated result content to the design system.
    Apply class "prose" to any container that receives generated HTML/markdown. */
 .prose{font-family:'DM Sans',sans-serif;font-weight:300;font-size:0.86rem;line-height:1.7;color:var(--dim)}
 .prose > *:first-child{margin-top:0}

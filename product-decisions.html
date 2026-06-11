@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product Decisions Â· Carlin Mankoto</title>
-<meta name="description" content="10 dÃ©cisions produit derriÃ¨re KRL1 : PLG, UX, contraintes, arbitrages et alternatives rejetÃ©es.">
+<title>Product Decisions · Carlin Mankoto</title>
+<meta name="description" content="10 décisions produit derrière KRL1 : PLG, UX, contraintes, arbitrages et alternatives rejetées.">
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -115,9 +115,9 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <div class="nav-tools" id="navTools">
       <button class="nav-tools-btn" onclick="toggleNavTools(event)" aria-haspopup="true"><span id="navToolsLabel">Outils</span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
       <div class="nav-tools-menu">
-        <a href="pm-toolkit.html"><span class="nt-ico">ðŸ§°</span> PM Toolkit</a>
-        <a href="rag-explorer.html"><span class="nt-ico">ðŸ”</span> RAG Explorer</a>
-        <a href="veille.html"><span class="nt-ico">ðŸ“¡</span> Veille</a>
+        <a href="pm-toolkit.html"><span class="nt-ico">🧰</span> PM Toolkit</a>
+        <a href="rag-explorer.html"><span class="nt-ico">🔍</span> RAG Explorer</a>
+        <a href="veille.html"><span class="nt-ico">📡</span> Veille</a>
       </div>
     </div>
   </div>
@@ -136,8 +136,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 
   <header>
-    <h1 id="h1Main">Les dÃ©cisions <span class="grad">produit</span><br id="h1br">derriÃ¨re le site</h1>
-    <p class="subtitle" id="subtitleTxt">Chaque choix structurant du site â€” PM Toolkit, KRL1, architecture statique, PLG, observabilitÃ© â€” avec les alternatives rejetÃ©es et pourquoi elles ne tiennent pas.</p>
+    <h1 id="h1Main">Les décisions <span class="grad">produit</span><br id="h1br">derrière le site</h1>
+    <p class="subtitle" id="subtitleTxt">Chaque choix structurant du site — PM Toolkit, KRL1, architecture statique, PLG, observabilité — avec les alternatives rejetées et pourquoi elles ne tiennent pas.</p>
     <div class="header-meta">
       <span class="meta-tag" id="m1">UX</span>
       <span class="meta-tag" id="m2">PLG</span>
@@ -147,246 +147,246 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     </div>
   </header>
 
-  <div class="sec-divider"><span id="sectionLbl">15 dÃ©cisions produit</span></div>
+  <div class="sec-divider"><span id="sectionLbl">15 décisions produit</span></div>
 
   <div class="decision-grid">
 
     <div class="decision-card" style="--dc-color:#22d3ee">
-      <div class="decision-num" id="d01n">DÃ©cision 01</div>
+      <div class="decision-num" id="d01n">Décision 01</div>
       <div class="decision-q" id="d01q">Pourquoi un assistant IA sur un portfolio PM ?</div>
       <div class="decision-a" id="d01a">PLG par le produit, pas par le CV</div>
-      <div class="decision-why" id="d01why">Un portfolio PM classique, c'est un PDF ou une page LinkedIn. Pour dÃ©montrer des compÃ©tences AI PM, le portfolio doit Ãªtre lui-mÃªme un produit AI. KRL1 est la preuve concrÃ¨te : un PM qui comprend les LLMs ne le dit pas, il le montre. Quand un recruteur interagit avec KRL1, il n'a pas besoin de lire "je comprends les systÃ¨mes IA" dans le rÃ©sumÃ©. Il l'expÃ©rimente directement. C'est du Product-Led Growth appliquÃ© Ã  la recherche d'emploi : le produit porte son propre discours commercial. KRL1 qualifie aussi les visiteurs naturellement : quelqu'un qui passe 5 minutes Ã  explorer les outils PM via KRL1 est plus engagÃ© qu'un scanner de CV de 10 secondes. Le message LinkedIn "j'ai testÃ© KRL1 et..." est un signal d'engagement fort. L'assistant existe pour le recruteur, pas pour moi.</div>
+      <div class="decision-why" id="d01why">Un portfolio PM classique, c'est un PDF ou une page LinkedIn. Pour démontrer des compétences AI PM, le portfolio doit être lui-même un produit AI. KRL1 est la preuve concrète : un PM qui comprend les LLMs ne le dit pas, il le montre. Quand un recruteur interagit avec KRL1, il n'a pas besoin de lire "je comprends les systèmes IA" dans le résumé. Il l'expérimente directement. C'est du Product-Led Growth appliqué à la recherche d'emploi : le produit porte son propre discours commercial. KRL1 qualifie aussi les visiteurs naturellement : quelqu'un qui passe 5 minutes à explorer les outils PM via KRL1 est plus engagé qu'un scanner de CV de 10 secondes. Le message LinkedIn "j'ai testé KRL1 et..." est un signal d'engagement fort. L'assistant existe pour le recruteur, pas pour moi.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d01al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d01al">Alternatives rejetées</div>
         <ul id="d01alts">
-          <li>Chatbot tiers (Crisp, Intercom) â€” branding gÃ©nÃ©rique, aucune valeur diffÃ©renciante</li>
-          <li>FAQ statique â€” passive, ne dÃ©montre aucune compÃ©tence technique</li>
-          <li>Formulaire de contact classique â€” zÃ©ro engagement, zÃ©ro preuve</li>
+          <li>Chatbot tiers (Crisp, Intercom) — branding générique, aucune valeur différenciante</li>
+          <li>FAQ statique — passive, ne démontre aucune compétence technique</li>
+          <li>Formulaire de contact classique — zéro engagement, zéro preuve</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#a78bfa">
-      <div class="decision-num" id="d02n">DÃ©cision 02</div>
+      <div class="decision-num" id="d02n">Décision 02</div>
       <div class="decision-q" id="d02q">Pourquoi 6 outils PM et pas plus ?</div>
       <div class="decision-a" id="d02a">Scope = workflow complet, pas catalogue</div>
-      <div class="decision-why" id="d02why">6 outils n'est pas un chiffre arbitraire. Il mappe exactement le workflow PM du quotidien : Discovery â†’ User Interviews â†’ OKRs â†’ Backlog â†’ Stories â†’ Roadmap. Pas un outil de plus, pas un de moins. La contrainte vient d'abord du PM Journey : chaque outil devait avoir un "next step" naturel pour que la sÃ©quence guidÃ©e fonctionne end-to-end. Un 7Ã¨me outil aurait crÃ©Ã© un dead end ou une branche sans issue. Le scope est aussi dictÃ© par la maintenance : 6 system prompts, 6 pages HTML, 6 entrÃ©es pm-session.js. Au-delÃ , la complexitÃ© croÃ®t non-linÃ©airement. La contrainte principale a Ã©tÃ© sÃ©mantique : chaque outil devait rÃ©pondre Ã  une friction rÃ©elle vÃ©cue en tant que PM, pas Ã  une catÃ©gorie thÃ©orique. OKR Builder vient de rÃ©unions de planning oÃ¹ les KRs Ã©taient flous. Discovery Assistant vient de preps d'interviews mal structurÃ©es. 6 frictions rÃ©elles = 6 outils.</div>
+      <div class="decision-why" id="d02why">6 outils n'est pas un chiffre arbitraire. Il mappe exactement le workflow PM du quotidien : Discovery → User Interviews → OKRs → Backlog → Stories → Roadmap. Pas un outil de plus, pas un de moins. La contrainte vient d'abord du PM Journey : chaque outil devait avoir un "next step" naturel pour que la séquence guidée fonctionne end-to-end. Un 7ème outil aurait créé un dead end ou une branche sans issue. Le scope est aussi dicté par la maintenance : 6 system prompts, 6 pages HTML, 6 entrées pm-session.js. Au-delà, la complexité croît non-linéairement. La contrainte principale a été sémantique : chaque outil devait répondre à une friction réelle vécue en tant que PM, pas à une catégorie théorique. OKR Builder vient de réunions de planning où les KRs étaient flous. Discovery Assistant vient de preps d'interviews mal structurées. 6 frictions réelles = 6 outils.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d02al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d02al">Alternatives rejetées</div>
         <ul id="d02alts">
-          <li>10+ outils â€” maintenance impossible, PM Journey trop complexe</li>
-          <li>3 outils â€” scope trop Ã©troit, workflow incomplet</li>
-          <li>Outils gÃ©nÃ©riques (rÃ©sumÃ© rÃ©union, email writer) â€” pas diffÃ©renciants pour un PM</li>
+          <li>10+ outils — maintenance impossible, PM Journey trop complexe</li>
+          <li>3 outils — scope trop étroit, workflow incomplet</li>
+          <li>Outils génériques (résumé réunion, email writer) — pas différenciants pour un PM</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#60a5fa">
-      <div class="decision-num" id="d03n">DÃ©cision 03</div>
-      <div class="decision-q" id="d03q">KB fast-path avant le LLM â€” pourquoi ne pas tout envoyer ?</div>
-      <div class="decision-a" id="d03a">CoÃ»t, vitesse, cohÃ©rence sans API</div>
-      <div class="decision-why" id="d03why">Envoyer chaque message Ã  Groq aurait ajoutÃ© ~300-500ms de latence rÃ©seau sur 30 Ã  40% des questions rÃ©currentes ("qui es-tu", "tes outils", "contact"). La KB fast-path intercepte ces patterns localement, rÃ©pond en moins de 10ms depuis le navigateur, et rÃ©serve le quota LLM pour les questions vraiment ouvertes. C'est aussi un guardrail de qualitÃ© : les rÃ©ponses sur le profil de Carlin, les certifications et les outils PM sont prÃ©cises et stables depuis la KB, sans risque que le LLM reformule lÃ©gÃ¨rement un fait biographique de faÃ§on imprÃ©cise. 17 rÃ¨gles par langue couvrent aujourd'hui les questions gÃ©nÃ©rales, les sujets techniques (RAG, Langfuse, SSE, orchestration, Groq, routes Worker) et la page Product Decisions. RÃ©sultat visible : KRL1 semble plus rÃ©actif que les chatbots classiques qui prennent toujours 1-2s mÃªme pour une question simple.</div>
+      <div class="decision-num" id="d03n">Décision 03</div>
+      <div class="decision-q" id="d03q">KB fast-path avant le LLM — pourquoi ne pas tout envoyer ?</div>
+      <div class="decision-a" id="d03a">Coût, vitesse, cohérence sans API</div>
+      <div class="decision-why" id="d03why">Envoyer chaque message à Groq aurait ajouté ~300-500ms de latence réseau sur 30 à 40% des questions récurrentes ("qui es-tu", "tes outils", "contact"). La KB fast-path intercepte ces patterns localement, répond en moins de 10ms depuis le navigateur, et réserve le quota LLM pour les questions vraiment ouvertes. C'est aussi un guardrail de qualité : les réponses sur le profil de Carlin, les certifications et les outils PM sont précises et stables depuis la KB, sans risque que le LLM reformule légèrement un fait biographique de façon imprécise. 17 règles par langue couvrent aujourd'hui les questions générales, les sujets techniques (RAG, Langfuse, SSE, orchestration, Groq, routes Worker) et la page Product Decisions. Résultat visible : KRL1 semble plus réactif que les chatbots classiques qui prennent toujours 1-2s même pour une question simple.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d03al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d03al">Alternatives rejetées</div>
         <ul id="d03alts">
-          <li>Tout envoyer au LLM â€” latence systÃ©matique + risque d'imprÃ©cision sur les faits</li>
-          <li>Cache LLM â€” rÃ©pond pour les questions identiques, pas les variations sÃ©mantiques</li>
-          <li>Base de donnÃ©es externe â€” overhead inutile, la KB tient en mÃ©moire dans le widget</li>
+          <li>Tout envoyer au LLM — latence systématique + risque d'imprécision sur les faits</li>
+          <li>Cache LLM — répond pour les questions identiques, pas les variations sémantiques</li>
+          <li>Base de données externe — overhead inutile, la KB tient en mémoire dans le widget</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#34d399">
-      <div class="decision-num" id="d04n">DÃ©cision 04</div>
-      <div class="decision-q" id="d04q">Auto-ouverture KRL1 Ã  6 secondes â€” pourquoi ce dÃ©lai ?</div>
+      <div class="decision-num" id="d04n">Décision 04</div>
+      <div class="decision-q" id="d04q">Auto-ouverture KRL1 à 6 secondes — pourquoi ce délai ?</div>
       <div class="decision-a" id="d04a">Engagement sans friction</div>
-      <div class="decision-why" id="d04why">Le timing de l'auto-ouverture est un arbitrage entre engagement et friction. En-dessous de 2 secondes : le visiteur n'a pas encore lu le titre, la popup paraÃ®t intrusive et est immÃ©diatement refermÃ©e. Au-delÃ  de 15 secondes : la majoritÃ© des visiteurs ont dÃ©jÃ  formÃ© leur opinion, l'opportunitÃ© d'engagement est passÃ©e. 6 secondes correspond approximativement au temps de lecture du hero Ã  vitesse normale, titre, sous-titre, tags de stack, premier coup d'oeil aux outils. Ã€ ce moment, le visiteur peut recevoir KRL1 comme une aide contextuelle plutÃ´t qu'une interruption. La logique est calquÃ©e sur les patterns mesurÃ©s des live chats SaaS B2B qui ont identifiÃ© ce window optimal. L'auto-ouverture ne se dÃ©clenche que si le widget n'a pas Ã©tÃ© ouvert manuellement entre-temps, pour ne pas interrompre un visiteur dÃ©jÃ  engagÃ©.</div>
+      <div class="decision-why" id="d04why">Le timing de l'auto-ouverture est un arbitrage entre engagement et friction. En-dessous de 2 secondes : le visiteur n'a pas encore lu le titre, la popup paraît intrusive et est immédiatement refermée. Au-delà de 15 secondes : la majorité des visiteurs ont déjà formé leur opinion, l'opportunité d'engagement est passée. 6 secondes correspond approximativement au temps de lecture du hero à vitesse normale, titre, sous-titre, tags de stack, premier coup d'oeil aux outils. À ce moment, le visiteur peut recevoir KRL1 comme une aide contextuelle plutôt qu'une interruption. La logique est calquée sur les patterns mesurés des live chats SaaS B2B qui ont identifié ce window optimal. L'auto-ouverture ne se déclenche que si le widget n'a pas été ouvert manuellement entre-temps, pour ne pas interrompre un visiteur déjà engagé.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d04al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d04al">Alternatives rejetées</div>
         <ul id="d04alts">
-          <li>Pas d'auto-ouverture â€” KRL1 invisible pour les visiteurs passifs qui ne cliquent pas</li>
-          <li>2-3 secondes â€” trop intrusif, perÃ§u comme spam, refusÃ© immÃ©diatement</li>
-          <li>Sur scroll (50%) â€” trop tardif pour les visiteurs qui rebondissent vite</li>
+          <li>Pas d'auto-ouverture — KRL1 invisible pour les visiteurs passifs qui ne cliquent pas</li>
+          <li>2-3 secondes — trop intrusif, perçu comme spam, refusé immédiatement</li>
+          <li>Sur scroll (50%) — trop tardif pour les visiteurs qui rebondissent vite</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#fb923c">
-      <div class="decision-num" id="d05n">DÃ©cision 05</div>
-      <div class="decision-q" id="d05q">PM Journey CTAs injectÃ©s dans les rÃ©sultats â€” pourquoi ?</div>
-      <div class="decision-a" id="d05a">PLG nudge zÃ©ro-friction</div>
-      <div class="decision-why" id="d05why">Le PM Journey (Discovery â†’ Interviews â†’ OKRs â†’ Backlog â†’ Stories â†’ Roadmap) est la valeur diffÃ©renciante du toolkit. Sans guidage actif, un PM qui utilise le Discovery Assistant finit sa session et quitte, sans jamais savoir que le User Interview Analyzer est l'Ã©tape logique suivante. Le CTA injectÃ© rÃ©sout ce problÃ¨me sans modifier 6 pages sÃ©parÃ©ment. KRL1 observe le div #results via MutationObserver depuis krl1-widget.js. DÃ¨s que la class .show apparaÃ®t (rÃ©sultat gÃ©nÃ©rÃ©), KRL1 injecte automatiquement le CTA "prochaine Ã©tape". C'est du PLG pur : la progression dans le workflow est guidÃ©e par le produit, pas par une documentation externe. Le couplage est nul : les pages outils n'ont aucune connaissance de cette injection. L'injection est conditionnelle et non-rÃ©pÃ©titive, elle ne s'affiche qu'une fois par session de rÃ©sultat.</div>
+      <div class="decision-num" id="d05n">Décision 05</div>
+      <div class="decision-q" id="d05q">PM Journey CTAs injectés dans les résultats — pourquoi ?</div>
+      <div class="decision-a" id="d05a">PLG nudge zéro-friction</div>
+      <div class="decision-why" id="d05why">Le PM Journey (Discovery → Interviews → OKRs → Backlog → Stories → Roadmap) est la valeur différenciante du toolkit. Sans guidage actif, un PM qui utilise le Discovery Assistant finit sa session et quitte, sans jamais savoir que le User Interview Analyzer est l'étape logique suivante. Le CTA injecté résout ce problème sans modifier 6 pages séparément. KRL1 observe le div #results via MutationObserver depuis krl1-widget.js. Dès que la class .show apparaît (résultat généré), KRL1 injecte automatiquement le CTA "prochaine étape". C'est du PLG pur : la progression dans le workflow est guidée par le produit, pas par une documentation externe. Le couplage est nul : les pages outils n'ont aucune connaissance de cette injection. L'injection est conditionnelle et non-répétitive, elle ne s'affiche qu'une fois par session de résultat.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d05al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d05al">Alternatives rejetées</div>
         <ul id="d05alts">
-          <li>Liens statiques dans le footer des pages â€” ignorÃ©s par les visiteurs engagÃ©s avec le rÃ©sultat</li>
-          <li>Navigation dans le header â€” visible mais non-pertinente pendant la gÃ©nÃ©ration</li>
-          <li>Email de rÃ©capitulatif â€” hors portÃ©e, pas de compte utilisateur, friction inutile</li>
+          <li>Liens statiques dans le footer des pages — ignorés par les visiteurs engagés avec le résultat</li>
+          <li>Navigation dans le header — visible mais non-pertinente pendant la génération</li>
+          <li>Email de récapitulatif — hors portée, pas de compte utilisateur, friction inutile</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#f472b6">
-      <div class="decision-num" id="d06n">DÃ©cision 06</div>
-      <div class="decision-q" id="d06q">Streaming SSE sur la synthesis â€” pourquoi pas une rÃ©ponse bloquante ?</div>
-      <div class="decision-a" id="d06a">Latence perÃ§ue vs latence rÃ©elle</div>
-      <div class="decision-why" id="d06why">Sans streaming, une requÃªte KRL1 (planner ~600ms + synthesis ~900ms) implique ~1.5 Ã  2.5 secondes de spinner sans feedback. Avec le streaming SSE, les premiers tokens de la synthesis s'affichent en ~400ms pendant que la gÃ©nÃ©ration continue. La latence perÃ§ue est divisÃ©e par trois environ, sans que la latence rÃ©elle change. MÃªme principe que le skeleton loading en UI : rÃ©duire l'attente perÃ§ue plutÃ´t que l'attente rÃ©elle. Le rendu mot par mot avec un dÃ©lai de 22ms entre chaque mot ajoute un effet "typewriter" subtil qui renforce la sensation d'intelligence. Le streaming impose que le planner (appel LLM nÂ°1) reste toujours bloquant car son output JSON est nÃ©cessaire avant de lancer la synthesis. Seul l'appel nÂ°2 streame. En cas d'Ã©chec, le widget bascule automatiquement sur /orchestrate avec zÃ©ro interruption visible.</div>
+      <div class="decision-num" id="d06n">Décision 06</div>
+      <div class="decision-q" id="d06q">Streaming SSE sur la synthesis — pourquoi pas une réponse bloquante ?</div>
+      <div class="decision-a" id="d06a">Latence perçue vs latence réelle</div>
+      <div class="decision-why" id="d06why">Sans streaming, une requête KRL1 (planner ~600ms + synthesis ~900ms) implique ~1.5 à 2.5 secondes de spinner sans feedback. Avec le streaming SSE, les premiers tokens de la synthesis s'affichent en ~400ms pendant que la génération continue. La latence perçue est divisée par trois environ, sans que la latence réelle change. Même principe que le skeleton loading en UI : réduire l'attente perçue plutôt que l'attente réelle. Le rendu mot par mot avec un délai de 22ms entre chaque mot ajoute un effet "typewriter" subtil qui renforce la sensation d'intelligence. Le streaming impose que le planner (appel LLM n°1) reste toujours bloquant car son output JSON est nécessaire avant de lancer la synthesis. Seul l'appel n°2 streame. En cas d'échec, le widget bascule automatiquement sur /orchestrate avec zéro interruption visible.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d06al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d06al">Alternatives rejetées</div>
         <ul id="d06alts">
-          <li>RÃ©ponse bloquante â€” ~2.5s de spinner, UX 2015, taux d'abandon Ã©levÃ©</li>
-          <li>RÃ©ponse plus courte pour aller plus vite â€” sacrifie la qualitÃ© de la rÃ©ponse</li>
-          <li>Skeleton placeholder avec contenu fictif â€” complexe Ã  implÃ©menter, faux feedback</li>
+          <li>Réponse bloquante — ~2.5s de spinner, UX 2015, taux d'abandon élevé</li>
+          <li>Réponse plus courte pour aller plus vite — sacrifie la qualité de la réponse</li>
+          <li>Skeleton placeholder avec contenu fictif — complexe à implémenter, faux feedback</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#fbbf24">
-      <div class="decision-num" id="d07n">DÃ©cision 07</div>
-      <div class="decision-q" id="d07q">Limite 220 mots sur les rÃ©ponses KRL1 â€” pourquoi ?</div>
-      <div class="decision-a" id="d07a">DensitÃ© > exhaustivitÃ©</div>
-      <div class="decision-why" id="d07why">220 mots est une contrainte de design dÃ©libÃ©rÃ©e, pas une limitation technique. Sans contrainte, un LLM produit des rÃ©ponses essay de 500 Ã  800 mots : pÃ©dagogiques, correctes, mais inadaptÃ©es au contexte d'un chat de portfolio. Un recruteur cherche une rÃ©ponse dense et directe, avec un prochain pas concret. Il ne veut pas lire un article. La limite oblige le modÃ¨le Ã  prioriser l'essentiel : l'intent de l'utilisateur, la recommandation claire, le lien vers l'outil appropriÃ©. C'est aussi une contrainte Ã©conomique : max_tokens 450 garde chaque synthesis dans un range de coÃ»t prÃ©visible. Le paramÃ¨tre temperature 0.45 pour la synthesis est calibrÃ© pour que la rÃ©ponse reste naturelle et non-robotique dans ce format court. En pratique, la plupart des rÃ©ponses font 150 Ã  200 mots.</div>
+      <div class="decision-num" id="d07n">Décision 07</div>
+      <div class="decision-q" id="d07q">Limite 220 mots sur les réponses KRL1 — pourquoi ?</div>
+      <div class="decision-a" id="d07a">Densité > exhaustivité</div>
+      <div class="decision-why" id="d07why">220 mots est une contrainte de design délibérée, pas une limitation technique. Sans contrainte, un LLM produit des réponses essay de 500 à 800 mots : pédagogiques, correctes, mais inadaptées au contexte d'un chat de portfolio. Un recruteur cherche une réponse dense et directe, avec un prochain pas concret. Il ne veut pas lire un article. La limite oblige le modèle à prioriser l'essentiel : l'intent de l'utilisateur, la recommandation claire, le lien vers l'outil approprié. C'est aussi une contrainte économique : max_tokens 450 garde chaque synthesis dans un range de coût prévisible. Le paramètre temperature 0.45 pour la synthesis est calibré pour que la réponse reste naturelle et non-robotique dans ce format court. En pratique, la plupart des réponses font 150 à 200 mots.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d07al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d07al">Alternatives rejetées</div>
         <ul id="d07alts">
-          <li>Pas de limite â€” rÃ©ponses essay, noie l'essentiel, perd l'utilisateur</li>
-          <li>100 mots â€” trop court pour les sujets PM complexes, rÃ©pond en surface</li>
-          <li>Limite dynamique selon l'intent â€” surengineering pour un gain marginal</li>
+          <li>Pas de limite — réponses essay, noie l'essentiel, perd l'utilisateur</li>
+          <li>100 mots — trop court pour les sujets PM complexes, répond en surface</li>
+          <li>Limite dynamique selon l'intent — surengineering pour un gain marginal</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#22d3ee">
-      <div class="decision-num" id="d08n">DÃ©cision 08</div>
-      <div class="decision-q" id="d08q">Budget $0 â€” pourquoi seulement des free tiers ?</div>
-      <div class="decision-a" id="d08a">Contrainte = crÃ©ativitÃ© technique</div>
-      <div class="decision-why" id="d08why">La contrainte $0 n'est pas une restriction : c'est un parti pris de conception. Un portfolio qui dÃ©montre des compÃ©tences AI PM doit montrer qu'on peut construire quelque chose de qualitÃ© dans les contraintes rÃ©elles d'un side project. Payer pour des serveurs ou des APIs premium aurait Ã©tÃ© la solution facile. Choisir Groq, Cloudflare Workers, GitHub Pages, Langfuse Cloud, Workers AI, tous sur free tier, a forcÃ© des dÃ©cisions architecturales crÃ©atives. Le RAG edge-native dans le Worker existe parce que le free tier Render Ã©tait trop limitÃ© pour Python. Cette contrainte a produit une architecture plus propre qu'un budget illimitÃ© ne l'aurait fait. Pour un recruteur AI PM, un systÃ¨me fonctionnel construit Ã  $0/mois est plus impressionnant qu'une solution identique Ã  $200/mois. Le $0 est un signal de resourcefulness et de pensÃ©e contrainte, deux qualitÃ©s centrales d'un bon PM.</div>
+      <div class="decision-num" id="d08n">Décision 08</div>
+      <div class="decision-q" id="d08q">Budget $0 — pourquoi seulement des free tiers ?</div>
+      <div class="decision-a" id="d08a">Contrainte = créativité technique</div>
+      <div class="decision-why" id="d08why">La contrainte $0 n'est pas une restriction : c'est un parti pris de conception. Un portfolio qui démontre des compétences AI PM doit montrer qu'on peut construire quelque chose de qualité dans les contraintes réelles d'un side project. Payer pour des serveurs ou des APIs premium aurait été la solution facile. Choisir Groq, Cloudflare Workers, GitHub Pages, Langfuse Cloud, Workers AI, tous sur free tier, a forcé des décisions architecturales créatives. Le RAG edge-native dans le Worker existe parce que le free tier Render était trop limité pour Python. Cette contrainte a produit une architecture plus propre qu'un budget illimité ne l'aurait fait. Pour un recruteur AI PM, un système fonctionnel construit à $0/mois est plus impressionnant qu'une solution identique à $200/mois. Le $0 est un signal de resourcefulness et de pensée contrainte, deux qualités centrales d'un bon PM.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d08al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d08al">Alternatives rejetées</div>
         <ul id="d08alts">
-          <li>Render + Railway payant â€” solution fonctionnelle mais banale, aucune ingÃ©niositÃ© dÃ©montrÃ©e</li>
-          <li>AWS/GCP â€” $20-50/mois, over-engineered pour un portfolio personnel</li>
-          <li>Vercel + Supabase â€” bon stack mais coÃ»ts dÃ¨s que le free tier est dÃ©passÃ©</li>
+          <li>Render + Railway payant — solution fonctionnelle mais banale, aucune ingéniosité démontrée</li>
+          <li>AWS/GCP — $20-50/mois, over-engineered pour un portfolio personnel</li>
+          <li>Vercel + Supabase — bon stack mais coûts dès que le free tier est dépassé</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#a78bfa">
-      <div class="decision-num" id="d09n">DÃ©cision 09</div>
-      <div class="decision-q" id="d09q">Langfuse en production sur un portfolio â€” pourquoi ?</div>
-      <div class="decision-a" id="d09a">Build â†’ mesure â†’ dÃ©cide</div>
-      <div class="decision-why" id="d09why">Mettre de l'observabilitÃ© LLM sur un portfolio personnel peut paraÃ®tre over-engineered. Ce ne l'est pas. Langfuse permet de fermer la boucle build â†’ mesure â†’ dÃ©cide, le cycle que je dÃ©fends comme PM. Sans donnÃ©es de production, impossible de savoir : quels intents sont les plus frÃ©quents, oÃ¹ la confidence du planner est faible (en-dessous de 0.6), quels outils KRL1 recommande le plus, combien de tokens sont consommÃ©s par route. Ces mÃ©triques permettent d'itÃ©rer sur le system prompt, les rÃ¨gles KB, le flow d'orchestration. La dÃ©cision d'intÃ©grer Langfuse via l'API REST directement dans le Worker (sans SDK) vient de la contrainte zero-npm. Le flush via ctx.waitUntil garantit zÃ©ro latence perÃ§ue ajoutÃ©e. Pour le portfolio, Langfuse dÃ©montre concrÃ¨tement qu'on pense "mesure" avant mÃªme d'avoir des vrais utilisateurs.</div>
+      <div class="decision-num" id="d09n">Décision 09</div>
+      <div class="decision-q" id="d09q">Langfuse en production sur un portfolio — pourquoi ?</div>
+      <div class="decision-a" id="d09a">Build → mesure → décide</div>
+      <div class="decision-why" id="d09why">Mettre de l'observabilité LLM sur un portfolio personnel peut paraître over-engineered. Ce ne l'est pas. Langfuse permet de fermer la boucle build → mesure → décide, le cycle que je défends comme PM. Sans données de production, impossible de savoir : quels intents sont les plus fréquents, où la confidence du planner est faible (en-dessous de 0.6), quels outils KRL1 recommande le plus, combien de tokens sont consommés par route. Ces métriques permettent d'itérer sur le system prompt, les règles KB, le flow d'orchestration. La décision d'intégrer Langfuse via l'API REST directement dans le Worker (sans SDK) vient de la contrainte zero-npm. Le flush via ctx.waitUntil garantit zéro latence perçue ajoutée. Pour le portfolio, Langfuse démontre concrètement qu'on pense "mesure" avant même d'avoir des vrais utilisateurs.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d09al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d09al">Alternatives rejetées</div>
         <ul id="d09alts">
-          <li>Console.log uniquement â€” pas de donnÃ©es structurÃ©es, pas d'historique, pas d'analyse</li>
-          <li>LangSmith â€” liÃ© Ã  LangChain, inadaptÃ© Ã  une architecture Worker JS pure</li>
-          <li>Pas d'observabilitÃ© â€” aucune feedback loop, impossible d'itÃ©rer informÃ©s</li>
+          <li>Console.log uniquement — pas de données structurées, pas d'historique, pas d'analyse</li>
+          <li>LangSmith — lié à LangChain, inadapté à une architecture Worker JS pure</li>
+          <li>Pas d'observabilité — aucune feedback loop, impossible d'itérer informés</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#60a5fa">
-      <div class="decision-num" id="d10n">DÃ©cision 10</div>
-      <div class="decision-q" id="d10q">Bilingue FR/EN dÃ¨s le dÃ©part â€” pourquoi pas ajouter EN plus tard ?</div>
+      <div class="decision-num" id="d10n">Décision 10</div>
+      <div class="decision-q" id="d10q">Bilingue FR/EN dès le départ — pourquoi pas ajouter EN plus tard ?</div>
       <div class="decision-a" id="d10a">Audience recruteur internationale</div>
-      <div class="decision-why" id="d10why">La dÃ©cision de supporter FR et EN dÃ¨s le premier jour vient d'une expÃ©rience produit directe : ajouter l'i18n en retard sur une base existante est douloureux et crÃ©e de la dette technique. Partir bilingue impose une discipline de code : chaque string de UI passe par un objet de traductions, zÃ©ro text hardcodÃ© dans le HTML. Le surcoÃ»t initial est d'environ 20% de temps par page. Le bÃ©nÃ©fice : aucun refactoring i18n Ã  prÃ©voir, et surtout une audience Ã©largie. Les recruteurs tech opÃ¨rent souvent dans des contextes multilingues. KRL1 dÃ©tecte la langue via localStorage et URL param (?lang=en), ce qui permet de partager des liens dans une langue spÃ©cifique. Le choix de l'i18n vanilla (objet T + setLang()) Ã©vite toute dÃ©pendance externe pour seulement deux langues.</div>
+      <div class="decision-why" id="d10why">La décision de supporter FR et EN dès le premier jour vient d'une expérience produit directe : ajouter l'i18n en retard sur une base existante est douloureux et crée de la dette technique. Partir bilingue impose une discipline de code : chaque string de UI passe par un objet de traductions, zéro text hardcodé dans le HTML. Le surcoût initial est d'environ 20% de temps par page. Le bénéfice : aucun refactoring i18n à prévoir, et surtout une audience élargie. Les recruteurs tech opèrent souvent dans des contextes multilingues. KRL1 détecte la langue via localStorage et URL param (?lang=en), ce qui permet de partager des liens dans une langue spécifique. Le choix de l'i18n vanilla (objet T + setLang()) évite toute dépendance externe pour seulement deux langues.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d10al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d10al">Alternatives rejetées</div>
         <ul id="d10alts">
-          <li>FR uniquement â€” audience limitÃ©e Ã  la France, signale peu d'ambition internationale</li>
-          <li>Ajouter EN plus tard â€” dette technique assurÃ©e, refactoring douloureux</li>
-          <li>BibliothÃ¨que i18n (i18next) â€” dÃ©pendance inutile pour seulement deux langues</li>
+          <li>FR uniquement — audience limitée à la France, signale peu d'ambition internationale</li>
+          <li>Ajouter EN plus tard — dette technique assurée, refactoring douloureux</li>
+          <li>Bibliothèque i18n (i18next) — dépendance inutile pour seulement deux langues</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#f472b6">
-      <div class="decision-num" id="d11n">DÃ©cision 11</div>
-      <div class="decision-q" id="d11q">Pourquoi un hub PM Toolkit plutÃ´t que 6 liens sÃ©parÃ©s sur le portfolio ?</div>
-      <div class="decision-a" id="d11a">ChaÃ®ner les outils = reflÃ©ter le vrai workflow PM</div>
-      <div class="decision-why" id="d11why">Un PM n'utilise jamais un outil de faÃ§on isolÃ©e. Il enchaÃ®ne : discovery â†’ interviews â†’ OKRs â†’ backlog â†’ stories â†’ roadmap. Garder les 6 outils comme des cartes indÃ©pendantes forÃ§ait l'utilisateur Ã  recoller le contexte Ã  la main d'une session Ã  l'autre. Le hub pm-toolkit.html rÃ©sout deux problÃ¨mes : il rend la sÃ©quence lisible et il centralise l'entrÃ©e dans le workflow. Le PM Journey CTA (injectÃ© par KRL1 via MutationObserver) suggÃ¨re automatiquement l'Ã©tape suivante aprÃ¨s chaque rÃ©sultat gÃ©nÃ©rÃ©. C'est du PLG au niveau du design d'information : le produit guide naturellement le workflow, sans documentation externe, sans friction. Pour le recruteur, naviguer dans le PM Toolkit est une dÃ©monstration concrÃ¨te de pensÃ©e workflow â€” il voit non pas 6 features isolÃ©es, mais un produit cohÃ©rent avec une logique de bout en bout.</div>
+      <div class="decision-num" id="d11n">Décision 11</div>
+      <div class="decision-q" id="d11q">Pourquoi un hub PM Toolkit plutôt que 6 liens séparés sur le portfolio ?</div>
+      <div class="decision-a" id="d11a">Chaîner les outils = refléter le vrai workflow PM</div>
+      <div class="decision-why" id="d11why">Un PM n'utilise jamais un outil de façon isolée. Il enchaîne : discovery → interviews → OKRs → backlog → stories → roadmap. Garder les 6 outils comme des cartes indépendantes forçait l'utilisateur à recoller le contexte à la main d'une session à l'autre. Le hub pm-toolkit.html résout deux problèmes : il rend la séquence lisible et il centralise l'entrée dans le workflow. Le PM Journey CTA (injecté par KRL1 via MutationObserver) suggère automatiquement l'étape suivante après chaque résultat généré. C'est du PLG au niveau du design d'information : le produit guide naturellement le workflow, sans documentation externe, sans friction. Pour le recruteur, naviguer dans le PM Toolkit est une démonstration concrète de pensée workflow — il voit non pas 6 features isolées, mais un produit cohérent avec une logique de bout en bout.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d11al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d11al">Alternatives rejetées</div>
         <ul id="d11alts">
-          <li>Liens sÃ©parÃ©s sur le portfolio â€” chaque outil vÃ©cu comme une feature isolÃ©e, pas de sÃ©quence visible</li>
-          <li>Navigation header avec 6 entrÃ©es â€” cognitive overload, pas de guidage contextuel</li>
-          <li>Workflow manuel (copier-coller) â€” friction maximale, perte de contexte garantie</li>
+          <li>Liens séparés sur le portfolio — chaque outil vécu comme une feature isolée, pas de séquence visible</li>
+          <li>Navigation header avec 6 entrées — cognitive overload, pas de guidage contextuel</li>
+          <li>Workflow manuel (copier-coller) — friction maximale, perte de contexte garantie</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#34d399">
-      <div class="decision-num" id="d12n">DÃ©cision 12</div>
+      <div class="decision-num" id="d12n">Décision 12</div>
       <div class="decision-q" id="d12q">Pourquoi localStorage pour passer le contexte entre outils PM ?</div>
-      <div class="decision-a" id="d12a">ContinuitÃ© sans backend, sans compte, sans friction</div>
-      <div class="decision-why" id="d12why">Le problÃ¨me : comment transfÃ©rer un insight d'un outil PM au suivant sans que l'utilisateur ait Ã  tout recopier. Les solutions naturelles â€” base de donnÃ©es, sessions serveur â€” nÃ©cessitent un backend et un compte utilisateur. Avec localStorage et un module lÃ©ger (pm-session.js), chaque outil sauvegarde ses sorties structurÃ©es (problÃ¨me cadrÃ©, persona validÃ©, OKRs gÃ©nÃ©rÃ©s, top-prioritÃ© RICE...) sous des clÃ©s communes. L'outil suivant peut les importer en un clic, avec un feedback visuel (bordure colorÃ©e) pour signaler qu'un contexte est disponible. Pas de compte, pas de serveur, pas de RGPD Ã  gÃ©rer. La contrainte $0 et l'architecture HTML statique ont rendu cette solution non seulement acceptable mais Ã©lÃ©gante â€” une contrainte qui a forcÃ© la simplicitÃ© plutÃ´t que de la contraindre.</div>
+      <div class="decision-a" id="d12a">Continuité sans backend, sans compte, sans friction</div>
+      <div class="decision-why" id="d12why">Le problème : comment transférer un insight d'un outil PM au suivant sans que l'utilisateur ait à tout recopier. Les solutions naturelles — base de données, sessions serveur — nécessitent un backend et un compte utilisateur. Avec localStorage et un module léger (pm-session.js), chaque outil sauvegarde ses sorties structurées (problème cadré, persona validé, OKRs générés, top-priorité RICE...) sous des clés communes. L'outil suivant peut les importer en un clic, avec un feedback visuel (bordure colorée) pour signaler qu'un contexte est disponible. Pas de compte, pas de serveur, pas de RGPD à gérer. La contrainte $0 et l'architecture HTML statique ont rendu cette solution non seulement acceptable mais élégante — une contrainte qui a forcé la simplicité plutôt que de la contraindre.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d12al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d12al">Alternatives rejetées</div>
         <ul id="d12alts">
-          <li>Base de donnÃ©es + API â€” nÃ©cessite un backend, un compte, de la gestion de sessions</li>
-          <li>URL params â€” taille limitÃ©e, donnÃ©es sensibles potentiellement exposÃ©es</li>
-          <li>Copier-coller manuel â€” friction maximale, erreur de saisie garantie</li>
+          <li>Base de données + API — nécessite un backend, un compte, de la gestion de sessions</li>
+          <li>URL params — taille limitée, données sensibles potentiellement exposées</li>
+          <li>Copier-coller manuel — friction maximale, erreur de saisie garantie</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#fbbf24">
-      <div class="decision-num" id="d13n">DÃ©cision 13</div>
+      <div class="decision-num" id="d13n">Décision 13</div>
       <div class="decision-q" id="d13q">Pourquoi HTML/JS vanilla sans framework ?</div>
-      <div class="decision-a" id="d13a">ZÃ©ro dÃ©pendance, zÃ©ro dette, dÃ©ploiement immÃ©diat</div>
-      <div class="decision-why" id="d13why">Le choix de ne pas utiliser React, Vue ou Next.js n'est pas une limitation â€” c'est une dÃ©cision explicite. Pour un portfolio de 6 outils PM et quelques pages de documentation, un framework SPA aurait apportÃ© : une Ã©tape de build obligatoire, des dÃ©pendances npm Ã  maintenir, une complexitÃ© d'abstraction sans valeur ajoutÃ©e. Chaque page HTML est autonome avec son CSS et son JS inline. Pas de routing, pas de state management global. Le dÃ©ploiement est un git push qui dÃ©clenche GitHub Pages en moins de 60 secondes. Le debug se fait directement dans les DevTools sans source maps. La lisibilitÃ© du code est maximale : pas de JSX, pas de hooks, pas de Webpack Ã  comprendre avant de contribuer. Pour un PM qui vibe code en spare time avec Claude Code, la vÃ©locitÃ© prime sur l'architecture. Le stack vanilla dÃ©montre aussi qu'on peut livrer un produit IA fonctionnel sans dÃ©pendre d'un framework.</div>
+      <div class="decision-a" id="d13a">Zéro dépendance, zéro dette, déploiement immédiat</div>
+      <div class="decision-why" id="d13why">Le choix de ne pas utiliser React, Vue ou Next.js n'est pas une limitation — c'est une décision explicite. Pour un portfolio de 6 outils PM et quelques pages de documentation, un framework SPA aurait apporté : une étape de build obligatoire, des dépendances npm à maintenir, une complexité d'abstraction sans valeur ajoutée. Chaque page HTML est autonome avec son CSS et son JS inline. Pas de routing, pas de state management global. Le déploiement est un git push qui déclenche GitHub Pages en moins de 60 secondes. Le debug se fait directement dans les DevTools sans source maps. La lisibilité du code est maximale : pas de JSX, pas de hooks, pas de Webpack à comprendre avant de contribuer. Pour un PM qui vibe code en spare time avec Claude Code, la vélocité prime sur l'architecture. Le stack vanilla démontre aussi qu'on peut livrer un produit IA fonctionnel sans dépendre d'un framework.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d13al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d13al">Alternatives rejetées</div>
         <ul id="d13alts">
-          <li>React / Next.js â€” Ã©tape de build, config webpack/eslint, overhead pour du contenu statique</li>
-          <li>Vue.js â€” mÃªme problÃ¨me, complexitÃ© non justifiÃ©e pour ce cas d'usage</li>
-          <li>Astro â€” plus adaptÃ©, mais paradigme Ã  apprendre, overhead de config initial</li>
+          <li>React / Next.js — étape de build, config webpack/eslint, overhead pour du contenu statique</li>
+          <li>Vue.js — même problème, complexité non justifiée pour ce cas d'usage</li>
+          <li>Astro — plus adapté, mais paradigme à apprendre, overhead de config initial</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#818cf8">
-      <div class="decision-num" id="d14n">DÃ©cision 14</div>
-      <div class="decision-q" id="d14q">Pourquoi remplacer l'accordÃ©on par des tabs ?</div>
-      <div class="decision-a" id="d14a">Navigation immÃ©diate, zÃ©ro friction d'exploration</div>
-      <div class="decision-why" id="d14why">L'accordÃ©on avait un dÃ©faut fondamental : le contenu Ã©tait invisible par dÃ©faut. Le visiteur devait deviner qu'il y avait quelque chose Ã  dÃ©plier, cliquer, puis scroller pour Ã©valuer si Ã§a valait le coup. Les tabs inversent ce rapport : le libellÃ© de l'onglet suffit Ã  savoir ce qu'on va trouver, le switch est instantanÃ©, sans reflow ni animation de dÃ©pliage. La navigation contextuelle (liens nav qui apparaissent en stagger au scroll via IntersectionObserver) remplace l'accordÃ©on comme affordance de navigation sans dupliquer la barre principale.</div>
+      <div class="decision-num" id="d14n">Décision 14</div>
+      <div class="decision-q" id="d14q">Pourquoi remplacer l'accordéon par des tabs ?</div>
+      <div class="decision-a" id="d14a">Navigation immédiate, zéro friction d'exploration</div>
+      <div class="decision-why" id="d14why">L'accordéon avait un défaut fondamental : le contenu était invisible par défaut. Le visiteur devait deviner qu'il y avait quelque chose à déplier, cliquer, puis scroller pour évaluer si ça valait le coup. Les tabs inversent ce rapport : le libellé de l'onglet suffit à savoir ce qu'on va trouver, le switch est instantané, sans reflow ni animation de dépliage. La navigation contextuelle (liens nav qui apparaissent en stagger au scroll via IntersectionObserver) remplace l'accordéon comme affordance de navigation sans dupliquer la barre principale.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d14al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d14al">Alternatives rejetées</div>
         <ul id="d14alts">
-          <li>AccordÃ©on â€” contenu cachÃ© par dÃ©faut, friction au clic, scroll non prÃ©visible aprÃ¨s ouverture</li>
-          <li>Sections toujours visibles â€” page trop longue, pas de focus, difficile Ã  parcourir rapidement</li>
-          <li>Bento grid cliquable â€” UX non standard pour du contenu dense et textuel</li>
+          <li>Accordéon — contenu caché par défaut, friction au clic, scroll non prévisible après ouverture</li>
+          <li>Sections toujours visibles — page trop longue, pas de focus, difficile à parcourir rapidement</li>
+          <li>Bento grid cliquable — UX non standard pour du contenu dense et textuel</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#34d399">
-      <div class="decision-num" id="d15n">DÃ©cision 15</div>
-      <div class="decision-q" id="d15q">Pourquoi charger Architecture et DÃ©cisions produit en lazy-load ?</div>
-      <div class="decision-a" id="d15a">Index lÃ©ger, pages autonomes prÃ©servÃ©es, styles isolÃ©s</div>
-      <div class="decision-why" id="d15why">IntÃ©grer les pages Architecture (1 779 lignes) et DÃ©cisions produit (500 lignes) directement dans index.html aurait crÃ©Ã© un fichier monolithique dÃ©passant 4 000 lignes, avec des conflits CSS garantis entre les systÃ¨mes de styles de chaque page. Le lazy-load (fetch + DOMParser) charge le contenu Ã  la demande, au premier clic seulement. Chaque page reste une URL autonome et partageabl. Le CSS injectÃ© est scopÃ© Ã  l'ID du tab panel (#architecture .decision-card) pour confiner son effet â€” impossible d'Ã©craser les glows du hero ou les styles des autres sections. Le guard dataset.loaded Ã©vite les doubles requÃªtes si on revient sur un tab dÃ©jÃ  chargÃ©.</div>
+      <div class="decision-num" id="d15n">Décision 15</div>
+      <div class="decision-q" id="d15q">Pourquoi charger Architecture et Décisions produit en lazy-load ?</div>
+      <div class="decision-a" id="d15a">Index léger, pages autonomes préservées, styles isolés</div>
+      <div class="decision-why" id="d15why">Intégrer les pages Architecture (1 779 lignes) et Décisions produit (500 lignes) directement dans index.html aurait créé un fichier monolithique dépassant 4 000 lignes, avec des conflits CSS garantis entre les systèmes de styles de chaque page. Le lazy-load (fetch + DOMParser) charge le contenu à la demande, au premier clic seulement. Chaque page reste une URL autonome et partageabl. Le CSS injecté est scopé à l'ID du tab panel (#architecture .decision-card) pour confiner son effet — impossible d'écraser les glows du hero ou les styles des autres sections. Le guard dataset.loaded évite les doubles requêtes si on revient sur un tab déjà chargé.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d15al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d15al">Alternatives rejetées</div>
         <ul id="d15alts">
-          <li>IntÃ©gration statique â€” index.html &gt; 4 000 lignes, conflits CSS, maintenance difficile</li>
-          <li>iFrame â€” pas de thÃ¨me dark/light partagÃ©, barre de scroll parasite, UX dÃ©gradÃ©e</li>
-          <li>Pages sÃ©parÃ©es uniquement â€” navigation fragmentÃ©e, on quitte l'index Ã  chaque clic</li>
+          <li>Intégration statique — index.html &gt; 4 000 lignes, conflits CSS, maintenance difficile</li>
+          <li>iFrame — pas de thème dark/light partagé, barre de scroll parasite, UX dégradée</li>
+          <li>Pages séparées uniquement — navigation fragmentée, on quitte l'index à chaque clic</li>
         </ul>
       </div>
     </div>
 
     <div class="decision-card" style="--dc-color:#fb923c">
-      <div class="decision-num" id="d16n">DÃ©cision 16</div>
-      <div class="decision-q" id="d16q">Pourquoi faire fetcher les flux RSS par le Worker plutÃ´t que par Make ?</div>
-      <div class="decision-a" id="d16a">ScalabilitÃ© des sources, zÃ©ro config manuelle, Make rÃ©duit Ã  un trigger</div>
-      <div class="decision-why" id="d16why">Avec Make, chaque nouvelle source RSS demandait deux modules configurÃ©s Ã  la main (RSS + Text Aggregator) â€” ingÃ©rable pour 13 flux rÃ©partis en 4 catÃ©gories (Product, IA, Builders, No-code/FR). La logique a Ã©tÃ© dÃ©placÃ©e dans le Worker&nbsp;: une constante VEILLE_SOURCES liste les 13 flux, parseRSSItems parse le XML par regex lÃ©gÃ¨re sans dÃ©pendance externe, les articles sont groupÃ©s par catÃ©gorie, synthÃ©tisÃ©s via Groq puis stockÃ©s en KV â€” le tout dÃ©clenchÃ© par un seul POST /veille-refresh protÃ©gÃ© par x-make-secret. Make devient un simple trigger HTTP cron (1 module au lieu d'une quinzaine), et ajouter une source ne demande plus qu'une ligne dans le Worker.</div>
+      <div class="decision-num" id="d16n">Décision 16</div>
+      <div class="decision-q" id="d16q">Pourquoi faire fetcher les flux RSS par le Worker plutôt que par Make ?</div>
+      <div class="decision-a" id="d16a">Scalabilité des sources, zéro config manuelle, Make réduit à un trigger</div>
+      <div class="decision-why" id="d16why">Avec Make, chaque nouvelle source RSS demandait deux modules configurés à la main (RSS + Text Aggregator) — ingérable pour 13 flux répartis en 4 catégories (Product, IA, Builders, No-code/FR). La logique a été déplacée dans le Worker&nbsp;: une constante VEILLE_SOURCES liste les 13 flux, parseRSSItems parse le XML par regex légère sans dépendance externe, les articles sont groupés par catégorie, synthétisés via Groq puis stockés en KV — le tout déclenché par un seul POST /veille-refresh protégé par x-make-secret. Make devient un simple trigger HTTP cron (1 module au lieu d'une quinzaine), et ajouter une source ne demande plus qu'une ligne dans le Worker.</div>
       <div class="decision-alts">
-        <div class="decision-alts-label" id="d16al">Alternatives rejetÃ©es</div>
+        <div class="decision-alts-label" id="d16al">Alternatives rejetées</div>
         <ul id="d16alts">
-          <li>Garder Make avec 1 module RSS + Aggregator par source â€” config manuelle x13, fragile au moindre changement de flux</li>
-          <li>Service tiers d'agrÃ©gation RSS â€” coÃ»t rÃ©current, dÃ©pendance externe, contraire au choix zÃ©ro-infra du site</li>
-          <li>Cron Cloudflare natif sans Make â€” perd le dÃ©clenchement pilotÃ© et observable depuis Make sans bÃ©nÃ©fice rÃ©el</li>
+          <li>Garder Make avec 1 module RSS + Aggregator par source — config manuelle x13, fragile au moindre changement de flux</li>
+          <li>Service tiers d'agrégation RSS — coût récurrent, dépendance externe, contraire au choix zéro-infra du site</li>
+          <li>Cron Cloudflare natif sans Make — perd le déclenchement piloté et observable depuis Make sans bénéfice réel</li>
         </ul>
       </div>
     </div>
@@ -400,7 +400,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     </a>
     <a href="how-i-built-this.html#s5c" class="page-cta-pill" id="footerKrl1">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      KRL1 Â· Couches de dÃ©cision
+      KRL1 · Couches de décision
     </a>
     <a href="index.html" class="page-cta-pill" id="footerHome">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -424,128 +424,128 @@ var _lang = 'fr';
 var I18N = {
   fr: {
     back:'Retour au portfolio',
-    tag:'Portfolio Â· Product Decisions',
-    h1:'Les dÃ©cisions <span class="grad">produit</span><br>derriÃ¨re le site',
-    subtitle:"Chaque choix structurant du site â€” PM Toolkit, KRL1, architecture statique, PLG, observabilitÃ© â€” avec les alternatives rejetÃ©es et pourquoi elles ne tiennent pas.",
+    tag:'Portfolio · Product Decisions',
+    h1:'Les décisions <span class="grad">produit</span><br>derrière le site',
+    subtitle:"Chaque choix structurant du site — PM Toolkit, KRL1, architecture statique, PLG, observabilité — avec les alternatives rejetées et pourquoi elles ne tiennent pas.",
     m1:'UX', m2:'PLG', m3:'Contraintes', m4:'Arbitrages', m5:'$0 Budget',
-    sectionLbl:'15 dÃ©cisions produit',
-    altslbl:'Alternatives rejetÃ©es',
-    d01n:'DÃ©cision 01', d01q:"Pourquoi un assistant IA sur un portfolio PM ?", d01a:"PLG par le produit, pas par le CV",
-    d01why:"Un portfolio PM classique, c'est un PDF ou une page LinkedIn. Pour dÃ©montrer des compÃ©tences AI PM, le portfolio doit Ãªtre lui-mÃªme un produit AI. KRL1 est la preuve concrÃ¨te : un PM qui comprend les LLMs ne le dit pas, il le montre. Quand un recruteur interagit avec KRL1, il n'a pas besoin de lire \"je comprends les systÃ¨mes IA\" dans le rÃ©sumÃ©. Il l'expÃ©rimente directement. C'est du Product-Led Growth appliquÃ© Ã  la recherche d'emploi : le produit porte son propre discours commercial. KRL1 qualifie aussi les visiteurs naturellement : quelqu'un qui passe 5 minutes Ã  explorer les outils PM via KRL1 est plus engagÃ© qu'un scanner de CV de 10 secondes. Le message LinkedIn \"j'ai testÃ© KRL1 et...\" est un signal d'engagement fort. L'assistant existe pour le recruteur, pas pour moi.",
-    d01alts:"<li>Chatbot tiers (Crisp, Intercom) â€” branding gÃ©nÃ©rique, aucune valeur diffÃ©renciante</li><li>FAQ statique â€” passive, ne dÃ©montre aucune compÃ©tence technique</li><li>Formulaire de contact classique â€” zÃ©ro engagement, zÃ©ro preuve</li>",
-    d02n:'DÃ©cision 02', d02q:"Pourquoi 6 outils PM et pas plus ?", d02a:"Scope = workflow complet, pas catalogue",
-    d02why:"6 outils n'est pas un chiffre arbitraire. Il mappe exactement le workflow PM du quotidien : Discovery â†’ User Interviews â†’ OKRs â†’ Backlog â†’ Stories â†’ Roadmap. Pas un outil de plus, pas un de moins. La contrainte vient d'abord du PM Journey : chaque outil devait avoir un \"next step\" naturel pour que la sÃ©quence guidÃ©e fonctionne end-to-end. Un 7Ã¨me outil aurait crÃ©Ã© un dead end ou une branche sans issue. Le scope est aussi dictÃ© par la maintenance : 6 system prompts, 6 pages HTML, 6 entrÃ©es pm-session.js. La contrainte principale a Ã©tÃ© sÃ©mantique : chaque outil devait rÃ©pondre Ã  une friction rÃ©elle vÃ©cue en tant que PM. OKR Builder vient de rÃ©unions de planning oÃ¹ les KRs Ã©taient flous. Discovery Assistant vient de preps d'interviews mal structurÃ©es. 6 frictions rÃ©elles = 6 outils.",
-    d02alts:"<li>10+ outils â€” maintenance impossible, PM Journey trop complexe</li><li>3 outils â€” scope trop Ã©troit, workflow incomplet</li><li>Outils gÃ©nÃ©riques (rÃ©sumÃ© rÃ©union, email writer) â€” pas diffÃ©renciants pour un PM</li>",
-    d03n:'DÃ©cision 03', d03q:"KB fast-path avant le LLM â€” pourquoi ne pas tout envoyer ?", d03a:"CoÃ»t, vitesse, cohÃ©rence sans API",
-    d03why:"Envoyer chaque message Ã  Groq aurait ajoutÃ© ~300-500ms de latence rÃ©seau sur 30 Ã  40% des questions rÃ©currentes (\"qui es-tu\", \"tes outils\", \"contact\"). La KB fast-path intercepte ces patterns localement, rÃ©pond en moins de 10ms depuis le navigateur, et rÃ©serve le quota LLM pour les questions vraiment ouvertes. C'est aussi un guardrail de qualitÃ© : les rÃ©ponses sur le profil de Carlin sont prÃ©cises et stables depuis la KB, sans risque que le LLM reformule un fait biographique de faÃ§on imprÃ©cise. 17 rÃ¨gles par langue couvrent aujourd'hui les questions gÃ©nÃ©rales, les sujets techniques (RAG, Langfuse, SSE, orchestration, Groq, routes Worker) et la page Product Decisions. RÃ©sultat visible : KRL1 semble plus rÃ©actif que les chatbots classiques qui prennent toujours 1-2s mÃªme pour une question simple.",
-    d03alts:"<li>Tout envoyer au LLM â€” latence systÃ©matique + risque d'imprÃ©cision sur les faits</li><li>Cache LLM â€” rÃ©pond pour les questions identiques, pas les variations sÃ©mantiques</li><li>Base de donnÃ©es externe â€” overhead inutile, la KB tient en mÃ©moire dans le widget</li>",
-    d04n:'DÃ©cision 04', d04q:"Auto-ouverture KRL1 Ã  6 secondes â€” pourquoi ce dÃ©lai ?", d04a:"Engagement sans friction",
-    d04why:"Le timing de l'auto-ouverture est un arbitrage entre engagement et friction. En-dessous de 2 secondes : le visiteur n'a pas encore lu le titre, la popup paraÃ®t intrusive et est immÃ©diatement refermÃ©e. Au-delÃ  de 15 secondes : la majoritÃ© des visiteurs ont dÃ©jÃ  formÃ© leur opinion, l'opportunitÃ© d'engagement est passÃ©e. 6 secondes correspond approximativement au temps de lecture du hero Ã  vitesse normale. Ã€ ce moment, le visiteur peut recevoir KRL1 comme une aide contextuelle plutÃ´t qu'une interruption. La logique est calquÃ©e sur les patterns mesurÃ©s des live chats SaaS B2B qui ont identifiÃ© ce window optimal entre engagement et friction. L'auto-ouverture ne se dÃ©clenche que si le widget n'a pas Ã©tÃ© ouvert manuellement entre-temps.",
-    d04alts:"<li>Pas d'auto-ouverture â€” KRL1 invisible pour les visiteurs passifs qui ne cliquent pas</li><li>2-3 secondes â€” trop intrusif, perÃ§u comme spam, refusÃ© immÃ©diatement</li><li>Sur scroll (50%) â€” trop tardif pour les visiteurs qui rebondissent vite</li>",
-    d05n:'DÃ©cision 05', d05q:"PM Journey CTAs injectÃ©s dans les rÃ©sultats â€” pourquoi ?", d05a:"PLG nudge zÃ©ro-friction",
-    d05why:"Le PM Journey (Discovery â†’ Interviews â†’ OKRs â†’ Backlog â†’ Stories â†’ Roadmap) est la valeur diffÃ©renciante du toolkit. Sans guidage actif, un PM qui utilise le Discovery Assistant finit sa session et quitte, sans jamais savoir que le User Interview Analyzer est l'Ã©tape logique suivante. Le CTA injectÃ© rÃ©sout ce problÃ¨me sans modifier 6 pages sÃ©parÃ©ment. KRL1 observe le div #results via MutationObserver depuis krl1-widget.js. DÃ¨s que la class .show apparaÃ®t (rÃ©sultat gÃ©nÃ©rÃ©), KRL1 injecte automatiquement le CTA \"prochaine Ã©tape\". C'est du PLG pur : la progression dans le workflow est guidÃ©e par le produit, pas par une documentation externe. Le couplage est nul : les pages outils n'ont aucune connaissance de cette injection.",
-    d05alts:"<li>Liens statiques dans le footer des pages â€” ignorÃ©s par les visiteurs engagÃ©s avec le rÃ©sultat</li><li>Navigation dans le header â€” visible mais non-pertinente pendant la gÃ©nÃ©ration</li><li>Email de rÃ©capitulatif â€” hors portÃ©e, pas de compte utilisateur, friction inutile</li>",
-    d06n:'DÃ©cision 06', d06q:"Streaming SSE sur la synthesis â€” pourquoi pas une rÃ©ponse bloquante ?", d06a:"Latence perÃ§ue vs latence rÃ©elle",
-    d06why:"Sans streaming, une requÃªte KRL1 (planner ~600ms + synthesis ~900ms) implique ~1.5 Ã  2.5 secondes de spinner sans feedback. Avec le streaming SSE, les premiers tokens de la synthesis s'affichent en ~400ms pendant que la gÃ©nÃ©ration continue. La latence perÃ§ue est divisÃ©e par trois environ, sans que la latence rÃ©elle change. MÃªme principe que le skeleton loading en UI. Le rendu mot par mot avec un dÃ©lai de 22ms entre chaque mot ajoute un effet \"typewriter\" subtil qui renforce la sensation d'intelligence. Le streaming impose que le planner (appel LLM nÂ°1) reste toujours bloquant car son output JSON est nÃ©cessaire avant de lancer la synthesis. Seul l'appel nÂ°2 streame. En cas d'Ã©chec, le widget bascule automatiquement sur /orchestrate.",
-    d06alts:"<li>RÃ©ponse bloquante â€” ~2.5s de spinner, UX 2015, taux d'abandon Ã©levÃ©</li><li>RÃ©ponse plus courte pour aller plus vite â€” sacrifie la qualitÃ© de la rÃ©ponse</li><li>Skeleton placeholder avec contenu fictif â€” complexe Ã  implÃ©menter, faux feedback</li>",
-    d07n:'DÃ©cision 07', d07q:"Limite 220 mots sur les rÃ©ponses KRL1 â€” pourquoi ?", d07a:"DensitÃ© > exhaustivitÃ©",
-    d07why:"220 mots est une contrainte de design dÃ©libÃ©rÃ©e, pas une limitation technique. Sans contrainte, un LLM produit des rÃ©ponses essay de 500 Ã  800 mots : pÃ©dagogiques, correctes, mais inadaptÃ©es au contexte d'un chat de portfolio. Un recruteur cherche une rÃ©ponse dense et directe, avec un prochain pas concret, pas un article. La limite oblige le modÃ¨le Ã  prioriser l'essentiel : l'intent de l'utilisateur, la recommandation claire, le lien vers l'outil appropriÃ©. C'est aussi une contrainte Ã©conomique : max_tokens 450 garde chaque synthesis dans un range de coÃ»t prÃ©visible. Le paramÃ¨tre temperature 0.45 est calibrÃ© pour que la rÃ©ponse reste naturelle et non-robotique dans ce format court. En pratique, la plupart des rÃ©ponses font 150 Ã  200 mots.",
-    d07alts:"<li>Pas de limite â€” rÃ©ponses essay, noie l'essentiel, perd l'utilisateur</li><li>100 mots â€” trop court pour les sujets PM complexes, rÃ©pond en surface</li><li>Limite dynamique selon l'intent â€” surengineering pour un gain marginal</li>",
-    d08n:'DÃ©cision 08', d08q:"Budget $0 â€” pourquoi seulement des free tiers ?", d08a:"Contrainte = crÃ©ativitÃ© technique",
-    d08why:"La contrainte $0 n'est pas une restriction : c'est un parti pris de conception. Un portfolio qui dÃ©montre des compÃ©tences AI PM doit montrer qu'on peut construire quelque chose de qualitÃ© dans les contraintes rÃ©elles d'un side project. Payer pour des serveurs ou des APIs premium aurait Ã©tÃ© la solution facile. Choisir Groq, Cloudflare Workers, GitHub Pages, Langfuse Cloud, Workers AI, tous sur free tier, a forcÃ© des dÃ©cisions architecturales crÃ©atives. Le RAG edge-native dans le Worker existe parce que le free tier Render Ã©tait trop limitÃ© pour Python. Cette contrainte a produit une architecture plus propre qu'un budget illimitÃ© ne l'aurait fait. Pour un recruteur AI PM, un systÃ¨me fonctionnel construit Ã  $0/mois est plus impressionnant qu'une solution identique Ã  $200/mois.",
-    d08alts:"<li>Render + Railway payant â€” solution fonctionnelle mais banale, aucune ingÃ©niositÃ© dÃ©montrÃ©e</li><li>AWS/GCP â€” $20-50/mois, over-engineered pour un portfolio personnel</li><li>Vercel + Supabase â€” bon stack mais coÃ»ts dÃ¨s que le free tier est dÃ©passÃ©</li>",
-    d09n:'DÃ©cision 09', d09q:"Langfuse en production sur un portfolio â€” pourquoi ?", d09a:"Build â†’ mesure â†’ dÃ©cide",
-    d09why:"Mettre de l'observabilitÃ© LLM sur un portfolio personnel peut paraÃ®tre over-engineered. Ce ne l'est pas. Langfuse permet de fermer la boucle build â†’ mesure â†’ dÃ©cide, le cycle que je dÃ©fends comme PM. Sans donnÃ©es de production, impossible de savoir : quels intents sont les plus frÃ©quents, oÃ¹ la confidence du planner est faible (en-dessous de 0.6), quels outils KRL1 recommande le plus, combien de tokens sont consommÃ©s par route. Ces mÃ©triques permettent d'itÃ©rer sur le system prompt, les rÃ¨gles KB, le flow d'orchestration. La dÃ©cision d'intÃ©grer Langfuse via l'API REST directement dans le Worker (sans SDK) vient de la contrainte zero-npm. Le flush via ctx.waitUntil garantit zÃ©ro latence perÃ§ue ajoutÃ©e. Pour le portfolio, Langfuse dÃ©montre qu'on pense \"mesure\" avant mÃªme d'avoir des vrais utilisateurs.",
-    d09alts:"<li>Console.log uniquement â€” pas de donnÃ©es structurÃ©es, pas d'historique, pas d'analyse</li><li>LangSmith â€” liÃ© Ã  LangChain, inadaptÃ© Ã  une architecture Worker JS pure</li><li>Pas d'observabilitÃ© â€” aucune feedback loop, impossible d'itÃ©rer informÃ©s</li>",
-    d10n:'DÃ©cision 10', d10q:"Bilingue FR/EN dÃ¨s le dÃ©part â€” pourquoi pas ajouter EN plus tard ?", d10a:"Audience recruteur internationale",
-    d10why:"La dÃ©cision de supporter FR et EN dÃ¨s le premier jour vient d'une expÃ©rience produit directe : ajouter l'i18n en retard sur une base existante est douloureux et crÃ©e de la dette technique. Partir bilingue impose une discipline de code : chaque string de UI passe par un objet de traductions, zÃ©ro text hardcodÃ© dans le HTML. Le surcoÃ»t initial est d'environ 20% de temps par page. Le bÃ©nÃ©fice : aucun refactoring i18n Ã  prÃ©voir, et surtout une audience Ã©largie. Les recruteurs tech opÃ¨rent souvent dans des contextes multilingues. KRL1 dÃ©tecte la langue via localStorage et URL param (?lang=en), ce qui permet de partager des liens dans une langue spÃ©cifique. Le choix de l'i18n vanilla Ã©vite toute dÃ©pendance externe pour seulement deux langues.",
-    d10alts:"<li>FR uniquement â€” audience limitÃ©e Ã  la France, signale peu d'ambition internationale</li><li>Ajouter EN plus tard â€” dette technique assurÃ©e, refactoring douloureux</li><li>BibliothÃ¨que i18n (i18next) â€” dÃ©pendance inutile pour seulement deux langues</li>",
-    d11n:'DÃ©cision 11', d11q:"Pourquoi un hub PM Toolkit plutÃ´t que 6 liens sÃ©parÃ©s ?", d11a:"ChaÃ®ner les outils = reflÃ©ter le vrai workflow PM",
-    d11why:"Un PM n'utilise jamais un outil de faÃ§on isolÃ©e. Il enchaÃ®ne : discovery â†’ interviews â†’ OKRs â†’ backlog â†’ stories â†’ roadmap. Garder les 6 outils comme des cartes indÃ©pendantes forÃ§ait l'utilisateur Ã  recoller le contexte Ã  la main d'une session Ã  l'autre. Le hub pm-toolkit.html rÃ©sout deux problÃ¨mes : il rend la sÃ©quence lisible et centralise l'entrÃ©e dans le workflow. Le PM Journey CTA (injectÃ© par KRL1 via MutationObserver) suggÃ¨re automatiquement l'Ã©tape suivante aprÃ¨s chaque rÃ©sultat gÃ©nÃ©rÃ©. C'est du PLG au niveau du design d'information : le produit guide naturellement le workflow, sans documentation externe, sans friction. Pour le recruteur, naviguer dans le PM Toolkit est une dÃ©monstration concrÃ¨te de pensÃ©e workflow.",
-    d11alts:"<li>Liens sÃ©parÃ©s sur le portfolio â€” chaque outil vÃ©cu comme une feature isolÃ©e, pas de sÃ©quence visible</li><li>Navigation header avec 6 entrÃ©es â€” cognitive overload, pas de guidage contextuel</li><li>Workflow manuel (copier-coller) â€” friction maximale, perte de contexte garantie</li>",
-    d12n:'DÃ©cision 12', d12q:"Pourquoi localStorage pour passer le contexte entre outils PM ?", d12a:"ContinuitÃ© sans backend, sans compte, sans friction",
-    d12why:"Le problÃ¨me : comment transfÃ©rer un insight d'un outil PM au suivant sans que l'utilisateur ait Ã  tout recopier. Les solutions naturelles â€” base de donnÃ©es, sessions serveur â€” nÃ©cessitent un backend et un compte utilisateur. Avec localStorage et pm-session.js, chaque outil sauvegarde ses sorties structurÃ©es (problÃ¨me cadrÃ©, persona validÃ©, OKRs gÃ©nÃ©rÃ©s, top-prioritÃ© RICE...) sous des clÃ©s communes. L'outil suivant peut les importer en un clic, avec un feedback visuel (bordure colorÃ©e). Pas de compte, pas de serveur, pas de RGPD Ã  gÃ©rer. La contrainte $0 et l'architecture HTML statique ont rendu cette solution non seulement acceptable mais Ã©lÃ©gante.",
-    d12alts:"<li>Base de donnÃ©es + API â€” nÃ©cessite un backend, un compte, de la gestion de sessions</li><li>URL params â€” taille limitÃ©e, donnÃ©es sensibles potentiellement exposÃ©es</li><li>Copier-coller manuel â€” friction maximale, erreur de saisie garantie</li>",
-    d13n:'DÃ©cision 13', d13q:"Pourquoi HTML/JS vanilla sans framework ?", d13a:"ZÃ©ro dÃ©pendance, zÃ©ro dette, dÃ©ploiement immÃ©diat",
-    d13why:"Le choix de ne pas utiliser React, Vue ou Next.js n'est pas une limitation â€” c'est une dÃ©cision explicite. Pour un portfolio de 6 outils PM et quelques pages de documentation, un framework SPA aurait apportÃ© : une Ã©tape de build obligatoire, des dÃ©pendances npm Ã  maintenir, une complexitÃ© d'abstraction sans valeur ajoutÃ©e. Chaque page HTML est autonome avec son CSS et son JS inline. Pas de routing, pas de state management global. Le dÃ©ploiement est un git push en moins de 60 secondes. Le debug se fait directement dans les DevTools sans source maps. La lisibilitÃ© du code est maximale. Pour un PM qui vibe code en spare time avec Claude Code, la vÃ©locitÃ© prime sur l'architecture.",
-    d13alts:"<li>React / Next.js â€” Ã©tape de build, config webpack/eslint, overhead pour du contenu statique</li><li>Vue.js â€” mÃªme problÃ¨me, complexitÃ© non justifiÃ©e pour ce cas d'usage</li><li>Astro â€” plus adaptÃ©, mais paradigme Ã  apprendre, overhead de config initial</li>",
-    d14n:'DÃ©cision 14', d14q:"Pourquoi remplacer l'accordÃ©on par des tabs ?", d14a:"Navigation immÃ©diate, zÃ©ro friction d'exploration",
-    d14why:"L'accordÃ©on avait un dÃ©faut fondamental : le contenu Ã©tait invisible par dÃ©faut. Le visiteur devait deviner qu'il y avait quelque chose Ã  dÃ©plier, cliquer, puis scroller pour Ã©valuer si Ã§a valait le coup. Les tabs inversent ce rapport : le libellÃ© de l'onglet suffit Ã  savoir ce qu'on va trouver, le switch est instantanÃ©, sans reflow ni animation de dÃ©pliage. La navigation contextuelle (liens nav qui apparaissent en stagger au scroll via IntersectionObserver) remplace l'accordÃ©on comme affordance de navigation sans dupliquer la barre principale.",
-    d14al:"Alternatives rejetÃ©es",
-    d14alts:"<li>AccordÃ©on â€” contenu cachÃ© par dÃ©faut, friction au clic, scroll non prÃ©visible aprÃ¨s ouverture</li><li>Sections toujours visibles â€” page trop longue, pas de focus, difficile Ã  parcourir rapidement</li><li>Bento grid cliquable â€” UX non standard pour du contenu dense et textuel</li>",
-    d15n:'DÃ©cision 15', d15q:"Pourquoi charger Architecture et DÃ©cisions produit en lazy-load ?", d15a:"Index lÃ©ger, pages autonomes prÃ©servÃ©es, styles isolÃ©s",
-    d15why:"IntÃ©grer les pages Architecture (1 779 lignes) et DÃ©cisions produit (500 lignes) directement dans index.html aurait crÃ©Ã© un fichier monolithique dÃ©passant 4 000 lignes, avec des conflits CSS garantis. Le lazy-load (fetch + DOMParser) charge le contenu Ã  la demande, au premier clic seulement. Chaque page reste une URL autonome et partageable. Le CSS injectÃ© est scopÃ© Ã  l'ID du tab panel (#architecture .decision-card) pour confiner son effet â€” impossible d'Ã©craser les glows du hero ou les styles des autres sections.",
-    d15al:"Alternatives rejetÃ©es",
-    d15alts:"<li>IntÃ©gration statique â€” index.html &gt; 4 000 lignes, conflits CSS, maintenance difficile</li><li>iFrame â€” pas de thÃ¨me dark/light partagÃ©, barre de scroll parasite, UX dÃ©gradÃ©e</li><li>Pages sÃ©parÃ©es uniquement â€” navigation fragmentÃ©e, on quitte l'index Ã  chaque clic</li>",
-    d16n:'DÃ©cision 16', d16q:"Pourquoi faire fetcher les flux RSS par le Worker plutÃ´t que par Make ?", d16a:"ScalabilitÃ© des sources, zÃ©ro config manuelle, Make rÃ©duit Ã  un trigger",
-    d16why:"Avec Make, chaque nouvelle source RSS demandait deux modules configurÃ©s Ã  la main (RSS + Text Aggregator) â€” ingÃ©rable pour 13 flux rÃ©partis en 4 catÃ©gories (Product, IA, Builders, No-code/FR). La logique a Ã©tÃ© dÃ©placÃ©e dans le Worker : une constante VEILLE_SOURCES liste les 13 flux, parseRSSItems parse le XML par regex lÃ©gÃ¨re sans dÃ©pendance externe, les articles sont groupÃ©s par catÃ©gorie, synthÃ©tisÃ©s via Groq puis stockÃ©s en KV â€” le tout dÃ©clenchÃ© par un seul POST /veille-refresh protÃ©gÃ© par x-make-secret. Make devient un simple trigger HTTP cron (1 module au lieu d'une quinzaine), et ajouter une source ne demande plus qu'une ligne dans le Worker.",
-    d16al:"Alternatives rejetÃ©es",
-    d16alts:"<li>Garder Make avec 1 module RSS + Aggregator par source â€” config manuelle x13, fragile au moindre changement de flux</li><li>Service tiers d'agrÃ©gation RSS â€” coÃ»t rÃ©current, dÃ©pendance externe, contraire au choix zÃ©ro-infra du site</li><li>Cron Cloudflare natif sans Make â€” perd le dÃ©clenchement pilotÃ© et observable depuis Make sans bÃ©nÃ©fice rÃ©el</li>",
+    sectionLbl:'15 décisions produit',
+    altslbl:'Alternatives rejetées',
+    d01n:'Décision 01', d01q:"Pourquoi un assistant IA sur un portfolio PM ?", d01a:"PLG par le produit, pas par le CV",
+    d01why:"Un portfolio PM classique, c'est un PDF ou une page LinkedIn. Pour démontrer des compétences AI PM, le portfolio doit être lui-même un produit AI. KRL1 est la preuve concrète : un PM qui comprend les LLMs ne le dit pas, il le montre. Quand un recruteur interagit avec KRL1, il n'a pas besoin de lire \"je comprends les systèmes IA\" dans le résumé. Il l'expérimente directement. C'est du Product-Led Growth appliqué à la recherche d'emploi : le produit porte son propre discours commercial. KRL1 qualifie aussi les visiteurs naturellement : quelqu'un qui passe 5 minutes à explorer les outils PM via KRL1 est plus engagé qu'un scanner de CV de 10 secondes. Le message LinkedIn \"j'ai testé KRL1 et...\" est un signal d'engagement fort. L'assistant existe pour le recruteur, pas pour moi.",
+    d01alts:"<li>Chatbot tiers (Crisp, Intercom) — branding générique, aucune valeur différenciante</li><li>FAQ statique — passive, ne démontre aucune compétence technique</li><li>Formulaire de contact classique — zéro engagement, zéro preuve</li>",
+    d02n:'Décision 02', d02q:"Pourquoi 6 outils PM et pas plus ?", d02a:"Scope = workflow complet, pas catalogue",
+    d02why:"6 outils n'est pas un chiffre arbitraire. Il mappe exactement le workflow PM du quotidien : Discovery → User Interviews → OKRs → Backlog → Stories → Roadmap. Pas un outil de plus, pas un de moins. La contrainte vient d'abord du PM Journey : chaque outil devait avoir un \"next step\" naturel pour que la séquence guidée fonctionne end-to-end. Un 7ème outil aurait créé un dead end ou une branche sans issue. Le scope est aussi dicté par la maintenance : 6 system prompts, 6 pages HTML, 6 entrées pm-session.js. La contrainte principale a été sémantique : chaque outil devait répondre à une friction réelle vécue en tant que PM. OKR Builder vient de réunions de planning où les KRs étaient flous. Discovery Assistant vient de preps d'interviews mal structurées. 6 frictions réelles = 6 outils.",
+    d02alts:"<li>10+ outils — maintenance impossible, PM Journey trop complexe</li><li>3 outils — scope trop étroit, workflow incomplet</li><li>Outils génériques (résumé réunion, email writer) — pas différenciants pour un PM</li>",
+    d03n:'Décision 03', d03q:"KB fast-path avant le LLM — pourquoi ne pas tout envoyer ?", d03a:"Coût, vitesse, cohérence sans API",
+    d03why:"Envoyer chaque message à Groq aurait ajouté ~300-500ms de latence réseau sur 30 à 40% des questions récurrentes (\"qui es-tu\", \"tes outils\", \"contact\"). La KB fast-path intercepte ces patterns localement, répond en moins de 10ms depuis le navigateur, et réserve le quota LLM pour les questions vraiment ouvertes. C'est aussi un guardrail de qualité : les réponses sur le profil de Carlin sont précises et stables depuis la KB, sans risque que le LLM reformule un fait biographique de façon imprécise. 17 règles par langue couvrent aujourd'hui les questions générales, les sujets techniques (RAG, Langfuse, SSE, orchestration, Groq, routes Worker) et la page Product Decisions. Résultat visible : KRL1 semble plus réactif que les chatbots classiques qui prennent toujours 1-2s même pour une question simple.",
+    d03alts:"<li>Tout envoyer au LLM — latence systématique + risque d'imprécision sur les faits</li><li>Cache LLM — répond pour les questions identiques, pas les variations sémantiques</li><li>Base de données externe — overhead inutile, la KB tient en mémoire dans le widget</li>",
+    d04n:'Décision 04', d04q:"Auto-ouverture KRL1 à 6 secondes — pourquoi ce délai ?", d04a:"Engagement sans friction",
+    d04why:"Le timing de l'auto-ouverture est un arbitrage entre engagement et friction. En-dessous de 2 secondes : le visiteur n'a pas encore lu le titre, la popup paraît intrusive et est immédiatement refermée. Au-delà de 15 secondes : la majorité des visiteurs ont déjà formé leur opinion, l'opportunité d'engagement est passée. 6 secondes correspond approximativement au temps de lecture du hero à vitesse normale. À ce moment, le visiteur peut recevoir KRL1 comme une aide contextuelle plutôt qu'une interruption. La logique est calquée sur les patterns mesurés des live chats SaaS B2B qui ont identifié ce window optimal entre engagement et friction. L'auto-ouverture ne se déclenche que si le widget n'a pas été ouvert manuellement entre-temps.",
+    d04alts:"<li>Pas d'auto-ouverture — KRL1 invisible pour les visiteurs passifs qui ne cliquent pas</li><li>2-3 secondes — trop intrusif, perçu comme spam, refusé immédiatement</li><li>Sur scroll (50%) — trop tardif pour les visiteurs qui rebondissent vite</li>",
+    d05n:'Décision 05', d05q:"PM Journey CTAs injectés dans les résultats — pourquoi ?", d05a:"PLG nudge zéro-friction",
+    d05why:"Le PM Journey (Discovery → Interviews → OKRs → Backlog → Stories → Roadmap) est la valeur différenciante du toolkit. Sans guidage actif, un PM qui utilise le Discovery Assistant finit sa session et quitte, sans jamais savoir que le User Interview Analyzer est l'étape logique suivante. Le CTA injecté résout ce problème sans modifier 6 pages séparément. KRL1 observe le div #results via MutationObserver depuis krl1-widget.js. Dès que la class .show apparaît (résultat généré), KRL1 injecte automatiquement le CTA \"prochaine étape\". C'est du PLG pur : la progression dans le workflow est guidée par le produit, pas par une documentation externe. Le couplage est nul : les pages outils n'ont aucune connaissance de cette injection.",
+    d05alts:"<li>Liens statiques dans le footer des pages — ignorés par les visiteurs engagés avec le résultat</li><li>Navigation dans le header — visible mais non-pertinente pendant la génération</li><li>Email de récapitulatif — hors portée, pas de compte utilisateur, friction inutile</li>",
+    d06n:'Décision 06', d06q:"Streaming SSE sur la synthesis — pourquoi pas une réponse bloquante ?", d06a:"Latence perçue vs latence réelle",
+    d06why:"Sans streaming, une requête KRL1 (planner ~600ms + synthesis ~900ms) implique ~1.5 à 2.5 secondes de spinner sans feedback. Avec le streaming SSE, les premiers tokens de la synthesis s'affichent en ~400ms pendant que la génération continue. La latence perçue est divisée par trois environ, sans que la latence réelle change. Même principe que le skeleton loading en UI. Le rendu mot par mot avec un délai de 22ms entre chaque mot ajoute un effet \"typewriter\" subtil qui renforce la sensation d'intelligence. Le streaming impose que le planner (appel LLM n°1) reste toujours bloquant car son output JSON est nécessaire avant de lancer la synthesis. Seul l'appel n°2 streame. En cas d'échec, le widget bascule automatiquement sur /orchestrate.",
+    d06alts:"<li>Réponse bloquante — ~2.5s de spinner, UX 2015, taux d'abandon élevé</li><li>Réponse plus courte pour aller plus vite — sacrifie la qualité de la réponse</li><li>Skeleton placeholder avec contenu fictif — complexe à implémenter, faux feedback</li>",
+    d07n:'Décision 07', d07q:"Limite 220 mots sur les réponses KRL1 — pourquoi ?", d07a:"Densité > exhaustivité",
+    d07why:"220 mots est une contrainte de design délibérée, pas une limitation technique. Sans contrainte, un LLM produit des réponses essay de 500 à 800 mots : pédagogiques, correctes, mais inadaptées au contexte d'un chat de portfolio. Un recruteur cherche une réponse dense et directe, avec un prochain pas concret, pas un article. La limite oblige le modèle à prioriser l'essentiel : l'intent de l'utilisateur, la recommandation claire, le lien vers l'outil approprié. C'est aussi une contrainte économique : max_tokens 450 garde chaque synthesis dans un range de coût prévisible. Le paramètre temperature 0.45 est calibré pour que la réponse reste naturelle et non-robotique dans ce format court. En pratique, la plupart des réponses font 150 à 200 mots.",
+    d07alts:"<li>Pas de limite — réponses essay, noie l'essentiel, perd l'utilisateur</li><li>100 mots — trop court pour les sujets PM complexes, répond en surface</li><li>Limite dynamique selon l'intent — surengineering pour un gain marginal</li>",
+    d08n:'Décision 08', d08q:"Budget $0 — pourquoi seulement des free tiers ?", d08a:"Contrainte = créativité technique",
+    d08why:"La contrainte $0 n'est pas une restriction : c'est un parti pris de conception. Un portfolio qui démontre des compétences AI PM doit montrer qu'on peut construire quelque chose de qualité dans les contraintes réelles d'un side project. Payer pour des serveurs ou des APIs premium aurait été la solution facile. Choisir Groq, Cloudflare Workers, GitHub Pages, Langfuse Cloud, Workers AI, tous sur free tier, a forcé des décisions architecturales créatives. Le RAG edge-native dans le Worker existe parce que le free tier Render était trop limité pour Python. Cette contrainte a produit une architecture plus propre qu'un budget illimité ne l'aurait fait. Pour un recruteur AI PM, un système fonctionnel construit à $0/mois est plus impressionnant qu'une solution identique à $200/mois.",
+    d08alts:"<li>Render + Railway payant — solution fonctionnelle mais banale, aucune ingéniosité démontrée</li><li>AWS/GCP — $20-50/mois, over-engineered pour un portfolio personnel</li><li>Vercel + Supabase — bon stack mais coûts dès que le free tier est dépassé</li>",
+    d09n:'Décision 09', d09q:"Langfuse en production sur un portfolio — pourquoi ?", d09a:"Build → mesure → décide",
+    d09why:"Mettre de l'observabilité LLM sur un portfolio personnel peut paraître over-engineered. Ce ne l'est pas. Langfuse permet de fermer la boucle build → mesure → décide, le cycle que je défends comme PM. Sans données de production, impossible de savoir : quels intents sont les plus fréquents, où la confidence du planner est faible (en-dessous de 0.6), quels outils KRL1 recommande le plus, combien de tokens sont consommés par route. Ces métriques permettent d'itérer sur le system prompt, les règles KB, le flow d'orchestration. La décision d'intégrer Langfuse via l'API REST directement dans le Worker (sans SDK) vient de la contrainte zero-npm. Le flush via ctx.waitUntil garantit zéro latence perçue ajoutée. Pour le portfolio, Langfuse démontre qu'on pense \"mesure\" avant même d'avoir des vrais utilisateurs.",
+    d09alts:"<li>Console.log uniquement — pas de données structurées, pas d'historique, pas d'analyse</li><li>LangSmith — lié à LangChain, inadapté à une architecture Worker JS pure</li><li>Pas d'observabilité — aucune feedback loop, impossible d'itérer informés</li>",
+    d10n:'Décision 10', d10q:"Bilingue FR/EN dès le départ — pourquoi pas ajouter EN plus tard ?", d10a:"Audience recruteur internationale",
+    d10why:"La décision de supporter FR et EN dès le premier jour vient d'une expérience produit directe : ajouter l'i18n en retard sur une base existante est douloureux et crée de la dette technique. Partir bilingue impose une discipline de code : chaque string de UI passe par un objet de traductions, zéro text hardcodé dans le HTML. Le surcoût initial est d'environ 20% de temps par page. Le bénéfice : aucun refactoring i18n à prévoir, et surtout une audience élargie. Les recruteurs tech opèrent souvent dans des contextes multilingues. KRL1 détecte la langue via localStorage et URL param (?lang=en), ce qui permet de partager des liens dans une langue spécifique. Le choix de l'i18n vanilla évite toute dépendance externe pour seulement deux langues.",
+    d10alts:"<li>FR uniquement — audience limitée à la France, signale peu d'ambition internationale</li><li>Ajouter EN plus tard — dette technique assurée, refactoring douloureux</li><li>Bibliothèque i18n (i18next) — dépendance inutile pour seulement deux langues</li>",
+    d11n:'Décision 11', d11q:"Pourquoi un hub PM Toolkit plutôt que 6 liens séparés ?", d11a:"Chaîner les outils = refléter le vrai workflow PM",
+    d11why:"Un PM n'utilise jamais un outil de façon isolée. Il enchaîne : discovery → interviews → OKRs → backlog → stories → roadmap. Garder les 6 outils comme des cartes indépendantes forçait l'utilisateur à recoller le contexte à la main d'une session à l'autre. Le hub pm-toolkit.html résout deux problèmes : il rend la séquence lisible et centralise l'entrée dans le workflow. Le PM Journey CTA (injecté par KRL1 via MutationObserver) suggère automatiquement l'étape suivante après chaque résultat généré. C'est du PLG au niveau du design d'information : le produit guide naturellement le workflow, sans documentation externe, sans friction. Pour le recruteur, naviguer dans le PM Toolkit est une démonstration concrète de pensée workflow.",
+    d11alts:"<li>Liens séparés sur le portfolio — chaque outil vécu comme une feature isolée, pas de séquence visible</li><li>Navigation header avec 6 entrées — cognitive overload, pas de guidage contextuel</li><li>Workflow manuel (copier-coller) — friction maximale, perte de contexte garantie</li>",
+    d12n:'Décision 12', d12q:"Pourquoi localStorage pour passer le contexte entre outils PM ?", d12a:"Continuité sans backend, sans compte, sans friction",
+    d12why:"Le problème : comment transférer un insight d'un outil PM au suivant sans que l'utilisateur ait à tout recopier. Les solutions naturelles — base de données, sessions serveur — nécessitent un backend et un compte utilisateur. Avec localStorage et pm-session.js, chaque outil sauvegarde ses sorties structurées (problème cadré, persona validé, OKRs générés, top-priorité RICE...) sous des clés communes. L'outil suivant peut les importer en un clic, avec un feedback visuel (bordure colorée). Pas de compte, pas de serveur, pas de RGPD à gérer. La contrainte $0 et l'architecture HTML statique ont rendu cette solution non seulement acceptable mais élégante.",
+    d12alts:"<li>Base de données + API — nécessite un backend, un compte, de la gestion de sessions</li><li>URL params — taille limitée, données sensibles potentiellement exposées</li><li>Copier-coller manuel — friction maximale, erreur de saisie garantie</li>",
+    d13n:'Décision 13', d13q:"Pourquoi HTML/JS vanilla sans framework ?", d13a:"Zéro dépendance, zéro dette, déploiement immédiat",
+    d13why:"Le choix de ne pas utiliser React, Vue ou Next.js n'est pas une limitation — c'est une décision explicite. Pour un portfolio de 6 outils PM et quelques pages de documentation, un framework SPA aurait apporté : une étape de build obligatoire, des dépendances npm à maintenir, une complexité d'abstraction sans valeur ajoutée. Chaque page HTML est autonome avec son CSS et son JS inline. Pas de routing, pas de state management global. Le déploiement est un git push en moins de 60 secondes. Le debug se fait directement dans les DevTools sans source maps. La lisibilité du code est maximale. Pour un PM qui vibe code en spare time avec Claude Code, la vélocité prime sur l'architecture.",
+    d13alts:"<li>React / Next.js — étape de build, config webpack/eslint, overhead pour du contenu statique</li><li>Vue.js — même problème, complexité non justifiée pour ce cas d'usage</li><li>Astro — plus adapté, mais paradigme à apprendre, overhead de config initial</li>",
+    d14n:'Décision 14', d14q:"Pourquoi remplacer l'accordéon par des tabs ?", d14a:"Navigation immédiate, zéro friction d'exploration",
+    d14why:"L'accordéon avait un défaut fondamental : le contenu était invisible par défaut. Le visiteur devait deviner qu'il y avait quelque chose à déplier, cliquer, puis scroller pour évaluer si ça valait le coup. Les tabs inversent ce rapport : le libellé de l'onglet suffit à savoir ce qu'on va trouver, le switch est instantané, sans reflow ni animation de dépliage. La navigation contextuelle (liens nav qui apparaissent en stagger au scroll via IntersectionObserver) remplace l'accordéon comme affordance de navigation sans dupliquer la barre principale.",
+    d14al:"Alternatives rejetées",
+    d14alts:"<li>Accordéon — contenu caché par défaut, friction au clic, scroll non prévisible après ouverture</li><li>Sections toujours visibles — page trop longue, pas de focus, difficile à parcourir rapidement</li><li>Bento grid cliquable — UX non standard pour du contenu dense et textuel</li>",
+    d15n:'Décision 15', d15q:"Pourquoi charger Architecture et Décisions produit en lazy-load ?", d15a:"Index léger, pages autonomes préservées, styles isolés",
+    d15why:"Intégrer les pages Architecture (1 779 lignes) et Décisions produit (500 lignes) directement dans index.html aurait créé un fichier monolithique dépassant 4 000 lignes, avec des conflits CSS garantis. Le lazy-load (fetch + DOMParser) charge le contenu à la demande, au premier clic seulement. Chaque page reste une URL autonome et partageable. Le CSS injecté est scopé à l'ID du tab panel (#architecture .decision-card) pour confiner son effet — impossible d'écraser les glows du hero ou les styles des autres sections.",
+    d15al:"Alternatives rejetées",
+    d15alts:"<li>Intégration statique — index.html &gt; 4 000 lignes, conflits CSS, maintenance difficile</li><li>iFrame — pas de thème dark/light partagé, barre de scroll parasite, UX dégradée</li><li>Pages séparées uniquement — navigation fragmentée, on quitte l'index à chaque clic</li>",
+    d16n:'Décision 16', d16q:"Pourquoi faire fetcher les flux RSS par le Worker plutôt que par Make ?", d16a:"Scalabilité des sources, zéro config manuelle, Make réduit à un trigger",
+    d16why:"Avec Make, chaque nouvelle source RSS demandait deux modules configurés à la main (RSS + Text Aggregator) — ingérable pour 13 flux répartis en 4 catégories (Product, IA, Builders, No-code/FR). La logique a été déplacée dans le Worker : une constante VEILLE_SOURCES liste les 13 flux, parseRSSItems parse le XML par regex légère sans dépendance externe, les articles sont groupés par catégorie, synthétisés via Groq puis stockés en KV — le tout déclenché par un seul POST /veille-refresh protégé par x-make-secret. Make devient un simple trigger HTTP cron (1 module au lieu d'une quinzaine), et ajouter une source ne demande plus qu'une ligne dans le Worker.",
+    d16al:"Alternatives rejetées",
+    d16alts:"<li>Garder Make avec 1 module RSS + Aggregator par source — config manuelle x13, fragile au moindre changement de flux</li><li>Service tiers d'agrégation RSS — coût récurrent, dépendance externe, contraire au choix zéro-infra du site</li><li>Cron Cloudflare natif sans Make — perd le déclenchement piloté et observable depuis Make sans bénéfice réel</li>",
     footerTech:'Architecture technique',
-    footerKrl1:'KRL1 Â· Couches de dÃ©cision',
+    footerKrl1:'KRL1 · Couches de décision',
     footerHome:'Portfolio'
   },
   en: {
     back:'Back to portfolio',
-    tag:'Portfolio Â· Product Decisions',
+    tag:'Portfolio · Product Decisions',
     h1:'The <span class="grad">product</span> decisions<br>behind the site',
-    subtitle:"Every structural choice in the site â€” PM Toolkit, KRL1, static architecture, PLG, observability â€” with the rejected alternatives and why they don't hold up.",
+    subtitle:"Every structural choice in the site — PM Toolkit, KRL1, static architecture, PLG, observability — with the rejected alternatives and why they don't hold up.",
     m1:'UX', m2:'PLG', m3:'Constraints', m4:'Trade-offs', m5:'$0 Budget',
     sectionLbl:'15 product decisions',
     altslbl:'Rejected alternatives',
     d01n:'Decision 01', d01q:"Why an AI assistant on a PM portfolio?", d01a:"PLG through the product, not the CV",
     d01why:"A classic PM portfolio is a PDF or a LinkedIn page. To demonstrate AI PM skills, the portfolio itself has to be an AI product. KRL1 is the concrete proof: a PM who understands LLMs does not say it, they show it. When a recruiter interacts with KRL1, they do not need to read \"I understand AI systems\" in a summary. They experience it directly. That is Product-Led Growth applied to job searching: the product carries its own sales pitch. KRL1 also qualifies visitors naturally: someone who spends 5 minutes exploring PM tools through KRL1 is more engaged than a 10-second CV scanner. The LinkedIn message \"I tested KRL1 and...\" is a strong engagement signal. The assistant exists for the recruiter, not for me.",
-    d01alts:"<li>Third-party chatbot (Crisp, Intercom) â€” generic branding, no differentiation</li><li>Static FAQ â€” passive, demonstrates no technical skill</li><li>Classic contact form â€” zero engagement, zero proof</li>",
+    d01alts:"<li>Third-party chatbot (Crisp, Intercom) — generic branding, no differentiation</li><li>Static FAQ — passive, demonstrates no technical skill</li><li>Classic contact form — zero engagement, zero proof</li>",
     d02n:'Decision 02', d02q:"Why 6 PM tools and not more?", d02a:"Scope = complete workflow, not catalogue",
-    d02why:"6 tools is not an arbitrary number. It maps exactly the everyday PM workflow: Discovery â†’ User Interviews â†’ OKRs â†’ Backlog â†’ Stories â†’ Roadmap. Not one more, not one less. The constraint comes first from the PM Journey: each tool had to have a natural next step for the guided sequence to work end-to-end. A 7th tool would have created a dead end. The scope is also driven by maintenance: 6 system prompts, 6 HTML pages, 6 pm-session.js entries. The main constraint was semantic: each tool had to address a real friction experienced as a PM, not a theoretical category. OKR Builder came from planning meetings with vague KRs. Discovery Assistant came from poorly structured interview prep. 6 real frictions = 6 tools.",
-    d02alts:"<li>10+ tools â€” maintenance impossible, PM Journey too complex</li><li>3 tools â€” scope too narrow, incomplete workflow</li><li>Generic tools (meeting summary, email writer) â€” not differentiating for a PM</li>",
-    d03n:'Decision 03', d03q:"KB fast-path before the LLM â€” why not send everything?", d03a:"Cost, speed, consistency without API",
+    d02why:"6 tools is not an arbitrary number. It maps exactly the everyday PM workflow: Discovery → User Interviews → OKRs → Backlog → Stories → Roadmap. Not one more, not one less. The constraint comes first from the PM Journey: each tool had to have a natural next step for the guided sequence to work end-to-end. A 7th tool would have created a dead end. The scope is also driven by maintenance: 6 system prompts, 6 HTML pages, 6 pm-session.js entries. The main constraint was semantic: each tool had to address a real friction experienced as a PM, not a theoretical category. OKR Builder came from planning meetings with vague KRs. Discovery Assistant came from poorly structured interview prep. 6 real frictions = 6 tools.",
+    d02alts:"<li>10+ tools — maintenance impossible, PM Journey too complex</li><li>3 tools — scope too narrow, incomplete workflow</li><li>Generic tools (meeting summary, email writer) — not differentiating for a PM</li>",
+    d03n:'Decision 03', d03q:"KB fast-path before the LLM — why not send everything?", d03a:"Cost, speed, consistency without API",
     d03why:"Sending every message to Groq would add ~300-500ms of network latency on 30 to 40% of recurring questions (\"who are you\", \"your tools\", \"contact\"). The KB fast-path intercepts these patterns locally, responds in under 10ms from the browser, and reserves the LLM quota for genuinely open questions. It is also a quality guardrail: answers about Carlin's profile are accurate and stable from the KB, with no risk of the LLM slightly rephrasing a biographical fact incorrectly. 17 rules per language now cover general questions, technical topics (RAG, Langfuse, SSE, orchestration, Groq, Worker routes), and the Product Decisions page. Visible result: KRL1 feels more responsive than typical chatbots that always take 1-2s even for simple questions.",
-    d03alts:"<li>Send everything to the LLM â€” systematic latency + factual imprecision risk</li><li>LLM cache â€” answers identical questions, not semantic variations</li><li>External database â€” unnecessary overhead, the KB fits in widget memory</li>",
-    d04n:'Decision 04', d04q:"KRL1 auto-opens at 6 seconds â€” why this delay?", d04a:"Engagement without friction",
+    d03alts:"<li>Send everything to the LLM — systematic latency + factual imprecision risk</li><li>LLM cache — answers identical questions, not semantic variations</li><li>External database — unnecessary overhead, the KB fits in widget memory</li>",
+    d04n:'Decision 04', d04q:"KRL1 auto-opens at 6 seconds — why this delay?", d04a:"Engagement without friction",
     d04why:"The auto-open timing is a trade-off between engagement and friction. Under 2 seconds: the visitor has not yet read the headline, the popup feels intrusive and is immediately dismissed. Over 15 seconds: most visitors have already formed their opinion, the engagement window is gone. 6 seconds approximately matches hero reading time at normal speed. At that point, the visitor can receive KRL1 as contextual assistance rather than an interruption. The logic mirrors measured patterns from B2B SaaS live chats that identified this optimal window. Auto-open only fires if the widget has not already been opened manually.",
-    d04alts:"<li>No auto-open â€” KRL1 invisible to passive visitors who do not click</li><li>2-3 seconds â€” too intrusive, perceived as spam, dismissed immediately</li><li>On scroll (50%) â€” too late for visitors who bounce quickly</li>",
-    d05n:'Decision 05', d05q:"PM Journey CTAs injected into results â€” why?", d05a:"Zero-friction PLG nudge",
-    d05why:"The PM Journey (Discovery â†’ Interviews â†’ OKRs â†’ Backlog â†’ Stories â†’ Roadmap) is the toolkit's differentiating value. Without active guidance, a PM who uses the Discovery Assistant finishes and leaves, never knowing that the User Interview Analyzer is the logical next step. The injected CTA solves this without modifying 6 separate pages. KRL1 watches the #results div via MutationObserver from krl1-widget.js. As soon as the .show class appears (result generated), KRL1 automatically injects the \"next step\" CTA. Pure PLG: workflow progression guided by the product, not external documentation. Zero coupling: the tool pages have no knowledge of this injection.",
-    d05alts:"<li>Static links in page footers â€” ignored by visitors engaged with their result</li><li>Header navigation â€” visible but contextually irrelevant during generation</li><li>Recap email â€” out of scope, no user account, unnecessary friction</li>",
-    d06n:'Decision 06', d06q:"SSE streaming on synthesis â€” why not a blocking response?", d06a:"Perceived latency vs real latency",
+    d04alts:"<li>No auto-open — KRL1 invisible to passive visitors who do not click</li><li>2-3 seconds — too intrusive, perceived as spam, dismissed immediately</li><li>On scroll (50%) — too late for visitors who bounce quickly</li>",
+    d05n:'Decision 05', d05q:"PM Journey CTAs injected into results — why?", d05a:"Zero-friction PLG nudge",
+    d05why:"The PM Journey (Discovery → Interviews → OKRs → Backlog → Stories → Roadmap) is the toolkit's differentiating value. Without active guidance, a PM who uses the Discovery Assistant finishes and leaves, never knowing that the User Interview Analyzer is the logical next step. The injected CTA solves this without modifying 6 separate pages. KRL1 watches the #results div via MutationObserver from krl1-widget.js. As soon as the .show class appears (result generated), KRL1 automatically injects the \"next step\" CTA. Pure PLG: workflow progression guided by the product, not external documentation. Zero coupling: the tool pages have no knowledge of this injection.",
+    d05alts:"<li>Static links in page footers — ignored by visitors engaged with their result</li><li>Header navigation — visible but contextually irrelevant during generation</li><li>Recap email — out of scope, no user account, unnecessary friction</li>",
+    d06n:'Decision 06', d06q:"SSE streaming on synthesis — why not a blocking response?", d06a:"Perceived latency vs real latency",
     d06why:"Without streaming, a KRL1 request (planner ~600ms + synthesis ~900ms) means ~1.5 to 2.5 seconds of blank spinner with no feedback. With SSE streaming, the first synthesis tokens appear in ~400ms while generation continues. Perceived latency drops by roughly three, without any change in real latency. Same principle as skeleton loading in UI: reduce perceived wait rather than real wait. The word-by-word render with a 22ms delay adds a subtle typewriter effect that reinforces intelligence. Streaming imposes that the planner (LLM call #1) remains blocking since its JSON output is needed before launching synthesis. Only call #2 streams. If the stream fails, the widget automatically falls back to /orchestrate.",
-    d06alts:"<li>Blocking response â€” ~2.5s spinner, 2015 UX, high drop-off rate</li><li>Shorter response to go faster â€” sacrifices response quality</li><li>Skeleton placeholder with dummy content â€” complex to implement, false feedback</li>",
-    d07n:'Decision 07', d07q:"220-word limit on KRL1 responses â€” why?", d07a:"Density > exhaustiveness",
+    d06alts:"<li>Blocking response — ~2.5s spinner, 2015 UX, high drop-off rate</li><li>Shorter response to go faster — sacrifices response quality</li><li>Skeleton placeholder with dummy content — complex to implement, false feedback</li>",
+    d07n:'Decision 07', d07q:"220-word limit on KRL1 responses — why?", d07a:"Density > exhaustiveness",
     d07why:"220 words is a deliberate design constraint, not a technical limitation. Without a constraint, an LLM produces 500 to 800-word essay responses: educational, correct, but mismatched to a portfolio chat context. A recruiter wants a dense, direct answer with a concrete next step, not an article. The limit forces the model to prioritise the essentials: the user's intent, a clear recommendation, a link to the right tool. It is also an economic constraint: max_tokens 450 keeps each synthesis within a predictable cost range. Temperature 0.45 is calibrated so the response stays natural and non-robotic in this short format. In practice, most responses are 150 to 200 words.",
-    d07alts:"<li>No limit â€” essay responses, buries the key point, loses the user</li><li>100 words â€” too short for complex PM topics, only surface-level answers</li><li>Dynamic limit by intent â€” over-engineering for marginal gain</li>",
-    d08n:'Decision 08', d08q:"$0 budget â€” why only free tiers?", d08a:"Constraint = technical creativity",
+    d07alts:"<li>No limit — essay responses, buries the key point, loses the user</li><li>100 words — too short for complex PM topics, only surface-level answers</li><li>Dynamic limit by intent — over-engineering for marginal gain</li>",
+    d08n:'Decision 08', d08q:"$0 budget — why only free tiers?", d08a:"Constraint = technical creativity",
     d08why:"The $0 constraint is not a restriction: it is a design stance. A portfolio demonstrating AI PM skills must show you can build something quality within the real constraints of a side project. Paying for servers or premium APIs would have been the easy path. Choosing Groq, Cloudflare Workers, GitHub Pages, Langfuse Cloud, Workers AI, all on free tiers, forced creative architectural decisions. The edge-native RAG in the Worker exists because Render's free tier was too limited for Python. This constraint produced a cleaner architecture than an unlimited budget would have. For an AI PM recruiter, a working system built at $0/month is more impressive than the same solution at $200/month.",
-    d08alts:"<li>Paid Render + Railway â€” functional but unremarkable, no ingenuity demonstrated</li><li>AWS/GCP â€” $20-50/month, over-engineered for a personal portfolio</li><li>Vercel + Supabase â€” good stack but costs once the free tier is exceeded</li>",
-    d09n:'Decision 09', d09q:"Langfuse in production on a portfolio â€” why?", d09a:"Build â†’ measure â†’ decide",
-    d09why:"Putting LLM observability on a personal portfolio may seem over-engineered. It is not. Langfuse closes the build â†’ measure â†’ decide loop, the cycle I advocate as a PM. Without production data, impossible to know: which intents are most frequent, where planner confidence is low (below 0.6), which tools KRL1 recommends most, how many tokens each route consumes. These metrics enable iteration on the system prompt, KB rules, and orchestration flow. The decision to integrate Langfuse via its REST API directly in the Worker (no SDK) comes from the zero-npm constraint. The ctx.waitUntil flush ensures zero added perceived latency. For the portfolio, Langfuse concretely demonstrates thinking about measurement before having real users.",
-    d09alts:"<li>Console.log only â€” no structured data, no history, no analysis</li><li>LangSmith â€” tied to LangChain, ill-suited to a pure Worker JS architecture</li><li>No observability â€” no feedback loop, impossible to iterate with data</li>",
-    d10n:'Decision 10', d10q:"Bilingual FR/EN from day one â€” why not add EN later?", d10a:"International recruiter audience",
+    d08alts:"<li>Paid Render + Railway — functional but unremarkable, no ingenuity demonstrated</li><li>AWS/GCP — $20-50/month, over-engineered for a personal portfolio</li><li>Vercel + Supabase — good stack but costs once the free tier is exceeded</li>",
+    d09n:'Decision 09', d09q:"Langfuse in production on a portfolio — why?", d09a:"Build → measure → decide",
+    d09why:"Putting LLM observability on a personal portfolio may seem over-engineered. It is not. Langfuse closes the build → measure → decide loop, the cycle I advocate as a PM. Without production data, impossible to know: which intents are most frequent, where planner confidence is low (below 0.6), which tools KRL1 recommends most, how many tokens each route consumes. These metrics enable iteration on the system prompt, KB rules, and orchestration flow. The decision to integrate Langfuse via its REST API directly in the Worker (no SDK) comes from the zero-npm constraint. The ctx.waitUntil flush ensures zero added perceived latency. For the portfolio, Langfuse concretely demonstrates thinking about measurement before having real users.",
+    d09alts:"<li>Console.log only — no structured data, no history, no analysis</li><li>LangSmith — tied to LangChain, ill-suited to a pure Worker JS architecture</li><li>No observability — no feedback loop, impossible to iterate with data</li>",
+    d10n:'Decision 10', d10q:"Bilingual FR/EN from day one — why not add EN later?", d10a:"International recruiter audience",
     d10why:"The decision to support FR and EN from day one comes from direct product experience: retrofitting i18n onto an existing codebase is painful and creates technical debt. Going bilingual from the start imposes code discipline: every UI string goes through a translation object, zero text hardcoded in HTML. The upfront overhead is about 20% extra time per page. The benefit: no i18n refactoring needed, and above all a wider audience. Tech recruiters often operate in multilingual contexts. KRL1 detects language via localStorage and URL param (?lang=en), allowing language-specific link sharing. The vanilla i18n choice avoids any external dependency for just two languages.",
-    d10alts:"<li>French only â€” audience limited to France, signals little international ambition</li><li>Add EN later â€” technical debt guaranteed, painful refactoring</li><li>i18n library (i18next) â€” unnecessary dependency for only two languages</li>",
+    d10alts:"<li>French only — audience limited to France, signals little international ambition</li><li>Add EN later — technical debt guaranteed, painful refactoring</li><li>i18n library (i18next) — unnecessary dependency for only two languages</li>",
     d11n:'Decision 11', d11q:"Why a PM Toolkit hub rather than 6 separate links?", d11a:"Chaining tools mirrors the real PM workflow",
-    d11why:"A PM never uses a single tool in isolation. The real workflow is: discovery â†’ interviews â†’ OKRs â†’ backlog â†’ stories â†’ roadmap. Keeping 6 tools as independent cards forced users to carry context by hand between sessions. The pm-toolkit.html hub solves two problems: it makes the sequence legible and centralises entry into the workflow. The PM Journey CTA (injected by KRL1 via MutationObserver) automatically suggests the next step after each generated result. That is PLG at the information design level: the product naturally guides the workflow, without external documentation, without friction. For the recruiter, navigating the PM Toolkit is a concrete demonstration of workflow thinking.",
-    d11alts:"<li>Separate links on the portfolio â€” each tool feels like an isolated feature, no sequence visible</li><li>Header nav with 6 entries â€” cognitive overload, no contextual guidance</li><li>Manual workflow (copy-paste) â€” maximum friction, guaranteed context loss</li>",
+    d11why:"A PM never uses a single tool in isolation. The real workflow is: discovery → interviews → OKRs → backlog → stories → roadmap. Keeping 6 tools as independent cards forced users to carry context by hand between sessions. The pm-toolkit.html hub solves two problems: it makes the sequence legible and centralises entry into the workflow. The PM Journey CTA (injected by KRL1 via MutationObserver) automatically suggests the next step after each generated result. That is PLG at the information design level: the product naturally guides the workflow, without external documentation, without friction. For the recruiter, navigating the PM Toolkit is a concrete demonstration of workflow thinking.",
+    d11alts:"<li>Separate links on the portfolio — each tool feels like an isolated feature, no sequence visible</li><li>Header nav with 6 entries — cognitive overload, no contextual guidance</li><li>Manual workflow (copy-paste) — maximum friction, guaranteed context loss</li>",
     d12n:'Decision 12', d12q:"Why localStorage to pass context between PM tools?", d12a:"Continuity without backend, account, or friction",
-    d12why:"The problem: how to transfer an insight from one PM tool to the next without the user retyping everything. Natural solutions â€” database, server sessions â€” require a backend and a user account. With localStorage and pm-session.js, each tool saves its structured outputs (framed problem, validated persona, generated OKRs, top RICE priority...) under common keys. The next tool can import them in one click, with visual feedback (coloured border) to signal context is available. No account, no server, no GDPR to manage. The $0 constraint and static HTML architecture made this solution not just acceptable but elegant.",
-    d12alts:"<li>Database + API â€” requires a backend, user account, session management</li><li>URL params â€” size limited, sensitive data potentially exposed</li><li>Manual copy-paste â€” maximum friction, guaranteed input error</li>",
+    d12why:"The problem: how to transfer an insight from one PM tool to the next without the user retyping everything. Natural solutions — database, server sessions — require a backend and a user account. With localStorage and pm-session.js, each tool saves its structured outputs (framed problem, validated persona, generated OKRs, top RICE priority...) under common keys. The next tool can import them in one click, with visual feedback (coloured border) to signal context is available. No account, no server, no GDPR to manage. The $0 constraint and static HTML architecture made this solution not just acceptable but elegant.",
+    d12alts:"<li>Database + API — requires a backend, user account, session management</li><li>URL params — size limited, sensitive data potentially exposed</li><li>Manual copy-paste — maximum friction, guaranteed input error</li>",
     d13n:'Decision 13', d13q:"Why vanilla HTML/JS without a framework?", d13a:"Zero dependencies, zero debt, immediate deployment",
-    d13why:"Choosing not to use React, Vue or Next.js is not a limitation â€” it is an explicit decision. For a portfolio of 6 PM tools and a few documentation pages, an SPA framework would have added: a mandatory build step, npm dependencies to maintain, and abstraction overhead with no added value. Each HTML page is standalone with its own inline CSS and JS. No routing, no global state management. Deployment is a git push that triggers GitHub Pages in under 60 seconds. Debugging happens directly in DevTools without source maps. Code readability is maximum. For a PM vibe coding in spare time with Claude Code, velocity beats architecture.",
-    d13alts:"<li>React / Next.js â€” build step, webpack/eslint config, overhead for static content</li><li>Vue.js â€” same problem, unjustified complexity for this use case</li><li>Astro â€” better fit, but paradigm to learn, initial config overhead</li>",
+    d13why:"Choosing not to use React, Vue or Next.js is not a limitation — it is an explicit decision. For a portfolio of 6 PM tools and a few documentation pages, an SPA framework would have added: a mandatory build step, npm dependencies to maintain, and abstraction overhead with no added value. Each HTML page is standalone with its own inline CSS and JS. No routing, no global state management. Deployment is a git push that triggers GitHub Pages in under 60 seconds. Debugging happens directly in DevTools without source maps. Code readability is maximum. For a PM vibe coding in spare time with Claude Code, velocity beats architecture.",
+    d13alts:"<li>React / Next.js — build step, webpack/eslint config, overhead for static content</li><li>Vue.js — same problem, unjustified complexity for this use case</li><li>Astro — better fit, but paradigm to learn, initial config overhead</li>",
     d14n:'Decision 14', d14q:"Why replace the accordion with tabs?", d14a:"Instant navigation, zero exploration friction",
     d14why:"The accordion had a fundamental flaw: content was hidden by default. Visitors had to guess there was something to unfold, click, then scroll to decide if it was worth it. Tabs reverse this: the tab label is enough to know what you'll find, switching is instant with no reflow or unfold animation. The contextual nav (section links that appear in stagger on scroll via IntersectionObserver) replaces the accordion as a navigation affordance without duplicating the main bar.",
     d14al:"Rejected alternatives",
-    d14alts:"<li>Accordion â€” content hidden by default, click friction, unpredictable scroll after opening</li><li>Always-visible sections â€” page too long, no focus, hard to scan quickly</li><li>Clickable bento grid â€” non-standard UX for dense text content</li>",
+    d14alts:"<li>Accordion — content hidden by default, click friction, unpredictable scroll after opening</li><li>Always-visible sections — page too long, no focus, hard to scan quickly</li><li>Clickable bento grid — non-standard UX for dense text content</li>",
     d15n:'Decision 15', d15q:"Why lazy-load Architecture and Product Decisions?", d15a:"Lightweight index, standalone pages preserved, isolated styles",
-    d15why:"Embedding the Architecture (1,779 lines) and Product Decisions (500 lines) pages directly into index.html would have created a monolithic file exceeding 4,000 lines, with guaranteed CSS conflicts. Lazy-load (fetch + DOMParser) loads content on demand, only on the first click. Each page remains a shareable standalone URL. Injected CSS is scoped to the tab panel ID (#architecture .decision-card) to confine its effect â€” impossible to override the hero glows or other section styles.",
+    d15why:"Embedding the Architecture (1,779 lines) and Product Decisions (500 lines) pages directly into index.html would have created a monolithic file exceeding 4,000 lines, with guaranteed CSS conflicts. Lazy-load (fetch + DOMParser) loads content on demand, only on the first click. Each page remains a shareable standalone URL. Injected CSS is scoped to the tab panel ID (#architecture .decision-card) to confine its effect — impossible to override the hero glows or other section styles.",
     d15al:"Rejected alternatives",
-    d15alts:"<li>Static integration â€” index.html &gt; 4,000 lines, CSS conflicts, impossible to maintain</li><li>iFrame â€” no shared dark/light theme, parasitic scrollbar, degraded UX</li><li>Separate pages only â€” fragmented navigation, leaves index on every click</li>",
+    d15alts:"<li>Static integration — index.html &gt; 4,000 lines, CSS conflicts, impossible to maintain</li><li>iFrame — no shared dark/light theme, parasitic scrollbar, degraded UX</li><li>Separate pages only — fragmented navigation, leaves index on every click</li>",
     d16n:'Decision 16', d16q:"Why have the Worker fetch RSS feeds instead of Make?", d16a:"Source scalability, zero manual config, Make reduced to a trigger",
-    d16why:"With Make, every new RSS source required two manually configured modules (RSS + Text Aggregator) â€” unmanageable for 13 feeds spread across 4 categories (Product, AI, Builders, No-code/FR). The logic moved into the Worker: a VEILLE_SOURCES constant lists the 13 feeds, parseRSSItems parses the XML with a lightweight regex with no external dependency, articles are grouped by category, synthesised via Groq and stored in KV â€” all triggered by a single POST /veille-refresh protected by x-make-secret. Make becomes a minimal HTTP cron trigger (1 module instead of around fifteen), and adding a source now only takes one line in the Worker.",
+    d16why:"With Make, every new RSS source required two manually configured modules (RSS + Text Aggregator) — unmanageable for 13 feeds spread across 4 categories (Product, AI, Builders, No-code/FR). The logic moved into the Worker: a VEILLE_SOURCES constant lists the 13 feeds, parseRSSItems parses the XML with a lightweight regex with no external dependency, articles are grouped by category, synthesised via Groq and stored in KV — all triggered by a single POST /veille-refresh protected by x-make-secret. Make becomes a minimal HTTP cron trigger (1 module instead of around fifteen), and adding a source now only takes one line in the Worker.",
     d16al:"Rejected alternatives",
-    d16alts:"<li>Keep Make with 1 RSS + Aggregator module per source â€” manual config x13, fragile to any feed change</li><li>Third-party RSS aggregation service â€” recurring cost, external dependency, against the site's zero-infra philosophy</li><li>Native Cloudflare cron without Make â€” loses the Make-driven, observable trigger with no real benefit</li>",
+    d16alts:"<li>Keep Make with 1 RSS + Aggregator module per source — manual config x13, fragile to any feed change</li><li>Third-party RSS aggregation service — recurring cost, external dependency, against the site's zero-infra philosophy</li><li>Native Cloudflare cron without Make — loses the Make-driven, observable trigger with no real benefit</li>",
     footerTech:'Technical architecture',
-    footerKrl1:'KRL1 Â· Decision layers',
+    footerKrl1:'KRL1 · Decision layers',
     footerHome:'Portfolio'
   }
 };
