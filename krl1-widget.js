@@ -9,12 +9,12 @@
     '@property --krl1-angle{syntax:"<angle>";initial-value:0deg;inherits:false}',
 
     /* ── FAB : glass pill + cursor-tracked specular ─────────────────────── */
-    '#chat-fab{--mx:50%;--my:50%;position:fixed;bottom:1.75rem;right:1.75rem;z-index:9999;width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#60a5fa,#a78bfa 55%,#22d3ee);box-shadow:0 4px 24px rgba(96,165,250,0.35),inset 0 1px 0 rgba(255,255,255,0.35),inset 0 -1px 0 rgba(0,0,0,0.15);transition:transform 0.25s cubic-bezier(.34,1.56,.64,1),box-shadow 0.25s;isolation:isolate;overflow:hidden}',
-    '#chat-fab::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,0.55) 0%,rgba(255,255,255,0) 45%);opacity:0;transition:opacity 0.25s;pointer-events:none;mix-blend-mode:overlay}',
-    '#chat-fab:hover{transform:scale(1.08);box-shadow:0 8px 36px rgba(96,165,250,0.55),inset 0 1px 0 rgba(255,255,255,0.45),inset 0 -1px 0 rgba(0,0,0,0.2)}',
+    '#chat-fab{--mx:50%;--my:50%;position:fixed;bottom:1.75rem;right:1.75rem;z-index:9999;width:52px;height:52px;border-radius:50%;border:1px solid rgba(96,165,250,0.45);cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(13,18,30,0.82);box-shadow:0 4px 20px rgba(96,165,250,0.15);transition:transform 0.25s cubic-bezier(.34,1.56,.64,1),box-shadow 0.25s,background 0.25s,border-color 0.25s;isolation:isolate;overflow:hidden}',
+    '#chat-fab::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at var(--mx) var(--my),rgba(96,165,250,0.35) 0%,rgba(96,165,250,0) 45%);opacity:0;transition:opacity 0.25s;pointer-events:none}',
+    '#chat-fab:hover{transform:scale(1.08);background:rgba(96,165,250,0.14);border-color:rgba(96,165,250,0.75);box-shadow:0 8px 30px rgba(96,165,250,0.3)}',
     '#chat-fab:hover::before{opacity:1}',
     '#chat-fab:active{transform:scale(0.96)}',
-    '#chat-fab svg{position:relative;z-index:1;width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.3))}',
+    '#chat-fab svg{position:relative;z-index:1;width:22px;height:22px;fill:none;stroke:#93c5fd;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}',
 
     /* ── CHAT WINDOW : frosted glass base + liquid edge ring ────────────── */
     '#chat-window{position:fixed;bottom:5.5rem;right:1.75rem;z-index:9998;width:340px;max-height:480px;background:linear-gradient(180deg,rgba(22,22,40,0.55) 0%,rgba(8,8,15,0.65) 100%);border:1px solid rgba(255,255,255,0.08);border-radius:18px;display:flex;flex-direction:column;box-shadow:0 1px 0 rgba(255,255,255,0.04) inset,0 20px 60px rgba(0,0,0,0.55),0 0 80px -20px rgba(96,165,250,0.25);overflow:hidden;backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);transform:scale(0.92) translateY(16px);opacity:0;pointer-events:none;transition:transform 0.22s cubic-bezier(.34,1.56,.64,1),opacity 0.18s,width 0.22s,max-height 0.22s;isolation:isolate}',
