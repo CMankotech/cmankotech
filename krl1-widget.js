@@ -537,10 +537,10 @@
     }
   }
 
-  // Auto-open after 6 s if user hasn't opened it yet
+  // Auto-open after 10 s if user hasn't opened it yet
   setTimeout(function () {
     if (!_chatOpen) toggleChat();
-  }, 6000);
+  }, 10000);
 
   // PM Journey: watch #results for .show class appearance
   if (JOURNEY[TOOL_ID]) {
