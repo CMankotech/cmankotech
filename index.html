@@ -679,7 +679,7 @@ body.intro-lock{overflow:hidden}
     spin(en?'running tests':'exécution des tests',640,'<span class="hto">✓</span> <span class="htn">14</span> tests <span class="htdim">·</span> <span class="htn">0</span> '+(en?'failed':'échec')+' <span class="htdim">· 380ms</span>'),
     note(en?'every API route is verified before deploy':'chaque route de l’API est vérifiée avant déploiement'),
     gap(),
-    cmd([['curl','t'],[' -s ','f'],['groq-proxy.workers.dev/rag-query','p'],[' -d ','f'],[en?'\'{"message":"how to prioritize?"}\'':'\'{"message":"comment prioriser ?"}\'','s']],320),
+    cmd([['curl','t'],[' -s ','f'],['https://groq-proxy.workers.dev/rag-query','p'],[' -H ','f'],["'Content-Type: application/json'",'s'],[' -d ','f'],[en?'\'{"message":"how to prioritize?"}\'':'\'{"message":"comment prioriser ?"}\'','s']],320),
     spin(en?'request · edge':'requête · edge',560,'<span class="hto">200</span> <span class="htdim">OK · 184ms</span>'),
     out('<span class="htdim">{</span>'),
     out('  <span class="htf">"reply"</span><span class="htdim">:</span> <span class="hts">'+(en?'"RICE for impact, MoSCoW to decide"':'"RICE pour l’impact, MoSCoW pour trancher"')+'</span><span class="htdim">,</span>'),
