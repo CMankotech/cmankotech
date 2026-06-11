@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Discovery Assistant — by Carlin Mankoto</title>
+<title>Discovery Assistant â€” by Carlin Mankoto</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -228,6 +228,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 .nav-tools-menu .nt-ico{font-size:0.95rem;line-height:1}
 @media(max-width:768px){.nav-tools-menu{left:auto;right:0;transform:translateY(-6px)}.nav-tools.open .nav-tools-menu{transform:translateY(0)}}
 </style>
+<link rel="stylesheet" href="tool-prose.css">
+<link rel="stylesheet" href="tool-cta.css">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
@@ -238,9 +240,9 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <div class="nav-tools" id="navTools">
       <button class="nav-tools-btn" onclick="toggleNavTools(event)" aria-haspopup="true"><span id="navToolsLabel">Outils</span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
       <div class="nav-tools-menu">
-        <a href="pm-toolkit.html" class="active"><span class="nt-ico">🧰</span> PM Toolkit</a>
-        <a href="rag-explorer.html"><span class="nt-ico">🔍</span> RAG Explorer</a>
-        <a href="veille.html"><span class="nt-ico">📡</span> Veille</a>
+        <a href="pm-toolkit.html" class="active"><span class="nt-ico">ðŸ§°</span> PM Toolkit</a>
+        <a href="rag-explorer.html"><span class="nt-ico">ðŸ”</span> RAG Explorer</a>
+        <a href="veille.html"><span class="nt-ico">ðŸ“¡</span> Veille</a>
       </div>
     </div>
   </div>
@@ -259,7 +261,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 
   <header>
-    <div class="header-tag"><span class="dot"></span> Product Discovery</div>
     <h1>Discovery<br><span class="grad">Assistant</span></h1>
     <p class="subtitle">D&eacute;cris ton probl&egrave;me utilisateur. L&rsquo;outil structure ta discovery en hypoth&egrave;ses, questions d&rsquo;interview et plan de test.</p>
   </header>
@@ -279,7 +280,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 <script>
 (function(){
   var _d = {
-    fr:{title:"En savoir plus",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour accélérer la phase de discovery produit, développé en vibe coding.",pb:"Un PM en début de discovery part souvent sans structure : hypothèses floues, questions d\'interview non préparées, pas de plan de test clair.",ap:"L\'utilisateur décrit son problème, l\'outil génère 3 hypothèses, 5 questions d\'interview et un plan de test structuré. Stack : HTML/JS + Groq.",res:"Conçu de zéro en moins d\'une journée. Outil live illustrant la capacité à shipper rapidement des outils IA utiles."},
+    fr:{title:"En savoir plus",lbl:["Contexte","ProblÃ¨me","Approche","RÃ©sultat"],ctx:"ConÃ§u pour accÃ©lÃ©rer la phase de discovery produit, dÃ©veloppÃ© en vibe coding.",pb:"Un PM en dÃ©but de discovery part souvent sans structure : hypothÃ¨ses floues, questions d\'interview non prÃ©parÃ©es, pas de plan de test clair.",ap:"L\'utilisateur dÃ©crit son problÃ¨me, l\'outil gÃ©nÃ¨re 3 hypothÃ¨ses, 5 questions d\'interview et un plan de test structurÃ©. Stack : HTML/JS + Groq.",res:"ConÃ§u de zÃ©ro en moins d\'une journÃ©e. Outil live illustrant la capacitÃ© Ã  shipper rapidement des outils IA utiles."},
     en:{title:"Learn more",lbl:["Context","Problem","Approach","Result"],ctx:"Built to accelerate the product discovery phase, developed via vibe coding.",pb:"A PM starting discovery often lacks structure: vague hypotheses, unprepared interview questions, no clear test plan.",ap:"The user describes their problem, the tool generates 3 hypotheses, 5 interview questions and a structured test plan. Stack: HTML/JS + Groq.",res:"Built from scratch in under a day. Live tool demonstrating the ability to ship useful AI tools quickly."}
   };
   function _upAbout(lang){
@@ -310,14 +311,14 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Décris le problème produit à explorer dans le champ dédié.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance l'analyse — l'IA génère des hypothèses, questions d'interview et un plan de test.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Describe the product problem to explore in the field.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run the analysis — the AI generates hypotheses, interview questions and a test plan.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">DÃ©cris le problÃ¨me produit Ã  explorer dans le champ dÃ©diÃ©.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance l'analyse â€” l'IA gÃ©nÃ¨re des hypothÃ¨ses, questions d'interview et un plan de test.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Describe the product problem to explore in the field.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run the analysis â€” the AI generates hypotheses, interview questions and a test plan.</div></div></div>
       <div class="about-divider"></div>
       <div class="about-grid">
-        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la phase de discovery produit, développé en vibe coding.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblPb">Problème</div><p class="about-text" id="aPb">Un PM en début de discovery part souvent sans structure : hypothèses floues, questions d'interview non préparées, pas de plan de test clair.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur décrit son problème, l'outil génère 3 hypothèses, 5 questions d'interview et un plan de test structuré. Stack : HTML/JS + Groq.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblRes">Résultat</div><p class="about-text" id="aRes">Conçu de zéro en moins d'une journée. Outil live illustrant la capacité à shipper rapidement des outils IA utiles.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">ConÃ§u pour accÃ©lÃ©rer la phase de discovery produit, dÃ©veloppÃ© en vibe coding.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblPb">ProblÃ¨me</div><p class="about-text" id="aPb">Un PM en dÃ©but de discovery part souvent sans structure : hypothÃ¨ses floues, questions d'interview non prÃ©parÃ©es, pas de plan de test clair.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur dÃ©crit son problÃ¨me, l'outil gÃ©nÃ¨re 3 hypothÃ¨ses, 5 questions d'interview et un plan de test structurÃ©. Stack : HTML/JS + Groq.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblRes">RÃ©sultat</div><p class="about-text" id="aRes">ConÃ§u de zÃ©ro en moins d'une journÃ©e. Outil live illustrant la capacitÃ© Ã  shipper rapidement des outils IA utiles.</p></div>
       </div>
     </div>
   </div>
@@ -436,11 +437,11 @@ function hideError() {
 }
 
 function friendlyApiError(err, status) {
-  if (status === 429) return currentLang === 'en' ? 'Rate limit reached — wait 30 seconds and try again.' : 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable — try again in a moment.' : 'Service temporairement indisponible — réessaie dans quelques instants.';
-  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
+  if (status === 429) return currentLang === 'en' ? 'Rate limit reached â€” wait 30 seconds and try again.' : 'Limite de requÃªtes atteinte â€” attends 30 secondes et rÃ©essaie.';
+  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable â€” try again in a moment.' : 'Service temporairement indisponible â€” rÃ©essaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification â€” contacte le support.';
   if (err && err.message) return err.message;
-  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
+  return 'Erreur inattendue (' + status + '). RÃ©essaie ou contacte le support.';
 }
 async function launch() {
   hideError();
@@ -498,7 +499,7 @@ async function launch() {
 
   } catch(e) {
     clearTimeout(_timeout);
-    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) — check your connection and try again.' : 'Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) â€” check your connection and try again.' : 'DÃ©lai dÃ©passÃ© (30s) â€” vÃ©rifie ta connexion et rÃ©essaie.');
     else showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
     document.getElementById('launchBtn').disabled = false;
     var _rr2 = document.getElementById('rerunBtn'); if(_rr2) _rr2.disabled = false;
@@ -533,14 +534,14 @@ function renderResults(d) {
   // Hypotheses
   var hypHtml = '';
   (d.hypotheses || []).forEach(function(h) {
-    hypHtml += '<div class="hyp-item"><span class="hyp-belief">' + esc(h.belief) + '</span><span class="hyp-signal">&#8594; ' + esc(h.signal) + '</span></div>';
+    hypHtml += '<div class="hyp-item"><span class="hyp-belief">' + fmt(h.belief) + '</span><span class="hyp-signal">&#8594; ' + fmt(h.signal) + '</span></div>';
   });
   document.getElementById('hypBody').innerHTML = hypHtml || '<p style="color:var(--muted);font-size:0.8rem">Aucune hypoth\u00e8se g\u00e9n\u00e9r\u00e9e.</p>';
 
   // Questions
   var qHtml = '';
   (d.questions || []).forEach(function(q, i) {
-    qHtml += '<div class="q-item"><span class="q-num">0' + (i+1) + '</span><span class="q-text">' + esc(q) + '</span></div>';
+    qHtml += '<div class="q-item"><span class="q-num">0' + (i+1) + '</span><span class="q-text">' + fmt(q) + '</span></div>';
   });
   document.getElementById('intBody').innerHTML = qHtml || '<p style="color:var(--muted);font-size:0.8rem">Aucune question g\u00e9n\u00e9r\u00e9e.</p>';
 
@@ -555,7 +556,7 @@ function renderResults(d) {
   ];
   var planHtml = '';
   planRows.forEach(function(r) {
-    if (r[1]) planHtml += '<div class="plan-row"><span class="plan-label">' + r[0] + '</span><span class="plan-value">' + esc(r[1]) + '</span></div>';
+    if (r[1]) planHtml += '<div class="plan-row"><span class="plan-label">' + r[0] + '</span><span class="plan-value">' + fmt(r[1]) + '</span></div>';
   });
   document.getElementById('planBody').innerHTML = planHtml || '<p style="color:var(--muted);font-size:0.8rem">Plan non disponible.</p>';
 
@@ -577,11 +578,11 @@ function rerun() { launch(); }
 
 function copyResults() {
   var d = window._discoveryData || {};
-  var lines = ['# Discovery — Résultats\n'];
+  var lines = ['# Discovery â€” RÃ©sultats\n'];
   var hyps = d.hypotheses || [];
   if (hyps.length) {
-    lines.push('## Hypothèses\n');
-    hyps.forEach(function(h) { lines.push('- ' + (h.belief||'') + ' → ' + (h.signal||'')); });
+    lines.push('## HypothÃ¨ses\n');
+    hyps.forEach(function(h) { lines.push('- ' + (h.belief||'') + ' â†’ ' + (h.signal||'')); });
     lines.push('');
   }
   var qs = d.questions || [];
@@ -592,11 +593,11 @@ function copyResults() {
   }
   var p = d.plan || {};
   lines.push('## Plan de test\n');
-  if (p.methode) lines.push('Méthode : ' + p.methode);
+  if (p.methode) lines.push('MÃ©thode : ' + p.methode);
   if (p.participants) lines.push('Participants : ' + p.participants);
-  if (p.duree) lines.push('Durée : ' + p.duree);
-  if (p.critere) lines.push('Critère de succès : ' + p.critere);
-  if (p.prochaine_etape) lines.push('Prochaine étape : ' + p.prochaine_etape);
+  if (p.duree) lines.push('DurÃ©e : ' + p.duree);
+  if (p.critere) lines.push('CritÃ¨re de succÃ¨s : ' + p.critere);
+  if (p.prochaine_etape) lines.push('Prochaine Ã©tape : ' + p.prochaine_etape);
   var _text = lines.join('\n');
   var _onCopied = function() { var btn = document.getElementById('copyAllBtn'); btn.textContent = currentLang === 'en' ? '\u2713 Copied!' : '\u2713 Copi\u00e9 !'; btn.classList.add('copied'); setTimeout(function() { btn.textContent = currentLang === 'en' ? '\u{1F4CB} Copy all' : '\u{1F4CB} Copier tout'; btn.classList.remove('copied'); }, 2000); };
   var _fb = function() { var ta = document.createElement('textarea'); ta.value = _text; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); _onCopied(); } catch(e) {} document.body.removeChild(ta); };
@@ -607,6 +608,7 @@ function esc(s) {
   if (!s) return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+function fmt(s) { return window.mdInline ? window.mdInline(s) : esc(s); }
 
 function reset() {
   document.getElementById('results').classList.remove('show');
@@ -620,8 +622,8 @@ function reset() {
 var LANG = {
   fr: {
     'title': 'Discovery <span class="grad">Assistant</span>',
-    'subtitle': 'Décris un problème produit. L’IA génère des hypothèses, des questions d’interview et un plan de test structuré.',
-    'btn.launch': '&#9654; Lancer l’analyse',
+    'subtitle': 'DÃ©cris un problÃ¨me produit. Lâ€™IA gÃ©nÃ¨re des hypothÃ¨ses, des questions dâ€™interview et un plan de test structurÃ©.',
+    'btn.launch': '&#9654; Lancer lâ€™analyse',
     'loading.text': 'Analyse en cours...',
     'btn.reset': '&#8635; Recommencer',
   },
@@ -703,8 +705,8 @@ function applyLangExtras(lang) {
   // Placeholders
   var _phda = {
     'problem': ['Ex : Les managers de mon app RH ne savent pas quels collaborateurs sont en risque...', 'E.g. The managers of my HR app don\'t know which employees are at risk...'],
-    'target': ['Ex : Managers d\'équipe B2B, 30-45 ans', 'E.g. B2B team managers, 30-45 years old'],
-    'context': ['Ex : SaaS RH, scale-up 50 employés', 'E.g. HR SaaS, scale-up 50 employees'],
+    'target': ['Ex : Managers d\'Ã©quipe B2B, 30-45 ans', 'E.g. B2B team managers, 30-45 years old'],
+    'context': ['Ex : SaaS RH, scale-up 50 employÃ©s', 'E.g. HR SaaS, scale-up 50 employees'],
   };
   Object.keys(_phda).forEach(function(id){
     var el=document.getElementById(id);
@@ -775,6 +777,7 @@ function syncNavToolsLang(){var a=document.querySelector('.lang-btn.active');var
 document.addEventListener('DOMContentLoaded',syncNavToolsLang);
 document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.lang-btn'))setTimeout(syncNavToolsLang,0);});
 </script>
+<script src="md-lite.js"></script>
 <script src="krl1-widget.js"></script>
 <script src="glass.js"></script>
 

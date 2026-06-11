@@ -9,3 +9,6 @@
 node_modules/
 package.json
 package-lock.json
+
+# captures de verif locales
+shots-push/

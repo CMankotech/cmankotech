@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Backlog Prioritizer — by Carlin Mankoto</title>
+<title>Backlog Prioritizer â€” by Carlin Mankoto</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -247,6 +247,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 .nav-tools-menu .nt-ico{font-size:0.95rem;line-height:1}
 @media(max-width:768px){.nav-tools-menu{left:auto;right:0;transform:translateY(-6px)}.nav-tools.open .nav-tools-menu{transform:translateY(0)}}
 </style>
+<link rel="stylesheet" href="tool-prose.css">
+<link rel="stylesheet" href="tool-cta.css">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
@@ -257,9 +259,9 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <div class="nav-tools" id="navTools">
       <button class="nav-tools-btn" onclick="toggleNavTools(event)" aria-haspopup="true"><span id="navToolsLabel">Outils</span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
       <div class="nav-tools-menu">
-        <a href="pm-toolkit.html" class="active"><span class="nt-ico">🧰</span> PM Toolkit</a>
-        <a href="rag-explorer.html"><span class="nt-ico">🔍</span> RAG Explorer</a>
-        <a href="veille.html"><span class="nt-ico">📡</span> Veille</a>
+        <a href="pm-toolkit.html" class="active"><span class="nt-ico">ðŸ§°</span> PM Toolkit</a>
+        <a href="rag-explorer.html"><span class="nt-ico">ðŸ”</span> RAG Explorer</a>
+        <a href="veille.html"><span class="nt-ico">ðŸ“¡</span> Veille</a>
       </div>
     </div>
   </div>
@@ -278,7 +280,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 
   <header>
-    <div class="header-tag"><span class="dot"></span> Product Management</div>
     <h1>Backlog<br><span class="grad">Prioritizer</span></h1>
     <p class="subtitle">Colle tes user stories, choisis ta m&eacute;thode. L'IA score, classe et justifie chaque item en quelques secondes.</p>
   </header>
@@ -298,7 +299,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 <script>
 (function(){
   var _d = {
-    fr:{title:"En savoir plus",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour accélérer les sessions de priorisation backlog, souvent chronophages et subjectives.",pb:"Prioriser un backlog de manière rigoureuse prend du temps et manque souvent de justification explicite face aux parties prenantes.",ap:"L\'utilisateur colle ses user stories, choisit RICE ou MoSCoW, et obtient un scoring complet avec justification par item. Stack : HTML/JS + Groq.",res:"Réduit une session de priorisation de 30 min à moins de 2 min. Double mode de saisie et exemples aléatoires."},
+    fr:{title:"En savoir plus",lbl:["Contexte","ProblÃ¨me","Approche","RÃ©sultat"],ctx:"ConÃ§u pour accÃ©lÃ©rer les sessions de priorisation backlog, souvent chronophages et subjectives.",pb:"Prioriser un backlog de maniÃ¨re rigoureuse prend du temps et manque souvent de justification explicite face aux parties prenantes.",ap:"L\'utilisateur colle ses user stories, choisit RICE ou MoSCoW, et obtient un scoring complet avec justification par item. Stack : HTML/JS + Groq.",res:"RÃ©duit une session de priorisation de 30 min Ã  moins de 2 min. Double mode de saisie et exemples alÃ©atoires."},
     en:{title:"Learn more",lbl:["Context","Problem","Approach","Result"],ctx:"Built to speed up backlog prioritization sessions, often time-consuming and subjective.",pb:"Rigorous backlog prioritization takes time and often lacks explicit justification for stakeholders.",ap:"The user pastes user stories, selects RICE or MoSCoW, and gets full scoring with per-item justification. Stack: HTML/JS + Groq.",res:"Reduces a prioritization session from 30 min to under 2 min. Dual input mode and random examples."}
   };
   function _upAbout(lang){
@@ -329,14 +330,14 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Colle tes user stories (une par ligne) et choisis ta méthode <strong>RICE</strong> ou <strong>MoSCoW</strong>.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la priorisation — l'IA score et justifie chaque item en quelques secondes.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Paste your user stories (one per line) and choose your method: <strong>RICE</strong> or <strong>MoSCoW</strong>.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run prioritisation — the AI scores and justifies each item in seconds.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Colle tes user stories (une par ligne) et choisis ta mÃ©thode <strong>RICE</strong> ou <strong>MoSCoW</strong>.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la priorisation â€” l'IA score et justifie chaque item en quelques secondes.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Paste your user stories (one per line) and choose your method: <strong>RICE</strong> or <strong>MoSCoW</strong>.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run prioritisation â€” the AI scores and justifies each item in seconds.</div></div></div>
       <div class="about-divider"></div>
       <div class="about-grid">
-        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer les sessions de priorisation backlog, souvent chronophages et subjectives.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblPb">Problème</div><p class="about-text" id="aPb">Prioriser un backlog de manière rigoureuse prend du temps et manque souvent de justification explicite face aux parties prenantes.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">ConÃ§u pour accÃ©lÃ©rer les sessions de priorisation backlog, souvent chronophages et subjectives.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblPb">ProblÃ¨me</div><p class="about-text" id="aPb">Prioriser un backlog de maniÃ¨re rigoureuse prend du temps et manque souvent de justification explicite face aux parties prenantes.</p></div>
         <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur colle ses user stories, choisit RICE ou MoSCoW, et obtient un scoring complet avec justification par item. Stack : HTML/JS + Groq.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblRes">Résultat</div><p class="about-text" id="aRes">Réduit une session de priorisation de 30 min à moins de 2 min. Double mode de saisie et exemples aléatoires.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblRes">RÃ©sultat</div><p class="about-text" id="aRes">RÃ©duit une session de priorisation de 30 min Ã  moins de 2 min. Double mode de saisie et exemples alÃ©atoires.</p></div>
       </div>
     </div>
   </div>
@@ -374,7 +375,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <!-- CONTEXT -->
     <div class="context-field" style="margin-top:1.5rem">
       <div class="card-title"><span id="lbl_ctx">Contexte produit</span> <span style="font-size:0.58rem;color:var(--muted);text-transform:none;letter-spacing:0"><span id="lbl_optional_ctx">(optionnel)</span></div>
-      <input type="text" id="context" placeholder="Ex : SaaS B2B analytics, 200 clients, priorité retention Q2">
+      <input type="text" id="context" placeholder="Ex : SaaS B2B analytics, 200 clients, prioritÃ© retention Q2">
     </div>
   </div>
 
@@ -419,16 +420,16 @@ var fieldCount = 3;
 
 // ---- EXAMPLES ----
 var STORY_SETS = [
-  ["Ajouter une barre de progression sur le tableau de bord","Permettre l'export CSV des données","Envoyer une notification push lors d'un nouvel événement","Afficher un graphique de tendance sur 30 jours","Intégrer une authentification SSO pour les entreprises"],
-  ["Créer un onboarding interactif pour les nouveaux utilisateurs","Ajouter un mode sombre dans les paramètres","Permettre le partage de rapport par lien public","Améliorer la vitesse de chargement des pages de plus de 3s","Ajouter un filtre par date sur la liste des transactions"],
-  ["Mettre en place un système de tags sur les contacts","Permettre l'import de données via fichier Excel","Ajouter un chat support en temps réel","Créer une page de statistiques d'utilisation pour les admins","Envoyer un email de récapitulatif hebdomadaire automatique"],
-  ["Implémenter une recherche globale dans l'application","Ajouter une fonctionnalité de commentaires sur les projets","Permettre aux managers de créer des templates de rapports","Intégrer une API Slack pour les notifications d'équipe","Afficher un score de santé du projet en temps réel"]
+  ["Ajouter une barre de progression sur le tableau de bord","Permettre l'export CSV des donnÃ©es","Envoyer une notification push lors d'un nouvel Ã©vÃ©nement","Afficher un graphique de tendance sur 30 jours","IntÃ©grer une authentification SSO pour les entreprises"],
+  ["CrÃ©er un onboarding interactif pour les nouveaux utilisateurs","Ajouter un mode sombre dans les paramÃ¨tres","Permettre le partage de rapport par lien public","AmÃ©liorer la vitesse de chargement des pages de plus de 3s","Ajouter un filtre par date sur la liste des transactions"],
+  ["Mettre en place un systÃ¨me de tags sur les contacts","Permettre l'import de donnÃ©es via fichier Excel","Ajouter un chat support en temps rÃ©el","CrÃ©er une page de statistiques d'utilisation pour les admins","Envoyer un email de rÃ©capitulatif hebdomadaire automatique"],
+  ["ImplÃ©menter une recherche globale dans l'application","Ajouter une fonctionnalitÃ© de commentaires sur les projets","Permettre aux managers de crÃ©er des templates de rapports","IntÃ©grer une API Slack pour les notifications d'Ã©quipe","Afficher un score de santÃ© du projet en temps rÃ©el"]
 ];
 var CONTEXTS = [
-  "SaaS B2B analytics, 200 clients PME, priorité rétention Q2",
+  "SaaS B2B analytics, 200 clients PME, prioritÃ© rÃ©tention Q2",
   "App mobile fintech, 50k utilisateurs, objectif activation J7",
-  "Plateforme RH SaaS, marché ETI, roadmap H2 axée adoption",
-  "Outil de gestion de projet B2B, scale-up 80 employés, focus NPS"
+  "Plateforme RH SaaS, marchÃ© ETI, roadmap H2 axÃ©e adoption",
+  "Outil de gestion de projet B2B, scale-up 80 employÃ©s, focus NPS"
 ];
 
 function randomStories() {
@@ -483,7 +484,7 @@ function addField(val) {
   div.className = 'story-field';
   div.dataset.id = fieldCount;
   div.innerHTML = '<span class="story-num">' + String(fieldCount).padStart(2,'0') + '</span>'
-    + '<input type="text" placeholder="Ex : Permettre l\'export CSV des données..." value="' + esc(val||'') + '">'
+    + '<input type="text" placeholder="Ex : Permettre l\'export CSV des donnÃ©es..." value="' + esc(val||'') + '">'
     + '<button class="btn-remove glass-shimmer glass-focus" onclick="removeField(this)" title="Supprimer">&#215;</button>';
   container.appendChild(div);
 }
@@ -508,18 +509,18 @@ function getStories() {
 
 // ---- LAUNCH ----
 function friendlyApiError(err, status) {
-  if (status === 429) return currentLang === 'en' ? 'Rate limit reached — wait 30 seconds and try again.' : 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable — try again in a moment.' : 'Service temporairement indisponible — réessaie dans quelques instants.';
-  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
+  if (status === 429) return currentLang === 'en' ? 'Rate limit reached â€” wait 30 seconds and try again.' : 'Limite de requÃªtes atteinte â€” attends 30 secondes et rÃ©essaie.';
+  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable â€” try again in a moment.' : 'Service temporairement indisponible â€” rÃ©essaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification â€” contacte le support.';
   if (err && err.message) return err.message;
-  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
+  return 'Erreur inattendue (' + status + '). RÃ©essaie ou contacte le support.';
 }
 async function launch() {
   hideError();
   var stories = getStories();
   var context = document.getElementById('context').value.trim();
   if (stories.length < 2) { showError(currentLang === 'en' ? 'Add at least 2 user stories to start prioritisation.' : 'Ajoute au moins 2 user stories pour lancer la priorisation.'); return; }
-  if (stories.length > 15) { showError(currentLang === 'en' ? 'Maximum 15 stories per session to keep scoring quality high.' : 'Maximum 15 stories par session pour garantir la qualité du scoring.'); return; }
+  if (stories.length > 15) { showError(currentLang === 'en' ? 'Maximum 15 stories per session to keep scoring quality high.' : 'Maximum 15 stories par session pour garantir la qualitÃ© du scoring.'); return; }
 
   document.getElementById('launchBtn').disabled = true;
   var _rr = document.getElementById('rerunBtn'); if(_rr) _rr.disabled = true;
@@ -551,7 +552,7 @@ async function launch() {
     renderResults(parsed, stories.length, context);
   } catch(e) {
     clearTimeout(_timeout);
-    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) — check your connection and try again.' : 'Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) â€” check your connection and try again.' : 'DÃ©lai dÃ©passÃ© (30s) â€” vÃ©rifie ta connexion et rÃ©essaie.');
     else showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
   }
 
@@ -566,9 +567,9 @@ function buildPrompt(stories, context) {
   var langRule = currentLang === 'en' ? 'IMPORTANT: Write every generated user-facing string in English. Keep JSON keys unchanged.\\n\\n' : '';
 
   if (currentMethod === 'rice') {
-    return langRule + 'Tu es un expert en priorisation produit. Analyse ces user stories et attribue un score RICE à chacune.\n\nUser stories :\n' + list + ctx + '\n\nRègles RICE :\n- Reach (1-10) : combien d\'utilisateurs impactés\n- Impact (1-3) : 1=faible, 2=moyen, 3=fort\n- Confidence (0.5/0.8/1.0) : 0.5=faible, 0.8=moyen, 1.0=élevé\n- Effort (1-5) : 1=très faible, 5=très élevé\n- Score = (Reach × Impact × Confidence) / Effort\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ou après :\n{\n  "method": "rice",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "reach": 7,\n      "impact": 2,\n      "confidence": 0.8,\n      "effort": 3,\n      "score": 3.73,\n      "justification": "Justification courte et spécifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items par score décroissant. Sois précis et cohérent avec le contexte produit fourni.';
+    return langRule + 'Tu es un expert en priorisation produit. Analyse ces user stories et attribue un score RICE Ã  chacune.\n\nUser stories :\n' + list + ctx + '\n\nRÃ¨gles RICE :\n- Reach (1-10) : combien d\'utilisateurs impactÃ©s\n- Impact (1-3) : 1=faible, 2=moyen, 3=fort\n- Confidence (0.5/0.8/1.0) : 0.5=faible, 0.8=moyen, 1.0=Ã©levÃ©\n- Effort (1-5) : 1=trÃ¨s faible, 5=trÃ¨s Ã©levÃ©\n- Score = (Reach Ã— Impact Ã— Confidence) / Effort\n\nRÃ©ponds UNIQUEMENT avec un JSON valide, sans texte avant ou aprÃ¨s :\n{\n  "method": "rice",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "reach": 7,\n      "impact": 2,\n      "confidence": 0.8,\n      "effort": 3,\n      "score": 3.73,\n      "justification": "Justification courte et spÃ©cifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items par score dÃ©croissant. Sois prÃ©cis et cohÃ©rent avec le contexte produit fourni.';
   } else {
-    return langRule + 'Tu es un expert en priorisation produit. Applique la méthode MoSCoW à ces user stories.\n\nUser stories :\n' + list + ctx + '\n\nCatégories MoSCoW :\n- Must Have : critique pour le produit, sans ça il ne fonctionne pas\n- Should Have : important mais pas bloquant\n- Could Have : nice to have, si le temps le permet\n- Won\'t Have : hors scope pour maintenant\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ou après :\n{\n  "method": "moscow",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "category": "Must Have",\n      "justification": "Justification courte et spécifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items : Must > Should > Could > Won\'t. Sois cohérent avec le contexte produit fourni.';
+    return langRule + 'Tu es un expert en priorisation produit. Applique la mÃ©thode MoSCoW Ã  ces user stories.\n\nUser stories :\n' + list + ctx + '\n\nCatÃ©gories MoSCoW :\n- Must Have : critique pour le produit, sans Ã§a il ne fonctionne pas\n- Should Have : important mais pas bloquant\n- Could Have : nice to have, si le temps le permet\n- Won\'t Have : hors scope pour maintenant\n\nRÃ©ponds UNIQUEMENT avec un JSON valide, sans texte avant ou aprÃ¨s :\n{\n  "method": "moscow",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "category": "Must Have",\n      "justification": "Justification courte et spÃ©cifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items : Must > Should > Could > Won\'t. Sois cohÃ©rent avec le contexte produit fourni.';
   }
 }
 
@@ -578,14 +579,14 @@ function parseResponse(text) {
   catch(e) {
     var m = clean.match(/\{[\s\S]*\}/);
     if (m) return JSON.parse(m[0]);
-    throw new Error('Impossible de parser la réponse. Réessaie.');
+    throw new Error('Impossible de parser la rÃ©ponse. RÃ©essaie.');
   }
 }
 
 function renderResults(d, count, context) {
   var items = d.items || [];
-  var sub = count + ' stor' + (count > 1 ? 'ies' : 'y') + ' · Méthode ' + (currentMethod === 'rice' ? 'RICE' : 'MoSCoW');
-  if (context) sub += ' · ' + context.substring(0, 40) + (context.length > 40 ? '…' : '');
+  var sub = count + ' stor' + (count > 1 ? 'ies' : 'y') + ' Â· MÃ©thode ' + (currentMethod === 'rice' ? 'RICE' : 'MoSCoW');
+  if (context) sub += ' Â· ' + context.substring(0, 40) + (context.length > 40 ? 'â€¦' : '');
   document.getElementById('resultsSub').textContent = sub;
 
   var html = '';
@@ -614,8 +615,8 @@ function renderResults(d, count, context) {
     html += '<div class="result-item">'
       + '<div class="rank' + (isTop ? ' top' : '') + '">' + rank + '</div>'
       + '<div class="story-content">'
-      + '<div class="story-title">' + esc(item.story) + '</div>'
-      + '<div class="story-justif">' + esc(item.justification || '') + '</div>'
+      + '<div class="story-title">' + fmt(item.story) + '</div>'
+      + '<div class="story-justif">' + fmt(item.justification || '') + '</div>'
       + '</div>'
       + scoreHtml
       + '</div>';
@@ -636,7 +637,7 @@ function copyResults() {
   var d = window._backlogData || {};
   var items = d.items || [];
   var method = d.method || 'rice';
-  var lines = ['# Backlog priorisé\n'];
+  var lines = ['# Backlog priorisÃ©\n'];
   items.forEach(function(item, i) {
     var score = method === 'rice'
       ? 'Score RICE : ' + (typeof item.score === 'number' ? item.score.toFixed(1) : '?') + ' (R' + (item.reach||'?') + ' I' + (item.impact||'?') + ' C' + (item.confidence||'?') + ' E' + (item.effort||'?') + ')'
@@ -671,6 +672,7 @@ function reset() {
 function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+function fmt(s) { return window.mdInline ? window.mdInline(s) : esc(s); }
 function showError(m) { var el = document.getElementById('errorBox'); el.textContent = m; el.classList.add('show'); }
 function hideError() { document.getElementById('errorBox').classList.remove('show'); }
 
@@ -681,7 +683,7 @@ setInputMode('text');
 var LANG = {
   fr: {
     'title': 'Backlog <span class="grad">Prioritizer</span>',
-    'subtitle': 'Colle tes user stories, choisis ta méthode. L’IA priorise et justifie chaque décision.',
+    'subtitle': 'Colle tes user stories, choisis ta mÃ©thode. Lâ€™IA priorise et justifie chaque dÃ©cision.',
     'btn.launch': '&#9654; Lancer la priorisation',
     'loading.text': 'Priorisation en cours...',
     'btn.reset': '&#8635; Recommencer',
@@ -764,7 +766,7 @@ function applyLangExtras(lang) {
   // Placeholders
   var _phbp = {
     'storiesText': ['Ajouter une barre de progression...', 'Add a progress bar to the dashboard...'],
-    'productContext': ['Ex : SaaS B2B analytics, 200 clients, priorité retention Q2', 'E.g. B2B analytics SaaS, 200 clients, Q2 retention priority'],
+    'productContext': ['Ex : SaaS B2B analytics, 200 clients, prioritÃ© retention Q2', 'E.g. B2B analytics SaaS, 200 clients, Q2 retention priority'],
   };
   Object.keys(_phbp).forEach(function(id){
     var el=document.getElementById(id);
@@ -791,7 +793,7 @@ function applyLangExtras(lang) {
     'lbl_moscow_btn': 'MoSCoW',
     'lbl_textarea_mode': 'Zone de texte',
     'lbl_fields_mode': 'Champs individuels',
-    'lbl_results_title': 'Backlog priorisé',
+    'lbl_results_title': 'Backlog priorisÃ©',
   };
   Object.keys(_sl).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_sl[id];});
 
@@ -853,12 +855,12 @@ window.pmImportInsights = function(){
   if(!okrs.length) return;
   var lines = [];
   if(prev.productName) lines.push('Produit : ' + prev.productName + (prev.productType ? ' (' + prev.productType + ')' : ''));
-  lines.push('Objectifs stratégiques du trimestre :');
+  lines.push('Objectifs stratÃ©giques du trimestre :');
   okrs.forEach(function(o){
-    lines.push('• ' + (o.objective||''));
-    (o.key_results||[]).forEach(function(kr){ lines.push('  → ' + (kr.text||'') + (kr.type ? ' [' + kr.type + ']' : '')); });
+    lines.push('â€¢ ' + (o.objective||''));
+    (o.key_results||[]).forEach(function(kr){ lines.push('  â†’ ' + (kr.text||'') + (kr.type ? ' [' + kr.type + ']' : '')); });
   });
-  if(prev.metrics) lines.push('\nMétriques à suivre : ' + prev.metrics);
+  if(prev.metrics) lines.push('\nMÃ©triques Ã  suivre : ' + prev.metrics);
   var ctxEl = document.getElementById('context');
   if(ctxEl) ctxEl.value = lines.join('\n');
   var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
@@ -873,6 +875,7 @@ function syncNavToolsLang(){var a=document.querySelector('.lang-btn.active');var
 document.addEventListener('DOMContentLoaded',syncNavToolsLang);
 document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.lang-btn'))setTimeout(syncNavToolsLang,0);});
 </script>
+<script src="md-lite.js"></script>
 <script src="krl1-widget.js"></script>
 <script src="glass.js"></script>
 

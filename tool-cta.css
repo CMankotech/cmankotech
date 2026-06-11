@@ -1,0 +1,24 @@
+/* tool-cta.css â€” unifies the primary "launch" button SHAPE across tools to
+   match the PM Toolkit pill. Per-page gradient/colour is left untouched, and
+   the existing glass-edge / glass-pointer hover effects are preserved
+   (so we deliberately avoid ::before / ::after here â€” glass owns those). */
+.btn-launch{
+  border-radius:99px;
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;
+  letter-spacing:0.1em;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.55rem;
+}
+.btn-launch .btn-inner{display:inline-flex;align-items:center;justify-content:center;gap:0.55rem}
+
+/* â”€â”€ FR/EN toggle: unify to the index pill shape (per-page accent dropped
+   in favour of the consistent nav chrome). Loaded after inline <style>, so
+   these win by source order without !important. â”€â”€ */
+.lang-toggle{align-items:center;border-radius:99px;padding:0.2rem}
+.lang-btn{border-radius:99px;font-weight:600;letter-spacing:0.08em}
+.lang-btn:hover:not(.active){color:var(--text)}
+.lang-btn.active{background:rgba(59,130,246,0.2);color:#93c5fd}
+

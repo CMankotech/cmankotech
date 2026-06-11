@@ -1,14 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72" role="img" aria-label="cm">
   <defs>
     <linearGradient id="cmF" x1="8" y1="10" x2="64" y2="62" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#60a5fa"/>
-      <stop offset="0.5" stop-color="#a78bfa"/>
-      <stop offset="1" stop-color="#22d3ee"/>
+      <stop offset="0" stop-color="#60a5fa"></stop>
+      <stop offset="0.5" stop-color="#a78bfa"></stop>
+      <stop offset="1" stop-color="#22d3ee"></stop>
     </linearGradient>
   </defs>
-  <rect width="72" height="72" rx="16" fill="#0b1020"/>
-  <rect x="4.5" y="4.5" width="63" height="63" rx="12.5" fill="none" stroke="url(#cmF)" stroke-width="2.5" stroke-opacity="0.85"/>
-  <path d="M30 23.5 A13 13 0 1 0 30 48.5" fill="none" stroke="url(#cmF)" stroke-width="8" stroke-linecap="round"/>
-  <path d="M40 49 V30 Q40 24 45.5 24 Q50 24 50 30 V49 M50 30 Q50 24 55.5 24 Q60 24 60 30 V49"
-        fill="none" stroke="url(#cmF)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect width="72" height="72" rx="16" fill="#0b1020"></rect>
+  <rect x="4.5" y="4.5" width="63" height="63" rx="12.5" fill="none" stroke="url(#cmF)" stroke-width="2.5" stroke-opacity="0.85"></rect>
+  <path d="M30 23.5 A13 13 0 1 0 30 48.5" fill="none" stroke="url(#cmF)" stroke-width="8" stroke-linecap="round"></path>
+  <path d="M40 49 V30 Q40 24 45.5 24 Q50 24 50 30 V49 M50 30 Q50 24 55.5 24 Q60 24 60 30 V49" fill="none" stroke="url(#cmF)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"></path>
 </svg>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Epic to User Stories — by Carlin Mankoto</title>
+<title>Epic to User Stories â€” by Carlin Mankoto</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -240,6 +240,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 .nav-tools-menu .nt-ico{font-size:0.95rem;line-height:1}
 @media(max-width:768px){.nav-tools-menu{left:auto;right:0;transform:translateY(-6px)}.nav-tools.open .nav-tools-menu{transform:translateY(0)}}
 </style>
+<link rel="stylesheet" href="tool-prose.css">
+<link rel="stylesheet" href="tool-cta.css">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
@@ -250,9 +252,9 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <div class="nav-tools" id="navTools">
       <button class="nav-tools-btn" onclick="toggleNavTools(event)" aria-haspopup="true"><span id="navToolsLabel">Outils</span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
       <div class="nav-tools-menu">
-        <a href="pm-toolkit.html" class="active"><span class="nt-ico">🧰</span> PM Toolkit</a>
-        <a href="rag-explorer.html"><span class="nt-ico">🔍</span> RAG Explorer</a>
-        <a href="veille.html"><span class="nt-ico">📡</span> Veille</a>
+        <a href="pm-toolkit.html" class="active"><span class="nt-ico">ðŸ§°</span> PM Toolkit</a>
+        <a href="rag-explorer.html"><span class="nt-ico">ðŸ”</span> RAG Explorer</a>
+        <a href="veille.html"><span class="nt-ico">ðŸ“¡</span> Veille</a>
       </div>
     </div>
   </div>
@@ -271,7 +273,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 
   <header>
-    <div class="header-tag"><span class="dot"></span> Backlog &amp; Delivery</div>
     <h1>Epic to <span class="grad">User Stories</span></h1>
     <p class="subtitle">D&eacute;cris un epic, l&rsquo;IA g&eacute;n&egrave;re un lot de user stories structur&eacute;es avec crit&egrave;res d&rsquo;acceptance, priorit&eacute; et effort estim&eacute;.</p>
   </header>
@@ -291,7 +292,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 <script>
 (function(){
   var _d = {
-    fr:{title:"En savoir plus",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour accélérer la décomposition d\'un epic en user stories prêtes pour le sprint planning.",pb:"Produire des user stories indépendantes, bien formulées et avec des critères d\'acceptance vérifiables demande du temps et de la rigueur.",ap:"L\'utilisateur décrit son epic, choisit le format (standard ou Job Story) et le nombre de stories. L\'IA génère chaque story avec priorité, effort et critères d\'acceptance. Stack : HTML/JS + Groq.",res:"Backlog prêt en quelques secondes, exportable en Markdown pour Jira ou Confluence. Respecte le principe INVEST."},
+    fr:{title:"En savoir plus",lbl:["Contexte","ProblÃ¨me","Approche","RÃ©sultat"],ctx:"ConÃ§u pour accÃ©lÃ©rer la dÃ©composition d\'un epic en user stories prÃªtes pour le sprint planning.",pb:"Produire des user stories indÃ©pendantes, bien formulÃ©es et avec des critÃ¨res d\'acceptance vÃ©rifiables demande du temps et de la rigueur.",ap:"L\'utilisateur dÃ©crit son epic, choisit le format (standard ou Job Story) et le nombre de stories. L\'IA gÃ©nÃ¨re chaque story avec prioritÃ©, effort et critÃ¨res d\'acceptance. Stack : HTML/JS + Groq.",res:"Backlog prÃªt en quelques secondes, exportable en Markdown pour Jira ou Confluence. Respecte le principe INVEST."},
     en:{title:"Learn more",lbl:["Context","Problem","Approach","Result"],ctx:"Built to accelerate epic breakdown into user stories ready for sprint planning.",pb:"Producing independent, well-formulated user stories with verifiable acceptance criteria takes time and rigor.",ap:"The user describes their epic, selects format (standard or Job Story) and story count. The AI generates each story with priority, effort and acceptance criteria. Stack: HTML/JS + Groq.",res:"Backlog ready in seconds, exportable to Markdown for Jira or Confluence. Follows the INVEST principle."}
   };
   function _upAbout(lang){
@@ -322,14 +323,14 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Colle ton epic et précise le contexte produit si besoin.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la décomposition — l'IA génère des user stories INVEST avec critères d'acceptance.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Paste your epic and add product context if needed.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run the breakdown — the AI generates INVEST user stories with acceptance criteria.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Colle ton epic et prÃ©cise le contexte produit si besoin.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la dÃ©composition â€” l'IA gÃ©nÃ¨re des user stories INVEST avec critÃ¨res d'acceptance.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Paste your epic and add product context if needed.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run the breakdown â€” the AI generates INVEST user stories with acceptance criteria.</div></div></div>
       <div class="about-divider"></div>
       <div class="about-grid">
-        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la décomposition d'un epic en user stories prêtes pour le sprint planning.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblPb">Problème</div><p class="about-text" id="aPb">Produire des user stories indépendantes, bien formulées et avec des critères d'acceptance vérifiables demande du temps et de la rigueur.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur décrit son epic, choisit le format (standard ou Job Story) et le nombre de stories. L'IA génère chaque story avec priorité, effort et critères d'acceptance. Stack : HTML/JS + Groq.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblRes">Résultat</div><p class="about-text" id="aRes">Backlog prêt en quelques secondes, exportable en Markdown pour Jira ou Confluence. Respecte le principe INVEST.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">ConÃ§u pour accÃ©lÃ©rer la dÃ©composition d'un epic en user stories prÃªtes pour le sprint planning.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblPb">ProblÃ¨me</div><p class="about-text" id="aPb">Produire des user stories indÃ©pendantes, bien formulÃ©es et avec des critÃ¨res d'acceptance vÃ©rifiables demande du temps et de la rigueur.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur dÃ©crit son epic, choisit le format (standard ou Job Story) et le nombre de stories. L'IA gÃ©nÃ¨re chaque story avec prioritÃ©, effort et critÃ¨res d'acceptance. Stack : HTML/JS + Groq.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblRes">RÃ©sultat</div><p class="about-text" id="aRes">Backlog prÃªt en quelques secondes, exportable en Markdown pour Jira ou Confluence. Respecte le principe INVEST.</p></div>
       </div>
     </div>
   </div>
@@ -339,7 +340,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="card">
     <div class="card-title">
       Epic
-      <button class="btn-examples glass-shimmer glass-focus" onclick="loadExample()">&#127922; Exemple aléatoire</button>
+      <button class="btn-examples glass-shimmer glass-focus" onclick="loadExample()">&#127922; Exemple alÃ©atoire</button>
     </div>
 
     <div class="field">
@@ -428,25 +429,25 @@ var format = 'standard';
 var EXAMPLES = [
   {
     title: "Refonte de l'onboarding utilisateur",
-    desc: "Les nouveaux utilisateurs abandonnent en masse : 60% ne complètent pas la configuration initiale. Réduire le time-to-value de J14 à J7 en simplifiant les étapes, ajoutant un wizard guidé et des tooltips contextuels.",
+    desc: "Les nouveaux utilisateurs abandonnent en masse : 60% ne complÃ¨tent pas la configuration initiale. RÃ©duire le time-to-value de J14 Ã  J7 en simplifiant les Ã©tapes, ajoutant un wizard guidÃ© et des tooltips contextuels.",
     persona: "Nouvel utilisateur (non-technique)",
     tech: "React SPA, mobile-first"
   },
   {
     title: "Module de notifications multi-canal",
-    desc: "Nos utilisateurs ratent des événements importants. Implémenter un système de notifications configurable (email, push, in-app) avec règles de déclenchement personnalisables et un centre de préférences.",
-    persona: "Utilisateur avancé, manager d'équipe",
+    desc: "Nos utilisateurs ratent des Ã©vÃ©nements importants. ImplÃ©menter un systÃ¨me de notifications configurable (email, push, in-app) avec rÃ¨gles de dÃ©clenchement personnalisables et un centre de prÃ©fÃ©rences.",
+    persona: "Utilisateur avancÃ©, manager d'Ã©quipe",
     tech: "Node.js backend, Firebase FCM, React"
   },
   {
-    title: "Export et reporting avancé",
-    desc: "Les managers passent 2-3h par semaine à extraire des données manuellement. Permettre l'export CSV/PDF/Excel avec filtres, planification de rapports automatiques et tableau de bord partageable par lien.",
-    persona: "Manager et décideur B2B",
+    title: "Export et reporting avancÃ©",
+    desc: "Les managers passent 2-3h par semaine Ã  extraire des donnÃ©es manuellement. Permettre l'export CSV/PDF/Excel avec filtres, planification de rapports automatiques et tableau de bord partageable par lien.",
+    persona: "Manager et dÃ©cideur B2B",
     tech: "SaaS B2B, stack React + Python API"
   },
   {
-    title: "Intégration SSO et gestion des rôles",
-    desc: "Les clients entreprise bloquent l'adoption faute d'intégration SSO. Supporter SAML 2.0 et OAuth/OIDC, gérer des rôles personnalisables par organisation et un tableau de bord admin pour les DSI.",
+    title: "IntÃ©gration SSO et gestion des rÃ´les",
+    desc: "Les clients entreprise bloquent l'adoption faute d'intÃ©gration SSO. Supporter SAML 2.0 et OAuth/OIDC, gÃ©rer des rÃ´les personnalisables par organisation et un tableau de bord admin pour les DSI.",
     persona: "Admin IT / DSI en entreprise",
     tech: "SaaS B2B enterprise, multi-tenant"
   }
@@ -494,7 +495,7 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, title);
   } catch(e) {
-    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) — check your connection and try again.' : 'Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) â€” check your connection and try again.' : 'DÃ©lai dÃ©passÃ© (30s) â€” vÃ©rifie ta connexion et rÃ©essaie.');
     else showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
   }
   document.getElementById('loading').classList.remove('show');
@@ -514,11 +515,11 @@ function buildPrompt(title, desc, persona, tech) {
 }
 
 function friendlyApiError(err, status) {
-  if (status === 429) return currentLang === 'en' ? 'Rate limit reached — wait 30 seconds and try again.' : 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable — try again in a moment.' : 'Service temporairement indisponible — réessaie dans quelques instants.';
-  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
+  if (status === 429) return currentLang === 'en' ? 'Rate limit reached â€” wait 30 seconds and try again.' : 'Limite de requÃªtes atteinte â€” attends 30 secondes et rÃ©essaie.';
+  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable â€” try again in a moment.' : 'Service temporairement indisponible â€” rÃ©essaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification â€” contacte le support.';
   if (err && err.message) return err.message;
-  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
+  return 'Erreur inattendue (' + status + '). RÃ©essaie ou contacte le support.';
 }
 async function callAI(prompt, maxTokens) {
   var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
@@ -564,14 +565,14 @@ function renderResults(d, epicTitle) {
     var priCls = 'badge-priority-' + (s.priority || 'medium');
     var effCls = 'badge-effort-' + (s.effort || 'M').toLowerCase();
     var acHtml = (s.acceptance_criteria || []).map(function(ac) {
-      return '<div class="us-ac-item"><span class="ac-bullet">&#10003;</span>' + esc(ac) + '</div>';
+      return '<div class="us-ac-item"><span class="ac-bullet">&#10003;</span>' + fmt(ac) + '</div>';
     }).join('');
     return '<div class="us-card">' +
       '<div class="us-card-top">' +
-        '<div class="us-title">' + esc(s.title) + '</div>' +
+        '<div class="us-title">' + fmt(s.title) + '</div>' +
         '<span class="us-id">' + esc(s.id || 'US') + '</span>' +
       '</div>' +
-      '<div class="us-story">' + esc(s.story) + '</div>' +
+      '<div class="us-story">' + fmt(s.story) + '</div>' +
       '<div class="us-meta">' +
         '<span class="us-badge ' + priCls + '">' + capitalise(s.priority || 'medium') + '</span>' +
         '<span class="us-badge ' + effCls + '">' + esc(s.effort || 'M') + '</span>' +
@@ -634,6 +635,7 @@ function reset() {
 }
 
 function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function fmt(s) { return window.mdInline ? window.mdInline(s) : esc(s); }
 function showError(m) { var el = document.getElementById('errorBox'); el.textContent = m; el.classList.add('show'); }
 function hideError() { document.getElementById('errorBox').classList.remove('show'); }
 
@@ -641,11 +643,11 @@ function hideError() { document.getElementById('errorBox').classList.remove('sho
 var LANG = {
   fr: {
     'title': 'Epic to <span class="grad">User Stories</span>',
-    'subtitle': 'Décris un epic, l’IA génère un lot de user stories structurées avec critères d’acceptance, priorité et effort estimé.',
-    'btn.launch': '&#9654; Générer les user stories',
-    'loading.text': 'Génération des user stories en cours...',
+    'subtitle': 'DÃ©cris un epic, lâ€™IA gÃ©nÃ¨re un lot de user stories structurÃ©es avec critÃ¨res dâ€™acceptance, prioritÃ© et effort estimÃ©.',
+    'btn.launch': '&#9654; GÃ©nÃ©rer les user stories',
+    'loading.text': 'GÃ©nÃ©ration des user stories en cours...',
     'btn.reset': '&#8635; Recommencer',
-    'ph.epicTitle': 'Ex : Refonte de l’onboarding utilisateur',
+    'ph.epicTitle': 'Ex : Refonte de lâ€™onboarding utilisateur',
     'ph.persona': 'Ex : Manager RH, Utilisateur final...',
     'ph.techContext': 'Ex : React SPA, mobile-first, API REST...'
   },
@@ -724,7 +726,7 @@ function applyLangExtras(lang) {
 
   var _pheu = {
     'epicTitle': ['Ex : Refonte de l\'onboarding utilisateur', 'E.g. User onboarding redesign'],
-    'epicDesc': ['Décris l\'epic, le problème qu\'il résout et la valeur apportée', 'Describe the epic, the problem it solves and the value it delivers'],
+    'epicDesc': ['DÃ©cris l\'epic, le problÃ¨me qu\'il rÃ©sout et la valeur apportÃ©e', 'Describe the epic, the problem it solves and the value it delivers'],
     'persona': ['Ex : Manager RH, Utilisateur final, Admin...', 'E.g. HR Manager, End user, Admin...'],
     'techContext': ['Ex : React SPA, mobile-first, API REST...', 'E.g. React SPA, mobile-first, REST API...'],
   };
@@ -754,13 +756,13 @@ function applyLangExtras(lang) {
     'lbl_standard_fmt': 'As a...',
     'lbl_results_title': 'Generated User Stories',
   } : {
-    'lbl_epic_title': 'Titre de l’epic',
+    'lbl_epic_title': 'Titre de lâ€™epic',
     'lbl_desc': 'Description &amp; objectif',
     'lbl_persona': 'Persona principal',
     'lbl_nb_stories': 'Nombre de user stories',
     'lbl_format': 'Format user story',
     'lbl_standard_fmt': 'En tant que...',
-    'lbl_results_title': 'User Stories générées',
+    'lbl_results_title': 'User Stories gÃ©nÃ©rÃ©es',
   };
   Object.keys(_sl).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_sl[id];});
 
@@ -836,8 +838,8 @@ window.pmImportInsights = function(){
     var lines = [];
     if(top.justification) lines.push(top.justification);
     if(items.length > 1){
-      lines.push('\nTop priorités adjacentes :');
-      items.slice(1,4).forEach(function(it){ lines.push('- ' + (it.story||it.title||'') + (it.justification ? ' — ' + it.justification : '')); });
+      lines.push('\nTop prioritÃ©s adjacentes :');
+      items.slice(1,4).forEach(function(it){ lines.push('- ' + (it.story||it.title||'') + (it.justification ? ' â€” ' + it.justification : '')); });
     }
     if(backlogData.context) lines.push('\nContexte produit : ' + backlogData.context);
     descEl.value = lines.join('\n');
@@ -847,7 +849,7 @@ window.pmImportInsights = function(){
     var interviewData = PMSession.get('interview');
     if(interviewData){
       var p = ((interviewData.result||{}).persona)||{};
-      if(p.name) persoEl.value = p.name + (p.description ? ' — ' + p.description : '') + (p.tags&&p.tags.length ? ' (' + p.tags.slice(0,3).join(', ') + ')' : '');
+      if(p.name) persoEl.value = p.name + (p.description ? ' â€” ' + p.description : '') + (p.tags&&p.tags.length ? ' (' + p.tags.slice(0,3).join(', ') + ')' : '');
     }
   }
   var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
@@ -862,6 +864,7 @@ function syncNavToolsLang(){var a=document.querySelector('.lang-btn.active');var
 document.addEventListener('DOMContentLoaded',syncNavToolsLang);
 document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.lang-btn'))setTimeout(syncNavToolsLang,0);});
 </script>
+<script src="md-lite.js"></script>
 <script src="krl1-widget.js"></script>
 <script src="glass.js"></script>
 

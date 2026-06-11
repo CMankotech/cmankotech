@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAG Explorer — by Carlin Mankoto</title>
+<title>RAG Explorer â€” by Carlin Mankoto</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -88,7 +88,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .step-desc{font-size:0.68rem;color:var(--dim)}
 .step-body{margin-left:52px}
 
-/* STEP 1 — INTENT */
+/* STEP 1 â€” INTENT */
 .intent-row{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
 .intent-badge{display:inline-flex;align-items:center;gap:0.4rem;font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;padding:0.35rem 0.85rem;border-radius:99px}
 .intent-pm{background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.3);color:#c4b5fd}
@@ -100,7 +100,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .goal-box{margin-top:0.75rem;padding:0.75rem 1rem;background:rgba(255,255,255,0.02);border:1px solid var(--line);border-radius:8px;font-size:0.8rem;color:var(--dim)}
 .goal-box strong{color:var(--text);font-weight:400}
 
-/* STEP 2 — CHUNKS */
+/* STEP 2 â€” CHUNKS */
 .chunk-list{display:flex;flex-direction:column;gap:0.65rem}
 @property --tc-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
 .chunk-card{position:relative;isolation:isolate;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(0,0,0,0.15));border:1px solid var(--border);border-radius:12px;padding:0.9rem 1rem;overflow:hidden;backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 6px 18px -10px rgba(0,0,0,0.4);transition:transform 0.25s,border-color 0.25s,box-shadow 0.3s}
@@ -120,7 +120,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .chunk-expand:hover{opacity:0.7}
 .no-rag-note{font-size:0.78rem;color:var(--dim);padding:0.75rem 1rem;background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.12);border-radius:8px}
 
-/* STEP 3 — REPLY */
+/* STEP 3 â€” REPLY */
 .reply-box{background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.25rem;font-size:0.84rem;line-height:1.75;color:var(--text)}
 .reply-box a{color:var(--acc);text-decoration:none}
 .reply-box a:hover{text-decoration:underline}
@@ -239,6 +239,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 .nav-tools-menu .nt-ico{font-size:0.95rem;line-height:1}
 @media(max-width:768px){.nav-tools-menu{left:auto;right:0;transform:translateY(-6px)}.nav-tools.open .nav-tools-menu{transform:translateY(0)}}
 </style>
+<link rel="stylesheet" href="tool-prose.css">
+<link rel="stylesheet" href="tool-cta.css">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
@@ -249,9 +251,9 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <div class="nav-tools" id="navTools">
       <button class="nav-tools-btn" onclick="toggleNavTools(event)" aria-haspopup="true"><span id="navToolsLabel">Outils</span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
       <div class="nav-tools-menu">
-        <a href="pm-toolkit.html"><span class="nt-ico">🧰</span> PM Toolkit</a>
-        <a href="rag-explorer.html" class="active"><span class="nt-ico">🔍</span> RAG Explorer</a>
-        <a href="veille.html"><span class="nt-ico">📡</span> Veille</a>
+        <a href="pm-toolkit.html"><span class="nt-ico">ðŸ§°</span> PM Toolkit</a>
+        <a href="rag-explorer.html" class="active"><span class="nt-ico">ðŸ”</span> RAG Explorer</a>
+        <a href="veille.html"><span class="nt-ico">ðŸ“¡</span> Veille</a>
       </div>
     </div>
   </div>
@@ -269,14 +271,13 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
   <!-- HEADER -->
   <header>
-    <div class="header-tag"><span class="dot"></span> RAG · Semantic Retrieval</div>
     <h1>PM Knowledge <span class="grad">Retriever</span></h1>
-    <p class="subtitle">Démonstration d'un pipeline RAG complet : embedding sémantique, retrieval vectoriel et génération augmentée sur une base de connaissances PM.</p>
+    <p class="subtitle">DÃ©monstration d'un pipeline RAG complet : embedding sÃ©mantique, retrieval vectoriel et gÃ©nÃ©ration augmentÃ©e sur une base de connaissances PM.</p>
   </header>
 
   <!-- ARCHITECTURE NOTE -->
   <div class="arch-note">
-    <p>Pipeline RAG embarqué dans un <strong>Cloudflare Worker</strong>. Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) et la similarité cosinus est calculée à l'edge. La base de connaissances couvre <strong>15 documents</strong> (PM, PO/Agile, AI Product), découpés en chunks de 300 mots avec overlap de 50.</p>
+    <p>Pipeline RAG embarquÃ© dans un <strong>Cloudflare Worker</strong>. Les embeddings sÃ©mantiques sont gÃ©nÃ©rÃ©s par <strong>Workers AI</strong> (bge-small-en-v1.5) et la similaritÃ© cosinus est calculÃ©e Ã  l'edge. La base de connaissances couvre <strong>15 documents</strong> (PM, PO/Agile, AI Product), dÃ©coupÃ©s en chunks de 300 mots avec overlap de 50.</p>
     <div class="arch-svg-wrap">
       <svg viewBox="0 0 780 168" class="arch-svg" role="img" aria-label="RAG pipeline diagram">
         <defs>
@@ -291,22 +292,22 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
         <text x="264" y="52" text-anchor="middle" font-size="8.5" fill="rgba(167,139,250,0.65)" font-family="DM Sans,sans-serif" font-style="italic">pm_workflow</text>
         <line x1="420" y1="77" x2="478" y2="77" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" marker-end="url(#arrW)"/>
         <line x1="581" y1="77" x2="642" y2="77" stroke="rgba(34,211,238,0.25)" stroke-width="1.5" marker-end="url(#arrC)"/>
-        <!-- Bypass: Planner → Synthesis (dashed) -->
+        <!-- Bypass: Planner â†’ Synthesis (dashed) -->
         <path d="M 188 97 L 188 133 L 530 133 L 530 97" fill="none" stroke="rgba(113,128,150,0.32)" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrD)"/>
-        <text x="359" y="150" text-anchor="middle" font-size="8.5" fill="rgba(113,128,150,0.52)" font-family="DM Sans,sans-serif" font-style="italic">other intent (portfolio · tech · contact) → Synthesis directement</text>
+        <text x="359" y="150" text-anchor="middle" font-size="8.5" fill="rgba(113,128,150,0.52)" font-family="DM Sans,sans-serif" font-style="italic">other intent (portfolio Â· tech Â· contact) â†’ Synthesis directement</text>
         <!-- Nodes -->
         <rect x="8" y="58" width="80" height="38" rx="8" fill="rgba(14,14,26,0.95)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
         <text x="48" y="78" text-anchor="middle" font-size="11" fill="#e2e8f0" font-family="DM Sans,sans-serif" font-weight="500">Query</text>
         <text x="48" y="90" text-anchor="middle" font-size="8" fill="#4a5568" font-family="DM Sans,sans-serif">user input</text>
         <rect x="143" y="58" width="91" height="38" rx="8" fill="rgba(14,14,26,0.95)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
         <text x="188" y="78" text-anchor="middle" font-size="11" fill="#e2e8f0" font-family="DM Sans,sans-serif" font-weight="500">Planner</text>
-        <text x="188" y="90" text-anchor="middle" font-size="8" fill="#4a5568" font-family="DM Sans,sans-serif">intent · confidence</text>
+        <text x="188" y="90" text-anchor="middle" font-size="8" fill="#4a5568" font-family="DM Sans,sans-serif">intent Â· confidence</text>
         <rect x="298" y="58" width="121" height="38" rx="8" fill="rgba(167,139,250,0.07)" stroke="rgba(167,139,250,0.3)" stroke-width="1.5"/>
         <text x="358.5" y="78" text-anchor="middle" font-size="11" fill="#a78bfa" font-family="DM Sans,sans-serif" font-weight="500">Retriever</text>
-        <text x="358.5" y="90" text-anchor="middle" font-size="8" fill="rgba(167,139,250,0.5)" font-family="DM Sans,sans-serif">Workers AI · cosine sim</text>
+        <text x="358.5" y="90" text-anchor="middle" font-size="8" fill="rgba(167,139,250,0.5)" font-family="DM Sans,sans-serif">Workers AI Â· cosine sim</text>
         <rect x="481" y="58" width="99" height="38" rx="8" fill="rgba(14,14,26,0.95)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
         <text x="530.5" y="78" text-anchor="middle" font-size="11" fill="#e2e8f0" font-family="DM Sans,sans-serif" font-weight="500">Synthesis</text>
-        <text x="530.5" y="90" text-anchor="middle" font-size="8" fill="#4a5568" font-family="DM Sans,sans-serif">Groq · llama-3.3-70b</text>
+        <text x="530.5" y="90" text-anchor="middle" font-size="8" fill="#4a5568" font-family="DM Sans,sans-serif">Groq Â· llama-3.3-70b</text>
         <rect x="644" y="58" width="110" height="38" rx="8" fill="rgba(34,211,238,0.06)" stroke="rgba(34,211,238,0.2)" stroke-width="1"/>
         <text x="699" y="78" text-anchor="middle" font-size="11" fill="#22d3ee" font-family="DM Sans,sans-serif" font-weight="500">Reply</text>
         <text x="699" y="90" text-anchor="middle" font-size="8" fill="rgba(34,211,238,0.45)" font-family="DM Sans,sans-serif">augmented</text>
@@ -332,7 +333,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <span class="kb-pill">INVEST</span>
       <span class="kb-pill">Story Mapping</span>
       <span class="kb-pill">Sprint Ceremonies</span>
-      <span class="kb-pill">Déf. of Done</span>
+      <span class="kb-pill">DÃ©f. of Done</span>
       <span class="kb-pill kb-pill-cat-ai">AI</span>
       <span class="kb-pill">RAG &amp; LLM</span>
       <span class="kb-pill">AI Product Strategy</span>
@@ -350,13 +351,13 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
     <div class="chips" id="chips-fr">
       <span class="chip" onclick="useChip(this)">Comment prioriser avec RICE ?</span>
-      <span class="chip" onclick="useChip(this)">Comment utiliser le modèle Kano ?</span>
+      <span class="chip" onclick="useChip(this)">Comment utiliser le modÃ¨le Kano ?</span>
       <span class="chip" onclick="useChip(this)">C'est quoi une North Star Metric ?</span>
       <span class="chip" onclick="useChip(this)">Comment construire mes OKRs trimestriels ?</span>
       <span class="chip" onclick="useChip(this)">Comment faire un Story Mapping ?</span>
-      <span class="chip" onclick="useChip(this)">Différence entre RAG et fine-tuning ?</span>
+      <span class="chip" onclick="useChip(this)">DiffÃ©rence entre RAG et fine-tuning ?</span>
       <span class="chip" onclick="useChip(this)">C'est quoi une Definition of Done ?</span>
-      <span class="chip" onclick="useChip(this)">Comment mesurer l'expérience avec HEART ?</span>
+      <span class="chip" onclick="useChip(this)">Comment mesurer l'expÃ©rience avec HEART ?</span>
     </div>
     <div class="chips" id="chips-en" style="display:none">
       <span class="chip" onclick="useChip(this)">How to use RICE for backlog prioritization?</span>
@@ -364,26 +365,26 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <span class="chip" onclick="useChip(this)">What is a North Star Metric?</span>
       <span class="chip" onclick="useChip(this)">How to set quarterly OKRs?</span>
       <span class="chip" onclick="useChip(this)">How to run a story mapping session?</span>
-      <span class="chip" onclick="useChip(this)">RAG vs fine-tuning — when to use what?</span>
+      <span class="chip" onclick="useChip(this)">RAG vs fine-tuning â€” when to use what?</span>
       <span class="chip" onclick="useChip(this)">What is a Definition of Done?</span>
       <span class="chip" onclick="useChip(this)">How to measure UX with the HEART framework?</span>
     </div>
 
-    <button class="btn-launch glass-edge glass-pointer glass-focus" id="btn-query" onclick="runQuery()">Interroger la KB →</button>
+    <button class="btn-launch glass-edge glass-pointer glass-focus" id="btn-query" onclick="runQuery()">Interroger la KB â†’</button>
     <div class="error-box" id="error-box"></div>
   </div>
 
   <!-- LOADING -->
   <div class="loading" id="loading">
     <div class="spinner"></div>
-    <div class="loading-text" id="loading-text">Planner en cours…</div>
+    <div class="loading-text" id="loading-text">Planner en coursâ€¦</div>
   </div>
 
   <!-- PIPELINE RESULTS -->
   <div class="pipeline" id="pipeline">
     <div class="pipeline-header">
       <div>
-        <div class="pipeline-title">Pipeline RAG — Résultats</div>
+        <div class="pipeline-title">Pipeline RAG â€” RÃ©sultats</div>
         <div class="pipeline-meta" id="pipeline-meta"></div>
       </div>
       <button class="btn-reset glass-shimmer glass-focus" onclick="resetForm()">Nouvelle question</button>
@@ -394,19 +395,19 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <div class="step-header">
         <div class="step-num">1</div>
         <div>
-          <div class="step-label" id="step1-label">Planner — Classification d'intent</div>
-          <div class="step-desc" id="step1-desc">Analyse la requête et détermine si le retriever doit s'activer</div>
+          <div class="step-label" id="step1-label">Planner â€” Classification d'intent</div>
+          <div class="step-desc" id="step1-desc">Analyse la requÃªte et dÃ©termine si le retriever doit s'activer</div>
         </div>
       </div>
       <div class="step-body">
         <div class="intent-row">
           <span class="intent-badge" id="intent-badge">pm_workflow</span>
           <div class="confidence-bar-wrap">
-            <div class="confidence-label" id="conf-label">Confidence : —</div>
+            <div class="confidence-label" id="conf-label">Confidence : â€”</div>
             <div class="confidence-bar"><div class="confidence-fill" id="conf-fill" style="width:0%"></div></div>
           </div>
         </div>
-        <div class="goal-box"><strong id="goal-text">—</strong></div>
+        <div class="goal-box"><strong id="goal-text">â€”</strong></div>
       </div>
     </div>
 
@@ -415,8 +416,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <div class="step-header">
         <div class="step-num">2</div>
         <div>
-          <div class="step-label" id="step2-label">Retriever — Chunks sémantiques</div>
-          <div class="step-desc" id="step2-desc">Top-3 passages les plus proches par similarité cosinus</div>
+          <div class="step-label" id="step2-label">Retriever â€” Chunks sÃ©mantiques</div>
+          <div class="step-desc" id="step2-desc">Top-3 passages les plus proches par similaritÃ© cosinus</div>
         </div>
       </div>
       <div class="step-body" id="chunks-body">
@@ -429,19 +430,19 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <div class="step-header">
         <div class="step-num">3</div>
         <div>
-          <div class="step-label" id="step3-label">Synthesis — Réponse augmentée</div>
-          <div class="step-desc" id="step3-desc">Le LLM génère une réponse ancrée dans les chunks récupérés</div>
+          <div class="step-label" id="step3-label">Synthesis â€” RÃ©ponse augmentÃ©e</div>
+          <div class="step-desc" id="step3-desc">Le LLM gÃ©nÃ¨re une rÃ©ponse ancrÃ©e dans les chunks rÃ©cupÃ©rÃ©s</div>
         </div>
       </div>
       <div class="step-body">
-        <div class="reply-box" id="reply-box"></div>
-        <button class="btn-copy glass-shimmer glass-focus" id="btn-copy" onclick="copyReply()">Copier la réponse</button>
+        <div class="reply-box prose" id="reply-box"></div>
+        <button class="btn-copy glass-shimmer glass-focus" id="btn-copy" onclick="copyReply()">Copier la rÃ©ponse</button>
       </div>
     </div>
   </div>
 
   <footer>
-    Construit par <a href="index.html">Carlin Mankoto</a> · Cloudflare Workers AI + Groq
+    Construit par <a href="index.html">Carlin Mankoto</a> Â· Cloudflare Workers AI + Groq
   </footer>
 
 </div>
@@ -454,40 +455,40 @@ var i18n = {
   fr: {
     queryLabel: 'Posez une question sur un framework PM',
     queryPlaceholder: 'Ex : Comment utiliser RICE pour prioriser mon backlog produit ?',
-    btnQuery: 'Interroger la KB →',
-    loadingPlanner: 'Planner en cours…',
-    loadingRetriever: 'Retrieval sémantique…',
-    loadingSynthesis: 'Synthèse augmentée…',
-    step1label: 'Planner — Classification d\'intent',
-    step1desc: 'Analyse la requête et détermine si le retriever doit s\'activer',
-    step2label: 'Retriever — Chunks sémantiques',
-    step2desc: 'Top-3 passages les plus proches par similarité cosinus',
-    step3label: 'Synthesis — Réponse augmentée',
-    step3desc: 'Le LLM génère une réponse ancrée dans les chunks récupérés',
-    noRag: 'Intent non-PM détecté → le Retriever n\'a pas été activé pour cette requête.',
-    noRagBackend: '⚠ Le retriever n\'a pas pu être activé. Réponse via l\'orchestrateur de base — les chunks ne sont pas disponibles.',
+    btnQuery: 'Interroger la KB â†’',
+    loadingPlanner: 'Planner en coursâ€¦',
+    loadingRetriever: 'Retrieval sÃ©mantiqueâ€¦',
+    loadingSynthesis: 'SynthÃ¨se augmentÃ©eâ€¦',
+    step1label: 'Planner â€” Classification d\'intent',
+    step1desc: 'Analyse la requÃªte et dÃ©termine si le retriever doit s\'activer',
+    step2label: 'Retriever â€” Chunks sÃ©mantiques',
+    step2desc: 'Top-3 passages les plus proches par similaritÃ© cosinus',
+    step3label: 'Synthesis â€” RÃ©ponse augmentÃ©e',
+    step3desc: 'Le LLM gÃ©nÃ¨re une rÃ©ponse ancrÃ©e dans les chunks rÃ©cupÃ©rÃ©s',
+    noRag: 'Intent non-PM dÃ©tectÃ© â†’ le Retriever n\'a pas Ã©tÃ© activÃ© pour cette requÃªte.',
+    noRagBackend: 'âš  Le retriever n\'a pas pu Ãªtre activÃ©. RÃ©ponse via l\'orchestrateur de base â€” les chunks ne sont pas disponibles.',
     pipelineMeta: function(engine){ return 'Moteur : ' + engine; },
     confLabel: function(pct){ return 'Confidence : ' + pct + '%'; },
     expand: 'Voir plus',
-    collapse: 'Réduire',
-    copied: 'Copié !',
-    copy: 'Copier la réponse',
+    collapse: 'RÃ©duire',
+    copied: 'CopiÃ© !',
+    copy: 'Copier la rÃ©ponse',
   },
   en: {
     queryLabel: 'Ask a question about a PM framework',
     queryPlaceholder: 'e.g. How do I use RICE to prioritize my product backlog?',
-    btnQuery: 'Query the KB →',
-    loadingPlanner: 'Running planner…',
-    loadingRetriever: 'Semantic retrieval…',
-    loadingSynthesis: 'Augmented synthesis…',
-    step1label: 'Planner — Intent Classification',
+    btnQuery: 'Query the KB â†’',
+    loadingPlanner: 'Running plannerâ€¦',
+    loadingRetriever: 'Semantic retrievalâ€¦',
+    loadingSynthesis: 'Augmented synthesisâ€¦',
+    step1label: 'Planner â€” Intent Classification',
     step1desc: 'Analyses the query and decides whether the retriever should activate',
-    step2label: 'Retriever — Semantic Chunks',
+    step2label: 'Retriever â€” Semantic Chunks',
     step2desc: 'Top-3 closest passages by cosine similarity',
-    step3label: 'Synthesis — Augmented Response',
+    step3label: 'Synthesis â€” Augmented Response',
     step3desc: 'The LLM generates a response grounded in the retrieved chunks',
-    noRag: 'Non-PM intent detected → the Retriever was not activated for this query.',
-    noRagBackend: '⚠ Retriever could not be activated. Responding via base orchestrator — chunks are unavailable.',
+    noRag: 'Non-PM intent detected â†’ the Retriever was not activated for this query.',
+    noRagBackend: 'âš  Retriever could not be activated. Responding via base orchestrator â€” chunks are unavailable.',
     pipelineMeta: function(engine){ return 'Engine: ' + engine; },
     confLabel: function(pct){ return 'Confidence: ' + pct + '%'; },
     expand: 'Read more',
@@ -572,7 +573,7 @@ async function runQuery() {
         }
       }
     } catch(e) {
-      // RAG backend unreachable — fall through to orchestrate
+      // RAG backend unreachable â€” fall through to orchestrate
     }
 
     // Fallback: /orchestrate (always available via Cloudflare Worker)
@@ -638,7 +639,7 @@ function renderPipeline(data, query) {
     chunkList.innerHTML = '<div class="no-rag-note">' + t('noRag') + '</div>';
   } else {
     chunks.forEach(function(chunk) {
-      var scoreDisplay = chunk.score !== undefined ? (chunk.score * 100).toFixed(0) + '%' : '—';
+      var scoreDisplay = chunk.score !== undefined ? (chunk.score * 100).toFixed(0) + '%' : 'â€”';
       var sClass = scoreClass(chunk.score || 0);
       var id = 'chunk-' + Math.random().toString(36).slice(2);
       var card = document.createElement('div');
@@ -657,7 +658,7 @@ function renderPipeline(data, query) {
   // Step 3: Reply
   document.getElementById('step3-label').textContent = t('step3label');
   document.getElementById('step3-desc').textContent = t('step3desc');
-  document.getElementById('reply-box').innerHTML = reply;
+  document.getElementById('reply-box').innerHTML = window.mdLite ? window.mdLite(reply) : reply;
   document.getElementById('btn-copy').textContent = t('copy');
   document.getElementById('btn-copy').classList.remove('copied');
   lastReply = reply.replace(/<[^>]+>/g, '');
@@ -714,6 +715,7 @@ function syncNavToolsLang(){var a=document.querySelector('.lang-btn.active');var
 document.addEventListener('DOMContentLoaded',syncNavToolsLang);
 document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.lang-btn'))setTimeout(syncNavToolsLang,0);});
 </script>
+<script src="md-lite.js"></script>
 <script src="krl1-widget.js"></script>
 <script src="glass.js"></script>
 <script>
@@ -740,7 +742,7 @@ document.addEventListener('click',function(e){if(e.target.closest&&e.target.clos
 
 <div id="tt-bubble"></div>
 <script>
-var TT_G_RAG={"cosine":{"fr":"Mesure de similarité entre deux vecteurs (0 = aucun lien, 1 = identiques). Utilisée pour trouver les chunks les plus proches d'une requête dans la base PM.","en":"Similarity measure between two vectors (0 = unrelated, 1 = identical). Used to find the closest chunks to a query in the PM knowledge base."},"planner":{"fr":"Premier appel LLM (T=0.2) qui produit un JSON strict : intent, confidence, user_goal, steps, risks, quick_win.","en":"First LLM call (T=0.2) that produces strict JSON: intent, confidence, user_goal, steps, risks, quick_win."},"synthesis":{"fr":"Deuxième appel LLM (T=0.45) qui transforme le plan structuré du Planner en réponse naturelle, max 220 mots.","en":"Second LLM call (T=0.45) that transforms the Planner's structured plan into a natural response, max 220 words."},"workersai":{"fr":"Service d'IA de Cloudflare exécuté sur serveurs edge. Ici : bge-small-en-v1.5 pour générer des embeddings sémantiques en un seul appel batch.","en":"Cloudflare's AI service running on edge servers. Here: bge-small-en-v1.5 to generate semantic embeddings in a single batch call."},"temperature":{"fr":"Paramètre LLM qui contrôle l'aléatoire. T=0.2 : déterministe, JSON fiable. T=0.45 : plus créatif, texte naturel.","en":"LLM parameter controlling randomness. T=0.2: deterministic, reliable JSON. T=0.45: more creative, natural text."},"chunk":{"fr":"Fragment de texte découpé depuis la base de connaissances (300 mots, overlap 50). Unité récupérée par le retriever RAG lors d'une requête sémantique.","en":"Text fragment sliced from the knowledge base (300 words, 50 overlap). The unit retrieved by the RAG retriever on a semantic query."},"vector":{"fr":"Tableau de nombres (384 dimensions ici) qui encode le sens sémantique d'un texte. Deux textes proches en sens ont des vecteurs proches.","en":"Array of numbers (384 dimensions here) encoding the semantic meaning of text. Two texts with similar meaning have similar vectors."},"rice":{"fr":"Reach x Impact x Confidence / Effort. Score numérique pour comparer des features et prioriser sans débat d'opinion.","en":"Reach x Impact x Confidence / Effort. Numeric score to compare features and prioritise without opinion debates."},"okr":{"fr":"Objectives and Key Results. Objectif qualitatif inspirant + 2-5 KR mesurables. Cadence trimestrielle, 70% de réussite = bon résultat.","en":"Objectives and Key Results. Inspiring qualitative objective + 2-5 measurable KRs. Quarterly cadence, 70% completion = good result."},"jtbd":{"fr":"Jobs-to-be-Done. Cadre centré sur le travail que l'utilisateur cherche à accomplir, pas ses demandes de features.","en":"Jobs-to-be-Done. Framework focused on the job the user is trying to get done, not their feature requests."},"moscow":{"fr":"Must / Should / Could / Won't. Priorisation par catégorie de nécessité pour un sprint ou une release.","en":"Must / Should / Could / Won't. Prioritisation by necessity category for a sprint or release."},"invest":{"fr":"Independent, Negotiable, Valuable, Estimable, Small, Testable. Critères de qualité d'une user story.","en":"Independent, Negotiable, Valuable, Estimable, Small, Testable. Quality criteria for a user story."},"kano":{"fr":"Catégorise les features en Must-Be, Performance et Delighters selon l'impact sur la satisfaction. Les Delighters créent le wow.","en":"Categorises features as Must-Be, Performance and Delighters by satisfaction impact. Delighters create the wow."},"heart":{"fr":"Happiness, Engagement, Adoption, Retention, Task Success. Framework Google de métriques UX centré sur l'expérience utilisateur.","en":"Happiness, Engagement, Adoption, Retention, Task Success. Google's UX metrics framework centred on user experience."},"northstar":{"fr":"Métrique unique qui capture la valeur créée pour l'utilisateur. Précède le revenu sans le mesurer directement.","en":"Single metric that captures the value created for users. Predicts revenue without measuring it directly."},"discovery":{"fr":"Phase de validation avant de construire. Double Diamond : comprendre le problème (diverger) puis cadrer la solution (converger).","en":"Validation phase before building. Double Diamond: understand the problem (diverge) then frame the solution (converge)."}};
+var TT_G_RAG={"cosine":{"fr":"Mesure de similaritÃ© entre deux vecteurs (0 = aucun lien, 1 = identiques). UtilisÃ©e pour trouver les chunks les plus proches d'une requÃªte dans la base PM.","en":"Similarity measure between two vectors (0 = unrelated, 1 = identical). Used to find the closest chunks to a query in the PM knowledge base."},"planner":{"fr":"Premier appel LLM (T=0.2) qui produit un JSON strict : intent, confidence, user_goal, steps, risks, quick_win.","en":"First LLM call (T=0.2) that produces strict JSON: intent, confidence, user_goal, steps, risks, quick_win."},"synthesis":{"fr":"DeuxiÃ¨me appel LLM (T=0.45) qui transforme le plan structurÃ© du Planner en rÃ©ponse naturelle, max 220 mots.","en":"Second LLM call (T=0.45) that transforms the Planner's structured plan into a natural response, max 220 words."},"workersai":{"fr":"Service d'IA de Cloudflare exÃ©cutÃ© sur serveurs edge. Ici : bge-small-en-v1.5 pour gÃ©nÃ©rer des embeddings sÃ©mantiques en un seul appel batch.","en":"Cloudflare's AI service running on edge servers. Here: bge-small-en-v1.5 to generate semantic embeddings in a single batch call."},"temperature":{"fr":"ParamÃ¨tre LLM qui contrÃ´le l'alÃ©atoire. T=0.2 : dÃ©terministe, JSON fiable. T=0.45 : plus crÃ©atif, texte naturel.","en":"LLM parameter controlling randomness. T=0.2: deterministic, reliable JSON. T=0.45: more creative, natural text."},"chunk":{"fr":"Fragment de texte dÃ©coupÃ© depuis la base de connaissances (300 mots, overlap 50). UnitÃ© rÃ©cupÃ©rÃ©e par le retriever RAG lors d'une requÃªte sÃ©mantique.","en":"Text fragment sliced from the knowledge base (300 words, 50 overlap). The unit retrieved by the RAG retriever on a semantic query."},"vector":{"fr":"Tableau de nombres (384 dimensions ici) qui encode le sens sÃ©mantique d'un texte. Deux textes proches en sens ont des vecteurs proches.","en":"Array of numbers (384 dimensions here) encoding the semantic meaning of text. Two texts with similar meaning have similar vectors."},"rice":{"fr":"Reach x Impact x Confidence / Effort. Score numÃ©rique pour comparer des features et prioriser sans dÃ©bat d'opinion.","en":"Reach x Impact x Confidence / Effort. Numeric score to compare features and prioritise without opinion debates."},"okr":{"fr":"Objectives and Key Results. Objectif qualitatif inspirant + 2-5 KR mesurables. Cadence trimestrielle, 70% de rÃ©ussite = bon rÃ©sultat.","en":"Objectives and Key Results. Inspiring qualitative objective + 2-5 measurable KRs. Quarterly cadence, 70% completion = good result."},"jtbd":{"fr":"Jobs-to-be-Done. Cadre centrÃ© sur le travail que l'utilisateur cherche Ã  accomplir, pas ses demandes de features.","en":"Jobs-to-be-Done. Framework focused on the job the user is trying to get done, not their feature requests."},"moscow":{"fr":"Must / Should / Could / Won't. Priorisation par catÃ©gorie de nÃ©cessitÃ© pour un sprint ou une release.","en":"Must / Should / Could / Won't. Prioritisation by necessity category for a sprint or release."},"invest":{"fr":"Independent, Negotiable, Valuable, Estimable, Small, Testable. CritÃ¨res de qualitÃ© d'une user story.","en":"Independent, Negotiable, Valuable, Estimable, Small, Testable. Quality criteria for a user story."},"kano":{"fr":"CatÃ©gorise les features en Must-Be, Performance et Delighters selon l'impact sur la satisfaction. Les Delighters crÃ©ent le wow.","en":"Categorises features as Must-Be, Performance and Delighters by satisfaction impact. Delighters create the wow."},"heart":{"fr":"Happiness, Engagement, Adoption, Retention, Task Success. Framework Google de mÃ©triques UX centrÃ© sur l'expÃ©rience utilisateur.","en":"Happiness, Engagement, Adoption, Retention, Task Success. Google's UX metrics framework centred on user experience."},"northstar":{"fr":"MÃ©trique unique qui capture la valeur crÃ©Ã©e pour l'utilisateur. PrÃ©cÃ¨de le revenu sans le mesurer directement.","en":"Single metric that captures the value created for users. Predicts revenue without measuring it directly."},"discovery":{"fr":"Phase de validation avant de construire. Double Diamond : comprendre le problÃ¨me (diverger) puis cadrer la solution (converger).","en":"Validation phase before building. Double Diamond: understand the problem (diverge) then frame the solution (converge)."}};
 var TT_P_RAG=[{rx:/cosine\s+sim(?:ilarity)?/gi,key:'cosine'},{rx:/Workers\s+AI/g,key:'workersai'},{rx:/\bPlanner\b/g,key:'planner'},{rx:/\bSynthesis\b/g,key:'synthesis'},{rx:/T=0\.\d+/g,key:'temperature'},{rx:/\bchunks?\b/gi,key:'chunk'},{rx:/\bvectors?\b/gi,key:'vector'},{rx:/ctx\.waitUntil/g,key:'waituntil'},{rx:/\bKV\s+Store/g,key:'kv'},{rx:/\bembeddings?\b/gi,key:'embedding'},{rx:/\bSSE\b/g,key:'sse'},{rx:/\bRAG\b/g,key:'rag'},{rx:/\bLLMs?\b/g,key:'llm'},{rx:/\bIntent\b/g,key:'intent'},{rx:/\bLPU\b/g,key:'lpu'},{rx:/\bRICE\b/g,key:'rice'},{rx:/\bOKRs?\b/g,key:'okr'},{rx:/\bJTBD\b/g,key:'jtbd'},{rx:/\bMoSCoW\b/gi,key:'moscow'},{rx:/\bINVEST\b/g,key:'invest'},{rx:/\bKano\b/gi,key:'kano'},{rx:/\bHEART\b/g,key:'heart'},{rx:/North\s+Star/gi,key:'northstar'},{rx:/\bDiscovery\b/g,key:'discovery'}];
 function applyTTRag(lang){
   document.querySelectorAll('.arch-note p,.step-desc,.subtitle,.decision-why').forEach(function(container){

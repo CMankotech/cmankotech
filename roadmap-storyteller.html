@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roadmap Storyteller — by Carlin Mankoto</title>
+<title>Roadmap Storyteller â€” by Carlin Mankoto</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -245,6 +245,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 .nav-tools-menu .nt-ico{font-size:0.95rem;line-height:1}
 @media(max-width:768px){.nav-tools-menu{left:auto;right:0;transform:translateY(-6px)}.nav-tools.open .nav-tools-menu{transform:translateY(0)}}
 </style>
+<link rel="stylesheet" href="tool-prose.css">
+<link rel="stylesheet" href="tool-cta.css">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
@@ -255,9 +257,9 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <div class="nav-tools" id="navTools">
       <button class="nav-tools-btn" onclick="toggleNavTools(event)" aria-haspopup="true"><span id="navToolsLabel">Outils</span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
       <div class="nav-tools-menu">
-        <a href="pm-toolkit.html" class="active"><span class="nt-ico">🧰</span> PM Toolkit</a>
-        <a href="rag-explorer.html"><span class="nt-ico">🔍</span> RAG Explorer</a>
-        <a href="veille.html"><span class="nt-ico">📡</span> Veille</a>
+        <a href="pm-toolkit.html" class="active"><span class="nt-ico">ðŸ§°</span> PM Toolkit</a>
+        <a href="rag-explorer.html"><span class="nt-ico">ðŸ”</span> RAG Explorer</a>
+        <a href="veille.html"><span class="nt-ico">ðŸ“¡</span> Veille</a>
       </div>
     </div>
   </div>
@@ -276,7 +278,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 
   <header>
-    <div class="header-tag"><span class="dot"></span> Communication &amp; Alignement</div>
     <h1>Roadmap <span class="grad">Storyteller</span></h1>
     <p class="subtitle">Transforme tes features brutes en roadmap narrative claire et convaincante pour tes stakeholders.</p>
   </header>
@@ -296,7 +297,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 <script>
 (function(){
   var _d = {
-    fr:{title:"En savoir plus",lbl:["Contexte","Problème","Approche","Résultat"],ctx:"Conçu pour transformer une liste de features brutes en roadmap narrative adaptée à chaque audience.",pb:"Présenter une roadmap à des dirigeants ou clients nécessite un discours orienté valeur, pas une liste de tickets JIRA.",ap:"L\'utilisateur entre ses features par période (Now/Next/Later), choisit son audience et obtient un pitch narratif + messages clés. Stack : HTML/JS + Groq.",res:"Roadmap prête à présenter en quelques secondes, avec un pitch copiable et des messages clés adaptés à l\'audience."},
+    fr:{title:"En savoir plus",lbl:["Contexte","ProblÃ¨me","Approche","RÃ©sultat"],ctx:"ConÃ§u pour transformer une liste de features brutes en roadmap narrative adaptÃ©e Ã  chaque audience.",pb:"PrÃ©senter une roadmap Ã  des dirigeants ou clients nÃ©cessite un discours orientÃ© valeur, pas une liste de tickets JIRA.",ap:"L\'utilisateur entre ses features par pÃ©riode (Now/Next/Later), choisit son audience et obtient un pitch narratif + messages clÃ©s. Stack : HTML/JS + Groq.",res:"Roadmap prÃªte Ã  prÃ©senter en quelques secondes, avec un pitch copiable et des messages clÃ©s adaptÃ©s Ã  l\'audience."},
     en:{title:"Learn more",lbl:["Context","Problem","Approach","Result"],ctx:"Built to turn a raw feature list into a narrative roadmap tailored to each audience.",pb:"Presenting a roadmap to executives or clients requires a value-oriented narrative, not a list of JIRA tickets.",ap:"The user enters features by period (Now/Next/Later), selects their audience and gets a narrative pitch + key messages. Stack: HTML/JS + Groq.",res:"Presentation-ready roadmap in seconds, with a copyable pitch and audience-tailored key messages."}
   };
   function _upAbout(lang){
@@ -327,14 +328,14 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Renseigne le nom du produit, ta vision, l'audience cible et ajoute tes features avec leur horizon (maintenant / ensuite / plus tard).</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la génération — l'IA crée une roadmap narrative avec pitch et messages clés adaptés.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Fill in the product name, your vision, target audience, and add your features with their horizon (now / next / later).</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run generation — the AI creates a narrative roadmap with pitch and tailored key messages.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Renseigne le nom du produit, ta vision, l'audience cible et ajoute tes features avec leur horizon (maintenant / ensuite / plus tard).</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la gÃ©nÃ©ration â€” l'IA crÃ©e une roadmap narrative avec pitch et messages clÃ©s adaptÃ©s.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Fill in the product name, your vision, target audience, and add your features with their horizon (now / next / later).</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run generation â€” the AI creates a narrative roadmap with pitch and tailored key messages.</div></div></div>
       <div class="about-divider"></div>
       <div class="about-grid">
-        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour transformer une liste de features brutes en roadmap narrative adaptée à chaque audience.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblPb">Problème</div><p class="about-text" id="aPb">Présenter une roadmap à des dirigeants ou clients nécessite un discours orienté valeur, pas une liste de tickets JIRA.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur entre ses features par période (Now/Next/Later), choisit son audience et obtient un pitch narratif + messages clés. Stack : HTML/JS + Groq.</p></div>
-        <div class="about-block"><div class="about-lbl" id="aLblRes">Résultat</div><p class="about-text" id="aRes">Roadmap prête à présenter en quelques secondes, avec un pitch copiable et des messages clés adaptés à l'audience.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">ConÃ§u pour transformer une liste de features brutes en roadmap narrative adaptÃ©e Ã  chaque audience.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblPb">ProblÃ¨me</div><p class="about-text" id="aPb">PrÃ©senter une roadmap Ã  des dirigeants ou clients nÃ©cessite un discours orientÃ© valeur, pas une liste de tickets JIRA.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblAp">Approche</div><p class="about-text" id="aAp">L'utilisateur entre ses features par pÃ©riode (Now/Next/Later), choisit son audience et obtient un pitch narratif + messages clÃ©s. Stack : HTML/JS + Groq.</p></div>
+        <div class="about-block"><div class="about-lbl" id="aLblRes">RÃ©sultat</div><p class="about-text" id="aRes">Roadmap prÃªte Ã  prÃ©senter en quelques secondes, avec un pitch copiable et des messages clÃ©s adaptÃ©s Ã  l'audience.</p></div>
       </div>
     </div>
   </div>
@@ -344,7 +345,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="card">
     <div class="card-title">
       <span id="lbl_ctx_title">Contexte produit</span>
-      <button class="btn-examples glass-shimmer glass-focus" onclick="loadExample()">&#127922; Exemple aléatoire</button>
+      <button class="btn-examples glass-shimmer glass-focus" onclick="loadExample()">&#127922; Exemple alÃ©atoire</button>
     </div>
 
     <div class="form-grid">
@@ -383,7 +384,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="card">
     <div class="card-title">
       <span id="lbl_features_title">Features &amp; initiatives</span>
-      <button class="btn-examples glass-shimmer glass-focus" onclick="loadFeaturesExample()">&#127922; Exemple aléatoire</button>
+      <button class="btn-examples glass-shimmer glass-focus" onclick="loadFeaturesExample()">&#127922; Exemple alÃ©atoire</button>
     </div>
     <p style="font-size:0.75rem;color:var(--dim);margin-bottom:1rem" id="hint_features_sub">Ajoute tes features ou initiatives. Assigne-leur une p&eacute;riode de livraison.</p>
     <div class="features-list" id="featuresList"></div>
@@ -452,38 +453,38 @@ window.onload = function() {
 var EXAMPLES = [
   {
     product: 'Flowly',
-    vision: "Devenir l'outil de gestion de projet incontournable pour les équipes hybrides",
+    vision: "Devenir l'outil de gestion de projet incontournable pour les Ã©quipes hybrides",
     features: [
-      {text: 'Module de reporting avancé pour managers', period: 'now'},
+      {text: 'Module de reporting avancÃ© pour managers', period: 'now'},
       {text: "Refonte de l'onboarding utilisateur", period: 'now'},
-      {text: 'Intégration native Slack et Teams', period: 'next'},
+      {text: 'IntÃ©gration native Slack et Teams', period: 'next'},
       {text: 'Mode hors-ligne mobile', period: 'next'},
-      {text: 'IA de suggestions de priorités', period: 'later'},
-      {text: "Marketplace d'intégrations partenaires", period: 'later'}
+      {text: 'IA de suggestions de prioritÃ©s', period: 'later'},
+      {text: "Marketplace d'intÃ©grations partenaires", period: 'later'}
     ]
   },
   {
     product: 'HiringPro',
-    vision: "Réduire de moitié le time-to-hire grâce à une expérience candidat et recruteur sans friction",
+    vision: "RÃ©duire de moitiÃ© le time-to-hire grÃ¢ce Ã  une expÃ©rience candidat et recruteur sans friction",
     features: [
       {text: 'Parsing automatique des CVs par IA', period: 'now'},
       {text: 'Scoring candidats configurable', period: 'now'},
       {text: "Module d'analytics RH", period: 'next'},
-      {text: 'Intégration LinkedIn et Indeed', period: 'next'},
-      {text: 'Entretiens vidéo asynchrones intégrés', period: 'later'},
-      {text: 'Benchmark marché des salaires en temps réel', period: 'later'}
+      {text: 'IntÃ©gration LinkedIn et Indeed', period: 'next'},
+      {text: 'Entretiens vidÃ©o asynchrones intÃ©grÃ©s', period: 'later'},
+      {text: 'Benchmark marchÃ© des salaires en temps rÃ©el', period: 'later'}
     ]
   },
   {
     product: 'Learnia',
-    vision: "Faire de chaque collaborateur un apprenant actif grâce à une expérience de formation ultra-personnalisée",
+    vision: "Faire de chaque collaborateur un apprenant actif grÃ¢ce Ã  une expÃ©rience de formation ultra-personnalisÃ©e",
     features: [
-      {text: 'Parcours adaptatifs pilotés par IA', period: 'now'},
-      {text: 'Tableau de bord managers : suivi équipe', period: 'now'},
+      {text: 'Parcours adaptatifs pilotÃ©s par IA', period: 'now'},
+      {text: 'Tableau de bord managers : suivi Ã©quipe', period: 'now'},
       {text: 'Offre entreprise et SSO', period: 'next'},
       {text: 'Certification et badges partageables LinkedIn', period: 'next'},
       {text: 'Moteur de recommandation de contenu', period: 'later'},
-      {text: 'API partenaires éditeurs de contenu', period: 'later'}
+      {text: 'API partenaires Ã©diteurs de contenu', period: 'later'}
     ]
   }
 ];
@@ -565,7 +566,7 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, name, horizon);
   } catch(e) {
-    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) — check your connection and try again.' : 'Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) â€” check your connection and try again.' : 'DÃ©lai dÃ©passÃ© (30s) â€” vÃ©rifie ta connexion et rÃ©essaie.');
     else showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
   }
   document.getElementById('loading').classList.remove('show');
@@ -584,11 +585,11 @@ function buildPrompt(name, vision, horizon, features) {
 }
 
 function friendlyApiError(err, status) {
-  if (status === 429) return currentLang === 'en' ? 'Rate limit reached — wait 30 seconds and try again.' : 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable — try again in a moment.' : 'Service temporairement indisponible — réessaie dans quelques instants.';
-  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
+  if (status === 429) return currentLang === 'en' ? 'Rate limit reached â€” wait 30 seconds and try again.' : 'Limite de requÃªtes atteinte â€” attends 30 secondes et rÃ©essaie.';
+  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable â€” try again in a moment.' : 'Service temporairement indisponible â€” rÃ©essaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification â€” contacte le support.';
   if (err && err.message) return err.message;
-  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
+  return 'Erreur inattendue (' + status + '). RÃ©essaie ou contacte le support.';
 }
 async function callAI(prompt, maxTokens) {
   var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
@@ -632,7 +633,7 @@ function renderResults(d, name, horizon) {
     var bord = periodBorder[period.key] || periodBorder.later;
     var txtCol = periodTextColor[period.key] || periodTextColor.later;
     var featsHtml = period.features.map(function(f) {
-      return '<div class="feature-item"><div class="feature-dot" style="background:'+txtCol+'"></div><div class="feature-body"><div class="feature-title">'+esc(f.title)+'</div><div class="feature-why">'+esc(f.why)+'</div></div></div>';
+      return '<div class="feature-item"><div class="feature-dot" style="background:'+txtCol+'"></div><div class="feature-body"><div class="feature-title">'+fmt(f.title)+'</div><div class="feature-why">'+fmt(f.why)+'</div></div></div>';
     }).join('');
     timelineHtml += '<div class="period-block"><div class="period-header" style="background:'+col+';border-bottom:1px solid '+bord+'"><span class="period-label" style="color:'+txtCol+'">'+esc(period.label)+'</span><span style="color:var(--muted);font-size:0.65rem;margin:0 0.5rem">/</span><span class="period-theme">'+esc(period.theme||'')+'</span></div><div class="period-items">'+featsHtml+'</div></div>';
   });
@@ -641,7 +642,7 @@ function renderResults(d, name, horizon) {
   // Talking points
   var pts = d.talking_points || [];
   if(pts.length) {
-    var html = pts.map(function(p){ return '<div class="talking-item"><span class="talking-bullet">&#8227;</span>'+esc(p)+'</div>'; }).join('');
+    var html = pts.map(function(p){ return '<div class="talking-item"><span class="talking-bullet">&#8227;</span>'+fmt(p)+'</div>'; }).join('');
     document.getElementById('talkingList').innerHTML = html;
     document.getElementById('talkingCard').style.display = 'block';
   }
@@ -667,7 +668,7 @@ function copyResults() {
     lines.push('# Timeline\n');
     d.periods.forEach(function(period) {
       if (!period.features || !period.features.length) return;
-      lines.push('## ' + (period.label||'') + (period.theme ? ' — ' + period.theme : '') + '\n');
+      lines.push('## ' + (period.label||'') + (period.theme ? ' â€” ' + period.theme : '') + '\n');
       period.features.forEach(function(f) { lines.push('- ' + (f.title||'') + (f.why ? ' : ' + f.why : '')); });
       lines.push('');
     });
@@ -702,6 +703,7 @@ function reset() {
 }
 
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function fmt(s){return window.mdInline?window.mdInline(s):esc(s);}
 function showError(m){var el=document.getElementById('errorBox');el.textContent=m;el.classList.add('show');}
 function hideError(){document.getElementById('errorBox').classList.remove('show');}
 
@@ -710,11 +712,11 @@ var LANG = {
   fr: {
     'title': 'Roadmap <span class="grad">Storyteller</span>',
     'subtitle': 'Transforme tes features brutes en roadmap narrative claire et convaincante pour tes stakeholders.',
-    'btn.launch': '&#9654; Générer ma roadmap narrative',
+    'btn.launch': '&#9654; GÃ©nÃ©rer ma roadmap narrative',
     'loading.text': 'Construction de ta roadmap en cours...',
     'btn.reset': '&#8635; Recommencer',
     'ph.productName': 'Ex : Kira, Notion, Doctolib...',
-    'ph.vision': 'Ex : Devenir la référence RH pour les PME en Europe'
+    'ph.vision': 'Ex : Devenir la rÃ©fÃ©rence RH pour les PME en Europe'
   },
   en: {
     'title': 'Roadmap <span class="grad">Storyteller</span>',
@@ -797,14 +799,14 @@ function applyLangExtras(lang) {
 
   var _phrs = {
     'productName': ['Ex : Kira, Notion, Doctolib...', 'E.g. Kira, Notion, Doctolib...'],
-    'vision': ['Ex : Devenir la référence RH pour les PME en Europe', 'E.g. Become the HR reference for SMEs in Europe'],
+    'vision': ['Ex : Devenir la rÃ©fÃ©rence RH pour les PME en Europe', 'E.g. Become the HR reference for SMEs in Europe'],
   };
   Object.keys(_phrs).forEach(function(id){
     var el=document.getElementById(id);
     if(el && el.placeholder !== undefined) el.placeholder = lang==='en'?_phrs[id][1]:_phrs[id][0];
   });
   var _optrs = {
-    'horizon': [['Ce trimestre (3 mois)', 'This quarter (3 months)'], ['Ce semestre (6 mois)', 'This semester (6 months)'], ['Cette année (12 mois)', 'This year (12 months)']],
+    'horizon': [['Ce trimestre (3 mois)', 'This quarter (3 months)'], ['Ce semestre (6 mois)', 'This semester (6 months)'], ['Cette annÃ©e (12 mois)', 'This year (12 months)']],
   };
   Object.keys(_optrs).forEach(function(selId){
     var sel=document.getElementById(selId); if(!sel) return;
@@ -836,8 +838,8 @@ function applyLangExtras(lang) {
     'lbl_prod_name': 'Nom du produit',
     'lbl_horizon': 'Horizon',
     'lbl_audience': 'Audience cible',
-    'lbl_vision': 'Vision / objectif stratégique',
-    'lbl_results_title': 'Roadmap générée',
+    'lbl_vision': 'Vision / objectif stratÃ©gique',
+    'lbl_results_title': 'Roadmap gÃ©nÃ©rÃ©e',
   };
   Object.keys(_sl).forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML=_sl[id];});
 
@@ -909,7 +911,7 @@ window.pmImportInsights = function(){
   if(prodEl && !prodEl.value){
     var okrData = PMSession.get('okr');
     if(okrData && okrData.productName) prodEl.value = okrData.productName;
-    else if(epicData.epicTitle) prodEl.value = epicData.epicTitle.split(/[—:·]/)[0].trim().slice(0,40);
+    else if(epicData.epicTitle) prodEl.value = epicData.epicTitle.split(/[â€”:Â·]/)[0].trim().slice(0,40);
   }
   // Vision: epic summary + first OKR objective as strategic anchor
   if(visEl && !visEl.value){
@@ -918,7 +920,7 @@ window.pmImportInsights = function(){
     var okrD = PMSession.get('okr');
     if(okrD){
       var firstObj = (((okrD.result||{}).okrs||[])[0]||{}).objective||'';
-      if(firstObj) visionParts.push('Objectif stratégique : ' + firstObj);
+      if(firstObj) visionParts.push('Objectif stratÃ©gique : ' + firstObj);
     }
     if(visionParts.length) visEl.value = visionParts.join('\n');
   }
@@ -945,6 +947,7 @@ function syncNavToolsLang(){var a=document.querySelector('.lang-btn.active');var
 document.addEventListener('DOMContentLoaded',syncNavToolsLang);
 document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.lang-btn'))setTimeout(syncNavToolsLang,0);});
 </script>
+<script src="md-lite.js"></script>
 <script src="krl1-widget.js"></script>
 <script src="glass.js"></script>
 
