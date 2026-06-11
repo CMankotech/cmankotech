@@ -145,15 +145,16 @@ async function run() {
     assert.equal(res.status, 403);
   }
 
-  // test: /veille-refresh tags items with real site name, dedups, strips Google News suffix
+  // test: /veille-refresh tags curated items with site name, unwraps Bing links to
+  // the publisher domain, decodes numeric entities, and dedups by title
   {
     const curatedXml = `<rss><channel>
       <item><title>Shared Article</title><link>https://www.mindtheproduct.com/a</link></item>
       <item><title>MTP Unique</title><link>https://www.mindtheproduct.com/b</link></item>
     </channel></rss>`;
-    const gnewsXml = `<rss><channel>
-      <item><title>Shared Article - TechCrunch</title><link>https://news.google.com/x</link><source url="https://techcrunch.com">TechCrunch</source></item>
-      <item><title>GNews Only - TechCrunch</title><link>https://news.google.com/y</link><source url="https://techcrunch.com">TechCrunch</source></item>
+    const bingXml = `<rss><channel>
+      <item><title>Shared Article</title><link>http://www.bing.com/news/apiclick.aspx?ref=FexRss&amp;url=https%3a%2f%2fexample.com%2fa&amp;mkt=fr-fr</link><News:Source>x</News:Source></item>
+      <item><title>Caf&#233; News</title><link>http://www.bing.com/news/apiclick.aspx?ref=FexRss&amp;url=https%3a%2f%2fwww.techcrunch.com%2fy&amp;mkt=fr-fr</link><News:Source>y</News:Source></item>
     </channel></rss>`;
 
     global.fetch = async (url) => {
@@ -163,7 +164,7 @@ async function run() {
           status: 200, headers: { 'Content-Type': 'application/json' },
         });
       }
-      const xml = u.includes('news.google.com') ? gnewsXml : curatedXml;
+      const xml = u.includes('bing.com') ? bingXml : curatedXml;
       return new Response(xml, { status: 200, headers: { 'Content-Type': 'application/xml' } });
     };
 
@@ -194,10 +195,11 @@ async function run() {
     assert.ok(product, 'product category present');
 
     const titles = product.items.map(i => i.title);
-    // Google News " - Publisher" suffix stripped
-    const gnews = product.items.find(i => i.title === 'GNews Only');
-    assert.ok(gnews, 'Google News title suffix stripped');
-    assert.equal(gnews.source, 'TechCrunch', 'per-item publisher used as source');
+    // Bing item: numeric entity decoded, link unwrapped, source = publisher domain
+    const bing = product.items.find(i => i.title === 'Café News');
+    assert.ok(bing, 'numeric entity decoded in title');
+    assert.equal(bing.source, 'techcrunch.com', 'Bing source is the unwrapped publisher domain');
+    assert.equal(bing.url, 'https://www.techcrunch.com/y', 'Bing link unwrapped to the real article URL');
     // Curated item carries its real site name, not the category label
     const curated = product.items.find(i => i.title === 'MTP Unique');
     assert.equal(curated.source, 'Mind the Product', 'curated source is the site name');

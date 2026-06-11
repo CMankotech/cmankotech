@@ -4,21 +4,22 @@ const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
 
 // ─── Veille sources ───────────────────────────────────────────────────────────
 
-// Build a Google News RSS search URL for a topic query in a given locale.
-function gnewsUrl(query, locale) {
+// Build a Bing News RSS search URL for a topic query in a given market.
+// (Google News RSS returns HTTP 503 to Cloudflare datacenter IPs; Bing does not.)
+function bingNewsUrl(query, locale) {
   const q = encodeURIComponent(query);
-  return locale === 'en'
-    ? `https://news.google.com/rss/search?q=${q}&hl=en-US&gl=US&ceid=US:en`
-    : `https://news.google.com/rss/search?q=${q}&hl=fr&gl=FR&ceid=FR:fr`;
+  const mkt = locale === 'en' ? 'en-US' : 'fr-FR';
+  return `https://www.bing.com/news/search?q=${q}&format=rss&setmkt=${mkt}`;
 }
 
-// Open-ended topics fanned out across the whole web via Google News (FR + EN
-// per topic). The real publisher is read per-item from each entry's <source>.
+// Open-ended topics fanned out across the whole web via Bing News, one query per
+// market (FR + EN). Single phrases only — Bing News returns nothing for "A" OR "B".
+// The publisher is derived from each article's real domain (see unwrapBing).
 const VEILLE_TOPICS = [
-  { id: 'product',  label: 'Product',      query: '"product management"' },
-  { id: 'ai',       label: 'IA',           query: '"IA générative" OR "intelligence artificielle"' },
-  { id: 'builders', label: 'Builders',     query: '"AI startup" OR "indie hacker"' },
-  { id: 'nocode',   label: 'No-code & FR', query: '"no-code" OR "automatisation no-code"' },
+  { id: 'product',  label: 'Product',      fr: '"product management"',        en: '"product management"' },
+  { id: 'ai',       label: 'IA',           fr: '"intelligence artificielle"', en: '"generative AI"' },
+  { id: 'builders', label: 'Builders',     fr: 'startup IA',                  en: '"AI startup"' },
+  { id: 'nocode',   label: 'No-code & FR', fr: 'no-code',                     en: 'no-code' },
 ];
 
 // Curated high-signal feeds, each with its display name.
@@ -38,23 +39,41 @@ const VEILLE_CURATED = [
   { id: 'nocode',  label: 'No-code & FR', name: 'No-code France',    url: 'https://nocodefrance.substack.com/feed' },
 ];
 
-// Curated feeds + Google News topics (FR + EN). Free Cloudflare plan caps a
-// request at 50 subrequests; this stays ~21 fetches (13 curated + 8 Google
-// News) + Groq + KV. Keep total feeds well under ~40 when adding topics.
+// Curated feeds + Bing News topics (FR + EN). Free Cloudflare plan caps a
+// request at 50 subrequests; this stays ~21 fetches (13 curated + 8 Bing News)
+// + Groq + KV. Keep total feeds well under ~40 when adding topics.
 const VEILLE_SOURCES = [
   ...VEILLE_CURATED,
-  ...VEILLE_TOPICS.flatMap(t =>
-    ['fr', 'en'].map(loc => ({ id: t.id, label: t.label, name: 'Google News', gnews: true, url: gnewsUrl(t.query, loc) })),
-  ),
+  ...VEILLE_TOPICS.flatMap(t => [
+    { id: t.id, label: t.label, bing: true, url: bingNewsUrl(t.fr, 'fr') },
+    { id: t.id, label: t.label, bing: true, url: bingNewsUrl(t.en, 'en') },
+  ]),
 ];
 
 // Max articles kept per category after merge+dedup (bounds Groq prompt size).
-const VEILLE_MAX_PER_CATEGORY = 10;
+const VEILLE_MAX_PER_CATEGORY = 12;
 
 function decodeEntities(s) {
   return (s || '')
-    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&#\d+;/g, '').trim();
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, n) => String.fromCharCode(parseInt(n, 16)))
+    .replace(/&quot;/g, '"').replace(/&apos;|&#39;/g, "'")
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&') // ampersand last so &amp;#233; isn't double-decoded
+    .trim();
+}
+
+// Bing News links wrap the real article URL in an apiclick redirect; unwrap it
+// and use the publisher's bare domain as the source label.
+function unwrapBing(link) {
+  try {
+    const u = new URL(link.replace(/&amp;/g, '&'));
+    const real = u.searchParams.get('url');
+    if (!real) return { url: link, host: '' };
+    return { url: real, host: new URL(real).hostname.replace(/^www\./, '') };
+  } catch {
+    return { url: link, host: '' };
+  }
 }
 
 function parseRSSItems(xml, limit = 5) {
@@ -1404,7 +1423,7 @@ export default {
         return new Response('Forbidden', { status: 403 });
       }
 
-      // Fetch all RSS feeds in parallel, ignore failures
+      // Fetch all feeds in parallel, ignore failures
       const results = await Promise.allSettled(
         VEILLE_SOURCES.map(src =>
           fetch(src.url, { headers: { 'User-Agent': 'Mozilla/5.0' }, cf: { cacheTtl: 3600 } })
@@ -1413,30 +1432,43 @@ export default {
         )
       );
 
-      // Group items by category, tagging each with its real site name
+      // Group items by category, keeping each feed's items separate for interleaving
       const byCategory = {};
       for (const r of results) {
         if (r.status !== 'fulfilled' || !r.value) continue;
         const { src, items } = r.value;
-        if (!byCategory[src.id]) byCategory[src.id] = { id: src.id, label: src.label, items: [] };
-        byCategory[src.id].items.push(...items.map(i => ({
-          title: i.title,
-          url: i.url,
-          source: i.siteName || src.name || src.label,
-        })));
+        if (!byCategory[src.id]) byCategory[src.id] = { id: src.id, label: src.label, feeds: [] };
+        byCategory[src.id].feeds.push(items.map(i => {
+          let link = i.url;
+          let site = i.siteName;
+          if (src.bing) { const b = unwrapBing(link); link = b.url; site = b.host; }
+          return { title: i.title, url: link, source: site || src.name || src.label };
+        }));
       }
 
-      // Dedup by normalized title and cap per category (bounds Groq cost)
+      // Round-robin across feeds, dedup by title, cap per category. Interleaving
+      // guarantees a mix of curated feeds and Google News instead of the first
+      // feeds filling the cap and squeezing the rest out.
       for (const cat of Object.values(byCategory)) {
+        const queues = cat.feeds.map(f => [...f]);
         const seen = new Set();
-        cat.items = cat.items
-          .filter(i => {
-            const key = i.title.toLowerCase().replace(/\s+/g, ' ').trim();
-            if (seen.has(key)) return false;
+        const merged = [];
+        let active = true;
+        while (active && merged.length < VEILLE_MAX_PER_CATEGORY) {
+          active = false;
+          for (const q of queues) {
+            if (!q.length) continue;
+            active = true;
+            const item = q.shift();
+            const key = item.title.toLowerCase().replace(/\s+/g, ' ').trim();
+            if (seen.has(key)) continue;
             seen.add(key);
-            return true;
-          })
-          .slice(0, VEILLE_MAX_PER_CATEGORY);
+            merged.push(item);
+            if (merged.length >= VEILLE_MAX_PER_CATEGORY) break;
+          }
+        }
+        cat.items = merged;
+        delete cat.feeds;
       }
 
       // Synthesize each category with Groq
