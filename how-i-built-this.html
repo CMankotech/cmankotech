@@ -75,6 +75,7 @@ section{margin-bottom:4rem}
 .sb-violet{background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.3);color:#c4b5fd}
 .sb-orange{background:rgba(251,146,60,0.1);border-color:rgba(251,146,60,0.3);color:#fdba74}
 .sb-green{background:rgba(74,222,128,0.1);border-color:rgba(74,222,128,0.3);color:#86efac}
+.sb-pink{background:rgba(232,121,249,0.1);border-color:rgba(232,121,249,0.3);color:#f0abfc}
 
 /* TIMELINE */
 .timeline{display:flex;flex-direction:column;gap:0}
@@ -518,6 +519,12 @@ if (window.mermaid) {
         <div class="stack-name">Langfuse · LLM Observability</div>
         <div class="stack-badge sb-green" data-i18n="stack.lf.badge">Observabilité</div>
         <div class="stack-desc" data-i18n="stack.lf.desc">Traces LLM en production via l'API REST Langfuse intégrée directement dans le Worker (no npm, fetch natif). Chaque appel KRL1 génère une trace avec 2 générations, planner (intent JSON, T=0.2) et synthesis (réponse naturelle, T=0.45), enrichies du token usage Groq et des latences par étape. La route RAG ajoute un span retriever Workers AI. Non-bloquant via <code>ctx.waitUntil</code>, zéro impact sur les temps de réponse. Plan gratuit Langfuse Cloud : 50 000 observations/mois.</div>
+      </div>
+      <div class="stack-card" style="grid-column:1/-1">
+        <div class="stack-icon"><img src="https://cdn.simpleicons.org/make" alt="Make" width="28" height="28"></div>
+        <div class="stack-name">Make · no-code automation</div>
+        <div class="stack-badge sb-pink" data-i18n="stack.make.badge">Orchestration</div>
+        <div class="stack-desc" data-i18n="stack.make.desc">Plateforme d'automatisation visuelle qui orchestre la veille tech hebdomadaire sans serveur à gérer. Un scénario planifié (cron) déclenche chaque semaine la route <code>POST /veille-refresh</code> du Worker, qui fetch les 13 flux RSS, synthétise l'édition via Groq et l'archive en KV par semaine ISO. Make sert aussi de point d'entrée pour <code>POST /veille-ingest</code> (articles bruts) et <code>POST /feedback</code> (analyse des retours), avec un en-tête <code>x-make-secret</code> qui authentifie les appels. Zéro code, zéro infra : la logique d'orchestration vit dans un canvas visuel plutôt que dans un cron Cloudflare.</div>
       </div>
     </div>
   </section>
@@ -1306,6 +1313,8 @@ var T={
     'stack.lf.badge':'Observabilité',
     'stack.lf.desc':'Traces LLM en production via l\'API REST Langfuse intégrée directement dans le Worker (no npm, fetch natif). Chaque appel KRL1 génère une trace avec 2 générations, planner (intent JSON, T=0.2) et synthesis (réponse naturelle, T=0.45), enrichies du token usage Groq et des latences par étape. La route RAG ajoute un span retriever Workers AI. Non-bloquant via <code>ctx.waitUntil</code>, zéro impact sur les temps de réponse. Plan gratuit Langfuse Cloud : 50 000 observations/mois.',
     'stack.lg.desc':'Base de connaissances embarquée dans le Worker (15 documents Markdown : PM, PO/Agile, AI Product). Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) en un seul appel batch ; la similarité cosinus est calculée à l\'edge. Le pipeline <strong>handleRagQuery</strong> enchaîne : <strong>planner</strong> (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; <strong>retriever</strong> (conditionnel, uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches par cosine similarity ; <strong>synthesis</strong> (T=0.45) transforme le plan enrichi du contexte PM en réponse naturelle max 220 mots. Zéro dépendance externe, zéro infra Python.',
+    'stack.make.badge':'Orchestration',
+    'stack.make.desc':'Plateforme d\'automatisation visuelle qui orchestre la veille tech hebdomadaire sans serveur à gérer. Un scénario planifié (cron) déclenche chaque semaine la route <code>POST /veille-refresh</code> du Worker, qui fetch les 13 flux RSS, synthétise l\'édition via Groq et l\'archive en KV par semaine ISO. Make sert aussi de point d\'entrée pour <code>POST /veille-ingest</code> (articles bruts) et <code>POST /feedback</code> (analyse des retours), avec un en-tête <code>x-make-secret</code> qui authentifie les appels. Zéro code, zéro infra : la logique d\'orchestration vit dans un canvas visuel plutôt que dans un cron Cloudflare.',
     's2.title':'Étapes de création',
     'step1.label':'Idée & cadrage',
     'step1.title':'Partir d\'un vrai problème PM',
@@ -1519,6 +1528,8 @@ var T={
     'stack.lf.badge':'Observability',
     'stack.lf.desc':'Production LLM tracing via Langfuse REST API integrated directly in the Worker (no npm, native fetch). Each KRL1 call generates a trace with 2 generations, planner (intent JSON, T=0.2) and synthesis (natural response, T=0.45), enriched with Groq token usage and per-step latencies. The RAG route adds a Workers AI retriever span. Non-blocking via <code>ctx.waitUntil</code>, zero impact on response times. Langfuse Cloud free tier: 50,000 observations/month.',
     'stack.lg.desc':'Knowledge base embedded in the Worker (15 Markdown documents: PM, PO/Agile, AI Product). Semantic embeddings generated by <strong>Workers AI</strong> (bge-small-en-v1.5) in a single batch call; cosine similarity computed at the edge. The <strong>handleRagQuery</strong> pipeline chains: <strong>planner</strong> (T=0.2) generates strict JSON; <strong>retriever</strong> (conditional, only when intent = pm_workflow) fetches the 3 closest chunks by cosine similarity; <strong>synthesis</strong> (T=0.45) transforms the PM-enriched plan into a natural response max 220 words. Zero external dependencies, zero Python infrastructure.',
+    'stack.make.badge':'Orchestration',
+    'stack.make.desc':'Visual automation platform that orchestrates the weekly tech watch with no server to manage. A scheduled scenario (cron) triggers the Worker\'s <code>POST /veille-refresh</code> route every week, fetching the 13 RSS feeds, synthesising the edition via Groq and archiving it in KV by ISO week. Make also acts as the entry point for <code>POST /veille-ingest</code> (raw articles) and <code>POST /feedback</code> (feedback analysis), with an <code>x-make-secret</code> header authenticating the calls. Zero code, zero infra: the orchestration logic lives in a visual canvas rather than a Cloudflare cron.',
     's2.title':'Creation steps',
     'step1.label':'Idea & scoping',
     'step1.title':'Start from a real PM problem',
