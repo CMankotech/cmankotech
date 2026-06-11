@@ -285,6 +285,7 @@
   // ── SYSTEM PROMPT ──────────────────────────────────────────────────────────
   var SYSTEM_PROMPT =
     "Tu es KRL1, l'assistant portfolio de Carlin Mankoto, AI Product Manager.\n" +
+    "Ton nom vient du prénom Carlin (KRL) et du Mark I des armures d'Iron Man : tu es la première armure de Carlin, faite pour itérer. Carlin est fan de Tony Stark et de son esprit builder.\n" +
     "Réponds de façon concise et professionnelle en français par défaut (en anglais si on te parle en anglais).\n" +
     "Ne réponds qu'aux questions liées à Carlin ou à ses outils. Si la question est hors sujet, redirige poliment.\n\n" +
     "PROFIL :\n" +
@@ -333,7 +334,7 @@
         r: "Carlin est disponible pour des missions CDI ou freelance. <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> ou carlinmankoto@proton.me",
         chips: ["🛠️ Ses outils IA ?", "💼 Son expérience ?"] },
       { k: ["krl1","comment tu","tu fonctionnes","qui es-tu","comment ça marche","t'as été construit","créé comment"],
-        r: "Je suis <strong>KRL1</strong>, l'assistant IA du portfolio de Carlin Mankoto. Ma logique de décision passe par 4 couches :\n\n• Détection du contexte de page\n• KB fast-path (matching local, 0 appel API)\n• LLM via Groq + system prompt annoté\n• PM Journey injection (MutationObserver)\n\n<a href='https://cmankotech.github.io/cmankotech/krl1-architecture.html' target='_blank'>Voir l'architecture de décision complète →</a>",
+        r: "Je suis <strong>KRL1</strong>, l'assistant IA du portfolio de Carlin Mankoto. Le nom vient de <strong>Carlin</strong> (KRL) et du <strong>Mark I</strong> de Tony Stark : la première armure, faite pour itérer. Ma logique de décision passe par 4 couches :\n\n• Détection du contexte de page\n• KB fast-path (matching local, 0 appel API)\n• LLM via Groq + system prompt annoté\n• PM Journey injection (MutationObserver)\n\n<a href='https://cmankotech.github.io/cmankotech/krl1-architecture.html' target='_blank'>Voir l'architecture de décision complète →</a>",
         chips: ["🏗️ Pourquoi Cloudflare Workers ?", "⚡ Pourquoi pas de backend ?"] },
       { k: ["stack","architecture","comment c'est construit","langgraph","fastapi","technique","comment ce site"],
         r: "La stack du site :\n\n• <strong>Frontend</strong> : HTML/CSS/JS vanilla, GitHub Pages\n• <strong>Proxy</strong> : Cloudflare Worker JS (clé API sécurisée, CORS, 7 routes)\n• <strong>LLM</strong> : Groq API + llama-3.3-70b-versatile (1-2s sur LPU)\n• <strong>Orchestration</strong> : Worker natif JS — planner (Groq JSON) → synthesis (Groq SSE)\n• <strong>RAG</strong> : Workers AI bge-small-en-v1.5 + cosine similarity inline\n• <strong>Observabilité</strong> : Langfuse Cloud (traces sur 3 routes IA)\n\nTous les détails sur <a href='https://cmankotech.github.io/cmankotech/how-i-built-this.html' target='_blank'>Comment j'ai construit ce site →</a>",
@@ -386,7 +387,7 @@
         r: "Carlin is open to CDI or freelance opportunities. <a href='https://www.linkedin.com/in/carlinmankoto/' target='_blank'>LinkedIn</a> or carlinmankoto@proton.me",
         chips: ["🛠️ His AI tools?", "💼 His experience?"] },
       { k: ["krl1","how do you work","what are you","who are you","how were you built","how is it built","how does it work"],
-        r: "I'm <strong>KRL1</strong>, Carlin Mankoto's portfolio AI assistant. My decision logic goes through 4 layers:\n\n• Page context detection\n• KB fast-path (local matching, 0 API call)\n• LLM via Groq + annotated system prompt\n• PM Journey injection (MutationObserver)\n\n<a href='https://cmankotech.github.io/cmankotech/krl1-architecture.html' target='_blank'>See the full decision architecture →</a>",
+        r: "I'm <strong>KRL1</strong>, Carlin Mankoto's portfolio AI assistant. The name comes from <strong>Carlin</strong> (KRL) and Tony Stark's <strong>Mark I</strong>: the first build, made to iterate. My decision logic goes through 4 layers:\n\n• Page context detection\n• KB fast-path (local matching, 0 API call)\n• LLM via Groq + annotated system prompt\n• PM Journey injection (MutationObserver)\n\n<a href='https://cmankotech.github.io/cmankotech/krl1-architecture.html' target='_blank'>See the full decision architecture →</a>",
         chips: ["🏗️ Why Cloudflare Workers?", "⚡ Why no backend?"] },
       { k: ["tech stack","architecture","how was this built","langgraph","fastapi","technical","how is this site"],
         r: "Site stack:\n\n• <strong>Frontend</strong>: vanilla HTML/CSS/JS, GitHub Pages\n• <strong>Proxy</strong>: Cloudflare Worker JS (API key secured, CORS, 7 routes)\n• <strong>LLM</strong>: Groq API + llama-3.3-70b-versatile (1-2s on LPU)\n• <strong>Orchestration</strong>: native Worker JS — planner (Groq JSON) → synthesis (Groq SSE)\n• <strong>RAG</strong>: Workers AI bge-small-en-v1.5 + inline cosine similarity\n• <strong>Observability</strong>: Langfuse Cloud (traces on 3 AI routes)\n\nFull details on <a href='https://cmankotech.github.io/cmankotech/how-i-built-this.html' target='_blank'>How I Built This →</a>",
