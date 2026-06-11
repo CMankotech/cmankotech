@@ -4,36 +4,81 @@ const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
 
 // ─── Veille sources ───────────────────────────────────────────────────────────
 
-const VEILLE_SOURCES = [
-  { id: 'product', label: 'Product', url: 'https://www.mindtheproduct.com/feed/' },
-  { id: 'product', label: 'Product', url: 'https://lennysnewsletter.substack.com/feed' },
-  { id: 'product', label: 'Product', url: 'https://www.maddyness.com/feed/' },
-  { id: 'product', label: 'Product', url: 'https://remiguyot.substack.com/feed' },
-  { id: 'ai',      label: 'IA',      url: 'https://bensbites.substack.com/feed' },
-  { id: 'ai',      label: 'IA',      url: 'https://tldr.tech/ai/rss' },
-  { id: 'ai',      label: 'IA',      url: 'https://marilynika.substack.com/feed' },
-  { id: 'ai',      label: 'IA',      url: 'https://generationia.substack.com/feed' },
-  { id: 'builders',label: 'Builders',url: 'https://newsletter.pragmaticengineer.com/feed' },
-  { id: 'builders',label: 'Builders',url: 'https://hnrss.org/frontpage' },
-  { id: 'nocode',  label: 'No-code & FR', url: 'https://leticket.substack.com/feed' },
-  { id: 'nocode',  label: 'No-code & FR', url: 'https://www.frenchweb.fr/feed' },
-  { id: 'nocode',  label: 'No-code & FR', url: 'https://nocodefrance.substack.com/feed' },
+// Build a Google News RSS search URL for a topic query in a given locale.
+function gnewsUrl(query, locale) {
+  const q = encodeURIComponent(query);
+  return locale === 'en'
+    ? `https://news.google.com/rss/search?q=${q}&hl=en-US&gl=US&ceid=US:en`
+    : `https://news.google.com/rss/search?q=${q}&hl=fr&gl=FR&ceid=FR:fr`;
+}
+
+// Open-ended topics fanned out across the whole web via Google News (FR + EN
+// per topic). The real publisher is read per-item from each entry's <source>.
+const VEILLE_TOPICS = [
+  { id: 'product',  label: 'Product',      query: '"product management"' },
+  { id: 'ai',       label: 'IA',           query: '"IA générative" OR "intelligence artificielle"' },
+  { id: 'builders', label: 'Builders',     query: '"AI startup" OR "indie hacker"' },
+  { id: 'nocode',   label: 'No-code & FR', query: '"no-code" OR "automatisation no-code"' },
 ];
+
+// Curated high-signal feeds, each with its display name.
+const VEILLE_CURATED = [
+  { id: 'product', label: 'Product', name: 'Mind the Product',       url: 'https://www.mindtheproduct.com/feed/' },
+  { id: 'product', label: 'Product', name: "Lenny's Newsletter",     url: 'https://lennysnewsletter.substack.com/feed' },
+  { id: 'product', label: 'Product', name: 'Maddyness',              url: 'https://www.maddyness.com/feed/' },
+  { id: 'product', label: 'Product', name: 'Rémi Guyot',             url: 'https://remiguyot.substack.com/feed' },
+  { id: 'ai',      label: 'IA',      name: "Ben's Bites",            url: 'https://bensbites.substack.com/feed' },
+  { id: 'ai',      label: 'IA',      name: 'TLDR AI',                url: 'https://tldr.tech/ai/rss' },
+  { id: 'ai',      label: 'IA',      name: 'Marily Nika',            url: 'https://marilynika.substack.com/feed' },
+  { id: 'ai',      label: 'IA',      name: 'Génération IA',          url: 'https://generationia.substack.com/feed' },
+  { id: 'builders',label: 'Builders',name: 'The Pragmatic Engineer', url: 'https://newsletter.pragmaticengineer.com/feed' },
+  { id: 'builders',label: 'Builders',name: 'Hacker News',            url: 'https://hnrss.org/frontpage' },
+  { id: 'nocode',  label: 'No-code & FR', name: 'Le Ticket',         url: 'https://leticket.substack.com/feed' },
+  { id: 'nocode',  label: 'No-code & FR', name: 'FrenchWeb',         url: 'https://www.frenchweb.fr/feed' },
+  { id: 'nocode',  label: 'No-code & FR', name: 'No-code France',    url: 'https://nocodefrance.substack.com/feed' },
+];
+
+// Curated feeds + Google News topics (FR + EN). Free Cloudflare plan caps a
+// request at 50 subrequests; this stays ~21 fetches (13 curated + 8 Google
+// News) + Groq + KV. Keep total feeds well under ~40 when adding topics.
+const VEILLE_SOURCES = [
+  ...VEILLE_CURATED,
+  ...VEILLE_TOPICS.flatMap(t =>
+    ['fr', 'en'].map(loc => ({ id: t.id, label: t.label, name: 'Google News', gnews: true, url: gnewsUrl(t.query, loc) })),
+  ),
+];
+
+// Max articles kept per category after merge+dedup (bounds Groq prompt size).
+const VEILLE_MAX_PER_CATEGORY = 10;
+
+function decodeEntities(s) {
+  return (s || '')
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&#\d+;/g, '').trim();
+}
 
 function parseRSSItems(xml, limit = 5) {
   const items = [];
   const itemRx = /<item[^>]*>([\s\S]*?)<\/item>/gi;
   const titleRx = /<title[^>]*>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/i;
   const linkRx = /<link>(https?[^<]*)<\/link>|<link\s[^>]*href="([^"]*)"/i;
+  const sourceRx = /<source[^>]*>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/source>/i;
   let m;
   while ((m = itemRx.exec(xml)) !== null && items.length < limit) {
     const block = m[1];
     const t = titleRx.exec(block);
     const l = linkRx.exec(block);
     if (!t || !l) continue;
-    const title = (t[1] || '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#\d+;/g, '').trim();
+    let title = decodeEntities(t[1]);
     const link = (l[1] || l[2] || '').trim();
-    if (title && link && link.startsWith('http')) items.push({ title, url: link });
+    // Google News items carry the real publisher in <source>; normal feeds don't.
+    const s = sourceRx.exec(block);
+    const siteName = s ? decodeEntities(s[1]) : '';
+    // Google News appends " - Publisher" to titles; drop it when redundant.
+    if (siteName && title.endsWith(` - ${siteName}`)) {
+      title = title.slice(0, -(siteName.length + 3)).trim();
+    }
+    if (title && link && link.startsWith('http')) items.push({ title, url: link, siteName });
   }
   return items;
 }
@@ -1368,13 +1413,30 @@ export default {
         )
       );
 
-      // Group items by category
+      // Group items by category, tagging each with its real site name
       const byCategory = {};
       for (const r of results) {
         if (r.status !== 'fulfilled' || !r.value) continue;
         const { src, items } = r.value;
         if (!byCategory[src.id]) byCategory[src.id] = { id: src.id, label: src.label, items: [] };
-        byCategory[src.id].items.push(...items.map(i => ({ ...i, source: src.label })));
+        byCategory[src.id].items.push(...items.map(i => ({
+          title: i.title,
+          url: i.url,
+          source: i.siteName || src.name || src.label,
+        })));
+      }
+
+      // Dedup by normalized title and cap per category (bounds Groq cost)
+      for (const cat of Object.values(byCategory)) {
+        const seen = new Set();
+        cat.items = cat.items
+          .filter(i => {
+            const key = i.title.toLowerCase().replace(/\s+/g, ' ').trim();
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          })
+          .slice(0, VEILLE_MAX_PER_CATEGORY);
       }
 
       // Synthesize each category with Groq

@@ -145,6 +145,66 @@ async function run() {
     assert.equal(res.status, 403);
   }
 
+  // test: /veille-refresh tags items with real site name, dedups, strips Google News suffix
+  {
+    const curatedXml = `<rss><channel>
+      <item><title>Shared Article</title><link>https://www.mindtheproduct.com/a</link></item>
+      <item><title>MTP Unique</title><link>https://www.mindtheproduct.com/b</link></item>
+    </channel></rss>`;
+    const gnewsXml = `<rss><channel>
+      <item><title>Shared Article - TechCrunch</title><link>https://news.google.com/x</link><source url="https://techcrunch.com">TechCrunch</source></item>
+      <item><title>GNews Only - TechCrunch</title><link>https://news.google.com/y</link><source url="https://techcrunch.com">TechCrunch</source></item>
+    </channel></rss>`;
+
+    global.fetch = async (url) => {
+      const u = String(url);
+      if (u.includes('api.groq.com')) {
+        return new Response(JSON.stringify({ choices: [{ message: { content: 'digest' } }] }), {
+          status: 200, headers: { 'Content-Type': 'application/json' },
+        });
+      }
+      const xml = u.includes('news.google.com') ? gnewsXml : curatedXml;
+      return new Response(xml, { status: 200, headers: { 'Content-Type': 'application/xml' } });
+    };
+
+    const kv = new Map();
+    const env = {
+      MAKE_SECRET: 's3cret',
+      GROQ_KEY: 'dummy',
+      VEILLE_STORE: {
+        async get(key, opts) {
+          const v = kv.get(key);
+          if (v === undefined) return null;
+          return opts && opts.type === 'json' ? JSON.parse(v) : v;
+        },
+        async put(key, value) { kv.set(key, value); },
+      },
+    };
+
+    const req = new Request('https://groq-proxy.cmankotech.workers.dev/veille-refresh', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-make-secret': 's3cret' },
+      body: JSON.stringify({}),
+    });
+    const res = await worker.fetch(req, env);
+    assert.equal(res.status, 200);
+
+    const latest = JSON.parse(kv.get('veille_latest'));
+    const product = latest.categories.find(c => c.id === 'product');
+    assert.ok(product, 'product category present');
+
+    const titles = product.items.map(i => i.title);
+    // Google News " - Publisher" suffix stripped
+    const gnews = product.items.find(i => i.title === 'GNews Only');
+    assert.ok(gnews, 'Google News title suffix stripped');
+    assert.equal(gnews.source, 'TechCrunch', 'per-item publisher used as source');
+    // Curated item carries its real site name, not the category label
+    const curated = product.items.find(i => i.title === 'MTP Unique');
+    assert.equal(curated.source, 'Mind the Product', 'curated source is the site name');
+    // Dedup by normalized title: "Shared Article" appears once
+    assert.equal(titles.filter(t => t === 'Shared Article').length, 1, 'duplicate title collapsed');
+  }
+
   global.fetch = originalFetch;
   console.log('proxy tests passed');
 }
