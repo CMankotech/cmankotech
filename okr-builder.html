@@ -22,8 +22,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 /* HEADER */
 header{text-align:center;margin-bottom:3rem}
-.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--yellow);background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);padding:0.4rem 1rem;border-radius:99px;margin-bottom:1.25rem}
-.dot{width:5px;height:5px;border-radius:50%;background:var(--yellow);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
 h1{font-family:'DM Sans',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:500;letter-spacing:-0.045em;line-height:0.98;margin-bottom:0.85rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .grad{background:linear-gradient(135deg,#fbbf24,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -636,7 +634,6 @@ function hideError() { document.getElementById('errorBox').classList.remove('sho
 // ---- i18n ----
 var LANG = {
   fr: {
-    'tag': 'Strategy &amp; Planning',
     'title': 'OKR <span class="grad">Builder</span>',
     'subtitle': "D&eacute;cris ton contexte produit et tes ambitions. L&rsquo;IA g&eacute;n&egrave;re des OKRs coh&eacute;rents avec des Key Results mesurables et actionnables.",
     'config.title': '&#128273; Configuration',
@@ -667,7 +664,6 @@ var LANG = {
     'tag.free': 'Gratuit',
   },
   en: {
-    'tag': 'Strategy &amp; Planning',
     'title': 'OKR <span class="grad">Builder</span>',
     'subtitle': "Describe your product context and ambitions. The AI generates coherent OKRs with measurable and actionable Key Results.",
     'config.title': '&#128273; Configuration',
@@ -708,7 +704,6 @@ function setLang(lang) {
   document.getElementById('lbEn').classList.toggle('active', lang === 'en');
   var T = LANG[lang];
   // Header
-  document.querySelector('.header-tag span:last-child') && (document.querySelector('.header-tag').innerHTML = '<span class="dot"></span> ' + T['tag']);
   document.querySelector('h1').innerHTML = T['title'];
   document.querySelector('.subtitle').innerHTML = T['subtitle'];
   // Cards titles

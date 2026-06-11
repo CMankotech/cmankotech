@@ -35,8 +35,6 @@ h1,h2,h3,h4{font-family:'Syne',sans-serif}
 .theme-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.18)}
 
 header{margin-bottom:3rem}
-.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--orange);margin-bottom:1.25rem;background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.2);padding:0.4rem 1rem;border-radius:99px}
-.dot{width:5px;height:5px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite;flex-shrink:0}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
 h1{font-family:'DM Sans',sans-serif;font-size:clamp(2rem,4.5vw,3.5rem);font-weight:500;letter-spacing:-0.045em;line-height:1;margin-bottom:0.85rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 h1 .grad{background:linear-gradient(135deg,#fb923c,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
@@ -424,7 +422,6 @@ var _lang = 'fr';
 var I18N = {
   fr: {
     back:'Retour au portfolio',
-    tag:'Portfolio · Product Decisions',
     h1:'Les décisions <span class="grad">produit</span><br>derrière le site',
     subtitle:"Chaque choix structurant du site — PM Toolkit, KRL1, architecture statique, PLG, observabilité — avec les alternatives rejetées et pourquoi elles ne tiennent pas.",
     m1:'UX', m2:'PLG', m3:'Contraintes', m4:'Arbitrages', m5:'$0 Budget',
@@ -487,7 +484,6 @@ var I18N = {
   },
   en: {
     back:'Back to portfolio',
-    tag:'Portfolio · Product Decisions',
     h1:'The <span class="grad">product</span> decisions<br>behind the site',
     subtitle:"Every structural choice in the site — PM Toolkit, KRL1, static architecture, PLG, observability — with the rejected alternatives and why they don't hold up.",
     m1:'UX', m2:'PLG', m3:'Constraints', m4:'Trade-offs', m5:'$0 Budget',
@@ -557,7 +553,6 @@ function setLang(lang){
   document.documentElement.lang = lang;
   var T = I18N[lang];
   var _bk=document.getElementById('backLbl');if(_bk)_bk.textContent = T.back;
-  var _tg=document.getElementById('tagLbl');if(_tg)_tg.textContent = T.tag;
   document.getElementById('h1Main').innerHTML = T.h1;
   document.getElementById('subtitleTxt').textContent = T.subtitle;
   ['m1','m2','m3','m4','m5'].forEach(function(id){ document.getElementById(id).textContent = T[id]; });

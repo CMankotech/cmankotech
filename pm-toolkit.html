@@ -65,7 +65,6 @@ h1,h2,h3{font-family:'Syne',sans-serif}
 .tool-hero-inner{position:relative;z-index:3;max-width:1280px;margin:0 auto;padding:0 3rem;display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start}
 @media(max-width:768px){.tool-hero-inner{padding:0 1.25rem}}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:0.6rem;font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:#93c5fd;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.22);padding:0.45rem 1rem;border-radius:99px;backdrop-filter:blur(8px)}
-.dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
 .hero-headline{display:flex;flex-direction:column;align-items:flex-start;gap:0.1rem;margin:0;max-width:1000px}
 .hero-hl-1,.hero-hl-2{width:fit-content}
@@ -648,7 +647,6 @@ function setLang(lang){
   document.getElementById('lbEn').classList.toggle('active', lang==='en');
   var T = I18N[lang];
   var _b=document.getElementById('backLbl');if(_b)_b.textContent = T.back;
-  var _t=document.getElementById('tagLbl');if(_t)_t.textContent = T.tag;
   document.getElementById('h1Main').textContent = T.h1Main;
   document.getElementById('subtitleTxt').textContent = T.subtitle;
   document.getElementById('sessTitle').textContent = T.sessTitle;

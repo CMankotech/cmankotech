@@ -57,8 +57,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 /* HEADER — centré comme pm-toolkit */
 header{text-align:center;margin-bottom:3rem}
-.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--blue);margin-bottom:1.25rem;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.2);padding:0.4rem 1rem;border-radius:99px}
-.dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
 h1{font-family:'DM Sans',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:500;letter-spacing:-0.045em;line-height:0.98;margin-bottom:0.85rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.05;letter-spacing:-0.02em;background:linear-gradient(135deg,var(--blue) 0%,var(--violet) 50%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -404,7 +402,6 @@ function renderCategories(cats) {
 
 const I18N = {
   fr: {
-    tag: 'Make · Automation · Veille hebdo',
     subtitle: 'Veille automatisée sur Product Management, IA générative, AI Builders et No-code. Make tourne chaque lundi, le Worker récupère 13 flux RSS, synthétise via Groq et publie ici.',
     noData: 'Pas encore de données',
     nextEdition: 'Prochaine édition : lundi',
@@ -415,7 +412,6 @@ const I18N = {
     historyLabel: 'Éditions précédentes',
   },
   en: {
-    tag: 'Make · Automation · Weekly Watch',
     subtitle: 'Automated watch on Product Management, Generative AI, AI Builders and No-code. Make runs every Monday, the Worker fetches 13 RSS feeds, synthesizes via Groq and publishes here.',
     noData: 'No data yet',
     nextEdition: 'Next edition: Monday',
@@ -432,7 +428,6 @@ let _lang = 'fr';
 function setLang(lang) {
   _lang = lang;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-  var _tg=document.getElementById('tagLabel');if(_tg)_tg.textContent = I18N[lang].tag;
   document.getElementById('subtitleEl').textContent = I18N[lang].subtitle;
   document.getElementById('flowLabel').textContent = I18N[lang].flowLabel;
   const hl = document.getElementById('historyLabel');
