@@ -24,7 +24,7 @@
   function mdLite(text) {
     if (text == null) return '';
     // If it already looks like rich HTML, leave it (still scoped by .prose CSS).
-    if (/<(p|h[1-6]|ul|ol|li|strong|em|table|div|br)\b/i.test(text)) return text;
+    if (/<(p|h[1-6]|ul|ol|li|strong|em|table|div|br|a)\b/i.test(text)) return text;
 
     var lines = esc(text).replace(/\r\n?/g, '\n').split('\n');
     var html = '', listType = null;

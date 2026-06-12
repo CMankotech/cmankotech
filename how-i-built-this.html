@@ -47,9 +47,6 @@ h1,h2,h3,h4{font-family:'Syne',sans-serif}
 
 /* HEADER */
 header{margin-bottom:4rem}
-.header-tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--cyan);margin-bottom:1.25rem;background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.2);padding:0.4rem 1rem;border-radius:99px}
-.dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
 h1{font-size:clamp(2rem,5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;line-height:1.05;margin-bottom:1rem}
 .grad{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .subtitle{font-size:0.92rem;color:var(--dim);max-width:560px;line-height:1.75;border-left:2px solid var(--cyan);padding-left:1.25rem;margin-top:1.25rem}
@@ -390,7 +387,6 @@ if (window.mermaid) {
 <div class="container">
 
   <header>
-    <div class="header-tag"><span class="dot"></span><span data-i18n="tag">Behind the build</span></div>
     <h1 class="hero-headline-page">
       <span class="hero-hl-1" data-i18n="h1.line1">Comment j'ai</span>
       <span class="hero-hl-2 grad" data-i18n="h1.grad">construit ce site</span>
@@ -1310,7 +1306,6 @@ Réponse actionnable et concise
 var T={
   fr:{
     'back':'Portfolio',
-    'tag':'Behind the build',
     'h1.line1':'Comment j\'ai',
     'h1.grad':'construit ce site',
     'subtitle':'Si vous aimez la technique et que la complexité ne vous fait pas peur, c\'est ici que ça se passe.',
@@ -1525,7 +1520,6 @@ var T={
   },
   en:{
     'back':'Portfolio',
-    'tag':'Behind the build',
     'h1.line1':'How I',
     'h1.grad':'built this site',
     'subtitle':'Want to know how it\'s actually built? Edge-native architecture, RAG pipeline, LLM orchestration, Langfuse observability, all here. No unnecessary abstractions.',
