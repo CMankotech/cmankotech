@@ -381,13 +381,17 @@ body.intro-lock{overflow:hidden}
 </div>
 <script>
 (function(){
+  // intro-ready pub/sub : les terminaux animes attendent la fin de l'intro
+  window.__introReady=false; window.__introCbs=[];
+  window.onIntroReady=function(cb){ if(window.__introReady){cb();} else {window.__introCbs.push(cb);} };
+  function fireIntroReady(){ if(window.__introReady)return; window.__introReady=true; var cbs=window.__introCbs; window.__introCbs=[]; for(var _i=0;_i<cbs.length;_i++){ try{cbs[_i]();}catch(_e){} } }
   var intro=document.getElementById('intro');
-  if(!intro) return;
+  if(!intro){ fireIntroReady(); return; }
   // Mode édition : #intro-edit garde l'intro figée pour l'édition directe
   var editMode=/intro-edit/.test(location.hash)||/intro-edit/.test(location.search);
   // Ne joue qu'une fois par session
   var seen=false; try{ seen=sessionStorage.getItem('introSeen')==='1'; }catch(e){}
-  if(seen && !editMode){ intro.parentNode.removeChild(intro); return; }
+  if(seen && !editMode){ intro.parentNode.removeChild(intro); fireIntroReady(); return; }
   document.body.classList.add('intro-lock');
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   var done=false;
@@ -396,6 +400,7 @@ body.intro-lock{overflow:hidden}
     try{ sessionStorage.setItem('introSeen','1'); }catch(e){}
     intro.classList.add('intro-out');
     document.body.classList.remove('intro-lock');
+    fireIntroReady();
     setTimeout(function(){ if(intro.parentNode) intro.parentNode.removeChild(intro); },800);
   }
   intro.addEventListener('click',finish);
@@ -417,6 +422,7 @@ body.intro-lock{overflow:hidden}
     name.classList.add('in'); roleline.classList.add('in'); bar.classList.add('in');
     rolesEl.textContent=ROLES[0];
     document.body.classList.remove('intro-lock');
+    fireIntroReady();
     return;
   }
 
@@ -788,7 +794,15 @@ body.intro-lock{overflow:hidden}
   window.addEventListener('resize',syncClip);
   if(window.ResizeObserver&&pin){ try{ new ResizeObserver(syncClip).observe(pin); }catch(e){} }
   if(reduce){ setPin(); renderStatic(); }
-  else { typePin().then(run); }
+  else {
+    // Demarre la frappe seulement apres l'intro ET a la 1re visibilite du terminal
+    var _hStarted=false;
+    function _startHterm(){ if(_hStarted)return; _hStarted=true; (window.onIntroReady||function(c){c();})(function(){ typePin().then(run); }); }
+    if('IntersectionObserver' in window && host){
+      var _hio=new IntersectionObserver(function(es){ for(var _k=0;_k<es.length;_k++){ if(es[_k].isIntersecting){ _hio.disconnect(); _startHterm(); break; } } },{threshold:0.2});
+      _hio.observe(host);
+    } else { _startHterm(); }
+  }
 })();
 </script>
 
@@ -1457,12 +1471,21 @@ function runBothTW(){
   typewrite(_stEl, _twLang==='en' ? _st_en : _st_fr, 18);
 }
 
-window.addEventListener('DOMContentLoaded', function(){ requestAnimationFrame(runBothTW); });
+// Demarre le typewriter du terminal projets a sa 1re visibilite, apres l'intro
+var _projTwStarted=false;
+function _startProjTW(){ if(_projTwStarted)return; _projTwStarted=true; runBothTW(); }
+window.addEventListener('DOMContentLoaded', function(){
+  var pt=document.querySelector('.proj-term')||_stEl;
+  if(pt && ('IntersectionObserver' in window)){
+    var io=new IntersectionObserver(function(es){ for(var i=0;i<es.length;i++){ if(es[i].isIntersecting){ io.disconnect(); (window.onIntroReady||function(c){c();})(_startProjTW); break; } } },{threshold:0.3});
+    io.observe(pt);
+  } else { (window.onIntroReady||function(c){c();})(_startProjTW); }
+});
 
 var _origTwSetLang = window.setLang;
 window.setLang = function(lang){
   _twLang = lang;
-  runBothTW();
+  if(_projTwStarted) runBothTW();
   if(_origTwSetLang) _origTwSetLang(lang);
 };
 
