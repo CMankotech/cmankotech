@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Veille Product & IA hebdomadaire par Carlin Mankoto — Product Management, IA générative, AI Builders, No-code.">
-<title>Veille hebdo — Carlin Mankoto</title>
+<meta name="description" content="Veille Product & IA hebdomadaire par Carlin Mankoto : Product Management, IA générative, AI Builders, No-code.">
+<title>Veille hebdo · Carlin Mankoto</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -55,7 +55,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 .back-link{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;margin-bottom:1.75rem;transition:color 0.2s}
 .back-link:hover{color:var(--text)}
 
-/* HEADER — centré comme pm-toolkit */
+/* HEADER : centré comme pm-toolkit */
 header{text-align:center;margin-bottom:3rem}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
 h1{font-family:'DM Sans',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:500;letter-spacing:-0.045em;line-height:0.98;margin-bottom:0.85rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -69,7 +69,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 .pill.live{border-color:rgba(52,211,153,0.35);color:var(--green);background:rgba(52,211,153,0.06)}
 .livedot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
 
-/* HISTORY SECTION — principale feature de navigation */
+/* HISTORY SECTION : principale feature de navigation */
 .history-section{margin-bottom:2.5rem}
 .section-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:0.8rem}
 .section-label::after{content:'';flex:1;height:1px;background:var(--line)}
@@ -96,7 +96,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 .empty-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--dim);margin-bottom:0.5rem}
 .empty-sub{font-size:0.8rem;color:var(--muted);line-height:1.6}
 
-/* CATEGORIES — style pm-toolkit cards (bordure conic animée au hover) */
+/* CATEGORIES : style pm-toolkit cards (bordure conic animée au hover) */
 @property --tc-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
 .categories{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;margin-bottom:3rem}
 .cat-block{position:relative;isolation:isolate;padding:1.5rem;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:14px;overflow:hidden;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 14px 36px -18px rgba(0,0,0,0.5);transition:transform 0.25s,border-color 0.25s,box-shadow 0.3s}
@@ -194,7 +194,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
     </div>
   </header>
 
-  <!-- HISTORIQUE — section principale visible avant les articles -->
+  <!-- HISTORIQUE : section principale visible avant les articles -->
   <div class="history-section" id="historySection" style="display:none">
     <div class="section-label" id="historyLabel">Éditions précédentes</div>
     <div class="editions-grid" id="editionsGrid"></div>
@@ -366,7 +366,7 @@ function renderHistory() {
       : '';
     return `<button class="edition-card${isActive ? ' active' : ''}" onclick="loadWeek('${e.week}','${e.year}')">
       <span class="ed-label">${_lang === 'fr' ? 'Semaine' : 'Week'}</span>
-      <span class="ed-week">${e.week} — ${e.year}</span>
+      <span class="ed-week">${e.week} : ${e.year}</span>
       ${dateLabel ? `<span class="ed-date">${dateLabel}</span>` : ''}
     </button>`;
   }).join('');

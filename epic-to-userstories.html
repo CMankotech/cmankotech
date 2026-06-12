@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Epic to User Stories — by Carlin Mankoto</title>
+<title>Epic to User Stories · by Carlin Mankoto</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -321,8 +321,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Colle ton epic et précise le contexte produit si besoin.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la décomposition — l'IA génère des user stories INVEST avec critères d'acceptance.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Paste your epic and add product context if needed.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run the breakdown — the AI generates INVEST user stories with acceptance criteria.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Colle ton epic et précise le contexte produit si besoin.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la décomposition : l'IA génère des user stories INVEST avec critères d'acceptance.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Paste your epic and add product context if needed.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run the breakdown : the AI generates INVEST user stories with acceptance criteria.</div></div></div>
       <div class="about-divider"></div>
       <div class="about-grid">
         <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la décomposition d'un epic en user stories prêtes pour le sprint planning.</p></div>
@@ -493,7 +493,7 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, title);
   } catch(e) {
-    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) — check your connection and try again.' : 'Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) : check your connection and try again.' : 'Délai dépassé (30s) : vérifie ta connexion et réessaie.');
     else showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
   }
   document.getElementById('loading').classList.remove('show');
@@ -513,9 +513,9 @@ function buildPrompt(title, desc, persona, tech) {
 }
 
 function friendlyApiError(err, status) {
-  if (status === 429) return currentLang === 'en' ? 'Rate limit reached — wait 30 seconds and try again.' : 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable — try again in a moment.' : 'Service temporairement indisponible — réessaie dans quelques instants.';
-  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
+  if (status === 429) return currentLang === 'en' ? 'Rate limit reached : wait 30 seconds and try again.' : 'Limite de requêtes atteinte : attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable : try again in a moment.' : 'Service temporairement indisponible : réessaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification : contacte le support.';
   if (err && err.message) return err.message;
   return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
 }
@@ -837,7 +837,7 @@ window.pmImportInsights = function(){
     if(top.justification) lines.push(top.justification);
     if(items.length > 1){
       lines.push('\nTop priorités adjacentes :');
-      items.slice(1,4).forEach(function(it){ lines.push('- ' + (it.story||it.title||'') + (it.justification ? ' — ' + it.justification : '')); });
+      items.slice(1,4).forEach(function(it){ lines.push('- ' + (it.story||it.title||'') + (it.justification ? ' : ' + it.justification : '')); });
     }
     if(backlogData.context) lines.push('\nContexte produit : ' + backlogData.context);
     descEl.value = lines.join('\n');
@@ -847,7 +847,7 @@ window.pmImportInsights = function(){
     var interviewData = PMSession.get('interview');
     if(interviewData){
       var p = ((interviewData.result||{}).persona)||{};
-      if(p.name) persoEl.value = p.name + (p.description ? ' — ' + p.description : '') + (p.tags&&p.tags.length ? ' (' + p.tags.slice(0,3).join(', ') + ')' : '');
+      if(p.name) persoEl.value = p.name + (p.description ? ' : ' + p.description : '') + (p.tags&&p.tags.length ? ' (' + p.tags.slice(0,3).join(', ') + ')' : '');
     }
   }
   var b = document.getElementById('pmInsightBanner'); if(b) b.remove();

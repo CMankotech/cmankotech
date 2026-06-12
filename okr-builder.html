@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OKR Builder — by Carlin Mankoto</title>
+<title>OKR Builder · by Carlin Mankoto</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -317,8 +317,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <span class="arrow">&#9660;</span>
     </button>
     <div class="howto-body" id="howtoBody">
-      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Renseigne le nom du produit, son type, tes ambitions stratégiques et tes métriques actuelles.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la génération — l'IA construit tes OKRs avec Key Results mesurables.</div></div></div>
-      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Fill in the product name, type, your strategic ambitions and current metrics.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run generation — the AI builds your OKRs with measurable Key Results.</div></div></div>
+      <div class="howto-steps" id="howtoStepsFr"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Renseigne le nom du produit, son type, tes ambitions stratégiques et tes métriques actuelles.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Lance la génération : l'IA construit tes OKRs avec Key Results mesurables.</div></div></div>
+      <div class="howto-steps" id="howtoStepsEn" style="display:none"><div class="howto-step"><div class="howto-step-num">1</div><div class="howto-step-text">Fill in the product name, type, your strategic ambitions and current metrics.</div></div><div class="howto-step"><div class="howto-step-num">2</div><div class="howto-step-text">Run generation : the AI builds your OKRs with measurable Key Results.</div></div></div>
       <div class="about-divider"></div>
       <div class="about-grid">
         <div class="about-block"><div class="about-lbl" id="aLblCtx">Contexte</div><p class="about-text" id="aCtx">Conçu pour accélérer la définition des OKRs produit, souvent floue ou déconnectée des vraies métriques.</p></div>
@@ -498,7 +498,7 @@ async function launch() {
     var data = JSON.parse(m[0]);
     renderResults(data, name, type);
   } catch(e) {
-    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) — check your connection and try again.' : 'Délai dépassé (30s) — vérifie ta connexion et réessaie.');
+    if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) : check your connection and try again.' : 'Délai dépassé (30s) : vérifie ta connexion et réessaie.');
     else showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
   }
   document.getElementById('loading').classList.remove('show');
@@ -515,9 +515,9 @@ function buildPrompt(name, type, ambitions, metrics) {
 }
 
 function friendlyApiError(err, status) {
-  if (status === 429) return currentLang === 'en' ? 'Rate limit reached — wait 30 seconds and try again.' : 'Limite de requêtes atteinte — attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable — try again in a moment.' : 'Service temporairement indisponible — réessaie dans quelques instants.';
-  if (status === 401) return 'Erreur d\'authentification — contacte le support.';
+  if (status === 429) return currentLang === 'en' ? 'Rate limit reached : wait 30 seconds and try again.' : 'Limite de requêtes atteinte : attends 30 secondes et réessaie.';
+  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable : try again in a moment.' : 'Service temporairement indisponible : réessaie dans quelques instants.';
+  if (status === 401) return 'Erreur d\'authentification : contacte le support.';
   if (err && err.message) return err.message;
   return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
 }
@@ -902,14 +902,14 @@ window.pmImportInsights = function(){
     var opps = r.opportunities || [];
     var pains = r.pain_groups || [];
     personaName = persona.name || '';
-    if(personaName) lines.push('Persona cible : ' + personaName + (persona.description ? ' — ' + persona.description : ''));
+    if(personaName) lines.push('Persona cible : ' + personaName + (persona.description ? ' : ' + persona.description : ''));
     if(pains.length){
       lines.push('\nPain points identifiés :');
       pains.forEach(function(g){ lines.push('- ' + (g.group||'') + ' (' + (g.count||(g.items||[]).length) + ' mentions)'); });
     }
     if(opps.length){
       lines.push('\nOpportunités à adresser ce trimestre :');
-      opps.forEach(function(o,i){ lines.push((i+1) + '. ' + (o.title||'') + (o.description ? ' — ' + o.description : '')); });
+      opps.forEach(function(o,i){ lines.push((i+1) + '. ' + (o.title||'') + (o.description ? ' : ' + o.description : '')); });
     }
     if(prodEl && !prodEl.value && interviewData.context) prodEl.value = interviewData.context.split(',')[0].trim().slice(0,40);
   } else if(discoveryData){

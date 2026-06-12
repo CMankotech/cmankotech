@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAG Explorer — by Carlin Mankoto</title>
+<title>RAG Explorer · by Carlin Mankoto</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -86,7 +86,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .step-desc{font-size:0.68rem;color:var(--dim)}
 .step-body{margin-left:52px}
 
-/* STEP 1 — INTENT */
+/* STEP 1 : INTENT */
 .intent-row{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
 .intent-badge{display:inline-flex;align-items:center;gap:0.4rem;font-family:'DM Mono',ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.72rem;font-weight:500;letter-spacing:0.02em;padding:0.35rem 0.85rem;border-radius:99px}
 .intent-pm{background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.3);color:#c4b5fd}
@@ -98,7 +98,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .goal-box{margin-top:0.75rem;padding:0.75rem 1rem;background:rgba(255,255,255,0.02);border:1px solid var(--line);border-radius:8px;font-size:0.8rem;color:var(--dim)}
 .goal-box strong{color:var(--text);font-weight:400}
 
-/* STEP 2 — CHUNKS */
+/* STEP 2 : CHUNKS */
 .chunk-list{display:flex;flex-direction:column;gap:0.65rem}
 @property --tc-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
 .chunk-card{position:relative;isolation:isolate;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(0,0,0,0.15));border:1px solid var(--border);border-radius:12px;padding:0.9rem 1rem;overflow:hidden;backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 6px 18px -10px rgba(0,0,0,0.4);transition:transform 0.25s,border-color 0.25s,box-shadow 0.3s}
@@ -118,7 +118,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .chunk-expand:hover{opacity:0.7}
 .no-rag-note{font-size:0.78rem;color:var(--dim);padding:0.75rem 1rem;background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.12);border-radius:8px}
 
-/* STEP 3 — REPLY */
+/* STEP 3 : REPLY */
 .reply-box{background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.25rem;font-size:0.84rem;line-height:1.75;color:var(--text)}
 .reply-box a{color:var(--acc);text-decoration:none}
 .reply-box a:hover{text-decoration:underline}
@@ -363,7 +363,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <span class="chip" onclick="useChip(this)">What is a North Star Metric?</span>
       <span class="chip" onclick="useChip(this)">How to set quarterly OKRs?</span>
       <span class="chip" onclick="useChip(this)">How to run a story mapping session?</span>
-      <span class="chip" onclick="useChip(this)">RAG vs fine-tuning — when to use what?</span>
+      <span class="chip" onclick="useChip(this)">RAG vs fine-tuning : when to use what?</span>
       <span class="chip" onclick="useChip(this)">What is a Definition of Done?</span>
       <span class="chip" onclick="useChip(this)">How to measure UX with the HEART framework?</span>
     </div>
@@ -382,7 +382,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="pipeline" id="pipeline">
     <div class="pipeline-header">
       <div>
-        <div class="pipeline-title">Pipeline RAG — Résultats</div>
+        <div class="pipeline-title">Pipeline RAG : Résultats</div>
         <div class="pipeline-meta" id="pipeline-meta"></div>
       </div>
       <button class="btn-reset glass-shimmer glass-focus" onclick="resetForm()">Nouvelle question</button>
@@ -393,7 +393,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <div class="step-header">
         <div class="step-num">1</div>
         <div>
-          <div class="step-label" id="step1-label">Planner — Classification d'intent</div>
+          <div class="step-label" id="step1-label">Planner : Classification d'intent</div>
           <div class="step-desc" id="step1-desc">Analyse la requête et détermine si le retriever doit s'activer</div>
         </div>
       </div>
@@ -414,7 +414,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <div class="step-header">
         <div class="step-num">2</div>
         <div>
-          <div class="step-label" id="step2-label">Retriever — Chunks sémantiques</div>
+          <div class="step-label" id="step2-label">Retriever : Chunks sémantiques</div>
           <div class="step-desc" id="step2-desc">Top-3 passages les plus proches par similarité cosinus</div>
         </div>
       </div>
@@ -428,7 +428,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <div class="step-header">
         <div class="step-num">3</div>
         <div>
-          <div class="step-label" id="step3-label">Synthesis — Réponse augmentée</div>
+          <div class="step-label" id="step3-label">Synthesis : Réponse augmentée</div>
           <div class="step-desc" id="step3-desc">Le LLM génère une réponse ancrée dans les chunks récupérés</div>
         </div>
       </div>
@@ -457,14 +457,14 @@ var i18n = {
     loadingPlanner: 'Planner en cours…',
     loadingRetriever: 'Retrieval sémantique…',
     loadingSynthesis: 'Synthèse augmentée…',
-    step1label: 'Planner — Classification d\'intent',
+    step1label: 'Planner : Classification d\'intent',
     step1desc: 'Analyse la requête et détermine si le retriever doit s\'activer',
-    step2label: 'Retriever — Chunks sémantiques',
+    step2label: 'Retriever : Chunks sémantiques',
     step2desc: 'Top-3 passages les plus proches par similarité cosinus',
-    step3label: 'Synthesis — Réponse augmentée',
+    step3label: 'Synthesis : Réponse augmentée',
     step3desc: 'Le LLM génère une réponse ancrée dans les chunks récupérés',
     noRag: 'Intent non-PM détecté → le Retriever n\'a pas été activé pour cette requête.',
-    noRagBackend: '⚠ Le retriever n\'a pas pu être activé. Réponse via l\'orchestrateur de base — les chunks ne sont pas disponibles.',
+    noRagBackend: '⚠ Le retriever n\'a pas pu être activé. Réponse via l\'orchestrateur de base : les chunks ne sont pas disponibles.',
     pipelineMeta: function(engine){ return 'Moteur : ' + engine; },
     confLabel: function(pct){ return 'Confidence : ' + pct + '%'; },
     expand: 'Voir plus',
@@ -479,14 +479,14 @@ var i18n = {
     loadingPlanner: 'Running planner…',
     loadingRetriever: 'Semantic retrieval…',
     loadingSynthesis: 'Augmented synthesis…',
-    step1label: 'Planner — Intent Classification',
+    step1label: 'Planner : Intent Classification',
     step1desc: 'Analyses the query and decides whether the retriever should activate',
-    step2label: 'Retriever — Semantic Chunks',
+    step2label: 'Retriever : Semantic Chunks',
     step2desc: 'Top-3 closest passages by cosine similarity',
-    step3label: 'Synthesis — Augmented Response',
+    step3label: 'Synthesis : Augmented Response',
     step3desc: 'The LLM generates a response grounded in the retrieved chunks',
     noRag: 'Non-PM intent detected → the Retriever was not activated for this query.',
-    noRagBackend: '⚠ Retriever could not be activated. Responding via base orchestrator — chunks are unavailable.',
+    noRagBackend: '⚠ Retriever could not be activated. Responding via base orchestrator : chunks are unavailable.',
     pipelineMeta: function(engine){ return 'Engine: ' + engine; },
     confLabel: function(pct){ return 'Confidence: ' + pct + '%'; },
     expand: 'Read more',
@@ -571,7 +571,7 @@ async function runQuery() {
         }
       }
     } catch(e) {
-      // RAG backend unreachable — fall through to orchestrate
+      // RAG backend unreachable : fall through to orchestrate
     }
 
     // Fallback: /orchestrate (always available via Cloudflare Worker)
