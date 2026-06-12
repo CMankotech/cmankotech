@@ -17,6 +17,7 @@
 <link rel="canonical" href="https://cmankotech.github.io/cmankotech/">
 <title>Portfolio Builder Carlin Mankoto</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="cursor.css">
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Instrument+Serif:ital@1&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -48,7 +49,17 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 @keyframes drift3{0%{transform:translate3d(0,0,0) scale(1)}25%{transform:translate3d(90px,-40px,0) scale(1.08)}50%{transform:translate3d(-30px,-80px,0) scale(1.15)}75%{transform:translate3d(-70px,50px,0) scale(0.9)}100%{transform:translate3d(0,0,0) scale(1)}}
 @keyframes drift4{0%{transform:translate3d(0,0,0) scale(1)}25%{transform:translate3d(-50px,70px,0) scale(1.1)}50%{transform:translate3d(60px,30px,0) scale(0.95)}75%{transform:translate3d(30px,-60px,0) scale(1.12)}100%{transform:translate3d(0,0,0) scale(1)}}
 @media (prefers-reduced-motion:reduce){.glow{animation:none!important}}
-@media (max-width:768px){.g4,.g5,.g6,.g7{display:none}.glow{filter:blur(80px)}}
+@media (max-width:768px){.g4,.g5,.g6,.g7{display:none}.glow{filter:blur(80px);position:absolute}
+/* Mobile GPU fix: kill backdrop-filter + mix-blend-mode + fixed blur re-raster */
+nav,.nav-tools-menu,.theme-btn-fixed,#mobile-menu,#egg-overlay,#tt-bubble,.hmock-theme-menu{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+nav{background:rgba(8,8,15,0.96)}
+.nav-tools-menu{background:rgba(12,12,20,0.99)}
+#mobile-menu{background:rgba(8,8,15,0.99)}
+#egg-overlay{background:rgba(8,8,15,0.9)}
+#tt-bubble{background:rgba(7,7,14,0.99)}
+.hmock-theme-menu{background:rgba(16,18,28,0.99)}
+.hero-bg-grain,.hero-orb,[data-theme="light"] .glow{mix-blend-mode:normal}
+.hero-bg-grain{opacity:0.1}}
 .grad{background:linear-gradient(135deg,#60a5fa 0%,#a78bfa 50%,#22d3ee 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .grad-blue{background:linear-gradient(to right,#60a5fa,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
