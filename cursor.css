@@ -6,7 +6,10 @@ body {
   cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><defs><linearGradient id='c' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%2360a5fa'/><stop offset='1' stop-color='%23a78bfa'/></linearGradient></defs><path d='M5 3 L5 22 L10 17 L13.5 24 L16.5 22.6 L13 16 L20 16 Z' fill='url(%23c)' stroke='%23070910' stroke-width='1.4' stroke-linejoin='round'/></svg>") 5 3, auto;
 }
 
-/* Éléments cliquables — même flèche, dégradé cyan→violet pour signaler l'interaction */
+/* Éléments cliquables — main qui pointe, dégradée cyan→violet, aux couleurs du site,
+   à la place de la main grise de l'OS. Hotspot sur le bout de l'index (9,3).
+   !important pour battre les `cursor:pointer` déclarés en dur dans les pages.
+   `.cm-pointer` est posée par cursor.js sur les éléments custom (cf. JS). */
 a,
 button,
 summary,
@@ -20,8 +23,9 @@ label[for],
 .qr-card,
 .footer-link,
 input[type="submit"],
-input[type="button"] {
-  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><defs><linearGradient id='c' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%2322d3ee'/><stop offset='1' stop-color='%23a78bfa'/></linearGradient></defs><path d='M5 3 L5 22 L10 17 L13.5 24 L16.5 22.6 L13 16 L20 16 Z' fill='url(%23c)' stroke='%23070910' stroke-width='1.4' stroke-linejoin='round'/></svg>") 5 3, pointer;
+input[type="button"],
+.cm-pointer {
+  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><defs><linearGradient id='g' gradientUnits='userSpaceOnUse' x1='4' y1='3' x2='21' y2='23'><stop offset='0' stop-color='%2322d3ee'/><stop offset='1' stop-color='%23a78bfa'/></linearGradient></defs><g stroke='%230b0f1a' stroke-width='2' stroke-linejoin='round' fill='%230b0f1a'><rect x='6.5' y='13' width='14.5' height='10' rx='4.5'/><rect x='4' y='13.5' width='4.4' height='5' rx='2.2'/><rect x='6.5' y='2.5' width='4.2' height='13.5' rx='2.1'/><rect x='10.4' y='8.5' width='3.8' height='9.5' rx='1.9'/><rect x='13.6' y='9' width='3.8' height='9' rx='1.9'/><rect x='16.7' y='10.5' width='3.6' height='7.5' rx='1.8'/></g><g fill='url(%23g)'><rect x='6.5' y='13' width='14.5' height='10' rx='4.5'/><rect x='4' y='13.5' width='4.4' height='5' rx='2.2'/><rect x='6.5' y='2.5' width='4.2' height='13.5' rx='2.1'/><rect x='10.4' y='8.5' width='3.8' height='9.5' rx='1.9'/><rect x='13.6' y='9' width='3.8' height='9' rx='1.9'/><rect x='16.7' y='10.5' width='3.6' height='7.5' rx='1.8'/></g></svg>") 9 3, pointer !important;
 }
 
 /* Champs de saisie — on garde le curseur texte natif */
@@ -29,4 +33,44 @@ input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type
 textarea,
 [contenteditable="true"] {
   cursor: text;
+}
+
+/* Halo de curseur (piloté par cursor.js). La flèche native reste visible par-dessus.
+   #cm-cursor se déplace par transform (translate3d), .cm-cursor-ring gère taille/glow
+   pour que le lissage de position ne soit jamais ralenti par les transitions. */
+#cm-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2147483646;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  will-change: transform;
+}
+#cm-cursor.cm-on {
+  opacity: 1;
+}
+.cm-cursor-ring {
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(148, 163, 220, 0.45);
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.12), rgba(96, 165, 250, 0) 70%);
+  transition: transform 0.18s ease, border-color 0.18s ease,
+    background 0.18s ease, box-shadow 0.25s ease;
+}
+/* Survol d'un élément cliquable : le halo grossit et s'illumine cyan→violet */
+#cm-cursor.cm-active .cm-cursor-ring {
+  transform: scale(1.75);
+  border-color: rgba(34, 211, 238, 0.55);
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.22), rgba(167, 139, 250, 0.12) 60%, rgba(167, 139, 250, 0) 75%);
+  box-shadow: 0 0 14px rgba(34, 211, 238, 0.35), 0 0 22px rgba(167, 139, 250, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-cursor-ring {
+    transition: none;
+  }
 }
