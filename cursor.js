@@ -17,9 +17,9 @@
 
   var halo = document.createElement('div');
   halo.id = 'cm-cursor';
-  var ring = document.createElement('div');
-  ring.className = 'cm-cursor-ring';
-  halo.appendChild(ring);
+  var aura = document.createElement('div');
+  aura.className = 'cm-cursor-aura';
+  halo.appendChild(aura);
 
   function mount() {
     document.body.appendChild(halo);
@@ -61,10 +61,9 @@
     tx = e.clientX;
     ty = e.clientY;
     if (!shown) {
-      // Pas de flash en 0,0 : on place le halo direct au 1er mouvement
+      // Pas de flash en 0,0 : on place l'aura direct au 1er mouvement
       x = tx; y = ty;
       shown = true;
-      halo.classList.add('cm-on');
     }
     // getComputedStyle seulement quand la cible change (léger sur PC modeste)
     if (e.target !== lastEl) {
@@ -74,9 +73,12 @@
     halo.classList.toggle('cm-active', lastClickable);
   }, { passive: true });
 
-  // Masquer quand la souris quitte la fenêtre, réafficher au retour
-  document.addEventListener('mouseleave', function () { halo.classList.remove('cm-on'); });
-  document.addEventListener('mouseenter', function () { if (shown) halo.classList.add('cm-on'); });
+  // Masquer l'aura quand la souris quitte la fenêtre (et forcer un reclassement au retour)
+  document.addEventListener('mouseleave', function () {
+    halo.classList.remove('cm-active');
+    lastEl = null;
+    setTagged(null);
+  });
 
   var ease = reduce ? 1 : 0.2;
   function loop() {

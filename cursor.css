@@ -35,8 +35,10 @@ textarea,
   cursor: text;
 }
 
-/* Halo de curseur (piloté par cursor.js). La flèche native reste visible par-dessus.
-   #cm-cursor se déplace par transform (translate3d), .cm-cursor-ring gère taille/glow
+/* Aura de curseur (pilotée par cursor.js). La flèche / main native reste visible
+   par-dessus. Pas de bord net : un dégradé radial diffus, invisible au repos, qui
+   apparait en fondu au survol d'un élément cliquable.
+   #cm-cursor se déplace par transform (translate3d) ; .cm-cursor-aura gère l'apparition
    pour que le lissage de position ne soit jamais ralenti par les transitions. */
 #cm-cursor {
   position: fixed;
@@ -44,33 +46,30 @@ textarea,
   left: 0;
   z-index: 2147483646;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.25s ease;
   will-change: transform;
 }
-#cm-cursor.cm-on {
-  opacity: 1;
-}
-.cm-cursor-ring {
-  width: 26px;
-  height: 26px;
-  margin: -13px 0 0 -13px;
+.cm-cursor-aura {
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
   border-radius: 50%;
-  border: 1.5px solid rgba(148, 163, 220, 0.45);
-  background: radial-gradient(circle, rgba(96, 165, 250, 0.12), rgba(96, 165, 250, 0) 70%);
-  transition: transform 0.18s ease, border-color 0.18s ease,
-    background 0.18s ease, box-shadow 0.25s ease;
+  opacity: 0;
+  transform: scale(0.55);
+  background: radial-gradient(circle,
+    rgba(34, 211, 238, 0.30) 0%,
+    rgba(167, 139, 250, 0.16) 42%,
+    rgba(167, 139, 250, 0) 72%);
+  transition: opacity 0.22s ease, transform 0.22s ease;
 }
-/* Survol d'un élément cliquable : le halo grossit et s'illumine cyan→violet */
-#cm-cursor.cm-active .cm-cursor-ring {
-  transform: scale(1.75);
-  border-color: rgba(34, 211, 238, 0.55);
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.22), rgba(167, 139, 250, 0.12) 60%, rgba(167, 139, 250, 0) 75%);
-  box-shadow: 0 0 14px rgba(34, 211, 238, 0.35), 0 0 22px rgba(167, 139, 250, 0.25);
+/* L'aura n'apparait qu'au survol d'un élément cliquable */
+#cm-cursor.cm-active .cm-cursor-aura {
+  opacity: 1;
+  transform: scale(1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cm-cursor-ring {
-    transition: none;
+  .cm-cursor-aura {
+    transition: opacity 0.22s ease;
+    transform: scale(1);
   }
 }
