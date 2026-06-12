@@ -1482,7 +1482,7 @@ export default {
           const groqRes = await callGroq(env, {
             model: DEFAULT_MODEL,
             messages: [
-              { role: 'system', content: 'Tu es un assistant de veille technologique. Rédige en 2 phrases maximum en français une synthèse concise et factuelle des articles listés. Sois direct, informatif, sans intro.' },
+              { role: 'system', content: 'Tu es un assistant de veille technologique. Rédige en 2 phrases maximum en français une synthèse concise et factuelle des articles listés. Sois direct, informatif, sans intro. N'utilise jamais de tirets longs.' },
               { role: 'user', content: `Articles de la semaine :\n${titles}` },
             ],
             temperature: 0.4,
@@ -1531,7 +1531,7 @@ export default {
           const groqRes = await callGroq(env, {
             model: DEFAULT_MODEL,
             messages: [
-              { role: 'system', content: 'Tu es un assistant de veille technologique. Rédige en 2 phrases maximum en français une synthèse concise et factuelle des articles listés. Sois direct, informatif, sans intro.' },
+              { role: 'system', content: 'Tu es un assistant de veille technologique. Rédige en 2 phrases maximum en français une synthèse concise et factuelle des articles listés. Sois direct, informatif, sans intro. N'utilise jamais de tirets longs.' },
               { role: 'user', content: `Articles de la semaine :\n${titles}` },
             ],
             temperature: 0.4,
@@ -1693,14 +1693,14 @@ async function handleOrchestrator(body, env, ctx) {
   const synthesisPrompt = lang === 'en'
     ? 'You are KRL1, Carlin Mankoto\'s portfolio assistant. ' +
       'For intent "pm_workflow": transform the PM plan into an actionable answer with links to PM tools. ' +
-      'For other intents (portfolio/tech/contact/other): answer the question directly based on user_goal — do NOT mention PM tools unless genuinely relevant. ' +
+      'For other intents (portfolio/tech/contact/other): answer the question directly based on user_goal, do NOT mention PM tools unless genuinely relevant. ' +
       'Only share Carlin\'s LinkedIn/email when intent is "contact" or the user explicitly asks how to reach him; never suggest contact proactively. ' +
-      'Max 220 words. When citing a tool, use HTML link: <a href="URL" target="_blank">Name</a>. Never use markdown link syntax.'
+      'Max 220 words. Never use em dashes or long dashes; use commas, colons or periods instead. When citing a tool, use HTML link: <a href="URL" target="_blank">Name</a>. Never use markdown link syntax.'
     : 'Tu es KRL1, assistant portfolio de Carlin Mankoto. ' +
       'Pour l\'intent "pm_workflow" : transforme le plan PM en réponse actionnable avec liens vers les outils PM. ' +
-      'Pour les autres intents (portfolio/tech/contact/other) : réponds directement à la question via user_goal — ne cite pas les outils PM sauf si vraiment pertinent. ' +
+      'Pour les autres intents (portfolio/tech/contact/other) : réponds directement à la question via user_goal, ne cite pas les outils PM sauf si vraiment pertinent. ' +
       'Ne partage le LinkedIn/email de Carlin que si l\'intent est "contact" ou si l\'utilisateur demande explicitement comment le joindre ; ne suggère jamais le contact de façon proactive. ' +
-      'Max 220 mots. Liens HTML cliquables si tu cites un outil : <a href="URL" target="_blank">Nom</a>. Jamais de liens markdown.';
+      'Max 220 mots. N\'utilise jamais de tirets longs ; préfère virgules, deux-points ou points. Liens HTML cliquables si tu cites un outil : <a href="URL" target="_blank">Nom</a>. Jamais de liens markdown.';
 
   const plannerMessages = [
     { role: 'system', content: plannerPrompt },
@@ -1837,14 +1837,14 @@ async function handleOrchestratorStream(body, env, ctx) {
   const synthesisPrompt = lang === 'en'
     ? 'You are KRL1, Carlin Mankoto\'s portfolio assistant. ' +
       'For intent "pm_workflow": transform the PM plan into an actionable answer with links to PM tools. ' +
-      'For other intents (portfolio/tech/contact/other): answer the question directly based on user_goal — do NOT mention PM tools unless genuinely relevant. ' +
+      'For other intents (portfolio/tech/contact/other): answer the question directly based on user_goal, do NOT mention PM tools unless genuinely relevant. ' +
       'Only share Carlin\'s LinkedIn/email when intent is "contact" or the user explicitly asks how to reach him; never suggest contact proactively. ' +
-      'Max 220 words. When citing a tool, use HTML link: <a href="URL" target="_blank">Name</a>. Never use markdown link syntax.'
+      'Max 220 words. Never use em dashes or long dashes; use commas, colons or periods instead. When citing a tool, use HTML link: <a href="URL" target="_blank">Name</a>. Never use markdown link syntax.'
     : 'Tu es KRL1, assistant portfolio de Carlin Mankoto. ' +
       'Pour l\'intent "pm_workflow" : transforme le plan PM en réponse actionnable avec liens vers les outils PM. ' +
-      'Pour les autres intents (portfolio/tech/contact/other) : réponds directement à la question via user_goal — ne cite pas les outils PM sauf si vraiment pertinent. ' +
+      'Pour les autres intents (portfolio/tech/contact/other) : réponds directement à la question via user_goal, ne cite pas les outils PM sauf si vraiment pertinent. ' +
       'Ne partage le LinkedIn/email de Carlin que si l\'intent est "contact" ou si l\'utilisateur demande explicitement comment le joindre ; ne suggère jamais le contact de façon proactive. ' +
-      'Max 220 mots. Liens HTML cliquables si tu cites un outil : <a href="URL" target="_blank">Nom</a>. Jamais de liens markdown.';
+      'Max 220 mots. N\'utilise jamais de tirets longs ; préfère virgules, deux-points ou points. Liens HTML cliquables si tu cites un outil : <a href="URL" target="_blank">Nom</a>. Jamais de liens markdown.';
 
   const toolLinks = [
     'OKR Builder: https://cmankotech.github.io/cmankotech/okr-builder.html',
@@ -1986,14 +1986,14 @@ async function handleRagQuery(body, env, ctx) {
   const synthesisPrompt = lang === 'en'
     ? 'You are KRL1, Carlin Mankoto\'s portfolio assistant. ' +
       'For intent "pm_workflow": transform the PM plan into an actionable answer with links to PM tools. ' +
-      'For other intents (portfolio/tech/contact/other): answer the question directly based on user_goal — do NOT mention PM tools unless genuinely relevant. ' +
+      'For other intents (portfolio/tech/contact/other): answer the question directly based on user_goal, do NOT mention PM tools unless genuinely relevant. ' +
       'Only share Carlin\'s LinkedIn/email when intent is "contact" or the user explicitly asks how to reach him; never suggest contact proactively. ' +
-      'Max 220 words. When citing a tool, use HTML link: <a href="URL" target="_blank">Name</a>. Never use markdown link syntax.'
+      'Max 220 words. Never use em dashes or long dashes; use commas, colons or periods instead. When citing a tool, use HTML link: <a href="URL" target="_blank">Name</a>. Never use markdown link syntax.'
     : 'Tu es KRL1, assistant portfolio de Carlin Mankoto. ' +
       'Pour l\'intent "pm_workflow" : transforme le plan PM en réponse actionnable avec liens vers les outils PM. ' +
-      'Pour les autres intents (portfolio/tech/contact/other) : réponds directement à la question via user_goal — ne cite pas les outils PM sauf si vraiment pertinent. ' +
+      'Pour les autres intents (portfolio/tech/contact/other) : réponds directement à la question via user_goal, ne cite pas les outils PM sauf si vraiment pertinent. ' +
       'Ne partage le LinkedIn/email de Carlin que si l\'intent est "contact" ou si l\'utilisateur demande explicitement comment le joindre ; ne suggère jamais le contact de façon proactive. ' +
-      'Max 220 mots. Liens HTML cliquables si tu cites un outil : <a href="URL" target="_blank">Nom</a>. Jamais de liens markdown.';
+      'Max 220 mots. N\'utilise jamais de tirets longs ; préfère virgules, deux-points ou points. Liens HTML cliquables si tu cites un outil : <a href="URL" target="_blank">Nom</a>. Jamais de liens markdown.';
 
   const toolLinks = [
     'OKR Builder: https://cmankotech.github.io/cmankotech/okr-builder.html',
