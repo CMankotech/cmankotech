@@ -13,7 +13,7 @@ function bingNewsUrl(query, locale) {
 }
 
 // Open-ended topics fanned out across the whole web via Bing News, one query per
-// market (FR + EN). Single phrases only — Bing News returns nothing for "A" OR "B".
+// market (FR + EN). Single phrases only : Bing News returns nothing for "A" OR "B".
 // The publisher is derived from each article's real domain (see unwrapBing).
 const VEILLE_TOPICS = [
   { id: 'product',  label: 'Product',      fr: '"product management"',        en: '"product management"' },
@@ -174,9 +174,9 @@ How confident are you in your estimates? Lower confidence = higher risk.
 
 | Score | Meaning |
 |-------|---------|
-| 100% | High confidence — data-backed estimates |
-| 80% | Medium confidence — some supporting data |
-| 50% | Low confidence — mostly assumptions |
+| 100% | High confidence : data-backed estimates |
+| 80% | Medium confidence : some supporting data |
+| 50% | Low confidence : mostly assumptions |
 
 ### Effort
 Total person-months of work required across all team members (design, dev, QA).
@@ -204,25 +204,25 @@ Total person-months of work required across all team members (design, dev, QA).
 
 ## Common Mistakes to Avoid
 
-1. **Overestimating Reach** — be conservative, use real analytics data
-2. **Inflating Confidence** — if you have no data, use 50% or lower
-3. **Underestimating Effort** — always add 20-30% buffer for unknowns
-4. **Using RICE in isolation** — combine with strategic alignment and dependencies
-5. **Treating the score as absolute truth** — RICE is a conversation starter, not a verdict
+1. **Overestimating Reach** : be conservative, use real analytics data
+2. **Inflating Confidence** : if you have no data, use 50% or lower
+3. **Underestimating Effort** : always add 20-30% buffer for unknowns
+4. **Using RICE in isolation** : combine with strategic alignment and dependencies
+5. **Treating the score as absolute truth** : RICE is a conversation starter, not a verdict
 
 ## RICE vs. ICE
 
 ICE (Impact × Confidence × Ease) is a simpler variant that drops Reach. Use ICE for smaller, uniform-audience features; use RICE when your features target different user segments of varying sizes.`,
 
-  'okr.md': `# OKR Framework — Objectives and Key Results
+  'okr.md': `# OKR Framework : Objectives and Key Results
 
 ## Definition
 
 OKRs are a goal-setting framework that connects ambitious objectives to measurable outcomes. Pioneered at Intel by Andy Grove and popularized by Google, OKRs align individual, team, and company efforts toward shared priorities.
 
 **Structure:**
-- **Objective** — a qualitative, inspiring statement of what you want to achieve
-- **Key Results** — 2-5 quantitative metrics that prove the objective is being achieved
+- **Objective** : a qualitative, inspiring statement of what you want to achieve
+- **Key Results** : 2-5 quantitative metrics that prove the objective is being achieved
 
 \`\`\`
 Objective: [Inspiring qualitative statement]
@@ -233,20 +233,20 @@ Objective: [Inspiring qualitative statement]
 
 ## What Makes a Good Objective
 
-- Qualitative and aspirational — it should inspire and give direction
+- Qualitative and aspirational : it should inspire and give direction
 - Memorable and short (one sentence)
 - Time-bound (typically quarterly)
-- Should NOT be a metric itself — that's what Key Results are for
+- Should NOT be a metric itself : that's what Key Results are for
 - Good: "Become the go-to platform for freelance designers"
 - Bad: "Increase revenue by 20%"
 
 ## What Makes a Good Key Result
 
-- Strictly quantitative — if it can't be measured, it's not a KR
+- Strictly quantitative : if it can't be measured, it's not a KR
 - Outcome-based, not output-based (measure impact, not activity)
 - Contains a baseline and a target: "from X to Y"
 - Should be ambitious but achievable (~70% completion is a success at Google)
-- 2-5 KRs per Objective — more creates dilution and confusion
+- 2-5 KRs per Objective : more creates dilution and confusion
 
 | Output (bad KR) | Outcome (good KR) |
 |-----------------|-------------------|
@@ -290,7 +290,7 @@ Company OKR
 
 - Score each KR from 0.0 to 1.0
 - Objective score = average of KR scores
-- **0.7 is the target** — consistently scoring 1.0 means objectives weren't ambitious enough
+- **0.7 is the target** : consistently scoring 1.0 means objectives weren't ambitious enough
 - 0.0–0.3: Significant shortfall, needs retrospective
 - 0.4–0.6: Progress made, but fell short
 - 0.7–1.0: Strong performance
@@ -304,12 +304,12 @@ Company OKR
 
 ## Common Mistakes to Avoid
 
-1. **Too many OKRs** — 3-5 objectives per team maximum; more = loss of focus
-2. **Tasks disguised as Key Results** — "Launch feature X" is a task, not a KR
-3. **OKRs as performance reviews** — OKRs are for direction, not HR evaluation
-4. **Setting OKRs in isolation** — must be co-created with the team to get buy-in
-5. **Forgetting to check in** — OKRs abandoned after Q1 kickoff achieve nothing
-6. **100% score as the goal** — ambitious OKRs should be hard; 100% may signal low ambition`,
+1. **Too many OKRs** : 3-5 objectives per team maximum; more = loss of focus
+2. **Tasks disguised as Key Results** : "Launch feature X" is a task, not a KR
+3. **OKRs as performance reviews** : OKRs are for direction, not HR evaluation
+4. **Setting OKRs in isolation** : must be co-created with the team to get buy-in
+5. **Forgetting to check in** : OKRs abandoned after Q1 kickoff achieve nothing
+6. **100% score as the goal** : ambitious OKRs should be hard; 100% may signal low ambition`,
 
   'discovery.md': `# Product Discovery Framework
 
@@ -318,10 +318,10 @@ Company OKR
 Product discovery is the process of determining what to build before building it. It answers the question: "Are we solving the right problem in the right way?" Effective discovery reduces the risk of building features users don't want or that don't achieve business goals.
 
 **The dual risk in product:**
-- **Value risk** — will users want this?
-- **Feasibility risk** — can we build it?
-- **Usability risk** — can users figure out how to use it?
-- **Business viability risk** — will this work for our business?
+- **Value risk** : will users want this?
+- **Feasibility risk** : can we build it?
+- **Usability risk** : can users figure out how to use it?
+- **Business viability risk** : will this work for our business?
 
 ## The Double Diamond Model
 
@@ -335,7 +335,7 @@ The Double Diamond (Design Council, 2005) is the most widely used discovery fram
   Space         Problem     Space       Solution
 \`\`\`
 
-### Diamond 1 — Problem Space
+### Diamond 1 : Problem Space
 
 **Discover (Diverge):**
 - Broad research to understand the problem landscape
@@ -349,12 +349,12 @@ The Double Diamond (Design Council, 2005) is the most widely used discovery fram
 - Goal: align the team on the right problem to solve
 - Output: problem statement, validated opportunity
 
-### Diamond 2 — Solution Space
+### Diamond 2 : Solution Space
 
 **Develop (Diverge):**
 - Generate a wide range of potential solutions
 - Methods: brainstorming, sketching, crazy eights, solution workshops
-- Goal: quantity over quality at this stage — avoid premature convergence
+- Goal: quantity over quality at this stage : avoid premature convergence
 - Output: concepts, wireframes, prototypes
 
 **Deliver (Converge):**
@@ -408,7 +408,7 @@ Desired Outcome
 
 - Recruit a pool of users for ongoing interviews (1 interview / week minimum)
 - Each interview surfaces new opportunities for the Opportunity Solution Tree
-- Run small, fast experiments weekly — no big-bang launches
+- Run small, fast experiments weekly : no big-bang launches
 - Discovery and delivery run in parallel, not sequentially
 
 ## When to Use Discovery
@@ -420,12 +420,12 @@ Desired Outcome
 
 ## Common Mistakes to Avoid
 
-1. **Skipping the problem diamond** — jumping straight to solutions without validating the problem
-2. **Conducting biased interviews** — asking "would you use this?" instead of "tell me about the last time you..."
-3. **Survey-only research** — surveys confirm hypotheses; interviews surface unknown unknowns
-4. **Discovery as a one-time phase** — continuous discovery beats waterfall discovery sprints
-5. **Insufficient sample size** — minimum 5-8 user interviews per research question
-6. **Confusing output with outcome** — "we ran 10 interviews" is an output; "we validated the core job" is an outcome`,
+1. **Skipping the problem diamond** : jumping straight to solutions without validating the problem
+2. **Conducting biased interviews** : asking "would you use this?" instead of "tell me about the last time you..."
+3. **Survey-only research** : surveys confirm hypotheses; interviews surface unknown unknowns
+4. **Discovery as a one-time phase** : continuous discovery beats waterfall discovery sprints
+5. **Insufficient sample size** : minimum 5-8 user interviews per research question
+6. **Confusing output with outcome** : "we ran 10 interviews" is an output; "we validated the core job" is an outcome`,
 
   'invest.md': `# INVEST Criteria for User Stories
 
@@ -446,7 +446,7 @@ User stories should be self-contained and have no hidden dependencies on other s
 - Tip: if stories are tightly coupled, consider merging them or extracting a shared spike
 
 ### Negotiable (N)
-Stories are not rigid contracts — they are an invitation to a conversation.
+Stories are not rigid contracts : they are an invitation to a conversation.
 
 - Details are negotiated between the team and the stakeholder
 - The user story captures intent, not a full specification
@@ -457,7 +457,7 @@ Stories are not rigid contracts — they are an invitation to a conversation.
 Every story must deliver value to a user or stakeholder.
 
 - Value should be explicit: "As a [user], I want [action] so that [benefit]"
-- Avoid technical stories that don't directly provide user-facing value — wrap them in a user-centric framing
+- Avoid technical stories that don't directly provide user-facing value : wrap them in a user-centric framing
 - If you can't articulate the value, the story isn't ready
 - Infrastructure or tech debt stories should reference the user outcome they enable
 
@@ -515,21 +515,21 @@ Acceptance Criteria:
 
 ## Common Mistakes to Avoid
 
-1. **Writing stories as tasks** — "Implement API endpoint for X" is a task, not a user story. Always anchor to user value.
-2. **Merging multiple scenarios into one story** — each scenario should be its own testable story.
-3. **Missing acceptance criteria** — a story without AC is not ready for development.
-4. **Ignoring the Independent criterion** — hidden dependencies blow up sprint planning.
-5. **Equating Small with trivial** — small means deliverable in one sprint, not necessarily simple.`,
+1. **Writing stories as tasks** : "Implement API endpoint for X" is a task, not a user story. Always anchor to user value.
+2. **Merging multiple scenarios into one story** : each scenario should be its own testable story.
+3. **Missing acceptance criteria** : a story without AC is not ready for development.
+4. **Ignoring the Independent criterion** : hidden dependencies blow up sprint planning.
+5. **Equating Small with trivial** : small means deliverable in one sprint, not necessarily simple.`,
 
   'jtbd.md': `# Jobs-to-be-Done (JTBD) Methodology
 
 ## Definition
 
-Jobs-to-be-Done is a framework for understanding why customers "hire" a product or service to accomplish a goal in their lives. Developed by Clayton Christensen, JTBD shifts the focus from what users do to why they do it — the underlying progress they are trying to make.
+Jobs-to-be-Done is a framework for understanding why customers "hire" a product or service to accomplish a goal in their lives. Developed by Clayton Christensen, JTBD shifts the focus from what users do to why they do it : the underlying progress they are trying to make.
 
 **Core insight:** People don't buy products; they hire them to get a job done.
 
-**Famous example:** "People don't want a quarter-inch drill. They want a quarter-inch hole." — Theodore Levitt
+**Famous example:** "People don't want a quarter-inch drill. They want a quarter-inch hole." : Theodore Levitt
 
 ## The Job Statement Structure
 
@@ -563,7 +563,7 @@ How the user wants to be perceived by others.
 
 ## The Competitor Lens
 
-JTBD redefines competition. The real competitor is whatever the customer used before your product to get the job done — including doing nothing.
+JTBD redefines competition. The real competitor is whatever the customer used before your product to get the job done : including doing nothing.
 
 | Traditional view | JTBD view |
 |-----------------|-----------|
@@ -576,12 +576,12 @@ JTBD redefines competition. The real competitor is whatever the customer used be
 Four forces influence whether a customer will switch to a new solution:
 
 **Pushing away from the old:**
-1. **Push** — pain and frustration with the current solution
-2. **Pull** — attraction toward the new solution's promise
+1. **Push** : pain and frustration with the current solution
+2. **Pull** : attraction toward the new solution's promise
 
 **Pulling back toward the old:**
-3. **Anxiety** — fears about trying something new
-4. **Habit** — comfort and inertia with the existing solution
+3. **Anxiety** : fears about trying something new
+4. **Habit** : comfort and inertia with the existing solution
 
 For a switch to happen, Push + Pull must outweigh Anxiety + Habit.
 
@@ -590,7 +590,7 @@ For a switch to happen, Push + Pull must outweigh Anxiety + Habit.
 ### 1. Jobs Interview Technique
 - Recruit customers who recently switched to your product or away from it
 - Ask them to tell the story of the decision chronologically
-- Focus on the "first thought" moment — what triggered the search
+- Focus on the "first thought" moment : what triggered the search
 - Avoid leading questions; let them narrate
 
 ### 2. Outcome-Driven Innovation (ODI)
@@ -604,9 +604,9 @@ Uncover what customers use to measure success of the job:
 Sequence the steps of the job:
 1. Define → 2. Locate → 3. Prepare → 4. Confirm → 5. Execute → 6. Monitor → 7. Modify → 8. Conclude
 
-Find where the job is most painful or underserved — that's the opportunity.
+Find where the job is most painful or underserved : that's the opportunity.
 
-## Worked Example — Project Management Tool
+## Worked Example : Project Management Tool
 
 **Functional Job:** Track my team's work to ensure projects finish on time
 **Emotional Job:** Feel confident that nothing important is falling through the cracks
@@ -626,11 +626,11 @@ Find where the job is most painful or underserved — that's the opportunity.
 
 ## Common Mistakes to Avoid
 
-1. **Confusing jobs with features** — "I want a dashboard" is a feature request, not a job
-2. **Writing jobs that are too narrow** — "Send a PDF" is a task, not a job; look for the why behind it
-3. **Ignoring emotional and social jobs** — functional jobs alone miss the full picture
-4. **Stopping at the interview** — JTBD insights must translate into prioritization and design decisions
-5. **Assuming one product = one job** — users often hire the same product for multiple jobs`,
+1. **Confusing jobs with features** : "I want a dashboard" is a feature request, not a job
+2. **Writing jobs that are too narrow** : "Send a PDF" is a task, not a job; look for the why behind it
+3. **Ignoring emotional and social jobs** : functional jobs alone miss the full picture
+4. **Stopping at the interview** : JTBD insights must translate into prioritization and design decisions
+5. **Assuming one product = one job** : users often hire the same product for multiple jobs`,
 
   'moscow.md': `# MoSCoW Prioritization
 
@@ -648,7 +648,7 @@ Non-negotiable requirements. Without these, the product, release, or sprint is a
 - Safety-critical features
 - Legal or regulatory requirements
 - Core user flows without which the product cannot function
-- If in doubt, ask: "What happens if we ship without this?" — if the answer is "we can't ship", it's a Must.
+- If in doubt, ask: "What happens if we ship without this?" : if the answer is "we can't ship", it's a Must.
 
 ### Should Have (S)
 Important requirements that add significant value but are not critical for the current release.
@@ -666,11 +666,11 @@ Nice-to-have requirements with a small impact if omitted.
 - Usually the first to be cut under time pressure
 - Often form the basis of future backlog items
 
-### Won't Have (W) — This Time
+### Won't Have (W) : This Time
 Requirements explicitly out of scope for the current iteration.
 
 - Manages stakeholder expectations proactively
-- "This time" is key — it signals the feature is not forgotten, only deferred
+- "This time" is key : it signals the feature is not forgotten, only deferred
 - Prevents scope creep and keeps the team focused
 - Should be revisited in future planning cycles
 
@@ -690,7 +690,7 @@ Won't Have → explicitly out of scope this sprint
 - Could: ~20% of total effort
 - Won't: listed explicitly, zero effort allocated
 
-## Worked Example — Mobile App Release
+## Worked Example : Mobile App Release
 
 | Requirement | Category | Reasoning |
 |-------------|----------|-----------|
@@ -704,22 +704,22 @@ Won't Have → explicitly out of scope this sprint
 
 - Sprint planning and backlog grooming
 - Stakeholder workshops to align on scope
-- MVP definition — separating essentials from nice-to-haves
+- MVP definition : separating essentials from nice-to-haves
 - Managing scope creep in ongoing projects
 
 ## Common Mistakes to Avoid
 
-1. **Too many Musts** — if everything is Must, nothing is prioritized. Musts should be critical only.
-2. **Skipping the Won't column** — explicitly stating Won't Have prevents scope creep and manages expectations.
-3. **Using MoSCoW once and forgetting it** — reprioritize at each planning cycle.
-4. **No stakeholder alignment** — MoSCoW decisions must be co-owned by business + tech + design.
-5. **Confusing Should and Could** — Should = important + painful if missing; Could = nice-to-have.`,
+1. **Too many Musts** : if everything is Must, nothing is prioritized. Musts should be critical only.
+2. **Skipping the Won't column** : explicitly stating Won't Have prevents scope creep and manages expectations.
+3. **Using MoSCoW once and forgetting it** : reprioritize at each planning cycle.
+4. **No stakeholder alignment** : MoSCoW decisions must be co-owned by business + tech + design.
+5. **Confusing Should and Could** : Should = important + painful if missing; Could = nice-to-have.`,
 
   'roadmap.md': `# Product Roadmap Strategies and Formats
 
 ## Definition
 
-A product roadmap is a strategic communication artifact that shows where a product is going and why, over a period of time. It is not a detailed project plan — it is a shared understanding of direction, priorities, and rationale.
+A product roadmap is a strategic communication artifact that shows where a product is going and why, over a period of time. It is not a detailed project plan : it is a shared understanding of direction, priorities, and rationale.
 
 **Key distinction:** A roadmap communicates strategy; a sprint backlog communicates execution.
 
@@ -757,7 +757,7 @@ Features plotted on a calendar with start/end dates.
 **Warning:** Creates false precision; treat dates as estimates, not commitments
 
 ### Opportunity Roadmap
-Maps customer opportunities (jobs, pain points) rather than solutions — leaves room for the team to find the best solution.
+Maps customer opportunities (jobs, pain points) rather than solutions : leaves room for the team to find the best solution.
 
 **Best for:** Discovery-led organizations, teams practicing continuous discovery
 
@@ -770,7 +770,7 @@ Each item on a roadmap should include:
 | **Theme / Goal** | The strategic problem being solved | "Reduce onboarding drop-off" |
 | **Hypothesis** | Belief that drives the work | "A guided tour will increase activation" |
 | **Expected outcome** | The metric this will move | "+15% 7-day activation rate" |
-| **Confidence level** | How validated is this bet? | Medium — 3 user interviews done |
+| **Confidence level** | How validated is this bet? | Medium : 3 user interviews done |
 | **Horizon** | When we plan to work on it | NOW / NEXT / LATER |
 
 ## Stakeholder Communication
@@ -788,11 +788,11 @@ Different audiences need different roadmap views:
 
 Organize roadmap themes by the funnel stage they address:
 
-- **Acquisition** — features that attract new users
-- **Activation** — features that deliver first value quickly
-- **Retention** — features that keep users coming back
-- **Revenue** — features that convert or upsell
-- **Referral** — features that generate word-of-mouth
+- **Acquisition** : features that attract new users
+- **Activation** : features that deliver first value quickly
+- **Retention** : features that keep users coming back
+- **Revenue** : features that convert or upsell
+- **Referral** : features that generate word-of-mouth
 
 This helps stakeholders see how the roadmap balances growth stages.
 
@@ -818,11 +818,11 @@ Reviewed once per year and never updated.
 
 Effective roadmap presentations include:
 
-1. **Why now** — what changed in the market or with users that makes this the right priority
-2. **What we learned** — discovery insights that inform the bet
-3. **What success looks like** — specific metrics and timeline
-4. **What we're not doing** — explicit out-of-scope items (prevents scope creep)
-5. **Open questions** — what we still need to validate
+1. **Why now** : what changed in the market or with users that makes this the right priority
+2. **What we learned** : discovery insights that inform the bet
+3. **What success looks like** : specific metrics and timeline
+4. **What we're not doing** : explicit out-of-scope items (prevents scope creep)
+5. **Open questions** : what we still need to validate
 
 ## Roadmap Formats for Presentations
 
@@ -838,17 +838,17 @@ LATER: B2B portal (opportunity validated, design TBD)
 
 ## Common Mistakes to Avoid
 
-1. **Confusing a roadmap with a backlog** — roadmaps are strategic, backlogs are tactical
-2. **Committing to specific features too far in advance** — discovery may reveal better solutions
-3. **Not updating the roadmap** — a stale roadmap erodes trust
-4. **One roadmap for all audiences** — tailor the detail level and framing to the audience
-5. **Ignoring technical debt** — roadmaps should allocate explicit capacity for non-feature work`,
+1. **Confusing a roadmap with a backlog** : roadmaps are strategic, backlogs are tactical
+2. **Committing to specific features too far in advance** : discovery may reveal better solutions
+3. **Not updating the roadmap** : a stale roadmap erodes trust
+4. **One roadmap for all audiences** : tailor the detail level and framing to the audience
+5. **Ignoring technical debt** : roadmaps should allocate explicit capacity for non-feature work`,
 
-  'kano.md': `# Kano Model — Feature Prioritization by Satisfaction
+  'kano.md': `# Kano Model : Feature Prioritization by Satisfaction
 
 ## Definition
 
-The Kano Model (Noriaki Kano, 1984) classifies features by their impact on customer satisfaction. Unlike effort-based frameworks, Kano focuses on the emotional response features trigger — helping teams decide what to build next by understanding what customers truly value vs what they merely expect.
+The Kano Model (Noriaki Kano, 1984) classifies features by their impact on customer satisfaction. Unlike effort-based frameworks, Kano focuses on the emotional response features trigger : helping teams decide what to build next by understanding what customers truly value vs what they merely expect.
 
 ## The Five Categories
 
@@ -856,7 +856,7 @@ The Kano Model (Noriaki Kano, 1984) classifies features by their impact on custo
 Features customers expect as a baseline. Their presence doesn't increase satisfaction, but their absence causes severe dissatisfaction.
 - Login/logout on any app
 - No crashes, basic performance
-- Cannot be used as differentiators — they're table stakes
+- Cannot be used as differentiators : they're table stakes
 
 ### Performance (Linear Satisfiers)
 More is better. The more you deliver, the more satisfied customers are. These directly affect competitive positioning.
@@ -893,12 +893,12 @@ Features that increase satisfaction for some users but frustrate others (advance
 
 ## Common Mistakes to Avoid
 
-1. **Treating Must-Be as priorities** — they're hygiene, not differentiators
-2. **Over-investing in Indifferent features** — common trap when engineers drive roadmap
-3. **Forgetting Kano shifts over time** — yesterday's Delighter becomes tomorrow's Must-Be (e.g., HTTPS, dark mode)
-4. **Running Kano too late** — it's a discovery tool, not a post-build evaluation`,
+1. **Treating Must-Be as priorities** : they're hygiene, not differentiators
+2. **Over-investing in Indifferent features** : common trap when engineers drive roadmap
+3. **Forgetting Kano shifts over time** : yesterday's Delighter becomes tomorrow's Must-Be (e.g., HTTPS, dark mode)
+4. **Running Kano too late** : it's a discovery tool, not a post-build evaluation`,
 
-  'heart.md': `# HEART Framework — User-Centered Metrics
+  'heart.md': `# HEART Framework : User-Centered Metrics
 
 ## Definition
 
@@ -942,12 +942,12 @@ Efficiency and effectiveness of user flows.
 - Error rate
 - Abandonment rate at each step
 
-## GSM — Goals, Signals, Metrics
+## GSM : Goals, Signals, Metrics
 
 HEART works best with the GSM framework:
-1. **Goal** — What user behavior are you trying to change?
-2. **Signal** — What user action indicates success or failure?
-3. **Metric** — How do you quantify that signal?
+1. **Goal** : What user behavior are you trying to change?
+2. **Signal** : What user action indicates success or failure?
+3. **Metric** : How do you quantify that signal?
 
 Example for Adoption:
 - Goal: More users discover and use the new collaboration feature
@@ -957,33 +957,33 @@ Example for Adoption:
 ## When to Use HEART
 
 - Establishing a measurement plan before launching a feature
-- OKR definition — translating product goals into measurable KRs
+- OKR definition : translating product goals into measurable KRs
 - Post-launch health check: is the new feature improving experience?
 - Prioritizing instrumentation in a data-poor environment
 
 ## Common Mistakes to Avoid
 
-1. **Measuring all 5 dimensions always** — pick 2-3 relevant to your current focus
-2. **Confusing Engagement with Addiction** — high engagement on a frustrating feature isn't good
-3. **No baseline** — always establish a pre-launch baseline before measuring change
-4. **Ignoring Task Success** — the most direct measure of UX quality, yet often skipped`,
+1. **Measuring all 5 dimensions always** : pick 2-3 relevant to your current focus
+2. **Confusing Engagement with Addiction** : high engagement on a frustrating feature isn't good
+3. **No baseline** : always establish a pre-launch baseline before measuring change
+4. **Ignoring Task Success** : the most direct measure of UX quality, yet often skipped`,
 
-  'north-star.md': `# North Star Metric — Product Strategy Alignment
+  'north-star.md': `# North Star Metric : Product Strategy Alignment
 
 ## Definition
 
-A North Star Metric (NSM) is a single metric that best captures the core value your product delivers to customers. It sits between leading indicators (features shipped, DAU) and lagging indicators (revenue, profit) — it measures value delivered, not just activity or financial output.
+A North Star Metric (NSM) is a single metric that best captures the core value your product delivers to customers. It sits between leading indicators (features shipped, DAU) and lagging indicators (revenue, profit) : it measures value delivered, not just activity or financial output.
 
 The concept was popularized by Sean Ellis and is central to product-led growth (PLG) strategy.
 
 ## What Makes a Good North Star Metric
 
 A strong NSM:
-- **Reflects customer value** — not just business value (revenue is a consequence, not the NSM)
-- **Leads revenue** — moves before revenue does; predicts long-term business health
-- **Is measurable** — trackable in your analytics stack
-- **Is actionable** — teams can influence it through product decisions
-- **Is singular** — one number, not a composite score
+- **Reflects customer value** : not just business value (revenue is a consequence, not the NSM)
+- **Leads revenue** : moves before revenue does; predicts long-term business health
+- **Is measurable** : trackable in your analytics stack
+- **Is actionable** : teams can influence it through product decisions
+- **Is singular** : one number, not a composite score
 
 | Company | North Star Metric |
 |---------|------------------|
@@ -1023,16 +1023,16 @@ Each squad owns one or more input metrics. The NSM gives alignment; input metric
 
 ## Common Mistakes to Avoid
 
-1. **Revenue as NSM** — revenue is an output; choose a metric that predicts it
-2. **Vanity metrics** — page views, total registered users (don't reflect value)
-3. **Multiple NSMs** — defeats the purpose; if you have two, you have none
-4. **NSM that optimizes engagement over value** — maximize time-in-app ≠ maximize value`,
+1. **Revenue as NSM** : revenue is an output; choose a metric that predicts it
+2. **Vanity metrics** : page views, total registered users (don't reflect value)
+3. **Multiple NSMs** : defeats the purpose; if you have two, you have none
+4. **NSM that optimizes engagement over value** : maximize time-in-app ≠ maximize value`,
 
-  'story-mapping.md': `# User Story Mapping — Backlog Organization
+  'story-mapping.md': `# User Story Mapping : Backlog Organization
 
 ## Definition
 
-User Story Mapping (Jeff Patton, 2014) is a collaborative technique for organizing user stories into a two-dimensional map that represents the user's journey. Unlike a flat backlog, a story map preserves the narrative of how users interact with the product — making it easier to scope releases and identify gaps.
+User Story Mapping (Jeff Patton, 2014) is a collaborative technique for organizing user stories into a two-dimensional map that represents the user's journey. Unlike a flat backlog, a story map preserves the narrative of how users interact with the product : making it easier to scope releases and identify gaps.
 
 ## Structure of a Story Map
 
@@ -1058,12 +1058,12 @@ FUTURE
 
 ## How to Build a Story Map
 
-1. **Define the user** — one persona per map
-2. **Write the narrative** — walk through what the user does from left to right (activities)
-3. **Decompose activities into tasks** — the backbone
-4. **Add stories below each task** — specific implementations, variations, edge cases
-5. **Draw release slices** — horizontal cuts define what ships in each release
-6. **Identify the walking skeleton** — smallest end-to-end experience that delivers core value
+1. **Define the user** : one persona per map
+2. **Write the narrative** : walk through what the user does from left to right (activities)
+3. **Decompose activities into tasks** : the backbone
+4. **Add stories below each task** : specific implementations, variations, edge cases
+5. **Draw release slices** : horizontal cuts define what ships in each release
+6. **Identify the walking skeleton** : smallest end-to-end experience that delivers core value
 
 ## Story Mapping vs Flat Backlog
 
@@ -1083,12 +1083,12 @@ FUTURE
 
 ## Common Mistakes to Avoid
 
-1. **Mapping features, not user actions** — activities should be verbs ("Find a product"), not nouns ("Product search")
-2. **Too many levels of decomposition** — activities → tasks → stories is enough; don't add sub-tasks
-3. **Building the map alone** — story mapping is a collaborative workshop, not a PM artifact
-4. **Forgetting to draw release slices** — without slices, a story map is just a wall of post-its`,
+1. **Mapping features, not user actions** : activities should be verbs ("Find a product"), not nouns ("Product search")
+2. **Too many levels of decomposition** : activities → tasks → stories is enough; don't add sub-tasks
+3. **Building the map alone** : story mapping is a collaborative workshop, not a PM artifact
+4. **Forgetting to draw release slices** : without slices, a story map is just a wall of post-its`,
 
-  'sprint-ceremonies.md': `# Agile Sprint Ceremonies — Scrum Rituals
+  'sprint-ceremonies.md': `# Agile Sprint Ceremonies : Scrum Rituals
 
 ## Definition
 
@@ -1161,11 +1161,11 @@ Average story points completed per sprint. Use velocity for capacity planning, n
 
 ## Common Mistakes to Avoid
 
-1. **Standups as status reports** — this kills psychological safety and slows the meeting
-2. **Skipping retrospectives** — the most valuable ceremony; skipping it kills improvement culture
-3. **No sprint goal** — without a goal, the sprint is just a list of tasks, not a commitment
-4. **Demoing unfinished work in Review** — erodes trust with stakeholders
-5. **Velocity as a KPI** — velocity is a planning tool, not a productivity measure`,
+1. **Standups as status reports** : this kills psychological safety and slows the meeting
+2. **Skipping retrospectives** : the most valuable ceremony; skipping it kills improvement culture
+3. **No sprint goal** : without a goal, the sprint is just a list of tasks, not a commitment
+4. **Demoing unfinished work in Review** : erodes trust with stakeholders
+5. **Velocity as a KPI** : velocity is a planning tool, not a productivity measure`,
 
   'dod.md': `# Definition of Done & Definition of Ready
 
@@ -1236,12 +1236,12 @@ The Definition of Ready is the inverse: criteria a user story must meet before i
 
 ## Common Mistakes
 
-1. **Too long DoD** — if the DoD has 20 items, half will be ignored
-2. **DoD as a checkbox ritual** — it should be internalized, not mechanical
-3. **No DoR** — leads to sprint planning chaos when stories are unclear
-4. **PO accepting DoD-non-compliant stories** — "we'll fix it next sprint" is how tech debt accumulates`,
+1. **Too long DoD** : if the DoD has 20 items, half will be ignored
+2. **DoD as a checkbox ritual** : it should be internalized, not mechanical
+3. **No DoR** : leads to sprint planning chaos when stories are unclear
+4. **PO accepting DoD-non-compliant stories** : "we'll fix it next sprint" is how tech debt accumulates`,
 
-  'rag-llm.md': `# RAG & LLMs — AI Product Management Fundamentals
+  'rag-llm.md': `# RAG & LLMs : AI Product Management Fundamentals
 
 ## What is RAG (Retrieval-Augmented Generation)
 
@@ -1257,7 +1257,7 @@ Vector Search → Top-K Relevant Chunks (from your knowledge base)
 LLM (query + retrieved context) → Grounded Response
 \`\`\`
 
-## RAG vs Fine-Tuning — When to Use What
+## RAG vs Fine-Tuning : When to Use What
 
 | Dimension | RAG | Fine-Tuning |
 |-----------|-----|-------------|
@@ -1309,13 +1309,13 @@ Tools: Langfuse evals, Ragas, TruLens.
 - **Guardrails**: scope the LLM's behavior with clear system prompt constraints + output validation
 - **Observability**: trace every LLM call (Langfuse, LangSmith) to debug quality regressions`,
 
-  'ai-product.md': `# AI Product Strategy — Building with LLMs
+  'ai-product.md': `# AI Product Strategy : Building with LLMs
 
 ## The AI PM's Core Decision Framework
 
 AI product strategy starts with one question: **what problem are we solving, and is AI the right tool?**
 
-AI is a means to an end. The product manager's job is to identify where AI unlocks value that was previously impossible or impractical — not to add AI for its own sake.
+AI is a means to an end. The product manager's job is to identify where AI unlocks value that was previously impossible or impractical : not to add AI for its own sake.
 
 ## Build vs Buy vs Fine-Tune
 
@@ -1370,11 +1370,11 @@ Beyond standard product metrics, AI features need:
 
 ## Key Principles for AI PMs
 
-1. **Start with the user problem, not the AI capability** — "users struggle to X" before "we could use LLMs to"
-2. **Prototype fast, evaluate honestly** — AI quality is hard to predict; test on real data early
-3. **Ship the simplest AI** — a well-prompted GPT-4 beats a complex pipeline for most use cases
-4. **Design for failure** — AI features will fail; the UX needs graceful degradation
-5. **Measure what matters** — token count is not a product metric; user value delivered is`,
+1. **Start with the user problem, not the AI capability** : "users struggle to X" before "we could use LLMs to"
+2. **Prototype fast, evaluate honestly** : AI quality is hard to predict; test on real data early
+3. **Ship the simplest AI** : a well-prompted GPT-4 beats a complex pipeline for most use cases
+4. **Design for failure** : AI features will fail; the UX needs graceful degradation
+5. **Measure what matters** : token count is not a product metric; user value delivered is`,
 };
 
 // ─── Chunk cache (built once per isolate) ────────────────────────────────────
@@ -1396,13 +1396,13 @@ export default {
       return handleStats(env);
     }
 
-    // Veille history — public, returns list of available weeks
+    // Veille history : public, returns list of available weeks
     if (request.method === 'GET' && url.pathname === '/veille/history') {
       const index = await env.VEILLE_STORE.get('veille_index', { type: 'json' });
       return jsonResponse(index || []);
     }
 
-    // Veille GET — public, no origin check; ?week=24&year=2026 for specific edition
+    // Veille GET : public, no origin check; ?week=24&year=2026 for specific edition
     if (request.method === 'GET' && url.pathname === '/veille') {
       const week = url.searchParams.get('week');
       const year = url.searchParams.get('year');
@@ -1416,7 +1416,7 @@ export default {
       return jsonResponse(data);
     }
 
-    // Veille refresh — Worker fetches RSS feeds directly, no Make RSS modules needed
+    // Veille refresh : Worker fetches RSS feeds directly, no Make RSS modules needed
     if (request.method === 'POST' && url.pathname === '/veille-refresh') {
       const secret = request.headers.get('x-make-secret');
       if (!env.MAKE_SECRET || secret !== env.MAKE_SECRET) {
@@ -1498,7 +1498,7 @@ export default {
       return jsonResponse({ ok: true, week: stored.week, categories: processed.length, articles: totalArticles });
     }
 
-    // Veille ingest — Make sends raw articles, Worker synthesizes with Groq and stores
+    // Veille ingest : Make sends raw articles, Worker synthesizes with Groq and stores
     if (request.method === 'POST' && url.pathname === '/veille-ingest') {
       const secret = request.headers.get('x-make-secret');
       if (!env.MAKE_SECRET || secret !== env.MAKE_SECRET) {
@@ -1548,7 +1548,7 @@ export default {
       return jsonResponse({ ok: true, week: stored.week, categories: processed.length });
     }
 
-    // Veille POST — protected by MAKE_SECRET, called by Make
+    // Veille POST : protected by MAKE_SECRET, called by Make
     if (request.method === 'POST' && url.pathname === '/veille') {
       const secret = request.headers.get('x-make-secret');
       if (!env.MAKE_SECRET || secret !== env.MAKE_SECRET) {
@@ -1617,7 +1617,7 @@ async function incrementCounter(env) {
     const current = parseInt((await env.USAGE_COUNTER.get('total')) || '0', 10);
     await env.USAGE_COUNTER.put('total', String(current + 1));
   } catch {
-    // non-blocking — never fail a request over a counter
+    // non-blocking : never fail a request over a counter
   }
 }
 
@@ -1685,10 +1685,10 @@ async function handleOrchestrator(body, env, ctx) {
   const plannerPrompt = lang === 'en'
     ? 'You are KRL1, portfolio assistant for Carlin Mankoto (AI Product Manager). Analyse the user intent and return strict JSON only. ' +
       'Intent values: "pm_workflow" (backlog/OKR/discovery/roadmap/epic/userStory questions), "portfolio" (Carlin profile/experience/certifications), "tech" (stack/architecture/KRL1 technical questions), "contact", "other". ' +
-      'Keys: intent, confidence (0-1), user_goal, steps (array of {tool, objective, output} — only for pm_workflow, else []), risks (array), quick_win.'
+      'Keys: intent, confidence (0-1), user_goal, steps (array of {tool, objective, output} : only for pm_workflow, else []), risks (array), quick_win.'
     : 'Tu es KRL1, assistant portfolio de Carlin Mankoto (AI PM). Analyse l\'intention et retourne uniquement du JSON strict. ' +
       'Valeurs d\'intent : "pm_workflow" (backlog/OKR/discovery/roadmap/epic/userStory), "portfolio" (profil/expérience/certifs de Carlin), "tech" (stack/architecture/questions techniques sur KRL1), "contact", "other". ' +
-      'Clés : intent, confidence (0-1), user_goal, steps (tableau {tool, objective, output} — seulement pour pm_workflow, sinon []), risks (tableau), quick_win.';
+      'Clés : intent, confidence (0-1), user_goal, steps (tableau {tool, objective, output} : seulement pour pm_workflow, sinon []), risks (tableau), quick_win.';
 
   const synthesisPrompt = lang === 'en'
     ? 'You are KRL1, Carlin Mankoto\'s portfolio assistant. ' +
@@ -1810,10 +1810,10 @@ async function handleOrchestratorStream(body, env, ctx) {
   const plannerPrompt = lang === 'en'
     ? 'You are KRL1, portfolio assistant for Carlin Mankoto (AI Product Manager). Analyse the user intent and return strict JSON only. ' +
       'Intent values: "pm_workflow" (backlog/OKR/discovery/roadmap/epic/userStory questions), "portfolio" (Carlin profile/experience/certifications), "tech" (stack/architecture/KRL1 technical questions), "contact", "other". ' +
-      'Keys: intent, confidence (0-1), user_goal, steps (array of {tool, objective, output} — only for pm_workflow, else []), risks (array), quick_win.'
+      'Keys: intent, confidence (0-1), user_goal, steps (array of {tool, objective, output} : only for pm_workflow, else []), risks (array), quick_win.'
     : 'Tu es KRL1, assistant portfolio de Carlin Mankoto (AI PM). Analyse l\'intention et retourne uniquement du JSON strict. ' +
       'Valeurs d\'intent : "pm_workflow" (backlog/OKR/discovery/roadmap/epic/userStory), "portfolio" (profil/expérience/certifs de Carlin), "tech" (stack/architecture/questions techniques sur KRL1), "contact", "other". ' +
-      'Clés : intent, confidence (0-1), user_goal, steps (tableau {tool, objective, output} — seulement pour pm_workflow, sinon []), risks (tableau), quick_win.';
+      'Clés : intent, confidence (0-1), user_goal, steps (tableau {tool, objective, output} : seulement pour pm_workflow, sinon []), risks (tableau), quick_win.';
 
   const traceId = lf_id();
   const plannerStart = Date.now();
@@ -1948,10 +1948,10 @@ async function handleRagQuery(body, env, ctx) {
   const plannerPrompt = lang === 'en'
     ? 'You are KRL1, portfolio assistant for Carlin Mankoto (AI Product Manager). Analyse the user intent and return strict JSON only. ' +
       'Intent values: "pm_workflow" (backlog/OKR/discovery/roadmap/epic/userStory questions), "portfolio" (Carlin profile/experience/certifications), "tech" (stack/architecture/KRL1 technical questions), "contact", "other". ' +
-      'Keys: intent, confidence (0-1), user_goal, steps (array of {tool, objective, output} — only for pm_workflow, else []), risks (array), quick_win.'
+      'Keys: intent, confidence (0-1), user_goal, steps (array of {tool, objective, output} : only for pm_workflow, else []), risks (array), quick_win.'
     : 'Tu es KRL1, assistant portfolio de Carlin Mankoto (AI PM). Analyse l\'intention et retourne uniquement du JSON strict. ' +
       'Valeurs d\'intent : "pm_workflow" (backlog/OKR/discovery/roadmap/epic/userStory), "portfolio" (profil/expérience/certifs de Carlin), "tech" (stack/architecture/questions techniques sur KRL1), "contact", "other". ' +
-      'Clés : intent, confidence (0-1), user_goal, steps (tableau {tool, objective, output} — seulement pour pm_workflow, sinon []), risks (tableau), quick_win.';
+      'Clés : intent, confidence (0-1), user_goal, steps (tableau {tool, objective, output} : seulement pour pm_workflow, sinon []), risks (tableau), quick_win.';
 
   const traceId = lf_id();
   const plannerStart = Date.now();
@@ -1974,7 +1974,7 @@ async function handleRagQuery(body, env, ctx) {
   const chunks = await retrieveSemantic(userMessage, env, 3);
   const retrievalEnd = Date.now();
 
-  // Step 3: Synthesis — inject retrieved context only for pm_workflow
+  // Step 3: Synthesis : inject retrieved context only for pm_workflow
   const intent = plan.intent || 'other';
   const ragSection = intent === 'pm_workflow' && chunks.length > 0
     ? (lang === 'en'
