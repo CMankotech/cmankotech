@@ -281,7 +281,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 @media(max-width:700px){.toc-bar{padding:0.55rem 1.5rem;margin:0 -1.5rem 2rem;overflow-x:auto;flex-wrap:nowrap}}
 [data-theme="light"] .toc-bar{background:rgba(244,246,251,0.9)}
 
-/* ── Section 05c — KRL1 decision layers ────────────────────────── */
+/* ── Section 05c : KRL1 decision layers ────────────────────────── */
 .s5c-sub{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);margin:2rem 0 1.25rem;display:flex;align-items:center;gap:0.8rem}
 .s5c-sub::after{content:'';flex:1;height:1px;background:var(--line)}
 .layers{display:flex;flex-direction:column;gap:0;margin-bottom:0}
@@ -325,7 +325,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 @media(max-width:600px){.toc-summary-grid{grid-template-columns:1fr}}
 [data-theme="light"] .toc-summary{background:rgba(255,255,255,0.8);border-color:rgba(15,23,42,0.09)}
 [data-theme="light"] .toc-summary-grid li{border-bottom-color:rgba(15,23,42,0.06)}
-/* LIGHT MODE — stack icons (fix invisible icons on light bg) */
+/* LIGHT MODE : stack icons (fix invisible icons on light bg) */
 [data-theme="light"] .stack-icon img,[data-theme="light"] .stack-icon svg{filter:brightness(0);opacity:0.65}
 .site-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 4rem;background:rgba(8,8,15,0.85);border-bottom:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 .sn-logo{display:inline-flex;align-items:center;text-decoration:none}.sn-logo img{display:block;height:54px;width:54px}
@@ -1270,8 +1270,8 @@ Réponse actionnable et concise
       <span class="sec-title" data-i18n="s7.title">Navigation contextuelle &amp; lazy-load</span>
     </div>
     <div class="narrative-block">
-      <p class="narrative-lead" data-i18n="s7.lead">Mai 2026 — refonte complète de la navigation : accordéon remplacé par 5 tabs avec chargement à la demande, et des liens nav qui n'apparaissent que lorsque le visiteur a dépassé le hero.</p>
-      <p class="narrative-p" data-i18n="s7.body">Architecture et Décisions produit sont désormais accessibles comme tabs dans l'index, chargées via fetch + DOMParser au premier clic. Chaque page reste une URL autonome. Le CSS injecté passe par scopeCSS(css, panelId) : chaque sélecteur est préfixé de l'ID du tab (#architecture .decision-card) pour confiner les styles — impossible d'écraser les glows du hero ou les variables globales. La navigation contextuelle repose sur un IntersectionObserver sur .tech-strip-label : les 5 liens de section apparaissent en stagger (60 ms par lien) dès que le visiteur dépasse la zone "Stack technique", et disparaissent instantanément au retour vers le hero.</p>
+      <p class="narrative-lead" data-i18n="s7.lead">Mai 2026, refonte complète de la navigation : accordéon remplacé par 5 tabs avec chargement à la demande, et des liens nav qui n'apparaissent que lorsque le visiteur a dépassé le hero.</p>
+      <p class="narrative-p" data-i18n="s7.body">Architecture et Décisions produit sont désormais accessibles comme tabs dans l'index, chargées via fetch + DOMParser au premier clic. Chaque page reste une URL autonome. Le CSS injecté passe par scopeCSS(css, panelId) : chaque sélecteur est préfixé de l'ID du tab (#architecture .decision-card) pour confiner les styles : impossible d'écraser les glows du hero ou les variables globales. La navigation contextuelle repose sur un IntersectionObserver sur .tech-strip-label : les 5 liens de section apparaissent en stagger (60 ms par lien) dès que le visiteur dépasse la zone "Stack technique", et disparaissent instantanément au retour vers le hero.</p>
     </div>
     <div class="stack-grid" style="grid-template-columns:repeat(3,1fr);margin-top:1.5rem">
       <div class="stack-card">
@@ -1453,7 +1453,7 @@ var T={
     'toc.s5':'05 RAG','toc.s5b':'05b Perf','toc.s5c':'05c KRL1',
     'toc.s6':'06 Glossaire','toc.s7':'07 Nav',
     's7.title':'Navigation contextuelle & lazy-load',
-    's7.lead':'Mai 2026 — refonte complète de la navigation : accordéon remplacé par 5 tabs avec chargement à la demande, et des liens nav qui n\'apparaissent que lorsque le visiteur a dépassé le hero.',
+    's7.lead':'Mai 2026, refonte complète de la navigation : accordéon remplacé par 5 tabs avec chargement à la demande, et des liens nav qui n\'apparaissent que lorsque le visiteur a dépassé le hero.',
     's7.body':'Architecture et Décisions produit sont chargées via fetch + DOMParser au premier clic. Le CSS injecté passe par scopeCSS(css, panelId) : chaque sélecteur est préfixé de l\'ID du tab pour confiner les styles. La navigation contextuelle repose sur un IntersectionObserver sur .tech-strip-label : les 5 liens apparaissent en stagger (60 ms) dès que le visiteur dépasse "Stack technique".',
     's7.c1.name':'Tabs + lazy-load','s7.c1.badge':'Navigation','s7.c1.desc':'5 tabs dans l\'index. Architecture et Décisions produit chargées via fetch + DOMParser au premier clic. Guard dataset.loaded pour éviter les doubles requêtes.',
     's7.c2.name':'scopeCSS()','s7.c2.badge':'Isolation CSS','s7.c2.desc':'Chaque sélecteur du CSS injecté est préfixé #panelId. Les règles globales (html, body, :root, *) et @keyframes sont exclues. Aucun conflit possible avec le hero.',
@@ -1667,7 +1667,7 @@ var T={
     'toc.s5':'05 RAG','toc.s5b':'05b Perf','toc.s5c':'05c KRL1',
     'toc.s6':'06 Glossary','toc.s7':'07 Nav',
     's7.title':'Contextual nav & lazy-load',
-    's7.lead':'May 2026 — full navigation overhaul: accordion replaced by 5 tabs with on-demand loading, and nav links that only appear once the visitor has scrolled past the hero.',
+    's7.lead':'May 2026, full navigation overhaul: accordion replaced by 5 tabs with on-demand loading, and nav links that only appear once the visitor has scrolled past the hero.',
     's7.body':'Architecture and Product Decisions are now loaded via fetch + DOMParser on first click. Injected CSS goes through scopeCSS(css, panelId): each selector is prefixed with the tab ID to confine styles. The contextual nav uses an IntersectionObserver on .tech-strip-label: the 5 section links appear in stagger (60ms) once the visitor scrolls past "Tech stack".',
     's7.c1.name':'Tabs + lazy-load','s7.c1.badge':'Navigation','s7.c1.desc':'5 tabs in the index. Architecture and Product Decisions loaded via fetch + DOMParser on first click. dataset.loaded guard prevents double requests.',
     's7.c2.name':'scopeCSS()','s7.c2.badge':'CSS isolation','s7.c2.desc':'Every selector in the injected CSS is prefixed with #panelId. Global rules (html, body, :root, *) and @keyframes are excluded. No possible conflict with the hero.',
