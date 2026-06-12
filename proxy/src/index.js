@@ -1482,7 +1482,7 @@ export default {
           const groqRes = await callGroq(env, {
             model: DEFAULT_MODEL,
             messages: [
-              { role: 'system', content: 'Tu es un assistant de veille technologique. Rédige en 2 phrases maximum en français une synthèse concise et factuelle des articles listés. Sois direct, informatif, sans intro. N'utilise jamais de tirets longs.' },
+              { role: 'system', content: 'Tu es un assistant de veille technologique. Rédige en 2 phrases maximum en français une synthèse concise et factuelle des articles listés. Sois direct, informatif, sans intro. N\'utilise jamais de tirets longs.' },
               { role: 'user', content: `Articles de la semaine :\n${titles}` },
             ],
             temperature: 0.4,
@@ -1531,7 +1531,7 @@ export default {
           const groqRes = await callGroq(env, {
             model: DEFAULT_MODEL,
             messages: [
-              { role: 'system', content: 'Tu es un assistant de veille technologique. Rédige en 2 phrases maximum en français une synthèse concise et factuelle des articles listés. Sois direct, informatif, sans intro. N'utilise jamais de tirets longs.' },
+              { role: 'system', content: 'Tu es un assistant de veille technologique. Rédige en 2 phrases maximum en français une synthèse concise et factuelle des articles listés. Sois direct, informatif, sans intro. N\'utilise jamais de tirets longs.' },
               { role: 'user', content: `Articles de la semaine :\n${titles}` },
             ],
             temperature: 0.4,
