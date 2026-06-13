@@ -54,6 +54,10 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 @keyframes drift4{0%{transform:translate3d(0,0,0) scale(1)}25%{transform:translate3d(-50px,70px,0) scale(1.1)}50%{transform:translate3d(60px,30px,0) scale(0.95)}75%{transform:translate3d(30px,-60px,0) scale(1.12)}100%{transform:translate3d(0,0,0) scale(1)}}
 @media (prefers-reduced-motion:reduce){.glow{animation:none!important}}
 @media (max-width:900px){.g4,.g5,.g6,.g7{display:none}.glow{filter:blur(80px);position:absolute}
+/* Mobile: fige les fonds décoratifs animés. Les couches floues animées (glows blur 80px)
+   + le pause/reprise des anims au scroll (.is-scrolling) re-rasterisaient à chaque frame
+   et provoquaient du clignotement. Statique = fluide et léger (cf. contrainte perf). */
+.glow,.hero-orb,.hero-mesh-rot{animation:none!important}
 /* Mobile GPU fix: kill backdrop-filter + mix-blend-mode + fixed blur re-raster */
 nav,.nav-tools-menu,.theme-btn-fixed,#mobile-menu,#egg-overlay,#tt-bubble,.hmock-theme-menu{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 nav{background:rgba(8,8,15,0.96)}

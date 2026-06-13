@@ -538,10 +538,15 @@
     }
   }
 
-  // Auto-open after 10 s if user hasn't opened it yet
-  setTimeout(function () {
-    if (!_chatOpen) toggleChat();
-  }, 10000);
+  // Auto-open après 20 s si l'utilisateur ne l'a pas ouvert — desktop uniquement.
+  // Sur mobile/tablette (≤900px, cf. breakpoint layout), le widget couvrirait l'écran :
+  // on le laisse fermé, le FAB reste dispo pour l'ouvrir à la main.
+  var _autoOpenOK = !(window.matchMedia && window.matchMedia('(max-width:900px)').matches);
+  if (_autoOpenOK) {
+    setTimeout(function () {
+      if (!_chatOpen) toggleChat();
+    }, 20000);
+  }
 
   // PM Journey: watch #results for .show class appearance
   if (JOURNEY[TOOL_ID]) {
