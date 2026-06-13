@@ -57,7 +57,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 /* HEADER : centré comme pm-toolkit */
 header{text-align:center;margin-bottom:3rem}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.2}}
 h1{font-family:'DM Sans',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:500;letter-spacing:-0.045em;line-height:0.98;margin-bottom:0.85rem;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.05;letter-spacing:-0.02em;background:linear-gradient(135deg,var(--blue) 0%,var(--violet) 50%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 @media(max-width:640px){h1,h1 .grad{font-size:clamp(1.6rem,6vw,2.4rem)!important}}
@@ -66,8 +65,6 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 /* STATUS PILLS */
 .status-bar{display:flex;align-items:center;justify-content:center;gap:0.6rem;flex-wrap:wrap}
 .pill{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.8rem;border-radius:99px;border:1px solid var(--border);color:var(--muted)}
-.pill.live{border-color:rgba(52,211,153,0.35);color:var(--green);background:rgba(52,211,153,0.06)}
-.livedot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
 
 /* HISTORY SECTION : principale feature de navigation */
 .history-section{margin-bottom:2.5rem}
@@ -198,35 +195,10 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
     </div>
   </header>
 
-  <!-- HISTORIQUE : section principale visible avant les articles -->
-  <div class="history-section" id="historySection" style="display:none">
-    <div class="section-label" id="historyLabel">Éditions précédentes</div>
-    <div class="editions-grid" id="editionsGrid"></div>
-  </div>
-
-  <!-- LOADING -->
-  <div id="loadingEl" class="state-card">
-    <div class="loading"><div class="spinner"></div></div>
-  </div>
-
-  <!-- EMPTY -->
-  <div id="emptyEl" class="state-card" style="display:none">
-    <div class="empty">
-      <div class="empty-icon">⏳</div>
-      <div class="empty-title" id="emptyTitle">Première édition en préparation</div>
-      <p class="empty-sub" id="emptySub">Make tourne chaque lundi matin. La première édition arrivera dès que le scénario sera activé.</p>
-    </div>
-  </div>
-
-  <!-- ARTICLES -->
-  <div id="contentEl" style="display:none">
-    <div class="categories" id="categoriesEl"></div>
-  </div>
-
-  <!-- FLOW -->
+  <!-- FLOW : schéma remonté en haut, modules révélés un par un -->
   <div class="flow-section">
     <div class="flow-label" id="flowLabel">Comment ça marche</div>
-    <div class="flow-nodes" data-reveal data-reveal-stagger="0.08">
+    <div class="flow-nodes" data-reveal data-reveal-stagger="0.18">
       <div class="flow-node fn-make">
         <div class="flow-icon">⚙️</div>
         <div class="flow-name">Make</div>
@@ -265,6 +237,31 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
     </div>
   </div>
 
+  <!-- HISTORIQUE : section principale visible avant les articles -->
+  <div class="history-section" id="historySection" style="display:none">
+    <div class="section-label" id="historyLabel">Éditions précédentes</div>
+    <div class="editions-grid" id="editionsGrid"></div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loadingEl" class="state-card">
+    <div class="loading"><div class="spinner"></div></div>
+  </div>
+
+  <!-- EMPTY -->
+  <div id="emptyEl" class="state-card" style="display:none">
+    <div class="empty">
+      <div class="empty-icon">⏳</div>
+      <div class="empty-title" id="emptyTitle">Première édition en préparation</div>
+      <p class="empty-sub" id="emptySub">Make tourne chaque lundi matin. La première édition arrivera dès que le scénario sera activé.</p>
+    </div>
+  </div>
+
+  <!-- ARTICLES -->
+  <div id="contentEl" style="display:none">
+    <div class="categories" id="categoriesEl"></div>
+  </div>
+
 </div>
 
 <script>
@@ -278,6 +275,7 @@ const CAT_COLORS = {
 
 let historyIndex = [];
 let activeWeek = null;
+let _lastData;  // dernière édition rendue (undefined = pas encore chargé, null = vide), pour re-render le statut au changement de langue
 
 async function fetchEdition(week, year) {
   try {
@@ -341,19 +339,30 @@ async function loadWeek(week, year) {
   document.getElementById('contentEl').style.display = 'block';
 }
 
+// Prochain lundi à venir (strictement après aujourd'hui), formaté jour + mois sans année.
+// Ex. fr : "lundi 16 juin" · en : "Monday 16 June".
+function nextEditionDate() {
+  const locale = _lang === 'fr' ? 'fr-FR' : 'en-GB';
+  const d = new Date();
+  let add = (1 - d.getDay() + 7) % 7; // jours jusqu'au prochain lundi
+  if (add === 0) add = 7;             // si on est lundi, viser le lundi suivant
+  d.setDate(d.getDate() + add);
+  return d.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long' });
+}
+
 function renderStatus(data) {
+  _lastData = data;
   const bar = document.getElementById('statusBar');
   if (!data) {
-    bar.innerHTML = `<span class="pill">${I18N[_lang].noData}</span><span class="pill">${I18N[_lang].nextEdition}</span>`;
+    bar.innerHTML = `<span class="pill">${I18N[_lang].noData}</span><span class="pill">${I18N[_lang].nextEdition} ${nextEditionDate()}</span>`;
     return;
   }
   const date = new Date(data.updated_at);
   const fmt = date.toLocaleDateString(_lang === 'fr' ? 'fr-FR' : 'en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   bar.innerHTML = `
-    <span class="pill live"><span class="livedot"></span>${_lang === 'fr' ? 'En ligne' : 'Live'}</span>
     <span class="pill">${I18N[_lang].updating} ${fmt}</span>
     <span class="pill">${I18N[_lang].week} ${data.week || ''}</span>
-    <span class="pill">${I18N[_lang].nextEdition}</span>
+    <span class="pill">${I18N[_lang].nextEdition} ${nextEditionDate()}</span>
   `;
 }
 
@@ -408,7 +417,7 @@ const I18N = {
   fr: {
     subtitle: 'Veille automatisée sur Product Management, IA générative, AI Builders et No-code. Make tourne chaque lundi, le Worker récupère 13 flux RSS, synthétise via Groq et publie ici.',
     noData: 'Pas encore de données',
-    nextEdition: 'Prochaine édition : lundi',
+    nextEdition: 'Prochaine édition :',
     updating: 'Mise à jour :',
     week: 'Semaine',
     noArticles: 'Aucun article cette semaine.',
@@ -418,7 +427,7 @@ const I18N = {
   en: {
     subtitle: 'Automated watch on Product Management, Generative AI, AI Builders and No-code. Make runs every Monday, the Worker fetches 13 RSS feeds, synthesizes via Groq and publishes here.',
     noData: 'No data yet',
-    nextEdition: 'Next edition: Monday',
+    nextEdition: 'Next edition:',
     updating: 'Updated:',
     week: 'Week',
     noArticles: 'No articles this week.',
@@ -439,6 +448,7 @@ function setLang(lang) {
   document.getElementById('flowSub1').textContent = lang === 'fr' ? '4 catégories' : '4 categories';
   document.getElementById('flowSub2').textContent = lang === 'fr' ? 'Synthèse' : 'Synthesis';
   document.getElementById('flowPageName').textContent = lang === 'fr' ? 'Cette page' : 'This page';
+  if (_lastData !== undefined) renderStatus(_lastData);  // ne pas écraser le « Chargement… » avant le 1er render
   renderHistory();
 }
 
