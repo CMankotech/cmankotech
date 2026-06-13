@@ -35,41 +35,5 @@ textarea,
   cursor: text;
 }
 
-/* Aura de curseur (pilotée par cursor.js). La flèche / main native reste visible
-   par-dessus. Pas de bord net : un dégradé radial diffus, invisible au repos, qui
-   apparait en fondu au survol d'un élément cliquable.
-   #cm-cursor se déplace par transform (translate3d) ; .cm-cursor-aura gère l'apparition
-   pour que le lissage de position ne soit jamais ralenti par les transitions. */
-#cm-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 2147483646;
-  pointer-events: none;
-  will-change: transform;
-}
-.cm-cursor-aura {
-  width: 44px;
-  height: 44px;
-  margin: -22px 0 0 -22px;
-  border-radius: 50%;
-  opacity: 0;
-  transform: scale(0.55);
-  background: radial-gradient(circle,
-    rgba(34, 211, 238, 0.30) 0%,
-    rgba(167, 139, 250, 0.16) 42%,
-    rgba(167, 139, 250, 0) 72%);
-  transition: opacity 0.22s ease, transform 0.22s ease;
-}
-/* L'aura n'apparait qu'au survol d'un élément cliquable */
-#cm-cursor.cm-active .cm-cursor-aura {
-  opacity: 1;
-  transform: scale(1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cm-cursor-aura {
-    transition: opacity 0.22s ease;
-    transform: scale(1);
-  }
-}
+/* Pas d'aura : flèche par défaut + main dégradée sur les cliquables, c'est tout.
+   cursor.js tague .cm-pointer les éléments cliquables custom (cf. JS). */

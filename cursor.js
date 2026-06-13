@@ -1,10 +1,10 @@
-/* Halo de curseur — un cercle dégradé qui trail le curseur et grossit + s'illumine
-   au survol des éléments cliquables. La flèche native (cursor.css) reste visible.
-   Léger : une seule boucle rAF, uniquement transform/opacity, aucun blur.
-   Désactivé sur écran tactile / souris non fine. Respecte prefers-reduced-motion. */
+/* Curseur custom — pas d'aura. Ce script ne fait qu'une chose : taguer .cm-pointer
+   les éléments cliquables custom (computed cursor 'pointer') pour qu'ils héritent
+   de la main dégradée (cf. cursor.css), là où la liste CSS ne les couvre pas.
+   Aucune boucle rAF, aucun rendu par frame. Désactivé sur tactile / souris non fine. */
 (function () {
   if (window.__cmCursor) return;
-  // Souris fine uniquement : pas de halo sur tactile (le pointeur n'existe pas)
+  // Souris fine uniquement : pas de main custom sur tactile (le pointeur n'existe pas)
   if (!window.matchMedia || !matchMedia('(pointer:fine)').matches) return;
   window.__cmCursor = true;
 
@@ -13,28 +13,10 @@
     '.nav-cta,.lang-btn,.tt,.qr-card,.footer-link,' +
     'input[type="submit"],input[type="button"]';
 
-  var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
-
-  var halo = document.createElement('div');
-  halo.id = 'cm-cursor';
-  var aura = document.createElement('div');
-  aura.className = 'cm-cursor-aura';
-  halo.appendChild(aura);
-
-  function mount() {
-    document.body.appendChild(halo);
-  }
-  if (document.body) mount();
-  else document.addEventListener('DOMContentLoaded', mount);
-
-  var tx = 0, ty = 0;      // cible (position réelle de la souris)
-  var x = 0, y = 0;        // position lissée du halo
-  var shown = false;
-
   // Élément actuellement tagué .cm-pointer (main dégradée appliquée par JS).
   // On ne tague que les éléments custom dont le computed cursor vaut 'pointer'
   // et qui ne sont pas déjà couverts par la liste CSS : ça remplace la main
-  // grise de l'OS partout, sans réenmnumérer toutes les classes du site.
+  // grise de l'OS partout, sans réénumérer toutes les classes du site.
   var tagged = null;
   function setTagged(el) {
     if (tagged === el) return;
@@ -44,48 +26,27 @@
   }
 
   var lastEl = null;       // dernier élément survolé (cache du classement)
-  var lastClickable = false;
 
   function classify(el) {
-    if (!el || el.nodeType !== 1) { setTagged(null); return false; }
+    if (!el || el.nodeType !== 1) { setTagged(null); return; }
     // closest() couvre les éléments déjà transformés en main par le CSS
     // (leur computed n'est plus 'pointer' mais 'url(...)').
-    if (el.closest && el.closest(CLICKABLE)) { setTagged(null); return true; }
-    var cur = getComputedStyle(el).cursor;
-    if (cur === 'pointer') { setTagged(el); return true; }
+    if (el.closest && el.closest(CLICKABLE)) { setTagged(null); return; }
+    if (getComputedStyle(el).cursor === 'pointer') { setTagged(el); return; }
     setTagged(null);
-    return false;
   }
 
   document.addEventListener('mousemove', function (e) {
-    tx = e.clientX;
-    ty = e.clientY;
-    if (!shown) {
-      // Pas de flash en 0,0 : on place l'aura direct au 1er mouvement
-      x = tx; y = ty;
-      shown = true;
-    }
     // getComputedStyle seulement quand la cible change (léger sur PC modeste)
     if (e.target !== lastEl) {
       lastEl = e.target;
-      lastClickable = classify(e.target);
+      classify(e.target);
     }
-    halo.classList.toggle('cm-active', lastClickable);
   }, { passive: true });
 
-  // Masquer l'aura quand la souris quitte la fenêtre (et forcer un reclassement au retour)
+  // Reset du classement quand la souris quitte la fenêtre
   document.addEventListener('mouseleave', function () {
-    halo.classList.remove('cm-active');
     lastEl = null;
     setTagged(null);
   });
-
-  var ease = reduce ? 1 : 0.2;
-  function loop() {
-    x += (tx - x) * ease;
-    y += (ty - y) * ease;
-    halo.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
-    requestAnimationFrame(loop);
-  }
-  requestAnimationFrame(loop);
 })();
