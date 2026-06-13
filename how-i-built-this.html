@@ -797,12 +797,12 @@ Réponds UNIQUEMENT avec un JSON valide :
           <marker id="lgArrC" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,1 L6,3.5 L0,6 Z" fill="rgba(34,211,238,0.35)"/></marker>
           <marker id="lgArrD" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,1 L6,3.5 L0,6 Z" fill="rgba(113,128,150,0.5)"/></marker>
         </defs>
-        <line x1="89" y1="77" x2="141" y2="77" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" marker-end="url(#lgArrW)"/>
-        <line x1="235" y1="77" x2="294" y2="77" stroke="rgba(167,139,250,0.45)" stroke-width="1.5" marker-end="url(#lgArrV)"/>
+        <line x1="89" y1="77" x2="141" y2="77" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" pathLength="100" class="lg-draw" marker-end="url(#lgArrW)"/>
+        <line x1="235" y1="77" x2="294" y2="77" stroke="rgba(167,139,250,0.45)" stroke-width="1.5" pathLength="100" class="lg-draw" marker-end="url(#lgArrV)"/>
         <text x="264" y="52" text-anchor="middle" font-size="8.5" fill="rgba(167,139,250,0.65)" font-family="DM Sans,sans-serif" font-style="italic">pm_workflow</text>
-        <line x1="420" y1="77" x2="478" y2="77" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" marker-end="url(#lgArrW)"/>
-        <line x1="581" y1="77" x2="642" y2="77" stroke="rgba(34,211,238,0.25)" stroke-width="1.5" marker-end="url(#lgArrC)"/>
-        <path d="M 188 97 L 188 133 L 530 133 L 530 97" fill="none" stroke="rgba(113,128,150,0.32)" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#lgArrD)"/>
+        <line x1="420" y1="77" x2="478" y2="77" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" pathLength="100" class="lg-draw" marker-end="url(#lgArrW)"/>
+        <line x1="581" y1="77" x2="642" y2="77" stroke="rgba(34,211,238,0.25)" stroke-width="1.5" pathLength="100" class="lg-draw" marker-end="url(#lgArrC)"/>
+        <path d="M 188 97 L 188 133 L 530 133 L 530 97" fill="none" stroke="rgba(113,128,150,0.32)" stroke-width="1.2" stroke-dasharray="4,3" class="lg-dash" marker-end="url(#lgArrD)"/>
         <text x="359" y="150" text-anchor="middle" font-size="8.5" fill="rgba(113,128,150,0.52)" font-family="DM Sans,sans-serif" font-style="italic">other intent (portfolio · tech · contact) → Synthesis directement</text>
         <rect x="8" y="58" width="80" height="38" rx="8" fill="rgba(14,14,26,0.95)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
         <text x="48" y="78" text-anchor="middle" font-size="11" fill="#e2e8f0" font-family="DM Sans,sans-serif" font-weight="500">Query</text>
@@ -821,6 +821,23 @@ Réponds UNIQUEMENT avec un JSON valide :
         <text x="699" y="90" text-anchor="middle" font-size="8" fill="rgba(34,211,238,0.45)" font-family="DM Sans,sans-serif">augmented · max 220w</text>
       </svg>
     </div>
+
+    <style>.lg-svg .lg-draw{stroke-dasharray:100}</style>
+    <script data-hf-diagram>
+    (function(){
+      if (typeof gsap === 'undefined') return;
+      var svg = document.querySelector('.lg-svg');
+      if (!svg) return;
+      // Build-up au scroll (one-shot) : tracé des connecteurs + apparition des nœuds.
+      var tl = gsap.timeline({ paused: true });
+      tl.from(svg.querySelectorAll('.lg-draw'), { strokeDashoffset: 100, opacity: 0, duration: 0.55, ease: 'power2.inOut', stagger: 0.1 }, 0);
+      tl.from(svg.querySelectorAll('rect, text, .lg-dash'), { opacity: 0, duration: 0.4, ease: 'power2.out', stagger: 0.04 }, 0.15);
+      if (window.IntersectionObserver) {
+        var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ tl.play(); io.unobserve(e.target); } }); }, { threshold: 0.3 });
+        io.observe(svg);
+      } else { tl.play(); }
+    })();
+    </script>
 
     <!-- RAG pipeline — diagramme animé (HyperFrames -> inline GSAP, GPU-light).
          Remplace les anciens blocs Mermaid FR/EN. Pause hors-écran via IntersectionObserver.
