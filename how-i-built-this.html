@@ -351,12 +351,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 .nav-tools-menu .nt-ico{font-size:0.95rem;line-height:1}
 @media(max-width:768px){.nav-tools-menu{left:auto;right:0;transform:translateY(-6px)}.nav-tools.open .nav-tools-menu{transform:translateY(0)}}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-<script>
-if (window.mermaid) {
-  mermaid.initialize({startOnLoad:false,theme:'dark',themeVariables:{background:'#07070e',primaryColor:'#0e0e1a',primaryTextColor:'#e2e8f0',primaryBorderColor:'#374151',lineColor:'#4b5563',fontFamily:'DM Sans,sans-serif',fontSize:'14px',edgeLabelBackground:'#07070e',secondaryColor:'#0e0e1a',tertiaryColor:'#0e0e1a'}});
-}
-</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="cursor.css">
 </head>
@@ -824,51 +819,134 @@ Réponds UNIQUEMENT avec un JSON valide :
       </svg>
     </div>
 
-    <div class="mermaid-wrap" data-diagram-lang="fr">
-      <div class="mermaid-label">RAG pipeline, flowchart interactif</div>
-      <div class="mermaid">
-%%{init: {'theme': 'dark', 'themeVariables': {'background': '#07070e', 'primaryColor': '#0e0e1a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#374151', 'lineColor': '#4b5563', 'fontFamily': 'DM Sans, sans-serif', 'fontSize': '13px', 'edgeLabelBackground': '#07070e'}}}%%
-flowchart LR
-    classDef cyan fill:#07141a,stroke:#22d3ee,color:#22d3ee
-    classDef gray fill:#0e0e1a,stroke:#374151,color:#d1d5db
-    classDef violet fill:#1a0e2e,stroke:#a78bfa,color:#c4b5fd
-    classDef green fill:#071a0a,stroke:#4ade80,color:#86efac
-    classDef orange fill:#1a0e05,stroke:#fb923c,color:#fdba74
+    <!-- RAG pipeline — diagramme animé (HyperFrames -> inline GSAP, GPU-light).
+         Remplace les anciens blocs Mermaid FR/EN. Pause hors-écran via IntersectionObserver.
+         Tout est scopé sous .ragd- / #ragd- pour ne pas entrer en collision avec la page. -->
+    <div class="mermaid-wrap ragd-wrap">
+      <div class="mermaid-label"><span data-l="fr">RAG pipeline, flux animé</span><span data-l="en">RAG pipeline, animated flow</span></div>
+      <div class="ragd-viewport">
+        <div class="ragd-stage" id="ragd-stage">
+          <div class="ragd-glow"></div>
+          <div class="ragd-cap"><span data-l="fr">RAG au edge</span><span data-l="en">RAG at the edge</span><small><span data-l="fr">Cloudflare Workers · cosine similarity · zéro vector DB</span><span data-l="en">Cloudflare Workers · cosine similarity · zero vector DB</span></small></div>
 
-    KB[(15 docs\nPM/Agile/AI)]:::orange --> RI
-    Q([Query]):::cyan --> PL[Planner · T=0.2]:::gray
-    PL -->|pm_workflow| RI[Workers AI · embeddings]:::violet
-    RI --> CS[Cosine Sim · top-3 chunks]:::violet
-    CS --> SY[Synthesis · T=0.45]:::gray
-    PL -->|autre intent| SY
-    SY --> RP([Reply · max 220w]):::cyan
-    PL & RI & SY -.->|ctx.waitUntil| LF[(Langfuse\nObservability)]:::green
-    SY -.->|ctx.waitUntil| KV[(KV Store\nUsage counter)]:::gray
+          <svg class="ragd-wires" viewBox="0 0 1280 720">
+            <defs>
+              <marker id="ragd-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#4a5568"></path>
+              </marker>
+            </defs>
+            <path id="ragd-e-q-pl"  class="ragd-edge" pathLength="100" marker-end="url(#ragd-arrow)" d="M165,300 L245,300"></path>
+            <path id="ragd-e-pl-ri" class="ragd-edge" pathLength="100" marker-end="url(#ragd-arrow)" d="M395,300 L460,300"></path>
+            <path id="ragd-e-kb-ri" class="ragd-edge" pathLength="100" marker-end="url(#ragd-arrow)" d="M545,158 L545,269"></path>
+            <path id="ragd-e-ri-cs" class="ragd-edge" pathLength="100" marker-end="url(#ragd-arrow)" d="M630,300 L685,300"></path>
+            <path id="ragd-e-cs-sy" class="ragd-edge" pathLength="100" marker-end="url(#ragd-arrow)" d="M865,300 L910,300"></path>
+            <path id="ragd-e-pl-sy" class="ragd-edge" pathLength="100" marker-end="url(#ragd-arrow)" d="M340,326 C 540,438 760,438 935,322"></path>
+            <path id="ragd-e-sy-rp" class="ragd-edge" pathLength="100" marker-end="url(#ragd-arrow)" d="M1060,300 L1118,300"></path>
+
+            <path id="ragd-a-pl-lf" class="ragd-async" d="M312,330 L452,548"></path>
+            <path id="ragd-a-ri-lf" class="ragd-async" d="M528,330 L478,548"></path>
+            <path id="ragd-a-sy-lf" class="ragd-async" d="M968,332 C 760,560 640,560 492,550"></path>
+            <path id="ragd-a-sy-kv" class="ragd-async" d="M1002,330 L900,548"></path>
+
+            <path id="ragd-p-q-pl"  class="ragd-pulse" pathLength="100" stroke="#22d3ee" d="M165,300 L245,300"></path>
+            <path id="ragd-p-pl-ri" class="ragd-pulse" pathLength="100" stroke="#a78bfa" d="M395,300 L460,300"></path>
+            <path id="ragd-p-kb-ri" class="ragd-pulse" pathLength="100" stroke="#fb923c" d="M545,158 L545,269"></path>
+            <path id="ragd-p-ri-cs" class="ragd-pulse" pathLength="100" stroke="#a78bfa" d="M630,300 L685,300"></path>
+            <path id="ragd-p-cs-sy" class="ragd-pulse" pathLength="100" stroke="#a78bfa" d="M865,300 L910,300"></path>
+            <path id="ragd-p-sy-rp" class="ragd-pulse" pathLength="100" stroke="#22d3ee" d="M1060,300 L1118,300"></path>
+          </svg>
+
+          <div class="ragd-elabel" id="ragd-l-pm" style="left:427px;top:282px;">pm_workflow</div>
+          <div class="ragd-elabel" id="ragd-l-alt" style="left:638px;top:452px;"><span data-l="fr">autre intent</span><span data-l="en">other intent</span></div>
+          <div class="ragd-elabel ragd-async-l" id="ragd-l-async" style="left:470px;top:590px;">ctx.waitUntil</div>
+
+          <div class="ragd-node ragd-pill ragd-cyan"   id="ragd-q"  style="left:110px;top:300px;"><div class="ragd-t">Query</div></div>
+          <div class="ragd-node ragd-gray"             id="ragd-pl" style="left:320px;top:300px;"><div class="ragd-t">Planner</div><div class="ragd-s">T = 0.2</div></div>
+          <div class="ragd-node ragd-cyl ragd-orange"  id="ragd-kb" style="left:545px;top:120px;"><div class="ragd-t">15 docs</div><div class="ragd-s">PM · Agile · AI</div></div>
+          <div class="ragd-node ragd-violet"           id="ragd-ri" style="left:545px;top:300px;"><div class="ragd-t">Workers AI</div><div class="ragd-s">embeddings</div></div>
+          <div class="ragd-node ragd-violet"           id="ragd-cs" style="left:775px;top:300px;"><div class="ragd-t">Cosine Sim</div><div class="ragd-s">top-3 chunks</div></div>
+          <div class="ragd-node ragd-gray"             id="ragd-sy" style="left:985px;top:300px;"><div class="ragd-t">Synthesis</div><div class="ragd-s">T = 0.45</div></div>
+          <div class="ragd-node ragd-pill ragd-cyan"   id="ragd-rp" style="left:1175px;top:300px;"><div class="ragd-t">Reply</div></div>
+          <div class="ragd-node ragd-cyl ragd-green"   id="ragd-lf" style="left:470px;top:582px;"><div class="ragd-t">Langfuse</div><div class="ragd-s">Observability</div></div>
+          <div class="ragd-node ragd-cyl ragd-gray"    id="ragd-kv" style="left:900px;top:582px;"><div class="ragd-t">KV Store</div><div class="ragd-s">Usage counter</div></div>
+        </div>
       </div>
     </div>
 
-    <div class="mermaid-wrap" data-diagram-lang="en">
-      <div class="mermaid-label">RAG pipeline, interactive flowchart</div>
-      <div class="mermaid">
-%%{init: {'theme': 'dark', 'themeVariables': {'background': '#07070e', 'primaryColor': '#0e0e1a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#374151', 'lineColor': '#4b5563', 'fontFamily': 'DM Sans, sans-serif', 'fontSize': '13px', 'edgeLabelBackground': '#07070e'}}}%%
-flowchart LR
-    classDef cyan fill:#07141a,stroke:#22d3ee,color:#22d3ee
-    classDef gray fill:#0e0e1a,stroke:#374151,color:#d1d5db
-    classDef violet fill:#1a0e2e,stroke:#a78bfa,color:#c4b5fd
-    classDef green fill:#071a0a,stroke:#4ade80,color:#86efac
-    classDef orange fill:#1a0e05,stroke:#fb923c,color:#fdba74
+    <style>
+      .ragd-viewport{position:relative;width:100%;aspect-ratio:1280/720;overflow:hidden;border-radius:10px;background:#07070e}
+      .ragd-stage{position:absolute;top:0;left:0;width:1280px;height:720px;transform-origin:top left;background:#07070e;font-family:'DM Sans',sans-serif}
+      .ragd-glow{position:absolute;inset:0;background:radial-gradient(900px 520px at 52% 42%,rgba(96,165,250,0.07),rgba(7,7,14,0) 70%)}
+      .ragd-cap{position:absolute;left:46px;top:34px;font-family:'Syne',sans-serif;font-weight:700;font-size:26px;color:#e2e8f0;letter-spacing:0.2px}
+      .ragd-cap small{display:block;margin-top:6px;font-family:'DM Sans',sans-serif;font-weight:300;font-size:15px;color:#94a3b8;letter-spacing:0.3px}
+      .ragd-wires{position:absolute;inset:0;width:1280px;height:720px;overflow:visible}
+      .ragd-edge{fill:none;stroke:#3a4456;stroke-width:2;stroke-dasharray:100;stroke-dashoffset:100;opacity:0}
+      .ragd-pulse{fill:none;stroke-width:4;stroke-linecap:round;stroke-dasharray:6 94;stroke-dashoffset:0;opacity:0}
+      .ragd-async{fill:none;stroke:#2f5740;stroke-width:1.6;stroke-dasharray:2 7;opacity:0}
+      .ragd-node{position:absolute;transform:translate(-50%,-50%);border:1.5px solid;border-radius:12px;padding:12px 18px;text-align:center;white-space:nowrap;line-height:1.18;background:#0e0e1a;box-shadow:0 6px 22px -12px rgba(0,0,0,0.8)}
+      .ragd-node .ragd-t{font-weight:500;font-size:19px}
+      .ragd-node .ragd-s{font-weight:300;font-size:13px;opacity:0.85;margin-top:2px}
+      .ragd-pill{border-radius:999px}
+      .ragd-cyl{border-radius:46px / 14px}
+      .ragd-cyan{border-color:#22d3ee;background:#07141a}.ragd-cyan .ragd-t,.ragd-cyan .ragd-s{color:#67e8f9}
+      .ragd-gray{border-color:#4b5563;background:#0e0e1a}.ragd-gray .ragd-t,.ragd-gray .ragd-s{color:#d1d5db}
+      .ragd-violet{border-color:#a78bfa;background:#1a0e2e}.ragd-violet .ragd-t,.ragd-violet .ragd-s{color:#c4b5fd}
+      .ragd-green{border-color:#4ade80;background:#071a0a}.ragd-green .ragd-t,.ragd-green .ragd-s{color:#86efac}
+      .ragd-orange{border-color:#fb923c;background:#1a0e05}.ragd-orange .ragd-t,.ragd-orange .ragd-s{color:#fdba74}
+      .ragd-elabel{position:absolute;transform:translate(-50%,-50%);font-size:12px;font-weight:300;color:#8b94a6;background:#07070e;padding:1px 7px;border-radius:6px;white-space:nowrap}
+      .ragd-async-l{color:#6e9e84}
+      .ragd-wrap [data-l="en"]{display:none}
+      html[lang="en"] .ragd-wrap [data-l="fr"]{display:none}
+      html[lang="en"] .ragd-wrap [data-l="en"]{display:inline}
+    </style>
 
-    KB[(15 docs\nPM/Agile/AI)]:::orange --> RI
-    Q([Query]):::cyan --> PL[Planner · T=0.2]:::gray
-    PL -->|pm_workflow| RI[Workers AI · embeddings]:::violet
-    RI --> CS[Cosine Sim · top-3 chunks]:::violet
-    CS --> SY[Synthesis · T=0.45]:::gray
-    PL -->|other intent| SY
-    SY --> RP([Reply · max 220w]):::cyan
-    PL & RI & SY -.->|ctx.waitUntil| LF[(Langfuse\nObservability)]:::green
-    SY -.->|ctx.waitUntil| KV[(KV Store\nUsage counter)]:::gray
-      </div>
-    </div>
+    <script>
+    (function(){
+      if (typeof gsap === 'undefined') return;
+      var stage = document.getElementById('ragd-stage');
+      if (!stage) return;
+      var viewport = stage.parentElement;
+      function fit(){ stage.style.transform = 'scale(' + (viewport.clientWidth / 1280) + ')'; }
+      fit();
+      if (window.ResizeObserver) { new ResizeObserver(fit).observe(viewport); } else { window.addEventListener('resize', fit); }
+
+      var tl = gsap.timeline({ paused: true });
+      var enter = function(sel, t, ease){ tl.from(sel, { opacity:0, scale:0.55, duration:0.42, ease: ease || 'back.out(1.5)' }, t); };
+      var draw = function(sel, t, d){ tl.set(sel, { opacity:1 }, t); tl.fromTo(sel, { strokeDashoffset:100 }, { strokeDashoffset:0, duration: d||0.4, ease:'power2.inOut' }, t); };
+      var flow = function(sel, t, d){ var dur=d||0.55; tl.set(sel,{opacity:1},t); tl.fromTo(sel,{strokeDashoffset:0},{strokeDashoffset:-94,duration:dur,ease:'power1.inOut',overwrite:'auto'},t); tl.to(sel,{opacity:0,duration:0.14,ease:'power1.in',overwrite:'auto'},t+dur); };
+
+      tl.from('#ragd-cap', { opacity:0, y:-14, duration:0.5, ease:'power2.out' }, 0.1);
+      enter('#ragd-q', 0.35, 'back.out(1.7)');
+      draw('#ragd-e-q-pl', 0.6); flow('#ragd-p-q-pl', 0.62);
+      enter('#ragd-pl', 0.85, 'back.out(1.4)');
+      enter('#ragd-kb', 1.15, 'power2.out');
+      draw('#ragd-e-kb-ri', 1.25); flow('#ragd-p-kb-ri', 1.27);
+      draw('#ragd-e-pl-ri', 1.3); flow('#ragd-p-pl-ri', 1.32);
+      enter('#ragd-ri', 1.55, 'back.out(1.5)');
+      tl.from('#ragd-l-pm', { opacity:0, duration:0.3 }, 1.35);
+      draw('#ragd-e-ri-cs', 1.85); flow('#ragd-p-ri-cs', 1.87);
+      enter('#ragd-cs', 2.1, 'back.out(1.4)');
+      draw('#ragd-e-cs-sy', 2.4); flow('#ragd-p-cs-sy', 2.42);
+      draw('#ragd-e-pl-sy', 2.5, 0.55);
+      tl.from('#ragd-l-alt', { opacity:0, duration:0.3 }, 2.7);
+      enter('#ragd-sy', 2.75, 'back.out(1.4)');
+      draw('#ragd-e-sy-rp', 3.05); flow('#ragd-p-sy-rp', 3.07);
+      enter('#ragd-rp', 3.3, 'back.out(1.7)');
+      tl.to(['#ragd-a-pl-lf','#ragd-a-ri-lf','#ragd-a-sy-lf','#ragd-a-sy-kv'], { opacity:0.85, duration:0.5, ease:'power2.out' }, 3.5);
+      tl.from('#ragd-l-async', { opacity:0, duration:0.4 }, 3.7);
+      enter('#ragd-lf', 3.7, 'power2.out');
+      enter('#ragd-kv', 3.85, 'power2.out');
+      var chain = ['#ragd-p-q-pl','#ragd-p-pl-ri','#ragd-p-ri-cs','#ragd-p-cs-sy','#ragd-p-sy-rp'];
+      var base = 4.5;
+      for (var pass=0; pass<2; pass++){ for (var i=0;i<chain.length;i++){ flow(chain[i], base + pass*0.9 + i*0.12, 0.5); } }
+      tl.to('#ragd-stage', { opacity:0, duration:0.5, ease:'power2.in' }, 6.5);
+      tl.repeat(-1); tl.repeatDelay(0.5);
+
+      if (window.IntersectionObserver){
+        new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ tl.play(); } else { tl.pause(); } }); }, { threshold: 0.15 }).observe(stage);
+      } else { tl.play(); }
+    })();
+    </script>
 
     <div class="decision-card" style="margin-bottom:1.5rem">
       <div class="decision-q" data-i18n="lg.flow.label">Flow d'une requête KRL1 / RAG Explorer</div>
@@ -1003,53 +1081,131 @@ flowchart LR
 
     <div class="s5c-sub"><span data-i18n="layersLbl">Les 4 couches de décision</span></div>
 
-    <div class="mermaid-wrap" data-diagram-lang="fr">
-      <div class="mermaid-label">Flux de décision, vue flowchart</div>
-      <div class="mermaid">
-%%{init: {'theme': 'dark', 'themeVariables': {'background': '#07070e', 'primaryColor': '#0e0e1a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#374151', 'lineColor': '#4b5563', 'fontFamily': 'DM Sans, sans-serif', 'fontSize': '13px', 'edgeLabelBackground': '#07070e'}}}%%
-flowchart TD
-    classDef cyan fill:#07141a,stroke:#22d3ee,color:#22d3ee
-    classDef gray fill:#0e0e1a,stroke:#374151,color:#d1d5db
-    classDef violet fill:#1a0e2e,stroke:#a78bfa,color:#c4b5fd
-    classDef green fill:#071a0a,stroke:#4ade80,color:#86efac
+    <!-- Flux de décision KRL1 — diagramme animé inline (GSAP), même système visuel
+         que le RAG (classes .ragd-*, IDs decd-*). Losanges de décision en polygones SVG. -->
+    <div class="mermaid-wrap ragd-wrap">
+      <div class="mermaid-label"><span data-l="fr">Flux de décision, animé</span><span data-l="en">Decision flow, animated</span></div>
+      <div class="ragd-viewport">
+        <div class="ragd-stage" id="decd-stage">
+          <div class="ragd-glow"></div>
+          <div class="ragd-cap"><span data-l="fr">Logique de décision KRL1</span><span data-l="en">KRL1 decision logic</span><small><span data-l="fr">fast-path KB · LLM Groq · CTA conditionnel</span><span data-l="en">KB fast-path · Groq LLM · conditional CTA</span></small></div>
 
-    A([Message reçu]):::cyan --> B[01 · Page Context · URL]:::cyan
-    B --> C{02 · KB fast-path · match?}:::gray
-    C -->|Oui ~30-40%| D([Réponse · sous 10ms · 0 token]):::cyan
-    C -->|Non| E[03 · Groq LLM · llama-3.3-70b]:::violet
-    E --> F([Réponse générée]):::violet
-    F --> G{04 · PM Journey · #35;results?}:::gray
-    G -->|Oui| H[Inject CTA · next step]:::green
-    G -->|Non| I([Affichage]):::cyan
-    H --> I
-    E -.->|ctx.waitUntil| LF[(Langfuse\nTrace)]:::green
-    E -.->|ctx.waitUntil| KV[(KV Store\nUsage)]:::gray
+          <svg class="ragd-wires" viewBox="0 0 1280 720">
+            <defs>
+              <marker id="decd-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#4a5568"></path>
+              </marker>
+            </defs>
+
+            <polygon id="decd-c" class="ragd-diamond" points="640,198 750,250 640,302 530,250"></polygon>
+            <polygon id="decd-g" class="ragd-diamond" points="600,538 710,590 600,642 490,590"></polygon>
+
+            <path id="decd-e-a-b" class="ragd-edge" pathLength="100" marker-end="url(#decd-arrow)" d="M640,82 L640,114"></path>
+            <path id="decd-e-b-c" class="ragd-edge" pathLength="100" marker-end="url(#decd-arrow)" d="M640,164 L640,196"></path>
+            <path id="decd-e-c-d" class="ragd-edge" pathLength="100" marker-end="url(#decd-arrow)" d="M752,250 L898,250"></path>
+            <path id="decd-e-c-e" class="ragd-edge" pathLength="100" marker-end="url(#decd-arrow)" d="M640,304 L640,350"></path>
+            <path id="decd-e-e-f" class="ragd-edge" pathLength="100" marker-end="url(#decd-arrow)" d="M640,406 L640,438"></path>
+            <path id="decd-e-f-g" class="ragd-edge" pathLength="100" marker-end="url(#decd-arrow)" d="M636,494 L604,536"></path>
+            <path id="decd-e-g-h" class="ragd-edge" pathLength="100" marker-end="url(#decd-arrow)" d="M712,584 L854,554"></path>
+            <path id="decd-e-g-i" class="ragd-edge" pathLength="100" marker-end="url(#decd-arrow)" d="M600,644 C 660,702 812,686 880,672"></path>
+            <path id="decd-e-h-i" class="ragd-edge" pathLength="100" marker-end="url(#decd-arrow)" d="M930,576 L930,632"></path>
+
+            <path id="decd-a-e-lf" class="ragd-async" d="M566,372 L312,360"></path>
+            <path id="decd-a-e-kv" class="ragd-async" d="M566,386 L312,452"></path>
+
+            <path id="decd-p-a-b" class="ragd-pulse" pathLength="100" stroke="#22d3ee" d="M640,82 L640,114"></path>
+            <path id="decd-p-b-c" class="ragd-pulse" pathLength="100" stroke="#22d3ee" d="M640,164 L640,196"></path>
+            <path id="decd-p-c-d" class="ragd-pulse" pathLength="100" stroke="#22d3ee" d="M752,250 L898,250"></path>
+            <path id="decd-p-c-e" class="ragd-pulse" pathLength="100" stroke="#a78bfa" d="M640,304 L640,350"></path>
+            <path id="decd-p-e-f" class="ragd-pulse" pathLength="100" stroke="#a78bfa" d="M640,406 L640,438"></path>
+            <path id="decd-p-f-g" class="ragd-pulse" pathLength="100" stroke="#a78bfa" d="M636,494 L604,536"></path>
+            <path id="decd-p-g-h" class="ragd-pulse" pathLength="100" stroke="#4ade80" d="M712,584 L854,554"></path>
+            <path id="decd-p-g-i" class="ragd-pulse" pathLength="100" stroke="#22d3ee" d="M600,644 C 660,702 812,686 880,672"></path>
+            <path id="decd-p-h-i" class="ragd-pulse" pathLength="100" stroke="#4ade80" d="M930,576 L930,632"></path>
+          </svg>
+
+          <div class="ragd-dtext" id="decd-ct" style="left:640px;top:250px;">02 · KB fast-path · match&#8239;?</div>
+          <div class="ragd-dtext" id="decd-gt" style="left:600px;top:590px;">04 · PM Journey · #results&#8239;?</div>
+
+          <div class="ragd-elabel" id="decd-l-cd" style="left:826px;top:233px;"><span data-l="fr">Oui ~30-40%</span><span data-l="en">Yes ~30-40%</span></div>
+          <div class="ragd-elabel" id="decd-l-ce" style="left:664px;top:327px;"><span data-l="fr">Non</span><span data-l="en">No</span></div>
+          <div class="ragd-elabel" id="decd-l-gh" style="left:786px;top:556px;"><span data-l="fr">Oui</span><span data-l="en">Yes</span></div>
+          <div class="ragd-elabel" id="decd-l-gi" style="left:726px;top:690px;"><span data-l="fr">Non</span><span data-l="en">No</span></div>
+          <div class="ragd-elabel ragd-async-l" id="decd-l-async" style="left:430px;top:300px;">ctx.waitUntil</div>
+
+          <div class="ragd-node ragd-pill ragd-cyan"  id="decd-a" style="left:640px;top:56px;"><div class="ragd-t"><span data-l="fr">Message reçu</span><span data-l="en">Incoming message</span></div></div>
+          <div class="ragd-node ragd-cyan"            id="decd-b" style="left:640px;top:138px;"><div class="ragd-t">01 · Page Context · URL</div></div>
+          <div class="ragd-node ragd-pill ragd-cyan"  id="decd-d" style="left:1015px;top:250px;"><div class="ragd-t"><span data-l="fr">Réponse · &lt;10ms · 0 token</span><span data-l="en">Reply · &lt;10ms · 0 token</span></div></div>
+          <div class="ragd-node ragd-violet"          id="decd-e" style="left:640px;top:378px;"><div class="ragd-t">03 · Groq LLM</div><div class="ragd-s">llama-3.3-70b</div></div>
+          <div class="ragd-node ragd-pill ragd-violet" id="decd-f" style="left:640px;top:466px;"><div class="ragd-t"><span data-l="fr">Réponse générée</span><span data-l="en">Generated reply</span></div></div>
+          <div class="ragd-node ragd-green"           id="decd-h" style="left:930px;top:548px;"><div class="ragd-t">Inject CTA</div><div class="ragd-s">next step</div></div>
+          <div class="ragd-node ragd-pill ragd-cyan"  id="decd-i" style="left:930px;top:660px;"><div class="ragd-t"><span data-l="fr">Affichage</span><span data-l="en">Display</span></div></div>
+          <div class="ragd-node ragd-cyl ragd-green"  id="decd-lf" style="left:225px;top:360px;"><div class="ragd-t">Langfuse</div><div class="ragd-s">Trace</div></div>
+          <div class="ragd-node ragd-cyl ragd-gray"   id="decd-kv" style="left:225px;top:452px;"><div class="ragd-t">KV Store</div><div class="ragd-s">Usage</div></div>
+        </div>
       </div>
     </div>
 
-    <div class="mermaid-wrap" data-diagram-lang="en" style="display:none">
-      <div class="mermaid-label">Decision flow, flowchart</div>
-      <div class="mermaid">
-%%{init: {'theme': 'dark', 'themeVariables': {'background': '#07070e', 'primaryColor': '#0e0e1a', 'primaryTextColor': '#e2e8f0', 'primaryBorderColor': '#374151', 'lineColor': '#4b5563', 'fontFamily': 'DM Sans, sans-serif', 'fontSize': '13px', 'edgeLabelBackground': '#07070e'}}}%%
-flowchart TD
-    classDef cyan fill:#07141a,stroke:#22d3ee,color:#22d3ee
-    classDef gray fill:#0e0e1a,stroke:#374151,color:#d1d5db
-    classDef violet fill:#1a0e2e,stroke:#a78bfa,color:#c4b5fd
-    classDef green fill:#071a0a,stroke:#4ade80,color:#86efac
+    <style>
+      .ragd-diamond{fill:#0e0e1a;stroke:#4b5563;stroke-width:1.5;transform-box:fill-box;transform-origin:center}
+      .ragd-dtext{position:absolute;transform:translate(-50%,-50%);text-align:center;white-space:nowrap;font-family:'DM Sans',sans-serif;font-weight:500;font-size:13.5px;color:#d1d5db;line-height:1.2}
+    </style>
 
-    A([Incoming message]):::cyan --> B[01 · Page Context · URL]:::cyan
-    B --> C{02 · KB fast-path · match?}:::gray
-    C -->|Yes ~30-40%| D([Response · under 10ms · 0 token]):::cyan
-    C -->|No| E[03 · Groq LLM · llama-3.3-70b]:::violet
-    E --> F([Generated response]):::violet
-    F --> G{04 · PM Journey · #35;results?}:::gray
-    G -->|Yes| H[Inject CTA · next step]:::green
-    G -->|No| I([Display]):::cyan
-    H --> I
-    E -.->|ctx.waitUntil| LF[(Langfuse\nTrace)]:::green
-    E -.->|ctx.waitUntil| KV[(KV Store\nUsage)]:::gray
-      </div>
-    </div>
+    <script>
+    (function(){
+      if (typeof gsap === 'undefined') return;
+      var stage = document.getElementById('decd-stage');
+      if (!stage) return;
+      var viewport = stage.parentElement;
+      function fit(){ stage.style.transform = 'scale(' + (viewport.clientWidth / 1280) + ')'; }
+      fit();
+      if (window.ResizeObserver) { new ResizeObserver(fit).observe(viewport); } else { window.addEventListener('resize', fit); }
+
+      var tl = gsap.timeline({ paused: true });
+      var enter = function(sel, t, ease){ tl.from(sel, { opacity:0, scale:0.55, duration:0.42, ease: ease || 'back.out(1.5)' }, t); };
+      var draw = function(sel, t, d){ tl.set(sel, { opacity:1 }, t); tl.fromTo(sel, { strokeDashoffset:100 }, { strokeDashoffset:0, duration: d||0.4, ease:'power2.inOut' }, t); };
+      var flow = function(sel, t, d){ var dur=d||0.55; tl.set(sel,{opacity:1},t); tl.fromTo(sel,{strokeDashoffset:0},{strokeDashoffset:-94,duration:dur,ease:'power1.inOut',overwrite:'auto'},t); tl.to(sel,{opacity:0,duration:0.14,ease:'power1.in',overwrite:'auto'},t+dur); };
+
+      tl.from('#decd-stage .ragd-cap', { opacity:0, y:-14, duration:0.5, ease:'power2.out' }, 0.1);
+      enter('#decd-a', 0.35, 'back.out(1.7)');
+      draw('#decd-e-a-b', 0.6); flow('#decd-p-a-b', 0.62);
+      enter('#decd-b', 0.85, 'back.out(1.4)');
+      draw('#decd-e-b-c', 1.05); flow('#decd-p-b-c', 1.07);
+      enter(['#decd-c','#decd-ct'], 1.3, 'back.out(1.4)');
+      draw('#decd-e-c-d', 1.6); flow('#decd-p-c-d', 1.62);
+      tl.from('#decd-l-cd', { opacity:0, duration:0.3 }, 1.62);
+      enter('#decd-d', 1.85, 'back.out(1.5)');
+      draw('#decd-e-c-e', 1.95); flow('#decd-p-c-e', 1.97);
+      tl.from('#decd-l-ce', { opacity:0, duration:0.3 }, 1.97);
+      enter('#decd-e', 2.2, 'back.out(1.4)');
+      tl.to(['#decd-a-e-lf','#decd-a-e-kv'], { opacity:0.85, duration:0.5, ease:'power2.out' }, 2.5);
+      tl.from('#decd-l-async', { opacity:0, duration:0.4 }, 2.6);
+      enter('#decd-lf', 2.7, 'power2.out');
+      enter('#decd-kv', 2.8, 'power2.out');
+      draw('#decd-e-e-f', 3.0); flow('#decd-p-e-f', 3.02);
+      enter('#decd-f', 3.2, 'back.out(1.4)');
+      draw('#decd-e-f-g', 3.4); flow('#decd-p-f-g', 3.42);
+      enter(['#decd-g','#decd-gt'], 3.65, 'back.out(1.4)');
+      draw('#decd-e-g-h', 3.95); flow('#decd-p-g-h', 3.97);
+      tl.from('#decd-l-gh', { opacity:0, duration:0.3 }, 3.97);
+      enter('#decd-h', 4.2, 'back.out(1.4)');
+      draw('#decd-e-g-i', 4.05); flow('#decd-p-g-i', 4.07);
+      tl.from('#decd-l-gi', { opacity:0, duration:0.3 }, 4.07);
+      enter('#decd-i', 4.35, 'back.out(1.5)');
+      draw('#decd-e-h-i', 4.5); flow('#decd-p-h-i', 4.52);
+
+      var chain = ['#decd-p-a-b','#decd-p-b-c','#decd-p-c-e','#decd-p-e-f','#decd-p-f-g'];
+      var base = 5.3;
+      for (var i=0;i<chain.length;i++){ flow(chain[i], base + i*0.12, 0.5); }
+
+      tl.to('#decd-stage', { opacity:0, duration:0.5, ease:'power2.in' }, 6.7);
+      tl.repeat(-1); tl.repeatDelay(0.5);
+
+      if (window.IntersectionObserver){
+        new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ tl.play(); } else { tl.pause(); } }); }, { threshold: 0.15 }).observe(stage);
+      } else { tl.play(); }
+    })();
+    </script>
 
     <div class="layers" style="margin-bottom:2rem">
 
@@ -1743,9 +1899,6 @@ function setLang(lang){
     var k = el.getAttribute('data-i18n');
     if(T[lang] && T[lang][k] !== undefined) el.innerHTML = T[lang][k];
   });
-  document.querySelectorAll('.mermaid-wrap[data-diagram-lang="en"]').forEach(function(el){ el.style.display = lang==='en' ? '' : 'none'; });
-  document.querySelectorAll('.mermaid-wrap[data-diagram-lang="fr"]').forEach(function(el){ el.style.display = lang==='fr' ? '' : 'none'; });
-  if(lang==='en') document.querySelectorAll('.mermaid-wrap[data-diagram-lang="en"] .mermaid:not([data-processed])').forEach(function(el){ mermaid.run({nodes:[el]}); });
   setTimeout(function(){ if(typeof applyTooltips==='function') applyTooltips(lang); }, 50);
 }
 
@@ -1753,7 +1906,6 @@ function setLang(lang){
 (function(){
   var params = new URLSearchParams(window.location.search);
   var lang = params.get('lang') || localStorage.getItem('lang') || 'fr';
-  mermaid.run({querySelector: '.mermaid-wrap[data-diagram-lang="fr"] .mermaid'});
   if(lang === 'en') setLang('en');
   setTimeout(function(){ if(typeof applyTooltips==='function') applyTooltips(document.documentElement.lang||'fr'); }, 150);
 })();
