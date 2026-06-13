@@ -156,6 +156,9 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 <link rel="stylesheet" href="tool-cta.css">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="cursor.css">
+<link rel="stylesheet" href="reveal.css">
+<script>document.documentElement.classList.add('reveal-on');window.__revealFallback=setTimeout(function(){document.documentElement.classList.remove('reveal-on')},2500);</script>
+<script src="reveal.js" defer></script>
 </head>
 <body>
 
@@ -223,7 +226,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
   <!-- FLOW -->
   <div class="flow-section">
     <div class="flow-label" id="flowLabel">Comment ça marche</div>
-    <div class="flow-nodes">
+    <div class="flow-nodes" data-reveal data-reveal-stagger="0.08">
       <div class="flow-node fn-make">
         <div class="flow-icon">⚙️</div>
         <div class="flow-name">Make</div>

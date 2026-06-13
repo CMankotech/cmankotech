@@ -354,6 +354,9 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="cursor.css">
+<link rel="stylesheet" href="reveal.css">
+<script>document.documentElement.classList.add('reveal-on');window.__revealFallback=setTimeout(function(){document.documentElement.classList.remove('reveal-on')},2500);</script>
+<script src="reveal.js" defer></script>
 </head>
 <body>
 <nav class="site-nav">
@@ -446,7 +449,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <span class="sec-title" data-i18n="s1.title">Stack technique</span>
     </div>
     <!-- ARCHITECTURE DIAGRAM -->
-    <div class="arch-diagram" role="img" aria-label="Architecture: Browser → CF Worker → deux routes → Groq API">
+    <div class="arch-diagram" role="img" aria-label="Architecture: Browser → CF Worker → deux routes → Groq API" data-reveal data-reveal-stagger="0.13">
       <!-- Niveau 1: Browser → Worker -->
       <div class="arch-top">
         <div class="arch-node n-user">
@@ -489,7 +492,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       </div>
     </div>
 
-    <div class="stack-grid">
+    <div class="stack-grid" data-reveal data-reveal-stagger="0.06">
       <div class="stack-card">
         <div class="stack-icon"><img src="https://cdn.simpleicons.org/html5" alt="HTML5" width="28" height="28"></div>
         <div class="stack-name">HTML · CSS · JavaScript</div>
@@ -900,7 +903,7 @@ Réponds UNIQUEMENT avec un JSON valide :
       html[lang="en"] .ragd-wrap [data-l="en"]{display:inline}
     </style>
 
-    <script>
+    <script data-hf-diagram>
     (function(){
       if (typeof gsap === 'undefined') return;
       var stage = document.getElementById('ragd-stage');
@@ -1151,7 +1154,7 @@ Réponds UNIQUEMENT avec un JSON valide :
       .ragd-dtext{position:absolute;transform:translate(-50%,-50%);text-align:center;white-space:nowrap;font-family:'DM Sans',sans-serif;font-weight:500;font-size:13.5px;color:#d1d5db;line-height:1.2}
     </style>
 
-    <script>
+    <script data-hf-diagram>
     (function(){
       if (typeof gsap === 'undefined') return;
       var stage = document.getElementById('decd-stage');
@@ -1207,7 +1210,7 @@ Réponds UNIQUEMENT avec un JSON valide :
     })();
     </script>
 
-    <div class="layers" style="margin-bottom:2rem">
+    <div class="layers" style="margin-bottom:2rem" data-reveal data-reveal-stagger="0.1">
 
       <div class="layer-card" style="--layer-color:#22d3ee">
         <span class="layer-num">01</span>
@@ -1430,7 +1433,7 @@ Réponse actionnable et concise
       <p class="narrative-lead" data-i18n="s7.lead">Mai 2026, refonte complète de la navigation : accordéon remplacé par 5 tabs avec chargement à la demande, et des liens nav qui n'apparaissent que lorsque le visiteur a dépassé le hero.</p>
       <p class="narrative-p" data-i18n="s7.body">Architecture et Décisions produit sont désormais accessibles comme tabs dans l'index, chargées via fetch + DOMParser au premier clic. Chaque page reste une URL autonome. Le CSS injecté passe par scopeCSS(css, panelId) : chaque sélecteur est préfixé de l'ID du tab (#architecture .decision-card) pour confiner les styles : impossible d'écraser les glows du hero ou les variables globales. La navigation contextuelle repose sur un IntersectionObserver sur .tech-strip-label : les 5 liens de section apparaissent en stagger (60 ms par lien) dès que le visiteur dépasse la zone "Stack technique", et disparaissent instantanément au retour vers le hero.</p>
     </div>
-    <div class="stack-grid" style="grid-template-columns:repeat(3,1fr);margin-top:1.5rem">
+    <div class="stack-grid" style="grid-template-columns:repeat(3,1fr);margin-top:1.5rem" data-reveal data-reveal-stagger="0.1">
       <div class="stack-card">
         <div class="stack-name" data-i18n="s7.c1.name">Tabs + lazy-load</div>
         <div class="stack-badge sb-violet" data-i18n="s7.c1.badge">Navigation</div>

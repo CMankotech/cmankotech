@@ -241,6 +241,17 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 <link rel="stylesheet" href="tool-cta.css">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="cursor.css">
+<link rel="stylesheet" href="reveal.css">
+<script>document.documentElement.classList.add('reveal-on');window.__revealFallback=setTimeout(function(){document.documentElement.classList.remove('reveal-on')},2500);</script>
+<script src="reveal.js" defer></script>
+<style>
+  /* Cascade d'apparition des chunks du pipeline dynamique (réutilise @keyframes fadeUp) */
+  .pipeline.show #chunk-list .chunk-card{animation:fadeUp .45s ease backwards}
+  .pipeline.show #chunk-list .chunk-card:nth-child(1){animation-delay:.05s}
+  .pipeline.show #chunk-list .chunk-card:nth-child(2){animation-delay:.15s}
+  .pipeline.show #chunk-list .chunk-card:nth-child(3){animation-delay:.25s}
+  .pipeline.show #chunk-list .chunk-card:nth-child(n+4){animation-delay:.32s}
+</style>
 </head>
 <body>
 <nav class="site-nav">
@@ -277,7 +288,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <!-- ARCHITECTURE NOTE -->
   <div class="arch-note">
     <p>Pipeline RAG embarqué dans un <strong>Cloudflare Worker</strong>. Les embeddings sémantiques sont générés par <strong>Workers AI</strong> (bge-small-en-v1.5) et la similarité cosinus est calculée à l'edge. La base de connaissances couvre <strong>15 documents</strong> (PM, PO/Agile, AI Product), découpés en chunks de 300 mots avec overlap de 50.</p>
-    <div class="arch-svg-wrap">
+    <div class="arch-svg-wrap" data-reveal>
       <svg viewBox="0 0 780 168" class="arch-svg" role="img" aria-label="RAG pipeline diagram">
         <defs>
           <marker id="arrW" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,1 L6,3.5 L0,6 Z" fill="rgba(255,255,255,0.2)"/></marker>

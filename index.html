@@ -18,6 +18,10 @@
 <title>Portfolio Builder Carlin Mankoto</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="cursor.css">
+<link rel="stylesheet" href="reveal.css">
+<script>document.documentElement.classList.add('reveal-on');window.__revealFallback=setTimeout(function(){document.documentElement.classList.remove('reveal-on')},2500);</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script src="reveal.js" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Instrument+Serif:ital@1&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -1152,16 +1156,6 @@ window.setLang=function(lang){
     }
   }
 
-  function initMermaid(panel){
-    if(window.mermaid){mermaid.init(undefined,panel.querySelectorAll('.mermaid'));return;}
-    var s=document.createElement('script');
-    s.src='https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
-    s.onload=function(){
-      mermaid.initialize({startOnLoad:false,theme:'dark',securityLevel:'loose'});
-      mermaid.init(undefined,panel.querySelectorAll('.mermaid'));
-    };
-    document.head.appendChild(s);
-  }
 
   // Scope tout le CSS injecté à #panelId pour éviter tout conflit global
   function scopeCSS(css,id){
@@ -1198,10 +1192,11 @@ window.setLang=function(lang){
         _lazyDocs[panelId]=doc;
         var styleId='lazy-css-'+panelId;
         if(!document.getElementById(styleId)){
-          var style=doc.querySelector('style');
-          if(style){
+          var styleAgg='';
+          doc.querySelectorAll('style').forEach(function(st){ styleAgg+=scopeCSS(st.textContent,panelId)+'\n'; });
+          if(styleAgg){
             var el=document.createElement('style');el.id=styleId;
-            el.textContent=scopeCSS(style.textContent,panelId);
+            el.textContent=styleAgg;
             document.head.appendChild(el);
           }
         }
@@ -1220,7 +1215,13 @@ window.setLang=function(lang){
           });
         });
         applyLazyI18n(doc,panel,document.documentElement.lang||'fr');
-        if(panelId==='architecture')initMermaid(panel);
+        // innerHTML n'exécute pas les <script> : on ré-exécute uniquement ceux des diagrammes
+        panel.querySelectorAll('script[data-hf-diagram]').forEach(function(old){
+          var s=document.createElement('script');
+          if(old.textContent)s.textContent=old.textContent;
+          old.parentNode.replaceChild(s,old);
+        });
+        if(window.revealScan)window.revealScan();
       })
       .catch(function(){
         var panel=document.getElementById(panelId);
