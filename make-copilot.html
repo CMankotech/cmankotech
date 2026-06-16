@@ -141,6 +141,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 .exp-card code{font-family:'Geist',monospace;font-size:0.78rem;color:#f0769a;background:rgba(199,58,99,0.1);padding:0.1rem 0.35rem;border-radius:4px}
 </style>
 <link rel="stylesheet" href="reveal.css">
+<link rel="stylesheet" href="cursor.css">
 <script>document.documentElement.classList.add('reveal-on');window.__revealFallback=setTimeout(function(){document.documentElement.classList.remove('reveal-on')},2500);</script>
 <script src="reveal.js" defer></script>
 </head>
@@ -162,8 +163,8 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
   </div>
   <div class="sn-right">
     <div class="lang-toggle">
-      <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')">FR</button>
-      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn glass-shimmer glass-focus active" data-lang="fr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn glass-shimmer glass-focus" data-lang="en" onclick="setLang('en')">EN</button>
     </div>
   </div>
 </nav>
@@ -175,7 +176,6 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 <div class="container">
 
   <header data-reveal data-reveal-stagger="0.12">
-    <span class="eyebrow" id="eyebrow">⚙️ Propulsé par un scénario Make</span>
     <h1>AI PM <span class="grad">Co-pilot</span></h1>
     <p class="subtitle" id="subtitleEl">Saisis une idée produit. Un scénario Make.com reçoit la requête via webhook, appelle Groq, et renvoie un mini-brief PM plus un score RICE, en direct. Pas de backend codé pour cette brique : tout est orchestré en no-code.</p>
   </header>
@@ -221,7 +221,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
     <label class="field-label" id="fieldLabel" for="ideaInput">Ton idée produit</label>
     <textarea class="idea-input" id="ideaInput" maxlength="300" placeholder="Ex : une app qui résume les réunions et génère les action items automatiquement"></textarea>
     <div class="chips" id="chips"></div>
-    <button class="btn" id="runBtn" onclick="run()"><span id="btnLabel">Générer le brief</span></button>
+    <button class="btn glass-edge glass-pointer glass-focus" id="runBtn" onclick="run()"><span id="btnLabel">Générer le brief</span></button>
     <p class="hint" id="hint">Le résultat est généré en français par Groq. Limité pour préserver le quota Make.</p>
   </div>
 
@@ -339,7 +339,6 @@ function setLang(lang){
   document.documentElement.lang = lang;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
   const T = t();
-  document.getElementById('eyebrow').textContent = T.eyebrow;
   document.getElementById('subtitleEl').textContent = T.subtitle;
   document.getElementById('flowLabel').textContent = T.flowLabel;
   document.getElementById('fn1').textContent = T.fn1;
@@ -452,6 +451,7 @@ renderChips();
 function toggleNavTools(e){e.stopPropagation();var d=document.getElementById('navTools');if(d)d.classList.toggle('open');}
 document.addEventListener('click',function(e){var d=document.getElementById('navTools');if(d&&!d.contains(e.target))d.classList.remove('open');});
 </script>
+<script src="glass.js"></script>
 <script src="krl1-widget.js"></script>
 <script src="cursor.js"></script>
 </body>
