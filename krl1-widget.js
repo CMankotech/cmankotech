@@ -209,6 +209,12 @@
       en: "I see you're trying the **AI PM Co-pilot** ⚙️ This demo runs on a **Make** (no-code) scenario calling Groq: a product idea in, a mini-brief and a RICE score out. I can explain how it's wired, or help you frame an idea to submit. What are you curious about?",
       chips_fr: ["⚙️ Comment marche le scénario Make ?", "💡 Aide-moi à formuler une idée produit", "📊 C'est quoi le score RICE ?"],
       chips_en: ["⚙️ How does the Make scenario work?", "💡 Help me frame a product idea", "📊 What is the RICE score?"]
+    },
+    'veille': {
+      fr: "Tu es sur la **Veille Product & IA** 📡 Chaque semaine, un cron Cloudflare agrège 13 flux RSS et les synthétise via Groq, archivés par semaine. Je peux t'expliquer comment c'est branché, ou discuter des tendances PM/IA du moment. Qu'est-ce qui t'intéresse ?",
+      en: "You're on the **Product & AI Watch** 📡 Every week, a Cloudflare cron aggregates 13 RSS feeds and synthesises them via Groq, archived by week. I can explain how it's wired, or chat about current PM/AI trends. What are you curious about?",
+      chips_fr: ["📡 Comment marche la veille ?", "🗂️ Naviguer dans l'historique", "🤖 Tendances IA du moment ?"],
+      chips_en: ["📡 How does the watch work?", "🗂️ Browse the history", "🤖 Current AI trends?"]
     }
   };
 
