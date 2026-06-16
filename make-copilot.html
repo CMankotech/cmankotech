@@ -23,9 +23,9 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 /* GLOWS */
 .glow{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0;opacity:0.7;will-change:transform}
-.g1{width:750px;height:550px;top:-15%;left:-10%;background:radial-gradient(ellipse 60% 55%,rgba(199,58,99,0.34),transparent 70%);animation:drift1 22s ease-in-out infinite}
-.g2{width:650px;height:650px;top:35%;right:-12%;background:radial-gradient(ellipse 55% 60%,rgba(167,139,250,0.30),transparent 70%);animation:drift2 26s ease-in-out infinite}
-.g3{width:600px;height:450px;bottom:5%;left:15%;background:radial-gradient(ellipse 70% 45%,rgba(34,211,238,0.24),transparent 70%);animation:drift3 30s ease-in-out infinite}
+.g1{width:750px;height:550px;top:-15%;left:-10%;background:radial-gradient(ellipse 60% 55%,rgba(59,130,246,0.40),transparent 70%);animation:drift1 22s ease-in-out infinite}
+.g2{width:650px;height:650px;top:35%;right:-12%;background:radial-gradient(ellipse 55% 60%,rgba(167,139,250,0.34),transparent 70%);animation:drift2 26s ease-in-out infinite}
+.g3{width:600px;height:450px;bottom:5%;left:15%;background:radial-gradient(ellipse 70% 45%,rgba(34,211,238,0.28),transparent 70%);animation:drift3 30s ease-in-out infinite}
 @keyframes drift1{0%,100%{transform:translate3d(0,0,0) scale(1)}33%{transform:translate3d(60px,50px,0) scale(1.1)}66%{transform:translate3d(-30px,100px,0) scale(0.95)}}
 @keyframes drift2{0%,100%{transform:translate3d(0,0,0) scale(1)}33%{transform:translate3d(-60px,-40px,0) scale(1.08)}66%{transform:translate3d(40px,-70px,0) scale(0.93)}}
 @keyframes drift3{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(70px,-50px,0) scale(1.12)}}
@@ -141,6 +141,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 .exp-card p{font-size:0.82rem;color:var(--dim);line-height:1.6}
 .exp-card code{font-family:'Geist',monospace;font-size:0.78rem;color:#f0769a;background:rgba(199,58,99,0.1);padding:0.1rem 0.35rem;border-radius:4px}
 </style>
+<link rel="stylesheet" href="reveal.css">
 <script>document.documentElement.classList.add('reveal-on');window.__revealFallback=setTimeout(function(){document.documentElement.classList.remove('reveal-on')},2500);</script>
 <script src="reveal.js" defer></script>
 </head>
@@ -174,7 +175,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 
 <div class="container">
 
-  <header>
+  <header data-reveal data-reveal-stagger="0.12">
     <span class="eyebrow" id="eyebrow">⚙️ Propulsé par un scénario Make</span>
     <h1>AI PM <span class="grad">Co-pilot</span></h1>
     <p class="subtitle" id="subtitleEl">Saisis une idée produit. Un scénario Make.com reçoit la requête via webhook, appelle Groq, et renvoie un mini-brief PM plus un score RICE, en direct. Pas de backend codé pour cette brique : tout est orchestré en no-code.</p>
@@ -217,7 +218,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
   </div>
 
   <!-- INPUT -->
-  <div class="panel">
+  <div class="panel" data-reveal data-reveal-stagger="0.09">
     <label class="field-label" id="fieldLabel" for="ideaInput">Ton idée produit</label>
     <textarea class="idea-input" id="ideaInput" maxlength="300" placeholder="Ex : une app qui résume les réunions et génère les action items automatiquement"></textarea>
     <div class="chips" id="chips"></div>
@@ -253,7 +254,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
   <!-- EXPLAINER -->
   <div class="explainer">
     <div class="section-label" id="expLabel">Pourquoi Make pour cette brique ?</div>
-    <div class="exp-grid">
+    <div class="exp-grid" data-reveal data-reveal-stagger="0.1">
       <div class="exp-card">
         <h4 id="exp1t">🧩 Le bon outil au bon endroit</h4>
         <p id="exp1p">Le reste du site est codé à la main sur Cloudflare Workers. Cette brique est volontairement en no-code pour montrer la maîtrise de l'orchestration visuelle : webhook, appel HTTP authentifié, réponse synchrone.</p>

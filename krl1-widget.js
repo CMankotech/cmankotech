@@ -203,6 +203,12 @@
       en: "You're reading **How I Built This** 🛠️ I can explain the technical choices, AI architecture or the full stack in detail. What are you curious about?",
       chips_fr: ["🏗️ Pourquoi Cloudflare Workers ?", "🤖 Comment fonctionne KRL1 ?", "⚡ Pourquoi pas de backend ?"],
       chips_en: ["🏗️ Why Cloudflare Workers?", "🤖 How does KRL1 work?", "⚡ Why no backend?"]
+    },
+    'make-copilot': {
+      fr: "Je vois que tu testes l'**AI PM Co-pilot** ⚙️ Cette démo tourne sur un scénario **Make** (no-code) qui appelle Groq : une idée produit en entrée, un mini-brief et un score RICE en sortie. Je peux t'expliquer comment c'est branché, ou t'aider à formuler une idée à soumettre. Qu'est-ce qui t'intéresse ?",
+      en: "I see you're trying the **AI PM Co-pilot** ⚙️ This demo runs on a **Make** (no-code) scenario calling Groq: a product idea in, a mini-brief and a RICE score out. I can explain how it's wired, or help you frame an idea to submit. What are you curious about?",
+      chips_fr: ["⚙️ Comment marche le scénario Make ?", "💡 Aide-moi à formuler une idée produit", "📊 C'est quoi le score RICE ?"],
+      chips_en: ["⚙️ How does the Make scenario work?", "💡 Help me frame a product idea", "📊 What is the RICE score?"]
     }
   };
 
