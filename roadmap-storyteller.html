@@ -899,44 +899,44 @@ function applyLangExtras(lang) {
 </script>
 <script src="pm-session.js"></script>
 <script>
-window.pmImportInsights = function(){
-  if(!window.PMSession) return;
-  var epicData = PMSession.get('epic');
-  if(!epicData) return;
-  var stories = ((epicData.result||{}).stories) || [];
-  if(!stories.length) return;
-  var prodEl = document.getElementById('productName');
-  var visEl  = document.getElementById('vision');
-  // Product name: prefer OKR productName, then epic title
-  if(prodEl && !prodEl.value){
-    var okrData = PMSession.get('okr');
-    if(okrData && okrData.productName) prodEl.value = okrData.productName;
-    else if(epicData.epicTitle) prodEl.value = epicData.epicTitle.split(/[—:·]/)[0].trim().slice(0,40);
-  }
-  // Vision: epic summary + first OKR objective as strategic anchor
-  if(visEl && !visEl.value){
-    var visionParts = [];
-    if((epicData.result||{}).epic_summary) visionParts.push(epicData.result.epic_summary);
-    var okrD = PMSession.get('okr');
-    if(okrD){
-      var firstObj = (((okrD.result||{}).okrs||[])[0]||{}).objective||'';
-      if(firstObj) visionParts.push('Objectif stratégique : ' + firstObj);
-    }
-    if(visionParts.length) visEl.value = visionParts.join('\n');
-  }
-  // Replace feature rows with stories mapped to periods by priority
-  var priorityToPeriod = { high: 'now', medium: 'next', low: 'later' };
+window.pmImportInsights = function(opts){
+  if(!window.PMSession) return [];
+  var ctx = PMSession.context();
+  var en = PMSession.lang() === 'en';
+
+  var visParts = [];
+  if(ctx._epicSummary) visParts.push(ctx._epicSummary);
+  else if(ctx.product && ctx.product.description) visParts.push(ctx.product.description);
+  if(ctx.objectives[0] && ctx.objectives[0].objective) visParts.push((en ? 'Strategic objective : ' : 'Objectif stratégique : ') + ctx.objectives[0].objective);
+
+  var filled = PMSession.autofill([
+    { sel:'#productName', value: ctx.product && ctx.product.name },
+    { sel:'#vision',      value: visParts.join('\n') }
+  ], opts);
+
+  // Features: stories (period from priority), else backlog priorities (rank), else opportunities.
+  var p2per = { high:'now', medium:'next', low:'later' };
+  var rows = [];
+  if(ctx.stories.length) ctx.stories.forEach(function(s){ rows.push({ title:s.title || s.story || '', period: p2per[s.priority] || 'next' }); });
+  else if(ctx.priorities.length) ctx.priorities.forEach(function(p,i){ rows.push({ title:p.label, period: i<2 ? 'now' : (i<4 ? 'next' : 'later') }); });
+  else if(ctx.opportunities.length) ctx.opportunities.forEach(function(o,i){ rows.push({ title:o.title, period: i<2 ? 'now' : (i<4 ? 'next' : 'later') }); });
+  rows = rows.filter(function(r){ return r.title; });
+
+  var addedFeatures = false;
   var list = document.getElementById('featuresList');
-  if(list){
-    list.innerHTML = '';
-    window.featureCount = 0;
-    stories.forEach(function(s){
-      var period = priorityToPeriod[s.priority] || 'next';
-      addFeature(s.title || '', period);
-    });
+  if(list && rows.length){
+    var existing = Array.from(list.querySelectorAll('input')).map(function(i){ return i.value.trim(); }).filter(Boolean);
+    if(!existing.length || (opts && opts.force)){
+      list.innerHTML = '';
+      window.featureCount = 0;
+      rows.forEach(function(r){ addFeature(r.title, r.period); });
+      addedFeatures = true;
+      PMSession.registerUndo(function(){ list.innerHTML = ''; window.featureCount = 0; addFeature('', 'now'); });
+    }
   }
-  var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
-  if(prodEl){ prodEl.style.borderColor='rgba(251,191,36,0.5)'; setTimeout(function(){prodEl.style.borderColor='';},900); prodEl.scrollIntoView({behavior:'smooth',block:'center'}); }
+
+  if(opts && opts.scroll && filled.length) filled[0].scrollIntoView({behavior:'smooth',block:'center'});
+  return addedFeatures ? filled.concat([list]) : filled;
 };
 if(window.PMSession) PMSession.init();
 </script>

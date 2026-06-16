@@ -1041,18 +1041,17 @@ function applyLangExtras(lang) {
 </script>
 <script src="pm-session.js"></script>
 <script>
-window.pmImportInsights = function(){
-  if(!window.PMSession) return;
-  var prev = PMSession.get('discovery');
-  if(!prev) return;
+window.pmImportInsights = function(opts){
+  if(!window.PMSession) return [];
+  var ctx = PMSession.context();
+  var en = PMSession.lang() === 'en';
   var parts = [];
-  if(prev.context) parts.push(prev.context);
-  if(prev.target) parts.push('Cible : ' + prev.target);
-  if(prev.problem) parts.push('Problème exploré : ' + prev.problem);
-  var ctxEl = document.getElementById('context');
-  if(ctxEl) ctxEl.value = parts.join(' · ');
-  var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
-  if(ctxEl){ ctxEl.style.borderColor='rgba(52,211,153,0.5)'; setTimeout(function(){ctxEl.style.borderColor='';},900); ctxEl.scrollIntoView({behavior:'smooth',block:'center'}); }
+  if(ctx.product && ctx.product.description) parts.push(ctx.product.description);
+  if(ctx._target) parts.push((en ? 'Target : ' : 'Cible : ') + ctx._target);
+  if(ctx._problem) parts.push((en ? 'Problem explored : ' : 'Problème exploré : ') + ctx._problem);
+  var filled = PMSession.autofill([{ sel:'#context', value: parts.join(' · ') }], opts);
+  if(opts && opts.scroll && filled.length) filled[0].scrollIntoView({behavior:'smooth',block:'center'});
+  return filled;
 };
 if(window.PMSession) PMSession.init();
 </script>

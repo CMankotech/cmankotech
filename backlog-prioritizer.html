@@ -847,24 +847,35 @@ function applyLangExtras(lang) {
 </script>
 <script src="pm-session.js"></script>
 <script>
-window.pmImportInsights = function(){
-  if(!window.PMSession) return;
-  var prev = PMSession.get('okr');
-  if(!prev) return;
-  var okrs = ((prev.result||{}).okrs) || [];
-  if(!okrs.length) return;
-  var lines = [];
-  if(prev.productName) lines.push('Produit : ' + prev.productName + (prev.productType ? ' (' + prev.productType + ')' : ''));
-  lines.push('Objectifs stratégiques du trimestre :');
-  okrs.forEach(function(o){
-    lines.push('• ' + (o.objective||''));
-    (o.key_results||[]).forEach(function(kr){ lines.push('  → ' + (kr.text||'') + (kr.type ? ' [' + kr.type + ']' : '')); });
-  });
-  if(prev.metrics) lines.push('\nMétriques à suivre : ' + prev.metrics);
-  var ctxEl = document.getElementById('context');
-  if(ctxEl) ctxEl.value = lines.join('\n');
-  var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
-  if(ctxEl){ ctxEl.style.borderColor='rgba(251,146,60,0.5)'; setTimeout(function(){ctxEl.style.borderColor='';},900); ctxEl.scrollIntoView({behavior:'smooth',block:'center'}); }
+window.pmImportInsights = function(opts){
+  if(!window.PMSession) return [];
+  var ctx = PMSession.context();
+  var en = PMSession.lang() === 'en';
+
+  // The candidates to prioritise (the field the old import forgot): one item per line.
+  var cand = [];
+  ctx.opportunities.forEach(function(o){ if(o.title) cand.push(o.title); });
+  ctx.stories.forEach(function(s){ var t = s.title || s.story; if(t) cand.push(t); });
+  ctx.hypotheses.forEach(function(h){ if(h.belief) cand.push(h.belief); });
+  cand = cand.filter(function(v,i){ return v && cand.indexOf(v) === i; });
+
+  // Strategic context block.
+  var ctxParts = [];
+  var objBlock = PMSession.lines([{ kind:'objective', items: ctx.objectives }]);
+  if(objBlock) ctxParts.push(objBlock);
+  if(ctx.product && ctx.product.description) ctxParts.push((en ? 'Product context : ' : 'Contexte produit : ') + ctx.product.description);
+  if(ctx._metrics) ctxParts.push((en ? 'Metrics : ' : 'Métriques : ') + ctx._metrics);
+
+  // #storiesText is only read in text mode (getStories) — switch to it before filling.
+  var stEl = document.getElementById('storiesText');
+  if(cand.length && stEl && (!stEl.value || (opts && opts.force)) && typeof setInputMode === 'function') setInputMode('text');
+
+  var filled = PMSession.autofill([
+    { sel:'#storiesText', value: cand.join('\n') },
+    { sel:'#context',     value: ctxParts.join('\n') }
+  ], opts);
+  if(opts && opts.scroll && filled.length) filled[0].scrollIntoView({behavior:'smooth',block:'center'});
+  return filled;
 };
 if(window.PMSession) PMSession.init();
 </script>

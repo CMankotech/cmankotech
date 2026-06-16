@@ -822,38 +822,31 @@ function applyLangExtras(lang) {
 </script>
 <script src="pm-session.js"></script>
 <script>
-window.pmImportInsights = function(){
-  if(!window.PMSession) return;
-  var backlogData = PMSession.get('backlog');
-  if(!backlogData) return;
-  var items = ((backlogData.result||{}).items) || [];
-  if(!items.length) return;
-  var top = items[0];
-  var titleEl = document.getElementById('epicTitle');
-  var descEl  = document.getElementById('epicDesc');
-  var ctxEl   = document.getElementById('techContext');
-  var persoEl = document.getElementById('persona');
-  if(titleEl) titleEl.value = (top.story || top.title || '').slice(0,120);
-  if(descEl){
-    var lines = [];
-    if(top.justification) lines.push(top.justification);
-    if(items.length > 1){
-      lines.push('\nTop priorités adjacentes :');
-      items.slice(1,4).forEach(function(it){ lines.push('- ' + (it.story||it.title||'') + (it.justification ? ' : ' + it.justification : '')); });
-    }
-    if(backlogData.context) lines.push('\nContexte produit : ' + backlogData.context);
-    descEl.value = lines.join('\n');
-  }
-  if(ctxEl && !ctxEl.value && backlogData.context) ctxEl.value = backlogData.context.slice(0,100);
-  if(persoEl && !persoEl.value){
-    var interviewData = PMSession.get('interview');
-    if(interviewData){
-      var p = ((interviewData.result||{}).persona)||{};
-      if(p.name) persoEl.value = p.name + (p.description ? ' : ' + p.description : '') + (p.tags&&p.tags.length ? ' (' + p.tags.slice(0,3).join(', ') + ')' : '');
-    }
-  }
-  var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
-  if(titleEl){ titleEl.style.borderColor='rgba(244,114,182,0.5)'; setTimeout(function(){titleEl.style.borderColor='';},900); titleEl.scrollIntoView({behavior:'smooth',block:'center'}); }
+window.pmImportInsights = function(opts){
+  if(!window.PMSession) return [];
+  var ctx = PMSession.context();
+
+  // Title: top backlog priority, else first opportunity.
+  var title = (ctx.priorities[0] && ctx.priorities[0].label) || (ctx.opportunities[0] && ctx.opportunities[0].title) || '';
+
+  // Description: the rationale behind the chosen item + the surrounding opportunities.
+  var descParts = [];
+  if(ctx.priorities[0] && ctx.priorities[0].justification) descParts.push(ctx.priorities[0].justification);
+  var oppBlock = PMSession.lines([{ kind:'opportunity', items: ctx.opportunities.slice(0,4) }]);
+  if(oppBlock) descParts.push(oppBlock);
+  if(!descParts.length && ctx._epicSummary) descParts.push(ctx._epicSummary);
+
+  var p = ctx.personas[0];
+  var persona = p ? (p.name + (p.description ? ' : ' + p.description : '') + (p.tags && p.tags.length ? ' (' + p.tags.slice(0,3).join(', ') + ')' : '')) : '';
+
+  var filled = PMSession.autofill([
+    { sel:'#epicTitle',   value: title.slice(0,120) },
+    { sel:'#epicDesc',    value: descParts.join('\n') },
+    { sel:'#persona',     value: persona },
+    { sel:'#techContext', value: ctx.product && ctx.product.description ? ctx.product.description.slice(0,120) : '' }
+  ], opts);
+  if(opts && opts.scroll && filled.length) filled[0].scrollIntoView({behavior:'smooth',block:'center'});
+  return filled;
 };
 if(window.PMSession) PMSession.init();
 </script>

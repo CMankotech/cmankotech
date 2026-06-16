@@ -889,48 +889,29 @@ function applyLangExtras(lang) {
 </script>
 <script src="pm-session.js"></script>
 <script>
-window.pmImportInsights = function(){
-  if(!window.PMSession) return;
-  var interviewData = PMSession.get('interview');
-  var discoveryData = PMSession.get('discovery');
-
-  var lines = [];
-  var personaName = '';
-  var prodEl = document.getElementById('productName');
-
-  if(interviewData){
-    var r = interviewData.result || {};
-    var persona = r.persona || {};
-    var opps = r.opportunities || [];
-    var pains = r.pain_groups || [];
-    personaName = persona.name || '';
-    if(personaName) lines.push('Persona cible : ' + personaName + (persona.description ? ' : ' + persona.description : ''));
-    if(pains.length){
-      lines.push('\nPain points identifiés :');
-      pains.forEach(function(g){ lines.push('- ' + (g.group||'') + ' (' + (g.count||(g.items||[]).length) + ' mentions)'); });
-    }
-    if(opps.length){
-      lines.push('\nOpportunités à adresser ce trimestre :');
-      opps.forEach(function(o,i){ lines.push((i+1) + '. ' + (o.title||'') + (o.description ? ' : ' + o.description : '')); });
-    }
-    if(prodEl && !prodEl.value && interviewData.context) prodEl.value = interviewData.context.split(',')[0].trim().slice(0,40);
-  } else if(discoveryData){
-    if(discoveryData.problem) lines.push('Problème exploré : ' + discoveryData.problem);
-    if(discoveryData.target) lines.push('Cible : ' + discoveryData.target);
-    var hyps = ((discoveryData.result||{}).hypotheses||[]);
-    if(hyps.length){
-      lines.push('\nHypothèses issues de la discovery :');
-      hyps.forEach(function(h,i){ lines.push((i+1) + '. ' + (h.belief||h.statement||String(h).slice(0,100))); });
-    }
-    if(prodEl && !prodEl.value && discoveryData.context) prodEl.value = discoveryData.context.split(',')[0].trim().slice(0,40);
-  } else { return; }
-
+window.pmImportInsights = function(opts){
+  if(!window.PMSession) return [];
+  var ctx = PMSession.context();
+  // Converge EVERY upstream insight into the ambitions field — not just the previous tool.
+  var amb = PMSession.lines([
+    { kind:'persona',     items: ctx.personas.slice(0,1) },
+    { kind:'hypothesis',  items: ctx.hypotheses },
+    { kind:'painPoint',   items: ctx.painPoints },
+    { kind:'opportunity', items: ctx.opportunities }
+  ]);
+  var filled = PMSession.autofill([
+    { sel:'#productName', value: ctx.product && ctx.product.name },
+    { sel:'#productType', value: ctx.product && ctx.product.type },
+    { sel:'#ambitions',   value: amb },
+    { sel:'#metrics',     value: ctx._metrics }
+  ], opts);
   var ambEl = document.getElementById('ambitions');
-  if(ambEl) ambEl.value = lines.join('\n');
-  var b = document.getElementById('pmInsightBanner'); if(b) b.remove();
-  if(ambEl){ ambEl.style.borderColor='rgba(167,139,250,0.5)'; setTimeout(function(){ambEl.style.borderColor='';},900); ambEl.scrollIntoView({behavior:'smooth',block:'center'}); }
-  var hint = document.getElementById('ambitionsHint');
-  if(hint){ var n = ambEl.value.trim().split(/\s+/).filter(Boolean).length; hint.textContent = n + (currentLang === 'en' ? ' word' : ' mot') + (n>1?'s':''); }
+  if(ambEl && filled.indexOf(ambEl) >= 0){
+    var hint = document.getElementById('ambitionsHint');
+    if(hint){ var n = ambEl.value.trim().split(/\s+/).filter(Boolean).length; hint.textContent = n + (PMSession.lang() === 'en' ? ' word' : ' mot') + (n>1?'s':''); }
+    if(opts && opts.scroll) ambEl.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  return filled;
 };
 if(window.PMSession) PMSession.init();
 </script>
