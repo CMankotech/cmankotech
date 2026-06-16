@@ -371,7 +371,7 @@ function renderHistory() {
     const dateLabel = e.updated_at
       ? new Date(e.updated_at).toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' })
       : '';
-    const text = `${weekLabel} ${e.week} : ${e.year}${dateLabel ? ' · ' + dateLabel : ''}`;
+    const text = `${weekLabel} ${e.week}${dateLabel ? ' · ' + dateLabel : ''}`;
     return `<option value="${e.week}|${e.year}"${isActive ? ' selected' : ''}>${text}</option>`;
   }).join('');
 }
