@@ -71,17 +71,10 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 .section-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:0.8rem}
 .section-label::after{content:'';flex:1;height:1px;background:var(--line)}
 
-.editions-grid{display:flex;gap:0.6rem;overflow-x:auto;padding-bottom:0.5rem;scrollbar-width:none}
-.editions-grid::-webkit-scrollbar{display:none}
-
-.edition-card{flex-shrink:0;display:flex;flex-direction:column;gap:0.2rem;padding:0.85rem 1.1rem;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015));cursor:pointer;transition:all 0.2s;text-align:left;min-width:100px}
-.edition-card:hover{border-color:rgba(255,255,255,0.16);transform:translateY(-1px);box-shadow:0 10px 28px -12px rgba(0,0,0,0.5)}
-.edition-card.active{border-color:rgba(96,165,250,0.4);background:rgba(96,165,250,0.06)}
-.ed-label{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted)}
-.edition-card.active .ed-label{color:var(--blue)}
-.ed-week{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--text)}
-.edition-card.active .ed-week{color:var(--blue)}
-.ed-date{font-size:0.6rem;color:var(--muted)}
+.edition-select{appearance:none;-webkit-appearance:none;width:100%;max-width:360px;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);border:1px solid var(--border);border-radius:12px;padding:0.85rem 2.6rem 0.85rem 1.1rem;cursor:pointer;transition:border-color 0.2s;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>") no-repeat right 1rem center,linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.015))}
+.edition-select:hover{border-color:rgba(255,255,255,0.16)}
+.edition-select:focus{outline:none;border-color:rgba(96,165,250,0.4)}
+.edition-select option{background:#0e1116;color:var(--text)}
 
 /* LOADING / EMPTY */
 .state-card{background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.5rem;backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%)}
@@ -189,7 +182,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
   <!-- HERO centré -->
   <header>
     <h1>Veille <span class="grad">Product &amp; IA</span></h1>
-    <p class="subtitle" id="subtitleEl">Veille automatisée sur Product Management, IA générative, AI Builders et No-code. Make tourne chaque lundi, le Worker récupère 13 flux RSS, synthétise via Groq et publie ici.</p>
+    <p class="subtitle" id="subtitleEl">Veille automatisée sur Product Management, IA générative, AI Builders et No-code. Un cron Cloudflare tourne chaque lundi, le Worker récupère 13 flux RSS, synthétise via Groq et publie ici.</p>
     <div class="status-bar" id="statusBar">
       <span class="pill">Chargement…</span>
     </div>
@@ -200,9 +193,9 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
     <div class="flow-label" id="flowLabel">Comment ça marche</div>
     <div class="flow-nodes" data-reveal data-reveal-stagger="0.18">
       <div class="flow-node fn-make">
-        <div class="flow-icon">⚙️</div>
-        <div class="flow-name">Make</div>
-        <div class="flow-sub">Cron lundi 8h</div>
+        <div class="flow-icon">⏰</div>
+        <div class="flow-name" id="flowCronName">Cron CF</div>
+        <div class="flow-sub" id="flowCronSub">Lundi 6h UTC</div>
       </div>
       <span class="flow-arrow">→</span>
       <div class="flow-node fn-worker">
@@ -239,8 +232,8 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 
   <!-- HISTORIQUE : section principale visible avant les articles -->
   <div class="history-section" id="historySection" style="display:none">
-    <div class="section-label" id="historyLabel">Éditions précédentes</div>
-    <div class="editions-grid" id="editionsGrid"></div>
+    <label class="section-label" id="historyLabel" for="editionSelect">Éditions précédentes</label>
+    <select class="edition-select" id="editionSelect" onchange="onEditionChange(this.value)"></select>
   </div>
 
   <!-- LOADING -->
@@ -253,7 +246,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
     <div class="empty">
       <div class="empty-icon">⏳</div>
       <div class="empty-title" id="emptyTitle">Première édition en préparation</div>
-      <p class="empty-sub" id="emptySub">Make tourne chaque lundi matin. La première édition arrivera dès que le scénario sera activé.</p>
+      <p class="empty-sub" id="emptySub">Le cron Cloudflare tourne chaque lundi matin. La première édition arrivera dès le prochain passage.</p>
     </div>
   </div>
 
@@ -368,21 +361,24 @@ function renderStatus(data) {
 
 function renderHistory() {
   const section = document.getElementById('historySection');
-  const grid = document.getElementById('editionsGrid');
+  const select = document.getElementById('editionSelect');
   if (historyIndex.length < 1) { section.style.display = 'none'; return; }
   section.style.display = 'block';
   const locale = _lang === 'fr' ? 'fr-FR' : 'en-GB';
-  grid.innerHTML = historyIndex.map(e => {
+  const weekLabel = _lang === 'fr' ? 'Semaine' : 'Week';
+  select.innerHTML = historyIndex.map(e => {
     const isActive = activeWeek && e.week === activeWeek.week && e.year === activeWeek.year;
     const dateLabel = e.updated_at
       ? new Date(e.updated_at).toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' })
       : '';
-    return `<button class="edition-card${isActive ? ' active' : ''}" onclick="loadWeek('${e.week}','${e.year}')">
-      <span class="ed-label">${_lang === 'fr' ? 'Semaine' : 'Week'}</span>
-      <span class="ed-week">${e.week} : ${e.year}</span>
-      ${dateLabel ? `<span class="ed-date">${dateLabel}</span>` : ''}
-    </button>`;
+    const text = `${weekLabel} ${e.week} : ${e.year}${dateLabel ? ' · ' + dateLabel : ''}`;
+    return `<option value="${e.week}|${e.year}"${isActive ? ' selected' : ''}>${text}</option>`;
   }).join('');
+}
+
+function onEditionChange(value) {
+  const sep = value.indexOf('|');
+  loadWeek(value.slice(0, sep), value.slice(sep + 1));
 }
 
 function renderCategories(cats) {
@@ -415,8 +411,12 @@ function renderCategories(cats) {
 
 const I18N = {
   fr: {
-    subtitle: 'Veille automatisée sur Product Management, IA générative, AI Builders et No-code. Make tourne chaque lundi, le Worker récupère 13 flux RSS, synthétise via Groq et publie ici.',
+    subtitle: 'Veille automatisée sur Product Management, IA générative, AI Builders et No-code. Un cron Cloudflare tourne chaque lundi, le Worker récupère 13 flux RSS, synthétise via Groq et publie ici.',
     noData: 'Pas encore de données',
+    emptyTitle: 'Première édition en préparation',
+    emptySub: 'Le cron Cloudflare tourne chaque lundi matin. La première édition arrivera dès le prochain passage.',
+    cronName: 'Cron CF',
+    cronSub: 'Lundi 6h UTC',
     nextEdition: 'Prochaine édition :',
     updating: 'Mise à jour :',
     week: 'Semaine',
@@ -425,8 +425,12 @@ const I18N = {
     historyLabel: 'Éditions précédentes',
   },
   en: {
-    subtitle: 'Automated watch on Product Management, Generative AI, AI Builders and No-code. Make runs every Monday, the Worker fetches 13 RSS feeds, synthesizes via Groq and publishes here.',
+    subtitle: 'Automated watch on Product Management, Generative AI, AI Builders and No-code. A Cloudflare cron runs every Monday, the Worker fetches 13 RSS feeds, synthesizes via Groq and publishes here.',
     noData: 'No data yet',
+    emptyTitle: 'First edition in preparation',
+    emptySub: 'The Cloudflare cron runs every Monday morning. The first edition will arrive on the next run.',
+    cronName: 'CF Cron',
+    cronSub: 'Monday 6am UTC',
     nextEdition: 'Next edition:',
     updating: 'Updated:',
     week: 'Week',
@@ -448,6 +452,10 @@ function setLang(lang) {
   document.getElementById('flowSub1').textContent = lang === 'fr' ? '4 catégories' : '4 categories';
   document.getElementById('flowSub2').textContent = lang === 'fr' ? 'Synthèse' : 'Synthesis';
   document.getElementById('flowPageName').textContent = lang === 'fr' ? 'Cette page' : 'This page';
+  document.getElementById('flowCronName').textContent = I18N[lang].cronName;
+  document.getElementById('flowCronSub').textContent = I18N[lang].cronSub;
+  document.getElementById('emptyTitle').textContent = I18N[lang].emptyTitle;
+  document.getElementById('emptySub').textContent = I18N[lang].emptySub;
   if (_lastData !== undefined) renderStatus(_lastData);  // ne pas écraser le « Chargement… » avant le 1er render
   renderHistory();
 }

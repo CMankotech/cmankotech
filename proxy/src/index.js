@@ -133,6 +133,84 @@ async function storeEdition(env, categories) {
   return stored;
 }
 
+// Fetch every veille RSS feed, interleave + dedup per category, synthesize each
+// digest with Groq, then store the edition. Shared by the /veille-refresh route
+// (external trigger) and the scheduled() cron handler (weekly self-trigger).
+async function runVeilleRefresh(env) {
+  // Fetch all feeds in parallel, ignore failures
+  const results = await Promise.allSettled(
+    VEILLE_SOURCES.map(src =>
+      fetch(src.url, { headers: { 'User-Agent': 'Mozilla/5.0' }, cf: { cacheTtl: 3600 } })
+        .then(r => r.ok ? r.text().then(xml => ({ src, items: parseRSSItems(xml) })) : null)
+        .catch(() => null)
+    )
+  );
+
+  // Group items by category, keeping each feed's items separate for interleaving
+  const byCategory = {};
+  for (const r of results) {
+    if (r.status !== 'fulfilled' || !r.value) continue;
+    const { src, items } = r.value;
+    if (!byCategory[src.id]) byCategory[src.id] = { id: src.id, label: src.label, feeds: [] };
+    byCategory[src.id].feeds.push(items.map(i => {
+      let link = i.url;
+      let site = i.siteName;
+      if (src.bing) { const b = unwrapBing(link); link = b.url; site = b.host; }
+      return { title: i.title, url: link, source: site || src.name || src.label };
+    }));
+  }
+
+  // Round-robin across feeds, dedup by title, cap per category. Interleaving
+  // guarantees a mix of curated feeds and Google News instead of the first
+  // feeds filling the cap and squeezing the rest out.
+  for (const cat of Object.values(byCategory)) {
+    const queues = cat.feeds.map(f => [...f]);
+    const seen = new Set();
+    const merged = [];
+    let active = true;
+    while (active && merged.length < VEILLE_MAX_PER_CATEGORY) {
+      active = false;
+      for (const q of queues) {
+        if (!q.length) continue;
+        active = true;
+        const item = q.shift();
+        const key = item.title.toLowerCase().replace(/\s+/g, ' ').trim();
+        if (seen.has(key)) continue;
+        seen.add(key);
+        merged.push(item);
+        if (merged.length >= VEILLE_MAX_PER_CATEGORY) break;
+      }
+    }
+    cat.items = merged;
+    delete cat.feeds;
+  }
+
+  // Synthesize each category with Groq
+  const processed = [];
+  let totalArticles = 0;
+  for (const cat of Object.values(byCategory)) {
+    totalArticles += cat.items.length;
+    let digest = '';
+    if (cat.items.length > 0 && env.GROQ_KEY) {
+      const titles = cat.items.map(i => `- ${i.title}`).join('\n');
+      const groqRes = await callGroq(env, {
+        model: DEFAULT_MODEL,
+        messages: [
+          { role: 'system', content: 'Tu es un assistant de veille technologique. Rédige en 2 phrases maximum en français une synthèse concise et factuelle des articles listés. Sois direct, informatif, sans intro. N\'utilise jamais de tirets longs.' },
+          { role: 'user', content: `Articles de la semaine :\n${titles}` },
+        ],
+        temperature: 0.4,
+        max_tokens: 120,
+      });
+      if (groqRes.ok) digest = extractContent(groqRes.data) || '';
+    }
+    processed.push({ id: cat.id, label: cat.label, digest, items: cat.items });
+  }
+
+  const stored = await storeEdition(env, processed);
+  return { week: stored.week, categories: processed.length, articles: totalArticles };
+}
+
 // ─── Knowledge Base ───────────────────────────────────────────────────────────
 
 const KB_FILES = {
@@ -1422,80 +1500,8 @@ export default {
       if (!env.MAKE_SECRET || secret !== env.MAKE_SECRET) {
         return new Response('Forbidden', { status: 403 });
       }
-
-      // Fetch all feeds in parallel, ignore failures
-      const results = await Promise.allSettled(
-        VEILLE_SOURCES.map(src =>
-          fetch(src.url, { headers: { 'User-Agent': 'Mozilla/5.0' }, cf: { cacheTtl: 3600 } })
-            .then(r => r.ok ? r.text().then(xml => ({ src, items: parseRSSItems(xml) })) : null)
-            .catch(() => null)
-        )
-      );
-
-      // Group items by category, keeping each feed's items separate for interleaving
-      const byCategory = {};
-      for (const r of results) {
-        if (r.status !== 'fulfilled' || !r.value) continue;
-        const { src, items } = r.value;
-        if (!byCategory[src.id]) byCategory[src.id] = { id: src.id, label: src.label, feeds: [] };
-        byCategory[src.id].feeds.push(items.map(i => {
-          let link = i.url;
-          let site = i.siteName;
-          if (src.bing) { const b = unwrapBing(link); link = b.url; site = b.host; }
-          return { title: i.title, url: link, source: site || src.name || src.label };
-        }));
-      }
-
-      // Round-robin across feeds, dedup by title, cap per category. Interleaving
-      // guarantees a mix of curated feeds and Google News instead of the first
-      // feeds filling the cap and squeezing the rest out.
-      for (const cat of Object.values(byCategory)) {
-        const queues = cat.feeds.map(f => [...f]);
-        const seen = new Set();
-        const merged = [];
-        let active = true;
-        while (active && merged.length < VEILLE_MAX_PER_CATEGORY) {
-          active = false;
-          for (const q of queues) {
-            if (!q.length) continue;
-            active = true;
-            const item = q.shift();
-            const key = item.title.toLowerCase().replace(/\s+/g, ' ').trim();
-            if (seen.has(key)) continue;
-            seen.add(key);
-            merged.push(item);
-            if (merged.length >= VEILLE_MAX_PER_CATEGORY) break;
-          }
-        }
-        cat.items = merged;
-        delete cat.feeds;
-      }
-
-      // Synthesize each category with Groq
-      const processed = [];
-      let totalArticles = 0;
-      for (const cat of Object.values(byCategory)) {
-        totalArticles += cat.items.length;
-        let digest = '';
-        if (cat.items.length > 0 && env.GROQ_KEY) {
-          const titles = cat.items.map(i => `- ${i.title}`).join('\n');
-          const groqRes = await callGroq(env, {
-            model: DEFAULT_MODEL,
-            messages: [
-              { role: 'system', content: 'Tu es un assistant de veille technologique. Rédige en 2 phrases maximum en français une synthèse concise et factuelle des articles listés. Sois direct, informatif, sans intro. N\'utilise jamais de tirets longs.' },
-              { role: 'user', content: `Articles de la semaine :\n${titles}` },
-            ],
-            temperature: 0.4,
-            max_tokens: 120,
-          });
-          if (groqRes.ok) digest = extractContent(groqRes.data) || '';
-        }
-        processed.push({ id: cat.id, label: cat.label, digest, items: cat.items });
-      }
-
-      const stored = await storeEdition(env, processed);
-
-      return jsonResponse({ ok: true, week: stored.week, categories: processed.length, articles: totalArticles });
+      const result = await runVeilleRefresh(env);
+      return jsonResponse({ ok: true, ...result });
     }
 
     // Veille ingest : Make sends raw articles, Worker synthesizes with Groq and stores
@@ -1597,6 +1603,12 @@ export default {
     }
 
     return proxyGroq(body, env, ctx);
+  },
+
+  // Weekly cron (see [triggers] in wrangler.toml) : regenerate the veille edition
+  // for the current ISO week. Runs inside the Worker, so no MAKE_SECRET needed.
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(runVeilleRefresh(env));
   },
 };
 

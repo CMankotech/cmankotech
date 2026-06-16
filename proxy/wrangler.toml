@@ -23,3 +23,9 @@ id = "48e9fef3f7d94c20a2934ab476d6a673"
 
 [ai]
 binding = "AI"
+
+# Weekly veille refresh : Monday 06:00 UTC. The scheduled() handler regenerates
+# the current ISO week's edition (fetch RSS + Groq synthesis + archive), so the
+# history grows on its own without any external (Make) trigger.
+[triggers]
+crons = ["0 6 * * 1"]
