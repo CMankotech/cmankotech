@@ -96,11 +96,10 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 .idea-input{width:100%;font-family:'DM Sans',sans-serif;font-size:0.95rem;color:var(--text);background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:0.9rem 1rem;resize:vertical;min-height:80px;line-height:1.5;transition:border-color 0.2s}
 .idea-input:focus{outline:none;border-color:rgba(199,58,99,0.45)}
 .idea-input::placeholder{color:var(--muted)}
-.row{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1rem;flex-wrap:wrap}
-.hint{font-size:0.7rem;color:var(--muted)}
-.btn{display:inline-flex;align-items:center;gap:0.5rem;font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.02em;color:#fff;background:linear-gradient(135deg,var(--make),#7c2d52);border:none;border-radius:10px;padding:0.8rem 1.5rem;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s,opacity 0.2s}
-.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 12px 30px -12px rgba(199,58,99,0.6)}
-.btn:disabled{opacity:0.5;cursor:not-allowed}
+.hint{display:block;font-size:0.7rem;color:var(--muted);text-align:center;margin-top:0.85rem}
+.btn{width:100%;margin-top:1rem;padding:1rem;font-family:'Syne',sans-serif;font-size:0.83rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#fff;background:linear-gradient(135deg,var(--make),#7c2d52);border:none;border-radius:10px;cursor:pointer;transition:all 0.25s}
+.btn:hover:not(:disabled){opacity:0.9;transform:translateY(-1px);box-shadow:0 8px 30px -8px rgba(199,58,99,0.45)}
+.btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
 .chips{display:flex;flex-wrap:wrap;gap:0.45rem;margin-top:0.9rem}
 .chip{font-size:0.68rem;color:var(--dim);background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:99px;padding:0.3rem 0.7rem;cursor:pointer;transition:all 0.15s}
 .chip:hover{border-color:rgba(199,58,99,0.4);color:var(--text)}
@@ -222,10 +221,8 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
     <label class="field-label" id="fieldLabel" for="ideaInput">Ton idée produit</label>
     <textarea class="idea-input" id="ideaInput" maxlength="300" placeholder="Ex : une app qui résume les réunions et génère les action items automatiquement"></textarea>
     <div class="chips" id="chips"></div>
-    <div class="row">
-      <span class="hint" id="hint">Le résultat est généré en français par Groq. Limité pour préserver le quota Make.</span>
-      <button class="btn" id="runBtn" onclick="run()"><span id="btnLabel">Générer le brief</span></button>
-    </div>
+    <button class="btn" id="runBtn" onclick="run()"><span id="btnLabel">Générer le brief</span></button>
+    <p class="hint" id="hint">Le résultat est généré en français par Groq. Limité pour préserver le quota Make.</p>
   </div>
 
   <div class="err" id="errEl"></div>
