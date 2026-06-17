@@ -426,37 +426,11 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 var nbStories = 6;
 var format = 'standard';
 
-var EXAMPLES = [
-  {
-    title: "Refonte de l'onboarding utilisateur",
-    desc: "Les nouveaux utilisateurs abandonnent en masse : 60% ne complètent pas la configuration initiale. Réduire le time-to-value de J14 à J7 en simplifiant les étapes, ajoutant un wizard guidé et des tooltips contextuels.",
-    persona: "Nouvel utilisateur (non-technique)",
-    tech: "React SPA, mobile-first"
-  },
-  {
-    title: "Module de notifications multi-canal",
-    desc: "Nos utilisateurs ratent des événements importants. Implémenter un système de notifications configurable (email, push, in-app) avec règles de déclenchement personnalisables et un centre de préférences.",
-    persona: "Utilisateur avancé, manager d'équipe",
-    tech: "Node.js backend, Firebase FCM, React"
-  },
-  {
-    title: "Export et reporting avancé",
-    desc: "Les managers passent 2-3h par semaine à extraire des données manuellement. Permettre l'export CSV/PDF/Excel avec filtres, planification de rapports automatiques et tableau de bord partageable par lien.",
-    persona: "Manager et décideur B2B",
-    tech: "SaaS B2B, stack React + Python API"
-  },
-  {
-    title: "Intégration SSO et gestion des rôles",
-    desc: "Les clients entreprise bloquent l'adoption faute d'intégration SSO. Supporter SAML 2.0 et OAuth/OIDC, gérer des rôles personnalisables par organisation et un tableau de bord admin pour les DSI.",
-    persona: "Admin IT / DSI en entreprise",
-    tech: "SaaS B2B enterprise, multi-tenant"
-  }
-];
+// Exemples partages : voir pm-examples.js (PMExamples).
 
-var _exIdx = 0;
 function loadExample() {
-  var e = EXAMPLES[_exIdx % EXAMPLES.length];
-  _exIdx++;
+  var e = window.PMExamples ? PMExamples.step().epic : null;
+  if (!e) return;
   document.getElementById('epicTitle').value = e.title;
   document.getElementById('epicDesc').value = e.desc;
   document.getElementById('persona').value = e.persona;
@@ -820,6 +794,7 @@ function applyLangExtras(lang) {
 (function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
 
 </script>
+<script src="pm-examples.js"></script>
 <script src="pm-session.js"></script>
 <script>
 window.pmImportInsights = function(opts){

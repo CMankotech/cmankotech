@@ -419,23 +419,13 @@ var currentInputMode = 'text';
 var fieldCount = 3;
 
 // ---- EXAMPLES ----
-var STORY_SETS = [
-  ["Ajouter une barre de progression sur le tableau de bord","Permettre l'export CSV des données","Envoyer une notification push lors d'un nouvel événement","Afficher un graphique de tendance sur 30 jours","Intégrer une authentification SSO pour les entreprises"],
-  ["Créer un onboarding interactif pour les nouveaux utilisateurs","Ajouter un mode sombre dans les paramètres","Permettre le partage de rapport par lien public","Améliorer la vitesse de chargement des pages de plus de 3s","Ajouter un filtre par date sur la liste des transactions"],
-  ["Mettre en place un système de tags sur les contacts","Permettre l'import de données via fichier Excel","Ajouter un chat support en temps réel","Créer une page de statistiques d'utilisation pour les admins","Envoyer un email de récapitulatif hebdomadaire automatique"],
-  ["Implémenter une recherche globale dans l'application","Ajouter une fonctionnalité de commentaires sur les projets","Permettre aux managers de créer des templates de rapports","Intégrer une API Slack pour les notifications d'équipe","Afficher un score de santé du projet en temps réel"]
-];
-var CONTEXTS = [
-  "SaaS B2B analytics, 200 clients PME, priorité rétention Q2",
-  "App mobile fintech, 50k utilisateurs, objectif activation J7",
-  "Plateforme RH SaaS, marché ETI, roadmap H2 axée adoption",
-  "Outil de gestion de projet B2B, scale-up 80 employés, focus NPS"
-];
+// Exemples partages : voir pm-examples.js (PMExamples).
 
 function randomStories() {
-  var set = STORY_SETS[Math.floor(Math.random() * STORY_SETS.length)];
-  var ctx = CONTEXTS[Math.floor(Math.random() * CONTEXTS.length)];
-  document.getElementById('context').value = ctx;
+  var bl = window.PMExamples ? PMExamples.step().backlog : null;
+  if (!bl) return;
+  var set = bl.stories || [];
+  document.getElementById('context').value = bl.context;
   if (currentInputMode === 'text') {
     var ta = document.getElementById('storiesText');
     ta.value = set.join('\n');
@@ -845,6 +835,7 @@ function applyLangExtras(lang) {
 }
 
 </script>
+<script src="pm-examples.js"></script>
 <script src="pm-session.js"></script>
 <script>
 window.pmImportInsights = function(opts){

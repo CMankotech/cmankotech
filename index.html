@@ -74,6 +74,10 @@ nav{background:rgba(8,8,15,0.96)}
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 4rem;background:rgba(8,8,15,0.8);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
 .nav-logo{display:inline-flex;align-items:center;cursor:pointer}.nav-logo img{display:block;height:54px;width:54px}
+.nav-logo-mark{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:14px;background:#0b1020;border:2.5px solid transparent;background-image:linear-gradient(#0b1020,#0b1020),linear-gradient(135deg,#60a5fa 0%,#a78bfa 50%,#22d3ee 100%);background-origin:border-box;background-clip:padding-box,border-box;letter-spacing:-0.04em}
+.nav-logo-mark span{font-size:1.55rem;line-height:1}
+.nav-logo-mark .nl-c{font-family:'DM Sans',sans-serif;font-weight:500;background:linear-gradient(180deg,#ededef 0%,#8a8a92 120%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-logo-mark .nl-m{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;background:linear-gradient(135deg,#60a5fa 0%,#a78bfa 50%,#22d3ee 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;padding-right:0.04em}
 .nav-left{display:flex;flex-direction:column;align-items:center;gap:0.2rem}
 .nav-slogan{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.56rem;font-weight:600;letter-spacing:0.02em;white-space:nowrap;line-height:1.1;text-align:center}
 .nav-right{display:flex;align-items:center;gap:1.5rem}
@@ -497,7 +501,7 @@ body.intro-lock{overflow:hidden}
 
 <nav>
   <div class="nav-left">
-    <div class="nav-logo" title="Carlin Mankoto"><img src="logo.svg" alt="Carlin Mankoto" width="54" height="54"></div>
+    <div class="nav-logo" title="Carlin Mankoto" aria-label="Carlin Mankoto"><span class="nav-logo-mark"><span class="nl-c">c</span><span class="nl-m">m</span></span></div>
     <span class="builder-slogan nav-slogan grad">Build it, break it, build it better.</span>
   </div>
   <div class="nav-links">

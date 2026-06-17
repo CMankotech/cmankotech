@@ -406,19 +406,11 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 </div>
 
 <script>
-var EXAMPLES = [
-  { problem: "Les managers de mon app RH ne savent pas quels collaborateurs sont en risque de d\u00e9sengagement avant que ce soit trop tard.", target: "Managers d'\u00e9quipe B2B, 30-45 ans", context: "SaaS RH, scale-up 50 employ\u00e9s" },
-  { problem: "Les freelances perdent trop de temps \u00e0 relancer leurs clients pour le paiement de leurs factures.", target: "Freelances tech et cr\u00e9atifs, 25-40 ans", context: "App de facturation mobile, march\u00e9 fran\u00e7ais" },
-  { problem: "Les Product Managers n\u2019ont pas de moyen simple pour partager l\u2019\u00e9tat d\u2019avancement de la roadmap avec les \u00e9quipes m\u00e9tiers sans ouvrir JIRA.", target: "PMs et Product Owners en scale-up", context: "Outil de gestion produit B2B" },
-  { problem: "Les patients oublient de prendre leurs m\u00e9dicaments au bon moment, ce qui nuit \u00e0 l\u2019efficacit\u00e9 de leur traitement.", target: "Patients chroniques 50+, peu technophiles", context: "App sant\u00e9 mobile, partenariat pharmacies" },
-  { problem: "Les recruteurs passent trop de temps \u00e0 lire des CV non qualifi\u00e9s qui ne correspondent pas au poste.", target: "Recruteurs internes, PME et ETI", context: "Plateforme ATS SaaS" },
-  { problem: "Les \u00e9tudiants en master ne savent pas comment transformer leur m\u00e9moire en un projet portfolio visible par les recruteurs.", target: "\u00c9tudiants Bac+4/5, en recherche de stage ou d\u2019alternance", context: "Plateforme EdTech, march\u00e9 \u00e9tudiants" },
-  { problem: "Les commer\u00e7ants de proximit\u00e9 ne savent pas quels produits vont manquer en stock avant qu\u2019il soit trop tard pour commander.", target: "G\u00e9rants de petits commerces alimentaires", context: "App de gestion de stock mobile, B2B SMB" },
-  { problem: "Les nouveaux employ\u00e9s se sentent isol\u00e9s pendant leur onboarding et ne savent pas \u00e0 qui poser leurs questions.", target: "Nouveaux employ\u00e9s en remote ou hybride", context: "Outil RH interne, ETI + grandes entreprises" }
-];
+// Exemples partages : voir pm-examples.js (PMExamples).
 
 function randomProblem() {
-  var ex = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)];
+  var ex = window.PMExamples ? PMExamples.step().discovery : null;
+  if (!ex) return;
   document.getElementById('problem').value = ex.problem;
   document.getElementById('target').value = ex.target || '';
   document.getElementById('context').value = ex.context || '';
@@ -768,6 +760,7 @@ function applyLangExtras(lang) {
 (function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
 
 </script>
+<script src="pm-examples.js"></script>
 <script src="pm-session.js"></script>
 <script>if(window.PMSession) PMSession.init();</script>
 <script>

@@ -450,49 +450,11 @@ window.onload = function() {
   for(var i = 0; i < 4; i++) addFeature();
 };
 
-var EXAMPLES = [
-  {
-    product: 'Flowly',
-    vision: "Devenir l'outil de gestion de projet incontournable pour les équipes hybrides",
-    features: [
-      {text: 'Module de reporting avancé pour managers', period: 'now'},
-      {text: "Refonte de l'onboarding utilisateur", period: 'now'},
-      {text: 'Intégration native Slack et Teams', period: 'next'},
-      {text: 'Mode hors-ligne mobile', period: 'next'},
-      {text: 'IA de suggestions de priorités', period: 'later'},
-      {text: "Marketplace d'intégrations partenaires", period: 'later'}
-    ]
-  },
-  {
-    product: 'HiringPro',
-    vision: "Réduire de moitié le time-to-hire grâce à une expérience candidat et recruteur sans friction",
-    features: [
-      {text: 'Parsing automatique des CVs par IA', period: 'now'},
-      {text: 'Scoring candidats configurable', period: 'now'},
-      {text: "Module d'analytics RH", period: 'next'},
-      {text: 'Intégration LinkedIn et Indeed', period: 'next'},
-      {text: 'Entretiens vidéo asynchrones intégrés', period: 'later'},
-      {text: 'Benchmark marché des salaires en temps réel', period: 'later'}
-    ]
-  },
-  {
-    product: 'Learnia',
-    vision: "Faire de chaque collaborateur un apprenant actif grâce à une expérience de formation ultra-personnalisée",
-    features: [
-      {text: 'Parcours adaptatifs pilotés par IA', period: 'now'},
-      {text: 'Tableau de bord managers : suivi équipe', period: 'now'},
-      {text: 'Offre entreprise et SSO', period: 'next'},
-      {text: 'Certification et badges partageables LinkedIn', period: 'next'},
-      {text: 'Moteur de recommandation de contenu', period: 'later'},
-      {text: 'API partenaires éditeurs de contenu', period: 'later'}
-    ]
-  }
-];
+// Exemples partages : voir pm-examples.js (PMExamples).
 
-var _exIdx = 0;
 function loadExample() {
-  var e = EXAMPLES[_exIdx % EXAMPLES.length];
-  _exIdx++;
+  var e = window.PMExamples ? PMExamples.step().roadmap : null;
+  if (!e) return;
   document.getElementById('productName').value = e.product;
   document.getElementById('vision').value = e.vision;
   document.getElementById('featuresList').innerHTML = '';
@@ -897,6 +859,7 @@ function applyLangExtras(lang) {
 (function() { if(new URLSearchParams(window.location.search).get('lang') === 'en') applyLangExtras('en'); })();
 
 </script>
+<script src="pm-examples.js"></script>
 <script src="pm-session.js"></script>
 <script>
 window.pmImportInsights = function(opts){
