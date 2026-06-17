@@ -13,6 +13,6 @@
   </defs>
   <rect x="3" y="3" width="66" height="66" rx="18" fill="#0b1020"/>
   <rect x="4.5" y="4.5" width="63" height="63" rx="16.5" fill="none" stroke="url(#cmA)" stroke-width="2.5" stroke-opacity=".9"/>
-  <path d="M39.2 26.8 A13 13 0 1 0 39.2 45.2" fill="none" stroke="url(#cmA)" stroke-width="7.5" stroke-linecap="round" opacity=".95"/>
-  <path d="M36 49 V37 Q36 30 41 30 Q46 30 46 37 V49 M46 37 Q46 30 51 30 Q56 30 56 37 V49" fill="none" stroke="url(#cmB)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" style="mix-blend-mode:screen"/>
+  <path d="M44.3 27.4 A15 15 0 1 0 44.3 44.6" fill="none" stroke="url(#cmA)" stroke-width="6" stroke-linecap="round"/>
+  <path d="M34 46 L39 30 L44.5 40 L50 30 L55 46" fill="none" stroke="url(#cmB)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
