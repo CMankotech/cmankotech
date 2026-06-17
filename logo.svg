@@ -1,16 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72" role="img" aria-label="cm — Carlin Mankoto">
   <defs>
-    <linearGradient id="cmG" x1="8" y1="10" x2="64" y2="62" gradientUnits="userSpaceOnUse">
+    <linearGradient id="cmA" x1="6" y1="8" x2="66" y2="64" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#60a5fa"/>
-      <stop offset="0.5" stop-color="#a78bfa"/>
+      <stop offset=".5" stop-color="#a78bfa"/>
       <stop offset="1" stop-color="#22d3ee"/>
     </linearGradient>
-    <style>
-      @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:600;src:url(data:font/woff2;base64,d09GMgABAAAAAAPYABAAAAAABzQAAAN+AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbdBwoBmA/U1RBVBwARBEICoM4gwwLCgABNgIkAxAEIAWEMgcgDAcb6AXIBB74vKr3k7QqY6QhYKpmrZPEwkI8DfI/1+TV8wRr0YHN7KL/3W3DtFlkEXVQtI50Arq3YeziMhIRwDY4p0CiMoHAzwy4EYKUlpFXxo6+5rEBdqBUof6KuN72kQEc22CmuYKEI8ItcazWgQDckJBRiP5t8jiY2SmPp/XAQ7EHI9SYeGgixUhV2BVIRqkKyHUXiAZChOswzC0wpBehzcYdGbkw8zk0+uWPzn8G85QF4aYhLpuS8wfpKSRo8wBHVtjXKEma7OwaEyGKQM4X5HKlQhA4rhlr7W6lf5akX6Z/rd+kX4mYEgL7hK6zc034/knsg9cAT9ewKfYfE4hdu7a5uXo0G63CbtmmbjdZUJbMhpbtJpuwW7YathnNKEuWSuMzYvlZ1fQ0S09ViOV7PQ/e+qRYfsZgfAsMYtlmU02W52Hpvsfc9l1+NTQbrVYhlm021WSxOJdd+8AbBqPZDEsWi2r60LX8ZrNZlVXU695VTRZ/9d53VZPFgmSQl58xGN9DMvBPj89Vd7S2aC0drdWZ9GRYpVtcRFI88RFJcUAaeSky6fULjmhHj2hHjho/JePaI853nXvp92PHTvzj7hHmvqd0f2BAUr5rUFCuy1M+iscHXxhfemhp1z4Ct2eNxqYMF+0oShkejc3KbAuOr1gfOJDwQb+Xd5KLW3qwIdgtLcnVO/6P4YHDD8aXt4WQ/cdw5O7XXgmNSPYVu8SZ2IAcT7/8mMzRRN/PvP1zIt1HEn0/8w6IiXQHAHGqFyfKrrykcWfc/46y/FOe79PrXa5xr1zQqj94/lvlPaX9nESpBXmL5p/RHzwXpbx3woQWqcirNKDDPCmfYLmS7NLjFOpwpAW7uiD36XJi5F45FCfW+xJnQ73Aj/f0Ejt4QS8Tx0anUq634wh9ent8SNHtIIJtvHj11yppp5tOuhgzs8cYYpQYApl3o7QyQjdDjDFKAPyGbvoIYJAROgmkkAzyKGWIZlppJ5MRBhmjnVF68aeUdvrpJoVB+mijgnZGerg2yAAaIQQQJFX42xVLBrnE9igp2d/JOH00M9Kml8Za1uJTGWSI6fURq8fmA0GmX6OMrh4a7g2K4pIeaG3pTmZ8D7HdYUdxb6/9dHfSXZo9TgsBtDKInYF0MFj9+G6aGaB3FTA6BgycATW6tT+dovffOkq/nhC02MeEvn6fcgEA) format('woff2');}
-      text.cm{font-family:'Space Grotesk','Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:37px;letter-spacing:-2px}
-    </style>
+    <linearGradient id="cmB" x1="66" y1="10" x2="10" y2="62" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset=".5" stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#60a5fa"/>
+    </linearGradient>
   </defs>
   <rect x="3" y="3" width="66" height="66" rx="18" fill="#0b1020"/>
-  <rect x="4.5" y="4.5" width="63" height="63" rx="16.5" fill="none" stroke="url(#cmG)" stroke-width="2.5" stroke-opacity="0.9"/>
-  <text class="cm" x="36" y="50" text-anchor="middle" fill="url(#cmG)">cm</text>
+  <rect x="4.5" y="4.5" width="63" height="63" rx="16.5" fill="none" stroke="url(#cmA)" stroke-width="2.5" stroke-opacity=".9"/>
+  <path d="M39.2 26.8 A13 13 0 1 0 39.2 45.2" fill="none" stroke="url(#cmA)" stroke-width="7.5" stroke-linecap="round" opacity=".95"/>
+  <path d="M36 49 V37 Q36 30 41 30 Q46 30 46 37 V49 M46 37 Q46 30 51 30 Q56 30 56 37 V49" fill="none" stroke="url(#cmB)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" style="mix-blend-mode:screen"/>
 </svg>
