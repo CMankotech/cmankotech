@@ -104,6 +104,40 @@ h1,h2,h3{font-family:'Syne',sans-serif}
 .feat{font-size:0.8rem;color:var(--dim);margin:0.25rem 0 0.25rem 0.9rem}
 .feat b{color:var(--text);font-weight:500}
 .rank{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;border-radius:6px;background:rgba(251,146,60,0.14);color:#fdba74;font-size:0.62rem;font-weight:800;font-variant-numeric:tabular-nums;margin-right:0.1rem;flex-shrink:0}
+.rank.r-top{background:rgba(251,146,60,0.22);color:#fed7aa;box-shadow:0 0 10px rgba(251,146,60,0.35)}
+
+/* DOCUMENT COVER */
+.brief-cover{background:linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.012));border:1px solid var(--border);border-radius:18px;padding:1.9rem 2rem;margin-bottom:0.4rem;position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 16px 40px -26px rgba(0,0,0,0.55)}
+.brief-cover::before{content:'';position:absolute;inset:0;background:radial-gradient(120% 90% at 0% 0%,rgba(96,165,250,0.10),transparent 55%),radial-gradient(120% 90% at 100% 100%,rgba(167,139,250,0.10),transparent 55%);pointer-events:none}
+.bc-kicker{position:relative;font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--muted);margin-bottom:0.5rem}
+.bc-title{position:relative;font-family:'Syne',sans-serif;font-size:clamp(1.5rem,3.2vw,2.1rem);font-weight:800;letter-spacing:-0.02em;line-height:1.1;color:var(--text);margin-bottom:0.5rem}
+.bc-lead{position:relative;font-size:0.92rem;color:var(--dim);line-height:1.65;max-width:760px}
+.bc-tiles{position:relative;display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:1.25rem}
+.bc-tile{flex:1 1 130px;min-width:120px;background:rgba(0,0,0,0.18);border:1px solid var(--border);border-radius:11px;padding:0.7rem 0.85rem}
+.bc-tile .k{font-size:0.54rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.3rem}
+.bc-tile .v{font-family:'Syne',sans-serif;font-size:0.92rem;font-weight:700;color:var(--text);line-height:1.25}
+.bc-tile .v.num{font-family:'DM Sans',sans-serif;font-size:1.45rem;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-0.02em}
+.bc-gen{position:relative;margin-top:1.1rem;font-size:0.66rem;color:var(--muted);letter-spacing:0.02em}
+.bc-gen b{color:var(--dim);font-weight:600}
+
+/* PAIN POINTS (expanded items) */
+.pain-grp{margin-bottom:0.7rem}
+.pain-grp:last-child{margin-bottom:0}
+.pain-grp-h{display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;font-weight:500;color:var(--text);margin-bottom:0.3rem}
+.pain-grp-h .cnt{font-size:0.56rem;font-weight:800;color:var(--green);background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);border-radius:99px;padding:0.1rem 0.45rem;font-variant-numeric:tabular-nums}
+.pain-subs{list-style:none;margin:0;padding:0 0 0 0.2rem;display:flex;flex-direction:column;gap:0.22rem}
+.pain-subs li{font-size:0.76rem;color:var(--dim);line-height:1.5;display:flex;gap:0.5rem}
+.pain-subs li::before{content:'–';color:var(--muted);flex-shrink:0}
+
+/* KR type badge */
+.kr-type{font-size:0.5rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.12rem 0.4rem;border-radius:99px;flex-shrink:0}
+.kr-type.t-metric{color:#93c5fd;background:rgba(96,165,250,0.12);border:1px solid rgba(96,165,250,0.25)}
+.kr-type.t-milestone{color:#c4b5fd;background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.25)}
+.kr-type.t-health{color:#86efac;background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25)}
+.pri{font-size:0.5rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.12rem 0.45rem;border-radius:99px;flex-shrink:0}
+.pri.p-high,.pri.p-must{color:#fca5a5;background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.25)}
+.pri.p-medium,.pri.p-should{color:#fcd34d;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.25)}
+.pri.p-low,.pri.p-could,.pri.p-default{color:#94a3b8;background:rgba(148,163,184,0.12);border:1px solid rgba(148,163,184,0.22)}
 
 /* EMPTY STATE */
 .empty{text-align:center;padding:3.5rem 1.5rem;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:18px}
@@ -144,6 +178,14 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
   .bs-title,.bs-persona .pn,.bs-list li b,.feat b{color:#0f172a!important}
   .bs-list li,.bs-sub,.feat,.kr,.bs-persona .pd{color:#334155!important}
   .bs-text{color:#1e293b!important}
+  .brief-cover{background:#fff!important;border:1px solid #e2e8f0!important;box-shadow:none!important;break-inside:avoid;page-break-inside:avoid}
+  .brief-cover::before{display:none!important}
+  .bc-title{color:#0f172a!important}
+  .bc-lead,.bc-gen,.bc-gen b{color:#334155!important}
+  .bc-tile{background:#f8fafc!important;border-color:#e2e8f0!important}
+  .bc-tile .v,.bc-tile .v.num{color:#0f172a!important}
+  .pain-grp-h{color:#0f172a!important}
+  .pain-subs li{color:#334155!important}
   footer{color:#64748b!important}
 }
 </style>
@@ -214,7 +256,7 @@ var I18N = {
     ebLabel:'Exporter', btnPrint:'Imprimer / PDF', btnMd:'Markdown', btnCopy:'Copier tout', copied:'Copié !',
     emptyTitle:'Pas encore de brief à générer', emptyP:"Lance au moins un outil du PM Toolkit. Tes insights s'accumulent automatiquement ici et composent ton Product Brief.", emptyCta:'Démarrer la discovery',
     footerBy:'Construit par', footerRole:'AI Product Manager',
-    sub_sources:'sources', generatedOn:'Généré le',
+    sub_sources:'sources', generatedOn:'Généré le', by:'par', objKey:'Objectif clé', horizonKey:'Horizon',
     sec:{product:'Produit', discovery:'Discovery', interview:'Recherche utilisateur', okr:'Objectifs (OKR)', backlog:'Priorisation', epic:'User stories', roadmap:'Roadmap'},
     lbl:{problem:'Problème', target:'Cible', metrics:'Métriques', hypotheses:'Hypothèses', persona:'Persona', pains:'Pain points', opportunities:'Opportunités', quotes:'Verbatims', objectives:'Objectives & Key Results', priorities:'Backlog priorisé', stories:'User stories', narrative:'Pitch narratif', timeline:'Timeline', talking:'Messages-clés'},
     signal:'Signal', impact:'Impact', baseline:'Baseline'
@@ -225,7 +267,7 @@ var I18N = {
     ebLabel:'Export', btnPrint:'Print / PDF', btnMd:'Markdown', btnCopy:'Copy all', copied:'Copied!',
     emptyTitle:'No brief to generate yet', emptyP:'Run at least one PM Toolkit tool. Your insights pile up here automatically and compose your Product Brief.', emptyCta:'Start discovery',
     footerBy:'Built by', footerRole:'AI Product Manager',
-    sub_sources:'sources', generatedOn:'Generated on',
+    sub_sources:'sources', generatedOn:'Generated on', by:'by', objKey:'Key objective', horizonKey:'Horizon',
     sec:{product:'Product', discovery:'Discovery', interview:'User research', okr:'Objectives (OKR)', backlog:'Prioritisation', epic:'User stories', roadmap:'Roadmap'},
     lbl:{problem:'Problem', target:'Target', metrics:'Metrics', hypotheses:'Hypotheses', persona:'Persona', pains:'Pain points', opportunities:'Opportunities', quotes:'Quotes', objectives:'Objectives & Key Results', priorities:'Prioritised backlog', stories:'User stories', narrative:'Narrative pitch', timeline:'Timeline', talking:'Talking points'},
     signal:'Signal', impact:'Impact', baseline:'Baseline'
@@ -235,6 +277,32 @@ var COLORS = { product:'#60a5fa', discovery:'#60a5fa', interview:'#34d399', okr:
 
 function curLang(){ return (window.PMSession && PMSession.lang) ? PMSession.lang() : (window._lang || 'fr'); }
 function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function trunc(s, n){ s = String(s==null?'':s); return s.length > n ? s.slice(0, n).trim() + '…' : s; }
+
+/* Document cover : product name, lead, key-facts tiles, generated date. */
+function buildCover(ctx, T){
+  var name = (ctx.product && ctx.product.name) || (T.eyebrow.replace('📄 ',''));
+  var leadParts = [];
+  if(ctx._target) leadParts.push(ctx._target);
+  var summary = (ctx.product && ctx.product.description && ctx.product.description !== (ctx.product.name||'')) ? ctx.product.description : ctx._problem;
+  if(summary) leadParts.push(summary);
+  var tiles = [];
+  function tile(k, v, num){ if(v==null||v==='') return; tiles.push('<div class="bc-tile"><div class="k">'+esc(k)+'</div><div class="v'+(num?' num':'')+'">'+esc(v)+'</div></div>'); }
+  if(ctx._target) tile(T.lbl.target, ctx._target);
+  if(ctx.objectives.length) tile(T.objKey, trunc(ctx.objectives[0].objective, 64));
+  if(ctx.roadmap && (ctx.roadmap.periods||[]).length) tile(T.horizonKey, ctx.roadmap.periods.map(function(p){return p.label||p.key;}).filter(Boolean).join(' · '));
+  if(ctx.stories.length) tile(T.lbl.stories, String(ctx.stories.length), true);
+  if(ctx.opportunities.length) tile(T.lbl.opportunities, String(ctx.opportunities.length), true);
+  var d = '';
+  try { d = new Date().toLocaleDateString(curLang()==='en'?'en-US':'fr-FR', {year:'numeric',month:'long',day:'numeric'}); } catch(e){}
+  return '<div class="brief-cover">' +
+    '<div class="bc-kicker">'+esc(T.eyebrow.replace('📄 ',''))+'</div>' +
+    '<div class="bc-title">'+esc(name)+'</div>' +
+    (leadParts.length ? '<div class="bc-lead">'+esc(leadParts.join(' · '))+'</div>' : '') +
+    (tiles.length ? '<div class="bc-tiles">'+tiles.join('')+'</div>' : '') +
+    (d ? '<div class="bc-gen">'+esc(T.generatedOn)+' <b>'+esc(d)+'</b> '+esc(T.by)+' Carlin Mankoto</div>' : '') +
+  '</div>';
+}
 
 /* ─── render ─── */
 function render(){
@@ -274,30 +342,16 @@ function render(){
   }
 
   bar.style.display = 'flex';
-  // hero meta chips
-  var counts = [];
-  function c(n, key){ if(n) counts.push('<span class="meta-chip"><b>' + n + '</b> ' + esc(T.lbl[key] || key) + '</span>'); }
-  c(ctx.hypotheses.length, 'hypotheses');
-  c(ctx.painPoints.length, 'pains');
-  c(ctx.opportunities.length, 'opportunities');
-  c(ctx.objectives.length, 'objectives');
-  c(ctx.priorities.length, 'priorities');
-  c(ctx.stories.length, 'stories');
-  var srcChip = '<span class="meta-chip"><b>' + ctx._sources.length + '</b> ' + esc(T.sub_sources) + '</span>';
-  document.getElementById('heroMeta').innerHTML = srcChip + counts.join('');
+  // hero shows a light source-count chip ; the rich key facts live in the cover.
+  document.getElementById('heroMeta').innerHTML =
+    '<span class="meta-chip"><b>' + ctx._sources.length + '</b> ' + esc(T.sub_sources) + '</span>';
 
   // sections
   var html = '<div class="brief-doc">';
+  html += buildCover(ctx, T);
   var step = 0;
 
-  // PRODUCT
-  if(ctx.product && (ctx.product.name || ctx.product.description)){
-    step++;
-    var pInner = '';
-    if(ctx.product.name) pInner += '<div class="bs-block"><div class="bs-text">' + esc(ctx.product.name) + (ctx.product.type ? ' — ' + esc(ctx.product.type) : '') + '</div></div>';
-    if(ctx.product.description && ctx.product.description !== ctx.product.name) pInner += '<div class="bs-block"><ul class="bs-list"><li>' + esc(ctx.product.description) + '</li></ul></div>';
-    html += section(step, 'product', T, pInner);
-  }
+  // PRODUCT identity is carried by the cover (masthead) above, so no standalone section.
 
   // DISCOVERY
   if(ctx._problem || ctx._target || ctx.hypotheses.length){
@@ -327,8 +381,11 @@ function render(){
         '</div></div></div>';
     }
     if(ctx.painPoints.length){
-      var pp = ctx.painPoints.map(function(x){ return '<li><span><b>' + esc(x.label) + '</b>' + (x.count ? ' (' + x.count + ')' : '') + '</span></li>'; }).join('');
-      iInner += block(T.lbl.pains, '<ul class="bs-list">' + pp + '</ul>');
+      var pp = ctx.painPoints.map(function(x){
+        var subs = (x.items && x.items.length) ? '<ul class="pain-subs">' + x.items.map(function(it){ return '<li>' + esc(it) + '</li>'; }).join('') + '</ul>' : '';
+        return '<div class="pain-grp"><div class="pain-grp-h">' + esc(x.label) + (x.count ? '<span class="cnt">' + x.count + '</span>' : '') + '</div>' + subs + '</div>';
+      }).join('');
+      iInner += block(T.lbl.pains, pp);
     }
     if(ctx.opportunities.length){
       var op = ctx.opportunities.map(function(x){ return '<li><span><b>' + esc(x.title) + '</b>' + (x.description ? ' : ' + esc(x.description) : '') + (x.impact ? ' <span class="sig">' + esc(T.impact) + ' : ' + esc(x.impact) + '</span>' : '') + '</span></li>'; }).join('');
@@ -345,7 +402,11 @@ function render(){
   if(ctx.objectives.length){
     step++;
     var oInner = ctx.objectives.map(function(o){
-      var krs = (o.keyResults || []).map(function(kr){ return '<div class="kr">' + esc(kr.text) + (kr.baseline ? ' <span class="base">(' + esc(T.baseline) + ' : ' + esc(kr.baseline) + ')</span>' : '') + '</div>'; }).join('');
+      var krs = (o.keyResults || []).map(function(kr){
+        var t = (kr.type || '').toLowerCase();
+        var badge = t ? '<span class="kr-type t-' + esc(t) + '">' + esc(t) + '</span>' : '';
+        return '<div class="kr">' + badge + '<span>' + esc(kr.text) + (kr.baseline ? ' <span class="base">(' + esc(T.baseline) + ' : ' + esc(kr.baseline) + ')</span>' : '') + '</span></div>';
+      }).join('');
       return '<div class="bs-block"><ul class="bs-list"><li><b>' + esc(o.objective) + '</b></li></ul>' + krs + '</div>';
     }).join('');
     html += section(step, 'okr', T, '<div class="bs-lbl">' + esc(T.lbl.objectives) + '</div>' + oInner);
@@ -356,7 +417,8 @@ function render(){
     step++;
     var bb = ctx.priorities.map(function(x, i){
       var rk = (x.rank != null ? x.rank : i + 1);
-      return '<li><span class="rank">' + rk + '</span><span><b>' + esc(x.label) + '</b>' + (x.score != null ? ' <span class="sig">score : ' + esc(x.score) + '</span>' : '') + (x.justification ? '<span class="sig">' + esc(x.justification) + '</span>' : '') + '</span></li>';
+      var topCls = (typeof rk === 'number' && rk <= 3) ? ' r-top' : '';
+      return '<li><span class="rank' + topCls + '">' + rk + '</span><span><b>' + esc(x.label) + '</b>' + (x.score != null ? ' <span class="sig">score : ' + esc(x.score) + '</span>' : '') + (x.justification ? '<span class="sig">' + esc(x.justification) + '</span>' : '') + '</span></li>';
     }).join('');
     html += section(step, 'backlog', T, '<div class="bs-lbl">' + esc(T.lbl.priorities) + '</div><ul class="bs-list">' + bb + '</ul>');
   }
@@ -365,9 +427,11 @@ function render(){
   if(ctx.stories.length){
     step++;
     var ss = ctx.stories.map(function(st){
-      var meta = [st.priority, st.type, st.effort].filter(Boolean).join(' · ');
+      var pr = (st.priority || '').toLowerCase();
+      var priBadge = st.priority ? '<span class="pri p-' + esc(pr) + '">' + esc(st.priority) + '</span>' : '';
+      var metaRest = [st.type, st.effort].filter(Boolean).join(' · ');
       var ac = (st.acceptanceCriteria && st.acceptanceCriteria.length) ? '<span class="sig">✓ ' + st.acceptanceCriteria.slice(0,3).map(esc).join(' · ') + '</span>' : '';
-      return '<li><span><b>' + esc(st.title || st.story) + '</b>' + (meta ? ' <span class="sig">' + esc(meta) + '</span>' : '') + ac + '</span></li>';
+      return '<li><span><b>' + esc(st.title || st.story) + '</b> ' + priBadge + (metaRest ? ' <span class="sig">' + esc(metaRest) + '</span>' : '') + ac + '</span></li>';
     }).join('');
     html += section(step, 'epic', T, '<div class="bs-lbl">' + esc(T.lbl.stories) + '</div><ul class="bs-list">' + ss + '</ul>');
   }
