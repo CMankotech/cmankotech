@@ -408,7 +408,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="results" id="results">
     <div class="results-topbar">
       <div class="results-info">
-        <div class="results-title"><span id="lbl_results_title">Roadmap g&eacute;n&eacute;r&eacute;e</span></div>
+        <div class="results-title"><span id="lbl_results_title">Roadmap g&eacute;n&eacute;r&eacute;e</span> <span id="confSlot"></span></div>
         <div class="results-sub" id="resultsSub"></div>
       </div>
       <div style="display:flex;gap:0.5rem;align-items:center">
@@ -421,7 +421,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <!-- Narrative pitch -->
     <div class="narrative-card" id="narrativeCard">
       <div class="narrative-label"><span id="lbl_pitch_title">&#128172; Pitch narratif</span></div>
-      <div class="narrative-text" id="narrativeText"></div>
+      <div class="narrative-text" id="narrativeText" data-ep="narrative"></div>
       <button class="btn-copy" id="copyBtn" onclick="copyNarrative()">&#128203; Copier le pitch</button>
     </div>
 
@@ -521,7 +521,8 @@ async function launch() {
   document.getElementById('loading').classList.add('show');
 
   try {
-    var raw = await callAI(buildPrompt(name, vision, horizon, features), 3500);
+    var confHint = currentLang === 'en' ? ' Also add a root "confidence" key (number 0 to 1) reflecting your confidence in this roadmap narrative.' : ' Ajoute aussi une clé racine "confidence" (nombre entre 0 et 1) reflétant ta confiance dans ce narratif de roadmap.';
+    var raw = await callAI(buildPrompt(name, vision, horizon, features) + confHint, 3500);
     var clean = raw.replace(/```json/gi,'').replace(/```/g,'').trim();
     var m = clean.match(/\{[\s\S]*\}/);
     if(!m) throw new Error('R\u00e9ponse invalide, r\u00e9essaie.');
@@ -546,34 +547,9 @@ function buildPrompt(name, vision, horizon, features) {
   return langRule + 'Tu es un expert en Product Management et communication produit. G\u00e9n\u00e8re une roadmap narrative pour les stakeholders.\n\nProduit : "' + name + '"\nVision : ' + (vision||'Non pr\u00e9cis\u00e9e') + '\nHorizon : ' + horizonStr + '\nAudience(s) : ' + audStr + '\n\nFeatures (NOW = maintenant, NEXT = ensuite, LATER = plus tard) :\n' + featStr + '\n\nG\u00e9n\u00e8re une roadmap narrative avec :\n1. Un pitch narratif de 3-4 phrases qui raconte l\'histoire du produit (inspir\u00e9, orient\u00e9 impact, pas technique)\n2. La timeline organis\u00e9e en p\u00e9riodes NOW/NEXT/LATER avec pour chaque feature : un titre clair et court (pas celui donn\u00e9 en input, reformule-le) + une phrase "Pourquoi" orient\u00e9e valeur pour l\'audience cible\n3. 3 messages cl\u00e9s adapt\u00e9s \u00e0 l\'audience pour convaincre et aligner\n\nR\u00e9ponds UNIQUEMENT avec un JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "narrative": "Pitch narratif de 3-4 phrases qui raconte l\'histoire...",\n  "periods": [\n    {\n      "key": "now",\n      "label": "Maintenant",\n      "theme": "Un mot-cl\u00e9 ou th\u00e8me de cette p\u00e9riode",\n      "features": [\n        {"title": "Titre reformul\u00e9 de la feature", "why": "Valeur concr\u00e8te pour l\'audience"}\n      ]\n    }\n  ],\n  "talking_points": [\n    "Message cl\u00e9 court et percutant pour cette audience"\n  ]\n}';
 }
 
-function friendlyApiError(err, status) {
-  if (status === 429) return currentLang === 'en' ? 'Rate limit reached : wait 30 seconds and try again.' : 'Limite de requêtes atteinte : attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable : try again in a moment.' : 'Service temporairement indisponible : réessaie dans quelques instants.';
-  if (status === 401) return 'Erreur d\'authentification : contacte le support.';
-  if (err && err.message) return err.message;
-  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
-}
+function friendlyApiError(err, status) { return PMCore.friendlyApiError(err, status, currentLang); }
 async function callAI(prompt, maxTokens) {
-  var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
-  var model = 'llama-3.3-70b-versatile';
-  var hdrs={'Content-Type':'application/json'};
-  var _ctrl = new AbortController();
-  var _timeout = setTimeout(function() { _ctrl.abort(); }, 30000);
-  try {
-    var res = await fetch(endpoint, {
-      method:'POST',
-      headers:hdrs,
-      signal:_ctrl.signal,
-      body:JSON.stringify({model,temperature:0.55,max_tokens:maxTokens,messages:[{role:'user',content:prompt}]})
-    });
-    clearTimeout(_timeout);
-    if(!res.ok){var e=await res.json();throw new Error(friendlyApiError(e.error, res.status));}
-    var data = await res.json();
-    return data.choices[0].message.content;
-  } catch(e) {
-    clearTimeout(_timeout);
-    throw e;
-  }
+  return PMCore.callAI(prompt, { maxTokens: maxTokens, temperature: 0.55, lang: currentLang });
 }
 
 function renderResults(d, name, horizon) {
@@ -589,38 +565,47 @@ function renderResults(d, name, horizon) {
   var periodBorder = {now:'rgba(74,222,128,0.3)', next:'rgba(244,114,182,0.3)', later:'rgba(96,165,250,0.3)'};
   var periodTextColor = {now:'#86efac', next:'#c4b5fd', later:'#93c5fd'};
   var timelineHtml = '';
-  (d.periods||[]).forEach(function(period) {
+  (d.periods||[]).forEach(function(period, pi) {
     if(!period.features || !period.features.length) return;
     var col = periodColors[period.key] || periodColors.later;
     var bord = periodBorder[period.key] || periodBorder.later;
     var txtCol = periodTextColor[period.key] || periodTextColor.later;
-    var featsHtml = period.features.map(function(f) {
-      return '<div class="feature-item"><div class="feature-dot" style="background:'+txtCol+'"></div><div class="feature-body"><div class="feature-title">'+fmt(f.title)+'</div><div class="feature-why">'+fmt(f.why)+'</div></div></div>';
+    var featsHtml = period.features.map(function(f, fi) {
+      return '<div class="feature-item"><div class="feature-dot" style="background:'+txtCol+'"></div><div class="feature-body"><div class="feature-title" data-ep="periods.'+pi+'.features.'+fi+'.title">'+fmt(f.title)+'</div><div class="feature-why" data-ep="periods.'+pi+'.features.'+fi+'.why">'+fmt(f.why)+'</div></div></div>';
     }).join('');
-    timelineHtml += '<div class="period-block"><div class="period-header" style="background:'+col+';border-bottom:1px solid '+bord+'"><span class="period-label" style="color:'+txtCol+'">'+esc(period.label)+'</span><span style="color:var(--muted);font-size:0.65rem;margin:0 0.5rem">/</span><span class="period-theme">'+esc(period.theme||'')+'</span></div><div class="period-items">'+featsHtml+'</div></div>';
+    timelineHtml += '<div class="period-block"><div class="period-header" style="background:'+col+';border-bottom:1px solid '+bord+'"><span class="period-label" style="color:'+txtCol+'">'+esc(period.label)+'</span><span style="color:var(--muted);font-size:0.65rem;margin:0 0.5rem">/</span><span class="period-theme" data-ep="periods.'+pi+'.theme">'+esc(period.theme||'')+'</span></div><div class="period-items">'+featsHtml+'</div></div>';
   });
   document.getElementById('timeline').innerHTML = timelineHtml;
 
   // Talking points
   var pts = d.talking_points || [];
   if(pts.length) {
-    var html = pts.map(function(p){ return '<div class="talking-item"><span class="talking-bullet">&#8227;</span>'+fmt(p)+'</div>'; }).join('');
+    var html = pts.map(function(p, ti){ return '<div class="talking-item"><span class="talking-bullet">&#8227;</span><span data-ep="talking_points.'+ti+'">'+fmt(p)+'</span></div>'; }).join('');
     document.getElementById('talkingList').innerHTML = html;
     document.getElementById('talkingCard').style.display = 'block';
   }
 
+  var cs = document.getElementById('confSlot');
+  if (cs) cs.innerHTML = PMCore.confidenceBadge(d.confidence, currentLang);
+
+  saveRoadmap(d);
+  PMCore.bindEditing(document.getElementById('results'), d, function(updated) { saveRoadmap(updated); });
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function rerun() { launch(); }
+
+function saveRoadmap(d) {
   window._roadmapData = d;
+  window._narrativeText = d.narrative || '';
   if (window.PMSession) PMSession.save('roadmap', {
     productName: document.getElementById('productName').value.trim(),
     vision: document.getElementById('vision').value.trim(),
     audiences: audiences.slice(),
     result: d
   });
-  document.getElementById('results').classList.add('show');
-  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
 }
-
-function rerun() { launch(); }
 
 function copyResults() {
   var d = window._roadmapData || {};
@@ -860,6 +845,7 @@ function applyLangExtras(lang) {
 
 </script>
 <script src="pm-examples.js"></script>
+<script src="pm-core.js"></script>
 <script src="pm-session.js"></script>
 <script>
 window.pmImportInsights = function(opts){

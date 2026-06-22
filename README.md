@@ -2,7 +2,7 @@
 
 Portfolio interactif de **Carlin Mankoto**, AI Product Manager, construit autour de plusieurs expériences live :
 
-- un **PM Toolkit** de 6 outils IA pour structurer discovery, priorisation, OKR, user stories, roadmap et analyse d'interviews ;
+- un **PM Toolkit** de 6 outils IA pour structurer discovery, priorisation, OKR, user stories, roadmap et analyse d'interviews, avec gestion multi-projets et un **Product Brief** exportable (PDF / Markdown) qui synthétise toute la session ;
 - un **RAG Explorer** pour interroger une base de connaissances product management depuis l'edge ;
 - une page **Product Decisions** qui documente les arbitrages produit derrière KRL1 ;
 - une **veille hebdo** Product / IA dont le Worker fetch nativement 13 flux RSS et synthétise via Groq, déclenchée chaque lundi par un trigger Make ;
@@ -22,7 +22,8 @@ Portfolio interactif de **Carlin Mankoto**, AI Product Manager, construit autour
 
 | Outil | Description |
 |---|---|
-| **PM Toolkit** | Hub qui relie 6 outils PM dans un workflow complet : discovery → priorisation → OKR → user stories → roadmap → interview analysis |
+| **PM Toolkit** | Hub qui relie 6 outils PM dans un workflow complet : discovery → priorisation → OKR → user stories → roadmap → interview analysis. Sessions multi-projets, démo guidée pré-remplie, résultats éditables en ligne, régénération par section et score de confiance. |
+| **Product Brief** | Synthèse exportable de toute la session (du problème à la roadmap), en PDF (impression) ou Markdown |
 | **Backlog Prioritizer** | Priorisation de backlog via RICE ou MoSCoW |
 | **Discovery Assistant** | Transformation de problèmes en hypothèses, questions d'interview et plans de test |
 | **Epic → User Stories** | Décomposition d'epics en user stories avec critères d'acceptation INVEST |
@@ -59,7 +60,8 @@ Cloudflare Worker (proxy/)
 
 - **Frontend :** HTML/CSS/JS vanilla, Google Fonts (Syne, DM Sans, Geist), thème sombre avec mode clair sur certaines pages
 - **Chat widget :** `krl1-widget.js` — assistant conversationnel flottant avec détection d'intent et routage contextuel
-- **Proxy :** Cloudflare Workers (JavaScript), CORS, secrets serveur, KV pour compteur d'usage et stockage de veille
+- **Proxy :** Cloudflare Workers (JavaScript), CORS, secrets serveur, KV pour compteur d'usage et stockage de veille. Protection contre l'abus : rate limit par IP (KV), allowlist de modèle et plafond `max_tokens` sur le passthrough Groq
+- **Frontend PM :** cœur partagé `pm-core.js` (appel proxy, parsing JSON tolérant, erreurs i18n) consommé par les 6 outils ; sessions multi-projets et Product Brief exportable côté client
 - **RAG sémantique :** Workers AI (Cloudflare, bge-small-en-v1.5) — embeddings batch + cosine similarity, natif dans le Worker
 - **LLM :** Groq API (llama-3.3-70b-versatile)
 - **Automation :** Make pour la veille hebdomadaire et le pipeline feedback optionnel
@@ -70,7 +72,10 @@ Cloudflare Worker (proxy/)
 
 ```text
 ├── index.html                  # Page portfolio principale
-├── pm-toolkit.html             # Hub des 6 outils Product Management
+├── pm-toolkit.html             # Hub des 6 outils Product Management (multi-projets + démo)
+├── product-brief.html          # Synthèse exportable de la session (PDF / Markdown)
+├── pm-core.js                  # Cœur partagé des outils : appel IA, parsing JSON, erreurs
+├── pm-session.js               # Session multi-projets et chaînage des insights entre outils
 ├── rag-explorer.html           # Interface de recherche sémantique PM
 ├── product-decisions.html      # Décisions produit et arbitrages KRL1
 ├── veille.html                 # Veille Product / IA alimentée par Make

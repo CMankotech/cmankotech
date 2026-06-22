@@ -86,13 +86,61 @@ async function run() {
     };
 
     const req = makeReq('https://groq-proxy.cmankotech.workers.dev/', {
-      model: 'llama',
+      model: 'llama-3.3-70b-versatile',
       messages: [{ role: 'user', content: 'hello' }],
     });
     const res = await worker.fetch(req, { GROQ_KEY: 'dummy' });
     assert.equal(res.status, 200);
     const json = await res.json();
     assert.equal(json.choices[0].message.content, 'legacy');
+  }
+
+  // test: passthrough rejects a non-allowlisted model
+  {
+    global.fetch = async () => { throw new Error('should not reach Groq'); };
+    const req = makeReq('https://groq-proxy.cmankotech.workers.dev/', {
+      model: 'gpt-4o',
+      messages: [{ role: 'user', content: 'hello' }],
+    });
+    const res = await worker.fetch(req, { GROQ_KEY: 'dummy' });
+    assert.equal(res.status, 400);
+  }
+
+  // test: passthrough clamps an oversized max_tokens before forwarding
+  {
+    let forwarded = null;
+    global.fetch = async (url, init) => {
+      forwarded = JSON.parse(init.body);
+      return new Response(JSON.stringify({ choices: [{ message: { content: 'ok' } }] }), {
+        status: 200, headers: { 'Content-Type': 'application/json' },
+      });
+    };
+    const req = makeReq('https://groq-proxy.cmankotech.workers.dev/', {
+      model: 'llama-3.3-70b-versatile',
+      max_tokens: 999999,
+      messages: [{ role: 'user', content: 'hello' }],
+    });
+    const res = await worker.fetch(req, { GROQ_KEY: 'dummy' });
+    assert.equal(res.status, 200);
+    assert.equal(forwarded.max_tokens, 4000, 'max_tokens clamped to the cap');
+  }
+
+  // test: per-IP rate limit returns 429 once the window count is exhausted
+  {
+    global.fetch = async () => { throw new Error('should not reach Groq when rate limited'); };
+    const env = {
+      GROQ_KEY: 'dummy',
+      USAGE_COUNTER: {
+        async get() { return '30'; },        // already at the limit
+        async put() {},
+      },
+    };
+    const req = makeReq('https://groq-proxy.cmankotech.workers.dev/', {
+      model: 'llama-3.3-70b-versatile',
+      messages: [{ role: 'user', content: 'hello' }],
+    });
+    const res = await worker.fetch(req, env);
+    assert.equal(res.status, 429);
   }
 
   // test: POST /veille archives the edition (latest + weekly key + sorted index)

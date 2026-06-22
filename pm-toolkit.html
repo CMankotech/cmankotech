@@ -88,6 +88,27 @@ h1{font-family:'DM Sans',sans-serif;font-weight:500;margin:0}
 .sess-reset{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:0.45rem 0.9rem;border-radius:8px;border:1px solid rgba(248,113,113,0.25);background:rgba(248,113,113,0.06);color:#fca5a5;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .sess-reset:hover{background:rgba(248,113,113,0.14)}
 
+/* PROJECT BAR */
+.project-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;padding:0.7rem 1rem;background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.012));border:1px solid var(--border);border-radius:12px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 12px 30px -22px rgba(0,0,0,0.5)}
+.pb-left{display:flex;align-items:center;gap:0.6rem;min-width:0}
+.pb-ico{font-size:1rem}
+.pb-lbl{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted)}
+.pb-select-wrap{position:relative;display:inline-flex;align-items:center}
+.pb-select-wrap select{appearance:none;-webkit-appearance:none;background:rgba(0,0,0,0.22);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;padding:0.4rem 1.9rem 0.4rem 0.75rem;cursor:pointer;max-width:240px;text-overflow:ellipsis}
+.pb-select-wrap select:focus{outline:none;border-color:rgba(96,165,250,0.4)}
+.pb-select-wrap select option{background:#0e0e1a;color:var(--text)}
+.pb-chev{position:absolute;right:0.6rem;color:var(--muted);pointer-events:none}
+.pb-actions{display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap}
+.pb-btn{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.45rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--dim);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.pb-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.06)}
+.pb-btn.pb-danger:hover{color:#fca5a5;border-color:rgba(248,113,113,0.3);background:rgba(248,113,113,0.08)}
+.pb-btn.pb-demo{color:#c4b5fd;border-color:rgba(167,139,250,0.3);background:rgba(167,139,250,0.08)}
+.pb-btn.pb-demo:hover{color:#ddd6fe;border-color:rgba(167,139,250,0.5);background:rgba(167,139,250,0.16)}
+[data-theme="light"] .project-bar{background:rgba(255,255,255,0.85);border-color:rgba(15,23,42,0.09)}
+[data-theme="light"] .pb-select-wrap select{background:rgba(15,23,42,0.04);color:#0f172a}
+[data-theme="light"] .pb-select-wrap select option{background:#fff;color:#0f172a}
+@media(max-width:560px){.project-bar{flex-direction:column;align-items:stretch}.pb-actions{justify-content:flex-end}}
+
 /* HOW-IT-WORKS */
 .how{display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem;margin-bottom:3rem}
 .how-item{background:linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:1.5rem 1.6rem;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 18px 48px -20px rgba(0,0,0,0.5),0 0 60px -30px rgba(96,165,250,0.2);transition:border-color 0.3s,box-shadow 0.3s,transform 0.3s;backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 10px 28px -16px rgba(0,0,0,0.45)}
@@ -256,6 +277,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <button class="nav-tools-btn" onclick="toggleNavTools(event)" aria-haspopup="true"><span id="navToolsLabel">Outils</span><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
       <div class="nav-tools-menu">
         <a href="pm-toolkit.html" class="active"><span class="nt-ico">🧰</span> PM Toolkit</a>
+        <a href="product-brief.html"><span class="nt-ico">📄</span> Product Brief</a>
         <a href="rag-explorer.html"><span class="nt-ico">🔍</span> RAG Explorer</a>
         <a href="veille.html"><span class="nt-ico">📡</span> Veille</a>
         <a href="make-copilot.html"><span class="nt-ico">⚙️</span> AI PM Co-pilot</a>
@@ -309,6 +331,24 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 <div class="container">
 
+  <!-- PROJECT BAR -->
+  <div class="project-bar" id="projectBar">
+    <div class="pb-left">
+      <span class="pb-ico">🗂️</span>
+      <label class="pb-lbl" id="pbLbl" for="projectSelect">Projet</label>
+      <div class="pb-select-wrap">
+        <select id="projectSelect" onchange="onProjectChange(this.value)"></select>
+        <svg class="pb-chev" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="pb-actions">
+      <button class="pb-btn" id="pbNewBtn" onclick="newProject()">+ <span id="pbNewLbl">Nouveau</span></button>
+      <button class="pb-btn" id="pbRenameBtn" onclick="renameCurrentProject()" title="Renommer">✎</button>
+      <button class="pb-btn pb-danger" id="pbDelBtn" onclick="deleteCurrentProject()" title="Supprimer">🗑</button>
+      <button class="pb-btn pb-demo" id="pbDemoBtn" onclick="loadGuidedDemo()">✨ <span id="pbDemoLbl">Voir une démo</span></button>
+    </div>
+  </div>
+
   <!-- SESSION (hidden if no session) -->
   <div class="session-panel" id="sessionPanel" style="display:none">
     <div class="sess-left">
@@ -326,6 +366,10 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div id="insightsSummary" style="display:none">
     <div class="flow-label"><span id="summaryLbl">Résumé des insights</span></div>
     <div class="summary-grid" id="summaryGrid"></div>
+    <div style="text-align:center;margin:1.5rem 0 0.5rem">
+      <a href="product-brief.html" class="btn-start glass-focus" id="briefBtn" style="background:linear-gradient(120deg,#34d399 0%,#60a5fa 55%,#a78bfa 100%)"><span class="btn-ico">📄</span><span id="briefLbl">Générer le Product Brief</span><span class="btn-arrow">→</span></a>
+      <div class="start-note" id="briefNote">Synthèse exportable (PDF · Markdown) de toute ta session, du problème à la roadmap.</div>
+    </div>
   </div>
 
   <!-- HOW IT WORKS -->
@@ -364,6 +408,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
 </div>
 
+<script src="pm-examples.js"></script>
 <script src="pm-session.js"></script>
 <script>
 /* ─── Tool definitions for the flow diagram ─── */
@@ -613,6 +658,54 @@ function resetSession(){
     : 'Démarrer une session de discovery';
 }
 
+/* ─── projects ─── */
+function renderProjectBar(){
+  if(!window.PMSession || !PMSession.listProjects) return;
+  var list = PMSession.listProjects();
+  var cur = PMSession.currentProjectId();
+  var sel = document.getElementById('projectSelect');
+  if(!sel) return;
+  sel.innerHTML = list.map(function(p){
+    return '<option value="'+p.id+'"'+(p.id===cur?' selected':'')+'>'+esc(p.name)+'</option>';
+  }).join('');
+  var delBtn = document.getElementById('pbDelBtn');
+  if(delBtn) delBtn.style.display = list.length > 1 ? '' : 'none';
+}
+function refreshAll(){ renderFlow(); renderSessionPanel(); renderInsightsSummary(); renderProjectBar(); }
+function onProjectChange(id){ if(window.PMSession){ PMSession.switchProject(id); refreshAll(); } }
+function newProject(){
+  if(!window.PMSession) return;
+  var name = prompt(_lang==='en'?'New project name:':'Nom du nouveau projet :', _lang==='en'?'New product':'Nouveau produit');
+  if(name===null) return;
+  PMSession.createProject(name.trim() || undefined);
+  refreshAll();
+}
+function renameCurrentProject(){
+  if(!window.PMSession) return;
+  var id = PMSession.currentProjectId();
+  var cur = (PMSession.listProjects().find(function(p){return p.id===id;})||{}).name||'';
+  var name = prompt(_lang==='en'?'Rename project:':'Renommer le projet :', cur);
+  if(name===null || !name.trim()) return;
+  PMSession.renameProject(id, name.trim());
+  refreshAll();
+}
+function deleteCurrentProject(){
+  if(!window.PMSession) return;
+  if(PMSession.listProjects().length <= 1) return;
+  var msg = _lang==='en' ? 'Delete this project and all its insights? This cannot be undone.' : 'Supprimer ce projet et tous ses insights ? Action irréversible.';
+  if(!confirm(msg)) return;
+  PMSession.deleteProject(PMSession.currentProjectId());
+  refreshAll();
+}
+function loadGuidedDemo(){
+  if(!window.PMSession || !window.PMExamples || !PMExamples.DEMO_SESSION) return;
+  var name = _lang==='en' ? 'Demo — Plantaime' : 'Démo — Plantaime';
+  PMSession.createProject(name);
+  var demo = PMExamples.DEMO_SESSION;
+  PMSession.FLOW.forEach(function(t){ if(demo[t]) PMSession.save(t, demo[t]); });
+  window.location.href = 'product-brief.html' + (_lang==='en' ? '?lang=en' : '');
+}
+
 /* ─── i18n ─── */
 var I18N = {
   fr:{
@@ -626,6 +719,8 @@ var I18N = {
     startLbl:'Démarrer une session de discovery',
     startNote:'L\'ordre suggéré t\'évite d\'oublier une étape, mais tu peux ouvrir n\'importe quel outil directement.',
     summaryLbl:'Résumé des insights',
+    briefLbl:'Générer le Product Brief', briefNote:'Synthèse exportable (PDF · Markdown) de toute ta session, du problème à la roadmap.',
+    pbLbl:'Projet', pbNew:'Nouveau', pbDemo:'Voir une démo',
     footerBy:'Construit par', footerRole:'AI Product Manager'
   },
   en:{
@@ -639,6 +734,8 @@ var I18N = {
     startLbl:'Start a discovery session',
     startNote:'The suggested order prevents skipping a step, but you can still open any tool directly.',
     summaryLbl:'Insights summary',
+    briefLbl:'Generate the Product Brief', briefNote:'Exportable synthesis (PDF · Markdown) of your whole session, from problem to roadmap.',
+    pbLbl:'Project', pbNew:'New', pbDemo:'See a demo',
     footerBy:'Built by', footerRole:'AI Product Manager'
   }
 };
@@ -664,11 +761,17 @@ function setLang(lang){
   document.getElementById('startLbl').textContent = T.startLbl;
   document.getElementById('startNote').textContent = T.startNote;
   document.getElementById('summaryLbl').textContent = T.summaryLbl;
+  var _bl=document.getElementById('briefLbl');if(_bl)_bl.textContent = T.briefLbl;
+  var _bn=document.getElementById('briefNote');if(_bn)_bn.textContent = T.briefNote;
+  var _pl=document.getElementById('pbLbl');if(_pl)_pl.textContent = T.pbLbl;
+  var _pn=document.getElementById('pbNewLbl');if(_pn)_pn.textContent = T.pbNew;
+  var _pd=document.getElementById('pbDemoLbl');if(_pd)_pd.textContent = T.pbDemo;
   document.getElementById('footerBy').textContent = T.footerBy;
   document.getElementById('footerRole').textContent = T.footerRole;
   localStorage.setItem('lang', lang);
   renderFlow();
   renderSessionPanel();
+  renderProjectBar();
   document.documentElement.lang = lang;
   setTimeout(function(){if(typeof applyTTPm==='function')applyTTPm(lang);},100);
 }
@@ -677,7 +780,7 @@ document.addEventListener('DOMContentLoaded', function(){
   var params = new URLSearchParams(window.location.search);
   var lang = params.get('lang') || localStorage.getItem('lang') || 'fr';
   if(lang === 'en') setLang('en');
-  else { renderFlow(); renderSessionPanel(); renderInsightsSummary(); }
+  else { renderFlow(); renderSessionPanel(); renderInsightsSummary(); renderProjectBar(); }
 });
 </script>
 <script>

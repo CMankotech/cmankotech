@@ -57,6 +57,8 @@ Langfuse est optionnel. Si `LANGFUSE_PUBLIC_KEY` et `LANGFUSE_SECRET_KEY` sont c
 - Headers CORS configurés pour l'origine autorisée uniquement
 - Clé Groq injectée côté serveur via les secrets Cloudflare
 - `POST /veille` protégé par secret partagé Make
+- **Rate limiting par IP** via `USAGE_COUNTER` (KV) : au-delà de 30 requêtes par fenêtre de 60s, le Worker répond `429`. Échec ouvert si KV indisponible
+- **Validation du passthrough Groq** (`POST /`) : `model` forcé à l'allowlist (`llama-3.3-70b-versatile`), `max_tokens` plafonné à 4000, nombre de messages et taille totale bornés. Une requête hors limites reçoit `400`
 
 ## Configuration
 

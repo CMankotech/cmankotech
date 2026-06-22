@@ -214,6 +214,103 @@
     }
   ];
 
+  /* ── Baked demo session (Plantaime) ──
+     A fully generated session — not just form inputs — so the guided demo can land
+     straight on a complete Product Brief without any live AI call. Shapes match what
+     each tool saves under its slot (see pm-session.js EXTRACTORS). */
+  var DEMO_SESSION = {
+    discovery: {
+      problem: "Les nouveaux propriétaires de plantes les laissent dépérir faute de savoir quand et comment les arroser.",
+      target: "Jeunes urbains 25-35 ans, débutants en plantes",
+      context: "App mobile B2C de soin des plantes, marché français",
+      result: {
+        hypotheses: [
+          { belief: "Nous croyons que les débutants abandonnent car les rappels génériques ne correspondent pas à leurs plantes réelles.", signal: "Nous le saurons si moins de 30% personnalisent leurs rappels la première semaine." },
+          { belief: "Nous croyons que le diagnostic photo crée le 'aha' mais ne devient pas une habitude.", signal: "Nous le saurons si le diagnostic est utilisé moins de 1 fois par semaine après J7." },
+          { belief: "Nous croyons que la peur de mal faire freine plus que le manque d'envie.", signal: "Nous le saurons si 'peur de tuer la plante' ressort dans plus de la moitié des entretiens." }
+        ]
+      }
+    },
+    interview: {
+      context: "App mobile soin des plantes, 12k utilisateurs",
+      result: {
+        persona: { name: "Léa, débutante urbaine", emoji: "🌱", description: "28 ans, 6 plantes en appartement, veut des consignes simples sans devenir botaniste.", tags: ["débutante", "pressée", "veut du concret"] },
+        pain_groups: [
+          { group: "Dosage de l'arrosage incertain", count: 5, items: ["A perdu 3 plantes faute de savoir doser", "Ne sait pas adapter à la saison"] },
+          { group: "Rappels non adaptés", count: 3, items: ["Rappels génériques jamais ajustés", "Pas de vue 'aujourd'hui'"] }
+        ],
+        opportunities: [
+          { title: "Vue 'à faire aujourd'hui' sur l'accueil", description: "Une seule action claire par jour", impact: "fort" },
+          { title: "Rappels personnalisés par plante et saison", description: "Adaptés à l'espèce et la luminosité", impact: "fort" },
+          { title: "Notes et photos de suivi", description: "Pour les utilisateurs plus engagés", impact: "moyen" }
+        ],
+        quotes: [
+          { text: "Je veux qu'on me dise quoi faire aujourd'hui, pas un cours de botanique.", profile: "Léa, débutante" },
+          { text: "L'app me traite comme un débutant alors que j'ai 40 plantes à suivre.", profile: "Karim, collectionneur" }
+        ]
+      }
+    },
+    okr: {
+      productName: "Plantaime", productType: "Application mobile",
+      ambitions: "Transformer le diagnostic photo en habitude hebdomadaire et relever la rétention au premier mois.",
+      metrics: "Rétention M1 19%, 2,3 sessions/semaine, conversion premium 4%",
+      result: {
+        okrs: [
+          { objective: "Faire de Plantaime le réflexe quotidien des débutants", key_results: [
+            { text: "Porter la rétention M1 de 19% à 35%", baseline: "19%", type: "metric" },
+            { text: "Atteindre 4 sessions par semaine et par utilisateur actif", baseline: "2,3", type: "metric" },
+            { text: "80% des nouveaux comptes personnalisent au moins une plante en J7", baseline: "—", type: "milestone" }
+          ] }
+        ]
+      }
+    },
+    backlog: {
+      context: "App mobile soin des plantes, priorité rétention M1",
+      result: {
+        method: "rice",
+        items: [
+          { story: "Vue 'à faire aujourd'hui' sur l'écran d'accueil", score: 9.0, rank: 1, justification: "Reach maximal, effort modéré, adresse le pain n°1 et l'opportunité forte." },
+          { story: "Rappels d'arrosage personnalisés par plante et saison", score: 7.5, rank: 2, justification: "Fort impact rétention, effort moyen côté logique saisonnière." },
+          { story: "Notes et photos de suivi par plante", score: 5.2, rank: 3, justification: "Engage les utilisateurs avancés mais reach plus limité." }
+        ]
+      }
+    },
+    epic: {
+      epicTitle: "Calendrier d'entretien personnalisé", persona: "Débutant urbain qui veut des consignes simples",
+      epicDesc: "Construire une vue 'à faire aujourd'hui' qui s'adapte à l'espèce, la saison et la luminosité déclarée.",
+      result: {
+        epic_summary: "Calendrier d'entretien par plante avec vue quotidienne sur l'accueil.",
+        stories: [
+          { id: "US-1", title: "Voir mes tâches du jour sur l'accueil", story: "En tant que débutant, je veux voir quoi faire aujourd'hui afin d'agir sans réfléchir.", priority: "Must", effort: "M", type: "feature", acceptance_criteria: ["Liste des plantes à arroser aujourd'hui", "1 tap pour marquer comme fait", "État vide encourageant"] },
+          { id: "US-2", title: "Personnaliser le rythme par plante", story: "En tant qu'utilisateur, je veux régler la fréquence par plante afin que les rappels soient justes.", priority: "Should", effort: "M", type: "feature", acceptance_criteria: ["Fréquence ajustable par plante", "Suggestion par défaut selon l'espèce"] }
+        ]
+      }
+    },
+    roadmap: {
+      productName: "Plantaime", vision: "Devenir l'assistant qui garde vivantes les plantes de tous les débutants urbains.",
+      result: {
+        narrative: "Plantaime veut passer du gadget de diagnostic au réflexe quotidien. Plutôt que des rappels génériques, l'utilisateur ouvre l'app et voit une seule chose : ce qu'il doit faire aujourd'hui pour ses plantes. La personnalisation par espèce et saison rend chaque conseil juste, et transforme la peur de mal faire en petites victoires régulières.",
+        periods: [
+          { key: "now", label: "Maintenant", theme: "Habitude quotidienne", features: [
+            { title: "Vue 'à faire aujourd'hui'", why: "Supprime l'hésitation : une action claire par jour." },
+            { title: "Rappels personnalisés par plante", why: "Des conseils justes, adaptés à l'espèce et la saison." }
+          ] },
+          { key: "next", label: "Ensuite", theme: "Engagement", features: [
+            { title: "Notes et photos de suivi", why: "Donne de la profondeur aux utilisateurs qui s'attachent." }
+          ] },
+          { key: "later", label: "Plus tard", theme: "Premium", features: [
+            { title: "Conseils selon la luminosité", why: "Base d'une offre premium à forte valeur perçue." }
+          ] }
+        ],
+        talking_points: [
+          "Notre North Star : la rétention au premier mois, pas le nombre de téléchargements.",
+          "Chaque conseil juste transforme une peur en petite victoire.",
+          "Le premium se construit sur la personnalisation, pas sur des murs payants."
+        ]
+      }
+    }
+  };
+
   function idx() {
     var n = SCENARIOS.length;
     try { var v = parseInt(localStorage.getItem(KEY) || '0', 10); if (isNaN(v)) v = 0; return ((v % n) + n) % n; }
@@ -234,6 +331,6 @@
   }
   function current() { return SCENARIOS[idx()]; }
 
-  G.PMExamples = { SCENARIOS: SCENARIOS, idx: idx, setIdx: setIdx, step: step, current: current };
+  G.PMExamples = { SCENARIOS: SCENARIOS, DEMO_SESSION: DEMO_SESSION, idx: idx, setIdx: setIdx, step: step, current: current };
 
 })(window);

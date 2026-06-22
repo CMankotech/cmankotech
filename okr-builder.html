@@ -409,6 +409,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <div class="results-info">
         <div class="results-title"><span id="lbl_results_title">OKRs g&eacute;n&eacute;r&eacute;s</span></div>
         <div class="results-sub" id="resultsSub"></div>
+        <div id="confSlot" style="margin-top:0.35rem"></div>
       </div>
       <div style="display:flex;gap:0.5rem;align-items:center">
         <button class="btn-copy-all glass-shimmer glass-focus" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
@@ -471,7 +472,8 @@ async function launch() {
   document.getElementById('loading').classList.add('show');
 
   try {
-    var raw = await callAI(buildPrompt(name, type, ambitions, metrics), 3000);
+    var confHint = currentLang === 'en' ? ' Also add a root "confidence" key (number 0 to 1) reflecting your confidence in these OKRs.' : ' Ajoute aussi une clé racine "confidence" (nombre entre 0 et 1) reflétant ta confiance dans ces OKRs.';
+    var raw = await callAI(buildPrompt(name, type, ambitions, metrics) + confHint, 3000);
     var clean = raw.replace(/```json/gi,'').replace(/```/g,'').trim();
     var m = clean.match(/\{[\s\S]*\}/);
     if (!m) throw new Error('R\u00e9ponse invalide, r\u00e9essaie.');
@@ -494,34 +496,9 @@ function buildPrompt(name, type, ambitions, metrics) {
   return langRule + 'Tu es un expert en Product Management et strat\u00e9gie OKR. G\u00e9n\u00e8re des OKRs pour le produit suivant.\n\nProduit : "' + name + '"' + t + '\nP\u00e9riode : ' + p + '\nNombre d\'objectifs souhait\u00e9 : ' + nbObjectives + '\nAmbitions : ' + ambitions + m + '\n\nR\u00e8gles importantes :\n- Chaque Objective doit \u00eatre qualitatif, inspirant et m\u00e9morable (pas de chiffres dans l\'objectif)\n- Chaque Key Result doit \u00eatre mesurable, avec une valeur cible pr\u00e9cise et r\u00e9aliste\n- 3 Key Results par objectif\n- Varie les types : metric (KPI \u00e0 atteindre), milestone (\u00e9tape cl\u00e9 \u00e0 franchir), health (indicateur \u00e0 maintenir)\n- Ancre les KRs dans les m\u00e9triques fournies si disponibles\n\nR\u00e9ponds UNIQUEMENT avec un JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "okrs": [\n    {\n      "objective": "Faire de l\'onboarding un acc\u00e9l\u00e9rateur de valeur",\n      "key_results": [\n        {"text": "Augmenter le time-to-value de J14 \u00e0 J7 pour 70% des nouveaux clients", "type": "metric", "baseline": "Actuellement J14 pour 60% des clients"},\n        {"text": "Livrer le nouveau flow d\'onboarding interactif en production", "type": "milestone", "baseline": ""},\n        {"text": "Maintenir le NPS onboarding au-dessus de 40", "type": "health", "baseline": "NPS actuel : 28"}\n      ]\n    }\n  ],\n  "tips": [\n    "Conseil court et actionnable sur l\'utilisation de ces OKRs"\n  ]\n}\n\nG\u00e9n\u00e8re exactement ' + nbObjectives + ' objectif(s). Les tips doivent \u00eatre 3 conseils concrets sur comment utiliser ces OKRs en \u00e9quipe produit.';
 }
 
-function friendlyApiError(err, status) {
-  if (status === 429) return currentLang === 'en' ? 'Rate limit reached : wait 30 seconds and try again.' : 'Limite de requêtes atteinte : attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable : try again in a moment.' : 'Service temporairement indisponible : réessaie dans quelques instants.';
-  if (status === 401) return 'Erreur d\'authentification : contacte le support.';
-  if (err && err.message) return err.message;
-  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
-}
+function friendlyApiError(err, status) { return PMCore.friendlyApiError(err, status, currentLang); }
 async function callAI(prompt, maxTokens) {
-  var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
-  var model = 'llama-3.3-70b-versatile';
-  var headers = { 'Content-Type': 'application/json' };
-  var _ctrl = new AbortController();
-  var _timeout = setTimeout(function() { _ctrl.abort(); }, 30000);
-  try {
-    var res = await fetch(endpoint, {
-      method: 'POST',
-      headers: headers,
-      signal: _ctrl.signal,
-      body: JSON.stringify({ model, temperature: 0.5, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
-    });
-    clearTimeout(_timeout);
-    if (!res.ok) { var e = await res.json(); throw new Error(friendlyApiError(e.error, res.status)); }
-    var data = await res.json();
-    return data.choices[0].message.content;
-  } catch(e) {
-    clearTimeout(_timeout);
-    throw e;
-  }
+  return PMCore.callAI(prompt, { maxTokens: maxTokens, temperature: 0.5, lang: currentLang });
 }
 
 function renderResults(d, name, type) {
@@ -537,8 +514,8 @@ function renderResults(d, name, type) {
       return '<div class="kr-item">' +
         '<div class="kr-num">KR' + (j+1) + '</div>' +
         '<div class="kr-body">' +
-          '<div class="kr-text">' + fmt(kr.text) + '</div>' +
-          (kr.baseline ? '<div class="kr-baseline">' + LANG[currentLang]["kr.baseline"] + ' ' + fmt(kr.baseline) + '</div>' : '') +
+          '<div class="kr-text" data-ep="okrs.' + i + '.key_results.' + j + '.text">' + fmt(kr.text) + '</div>' +
+          (kr.baseline ? '<div class="kr-baseline">' + LANG[currentLang]["kr.baseline"] + ' <span data-ep="okrs.' + i + '.key_results.' + j + '.baseline">' + fmt(kr.baseline) + '</span></div>' : '') +
         '</div>' +
         '<span class="kr-type-badge ' + typeCls + '">' + typeLabel + '</span>' +
         '</div>';
@@ -546,13 +523,16 @@ function renderResults(d, name, type) {
 
     okrHtml += '<div class="okr-card">' +
       '<div class="okr-header">' +
-        '<div class="okr-objective">' + fmt(okr.objective) + '</div>' +
+        '<div class="okr-objective" data-ep="okrs.' + i + '.objective">' + fmt(okr.objective) + '</div>' +
         '<span class="okr-num">' + LANG[currentLang]["obj.label"] + ' ' + (i+1) + '</span>' +
       '</div>' +
       '<div class="kr-list">' + krsHtml + '</div>' +
+      '<div style="margin-top:0.75rem">' + PMCore.regenButton('regenObjective(' + i + ', this)', currentLang) + '</div>' +
       '</div>';
   });
   document.getElementById('okrList').innerHTML = okrHtml;
+  var cs = document.getElementById('confSlot');
+  if (cs) cs.innerHTML = PMCore.confidenceBadge(d.confidence, currentLang);
 
   var tips = d.tips || [];
   if (tips.length) {
@@ -563,6 +543,15 @@ function renderResults(d, name, type) {
     document.getElementById('tipsCard').style.display = 'block';
   }
 
+  saveOKR(d);
+  PMCore.bindEditing(document.getElementById('results'), d, function(updated) { saveOKR(updated); });
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function rerun() { launch(); }
+
+function saveOKR(d) {
   window._okrData = d;
   if (window.PMSession) PMSession.save('okr', {
     productName: document.getElementById('productName').value.trim(),
@@ -571,11 +560,31 @@ function renderResults(d, name, type) {
     metrics: document.getElementById('metrics').value.trim(),
     result: d
   });
-  document.getElementById('results').classList.add('show');
-  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function rerun() { launch(); }
+async function regenObjective(i, btn) {
+  var d = window._okrData;
+  if (!d || !d.okrs || !d.okrs[i]) return;
+  if (btn) btn.disabled = true;
+  var name = document.getElementById('productName').value.trim();
+  var ambitions = document.getElementById('ambitions').value.trim();
+  var metrics = document.getElementById('metrics').value.trim();
+  var others = d.okrs.filter(function(_, j) { return j !== i; }).map(function(o) { return '- ' + (o.objective || ''); }).join('\n');
+  var langRule = currentLang === 'en' ? 'Write every value in English. ' : '';
+  var prompt = langRule + 'Tu es un expert en stratégie OKR. Produit : "' + name + '"' + (ambitions ? '\nAmbitions : ' + ambitions : '') + (metrics ? '\nMétriques actuelles : ' + metrics : '') +
+    '\n\nGénère UN Objective alternatif (qualitatif, inspirant, sans chiffre) avec 3 Key Results mesurables (types metric / milestone / health), différent des objectifs déjà présents :\n' + others +
+    '\n\nRéponds UNIQUEMENT avec un JSON valide : {"objective":"...","key_results":[{"text":"...","type":"metric","baseline":"..."},{"text":"...","type":"milestone","baseline":""},{"text":"...","type":"health","baseline":"..."}]}';
+  try {
+    var fresh = await PMCore.callJSON(prompt, { maxTokens: 700, temperature: 0.8, lang: currentLang });
+    if (fresh && fresh.objective) {
+      d.okrs[i] = fresh;
+      renderResults(d, name, document.getElementById('productType') ? document.getElementById('productType').value : '');
+    } else if (btn) { btn.disabled = false; }
+  } catch (e) {
+    if (btn) btn.disabled = false;
+    if (typeof showError === 'function') showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
+  }
+}
 
 function copyResults() {
   var d = window._okrData || {};
@@ -866,6 +875,7 @@ function applyLangExtras(lang) {
 
 </script>
 <script src="pm-examples.js"></script>
+<script src="pm-core.js"></script>
 <script src="pm-session.js"></script>
 <script>
 window.pmImportInsights = function(opts){

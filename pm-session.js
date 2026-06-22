@@ -5,7 +5,8 @@
 (function(G) {
   'use strict';
 
-  var KEY = 'pmSession_v1';
+  var KEY = 'pmSession_v1';          // base key ; per-project store is KEY + '::' + id
+  var PROJ_KEY = 'pmProjects_v1';     // registry { current, list:[{id,name,createdAt,lastTs}] }
   var FLOW = ['discovery', 'interview', 'okr', 'backlog', 'epic', 'roadmap'];
 
   var META = {
@@ -17,12 +18,63 @@
     roadmap:   { name: 'Roadmap Storyteller',       url: 'roadmap-storyteller.html',     color: '#fbbf24' }
   };
 
-  /* ── storage ── */
-  function load()        { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { return {}; } }
-  function dump(d)       { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e) {} }
+  /* ── projects registry ──
+     A session belongs to a project so a PM can juggle several products. Legacy
+     single-session data (the old pmSession_v1 blob) is migrated into "Projet 1"
+     on first access, so nothing is lost and old links keep working. */
+  function uid() { return 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function loadProjects() { try { return JSON.parse(localStorage.getItem(PROJ_KEY) || 'null'); } catch(e) { return null; } }
+  function dumpProjects(p) { try { localStorage.setItem(PROJ_KEY, JSON.stringify(p)); } catch(e) {} }
+
+  function ensureProjects() {
+    var p = loadProjects();
+    if (p && p.current && Array.isArray(p.list) && p.list.length) return p;
+    var id = uid();
+    p = { current: id, list: [{ id: id, name: (lang() === 'en' ? 'Project 1' : 'Projet 1'), createdAt: Date.now(), lastTs: Date.now() }] };
+    try { var legacy = localStorage.getItem(KEY); if (legacy && legacy !== '{}') localStorage.setItem(KEY + '::' + id, legacy); } catch(e) {}
+    dumpProjects(p);
+    return p;
+  }
+  function currentProjectId() { return ensureProjects().current; }
+  function storeKey() { return KEY + '::' + currentProjectId(); }
+  function touchProject() {
+    var p = loadProjects(); if (!p) return;
+    p.list.forEach(function(x) { if (x.id === p.current) x.lastTs = Date.now(); });
+    dumpProjects(p);
+  }
+
+  function listProjects()        { return ensureProjects().list.slice(); }
+  function createProject(name) {
+    var p = ensureProjects();
+    var id = uid();
+    p.list.push({ id: id, name: name || ((lang() === 'en' ? 'Project ' : 'Projet ') + (p.list.length + 1)), createdAt: Date.now(), lastTs: Date.now() });
+    p.current = id; dumpProjects(p);
+    return id;
+  }
+  function switchProject(id) {
+    var p = ensureProjects();
+    if (p.list.some(function(x) { return x.id === id; })) { p.current = id; dumpProjects(p); }
+  }
+  function renameProject(id, name) {
+    var p = ensureProjects();
+    p.list.forEach(function(x) { if (x.id === id && name) x.name = name; });
+    dumpProjects(p);
+  }
+  function deleteProject(id) {
+    var p = ensureProjects();
+    try { localStorage.removeItem(KEY + '::' + id); } catch(e) {}
+    p.list = p.list.filter(function(x) { return x.id !== id; });
+    if (!p.list.length) { var nid = uid(); p.list.push({ id: nid, name: (lang() === 'en' ? 'Project 1' : 'Projet 1'), createdAt: Date.now(), lastTs: Date.now() }); p.current = nid; }
+    else if (p.current === id) p.current = p.list[0].id;
+    dumpProjects(p);
+  }
+
+  /* ── storage (scoped to the current project) ── */
+  function load()        { try { return JSON.parse(localStorage.getItem(storeKey()) || '{}'); } catch(e) { return {}; } }
+  function dump(d)       { try { localStorage.setItem(storeKey(), JSON.stringify(d)); touchProject(); } catch(e) {} }
   function save(t, data) { var s = load(); s[t] = Object.assign({}, s[t] || {}, data, { _ts: Date.now() }); dump(s); }
   function get(t)        { return load()[t] || null; }
-  function clearAll()    { try { localStorage.removeItem(KEY); } catch(e) {} }
+  function clearAll()    { try { localStorage.removeItem(storeKey()); } catch(e) {} }
 
   /* ── routing ── */
   function currentTool() {
@@ -425,6 +477,9 @@
   G.PMSession = {
     save: save, get: get, clear: clearAll, load: load,
     currentTool: currentTool, prevTool: prevTool, nextTool: nextTool,
+    listProjects: listProjects, currentProjectId: currentProjectId,
+    createProject: createProject, switchProject: switchProject,
+    renameProject: renameProject, deleteProject: deleteProject,
     META: META, FLOW: FLOW,
     context: context, dedup: dedup, lang: lang,
     lines: lines, fmtBlock: fmtBlock,

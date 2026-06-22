@@ -402,7 +402,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="results" id="results">
     <div class="results-topbar">
       <div>
-        <div class="results-title"><span id="lbl_results_title">User Stories g&eacute;n&eacute;r&eacute;es</span></div>
+        <div class="results-title"><span id="lbl_results_title">User Stories g&eacute;n&eacute;r&eacute;es</span> <span id="confSlot"></span></div>
         <div class="results-sub" id="resultsSub"></div>
       </div>
       <div style="display:flex;gap:0.5rem;align-items:center">
@@ -462,7 +462,8 @@ async function launch() {
   document.getElementById('loading').classList.add('show');
 
   try {
-    var raw = await callAI(buildPrompt(title, desc, persona, tech), 4000);
+    var confHint = currentLang === 'en' ? ' Also add a root "confidence" key (number 0 to 1) reflecting your confidence in this breakdown.' : ' Ajoute aussi une clé racine "confidence" (nombre entre 0 et 1) reflétant ta confiance dans la décomposition.';
+    var raw = await callAI(buildPrompt(title, desc, persona, tech) + confHint, 4000);
     var clean = raw.replace(/```json/gi, '').replace(/```/g, '').trim();
     var m = clean.match(/\{[\s\S]*\}/);
     if (!m) throw new Error('R\u00e9ponse invalide, r\u00e9essaie.');
@@ -488,34 +489,9 @@ function buildPrompt(title, desc, persona, tech) {
   return langRule + 'Tu es un expert Product Owner. D\u00e9compose l\u2019epic suivant en ' + nbStories + ' user stories actionables.\n\nEpic : "' + title + '"\nDescription : ' + desc + personaStr + techStr + '\n\nR\u00e8gles :\n- ' + fmtInstruction + '\n- Chaque user story doit \u00eatre ind\u00e9pendante et livrable seule (principe INVEST)\n- 2 \u00e0 3 crit\u00e8res d\u2019acceptance concrets et v\u00e9rifiables par story\n- Priorit\u00e9 : high / medium / low\n- Effort estim\u00e9 : XS (< 1j), S (1-2j), M (3-5j), L (> 5j)\n- Type : feature / tech / ux / bug-fix\n- Varie les types et priorit\u00e9s de fa\u00e7on r\u00e9aliste\n\nR\u00e9ponds UNIQUEMENT en JSON valide, sans texte avant ni apr\u00e8s :\n{\n  "epic_summary": "R\u00e9sum\u00e9 de l\u2019epic en 1 phrase",\n  "stories": [\n    {\n      "id": "US-01",\n      "title": "Titre court de la story",\n      "story": "En tant que... je veux... afin de...",\n      "type": "feature",\n      "priority": "high",\n      "effort": "M",\n      "acceptance_criteria": [\n        "Crit\u00e8re 1 v\u00e9rifiable",\n        "Crit\u00e8re 2 v\u00e9rifiable"\n      ]\n    }\n  ]\n}';
 }
 
-function friendlyApiError(err, status) {
-  if (status === 429) return currentLang === 'en' ? 'Rate limit reached : wait 30 seconds and try again.' : 'Limite de requêtes atteinte : attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable : try again in a moment.' : 'Service temporairement indisponible : réessaie dans quelques instants.';
-  if (status === 401) return 'Erreur d\'authentification : contacte le support.';
-  if (err && err.message) return err.message;
-  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
-}
+function friendlyApiError(err, status) { return PMCore.friendlyApiError(err, status, currentLang); }
 async function callAI(prompt, maxTokens) {
-  var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
-  var model = 'llama-3.3-70b-versatile';
-  var headers = { 'Content-Type': 'application/json' };
-  var _ctrl = new AbortController();
-  var _timeout = setTimeout(function() { _ctrl.abort(); }, 30000);
-  try {
-    var res = await fetch(endpoint, {
-      method: 'POST',
-      headers: headers,
-      signal: _ctrl.signal,
-      body: JSON.stringify({ model, temperature: 0.4, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
-    });
-    clearTimeout(_timeout);
-    if (!res.ok) { var e = await res.json(); throw new Error(friendlyApiError(e.error, res.status)); }
-    var data = await res.json();
-    return data.choices[0].message.content;
-  } catch(e) {
-    clearTimeout(_timeout);
-    throw e;
-  }
+  return PMCore.callAI(prompt, { maxTokens: maxTokens, temperature: 0.4, lang: currentLang });
 }
 
 function renderResults(d, epicTitle) {
@@ -535,38 +511,35 @@ function renderResults(d, epicTitle) {
     stat(d.epic_summary ? '\u201c' + d.epic_summary.substring(0, 40) + (d.epic_summary.length > 40 ? '...\u201d' : '\u201d') : epicTitle, 'Epic');
 
   // Stories
-  var html = stories.map(function(s) {
+  var html = stories.map(function(s, i) {
     var priCls = 'badge-priority-' + (s.priority || 'medium');
     var effCls = 'badge-effort-' + (s.effort || 'M').toLowerCase();
-    var acHtml = (s.acceptance_criteria || []).map(function(ac) {
-      return '<div class="us-ac-item"><span class="ac-bullet">&#10003;</span>' + fmt(ac) + '</div>';
+    var acHtml = (s.acceptance_criteria || []).map(function(ac, j) {
+      return '<div class="us-ac-item"><span class="ac-bullet">&#10003;</span><span data-ep="stories.' + i + '.acceptance_criteria.' + j + '">' + fmt(ac) + '</span></div>';
     }).join('');
     return '<div class="us-card">' +
       '<div class="us-card-top">' +
-        '<div class="us-title">' + fmt(s.title) + '</div>' +
+        '<div class="us-title" data-ep="stories.' + i + '.title">' + fmt(s.title) + '</div>' +
         '<span class="us-id">' + esc(s.id || 'US') + '</span>' +
       '</div>' +
-      '<div class="us-story">' + fmt(s.story) + '</div>' +
+      '<div class="us-story" data-ep="stories.' + i + '.story">' + fmt(s.story) + '</div>' +
       '<div class="us-meta">' +
         '<span class="us-badge ' + priCls + '">' + capitalise(s.priority || 'medium') + '</span>' +
         '<span class="us-badge ' + effCls + '">' + esc(s.effort || 'M') + '</span>' +
         '<span class="us-badge badge-type">' + esc(s.type || 'feature') + '</span>' +
+        PMCore.regenButton('regenStory(' + i + ', this)', currentLang) +
       '</div>' +
       (acHtml ? '<div class="us-ac"><div class="us-ac-title">Crit\u00e8res d\u2019acceptance</div><div class="us-ac-list">' + acHtml + '</div></div>' : '') +
       '</div>';
   }).join('');
   document.getElementById('usList').innerHTML = html;
 
-  // Store for copy
-  window._storiesData = stories;
+  var cs = document.getElementById('confSlot');
+  if (cs) cs.innerHTML = PMCore.confidenceBadge(d.confidence, currentLang);
+
   window._epicTitle = epicTitle;
-  if (window.PMSession) PMSession.save('epic', {
-    epicTitle: document.getElementById('epicTitle').value.trim(),
-    epicDesc: document.getElementById('epicDesc').value.trim(),
-    persona: (document.getElementById('persona')||{}).value || '',
-    techContext: (document.getElementById('techContext')||{}).value || '',
-    result: { epic_summary: d.epic_summary, stories: stories }
-  });
+  saveEpic(d);
+  PMCore.bindEditing(document.getElementById('results'), d, function(updated) { saveEpic(updated); });
 
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -574,6 +547,43 @@ function renderResults(d, epicTitle) {
 
 function stat(val, lbl) {
   return '<div class="stat-item"><div class="stat-num">' + val + '</div><div class="stat-lbl">' + lbl + '</div></div>';
+}
+
+function saveEpic(d) {
+  d.stories = d.stories || [];
+  window._epicData = d;
+  window._storiesData = d.stories;
+  if (window.PMSession) PMSession.save('epic', {
+    epicTitle: document.getElementById('epicTitle').value.trim(),
+    epicDesc: document.getElementById('epicDesc').value.trim(),
+    persona: (document.getElementById('persona')||{}).value || '',
+    techContext: (document.getElementById('techContext')||{}).value || '',
+    result: { epic_summary: d.epic_summary, stories: d.stories }
+  });
+}
+
+async function regenStory(i, btn) {
+  var d = window._epicData;
+  if (!d || !d.stories || !d.stories[i]) return;
+  if (btn) btn.disabled = true;
+  var title = document.getElementById('epicTitle').value.trim();
+  var desc = document.getElementById('epicDesc').value.trim();
+  var others = d.stories.filter(function(_, j) { return j !== i; }).map(function(s) { return '- ' + (s.title || ''); }).join('\n');
+  var langRule = currentLang === 'en' ? 'Write every value in English. ' : '';
+  var prompt = langRule + 'Tu es un Product Owner expert. Pour l\'epic "' + title + '"' + (desc ? ' (' + desc + ')' : '') +
+    ', génère UNE user story alternative, indépendante (INVEST) et différente des autres déjà présentes :\n' + others +
+    '\n\nRéponds UNIQUEMENT avec un JSON valide : {"title":"Titre court","story":"En tant que... je veux... afin de...","type":"feature","priority":"high","effort":"M","acceptance_criteria":["Critère 1 vérifiable","Critère 2 vérifiable"]}';
+  try {
+    var fresh = await PMCore.callJSON(prompt, { maxTokens: 700, temperature: 0.8, lang: currentLang });
+    if (fresh && (fresh.title || fresh.story)) {
+      fresh.id = d.stories[i].id;
+      d.stories[i] = fresh;
+      renderResults(d, window._epicTitle || title);
+    } else if (btn) { btn.disabled = false; }
+  } catch (e) {
+    if (btn) btn.disabled = false;
+    showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
+  }
 }
 
 function capitalise(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
@@ -795,6 +805,7 @@ function applyLangExtras(lang) {
 
 </script>
 <script src="pm-examples.js"></script>
+<script src="pm-core.js"></script>
 <script src="pm-session.js"></script>
 <script>
 window.pmImportInsights = function(opts){

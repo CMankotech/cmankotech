@@ -395,7 +395,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="results" id="results">
     <div class="results-header">
       <div class="results-meta">
-        <div class="results-title"><span id="lbl_results_title">Backlog prioris&eacute;</span></div>
+        <div class="results-title"><span id="lbl_results_title">Backlog prioris&eacute;</span> <span id="confSlot"></span></div>
         <div class="results-sub" id="resultsSub"></div>
       </div>
       <div style="display:flex;gap:0.5rem;align-items:center">
@@ -498,13 +498,7 @@ function getStories() {
 }
 
 // ---- LAUNCH ----
-function friendlyApiError(err, status) {
-  if (status === 429) return currentLang === 'en' ? 'Rate limit reached : wait 30 seconds and try again.' : 'Limite de requêtes atteinte : attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable : try again in a moment.' : 'Service temporairement indisponible : réessaie dans quelques instants.';
-  if (status === 401) return 'Erreur d\'authentification : contacte le support.';
-  if (err && err.message) return err.message;
-  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
-}
+function friendlyApiError(err, status) { return PMCore.friendlyApiError(err, status, currentLang); }
 async function launch() {
   hideError();
   var stories = getStories();
@@ -517,31 +511,11 @@ async function launch() {
   document.getElementById('results').classList.remove('show');
   document.getElementById('loading').classList.add('show');
 
-  var _ctrl = new AbortController();
-  var _timeout = setTimeout(function() { _ctrl.abort(); }, 30000);
   try {
-    var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
-    var model = 'llama-3.3-70b-versatile';
-    var reqHeaders = { 'Content-Type': 'application/json' };
-
-    var res = await fetch(endpoint, {
-      method: 'POST',
-      headers: reqHeaders,
-      signal: _ctrl.signal,
-      body: JSON.stringify({
-        model: model,
-        temperature: 0.3,
-        max_tokens: 3000,
-        messages: [{ role: 'user', content: buildPrompt(stories, context) }]
-      })
-    });
-    clearTimeout(_timeout);
-    if (!res.ok) { var e = await res.json(); throw new Error(friendlyApiError(e.error, res.status)); }
-    var data = await res.json();
-    var parsed = parseResponse(data.choices[0].message.content);
+    var text = await PMCore.callAI(buildPrompt(stories, context), { maxTokens: 3000, temperature: 0.3, lang: currentLang });
+    var parsed = parseResponse(text);
     renderResults(parsed, stories.length, context);
   } catch(e) {
-    clearTimeout(_timeout);
     if (e.name === 'AbortError') showError(currentLang === 'en' ? 'Request timed out (30s) : check your connection and try again.' : 'Délai dépassé (30s) : vérifie ta connexion et réessaie.');
     else showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
   }
@@ -557,21 +531,13 @@ function buildPrompt(stories, context) {
   var langRule = currentLang === 'en' ? 'IMPORTANT: Write every generated user-facing string in English. Keep JSON keys unchanged.\\n\\n' : '';
 
   if (currentMethod === 'rice') {
-    return langRule + 'Tu es un expert en priorisation produit. Analyse ces user stories et attribue un score RICE à chacune.\n\nUser stories :\n' + list + ctx + '\n\nRègles RICE :\n- Reach (1-10) : combien d\'utilisateurs impactés\n- Impact (1-3) : 1=faible, 2=moyen, 3=fort\n- Confidence (0.5/0.8/1.0) : 0.5=faible, 0.8=moyen, 1.0=élevé\n- Effort (1-5) : 1=très faible, 5=très élevé\n- Score = (Reach × Impact × Confidence) / Effort\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ou après :\n{\n  "method": "rice",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "reach": 7,\n      "impact": 2,\n      "confidence": 0.8,\n      "effort": 3,\n      "score": 3.73,\n      "justification": "Justification courte et spécifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items par score décroissant. Sois précis et cohérent avec le contexte produit fourni.';
+    return langRule + 'Tu es un expert en priorisation produit. Analyse ces user stories et attribue un score RICE à chacune.\n\nUser stories :\n' + list + ctx + '\n\nRègles RICE :\n- Reach (1-10) : combien d\'utilisateurs impactés\n- Impact (1-3) : 1=faible, 2=moyen, 3=fort\n- Confidence (0.5/0.8/1.0) : 0.5=faible, 0.8=moyen, 1.0=élevé\n- Effort (1-5) : 1=très faible, 5=très élevé\n- Score = (Reach × Impact × Confidence) / Effort\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ou après :\n{\n  "method": "rice",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "reach": 7,\n      "impact": 2,\n      "confidence": 0.8,\n      "effort": 3,\n      "score": 3.73,\n      "justification": "Justification courte et spécifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items par score décroissant. Sois précis et cohérent avec le contexte produit fourni. Ajoute une clé racine "confidence" (nombre entre 0 et 1) reflétant ta confiance dans la priorisation.';
   } else {
-    return langRule + 'Tu es un expert en priorisation produit. Applique la méthode MoSCoW à ces user stories.\n\nUser stories :\n' + list + ctx + '\n\nCatégories MoSCoW :\n- Must Have : critique pour le produit, sans ça il ne fonctionne pas\n- Should Have : important mais pas bloquant\n- Could Have : nice to have, si le temps le permet\n- Won\'t Have : hors scope pour maintenant\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ou après :\n{\n  "method": "moscow",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "category": "Must Have",\n      "justification": "Justification courte et spécifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items : Must > Should > Could > Won\'t. Sois cohérent avec le contexte produit fourni.';
+    return langRule + 'Tu es un expert en priorisation produit. Applique la méthode MoSCoW à ces user stories.\n\nUser stories :\n' + list + ctx + '\n\nCatégories MoSCoW :\n- Must Have : critique pour le produit, sans ça il ne fonctionne pas\n- Should Have : important mais pas bloquant\n- Could Have : nice to have, si le temps le permet\n- Won\'t Have : hors scope pour maintenant\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ou après :\n{\n  "method": "moscow",\n  "items": [\n    {\n      "story": "texte exact de la story",\n      "category": "Must Have",\n      "justification": "Justification courte et spécifique en 1-2 phrases."\n    }\n  ]\n}\n\nTrie les items : Must > Should > Could > Won\'t. Sois cohérent avec le contexte produit fourni. Ajoute une clé racine "confidence" (nombre entre 0 et 1) reflétant ta confiance dans la priorisation.';
   }
 }
 
-function parseResponse(text) {
-  var clean = text.replace(/```json/gi,'').replace(/```/g,'').trim();
-  try { return JSON.parse(clean); }
-  catch(e) {
-    var m = clean.match(/\{[\s\S]*\}/);
-    if (m) return JSON.parse(m[0]);
-    throw new Error('Impossible de parser la réponse. Réessaie.');
-  }
-}
+function parseResponse(text) { return PMCore.parseJSON(text); }
 
 function renderResults(d, count, context) {
   var items = d.items || [];
@@ -605,20 +571,19 @@ function renderResults(d, count, context) {
     html += '<div class="result-item">'
       + '<div class="rank' + (isTop ? ' top' : '') + '">' + rank + '</div>'
       + '<div class="story-content">'
-      + '<div class="story-title">' + fmt(item.story) + '</div>'
-      + '<div class="story-justif">' + fmt(item.justification || '') + '</div>'
+      + '<div class="story-title" data-ep="items.' + i + '.story">' + fmt(item.story) + '</div>'
+      + '<div class="story-justif" data-ep="items.' + i + '.justification">' + fmt(item.justification || '') + '</div>'
+      + '<div style="margin-top:0.5rem">' + PMCore.regenButton('regenItem(' + i + ', this)', currentLang) + '</div>'
       + '</div>'
       + scoreHtml
       + '</div>';
   });
 
   document.getElementById('resultsList').innerHTML = html;
-  window._backlogData = { items: items, method: currentMethod };
-  if (window.PMSession) PMSession.save('backlog', {
-    context: document.getElementById('context').value.trim(),
-    method: currentMethod,
-    result: { items: items, method: currentMethod }
-  });
+  var cs = document.getElementById('confSlot');
+  if (cs) cs.innerHTML = PMCore.confidenceBadge(d.confidence, currentLang);
+  saveBacklog(d);
+  PMCore.bindEditing(document.getElementById('results'), d, function(updated) { saveBacklog(updated); });
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -648,6 +613,45 @@ function copyResults() {
 }
 
 function rerun() { launch(); }
+
+function saveBacklog(d) {
+  d.items = d.items || [];
+  d.method = currentMethod;
+  window._backlogData = d;
+  if (window.PMSession) PMSession.save('backlog', {
+    context: document.getElementById('context').value.trim(),
+    method: currentMethod,
+    result: d
+  });
+}
+
+async function regenItem(i, btn) {
+  var d = window._backlogData;
+  if (!d || !d.items || !d.items[i]) return;
+  if (btn) btn.disabled = true;
+  var item = d.items[i];
+  var context = document.getElementById('context').value.trim();
+  var langRule = currentLang === 'en' ? 'Write every value in English. ' : '';
+  var prompt;
+  if (currentMethod === 'rice') {
+    prompt = langRule + 'Tu es un expert en priorisation produit (RICE). Re-évalue de façon fraîche et critique CETTE user story.\n\nStory : ' + item.story + (context ? '\nContexte produit : ' + context : '') +
+      '\n\nRéponds UNIQUEMENT avec un JSON valide : {"story":"texte exact","reach":7,"impact":2,"confidence":0.8,"effort":3,"score":3.73,"justification":"Justification courte et spécifique en 1-2 phrases."}';
+  } else {
+    prompt = langRule + 'Tu es un expert en priorisation produit (MoSCoW). Re-catégorise de façon fraîche et critique CETTE user story.\n\nStory : ' + item.story + (context ? '\nContexte produit : ' + context : '') +
+      '\n\nRéponds UNIQUEMENT avec un JSON valide : {"story":"texte exact","category":"Must Have|Should Have|Could Have|Won\'t Have","justification":"Justification courte et spécifique en 1-2 phrases."}';
+  }
+  try {
+    var fresh = await PMCore.callJSON(prompt, { maxTokens: 600, temperature: 0.75, lang: currentLang });
+    if (fresh && (fresh.justification || fresh.story)) {
+      fresh.story = fresh.story || item.story;
+      d.items[i] = fresh;
+      renderResults(d, d.items.length, context);
+    } else if (btn) { btn.disabled = false; }
+  } catch (e) {
+    if (btn) btn.disabled = false;
+    showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
+  }
+}
 
 function reset() {
   document.getElementById('results').classList.remove('show');
@@ -837,6 +841,7 @@ function applyLangExtras(lang) {
 
 </script>
 <script src="pm-examples.js"></script>
+<script src="pm-core.js"></script>
 <script src="pm-session.js"></script>
 <script>
 window.pmImportInsights = function(opts){

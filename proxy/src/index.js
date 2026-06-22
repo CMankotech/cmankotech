@@ -2,6 +2,16 @@ const ALLOWED_ORIGIN = 'https://cmankotech.github.io';
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
 
+// ─── Abuse protection ──────────────────────────────────────────────────────────
+// The AI POST endpoints sit behind an Origin check, but Origin is trivially spoofed
+// outside a browser. These bounds + a per-IP rate limit keep a leaked endpoint from
+// turning into an open, uncapped bill on the Groq key.
+const RATE_LIMIT_MAX = 30;        // requests allowed per IP per window
+const RATE_LIMIT_WINDOW = 60;     // seconds (also the KV TTL ; KV min is 60s)
+const MAX_TOKENS_CAP = 4000;      // hard ceiling on max_tokens for the raw passthrough
+const MAX_MESSAGES = 20;          // max messages array length
+const MAX_TOTAL_CHARS = 24000;    // max summed length of all message contents
+
 // ─── Veille sources ───────────────────────────────────────────────────────────
 
 // Build a Bing News RSS search URL for a topic query in a given market.
@@ -1579,6 +1589,10 @@ export default {
       return new Response('Forbidden', { status: 403 });
     }
 
+    if (await rateLimited(request, env)) {
+      return jsonResponse({ error: { message: 'Rate limit reached. Please wait a moment and try again.' } }, 429);
+    }
+
     let body;
     try {
       body = await request.json();
@@ -2222,7 +2236,43 @@ async function forwardToLangGraph(body, env) {
 
 // ─── Groq proxy ───────────────────────────────────────────────────────────────
 
+// Per-IP rate limit backed by KV. Fails open (returns false) when the KV binding
+// is absent or errors, so a counter hiccup never takes the proxy down.
+async function rateLimited(request, env) {
+  if (!env.USAGE_COUNTER) return false;
+  const ip = request.headers.get('cf-connecting-ip') || 'unknown';
+  const key = `rl_${ip}`;
+  try {
+    const current = parseInt((await env.USAGE_COUNTER.get(key)) || '0', 10);
+    if (current >= RATE_LIMIT_MAX) return true;
+    await env.USAGE_COUNTER.put(key, String(current + 1), { expirationTtl: RATE_LIMIT_WINDOW });
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+// Validates / clamps a raw Groq passthrough body. Returns an error string when the
+// request must be rejected, or null when it is safe (mutating body in place to clamp).
+function validateGroqBody(body) {
+  if (!body || typeof body !== 'object') return 'Invalid request body.';
+  if (body.model && body.model !== DEFAULT_MODEL) return 'Unsupported model.';
+  body.model = DEFAULT_MODEL;
+  if (!Array.isArray(body.messages) || body.messages.length === 0) return 'Missing messages.';
+  if (body.messages.length > MAX_MESSAGES) return 'Too many messages.';
+  const totalChars = body.messages.reduce(
+    (n, m) => n + (m && typeof m.content === 'string' ? m.content.length : 0), 0);
+  if (totalChars > MAX_TOTAL_CHARS) return 'Payload too large.';
+  if (typeof body.max_tokens !== 'number' || body.max_tokens > MAX_TOKENS_CAP) {
+    body.max_tokens = MAX_TOKENS_CAP;
+  }
+  return null;
+}
+
 async function proxyGroq(body, env, ctx) {
+  const invalid = validateGroqBody(body);
+  if (invalid) return jsonResponse({ error: { message: invalid } }, 400);
+
   const groqRes = await fetch(GROQ_URL, {
     method: 'POST',
     headers: {

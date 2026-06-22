@@ -410,7 +410,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="results" id="results">
     <div class="results-topbar">
       <div class="results-info">
-        <div class="results-title"><span id="lbl_results_title">Synthèse des entretiens</span></div>
+        <div class="results-title"><span id="lbl_results_title">Synthèse des entretiens</span> <span id="confSlot"></span></div>
         <div class="results-sub" id="resultsSub"></div>
       </div>
       <div style="display:flex;gap:0.5rem;align-items:center">
@@ -527,7 +527,8 @@ async function launch() {
   document.getElementById('loading').classList.add('show');
 
   try {
-    var raw = await callAI(buildPrompt(text, context), 3000);
+    var confHint = currentLang === 'en' ? ' Also add a root "confidence" key (number 0 to 1) reflecting your confidence in this synthesis.' : ' Ajoute aussi une clé racine "confidence" (nombre entre 0 et 1) reflétant ta confiance dans cette synthèse.';
+    var raw = await callAI(buildPrompt(text, context) + confHint, 3000);
     var clean = raw.replace(/```json/gi,'').replace(/```/g,'').trim();
     var m = clean.match(/\{[\s\S]*\}/);
     if (!m) throw new Error('Réponse invalide, réessaie.');
@@ -548,34 +549,9 @@ function buildPrompt(text, context) {
   return langRule + 'Tu es un UX researcher et Product Manager expert. Analyse ces notes d\'entretiens utilisateur.\n\nNotes :\n' + text + ctx + '\n\nRéponds UNIQUEMENT avec un JSON valide, sans texte avant ni après :\n{\n  "interview_count": 1,\n  "persona": {\n    "name": "Marie",\n    "emoji": "👩‍💼",\n    "description": "Responsable marketing, 34 ans, utilise l\'outil au quotidien pour gérer ses reportings et suivre ses projets d\'équipe.",\n    "tags": ["Marketing", "PME", "Power user", "Mobile first"]\n  },\n  "pain_groups": [\n    {\n      "group": "Partage et collaboration",\n      "count": 3,\n      "items": [\n        "Impossible de partager un rapport sans donner accès complet à l\'outil",\n        "Pas de notification lors de modifications par un collègue"\n      ]\n    }\n  ],\n  "quotes": [\n    {\n      "text": "Citation exacte ou reformulée fidèlement depuis les notes",\n      "profile": "Marie, responsable marketing"\n    }\n  ],\n  "opportunities": [\n    {\n      "title": "Export PDF en un clic",\n      "description": "Permettre le partage de rapports sans compte requis, via un lien ou un email avec PDF généré automatiquement.",\n      "impact": "high"\n    }\n  ]\n}\n\nRègles :\n- pain_groups : 2-4 groupes, chacun avec 2-3 items\n- quotes : 3-4 citations marquantes\n- opportunities : 3-4 opportunités, impact parmi high/medium/low\n- Si plusieurs entretiens : synthétise les patterns communs\n- Sois précis, actionnable, ancré dans les notes fournies.';
 }
 
-function friendlyApiError(err, status) {
-  if (status === 429) return currentLang === 'en' ? 'Rate limit reached : wait 30 seconds and try again.' : 'Limite de requêtes atteinte : attends 30 secondes et réessaie.';
-  if (status === 503 || status === 502) return currentLang === 'en' ? 'Service temporarily unavailable : try again in a moment.' : 'Service temporairement indisponible : réessaie dans quelques instants.';
-  if (status === 401) return 'Erreur d\'authentification : contacte le support.';
-  if (err && err.message) return err.message;
-  return 'Erreur inattendue (' + status + '). Réessaie ou contacte le support.';
-}
+function friendlyApiError(err, status) { return PMCore.friendlyApiError(err, status, currentLang); }
 async function callAI(prompt, maxTokens) {
-  var endpoint = 'https://groq-proxy.cmankotech.workers.dev';
-  var model = 'llama-3.3-70b-versatile';
-  var headers = { 'Content-Type': 'application/json' };
-  var _ctrl = new AbortController();
-  var _timeout = setTimeout(function() { _ctrl.abort(); }, 30000);
-  try {
-    var res = await fetch(endpoint, {
-      method: 'POST',
-      headers: headers,
-      signal: _ctrl.signal,
-      body: JSON.stringify({ model, temperature: 0.4, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
-    });
-    clearTimeout(_timeout);
-    if (!res.ok) { var e = await res.json(); throw new Error(friendlyApiError(e.error, res.status)); }
-    var data = await res.json();
-    return data.choices[0].message.content;
-  } catch(e) {
-    clearTimeout(_timeout);
-    throw e;
-  }
+  return PMCore.callAI(prompt, { maxTokens: maxTokens, temperature: 0.4, lang: currentLang });
 }
 
 // ---- RENDER ----
@@ -590,27 +566,27 @@ function renderResults(d, context) {
   var tagsHtml = (p.tags||[]).map(function(t){ return '<span class="persona-tag">' + esc(t) + '</span>'; }).join('');
   document.getElementById('personaCard').innerHTML =
     '<div class="persona-avatar">' + (p.emoji||'👤') + '</div>' +
-    '<div><div class="persona-name">' + fmt(p.name||'Utilisateur type') + '</div>' +
-    '<div class="persona-desc">' + fmt(p.description||'') + '</div>' +
+    '<div><div class="persona-name" data-ep="persona.name">' + fmt(p.name||'Utilisateur type') + '</div>' +
+    '<div class="persona-desc" data-ep="persona.description">' + fmt(p.description||'') + '</div>' +
     '<div class="persona-tags">' + tagsHtml + '</div></div>';
 
   // PAIN POINTS
   var painHtml = '';
-  (d.pain_groups||[]).forEach(function(g) {
-    var itemsHtml = (g.items||[]).map(function(it) {
-      return '<div class="pain-item"><span class="pain-icon">&#9642;</span>' + fmt(it) + '</div>';
+  (d.pain_groups||[]).forEach(function(g, gi) {
+    var itemsHtml = (g.items||[]).map(function(it, k) {
+      return '<div class="pain-item"><span class="pain-icon">&#9642;</span><span data-ep="pain_groups.' + gi + '.items.' + k + '">' + fmt(it) + '</span></div>';
     }).join('');
     painHtml += '<div class="pain-group">' +
-      '<div class="pain-group-title">' + fmt(g.group||'') + ' <span class="pain-count">' + (g.count||g.items?.length||0) + '</span></div>' +
+      '<div class="pain-group-title"><span data-ep="pain_groups.' + gi + '.group">' + fmt(g.group||'') + '</span> <span class="pain-count">' + (g.count||g.items?.length||0) + '</span></div>' +
       '<div class="pain-items">' + itemsHtml + '</div></div>';
   });
   document.getElementById('painContainer').innerHTML = painHtml;
 
   // QUOTES
-  var quotesHtml = (d.quotes||[]).map(function(q) {
+  var quotesHtml = (d.quotes||[]).map(function(q, qi) {
     return '<div class="quote-item">' +
-      '<div class="quote-text">&laquo;&nbsp;' + fmt(q.text||'') + '&nbsp;&raquo;</div>' +
-      (q.profile ? '<div class="quote-meta">' + fmt(q.profile) + '</div>' : '') +
+      '<div class="quote-text">&laquo;&nbsp;<span data-ep="quotes.' + qi + '.text">' + fmt(q.text||'') + '</span>&nbsp;&raquo;</div>' +
+      (q.profile ? '<div class="quote-meta" data-ep="quotes.' + qi + '.profile">' + fmt(q.profile) + '</div>' : '') +
       '</div>';
   }).join('');
   document.getElementById('quotesContainer').innerHTML = quotesHtml;
@@ -621,22 +597,52 @@ function renderResults(d, context) {
     var impactCls = 'impact-' + (o.impact||'medium');
     return '<div class="opp-item">' +
       '<div class="opp-num' + (i < 2 ? ' top' : '') + '">' + (i+1) + '</div>' +
-      '<div class="opp-body"><div class="opp-title">' + fmt(o.title||'') + '</div><div class="opp-desc">' + fmt(o.description||'') + '</div></div>' +
-      '<div class="opp-impact"><span class="impact-badge ' + impactCls + '">' + impactLabel + '</span></div>' +
+      '<div class="opp-body"><div class="opp-title" data-ep="opportunities.' + i + '.title">' + fmt(o.title||'') + '</div><div class="opp-desc" data-ep="opportunities.' + i + '.description">' + fmt(o.description||'') + '</div></div>' +
+      '<div class="opp-impact"><span class="impact-badge ' + impactCls + '">' + impactLabel + '</span>' + PMCore.regenButton('regenOpportunity(' + i + ', this)', currentLang) + '</div>' +
       '</div>';
   }).join('');
   document.getElementById('oppsContainer').innerHTML = oppsHtml;
 
-  window._interviewData = d;
-  if (window.PMSession) PMSession.save('interview', {
-    context: document.getElementById('context').value.trim(),
-    result: d
-  });
+  var cs = document.getElementById('confSlot');
+  if (cs) cs.innerHTML = PMCore.confidenceBadge(d.confidence, currentLang);
+
+  saveInterview(d);
+  PMCore.bindEditing(document.getElementById('results'), d, function(updated) { saveInterview(updated); });
   document.getElementById('results').classList.add('show');
   document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function rerun() { launch(); }
+
+function saveInterview(d) {
+  window._interviewData = d;
+  if (window.PMSession) PMSession.save('interview', {
+    context: document.getElementById('context').value.trim(),
+    result: d
+  });
+}
+
+async function regenOpportunity(i, btn) {
+  var d = window._interviewData;
+  if (!d || !d.opportunities || !d.opportunities[i]) return;
+  if (btn) btn.disabled = true;
+  var pains = (d.pain_groups || []).map(function(g) { return '- ' + (g.group || ''); }).join('\n');
+  var others = d.opportunities.filter(function(_, j) { return j !== i; }).map(function(o) { return '- ' + (o.title || ''); }).join('\n');
+  var langRule = currentLang === 'en' ? 'Write every value in English. ' : '';
+  var prompt = langRule + 'Tu es un Product Manager. À partir de ces pain points utilisateurs :\n' + pains +
+    '\n\nGénère UNE opportunité produit alternative, différente de celles déjà identifiées :\n' + others +
+    '\n\nRéponds UNIQUEMENT avec un JSON valide : {"title":"Titre court","description":"1-2 phrases concrètes","impact":"high"}';
+  try {
+    var fresh = await PMCore.callJSON(prompt, { maxTokens: 400, temperature: 0.8, lang: currentLang });
+    if (fresh && fresh.title) {
+      d.opportunities[i] = { title: fresh.title, description: fresh.description || '', impact: fresh.impact || 'medium' };
+      renderResults(d, document.getElementById('context').value.trim());
+    } else if (btn) { btn.disabled = false; }
+  } catch (e) {
+    if (btn) btn.disabled = false;
+    if (typeof showError === 'function') showError((currentLang === 'en' ? 'Error: ' : 'Erreur : ') + e.message);
+  }
+}
 
 function copyResults() {
   var d = window._interviewData || {};
@@ -911,6 +917,7 @@ function applyLangExtras(lang) {
 
 </script>
 <script src="pm-examples.js"></script>
+<script src="pm-core.js"></script>
 <script src="pm-session.js"></script>
 <script>
 window.pmImportInsights = function(opts){

@@ -215,6 +215,12 @@
       en: "You're on the **Product & AI Watch** 📡 Every week, a Cloudflare cron aggregates 13 RSS feeds and synthesises them via Groq, archived by week. I can explain how it's wired, or chat about current PM/AI trends. What are you curious about?",
       chips_fr: ["📡 Comment marche la veille ?", "🗂️ Naviguer dans l'historique", "🤖 Tendances IA du moment ?"],
       chips_en: ["📡 How does the watch work?", "🗂️ Browse the history", "🤖 Current AI trends?"]
+    },
+    'product-brief': {
+      fr: "Tu es sur le **Product Brief** 📄 C'est la synthèse exportable de ta session : discovery, recherche, OKRs, priorisation, user stories et roadmap réunis en un document (PDF ou Markdown). Je peux t'expliquer comment c'est généré ou comment l'exploiter face à des stakeholders. Qu'est-ce qui t'intéresse ?",
+      en: "You're on the **Product Brief** 📄 It's the exportable synthesis of your session: discovery, research, OKRs, prioritisation, user stories and roadmap in one document (PDF or Markdown). I can explain how it's generated or how to use it with stakeholders. What are you curious about?",
+      chips_fr: ["📄 Comment est généré le brief ?", "📤 Exporter en PDF ou Markdown ?", "🗂️ Gérer plusieurs projets ?"],
+      chips_en: ["📄 How is the brief generated?", "📤 Export to PDF or Markdown?", "🗂️ Manage multiple projects?"]
     }
   };
 
@@ -256,11 +262,11 @@
       emoji: '🗺️'
     },
     'roadmap-storyteller': {
-      nextName: null,
-      nextUrl:  'https://cmankotech.github.io/cmankotech/',
-      fr: 'Parcours PM complet : Discovery · Interviews · OKRs · Backlog · User Stories · Roadmap.',
-      en: 'Full PM journey done: Discovery · Interviews · OKRs · Backlog · User Stories · Roadmap.',
-      emoji: '🏠'
+      nextName: 'Product Brief',
+      nextUrl:  'https://cmankotech.github.io/cmankotech/product-brief.html',
+      fr: 'Parcours PM complet. Dernière étape : générer ton Product Brief exportable, du problème à la roadmap.',
+      en: 'Full PM journey done. Final step: generate your exportable Product Brief, from problem to roadmap.',
+      emoji: '📄'
     }
   };
 
