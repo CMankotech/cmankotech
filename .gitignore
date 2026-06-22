@@ -12,3 +12,19 @@ package-lock.json
 
 # captures de verif locales
 shots-push/
+
+# artefacts de test / exploration (pas utilises par le site en prod)
+_shot.js
+_slogan-fonts-compare.html
+hero-teaser-test.html
+shot-mobile-fix-*.png
+
+# essais de logo
+logo-fusion.png
+logo-m-treatments.png
+logo-marriage.png
+logo-variants-preview.png
+tools/render-logo*.cjs
+
+# medias lourds lies a la page de test hero (hero-teaser-test.html)
+media/
