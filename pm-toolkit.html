@@ -801,6 +801,17 @@ function setLang(lang){
 document.addEventListener('DOMContentLoaded', function(){
   var params = new URLSearchParams(window.location.search);
   var lang = params.get('lang') || localStorage.getItem('lang') || 'fr';
+  // Presenter safety net (invisible to visitors) : ?seed=demo seeds a complete,
+  // pre-generated session and lands on a rich Product Brief with zero AI calls.
+  // Handy as a live-demo fallback if the venue network or the LLM is flaky.
+  if(params.get('seed') && window.PMSession && window.PMExamples && PMExamples.DEMO_SESSION){
+    _lang = lang;
+    PMSession.createProject(lang==='en'?'Demo (backup)':'Démo (secours)', 'plantaime');
+    var demo = PMExamples.DEMO_SESSION;
+    PMSession.FLOW.forEach(function(t){ if(demo[t]) PMSession.save(t, demo[t]); });
+    window.location.href = 'product-brief.html' + (lang==='en' ? '?lang=en' : '');
+    return;
+  }
   if(lang === 'en') setLang('en');
   else { renderFlow(); renderSessionPanel(); renderInsightsSummary(); renderProjectBar(); }
 });
