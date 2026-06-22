@@ -331,6 +331,23 @@
   }
   function current() { return SCENARIOS[idx()]; }
 
-  G.PMExamples = { SCENARIOS: SCENARIOS, DEMO_SESSION: DEMO_SESSION, idx: idx, setIdx: setIdx, step: step, current: current };
+  // Lookup a scenario by its key (used by the guided journey, deterministic).
+  function find(key) {
+    for (var i = 0; i < SCENARIOS.length; i++) { if (SCENARIOS[i].key === key) return SCENARIOS[i]; }
+    return null;
+  }
+  // Lightweight list for the hub scenario picker.
+  function list() {
+    return SCENARIOS.map(function(s) {
+      return {
+        key: s.key,
+        name: (s.okr && s.okr.name) || s.key,
+        type: (s.okr && s.okr.type) || '',
+        tagline: (s.discovery && s.discovery.context) || ''
+      };
+    });
+  }
+
+  G.PMExamples = { SCENARIOS: SCENARIOS, DEMO_SESSION: DEMO_SESSION, idx: idx, setIdx: setIdx, step: step, current: current, find: find, list: list };
 
 })(window);

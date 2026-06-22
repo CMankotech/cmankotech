@@ -340,7 +340,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="card">
     <div class="card-title">
       Epic
-      <button class="btn-examples glass-shimmer glass-focus" onclick="loadExample()">&#127922; Exemple aléatoire</button>
     </div>
 
     <div class="field">
@@ -428,14 +427,21 @@ var format = 'standard';
 
 // Exemples partages : voir pm-examples.js (PMExamples).
 
-function loadExample() {
-  var e = window.PMExamples ? PMExamples.step().epic : null;
+// Guided demo : pre-fill from the project's chosen scenario (empty fields only).
+function pmDemoAutofill() {
+  var key = (window.PMSession && PMSession.currentScenario) ? PMSession.currentScenario() : null;
+  if (!key || !window.PMExamples) return;
+  var sc = PMExamples.find(key);
+  var e = sc && sc.epic;
   if (!e) return;
-  document.getElementById('epicTitle').value = e.title;
-  document.getElementById('epicDesc').value = e.desc;
-  document.getElementById('persona').value = e.persona;
-  document.getElementById('techContext').value = e.tech;
+  var et = document.getElementById('epicTitle');
+  if (et.value.trim() || document.getElementById('epicDesc').value.trim()) return;
+  et.value = e.title || '';
+  document.getElementById('epicDesc').value = e.desc || '';
+  document.getElementById('persona').value = e.persona || '';
+  document.getElementById('techContext').value = e.tech || '';
 }
+document.addEventListener('DOMContentLoaded', function(){ setTimeout(pmDemoAutofill, 60); });
 function setNb(n) {
   nbStories = n;
   [4, 6, 8, 10].forEach(function(x) { document.getElementById('nb' + x).classList.toggle('active', x === n); });

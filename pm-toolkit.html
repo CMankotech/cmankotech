@@ -102,8 +102,13 @@ h1{font-family:'DM Sans',sans-serif;font-weight:500;margin:0}
 .pb-btn{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.45rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--dim);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
 .pb-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.06)}
 .pb-btn.pb-danger:hover{color:#fca5a5;border-color:rgba(248,113,113,0.3);background:rgba(248,113,113,0.08)}
-.pb-btn.pb-demo{color:#c4b5fd;border-color:rgba(167,139,250,0.3);background:rgba(167,139,250,0.08)}
-.pb-btn.pb-demo:hover{color:#ddd6fe;border-color:rgba(167,139,250,0.5);background:rgba(167,139,250,0.16)}
+.pb-demo-wrap{position:relative;display:inline-flex;align-items:center}
+.pb-demo-select{appearance:none;-webkit-appearance:none;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.45rem 1.9rem 0.45rem 0.75rem;border-radius:8px;border:1px solid rgba(167,139,250,0.3);background:rgba(167,139,250,0.08);color:#c4b5fd;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;max-width:230px;text-overflow:ellipsis}
+.pb-demo-select:hover{color:#ddd6fe;border-color:rgba(167,139,250,0.5);background:rgba(167,139,250,0.16)}
+.pb-demo-select:focus{outline:none;border-color:rgba(167,139,250,0.6)}
+.pb-demo-select option{background:#0e0e1a;color:var(--text);text-transform:none;letter-spacing:0;font-weight:400}
+.pb-demo-wrap .pb-chev{color:#c4b5fd}
+[data-theme="light"] .pb-demo-select option{background:#fff;color:#0f172a}
 [data-theme="light"] .project-bar{background:rgba(255,255,255,0.85);border-color:rgba(15,23,42,0.09)}
 [data-theme="light"] .pb-select-wrap select{background:rgba(15,23,42,0.04);color:#0f172a}
 [data-theme="light"] .pb-select-wrap select option{background:#fff;color:#0f172a}
@@ -345,7 +350,10 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <button class="pb-btn" id="pbNewBtn" onclick="newProject()">+ <span id="pbNewLbl">Nouveau</span></button>
       <button class="pb-btn" id="pbRenameBtn" onclick="renameCurrentProject()" title="Renommer">✎</button>
       <button class="pb-btn pb-danger" id="pbDelBtn" onclick="deleteCurrentProject()" title="Supprimer">🗑</button>
-      <button class="pb-btn pb-demo" id="pbDemoBtn" onclick="loadGuidedDemo()">✨ <span id="pbDemoLbl">Voir une démo</span></button>
+      <div class="pb-select-wrap pb-demo-wrap">
+        <select id="demoSelect" class="pb-demo-select" onchange="if(this.value){loadGuidedDemo(this.value);this.selectedIndex=0;}" aria-label="Démo guidée"></select>
+        <svg class="pb-chev" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
     </div>
   </div>
 
@@ -670,6 +678,17 @@ function renderProjectBar(){
   }).join('');
   var delBtn = document.getElementById('pbDelBtn');
   if(delBtn) delBtn.style.display = list.length > 1 ? '' : 'none';
+  renderDemoSelect();
+}
+function renderDemoSelect(){
+  var sel = document.getElementById('demoSelect');
+  if(!sel || !window.PMExamples || !PMExamples.list) return;
+  var placeholder = _lang==='en' ? '✨ Guided demo…' : '✨ Démo guidée…';
+  var opts = ['<option value="" selected>'+placeholder+'</option>'];
+  PMExamples.list().forEach(function(s){
+    opts.push('<option value="'+esc(s.key)+'">'+esc(s.name)+(s.type?' · '+esc(s.type):'')+'</option>');
+  });
+  sel.innerHTML = opts.join('');
 }
 function refreshAll(){ renderFlow(); renderSessionPanel(); renderInsightsSummary(); renderProjectBar(); }
 function onProjectChange(id){ if(window.PMSession){ PMSession.switchProject(id); refreshAll(); } }
@@ -697,13 +716,16 @@ function deleteCurrentProject(){
   PMSession.deleteProject(PMSession.currentProjectId());
   refreshAll();
 }
-function loadGuidedDemo(){
-  if(!window.PMSession || !window.PMExamples || !PMExamples.DEMO_SESSION) return;
-  var name = _lang==='en' ? 'Demo — Plantaime' : 'Démo — Plantaime';
-  PMSession.createProject(name);
-  var demo = PMExamples.DEMO_SESSION;
-  PMSession.FLOW.forEach(function(t){ if(demo[t]) PMSession.save(t, demo[t]); });
-  window.location.href = 'product-brief.html' + (_lang==='en' ? '?lang=en' : '');
+function loadGuidedDemo(key){
+  if(!window.PMSession || !window.PMExamples) return;
+  var sc = PMExamples.find(key);
+  if(!sc) return;
+  var label = (sc.okr && sc.okr.name) || key;
+  var name = (_lang==='en' ? 'Demo — ' : 'Démo — ') + label;
+  // Create a project tagged with the chosen scenario : every tool will pre-fill
+  // its form from this scenario on load, so the whole journey runs on that base.
+  PMSession.createProject(name, key);
+  window.location.href = 'discovery-assistant.html' + (_lang==='en' ? '?lang=en' : '');
 }
 
 /* ─── i18n ─── */

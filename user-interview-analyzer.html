@@ -364,7 +364,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="card">
     <div class="card-title">
       <span id="lbl_interviews_title">Entretiens utilisateurs</span>
-      <button class="btn-examples glass-shimmer glass-focus" onclick="loadExamples()">&#127922; Exemple aléatoire</button>
     </div>
 
     <div class="input-tabs">
@@ -450,18 +449,25 @@ var interviewCount = 0;
 // ---- EXAMPLES ----
 // Exemples partages : voir pm-examples.js (PMExamples).
 
-function loadExamples() {
-  var iv = window.PMExamples ? PMExamples.step().interview : null;
+// Guided demo : pre-fill from the project's chosen scenario (empty fields only).
+function pmDemoAutofill() {
+  var key = (window.PMSession && PMSession.currentScenario) ? PMSession.currentScenario() : null;
+  if (!key || !window.PMExamples) return;
+  var sc = PMExamples.find(key);
+  var iv = sc && sc.interview;
   if (!iv) return;
-  document.getElementById('context').value = iv.context;
+  var single = document.getElementById('singleText');
+  var blocks = document.getElementById('interviewBlocks');
+  var hasContent = (single && single.value.trim()) || (blocks && blocks.children.length > 0 && blocks.textContent.trim());
+  if (hasContent) return;
+  if (!document.getElementById('context').value.trim()) document.getElementById('context').value = iv.context || '';
   if (inputMode === 'single') {
-    document.getElementById('singleText').value = iv.notes;
+    if (single) single.value = iv.notes || '';
   } else {
-    document.getElementById('interviewBlocks').innerHTML = '';
-    interviewCount = 0;
-    (iv.interviews || []).forEach(function(ex) { addInterview(ex.label, ex.text); });
+    if (blocks) { blocks.innerHTML = ''; interviewCount = 0; (iv.interviews || []).forEach(function(ex) { addInterview(ex.label, ex.text); }); }
   }
 }
+document.addEventListener('DOMContentLoaded', function(){ setTimeout(pmDemoAutofill, 60); });
 // ---- INPUT MODE ----
 function setMode(m) {
   inputMode = m;

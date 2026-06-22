@@ -336,7 +336,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="card">
     <div class="card-title">
       <span id="lbl_ctx_title">Contexte produit</span>
-      <button class="btn-examples glass-shimmer glass-focus" onclick="loadExample()">&#127922; Exemple aléatoire</button>
     </div>
 
     <div class="form-grid">
@@ -438,14 +437,21 @@ var nbObjectives = 3;
 
 // Exemples partages : voir pm-examples.js (PMExamples).
 
-function loadExample() {
-  var e = window.PMExamples ? PMExamples.step().okr : null;
+// Guided demo : pre-fill from the project's chosen scenario (empty fields only).
+function pmDemoAutofill() {
+  var key = (window.PMSession && PMSession.currentScenario) ? PMSession.currentScenario() : null;
+  if (!key || !window.PMExamples) return;
+  var sc = PMExamples.find(key);
+  var e = sc && sc.okr;
   if (!e) return;
-  document.getElementById('productName').value = e.name;
-  document.getElementById('productType').value = e.type;
-  document.getElementById('ambitions').value = e.ambitions;
-  document.getElementById('metrics').value = e.metrics;
+  var pn = document.getElementById('productName');
+  if (pn.value.trim() || document.getElementById('ambitions').value.trim()) return;
+  pn.value = e.name || '';
+  document.getElementById('productType').value = e.type || '';
+  document.getElementById('ambitions').value = e.ambitions || '';
+  document.getElementById('metrics').value = e.metrics || '';
 }
+document.addEventListener('DOMContentLoaded', function(){ setTimeout(pmDemoAutofill, 60); });
 function setPeriod(p) {
   period = p;
   document.getElementById('pQ').classList.toggle('active', p === 'trimestre');

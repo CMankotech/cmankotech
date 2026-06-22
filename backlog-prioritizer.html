@@ -355,7 +355,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     </div>
 
     <!-- INPUT MODE -->
-    <div class="card-title" style="margin-top:1.5rem"><span id="lbl_stories_title">User Stories</span> <button class="btn-random-stories glass-shimmer glass-focus" onclick="randomStories()" type="button">&#127922; Exemple al&eacute;atoire</button></div>
+    <div class="card-title" style="margin-top:1.5rem"><span id="lbl_stories_title">User Stories</span></div>
     <div class="input-tabs">
       <button class="input-tab active" id="tabText" onclick="setInputMode('text')"><span id="lbl_textarea_mode"><span id="lbl_textarea_mode">Zone de texte</span></span></button>
       <button class="input-tab" id="tabFields" onclick="setInputMode('fields')"><span id="lbl_fields_mode"><span id="lbl_fields_mode">Champs individuels</span></span></button>
@@ -421,23 +421,26 @@ var fieldCount = 3;
 // ---- EXAMPLES ----
 // Exemples partages : voir pm-examples.js (PMExamples).
 
-function randomStories() {
-  var bl = window.PMExamples ? PMExamples.step().backlog : null;
+// Guided demo : pre-fill from the project's chosen scenario (empty fields only).
+function pmDemoAutofill() {
+  var key = (window.PMSession && PMSession.currentScenario) ? PMSession.currentScenario() : null;
+  if (!key || !window.PMExamples) return;
+  var sc = PMExamples.find(key);
+  var bl = sc && sc.backlog;
   if (!bl) return;
   var set = bl.stories || [];
-  document.getElementById('context').value = bl.context;
+  var ta = document.getElementById('storiesText');
+  var fields = document.getElementById('storyFields');
+  var hasContent = (ta && ta.value.trim()) || (fields && fields.querySelector('input,textarea') && Array.prototype.some.call(fields.querySelectorAll('input,textarea'), function(el){ return el.value.trim(); }));
+  if (hasContent) return;
+  if (!document.getElementById('context').value.trim()) document.getElementById('context').value = bl.context || '';
   if (currentInputMode === 'text') {
-    var ta = document.getElementById('storiesText');
-    ta.value = set.join('\n');
-    ta.style.borderColor = 'rgba(167,139,250,0.5)';
-    setTimeout(function(){ ta.style.borderColor = ''; }, 800);
+    if (ta) { ta.value = set.join('\n'); ta.style.borderColor = 'rgba(167,139,250,0.5)'; setTimeout(function(){ ta.style.borderColor = ''; }, 800); }
   } else {
-    var container = document.getElementById('storyFields');
-    container.innerHTML = '';
-    fieldCount = 0;
-    set.forEach(function(s) { addField(s); });
+    if (fields) { fields.innerHTML = ''; fieldCount = 0; set.forEach(function(s) { addField(s); }); }
   }
 }
+document.addEventListener('DOMContentLoaded', function(){ setTimeout(pmDemoAutofill, 60); });
 
 // ---- METHOD ----
 function setMethod(m) {

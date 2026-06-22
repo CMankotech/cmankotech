@@ -329,7 +329,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     <div class="field">
       <label class="field-label" style="justify-content:space-between">
         <span><span id="lbl_problem">Probl&egrave;me utilisateur</span> <span class="required">&#9679; Requis</span></span>
-        <button class="btn-random glass-shimmer glass-focus" onclick="randomProblem()" type="button">&#127922; Exemple al&eacute;atoire</button>
       </label>
       <textarea id="problem" placeholder="Ex : Les managers de mon app RH ne savent pas quels collaborateurs sont en risque de d&eacute;sengagement avant que ce soit trop tard." rows="4"></textarea>
       <div class="input-hint" id="problemHint"></div>
@@ -408,17 +407,22 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 <script>
 // Exemples partages : voir pm-examples.js (PMExamples).
 
-function randomProblem() {
-  var ex = window.PMExamples ? PMExamples.step().discovery : null;
+// Guided demo : pre-fill from the project's chosen scenario (empty fields only).
+function pmDemoAutofill() {
+  var key = (window.PMSession && PMSession.currentScenario) ? PMSession.currentScenario() : null;
+  if (!key || !window.PMExamples) return;
+  var sc = PMExamples.find(key);
+  var ex = sc && sc.discovery;
   if (!ex) return;
-  document.getElementById('problem').value = ex.problem;
-  document.getElementById('target').value = ex.target || '';
-  document.getElementById('context').value = ex.context || '';
-  // Animate the textarea briefly
-  var ta = document.getElementById('problem');
-  ta.style.borderColor = 'rgba(167,139,250,0.5)';
-  setTimeout(function(){ ta.style.borderColor = ''; }, 800);
+  var prob = document.getElementById('problem');
+  if (prob.value.trim()) return;
+  prob.value = ex.problem || '';
+  if (!document.getElementById('target').value.trim()) document.getElementById('target').value = ex.target || '';
+  if (!document.getElementById('context').value.trim()) document.getElementById('context').value = ex.context || '';
+  prob.style.borderColor = 'rgba(167,139,250,0.5)';
+  setTimeout(function(){ prob.style.borderColor = ''; }, 800);
 }
+document.addEventListener('DOMContentLoaded', function(){ setTimeout(pmDemoAutofill, 60); });
 function showError(msg) {
   var el = document.getElementById('errorBox');
   el.textContent = msg;

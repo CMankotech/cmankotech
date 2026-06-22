@@ -44,10 +44,17 @@
   }
 
   function listProjects()        { return ensureProjects().list.slice(); }
-  function createProject(name) {
+  function currentScenario() {
+    var p = ensureProjects();
+    for (var i = 0; i < p.list.length; i++) { if (p.list[i].id === p.current) return p.list[i].scenario || null; }
+    return null;
+  }
+  function createProject(name, scenario) {
     var p = ensureProjects();
     var id = uid();
-    p.list.push({ id: id, name: name || ((lang() === 'en' ? 'Project ' : 'Projet ') + (p.list.length + 1)), createdAt: Date.now(), lastTs: Date.now() });
+    var entry = { id: id, name: name || ((lang() === 'en' ? 'Project ' : 'Projet ') + (p.list.length + 1)), createdAt: Date.now(), lastTs: Date.now() };
+    if (scenario) entry.scenario = scenario;
+    p.list.push(entry);
     p.current = id; dumpProjects(p);
     return id;
   }
@@ -477,7 +484,7 @@
   G.PMSession = {
     save: save, get: get, clear: clearAll, load: load,
     currentTool: currentTool, prevTool: prevTool, nextTool: nextTool,
-    listProjects: listProjects, currentProjectId: currentProjectId,
+    listProjects: listProjects, currentProjectId: currentProjectId, currentScenario: currentScenario,
     createProject: createProject, switchProject: switchProject,
     renameProject: renameProject, deleteProject: deleteProject,
     META: META, FLOW: FLOW,

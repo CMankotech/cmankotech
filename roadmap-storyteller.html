@@ -345,7 +345,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="card">
     <div class="card-title">
       <span id="lbl_ctx_title">Contexte produit</span>
-      <button class="btn-examples glass-shimmer glass-focus" onclick="loadExample()">&#127922; Exemple aléatoire</button>
     </div>
 
     <div class="form-grid">
@@ -384,7 +383,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
   <div class="card">
     <div class="card-title">
       <span id="lbl_features_title">Features &amp; initiatives</span>
-      <button class="btn-examples glass-shimmer glass-focus" onclick="loadFeaturesExample()">&#127922; Exemple aléatoire</button>
     </div>
     <p style="font-size:0.75rem;color:var(--dim);margin-bottom:1rem" id="hint_features_sub">Ajoute tes features ou initiatives. Assigne-leur une p&eacute;riode de livraison.</p>
     <div class="features-list" id="featuresList"></div>
@@ -452,19 +450,22 @@ window.onload = function() {
 
 // Exemples partages : voir pm-examples.js (PMExamples).
 
-function loadExample() {
-  var e = window.PMExamples ? PMExamples.step().roadmap : null;
+// Guided demo : pre-fill from the project's chosen scenario (empty fields only).
+function pmDemoAutofill() {
+  var key = (window.PMSession && PMSession.currentScenario) ? PMSession.currentScenario() : null;
+  if (!key || !window.PMExamples) return;
+  var sc = PMExamples.find(key);
+  var e = sc && sc.roadmap;
   if (!e) return;
-  document.getElementById('productName').value = e.product;
-  document.getElementById('vision').value = e.vision;
-  document.getElementById('featuresList').innerHTML = '';
-  featureCount = 0;
-  e.features.forEach(function(f) { addFeature(f.text, f.period); });
+  var pn = document.getElementById('productName');
+  var fl = document.getElementById('featuresList');
+  var hasContent = pn.value.trim() || (fl && Array.prototype.some.call(fl.querySelectorAll('input'), function(el){ return el.value.trim(); }));
+  if (hasContent) return;
+  pn.value = e.product || '';
+  document.getElementById('vision').value = e.vision || '';
+  if (fl) { fl.innerHTML = ''; featureCount = 0; (e.features || []).forEach(function(f) { addFeature(f.text, f.period); }); }
 }
-
-function loadFeaturesExample() {
-  loadExample();
-}
+document.addEventListener('DOMContentLoaded', function(){ setTimeout(pmDemoAutofill, 60); });
 
 function addFeature(text, period) {
   featureCount++;
