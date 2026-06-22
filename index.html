@@ -75,7 +75,7 @@ nav{background:rgba(8,8,15,0.96)}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 4rem;background:rgba(8,8,15,0.8);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
 .nav-logo{display:inline-flex;align-items:center;cursor:pointer}.nav-logo img{display:block;height:54px;width:54px}
 .nav-left{display:flex;flex-direction:column;align-items:center;gap:0.2rem}
-.nav-slogan{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-size:0.62rem;letter-spacing:-0.01em;white-space:nowrap;line-height:1.1;text-align:center}
+.nav-slogan{font-family:'Geist',sans-serif;font-weight:500;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap;line-height:1.15;text-align:center}
 .nav-right{display:flex;align-items:center;gap:1.5rem}
 .nav-links{display:flex;gap:2.5rem;position:absolute;left:50%;transform:translateX(-50%)}
 .nav-links a{font-size:0.7rem;font-weight:500;text-transform:uppercase;letter-spacing:0.14em;color:var(--muted);text-decoration:none;transition:color 0.25s;position:relative;padding-bottom:0.25rem}
@@ -404,15 +404,23 @@ body.intro-lock{overflow:hidden}
     <div class="intro-roleline" id="introRoleLine"><span class="lead">je suis</span><span class="intro-roles" id="introRoles">AI Product Manager</span></div>
     <div class="intro-bar" id="introBar"></div>
   </div>
-  <div class="intro-skip">cliquer pour passer</div>
+  <div class="intro-skip" id="introSkip">cliquer pour passer</div>
 </div>
 <script>
 (function(){
+  // Langue choisie (URL ?lang=en ou préférence mémorisée), sinon FR par défaut
+  window.__lang=(function(){ try{ var u=new URLSearchParams(location.search).get('lang'); if(u==='en'||u==='fr')return u; var s=localStorage.getItem('lang'); if(s==='en'||s==='fr')return s; }catch(e){} return 'fr'; })();
+  var EN=window.__lang==='en';
   // intro-ready pub/sub : les terminaux animes attendent la fin de l'intro
   window.__introReady=false; window.__introCbs=[];
   window.onIntroReady=function(cb){ if(window.__introReady){cb();} else {window.__introCbs.push(cb);} };
   function fireIntroReady(){ if(window.__introReady)return; window.__introReady=true; var cbs=window.__introCbs; window.__introCbs=[]; for(var _i=0;_i<cbs.length;_i++){ try{cbs[_i]();}catch(_e){} } }
   var intro=document.getElementById('intro');
+  // Intro en anglais si la langue choisie est EN
+  try{
+    var _sk=document.getElementById('introSkip'); if(_sk) _sk.textContent=EN?'click to skip':'cliquer pour passer';
+    var _lead=document.querySelector('#introRoleLine .lead'); if(_lead) _lead.textContent=EN?'I am':'je suis';
+  }catch(e){}
   if(!intro){ fireIntroReady(); return; }
   // Mode édition : #intro-edit garde l'intro figée pour l'édition directe
   var editMode=/intro-edit/.test(location.hash)||/intro-edit/.test(location.search);
@@ -441,7 +449,7 @@ body.intro-lock{overflow:hidden}
   var bar=document.getElementById('introBar');
 
   // Titres qui défilent (repris du hero)
-  var ROLES=['AI Product Manager','AI Builder','Vibe Coder','Passionn\u00e9 d\'IA'];
+  var ROLES=EN?['AI Product Manager','AI Builder','Vibe Coder','AI Enthusiast']:['AI Product Manager','AI Builder','Vibe Coder','Passionn\u00e9 d\'IA'];
   var dur=3600; // durée totale visée
 
   if(editMode){
@@ -1057,7 +1065,7 @@ body.intro-lock{overflow:hidden}
 <div style="border-top:1px solid var(--line);position:relative;z-index:1">
   <div class="footer-wrap">
     <div class="footer-hl"><span class="hero-hl-1" data-i18n="footer.hl">On construit</span><span class="hero-hl-2 grad" data-i18n="footer.hl2">quelque chose ?</span></div>
-    <p class="builder-slogan grad" style="margin:0;font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.82rem;letter-spacing:0.04em;opacity:0.9">Build it, break it, build it better.</p>
+    <p class="builder-slogan grad" style="margin:0;font-family:'Geist',sans-serif;font-weight:500;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;opacity:0.9">Build it, break it, build it better.</p>
     <div class="footer-links">
       <a href="https://linkedin.com/in/carlinmankoto" target="_blank" class="footer-link">&#8599; LinkedIn</a>
       <a href="https://www.credly.com/users/carlin-mankoto" target="_blank" class="footer-link">&#8599; Credly</a>
@@ -1098,12 +1106,14 @@ T.fr['skills.ai.list']='LLM &middot; RAG &middot; Prompt Engineering<br>Agentic 
 T.en['skills.ai.list']='LLM &middot; RAG &middot; Prompt Engineering<br>Agentic AI &middot; Multi-Agent Systems<br>RLHF &middot; Labelbox &middot; Flowise &middot; Dify<br>CrewAI &middot; Vibe Coding (Cursor, Claude Code, Lovable)<br>n8n &middot; Make &middot; Zapier &middot; Power Automate<br>SQL &middot; Python &middot; JS &middot; API REST';
 
 window.setLang=function(lang){
+  try{ localStorage.setItem('lang',lang); }catch(e){}
   document.getElementById('btn-fr').classList.toggle('active',lang==='fr');
   document.getElementById('btn-en').classList.toggle('active',lang==='en');
   document.querySelectorAll('[data-i18n]').forEach(function(el){
     var k=el.getAttribute('data-i18n');
     if(T[lang]&&T[lang][k]!==undefined)el.innerHTML=T[lang][k];
   });
+  document.querySelectorAll('a[href="veille.html"]').forEach(function(el){var tn=el.lastChild;if(tn&&tn.nodeType===3)tn.textContent=lang==='en'?' Weekly Watch':' Veille';});
   document.documentElement.lang=lang;
   // Update tool links with ?lang=en or remove it
   document.querySelectorAll('.proj-link, .proj-card').forEach(function(el){
@@ -1464,7 +1474,7 @@ if(canvas){
 var _st_fr = "Voici mes projets. Open access, sans clé API côté utilisateur.";
 var _st_en = "Here are my projects. Open access, no API key on the user side.";
 var _stEl  = document.getElementById('stackLine');
-var _twLang = 'fr';
+var _twLang = window.__lang||'fr';
 
 function typewrite(el, txt, speed, onDone){
   if(!el) return;
@@ -1517,6 +1527,9 @@ window.setLang = function(lang){
   if(_projTwStarted) runBothTW();
   if(_origTwSetLang) _origTwSetLang(lang);
 };
+
+// Applique la langue choisie (URL / mémoire) au chargement
+if((window.__lang||'fr')==='en'){ try{ window.setLang('en'); if(_stEl) _stEl.textContent=_st_en; }catch(e){} }
 
 // ═══════════════════════════════════════════════════════
 // 4. ANIMATED COUNTERS

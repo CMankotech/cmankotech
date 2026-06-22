@@ -336,6 +336,7 @@ function t(){ return I18N[_lang]; }
 
 function setLang(lang){
   _lang = lang;
+  try { localStorage.setItem('lang', lang); } catch(e) {}
   document.documentElement.lang = lang;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
   const T = t();
@@ -358,6 +359,7 @@ function setLang(lang){
     document.getElementById('exp'+i+'p').innerHTML = T['exp'+i+'p'];
   }
   document.getElementById('navToolsLabel').textContent = lang === 'fr' ? 'Outils' : 'Tools';
+  document.querySelectorAll('a[href="veille.html"]').forEach(function(el){var tn=el.lastChild;if(tn&&tn.nodeType===3)tn.textContent=lang==='en'?' Weekly Watch':' Veille';});
   renderChips();
 }
 
@@ -445,7 +447,12 @@ function esc(s){
   return String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 }
 
-renderChips();
+(function(){
+  var p = new URLSearchParams(location.search).get('lang');
+  var stored = null; try { stored = localStorage.getItem('lang'); } catch(e) {}
+  var initLang = (p === 'en' || p === 'fr') ? p : (stored === 'en' || stored === 'fr') ? stored : 'fr';
+  setLang(initLang);
+})();
 </script>
 <script>
 function toggleNavTools(e){e.stopPropagation();var d=document.getElementById('navTools');if(d)d.classList.toggle('open');}

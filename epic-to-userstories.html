@@ -828,8 +828,8 @@ if(window.PMSession) PMSession.init();
 <script>
 function toggleNavTools(e){e.stopPropagation();var d=document.getElementById('navTools');if(d)d.classList.toggle('open');}
 document.addEventListener('click',function(e){var d=document.getElementById('navTools');if(d&&!d.contains(e.target))d.classList.remove('open');});
-function syncNavToolsLang(){var a=document.querySelector('.lang-btn.active');var en=!!a&&/^\s*en\s*$/i.test(a.textContent);var l=document.getElementById('navToolsLabel');if(l)l.textContent=en?'Tools':'Outils';}
-document.addEventListener('DOMContentLoaded',syncNavToolsLang);
+function syncNavToolsLang(){var a=document.querySelector('.lang-btn.active');var en=!!a&&/^\s*en\s*$/i.test(a.textContent);var l=document.getElementById('navToolsLabel');if(l)l.textContent=en?'Tools':'Outils';var v=document.querySelector('.nav-tools-menu a[href="veille.html"]');if(v){var tn=v.lastChild;if(tn&&tn.nodeType===3)tn.textContent=en?' Weekly Watch':' Veille';}}
+document.addEventListener('DOMContentLoaded',function(){setTimeout(syncNavToolsLang,80);});
 document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.lang-btn'))setTimeout(syncNavToolsLang,0);});
 </script>
 <script src="md-lite.js"></script>

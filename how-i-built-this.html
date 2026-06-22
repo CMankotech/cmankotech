@@ -473,7 +473,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
           <div class="arch-vline"></div>
           <div class="arch-node n-groq">
             <div class="arch-node-name">Groq API</div>
-            <div class="arch-node-label">6 outils PM</div>
+            <div class="arch-node-label" data-i18n="arch.6tools">6 outils PM</div>
           </div>
         </div>
         <!-- Route 2 -->
@@ -724,6 +724,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
 
     <div class="decision-card" style="margin-bottom:1rem">
       <div class="decision-q" data-i18n="s4b.okr.label">Prompt system, OKR Builder (extrait réel)</div>
+      <div class="prompt-caption" data-i18n="prompt.caption" style="font-size:0.7rem;color:var(--muted);margin:0.2rem 0 0.4rem">Affiché en français, le prompt de production réel.</div>
       <div class="prompt-meta">
         <span class="prompt-tag pt-t">T = 0.5</span>
         <span class="prompt-tag pt-mt">max_tokens 3 000</span>
@@ -1067,7 +1068,7 @@ Réponds UNIQUEMENT avec un JSON valide :
       <table class="params-table">
         <thead>
           <tr>
-            <th>Étape</th>
+            <th data-i18n="tbl.step">Étape</th>
             <th>Modèle</th>
             <th>Température</th>
             <th>max_tokens</th>
@@ -1083,7 +1084,7 @@ Réponds UNIQUEMENT avec un JSON valide :
           <tr><td class="td-tool">Total /rag-query</td><td>,</td><td class="td-temp">,</td><td class="td-tokens">,</td><td class="td-temp">~2–4s</td><td class="td-tokens">~700–1000</td></tr>
         </tbody>
       </table>
-      <div class="decision-why" style="margin-top:0.75rem">Le streaming SSE sur <code>/orchestrate-stream</code> divise la latence perçue par ~3 : les premiers tokens s'affichent en ~400ms pendant que la synthesis continue. Pour <code>/rag-query</code>, l'embedding batch Workers AI ajoute ~200-400ms mais permet un retrieval sémantique sans infrastructure externe.</div>
+      <div class="decision-why" style="margin-top:0.75rem" data-i18n="note.sse">Le streaming SSE sur <code>/orchestrate-stream</code> divise la latence perçue par ~3 : les premiers tokens s'affichent en ~400ms pendant que la synthesis continue. Pour <code>/rag-query</code>, l'embedding batch Workers AI ajoute ~200-400ms mais permet un retrieval sémantique sans infrastructure externe.</div>
     </div>
 
     <div class="decision-card" style="margin-bottom:1rem">
@@ -1101,17 +1102,17 @@ Réponds UNIQUEMENT avec un JSON valide :
         <tbody>
           <tr><td class="td-tool">KRL1 orchestrate</td><td class="td-tokens">~500</td><td class="td-tokens">~400</td><td class="td-temp">~$0.00061</td><td class="td-temp">~$0.61</td></tr>
           <tr><td class="td-tool">RAG query</td><td class="td-tokens">~700</td><td class="td-tokens">~450</td><td class="td-temp">~$0.00077</td><td class="td-temp">~$0.77</td></tr>
-          <tr><td class="td-tool">6 outils PM (avg)</td><td class="td-tokens">~600</td><td class="td-tokens">~1500</td><td class="td-temp">~$0.00154</td><td class="td-temp">~$1.54</td></tr>
+          <tr><td class="td-tool" data-i18n="cost.6tools">6 outils PM (avg)</td><td class="td-tokens">~600</td><td class="td-tokens">~1500</td><td class="td-temp">~$0.00154</td><td class="td-temp">~$1.54</td></tr>
         </tbody>
       </table>
-      <div class="decision-why" style="margin-top:0.75rem">Tarifs llama-3.3-70b : $0.59/M input tokens, $0.79/M output tokens. Actuellement 100% sur le plan gratuit Groq (30 req/min, 14 400 req/jour). La migration vers le paid tier n'interviendrait qu'en cas de trafic soutenu, à ce volume, le coût mensuel total resterait sous $5.</div>
+      <div class="decision-why" style="margin-top:0.75rem" data-i18n="note.pricing">Tarifs llama-3.3-70b : $0.59/M input tokens, $0.79/M output tokens. Actuellement 100% sur le plan gratuit Groq (30 req/min, 14 400 req/jour). La migration vers le paid tier n'interviendrait qu'en cas de trafic soutenu, à ce volume, le coût mensuel total resterait sous $5.</div>
     </div>
 
     <div class="decision-card">
       <div class="decision-q">Free tiers utilisés, zéro coût en prod</div>
       <table class="params-table">
         <thead>
-          <tr><th>Service</th><th>Limite gratuite</th><th>Usage actuel</th></tr>
+          <tr><th>Service</th><th data-i18n="tbl.freelimit">Limite gratuite</th><th data-i18n="tbl.currusage">Usage actuel</th></tr>
         </thead>
         <tbody>
           <tr><td class="td-tool">Groq API</td><td>30 req/min · 14 400 req/jour</td><td class="td-temp">Largement suffisant</td></tr>
@@ -1328,6 +1329,7 @@ Réponds UNIQUEMENT avec un JSON valide :
     </div>
 
     <div class="s5c-sub"><span data-i18n="promptLbl">Le system prompt annoté</span></div>
+    <div class="prompt-caption" data-i18n="prompt.caption" style="font-size:0.7rem;color:var(--muted);margin:0.2rem 0 0.6rem">Affiché en français, le prompt de production réel.</div>
 
     <div style="margin-bottom:2rem">
       <div class="prompt-section">
@@ -1515,6 +1517,14 @@ Réponse actionnable et concise
 <script>
 var T={
   fr:{
+    'arch.6tools':'6 outils PM',
+    'cost.6tools':'6 outils PM (avg)',
+    'tbl.step':'Étape',
+    'tbl.freelimit':'Limite gratuite',
+    'tbl.currusage':'Usage actuel',
+    'note.sse':'Le streaming SSE sur <code>/orchestrate-stream</code> divise la latence perçue par ~3 : les premiers tokens s\'affichent en ~400ms pendant que la synthesis continue. Pour <code>/rag-query</code>, l\'embedding batch Workers AI ajoute ~200-400ms mais permet un retrieval sémantique sans infrastructure externe.',
+    'note.pricing':'Tarifs llama-3.3-70b : $0.59/M input tokens, $0.79/M output tokens. Actuellement 100% sur le plan gratuit Groq (30 req/min, 14 400 req/jour). La migration vers le paid tier n\'interviendrait qu\'en cas de trafic soutenu, à ce volume, le coût mensuel total resterait sous $5.',
+    'prompt.caption':'Affiché en français, le prompt de production réel.',
     'back':'Portfolio',
     'h1.line1':'Comment j\'ai',
     'h1.grad':'construit ce site',
@@ -1729,6 +1739,14 @@ var T={
     'toc.sum.s7':'Navigation contextuelle'
   },
   en:{
+    'arch.6tools':'6 PM tools',
+    'cost.6tools':'6 PM tools (avg)',
+    'tbl.step':'Step',
+    'tbl.freelimit':'Free limit',
+    'tbl.currusage':'Current usage',
+    'note.sse':'SSE streaming on <code>/orchestrate-stream</code> cuts perceived latency by ~3×: the first tokens appear in ~400ms while the synthesis keeps going. For <code>/rag-query</code>, the Workers AI batch embedding adds ~200-400ms but enables semantic retrieval with no external infrastructure.',
+    'note.pricing':'llama-3.3-70b pricing: $0.59/M input tokens, $0.79/M output tokens. Currently 100% on the Groq free plan (30 req/min, 14,400 req/day). Moving to the paid tier would only happen under sustained traffic; at this volume, the total monthly cost would stay under $5.',
+    'prompt.caption':'Shown in French, the actual production prompt.',
     'back':'Portfolio',
     'h1.line1':'How I',
     'h1.grad':'built this site',
@@ -1989,8 +2007,8 @@ function setLang(lang){
 <script>
 function toggleNavTools(e){e.stopPropagation();var d=document.getElementById('navTools');if(d)d.classList.toggle('open');}
 document.addEventListener('click',function(e){var d=document.getElementById('navTools');if(d&&!d.contains(e.target))d.classList.remove('open');});
-function syncNavToolsLang(){var a=document.querySelector('.lang-btn.active');var en=!!a&&/^\s*en\s*$/i.test(a.textContent);var l=document.getElementById('navToolsLabel');if(l)l.textContent=en?'Tools':'Outils';}
-document.addEventListener('DOMContentLoaded',syncNavToolsLang);
+function syncNavToolsLang(){var a=document.querySelector('.lang-btn.active');var en=!!a&&/^\s*en\s*$/i.test(a.textContent);var l=document.getElementById('navToolsLabel');if(l)l.textContent=en?'Tools':'Outils';var v=document.querySelector('.nav-tools-menu a[href="veille.html"]');if(v){var tn=v.lastChild;if(tn&&tn.nodeType===3)tn.textContent=en?' Weekly Watch':' Veille';}}
+document.addEventListener('DOMContentLoaded',function(){setTimeout(syncNavToolsLang,80);});
 document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.lang-btn'))setTimeout(syncNavToolsLang,0);});
 </script>
 <script src="krl1-widget.js"></script>

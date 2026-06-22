@@ -76,7 +76,8 @@
       obj_s:'objectif', obj_p:'objectifs', prio_s:'priorité', prio_p:'priorités',
       story_s:'user story', story_p:'user stories', quote_s:'verbatim', quote_p:'verbatims',
       panel:'Contexte PM', empty:'Aucun insight accumulé pour le moment.',
-      notice:'Champs pré-remplis depuis ton contexte', undo:'Annuler', reapply:'Réappliquer au formulaire'
+      notice:'Champs pré-remplis depuis ton contexte', undo:'Annuler', reapply:'Réappliquer au formulaire',
+      lastStep:'Dernière étape'
     },
     en: {
       persona:'Target persona', hypothesis:'Hypotheses', painPoint:'Identified pain points',
@@ -87,7 +88,8 @@
       obj_s:'objective', obj_p:'objectives', prio_s:'priority', prio_p:'priorities',
       story_s:'user story', story_p:'user stories', quote_s:'quote', quote_p:'quotes',
       panel:'PM Context', empty:'No insights gathered yet.',
-      notice:'Fields pre-filled from your context', undo:'Undo', reapply:'Re-apply to form'
+      notice:'Fields pre-filled from your context', undo:'Undo', reapply:'Re-apply to form',
+      lastStep:'Last step'
     }
   };
 
@@ -292,7 +294,7 @@
             'font-weight:700;text-transform:uppercase;letter-spacing:0.1em;font-family:\'DM Sans\',sans-serif;' +
             'transition:color 0.2s" onmouseover="this.style.color=\'#e2e8f0\'" onmouseout="this.style.color=\'#475569\'">' +
             esc(META[next].name) + ' ▶</a>'
-        : '<span style="color:#2d3748;font-size:0.58rem">Dernière étape</span>'
+        : '<span style="color:#2d3748;font-size:0.58rem">' + LABELS[lang()].lastStep + '</span>'
       );
 
     var container = document.querySelector('.container');
