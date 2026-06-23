@@ -219,14 +219,14 @@
       chips_en: ["📡 How does the watch work?", "🗂️ Browse the history", "🤖 Current AI trends?"]
     },
     'product-brief': {
-      fr: "Tu es sur le **Product Brief** 📄 C'est la synthèse exportable de ta session : discovery, recherche, OKRs, priorisation, user stories et roadmap réunis en un document (PDF ou Markdown). Je peux t'expliquer comment c'est généré ou comment l'exploiter face à des stakeholders. Qu'est-ce qui t'intéresse ?",
-      en: "You're on the **Product Brief** 📄 It's the exportable synthesis of your session: discovery, research, OKRs, prioritisation, user stories and roadmap in one document (PDF or Markdown). I can explain how it's generated or how to use it with stakeholders. What are you curious about?",
-      chips_fr: ["📄 Comment est généré le brief ?", "📤 Exporter en PDF ou Markdown ?", "🗂️ Gérer plusieurs projets ?"],
-      chips_en: ["📄 How is the brief generated?", "📤 Export to PDF or Markdown?", "🗂️ Manage multiple projects?"]
+      fr: "Tu es sur le **Product Brief** 📄 C'est la synthèse exportable de ta session : discovery, recherche, OKRs, priorisation, user stories et roadmap réunis en un document (PDF, Markdown, ou export one-click vers **Notion** en OAuth). Je peux t'expliquer comment c'est généré ou comment l'exploiter face à des stakeholders. Qu'est-ce qui t'intéresse ?",
+      en: "You're on the **Product Brief** 📄 It's the exportable synthesis of your session: discovery, research, OKRs, prioritisation, user stories and roadmap in one document (PDF, Markdown, or one-click export to **Notion** via OAuth). I can explain how it's generated or how to use it with stakeholders. What are you curious about?",
+      chips_fr: ["📄 Comment est généré le brief ?", "📤 Exporter vers Notion, PDF ou Markdown ?", "🗂️ Gérer plusieurs projets ?"],
+      chips_en: ["📄 How is the brief generated?", "📤 Export to Notion, PDF or Markdown?", "🗂️ Manage multiple projects?"]
     },
     'pm-toolkit': {
-      fr: "Tu es sur le **PM Toolkit** 🧰 6 outils enchaînés, du problème utilisateur jusqu'à la roadmap, avec un Product Brief exportable au bout. Je peux t'aider à choisir par où commencer ou t'expliquer comment les outils se transmettent le contexte. Qu'est-ce qui t'amène ?",
-      en: "You're on the **PM Toolkit** 🧰 6 chained tools, from user problem to roadmap, with an exportable Product Brief at the end. I can help you pick where to start or explain how the tools pass context to each other. What brings you here?",
+      fr: "Tu es sur le **PM Toolkit** 🧰 6 outils enchaînés, du problème utilisateur jusqu'à la roadmap, avec un Product Brief exportable au bout (PDF, Markdown, ou vers **Notion** en un clic). Je peux t'aider à choisir par où commencer ou t'expliquer comment les outils se transmettent le contexte. Qu'est-ce qui t'amène ?",
+      en: "You're on the **PM Toolkit** 🧰 6 chained tools, from user problem to roadmap, with an exportable Product Brief at the end (PDF, Markdown, or to **Notion** in one click). I can help you pick where to start or explain how the tools pass context to each other. What brings you here?",
       chips_fr: ["🧭 Par où je commence ?", "🔗 Comment les outils s'enchaînent ?", "📄 C'est quoi le Product Brief ?"],
       chips_en: ["🧭 Where do I start?", "🔗 How do the tools chain?", "📄 What is the Product Brief?"]
     },
