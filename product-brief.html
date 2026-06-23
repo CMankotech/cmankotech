@@ -229,11 +229,17 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
 
   <div class="export-bar" id="exportBar" style="display:none">
     <span class="eb-label" id="ebLabel">Exporter</span>
-    <button class="eb-btn primary" id="btnPrint" onclick="exportPdf()">⬇ <span id="btnPrintLbl">Télécharger le PDF</span></button>
-    <button class="eb-btn" id="btnMd" onclick="downloadMarkdown()">⬇ <span id="btnMdLbl">Markdown</span></button>
+    <details class="pmx-menu" id="fmtMenu">
+      <summary class="eb-btn primary" role="button">⬇ <span id="btnDownloadLbl">Télécharger</span> ▾</summary>
+      <div class="pmx-list">
+        <button type="button" class="pmx-opt" onclick="this.closest('details').removeAttribute('open');exportPdf()"><span id="fmtPdfLbl">PDF (.pdf)</span></button>
+        <button type="button" class="pmx-opt" onclick="this.closest('details').removeAttribute('open');downloadMarkdown()"><span id="fmtMdLbl">Markdown (.md)</span></button>
+        <button type="button" class="pmx-opt" onclick="this.closest('details').removeAttribute('open');downloadTxt()"><span id="fmtTxtLbl">Texte (.txt)</span></button>
+      </div>
+    </details>
     <button class="eb-btn" id="btnCopy" onclick="copyAll()">📋 <span id="btnCopyLbl">Copier tout</span></button>
     <details class="pmx-menu" id="notionMenu">
-      <summary class="eb-btn" role="button">⬆ <span id="btnNotionLbl">Export Notion</span> ▾</summary>
+      <summary class="eb-btn" role="button"><svg class="pmx-ico" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952l1.448.327s0 .84-1.168.84l-3.222.186c-.093-.187 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.401-1.632z"/></svg> <span id="btnNotionLbl">Export Notion</span> ▾</summary>
       <div class="pmx-list" id="pmxList"></div>
     </details>
     <span class="pmx-status" id="pmxStatus"></span>
@@ -262,6 +268,7 @@ var I18N = {
     emptyTitle:'Pas encore de brief à générer', emptyP:"Lance au moins un outil du PM Toolkit. Tes insights s'accumulent automatiquement ici et composent ton Product Brief.", emptyCta:'Démarrer la discovery',
     footerBy:'Construit par', footerRole:'AI Product Manager',
     sub_sources:'sources', generatedOn:'Généré le', objKey:'Objectif clé', horizonKey:'Horizon', coverFallback:'Synthèse produit', pdfBtn:'Télécharger le PDF',
+    dlBtn:'Télécharger', fmtPdf:'PDF (.pdf)', fmtMd:'Markdown (.md)', fmtTxt:'Texte (.txt)',
     sec:{product:'Produit', discovery:'Discovery', interview:'Recherche utilisateur', okr:'Objectifs (OKR)', backlog:'Priorisation', epic:'User stories', roadmap:'Roadmap'},
     lbl:{problem:'Problème', target:'Cible', metrics:'Métriques', hypotheses:'Hypothèses', persona:'Persona', pains:'Pain points', opportunities:'Opportunités', quotes:'Verbatims', objectives:'Objectives & Key Results', priorities:'Backlog priorisé', stories:'User stories', narrative:'Pitch narratif', timeline:'Timeline', talking:'Messages-clés'},
     signal:'Signal', impact:'Impact', baseline:'Baseline'
@@ -273,6 +280,7 @@ var I18N = {
     emptyTitle:'No brief to generate yet', emptyP:'Run at least one PM Toolkit tool. Your insights pile up here automatically and compose your Product Brief.', emptyCta:'Start discovery',
     footerBy:'Built by', footerRole:'AI Product Manager',
     sub_sources:'sources', generatedOn:'Generated on', objKey:'Key objective', horizonKey:'Horizon', coverFallback:'Product summary', pdfBtn:'Download PDF',
+    dlBtn:'Download', fmtPdf:'PDF (.pdf)', fmtMd:'Markdown (.md)', fmtTxt:'Text (.txt)',
     sec:{product:'Product', discovery:'Discovery', interview:'User research', okr:'Objectives (OKR)', backlog:'Prioritisation', epic:'User stories', roadmap:'Roadmap'},
     lbl:{problem:'Problem', target:'Target', metrics:'Metrics', hypotheses:'Hypotheses', persona:'Persona', pains:'Pain points', opportunities:'Opportunities', quotes:'Quotes', objectives:'Objectives & Key Results', priorities:'Prioritised backlog', stories:'User stories', narrative:'Narrative pitch', timeline:'Timeline', talking:'Talking points'},
     signal:'Signal', impact:'Impact', baseline:'Baseline'
@@ -319,8 +327,10 @@ function render(){
   document.getElementById('htB').textContent = T.htB;
   document.getElementById('heroSub').textContent = T.heroSub;
   document.getElementById('ebLabel').textContent = T.ebLabel;
-  document.getElementById('btnPrintLbl').textContent = T.pdfBtn;
-  document.getElementById('btnMdLbl').textContent = T.btnMd;
+  document.getElementById('btnDownloadLbl').textContent = T.dlBtn;
+  document.getElementById('fmtPdfLbl').textContent = T.fmtPdf;
+  document.getElementById('fmtMdLbl').textContent = T.fmtMd;
+  document.getElementById('fmtTxtLbl').textContent = T.fmtTxt;
   document.getElementById('btnCopyLbl').textContent = T.btnCopy;
   document.getElementById('footerBy').textContent = T.footerBy;
   document.getElementById('footerRole').textContent = T.footerRole;
@@ -534,14 +544,26 @@ function buildMarkdown(){
   return L.join('\n');
 }
 
-function downloadMarkdown(){
-  var md = buildMarkdown();
-  var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+function downloadFile(content, filename, mime){
+  var blob = new Blob([content], { type: mime });
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
-  a.href = url; a.download = 'product-brief.md';
+  a.href = url; a.download = filename;
   document.body.appendChild(a); a.click();
   setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+}
+function downloadMarkdown(){
+  downloadFile(buildMarkdown(), 'product-brief.md', 'text/markdown;charset=utf-8');
+}
+function downloadTxt(){
+  // plain-text rendering : strip the lightweight Markdown syntax
+  var txt = buildMarkdown()
+    .replace(/^#{1,6}\s+/gm, '')        // headings
+    .replace(/\*\*(.+?)\*\*/g, '$1')    // bold
+    .replace(/\*(.+?)\*/g, '$1')        // italic
+    .replace(/`{1,3}/g, '')             // code ticks
+    .replace(/^\s*[-*]\s+/gm, '• ');    // bullets
+  downloadFile(txt, 'product-brief.txt', 'text/plain;charset=utf-8');
 }
 
 function copyAll(){

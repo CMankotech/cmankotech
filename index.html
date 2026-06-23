@@ -973,6 +973,16 @@ body.intro-lock{overflow:hidden}
           <span class="tech-logo-name">Python</span>
           <span class="tech-logo-role" data-i18n="stack.strip.back">Orchestrateur</span>
         </div>
+        <div class="tech-logo-card">
+          <img class="tech-logo-img" src="https://cdn.simpleicons.org/notion" alt="Notion" width="28" height="28">
+          <span class="tech-logo-name">Notion</span>
+          <span class="tech-logo-role" data-i18n="stack.strip.notion">Export OAuth</span>
+        </div>
+        <div class="tech-logo-card">
+          <img class="tech-logo-img" src="https://cdn.simpleicons.org/make" alt="Make" width="28" height="28">
+          <span class="tech-logo-name">Make</span>
+          <span class="tech-logo-role" data-i18n="stack.strip.makedemo">D&eacute;mo no-code</span>
+        </div>
         </div><!-- /tech-logos deploy -->
       </div><!-- /tech-group deploy -->
       </div><!-- /tech-groups -->
@@ -1014,7 +1024,7 @@ body.intro-lock{overflow:hidden}
           <div class="proj-top-row">
             <span class="proj-tag-group">
               <span class="proj-tag" style="color:#60a5fa" data-i18n="proj.toolkit.tag">PM Toolkit · Nouveau</span>
-              <span class="proj-wip-badge">Work in progress</span>
+              <span class="proj-wip-badge" id="toolkitWipBadge" style="display:none" data-i18n="proj.wip">Parcours en cours</span>
             </span>
             <span class="proj-icon" style="color:#60a5fa99"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="4" cy="5" r="2"/><circle cx="4" cy="12" r="2"/><circle cx="4" cy="19" r="2"/><circle cx="20" cy="5" r="2"/><circle cx="20" cy="12" r="2"/><circle cx="20" cy="19" r="2"/><path d="M6 5h12"/><path d="M6 12h12"/><path d="M6 19h12"/></svg></span>
           </div>
@@ -1102,6 +1112,12 @@ T.fr['stack.strip.cursor']='IDE';
 T.en['stack.strip.cursor']='IDE';
 T.fr['stack.strip.claude-design']='Front';
 T.en['stack.strip.claude-design']='Front';
+T.fr['proj.wip']='Parcours en cours';
+T.en['proj.wip']='Journey in progress';
+T.fr['stack.strip.notion']='Export OAuth';
+T.en['stack.strip.notion']='OAuth export';
+T.fr['stack.strip.makedemo']='Démo no-code';
+T.en['stack.strip.makedemo']='No-code demo';
 T.fr['skills.ai.list']='LLM &middot; RAG &middot; Prompt Engineering<br>Agentic AI &middot; Multi-Agent Systems<br>RLHF &middot; Labelbox &middot; Flowise &middot; Dify<br>CrewAI &middot; Vibe Coding (Cursor, Claude Code, Lovable)<br>n8n &middot; Make &middot; Zapier &middot; Power Automate<br>SQL &middot; Python &middot; JS &middot; API REST';
 T.en['skills.ai.list']='LLM &middot; RAG &middot; Prompt Engineering<br>Agentic AI &middot; Multi-Agent Systems<br>RLHF &middot; Labelbox &middot; Flowise &middot; Dify<br>CrewAI &middot; Vibe Coding (Cursor, Claude Code, Lovable)<br>n8n &middot; Make &middot; Zapier &middot; Power Automate<br>SQL &middot; Python &middot; JS &middot; API REST';
 
@@ -1665,6 +1681,37 @@ document.addEventListener('DOMContentLoaded',function(){
 <script>
 function toggleNavTools(e){e.stopPropagation();var d=document.getElementById('navTools');if(d)d.classList.toggle('open');}
 document.addEventListener('click',function(e){var d=document.getElementById('navTools');if(d&&!d.contains(e.target))d.classList.remove('open');});
+</script>
+<script>
+/* PM Toolkit card : show the "journey in progress" badge only when the visitor
+   has an unfinished journey in localStorage (>=1 tool used, <6 completed). */
+(function(){
+  var FLOW = ['discovery','interview','okr','backlog','epic','roadmap'];
+  function toolDone(store, t){
+    var d = store[t];
+    return d && typeof d==='object' && Object.keys(d).some(function(k){ return k!=='_ts'; });
+  }
+  function hasUnfinishedJourney(){
+    try{
+      var reg = JSON.parse(localStorage.getItem('pmProjects_v1')||'null');
+      var ids = reg && reg.list ? reg.list.map(function(p){ return p.id; }) : [];
+      if(!ids.length && localStorage.getItem('pmSession_v1')) ids = ['__legacy__'];
+      for(var i=0;i<ids.length;i++){
+        var key = ids[i]==='__legacy__' ? 'pmSession_v1' : 'pmSession_v1::'+ids[i];
+        var store = JSON.parse(localStorage.getItem(key)||'{}');
+        var n = FLOW.filter(function(t){ return toolDone(store, t); }).length;
+        if(n>=1 && n<FLOW.length) return true;
+      }
+    }catch(e){}
+    return false;
+  }
+  function apply(){
+    var b = document.getElementById('toolkitWipBadge');
+    if(b) b.style.display = hasUnfinishedJourney() ? '' : 'none';
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', apply);
+  else apply();
+})();
 </script>
 </body>
 </html>

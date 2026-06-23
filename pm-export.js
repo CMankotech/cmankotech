@@ -187,18 +187,22 @@
     }, 800);
   }
 
-  /* ── run : drive a button + status element through the export ── */
+  /* ── run : drive a button + status element through the export ──
+     Writes into the [data-pmx-label] span when present so a leading icon
+     (e.g. the Notion logo) is preserved ; falls back to the button itself. */
+  function labelOf(btn) { return btn ? (btn.querySelector && btn.querySelector('[data-pmx-label]') || btn) : null; }
   function run(scope, btn, statusEl) {
     var t = T();
     var payload = buildPayload(scope, ctxOf());
-    var orig = btn ? btn.textContent : '';
+    var lbl = labelOf(btn);
+    var orig = lbl ? lbl.textContent : '';
     send(payload, function (state) {
       if (!btn) return;
       if (state.kind === 'sending') {
-        btn.disabled = true; btn.textContent = t.sending;
+        btn.disabled = true; lbl.textContent = t.sending;
         if (statusEl) statusEl.textContent = '';
       } else if (state.kind === 'created') {
-        btn.disabled = false; btn.textContent = t.created;
+        btn.disabled = false; lbl.textContent = t.created;
         if (statusEl) {
           statusEl.innerHTML = '';
           var a = document.createElement('a');
@@ -206,12 +210,12 @@
           a.className = 'pmx-link'; a.textContent = t.open;
           statusEl.appendChild(a);
         }
-        setTimeout(function () { btn.textContent = orig; }, 4000);
+        setTimeout(function () { lbl.textContent = orig; }, 4000);
       } else if (state.kind === 'error') {
-        btn.disabled = false; btn.textContent = orig;
+        btn.disabled = false; lbl.textContent = orig;
         if (statusEl) statusEl.textContent = state.msg;
       } else {
-        btn.disabled = false; btn.textContent = orig;
+        btn.disabled = false; lbl.textContent = orig;
       }
     });
   }
