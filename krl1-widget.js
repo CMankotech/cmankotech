@@ -237,8 +237,8 @@
       chips_en: ["🔍 How does RAG work?", "🧠 What is an embedding?", "💬 Help me frame a query"]
     },
     'product-decisions': {
-      fr: "Tu lis les **Product Decisions** 🧩 10 arbitrages produit derrière KRL1 : PLG, UX, contraintes techniques et alternatives rejetées. Je peux détailler une décision ou le raisonnement produit derrière. Laquelle t'intéresse ?",
-      en: "You're reading the **Product Decisions** 🧩 10 product trade-offs behind KRL1: PLG, UX, technical constraints and rejected alternatives. I can detail a decision or the reasoning behind it. Which one interests you?",
+      fr: "Tu lis les **Product Decisions** 🧩 17 arbitrages produit derrière KRL1 : PLG, UX, contraintes techniques et alternatives rejetées (dont l'export Notion OAuth token-safe). Je peux détailler une décision ou le raisonnement produit derrière. Laquelle t'intéresse ?",
+      en: "You're reading the **Product Decisions** 🧩 17 product trade-offs behind KRL1: PLG, UX, technical constraints and rejected alternatives (including the token-safe Notion OAuth export). I can detail a decision or the reasoning behind it. Which one interests you?",
       chips_fr: ["🧩 Pourquoi ces choix ?", "⚖️ Une alternative rejetée ?", "🛠️ Les contraintes techniques ?"],
       chips_en: ["🧩 Why these choices?", "⚖️ A rejected alternative?", "🛠️ The technical constraints?"]
     },

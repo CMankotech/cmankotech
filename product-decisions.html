@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Product Decisions · Carlin Mankoto</title>
-<meta name="description" content="10 décisions produit derrière KRL1 : PLG, UX, contraintes, arbitrages et alternatives rejetées.">
+<meta name="description" content="17 décisions produit derrière KRL1 : PLG, UX, contraintes, arbitrages et alternatives rejetées.">
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -152,7 +152,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     </div>
   </header>
 
-  <div class="sec-divider"><span id="sectionLbl">15 décisions produit</span></div>
+  <div class="sec-divider"><span id="sectionLbl">17 décisions produit</span></div>
 
   <div class="decision-grid">
 
@@ -396,6 +396,21 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       </div>
     </div>
 
+    <div class="decision-card" style="--dc-color:#f472b6">
+      <div class="decision-num" id="d17n">Décision 17</div>
+      <div class="decision-q" id="d17q">Pourquoi un export Notion où le token OAuth ne touche jamais le navigateur ?</div>
+      <div class="decision-a" id="d17a">Sécurité d'abord : le secret reste côté Worker</div>
+      <div class="decision-why" id="d17why">Le Product Brief s'exporte vers Notion en un clic, pour n'importe quel compte visiteur, via OAuth. Le réflexe naïf serait de gérer le jeton d'accès Notion côté client : il fuiterait dans le localStorage ou les logs, inacceptable pour le compte d'un tiers. À la place, tout le flux vit dans le Worker&nbsp;: pm-export.js construit les blocs Notion depuis la session puis appelle POST /export/prepare, qui stocke le payload en KV de façon transitoire (TTL 10 min) et renvoie l'URL d'autorisation. Après consentement, GET /oauth/notion/callback échange le code contre un token, crée la page dans l'espace du visiteur, puis jette le token et notifie la popup par postMessage. Le navigateur ne voit jamais le secret. La même plomberie OAuth resservira pour Jira, Linear ou Confluence sans la réécrire.</div>
+      <div class="decision-alts">
+        <div class="decision-alts-label" id="d17al">Alternatives rejetées</div>
+        <ul id="d17alts">
+          <li>Gérer le token côté client (localStorage) : fuite garantie dans le storage ou les logs, exclu pour un compte visiteur tiers</li>
+          <li>Un token d'intégration statique partagé : écrirait dans mon espace Notion, pas celui du visiteur, et n'est pas admissible en public</li>
+          <li>Un backend dédié à l'OAuth : infra et coût récurrents, contraire au choix zéro-serveur (un simple Worker + KV suffit)</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 
   <footer>
@@ -431,7 +446,7 @@ var I18N = {
     back:'Retour au portfolio',
     h1:'Les décisions <span class="grad">produit</span><br>derrière le site',
     subtitle:"Les choix qui structurent le site : PM Toolkit, KRL1, architecture statique, PLG, observabilité. Pour chacun, les alternatives écartées et la raison.",
-    sectionLbl:'15 décisions produit',
+    sectionLbl:'17 décisions produit',
     altslbl:'Alternatives rejetées',
     d01n:'Décision 01', d01q:"Pourquoi un assistant IA sur un portfolio PM ?", d01a:"PLG par le produit, pas par le CV",
     d01why:"Un portfolio PM classique, c'est un PDF ou une page LinkedIn. Pour démontrer des compétences AI PM, le portfolio doit être lui-même un produit AI. KRL1 est la preuve concrète : un PM qui comprend les LLMs ne le dit pas, il le montre. Quand un recruteur interagit avec KRL1, il n'a pas besoin de lire \"je comprends les systèmes IA\" dans le résumé. Il l'expérimente directement. C'est du Product-Led Growth appliqué à la recherche d'emploi : le produit porte son propre discours commercial. KRL1 qualifie aussi les visiteurs naturellement : quelqu'un qui passe 5 minutes à explorer les outils PM via KRL1 est plus engagé qu'un scanner de CV de 10 secondes. Le message LinkedIn \"j'ai testé KRL1 et...\" est un signal d'engagement fort. L'assistant existe pour le recruteur, pas pour moi.",
@@ -484,6 +499,10 @@ var I18N = {
     d16why:"Le fetch des 13 flux RSS avait déjà été déplacé dans le Worker (constante VEILLE_SOURCES, parseRSSItems par regex légère, synthèse Groq, archivage KV par semaine ISO) : Make ne servait plus que de minuteur HTTP hebdomadaire. Or un Cron Trigger Cloudflare fait exactement ce déclenchement sans dépendance externe : un handler scheduled() dans le Worker + une ligne crons dans wrangler.toml. Le cron tourne dans le Worker, donc aucun secret à transmettre, et le déclencheur est versionné avec le code. Résultat : la veille s'archive seule chaque lundi 6h UTC et l'historique grossit tout seul, une carte par semaine ISO.",
     d16al:"Alternatives rejetées",
     d16alts:"<li>Garder Make en trigger HTTP cron : dépendance externe et secret à gérer pour ce qui n'est qu'un minuteur hebdo</li><li>Garder Make avec 1 module RSS + Aggregator par source : config manuelle x13, fragile au moindre changement de flux</li><li>Service tiers d'agrégation RSS : coût récurrent, dépendance externe, contraire au choix zéro-infra du site</li>",
+    d17n:'Décision 17', d17q:"Pourquoi un export Notion où le token OAuth ne touche jamais le navigateur ?", d17a:"Sécurité d'abord : le secret reste côté Worker",
+    d17why:"Le Product Brief s'exporte vers Notion en un clic, pour n'importe quel compte visiteur, via OAuth. Le réflexe naïf serait de gérer le jeton d'accès Notion côté client : il fuiterait dans le localStorage ou les logs, inacceptable pour le compte d'un tiers. À la place, tout le flux vit dans le Worker : pm-export.js construit les blocs Notion depuis la session puis appelle POST /export/prepare, qui stocke le payload en KV de façon transitoire (TTL 10 min) et renvoie l'URL d'autorisation. Après consentement, GET /oauth/notion/callback échange le code contre un token, crée la page dans l'espace du visiteur, puis jette le token et notifie la popup par postMessage. Le navigateur ne voit jamais le secret. La même plomberie OAuth resservira pour Jira, Linear ou Confluence sans la réécrire.",
+    d17al:"Alternatives rejetées",
+    d17alts:"<li>Gérer le token côté client (localStorage) : fuite garantie dans le storage ou les logs, exclu pour un compte visiteur tiers</li><li>Un token d'intégration statique partagé : écrirait dans mon espace Notion, pas celui du visiteur, et n'est pas admissible en public</li><li>Un backend dédié à l'OAuth : infra et coût récurrents, contraire au choix zéro-serveur (un simple Worker + KV suffit)</li>",
     footerTech:'Architecture technique',
     footerKrl1:'KRL1 · Couches de décision',
     footerHome:'Portfolio'
@@ -492,7 +511,7 @@ var I18N = {
     back:'Back to portfolio',
     h1:'The <span class="grad">product</span> decisions<br>behind the site',
     subtitle:"The choices that shape the site: PM Toolkit, KRL1, static architecture, PLG, observability. For each one, the alternatives I ruled out and why.",
-    sectionLbl:'15 product decisions',
+    sectionLbl:'17 product decisions',
     altslbl:'Rejected alternatives',
     d01n:'Decision 01', d01q:"Why an AI assistant on a PM portfolio?", d01a:"PLG through the product, not the CV",
     d01why:"A classic PM portfolio is a PDF or a LinkedIn page. To demonstrate AI PM skills, the portfolio itself has to be an AI product. KRL1 is the concrete proof: a PM who understands LLMs does not say it, they show it. When a recruiter interacts with KRL1, they do not need to read \"I understand AI systems\" in a summary. They experience it directly. That is Product-Led Growth applied to job searching: the product carries its own sales pitch. KRL1 also qualifies visitors naturally: someone who spends 5 minutes exploring PM tools through KRL1 is more engaged than a 10-second CV scanner. The LinkedIn message \"I tested KRL1 and...\" is a strong engagement signal. The assistant exists for the recruiter, not for me.",
@@ -545,6 +564,10 @@ var I18N = {
     d16why:"The fetch of the 13 RSS feeds had already moved into the Worker (VEILLE_SOURCES constant, parseRSSItems via lightweight regex, Groq synthesis, KV archiving by ISO week) : Make was only acting as a weekly HTTP timer. A Cloudflare Cron Trigger does exactly that triggering with no external dependency : a scheduled() handler in the Worker plus one crons line in wrangler.toml. The cron runs inside the Worker, so there is no secret to pass around, and the trigger is versioned with the code. Result : the watch archives itself every Monday 6am UTC and the history grows on its own, one card per ISO week.",
     d16al:"Rejected alternatives",
     d16alts:"<li>Keep Make as an HTTP cron trigger : external dependency and a secret to manage for what is just a weekly timer</li><li>Keep Make with 1 RSS + Aggregator module per source : manual config x13, fragile to any feed change</li><li>Third-party RSS aggregation service : recurring cost, external dependency, against the site's zero-infra philosophy</li>",
+    d17n:'Decision 17', d17q:"Why a Notion export where the OAuth token never touches the browser?", d17a:"Security first: the secret stays inside the Worker",
+    d17why:"The Product Brief exports to Notion in one click, for any visitor account, via OAuth. The naive reflex would be to handle the Notion access token client-side: it would leak into localStorage or logs, unacceptable for a third party's account. Instead, the whole flow lives in the Worker: pm-export.js builds the Notion blocks from the session, then calls POST /export/prepare, which transiently stores the payload in KV (10 min TTL) and returns the authorize URL. After consent, GET /oauth/notion/callback exchanges the code for a token, creates the page in the visitor's own workspace, then discards the token and notifies the popup via postMessage. The browser never sees the secret. The same OAuth plumbing will be reused for Jira, Linear or Confluence without rewriting it.",
+    d17al:"Rejected alternatives",
+    d17alts:"<li>Handle the token client-side (localStorage): guaranteed leak into storage or logs, ruled out for a third-party visitor account</li><li>A shared static integration token: it would write into my own Notion workspace, not the visitor's, and isn't eligible for public use</li><li>A dedicated OAuth backend: recurring infra and cost, against the zero-server choice (a plain Worker + KV is enough)</li>",
     footerTech:'Technical architecture',
     footerKrl1:'KRL1 · Decision layers',
     footerHome:'Portfolio'
@@ -562,7 +585,7 @@ function setLang(lang){
   document.getElementById('h1Main').innerHTML = T.h1;
   document.getElementById('subtitleTxt').textContent = T.subtitle;
   document.getElementById('sectionLbl').textContent = T.sectionLbl;
-  for(var i=1;i<=16;i++){
+  for(var i=1;i<=17;i++){
     var n = ('0'+i).slice(-2);
     ['n','q','a','why'].forEach(function(k){
       var el = document.getElementById('d'+n+k);
