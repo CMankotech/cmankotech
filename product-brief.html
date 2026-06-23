@@ -493,6 +493,7 @@ function buildMarkdown(){
   var T = I18N[lang];
   var ctx = PMSession.context();
   var L = [];
+  var sep = lang === 'en' ? ':' : ' :';  // EN: "Label:"  FR: "Label :"
   L.push('# Product Brief' + (ctx.product && ctx.product.name ? ' — ' + ctx.product.name : ''));
   L.push('');
   if(ctx.product && ctx.product.description && ctx.product.description !== (ctx.product.name||'')) L.push('> ' + ctx.product.description + '\n');
@@ -501,8 +502,8 @@ function buildMarkdown(){
 
   if(ctx._problem || ctx._target || ctx.hypotheses.length){
     H(T.sec.discovery);
-    if(ctx._problem) L.push('**' + T.lbl.problem + ' :** ' + ctx._problem);
-    if(ctx._target) L.push('**' + T.lbl.target + ' :** ' + ctx._target);
+    if(ctx._problem) L.push('**' + T.lbl.problem + sep + '** ' + ctx._problem);
+    if(ctx._target) L.push('**' + T.lbl.target + sep + '** ' + ctx._target);
     var hb = PMSession.fmtBlock('hypothesis', ctx.hypotheses);
     if(hb) L.push('\n' + hb);
     L.push('');
@@ -535,9 +536,9 @@ function buildMarkdown(){
     if(ctx.roadmap.narrative) L.push('> ' + ctx.roadmap.narrative + '\n');
     (ctx.roadmap.periods || []).forEach(function(pr){
       L.push('### ' + (pr.label || pr.key || '') + (pr.theme ? ' — ' + pr.theme : ''));
-      (pr.features || []).forEach(function(f){ L.push('- **' + f.title + '**' + (f.why ? ' : ' + f.why : '')); });
+      (pr.features || []).forEach(function(f){ L.push('- **' + f.title + '**' + (f.why ? sep + ' ' + f.why : '')); });
     });
-    if((ctx.roadmap.talkingPoints||[]).length){ L.push('\n**' + T.lbl.talking + ' :**'); ctx.roadmap.talkingPoints.forEach(function(t){ L.push('- ' + t); }); }
+    if((ctx.roadmap.talkingPoints||[]).length){ L.push('\n**' + T.lbl.talking + sep + '**'); ctx.roadmap.talkingPoints.forEach(function(t){ L.push('- ' + t); }); }
     L.push('');
   }
   L.push('\n---\n_' + T.footerRole + ' · Carlin Mankoto · cmankotech.github.io/cmankotech_');
