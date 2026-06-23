@@ -1484,6 +1484,12 @@ export default {
       return handleStats(env);
     }
 
+    // Notion OAuth callback : browser redirect from Notion. No origin check
+    // (it is a top-level navigation from the Notion domain, not a cmankotech fetch).
+    if (request.method === 'GET' && url.pathname === '/oauth/notion/callback') {
+      return handleNotionCallback(request, url, env, ctx);
+    }
+
     // Veille history : public, returns list of available weeks
     if (request.method === 'GET' && url.pathname === '/veille/history') {
       const index = await env.VEILLE_STORE.get('veille_index', { type: 'json' });
@@ -1614,6 +1620,11 @@ export default {
 
     if (url.pathname === '/feedback') {
       return handleFeedback(body, env, ctx);
+    }
+
+    // Notion export : stash the page payload + return the Notion authorize URL.
+    if (url.pathname === '/export/prepare') {
+      return handleExportPrepare(body, request, env);
     }
 
     return proxyGroq(body, env, ctx);
@@ -2342,4 +2353,173 @@ function corsHeaders() {
     'Access-Control-Allow-Headers': 'Content-Type',
     'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'",
   };
+}
+
+// ─── Notion export (one-click OAuth, any account) ────────────────────────────
+// Flow: the tool POSTs the page payload to /export/prepare → we stash it in KV
+// under a random state and return the Notion authorize URL. After consent Notion
+// redirects to /oauth/notion/callback, where we exchange the code for a token,
+// create the page in the visitor's own workspace, then discard the token. The
+// token never reaches the browser ; the payload lives <=10 min in KV.
+
+const NOTION_VERSION = '2022-06-28';
+const OAUTH_STATE_TTL = 600;     // 10 minutes
+const EXPORT_MAX_BLOCKS = 400;
+
+function notionRedirectUri(reqUrl) {
+  return new URL(reqUrl).origin + '/oauth/notion/callback';
+}
+
+async function handleExportPrepare(body, request, env) {
+  if (!env.NOTION_CLIENT_ID) {
+    return jsonResponse({ error: 'Notion export is not configured.' }, 503);
+  }
+  const payload = body && body.payload;
+  if (!payload || typeof payload.title !== 'string' || !Array.isArray(payload.blocks)) {
+    return jsonResponse({ error: 'Invalid export payload.' }, 400);
+  }
+  if (!payload.blocks.length || payload.blocks.length > EXPORT_MAX_BLOCKS) {
+    return jsonResponse({ error: 'Nothing to export, or content too large.' }, 400);
+  }
+
+  const state = crypto.randomUUID();
+  try {
+    await env.VEILLE_STORE.put(
+      'oauth_state_' + state,
+      JSON.stringify({ provider: 'notion', payload }),
+      { expirationTtl: OAUTH_STATE_TTL },
+    );
+  } catch {
+    return jsonResponse({ error: 'Could not start export. Try again.' }, 500);
+  }
+
+  const redirectUri = notionRedirectUri(request.url);
+  const authorizeUrl = 'https://api.notion.com/v1/oauth/authorize'
+    + '?client_id=' + encodeURIComponent(env.NOTION_CLIENT_ID)
+    + '&response_type=code&owner=user'
+    + '&redirect_uri=' + encodeURIComponent(redirectUri)
+    + '&state=' + encodeURIComponent(state);
+
+  return jsonResponse({ authorizeUrl });
+}
+
+async function handleNotionCallback(request, url, env, ctx) {
+  const code = url.searchParams.get('code');
+  const state = url.searchParams.get('state');
+  const oauthErr = url.searchParams.get('error');
+  if (oauthErr) return notionPopupResult(false, oauthErr === 'access_denied' ? 'access_denied' : 'oauth_error');
+  if (!code || !state) return notionPopupResult(false, 'missing_code');
+
+  const key = 'oauth_state_' + state;
+  let stored = null;
+  try { stored = await env.VEILLE_STORE.get(key, { type: 'json' }); } catch { stored = null; }
+  if (!stored || stored.provider !== 'notion' || !stored.payload) return notionPopupResult(false, 'expired');
+  // one-time use : drop the stash as soon as we have it
+  ctx?.waitUntil?.(env.VEILLE_STORE.delete(key).catch(() => {}));
+
+  const redirectUri = notionRedirectUri(request.url);
+  let token = null;
+  try { token = await notionExchangeToken(env, code, redirectUri); } catch { token = null; }
+  if (!token) return notionPopupResult(false, 'token_failed');
+
+  let parentId = null;
+  try { parentId = await notionFindParent(token); } catch { parentId = null; }
+  if (!parentId) return notionPopupResult(false, 'no_parent');
+
+  let pageUrl = null;
+  try { pageUrl = await notionCreatePage(token, parentId, stored.payload); } catch { pageUrl = null; }
+  if (!pageUrl) return notionPopupResult(false, 'create_failed');
+
+  ctx?.waitUntil?.(incrementCounter(env));
+  return notionPopupResult(true, pageUrl);
+}
+
+async function notionExchangeToken(env, code, redirectUri) {
+  const basic = btoa(env.NOTION_CLIENT_ID + ':' + env.NOTION_CLIENT_SECRET);
+  const res = await fetch('https://api.notion.com/v1/oauth/token', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Basic ' + basic,
+      'Content-Type': 'application/json',
+      'Notion-Version': NOTION_VERSION,
+    },
+    body: JSON.stringify({ grant_type: 'authorization_code', code, redirect_uri: redirectUri }),
+  });
+  if (!res.ok) return null;
+  const data = await res.json();
+  return data.access_token || null;
+}
+
+async function notionFindParent(token) {
+  const res = await fetch('https://api.notion.com/v1/search', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+      'Notion-Version': NOTION_VERSION,
+    },
+    body: JSON.stringify({ filter: { property: 'object', value: 'page' }, page_size: 5 }),
+  });
+  if (!res.ok) return null;
+  const data = await res.json();
+  const results = Array.isArray(data.results) ? data.results : [];
+  const page = results.find(r => r && r.object === 'page');
+  return page ? page.id : null;
+}
+
+async function notionCreatePage(token, parentId, payload) {
+  const first = payload.blocks.slice(0, 100);
+  const rest = payload.blocks.slice(100);
+  const res = await fetch('https://api.notion.com/v1/pages', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+      'Notion-Version': NOTION_VERSION,
+    },
+    body: JSON.stringify({
+      parent: { page_id: parentId },
+      properties: { title: { title: [{ text: { content: String(payload.title || 'Export').slice(0, 2000) } }] } },
+      children: first,
+    }),
+  });
+  if (!res.ok) return null;
+  const data = await res.json();
+  const pageId = data.id;
+  for (let i = 0; i < rest.length; i += 100) {
+    const batch = rest.slice(i, i + 100);
+    try {
+      await fetch('https://api.notion.com/v1/blocks/' + pageId + '/children', {
+        method: 'PATCH',
+        headers: {
+          Authorization: 'Bearer ' + token,
+          'Content-Type': 'application/json',
+          'Notion-Version': NOTION_VERSION,
+        },
+        body: JSON.stringify({ children: batch }),
+      });
+    } catch { /* best effort : the page already exists */ }
+  }
+  return data.url || ('https://www.notion.so/' + String(pageId || '').replace(/-/g, ''));
+}
+
+// Tiny self-contained HTML page rendered inside the OAuth popup : it posts the
+// result back to the opener (cmankotech) and closes. CSP allows only its own
+// inline script/style, nothing external.
+function notionPopupResult(ok, data) {
+  const msg = JSON.stringify({ source: 'pm-export', ok: !!ok, url: ok ? data : '', error: ok ? '' : String(data || 'error') })
+    .replace(/</g, '\\u003c');
+  const label = ok ? 'Page créée. Vous pouvez fermer cette fenêtre.' : 'Export interrompu. Vous pouvez fermer cette fenêtre.';
+  const html = '<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Notion</title></head>'
+    + '<body style="font-family:system-ui,sans-serif;background:#08080f;color:#e2e8f0;display:flex;align-items:center;justify-content:center;height:100vh;margin:0">'
+    + '<p style="opacity:.8">' + label + '</p>'
+    + '<script>(function(){try{if(window.opener)window.opener.postMessage(' + msg + ',' + JSON.stringify(ALLOWED_ORIGIN) + ');}catch(e){}setTimeout(function(){try{window.close();}catch(e){}},500);})();</script>'
+    + '</body></html>';
+  return new Response(html, {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Content-Security-Policy': "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'",
+    },
+  });
 }

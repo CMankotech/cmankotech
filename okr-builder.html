@@ -412,6 +412,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       </div>
       <div style="display:flex;gap:0.5rem;align-items:center">
         <button class="btn-copy-all glass-shimmer glass-focus" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
+        <button class="btn-copy-all glass-shimmer glass-focus" id="notionBtn" onclick="PMExport.run('okr', this, document.getElementById('pmxNotionStatus'))">&#11014; <span data-pmx-label>Export Notion</span></button>
+        <span class="pmx-status" id="pmxNotionStatus"></span>
         <button class="btn-rerun glass-shimmer glass-focus" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
         <button class="btn-reset glass-shimmer glass-focus" onclick="reset()">&#8635; Recommencer</button>
       </div>
@@ -884,6 +886,7 @@ function applyLangExtras(lang) {
 <script src="pm-examples.js"></script>
 <script src="pm-core.js"></script>
 <script src="pm-session.js"></script>
+<script src="pm-export.js"></script>
 <script>
 window.pmImportInsights = function(opts){
   if(!window.PMSession) return [];

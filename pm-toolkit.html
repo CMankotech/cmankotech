@@ -108,6 +108,25 @@ h1{font-family:'DM Sans',sans-serif;font-weight:500;margin:0}
 .pb-demo-select:focus{outline:none;border-color:rgba(167,139,250,0.6)}
 .pb-demo-select option{background:#0e0e1a;color:var(--text);text-transform:none;letter-spacing:0;font-weight:400}
 .pb-demo-wrap .pb-chev{color:#c4b5fd}
+/* Demo choice modal */
+.demo-modal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:1.25rem;background:rgba(6,6,14,0.72);animation:dmFade 0.2s ease}
+.demo-modal[hidden]{display:none}
+@keyframes dmFade{from{opacity:0}to{opacity:1}}
+.demo-modal-card{position:relative;width:100%;max-width:460px;background:#13131f;border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:1.75rem 1.6rem 1.6rem;box-shadow:0 24px 60px rgba(0,0,0,0.5);animation:dmRise 0.24s cubic-bezier(0.22,1,0.36,1)}
+@keyframes dmRise{from{opacity:0;transform:translateY(14px) scale(0.98)}to{opacity:1;transform:none}}
+.demo-modal-close{position:absolute;top:0.85rem;right:0.95rem;width:30px;height:30px;border-radius:99px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:var(--muted);font-size:1.15rem;line-height:1;cursor:pointer;transition:all 0.2s}
+.demo-modal-close:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+.demo-modal-eyebrow{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#c4b5fd}
+.demo-modal-title{margin:0.5rem 0 0.3rem;font-size:1.3rem;font-weight:700;color:var(--text)}
+.demo-modal-sub{margin:0 0 1.25rem;font-size:0.85rem;color:var(--muted);line-height:1.5}
+.demo-modal-opts{display:flex;flex-direction:column;gap:0.7rem}
+.demo-opt{display:flex;align-items:flex-start;gap:0.85rem;text-align:left;padding:0.95rem 1rem;border-radius:13px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);cursor:pointer;transition:all 0.18s;font-family:'DM Sans',sans-serif}
+.demo-opt:hover{border-color:rgba(167,139,250,0.5);background:rgba(167,139,250,0.08);transform:translateY(-1px)}
+.demo-opt-ico{font-size:1.3rem;line-height:1.3;flex-shrink:0}
+.demo-opt-txt{display:flex;flex-direction:column;gap:0.2rem}
+.demo-opt-h{font-size:0.95rem;font-weight:700;color:var(--text)}
+.demo-opt-d{font-size:0.8rem;color:var(--muted);line-height:1.45}
+[data-theme="light"] .demo-modal-card{background:#fff}
 [data-theme="light"] .pb-demo-select option{background:#fff;color:#0f172a}
 [data-theme="light"] .project-bar{background:rgba(255,255,255,0.85);border-color:rgba(15,23,42,0.09)}
 [data-theme="light"] .pb-select-wrap select{background:rgba(15,23,42,0.04);color:#0f172a}
@@ -351,8 +370,34 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <button class="pb-btn" id="pbRenameBtn" onclick="renameCurrentProject()" title="Renommer">✎</button>
       <button class="pb-btn pb-danger" id="pbDelBtn" onclick="deleteCurrentProject()" title="Supprimer">🗑</button>
       <div class="pb-select-wrap pb-demo-wrap">
-        <select id="demoSelect" class="pb-demo-select" onchange="if(this.value){loadGuidedDemo(this.value);this.selectedIndex=0;}" aria-label="Démo guidée"></select>
+        <select id="demoSelect" class="pb-demo-select" onchange="if(this.value){openDemoChoice(this.value);this.selectedIndex=0;}" aria-label="Démo guidée"></select>
         <svg class="pb-chev" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEMO CHOICE MODAL -->
+  <div class="demo-modal" id="demoModal" role="dialog" aria-modal="true" aria-labelledby="demoModalTitle" hidden>
+    <div class="demo-modal-card">
+      <button class="demo-modal-close" onclick="closeDemoChoice()" aria-label="Fermer">×</button>
+      <span class="demo-modal-eyebrow" id="demoModalEyebrow">✨ Démo</span>
+      <h3 class="demo-modal-title" id="demoModalTitle">Que veux-tu faire&nbsp;?</h3>
+      <p class="demo-modal-sub" id="demoModalSub">Choisis comment découvrir ce scénario.</p>
+      <div class="demo-modal-opts">
+        <button class="demo-opt" id="demoOptBrief" onclick="seedDemoBrief()">
+          <span class="demo-opt-ico">⚡</span>
+          <span class="demo-opt-txt">
+            <span class="demo-opt-h" id="demoOptBriefH">Générer le brief directement</span>
+            <span class="demo-opt-d" id="demoOptBriefD">Saute les étapes et va droit au Product Brief, prérempli avec un exemple complet.</span>
+          </span>
+        </button>
+        <button class="demo-opt" id="demoOptGuided" onclick="startGuidedDemo()">
+          <span class="demo-opt-ico">🧭</span>
+          <span class="demo-opt-txt">
+            <span class="demo-opt-h" id="demoOptGuidedH">Faire le parcours guidé</span>
+            <span class="demo-opt-d" id="demoOptGuidedD">Démarre sur la discovery et enchaîne les 6 outils, préremplis avec ce scénario.</span>
+          </span>
+        </button>
       </div>
     </div>
   </div>
@@ -727,6 +772,52 @@ function loadGuidedDemo(key){
   PMSession.createProject(name, key);
   window.location.href = 'discovery-assistant.html' + (_lang==='en' ? '?lang=en' : '');
 }
+
+/* ─── Demo choice modal ─── */
+var _demoPendingKey = null;
+var DEMO_MODAL_I18N = {
+  fr:{ eyebrow:'✨ Démo', title:'Que veux-tu faire&nbsp;?', sub:'Choisis comment découvrir le scénario',
+       briefH:'Générer le brief directement', briefD:'Saute les étapes et va droit au Product Brief, prérempli avec un exemple complet.',
+       guidedH:'Faire le parcours guidé', guidedD:'Démarre sur la discovery et enchaîne les 6 outils, préremplis avec ce scénario.' },
+  en:{ eyebrow:'✨ Demo', title:'What do you want to do?', sub:'Pick how to explore the scenario',
+       briefH:'Generate the brief directly', briefD:'Skip the steps and jump straight to the Product Brief, prefilled with a full example.',
+       guidedH:'Run the guided journey', guidedD:'Start on discovery and go through the 6 tools, prefilled with this scenario.' }
+};
+function openDemoChoice(key){
+  _demoPendingKey = key;
+  var T = DEMO_MODAL_I18N[_lang] || DEMO_MODAL_I18N.fr;
+  var sc = window.PMExamples ? PMExamples.find(key) : null;
+  var label = sc ? ((sc.okr && sc.okr.name) || key) : key;
+  document.getElementById('demoModalEyebrow').innerHTML = T.eyebrow;
+  document.getElementById('demoModalTitle').innerHTML = T.title;
+  document.getElementById('demoModalSub').textContent = T.sub + ' « ' + label + ' ».';
+  document.getElementById('demoOptBriefH').textContent = T.briefH;
+  document.getElementById('demoOptBriefD').textContent = T.briefD;
+  document.getElementById('demoOptGuidedH').textContent = T.guidedH;
+  document.getElementById('demoOptGuidedD').textContent = T.guidedD;
+  document.getElementById('demoModal').hidden = false;
+}
+function closeDemoChoice(){
+  document.getElementById('demoModal').hidden = true;
+  _demoPendingKey = null;
+}
+function startGuidedDemo(){
+  var key = _demoPendingKey;
+  closeDemoChoice();
+  if(key) loadGuidedDemo(key);
+}
+function seedDemoBrief(){
+  closeDemoChoice();
+  if(!window.PMSession || !window.PMExamples || !PMExamples.DEMO_SESSION) return;
+  // Same path as the ?seed presenter fallback : seed a complete pre-generated
+  // session, then land directly on a rich Product Brief (zero AI calls).
+  PMSession.createProject(_lang==='en'?'Demo brief':'Brief de démo', 'plantaime');
+  var demo = PMExamples.DEMO_SESSION;
+  PMSession.FLOW.forEach(function(t){ if(demo[t]) PMSession.save(t, demo[t]); });
+  window.location.href = 'product-brief.html' + (_lang==='en' ? '?lang=en' : '');
+}
+document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ var m=document.getElementById('demoModal'); if(m && !m.hidden) closeDemoChoice(); } });
+document.addEventListener('click', function(e){ var m=document.getElementById('demoModal'); if(m && !m.hidden && e.target===m) closeDemoChoice(); });
 
 /* ─── i18n ─── */
 var I18N = {
