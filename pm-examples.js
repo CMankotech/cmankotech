@@ -214,6 +214,204 @@
     }
   ];
 
+  /* ── English translations of the guided scenarios (same shape as SCENARIOS) ──
+     find() merges these over the base scenario when the site language is English,
+     so the guided-demo prefill is in the visitor's language. */
+  var SCENARIOS_EN = {
+    plantaime: {
+      discovery: {
+        problem: "New houseplant owners let them die because they don't know when or how to water and position them.",
+        target: "Urban millennials 25-35, plant beginners",
+        context: "B2C mobile plant-care app, acquisition phase"
+      },
+      interview: {
+        context: "Plant-care mobile app, retention phase, 12k users",
+        notes: "Lea, 28, lives in a flat, has owned 6 plants for a year.\n\n- Has already lost 3 plants, unsure whether she was over or under watering.\n- Uses generic phone reminders but never adapts them to the season.\n- Downloaded the app for photo diagnosis but doesn't come back weekly.\n- Would like advice tailored to the light in her living room.\n- Quote: \"I just want to be told what to do today, without becoming a botanist\".",
+        interviews: [
+          { label: "Interview 1: Lea, urban beginner", text: "Lea, 28, 6 plants in a flat, user for 2 months.\n\n- Lost 3 plants, unsure how to dose watering.\n- Finds photo diagnosis impressive but forgets to return to the app.\n- Quote: \"I want to be told what to do today, not a botany lesson\"." },
+          { label: "Interview 2: Karim, collector", text: "Karim, 34, 40 plants, enthusiast, daily user.\n\n- Wants a per-plant care calendar, not generic reminders.\n- Frustrated he can't log his own observations.\n- Quote: \"The app treats me like a beginner while I have 40 plants to track\"." }
+        ]
+      },
+      okr: {
+        name: "Plantaime", type: "Mobile app",
+        ambitions: "Raise first-month retention, which is too low, and turn photo diagnosis into a weekly habit. Prepare a premium offer without breaking the free experience.",
+        metrics: "M1 retention 19%, 12k active users, 2.3 sessions/week, premium conversion 4%"
+      },
+      backlog: {
+        context: "Plant-care mobile app, 12k users, M1 retention priority",
+        stories: [
+          "Create per-plant, per-season personalised watering reminders",
+          "Add a weekly care calendar on the home screen",
+          "Let users add notes and follow-up photos for each plant",
+          "Send a photo-diagnosis notification once a week",
+          "Launch a premium offer with light-based personalised advice"
+        ]
+      },
+      epic: {
+        title: "Personalised care calendar",
+        desc: "Users don't return weekly because reminders are generic. Build a per-plant care calendar that adapts to species, season and declared light, with a 'to do today' view on the home screen.",
+        persona: "Urban beginner who wants simple instructions",
+        tech: "React Native mobile app, push notifications, Node backend"
+      },
+      roadmap: {
+        product: "Plantaime",
+        vision: "Become the assistant that keeps every urban beginner's plants alive.",
+        features: [
+          { text: "Per-plant personalised watering reminders", period: "now" },
+          { text: "'To do today' view on the home screen", period: "now" },
+          { text: "Per-plant notes and follow-up photos", period: "next" },
+          { text: "Premium personalised-advice offer", period: "next" },
+          { text: "Disease diagnosis by photo", period: "later" },
+          { text: "Community and cutting exchange", period: "later" }
+        ]
+      }
+    },
+    facturio: {
+      discovery: {
+        problem: "Freelancers lose time and revenue chasing clients by hand for unpaid invoices.",
+        target: "Tech and creative freelancers, 25-45",
+        context: "Invoicing and payment-chasing app, B2B independents"
+      },
+      interview: {
+        context: "Invoicing app for freelancers, activation phase",
+        notes: "Thomas, 36, freelance developer, 15 to 20 invoices a month.\n\n- Chases clients by hand over email, often late or not at all.\n- Already lost 2000 EUR on an invoice never chased in the rush.\n- Tracks everything in a spreadsheet he forgets to update.\n- Wants automatic reminders but a customisable tone.\n- Quote: \"Chasing is awkward and time-consuming. If it were automatic, I'd sleep better\".",
+        interviews: [
+          { label: "Interview 1: Thomas, freelance dev", text: "Thomas, 36, 15 to 20 invoices a month, user for 1 month.\n\n- Chases by hand, often late, lost 2000 EUR on a forgotten invoice.\n- Tracking in a spreadsheet that's never up to date.\n- Quote: \"If chasing were automatic, I'd sleep better\"." },
+          { label: "Interview 2: Ines, designer", text: "Ines, 29, freelance designer, big clients who pay at 60 days.\n\n- Hates chasing clients for fear of seeming pushy.\n- Wants to see at a glance what's paid, pending, overdue.\n- Quote: \"I want a dashboard that tells me where my money is\"." }
+        ]
+      },
+      okr: {
+        name: "Facturio", type: "Fintech",
+        ambitions: "Make automatic reminders the default habit and shorten the average payment delay. Convert free users who invoice regularly to the paid plan.",
+        metrics: "Average payment delay 47 days, 8k active freelancers, 22% enable auto-reminders, paid conversion 6%"
+      },
+      backlog: {
+        context: "Freelancer invoicing app, 8k users, reminder-activation priority",
+        stories: [
+          "Enable automatic payment reminders with customisable templates",
+          "Show a paid / pending / overdue dashboard",
+          "Import existing invoices from a spreadsheet or PDF",
+          "Alert the freelancer when an invoice goes past due",
+          "Offer online payment via a link in the invoice"
+        ]
+      },
+      epic: {
+        title: "Automatic payment reminders",
+        desc: "Freelancers chase badly and late, which stretches payment delays. Set up automatic reminder sequences, triggered at the due date, with customisable message templates and per-invoice status tracking.",
+        persona: "Freelancer who hates chasing clients",
+        tech: "Web SaaS, Python backend, emailing and payment integration"
+      },
+      roadmap: {
+        product: "Facturio",
+        vision: "Let every freelancer get paid on time without ever chasing anyone.",
+        features: [
+          { text: "Automatic reminders at the due date", period: "now" },
+          { text: "Paid / pending / overdue dashboard", period: "now" },
+          { text: "Import of existing invoices", period: "next" },
+          { text: "Online payment via link", period: "next" },
+          { text: "Cash-flow forecast", period: "later" },
+          { text: "Reminders by SMS and postal mail", period: "later" }
+        ]
+      }
+    },
+    cohortia: {
+      discovery: {
+        problem: "Online learners drop their courses before the end, which hurts perceived value and word of mouth.",
+        target: "Working adults 25-40 reskilling or upskilling",
+        context: "EdTech online-course platform, B2C with an emerging enterprise offer"
+      },
+      interview: {
+        context: "Online-course platform, retention phase and enterprise-offer launch",
+        notes: "Sarah, 31, reskilling into data, bought 3 courses, finished only one.\n\n- Starts motivated then drops off after two weeks with no nudge.\n- Feels alone, with no sense of her real progress.\n- Would like cohort sessions with other learners to stay on track.\n- Quote: \"On my own I quit. With a group and deadlines, I stick with it\".",
+        interviews: [
+          { label: "Interview 1: Sarah, reskilling", text: "Sarah, 31, reskilling into data, 3 courses bought, 1 finished.\n\n- Drops off after 2 weeks with no nudge or progress marker.\n- Quote: \"Alone I quit, with a group and deadlines I stick with it\"." },
+          { label: "Interview 2: David, L&D manager", text: "David, 45, L&D manager at a mid-size company, evaluating the enterprise offer.\n\n- Wants to track his teams' progress and prove ROI to leadership.\n- Blocked by the lack of an admin dashboard.\n- Quote: \"Without team reporting, I can't justify the budget\"." }
+        ]
+      },
+      okr: {
+        name: "Cohortia", type: "EdTech",
+        ambitions: "Lift the course completion rate, which is too low, and launch a credible enterprise offer with team reporting. Bring down the acquisition cost, which has climbed.",
+        metrics: "Completion rate 24%, CAC 38 EUR, 16k active learners, 4 pilot companies"
+      },
+      backlog: {
+        context: "EdTech platform, 16k learners, completion and enterprise-offer priority",
+        stories: [
+          "Launch cohort courses with start dates and deadlines",
+          "Show a progress bar and re-engagement nudges",
+          "Build an admin dashboard for companies",
+          "Add certifications and badges shareable on LinkedIn",
+          "Let a company enrol its employees in bulk"
+        ]
+      },
+      epic: {
+        title: "Cohort-based courses",
+        desc: "Learners on their own drop off fast. Introduce cohort courses with a shared start date, paced deadlines, peer checkpoints and re-engagement nudges to lift completion.",
+        persona: "Reskilling learner who needs structure",
+        tech: "Web platform, Node backend, emailing, video"
+      },
+      roadmap: {
+        product: "Cohortia",
+        vision: "Make online learning a collective experience people actually finish.",
+        features: [
+          { text: "Cohort courses with deadlines", period: "now" },
+          { text: "Progress and re-engagement nudges", period: "now" },
+          { text: "Enterprise admin dashboard", period: "next" },
+          { text: "Certifications and LinkedIn badges", period: "next" },
+          { text: "Personalised course recommendations", period: "later" },
+          { text: "Instructor marketplace", period: "later" }
+        ]
+      }
+    },
+    troquet: {
+      discovery: {
+        problem: "People who want to sell second-hand items near them find the process slow and unsafe, and abandon their listings.",
+        target: "City dwellers 25-45, occasional sellers and buyers",
+        context: "Mobile marketplace for local second-hand buying and selling between individuals"
+      },
+      interview: {
+        context: "Local second-hand marketplace, supply-liquidity phase",
+        notes: "Manon, 30, sells and buys second-hand, mostly furniture and clothes.\n\n- Posts a listing then drowns in \"is this still available?\" messages.\n- Gave up two sales for fear of payment and in-person handover.\n- Finds listing too slow, especially setting the price.\n- Quote: \"I want to sell fast and stress-free, not haggle for three days\".",
+        interviews: [
+          { label: "Interview 1: Manon, occasional seller", text: "Manon, 30, sells second-hand furniture and clothes.\n\n- Drowns in \"still available?\" messages, gives up for fear of payment.\n- Finds listing too slow, especially setting the price.\n- Quote: \"I want to sell fast and stress-free\"." },
+          { label: "Interview 2: Yanis, buyer", text: "Yanis, 27, buys second-hand for price and ecology.\n\n- Wary of items' real condition and payment scams.\n- Wants to reserve and pay safely in the app.\n- Quote: \"If payment is protected, I buy without hesitation\"." }
+        ]
+      },
+      okr: {
+        name: "Troquet", type: "Marketplace",
+        ambitions: "Streamline listing and secure transactions to grow completed sales. Strengthen local liquidity so every listing finds a buyer fast.",
+        metrics: "35% of listings sold within 14 days, 25k active users, average time to sell 11 days, 3.1 messages before a sale"
+      },
+      backlog: {
+        context: "Local second-hand marketplace, 25k users, completed-sales priority",
+        stories: [
+          "Pre-fill a suggested price from a photo and a category",
+          "Integrate secure payment with escrow",
+          "Add automatic quick replies to frequent questions",
+          "Offer pickup points and optional delivery",
+          "Surface listings near the buyer"
+        ]
+      },
+      epic: {
+        title: "Built-in secure payment",
+        desc: "Sales fall through for fear of scams and in-person handover. Integrate secure escrow payment, released on delivery, plus a delivery option and pickup points, to build trust between buyers and sellers.",
+        persona: "Occasional seller who wants to sell fast and safely",
+        tech: "Mobile app, escrow payment, carrier integration"
+      },
+      roadmap: {
+        product: "Troquet",
+        vision: "Make second-hand buying and selling between neighbours as simple and safe as buying new.",
+        features: [
+          { text: "Automatic suggested price at listing", period: "now" },
+          { text: "Secure payment with escrow", period: "now" },
+          { text: "Automatic quick replies", period: "next" },
+          { text: "Delivery and pickup points", period: "next" },
+          { text: "Surfacing of nearby listings", period: "later" },
+          { text: "Authentication of valuable items", period: "later" }
+        ]
+      }
+    }
+  };
+
   /* ── Baked demo session (Plantaime) ──
      A fully generated session — not just form inputs — so the guided demo can land
      straight on a complete Product Brief without any live AI call. Shapes match what
@@ -331,19 +529,32 @@
   }
   function current() { return SCENARIOS[idx()]; }
 
-  // Lookup a scenario by its key (used by the guided journey, deterministic).
-  function find(key) {
-    for (var i = 0; i < SCENARIOS.length; i++) { if (SCENARIOS[i].key === key) return SCENARIOS[i]; }
-    return null;
+  // Current site language (English guided demos when the visitor is in EN).
+  function curLang() {
+    try { if (G.PMSession && PMSession.lang) return PMSession.lang(); } catch (e) {}
+    return 'fr';
   }
-  // Lightweight list for the hub scenario picker.
+  // Lookup a scenario by its key (used by the guided journey, deterministic).
+  // Returns the English variant when the site is in English so the prefill matches.
+  function find(key) {
+    var base = null;
+    for (var i = 0; i < SCENARIOS.length; i++) { if (SCENARIOS[i].key === key) { base = SCENARIOS[i]; break; } }
+    if (!base) return null;
+    if (curLang() === 'en' && SCENARIOS_EN[key]) {
+      return Object.assign({ key: base.key }, SCENARIOS_EN[key]);
+    }
+    return base;
+  }
+  // Lightweight list for the hub scenario picker (localised).
   function list() {
+    var en = curLang() === 'en';
     return SCENARIOS.map(function(s) {
+      var loc = (en && SCENARIOS_EN[s.key]) ? SCENARIOS_EN[s.key] : s;
       return {
         key: s.key,
-        name: (s.okr && s.okr.name) || s.key,
-        type: (s.okr && s.okr.type) || '',
-        tagline: (s.discovery && s.discovery.context) || ''
+        name: (loc.okr && loc.okr.name) || s.key,
+        type: (loc.okr && loc.okr.type) || '',
+        tagline: (loc.discovery && loc.discovery.context) || ''
       };
     });
   }
