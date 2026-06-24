@@ -85,6 +85,12 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .step-label{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--acc)}
 .step-desc{font-size:0.68rem;color:var(--dim)}
 .step-body{margin-left:52px}
+/* Indexing banner : one-time preprocessing, visually distinct from the numbered steps */
+.index-banner{display:flex;align-items:center;gap:0.85rem;padding:0.75rem 1rem;margin-bottom:1.6rem;border:1px dashed var(--border);border-radius:11px;background:rgba(255,255,255,0.02)}
+.index-ico{font-size:1.15rem;opacity:0.85;flex-shrink:0;line-height:1}
+.index-label{font-family:'Syne',sans-serif;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
+.index-detail{font-size:0.72rem;color:var(--dim);margin-top:0.25rem;font-family:'Geist','DM Sans',monospace;font-variant-numeric:tabular-nums}
+[data-theme="light"] .index-banner{background:rgba(15,23,42,0.02)}
 /* Sequential reveal states : pending (dim) -> active (pulsing) -> done (check) */
 .step{opacity:0.32;filter:saturate(0.55);transition:opacity 0.45s ease,filter 0.45s ease}
 .step.is-active,.step.is-done{opacity:1;filter:none}
@@ -438,6 +444,15 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <button class="btn-reset glass-shimmer glass-focus" onclick="resetForm()">Nouvelle question</button>
     </div>
 
+    <!-- INDEXING (one-time preprocessing, not a per-query step) -->
+    <div class="index-banner">
+      <div class="index-ico">🗂️</div>
+      <div class="index-body">
+        <div class="index-label" id="indexLabel">Indexation · préparée une fois, pas à chaque requête</div>
+        <div class="index-detail" id="indexDetail">15 documents → 39 chunks · 300 mots, overlap 50 · embeddings bge-small-en-v1.5</div>
+      </div>
+    </div>
+
     <!-- STEP 1: INTENT -->
     <div class="step" id="step1">
       <div class="step-header">
@@ -516,6 +531,8 @@ var i18n = {
     runPlanner: 'Classification de l\'intent (T=0.2)…',
     runEmbed: 'Encodage de la requête + similarité cosinus, top-3 retenus…',
     runSynth: 'Génération de la réponse ancrée dans les chunks (T=0.45)…',
+    indexLabel: 'Indexation · préparée une fois, pas à chaque requête',
+    indexDetail: '15 documents → 39 chunks · 300 mots, overlap 50 · embeddings bge-small-en-v1.5',
     step1label: 'Planner : Classification d\'intent',
     step1desc: 'Analyse la requête et détermine si le retriever doit s\'activer',
     step2label: 'Retriever : Chunks sémantiques',
@@ -544,6 +561,8 @@ var i18n = {
     runPlanner: 'Classifying intent (T=0.2)…',
     runEmbed: 'Encoding the query + cosine similarity, keeping top-3…',
     runSynth: 'Generating the answer grounded in the chunks (T=0.45)…',
+    indexLabel: 'Indexing · built once, not per query',
+    indexDetail: '15 documents → 39 chunks · 300-word, 50 overlap · bge-small-en-v1.5 embeddings',
     step1label: 'Planner : Intent Classification',
     step1desc: 'Analyses the query and decides whether the retriever should activate',
     step2label: 'Retriever : Semantic Chunks',
@@ -576,6 +595,8 @@ function setLang(lang) {
   var _sub = document.getElementById('ragSubtitle'); if (_sub) _sub.textContent = t('subtitle');
   var _intro = document.getElementById('ragIntro'); if (_intro) _intro.innerHTML = t('intro');
   var _bb = document.getElementById('builtByLbl'); if (_bb) _bb.textContent = t('builtBy');
+  var _il = document.getElementById('indexLabel'); if (_il) _il.textContent = t('indexLabel');
+  var _id = document.getElementById('indexDetail'); if (_id) _id.textContent = t('indexDetail');
   var _nt = document.getElementById('navToolsLabel'); if (_nt) _nt.textContent = lang === 'en' ? 'Tools' : 'Outils';
   document.getElementById('chips-fr').style.display = lang === 'fr' ? 'flex' : 'none';
   document.getElementById('chips-en').style.display = lang === 'en' ? 'flex' : 'none';
