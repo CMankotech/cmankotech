@@ -12,6 +12,10 @@ Le Worker contient aussi l'orchestration native du widget KRL1, le pipeline RAG 
 | `POST` | `/orchestrate` | Orchestrateur 2 étapes : planner → synthesis |
 | `POST` | `/orchestrate-stream` | Version streaming SSE de l'orchestrateur |
 | `POST` | `/rag-query` | Recherche sémantique dans la base de connaissances PM, puis synthèse LLM |
+| `GET` | `/rag-chunks` | Expose tous les chunks indexés de la base PM (utilisé par le « Explorer la base » du RAG Explorer) |
+| `POST` | `/export/prepare` | Stash le payload Notion + state en KV (TTL 10 min) et renvoie l'URL d'autorisation OAuth Notion |
+| `GET` | `/oauth/notion/callback` | Callback OAuth Notion : échange le code contre un token, crée la page dans l'espace du visiteur, jette le token |
+| `POST` | `/site-kb-refresh` | Re-extrait les pages live du site dans la base de connaissances du chatbot KRL1 (KV), protégé par `x-make-secret` |
 | `POST` | `/feedback` | Classification feedback via Make si configuré, sinon fallback Groq |
 | `GET` | `/veille` | Dernière veille hebdo stockée dans KV (ou édition spécifique via `?week=24&year=2026`) |
 | `GET` | `/veille/history` | Liste des éditions disponibles (index des semaines stockées dans KV) |
