@@ -85,6 +85,19 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .step-label{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--acc)}
 .step-desc{font-size:0.68rem;color:var(--dim)}
 .step-body{margin-left:52px}
+/* Sequential reveal states : pending (dim) -> active (pulsing) -> done (check) */
+.step{opacity:0.32;filter:saturate(0.55);transition:opacity 0.45s ease,filter 0.45s ease}
+.step.is-active,.step.is-done{opacity:1;filter:none}
+.step-num{transition:all 0.3s ease}
+.step.is-active .step-num{border-color:var(--acc);animation:stepPulse 1.2s ease-in-out infinite}
+@keyframes stepPulse{0%,100%{box-shadow:0 0 0 3px var(--acc-bg)}50%{box-shadow:0 0 0 8px transparent}}
+.step.is-done .step-num{background:rgba(52,211,153,0.16);border-color:rgba(52,211,153,0.5);color:transparent;position:relative}
+.step.is-done .step-num::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#86efac;font-size:1rem;font-weight:700}
+.step-run{display:none;align-items:center;gap:0.5rem;font-size:0.66rem;color:var(--acc);margin-top:0.35rem}
+.step.is-active .step-run{display:flex}
+.step-run::before{content:'';width:11px;height:11px;border-radius:50%;border:2px solid var(--acc-border);border-top-color:var(--acc);animation:spin 0.7s linear infinite;flex-shrink:0}
+.step.is-active .step-body{opacity:0.45;transition:opacity 0.4s ease}
+.step.is-done .step-body{opacity:1}
 
 /* STEP 1 : INTENT */
 .intent-row{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
@@ -426,12 +439,13 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     </div>
 
     <!-- STEP 1: INTENT -->
-    <div class="step">
+    <div class="step" id="step1">
       <div class="step-header">
         <div class="step-num">1</div>
         <div>
           <div class="step-label" id="step1-label">Planner : Classification d'intent</div>
           <div class="step-desc" id="step1-desc">Analyse la requête et détermine si le retriever doit s'activer</div>
+          <div class="step-run" id="step1-run"></div>
         </div>
       </div>
       <div class="step-body">
@@ -447,12 +461,13 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     </div>
 
     <!-- STEP 2: RETRIEVAL -->
-    <div class="step">
+    <div class="step" id="step2">
       <div class="step-header">
         <div class="step-num">2</div>
         <div>
           <div class="step-label" id="step2-label">Retriever : Chunks sémantiques</div>
           <div class="step-desc" id="step2-desc">Top-3 passages les plus proches par similarité cosinus</div>
+          <div class="step-run" id="step2-run"></div>
         </div>
       </div>
       <div class="step-body" id="chunks-body">
@@ -461,12 +476,13 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
     </div>
 
     <!-- STEP 3: REPLY -->
-    <div class="step">
+    <div class="step" id="step3">
       <div class="step-header">
         <div class="step-num">3</div>
         <div>
           <div class="step-label" id="step3-label">Synthesis : Réponse augmentée</div>
           <div class="step-desc" id="step3-desc">Le LLM génère une réponse ancrée dans les chunks récupérés</div>
+          <div class="step-run" id="step3-run"></div>
         </div>
       </div>
       <div class="step-body">
@@ -497,6 +513,9 @@ var i18n = {
     loadingPlanner: 'Planner en cours…',
     loadingRetriever: 'Retrieval sémantique…',
     loadingSynthesis: 'Synthèse augmentée…',
+    runPlanner: 'Classification de l\'intent (T=0.2)…',
+    runEmbed: 'Encodage de la requête + similarité cosinus, top-3 retenus…',
+    runSynth: 'Génération de la réponse ancrée dans les chunks (T=0.45)…',
     step1label: 'Planner : Classification d\'intent',
     step1desc: 'Analyse la requête et détermine si le retriever doit s\'activer',
     step2label: 'Retriever : Chunks sémantiques',
@@ -522,6 +541,9 @@ var i18n = {
     loadingPlanner: 'Running planner…',
     loadingRetriever: 'Semantic retrieval…',
     loadingSynthesis: 'Augmented synthesis…',
+    runPlanner: 'Classifying intent (T=0.2)…',
+    runEmbed: 'Encoding the query + cosine similarity, keeping top-3…',
+    runSynth: 'Generating the answer grounded in the chunks (T=0.45)…',
     step1label: 'Planner : Intent Classification',
     step1desc: 'Analyses the query and decides whether the retriever should activate',
     step2label: 'Retriever : Semantic Chunks',
@@ -593,21 +615,41 @@ function setLoading(phase) {
   document.getElementById('loading-text').textContent = t(map[phase] || 'loadingPlanner');
 }
 
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+function setStepState(n, state){
+  var el = document.getElementById('step' + n);
+  if (!el) return;
+  el.classList.remove('is-active', 'is-done');
+  if (state === 'active') el.classList.add('is-active');
+  else if (state === 'done') el.classList.add('is-done');
+}
+function setStepRun(n, key){
+  var el = document.getElementById('step' + n + '-run');
+  if (el) el.textContent = key ? t(key) : '';
+}
+function resetSteps(){
+  [1, 2, 3].forEach(function(n){ setStepState(n, 'pending'); setStepRun(n, ''); });
+}
+
 async function runQuery() {
   var query = document.getElementById('query').value.trim();
   if (!query) return;
 
   document.getElementById('form-card').style.display = 'none';
   document.getElementById('error-box').classList.remove('show');
-  document.getElementById('pipeline').classList.remove('show');
-  document.getElementById('loading').classList.add('show');
-  setLoading('planner');
   document.getElementById('btn-query').disabled = true;
 
-  try {
-    setTimeout(function(){ setLoading('retriever'); }, 600);
-    setTimeout(function(){ setLoading('synthesis'); }, 1400);
+  // Reveal the pipeline immediately and start the live, staged demonstration.
+  resetSteps();
+  document.getElementById('pipeline-meta').textContent = '';
+  document.getElementById('chunk-list').innerHTML = '';
+  document.getElementById('reply-box').innerHTML = '';
+  document.getElementById('conf-fill').style.width = '0%';
+  document.getElementById('pipeline').classList.add('show');
+  setStepState(1, 'active');
+  setStepRun(1, 'runPlanner');
 
+  try {
     var data = null;
 
     // Try /rag-query first (semantic RAG, native Worker)
@@ -648,11 +690,10 @@ async function runQuery() {
       };
     }
 
-    document.getElementById('loading').classList.remove('show');
-    renderPipeline(data, query);
+    await revealPipeline(data, query);
 
   } catch(err) {
-    document.getElementById('loading').classList.remove('show');
+    document.getElementById('pipeline').classList.remove('show');
     document.getElementById('form-card').style.display = 'block';
     document.getElementById('btn-query').disabled = false;
     var errBox = document.getElementById('error-box');
@@ -661,13 +702,15 @@ async function runQuery() {
   }
 }
 
-function renderPipeline(data, query) {
+// Reveal the three pipeline stages one after another so the user watches the
+// RAG run : planner -> retriever (embedding + cosine) -> synthesis.
+async function revealPipeline(data, query) {
   var plan = data.plan || {};
   var chunks = 'chunks' in data ? data.chunks : [];
   var reply = data.reply || '';
   var engine = data.engine || 'worker-rag-semantic';
 
-  // Step 1: Intent
+  // ---- STEP 1 : Planner (intent classification) ----
   document.getElementById('step1-label').textContent = t('step1label');
   document.getElementById('step1-desc').textContent = t('step1desc');
   var intent = plan.intent || 'other';
@@ -676,14 +719,21 @@ function renderPipeline(data, query) {
   badge.textContent = intent;
   badge.className = 'intent-badge ' + (intent === 'pm_workflow' ? 'intent-pm' : 'intent-other');
   document.getElementById('conf-label').textContent = t('confLabel', confidence);
-  document.getElementById('conf-fill').style.width = confidence + '%';
   document.getElementById('goal-text').textContent = plan.user_goal || query;
+  await sleep(300);
+  document.getElementById('conf-fill').style.width = confidence + '%'; // animate the bar
+  setStepRun(1, '');
+  setStepState(1, 'done');
+  await sleep(600);
 
-  // Step 2: Chunks
+  // ---- STEP 2 : Retriever (embedding + cosine similarity) ----
   document.getElementById('step2-label').textContent = t('step2label');
   document.getElementById('step2-desc').textContent = t('step2desc');
+  setStepState(2, 'active');
+  setStepRun(2, 'runEmbed');
   var chunkList = document.getElementById('chunk-list');
   chunkList.innerHTML = '';
+  await sleep(950); // let the "computing cosine similarity" status breathe
 
   if (chunks === null) {
     chunkList.innerHTML = '<div class="no-rag-note">' + t('noRagBackend') + '</div>';
@@ -706,19 +756,25 @@ function renderPipeline(data, query) {
       chunkList.appendChild(card);
     });
   }
+  setStepRun(2, '');
+  setStepState(2, 'done');
+  await sleep(600);
 
-  // Step 3: Reply
+  // ---- STEP 3 : Synthesis (grounded generation) ----
   document.getElementById('step3-label').textContent = t('step3label');
   document.getElementById('step3-desc').textContent = t('step3desc');
+  setStepState(3, 'active');
+  setStepRun(3, 'runSynth');
+  await sleep(750);
   document.getElementById('reply-box').innerHTML = window.mdLite ? window.mdLite(reply) : reply;
   document.getElementById('btn-copy').textContent = t('copy');
   document.getElementById('btn-copy').classList.remove('copied');
   lastReply = reply.replace(/<[^>]+>/g, '');
+  setStepRun(3, '');
+  setStepState(3, 'done');
 
-  // Meta
   document.getElementById('pipeline-meta').textContent = t('pipelineMeta', engine);
-
-  document.getElementById('pipeline').classList.add('show');
+  document.getElementById('btn-query').disabled = false;
 }
 
 function toggleChunk(id) {
@@ -746,6 +802,7 @@ function copyReply() {
 
 function resetForm() {
   document.getElementById('pipeline').classList.remove('show');
+  resetSteps();
   document.getElementById('form-card').style.display = 'block';
   document.getElementById('btn-query').disabled = false;
   document.getElementById('query').value = '';
