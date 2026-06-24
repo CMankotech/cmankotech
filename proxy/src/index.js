@@ -2356,7 +2356,11 @@ async function retrieveSemantic(query, env, topK = 3, allChunks = getChunks()) {
 // Ground KRL1 answers in the site's own content (architecture, product decisions,
 // tools, Carlin's profile). Skipped for pm_workflow (PM help) and contact.
 async function siteGrounding(query, env, intent, lang) {
-  if (intent === 'pm_workflow' || intent === 'contact') return '';
+  // Ground everything except pure contact requests. We do NOT skip pm_workflow:
+  // site questions ("décisions produit du site") are often misclassified as
+  // pm_workflow, and for genuine PM questions the site chunks just score low and
+  // are ignored by the model.
+  if (intent === 'contact') return '';
   const chunks = await retrieveSemantic(query, env, 6, await getSiteChunks(env));
   if (!chunks.length) return '';
   const head = lang === 'en'
