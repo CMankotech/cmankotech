@@ -107,7 +107,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 /* RESULTS */
 .results{display:none}
 .results.show{display:block}
-.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.results-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
 .results-meta{display:flex;flex-direction:column;gap:0.2rem}
 .results-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700}
 .results-sub{font-size:0.7rem;color:var(--muted)}
@@ -398,7 +398,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
         <div class="results-title"><span id="lbl_results_title">Backlog prioris&eacute;</span> <span id="confSlot"></span></div>
         <div class="results-sub" id="resultsSub"></div>
       </div>
-      <div style="display:flex;gap:0.5rem;align-items:center">
+      <div style="display:flex;gap:0.55rem;align-items:center;flex-wrap:wrap">
         <button class="btn-copy-all glass-shimmer glass-focus" id="copyAllBtn" onclick="copyResults()">&#128203; Copier tout</button>
         <button class="btn-rerun glass-shimmer glass-focus" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
         <button class="btn-reset glass-shimmer glass-focus" onclick="reset()">&#8635; Recommencer</button>

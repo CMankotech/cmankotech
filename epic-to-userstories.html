@@ -95,7 +95,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .results{display:none}
 .results.show{display:block;animation:fadeUp 0.4s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.results-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem}
+.results-topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.75rem}
 .results-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700}
 .results-sub{font-size:0.68rem;color:var(--dim);margin-top:0.2rem}
 .btn-reset{font-size:0.63rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.9rem;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
@@ -404,7 +404,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
         <div class="results-title"><span id="lbl_results_title">User Stories g&eacute;n&eacute;r&eacute;es</span> <span id="confSlot"></span></div>
         <div class="results-sub" id="resultsSub"></div>
       </div>
-      <div style="display:flex;gap:0.5rem;align-items:center">
+      <div style="display:flex;gap:0.55rem;align-items:center;flex-wrap:wrap">
         <button class="btn-copy-all glass-shimmer glass-focus" id="copyAllBtn" onclick="copyAll()">&#128203; Copier tout</button>
         <button class="btn-rerun glass-shimmer glass-focus" onclick="rerun()">&#8634; R&eacute;-g&eacute;n&eacute;rer</button>
         <button class="btn-reset glass-shimmer glass-focus" onclick="reset()">&#8635; Recommencer</button>

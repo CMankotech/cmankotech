@@ -136,9 +136,12 @@
     if (n > 1) n = n / 100;
     var pct = Math.round(n * 100);
     var level = n >= 0.75 ? 'hi' : (n >= 0.5 ? 'mid' : 'lo');
-    var lbl = (lg || lang()) === 'en' ? 'confidence' : 'confiance';
+    var en = (lg || lang()) === 'en';
+    var lbl = en ? 'confidence' : 'confiance';
+    var note = en ? 'AI-estimated score' : 'score estimé par l\'IA';
     injectStyles();
-    return '<span class="pm-conf pm-conf-' + level + '" title="' + lbl + '">' + pct + '% ' + lbl + '</span>';
+    return '<span class="pm-conf pm-conf-' + level + '" title="' + note + '">' + pct + '% ' + lbl + '</span>'
+      + '<span class="pm-conf-note">' + note + '</span>';
   }
 
   /* ── regenerate button (styling only ; tools wire their own onclick) ── */
@@ -163,6 +166,7 @@
       '.pm-conf-hi{color:#86efac;background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25)}' +
       '.pm-conf-mid{color:#fbbf24;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.25)}' +
       '.pm-conf-lo{color:#fca5a5;background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.25)}' +
+      '.pm-conf-note{margin-left:0.5rem;font-size:0.62rem;font-style:italic;color:var(--muted,#94a3b8);letter-spacing:0.01em;vertical-align:middle}' +
       '.pm-regen{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.03);color:var(--dim,#94a3b8);cursor:pointer;font-size:0.85rem;line-height:1;font-family:inherit;transition:all .18s;flex-shrink:0}' +
       '.pm-regen:hover{color:var(--text,#e2e8f0);border-color:rgba(96,165,250,0.45);background:rgba(96,165,250,0.1);transform:rotate(45deg)}' +
       '.pm-regen:disabled{opacity:0.4;cursor:wait;transform:none}';
