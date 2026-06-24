@@ -1642,6 +1642,14 @@ export default {
       return jsonResponse(index || []);
     }
 
+    // RAG chunks GET : public, exposes the indexed PM knowledge base so the RAG
+    // Explorer can let visitors browse every chunk (not just the retrieved top-3).
+    if (request.method === 'GET' && url.pathname === '/rag-chunks') {
+      const all = getChunks();
+      const chunks = all.map((c, i) => ({ i, source: c.source, words: c.text.split(/\s+/).filter(Boolean).length, text: c.text }));
+      return jsonResponse({ total: chunks.length, chunkWords: 300, overlap: 50, model: 'bge-small-en-v1.5', chunks });
+    }
+
     // Veille GET : public, no origin check; ?week=24&year=2026 for specific edition
     if (request.method === 'GET' && url.pathname === '/veille') {
       const week = url.searchParams.get('week');
