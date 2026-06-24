@@ -1465,8 +1465,154 @@ Beyond standard product metrics, AI features need:
 5. **Measure what matters** : token count is not a product metric; user value delivered is`,
 };
 
+// ─── Site knowledge base (this website: architecture, decisions, tools, profile) ───
+const SITE_KB = {
+  'site-overview.md': `# A propos du site cmankotech
+
+cmankotech.github.io est le portfolio d'AI Product Manager de Carlin Mankoto. Plutot qu'un CV statique, le site est lui-meme un produit IA : il demontre des competences AI PM en les faisant vivre. Stack 100% gratuite (free tiers), zero budget. Frontend HTML/CSS/JS vanilla sur GitHub Pages, backend Cloudflare Worker (groq-proxy) appelant Groq (Llama 3.3-70b), RAG via Workers AI, observabilite Langfuse. Le site est bilingue francais/anglais. Pour toute question sur l'architecture, les choix techniques, les decisions produit, les outils ou le parcours de Carlin, la reponse se trouve dans ces documents.`,
+  'site-architecture.md': `# Architecture technique et stack du site cmankotech
+
+Vanilla à 100%. Pas de framework, pas de bundler, pas de dépendances npm. Chaque outil est une page HTML autonome avec son CSS et son JS inline, pas de composants partagés, pas de routing entre pages. Ce choix permet un déploiement direct sans étape de build, un debug immédiat dans les DevTools navigateur, et un code lisible à plat sans couche d'abstraction. Huit pages autonomes : les 6 outils PM (OKR Builder, Discovery Assistant, User Interview Analyzer, Backlog Prioritizer, Epic to User Stories, Roadmap Storyteller), le hub pm-toolkit.html qui les enchaîne, et product-brief.html qui synthétise la session en un livrable exportable (PDF, Markdown, ou export one-click vers Notion en OAuth). Deux modules partagés sans dépendances : pm-core.js centralise les appels au proxy, le parsing JSON tolérant et les erreurs ; pm-session.js persiste les sorties par projet dans localStorage (sessions multi-projets) et en dérive un contexte canonique que chaque outil aval consomme, pas seulement le suivant.
+
+Hébergement statique gratuit avec CI/CD natif : chaque git push sur main déclenche un déploiement automatique en moins de 60 secondes. CDN mondial, HTTPS automatique, domaine cmankotech.github.io sans configuration. Zéro coût, zéro infra à gérer, idéal pour un site statique à fichiers HTML/CSS/JS.
+
+Un Worker est une fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes, pas de VPS, cold start quasi-nul. Ici il fait bien plus que proxifier : il orchestre le pipeline planner→synthesis pour KRL1, calcule les embeddings RAG via Workers AI, et trace les appels via Langfuse, la clé API n'est jamais exposée côté client. 7 routes : POST / passthrough direct Groq (6 outils PM) ; POST /orchestrate planner→synthesis sync ; POST /orchestrate-stream synthesis SSE ; POST /rag-query RAG sémantique complet ; POST /feedback analyse feedback (Make webhook ou Groq fallback) ; GET /stats compteur KV usage ; GET|POST /veille données veille tech. Validation d'origine (cmankotech.github.io uniquement), CORS automatique, rate limit par IP (30 req/min via KV) et validation du passthrough Groq (allowlist de modèle, max_tokens plafonné), plan gratuit Cloudflare : 100 000 req/jour.
+
+Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes, 5 à 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).
+
+Base de connaissances embarquée dans le Worker (15 documents Markdown : PM, PO/Agile, AI Product). Les embeddings sémantiques sont générés par Workers AI (bge-small-en-v1.5) en un seul appel batch ; la similarité cosinus est calculée à l'edge. Le pipeline handleRagQuery enchaîne : planner (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; retriever (conditionnel, uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches par cosine similarity ; synthesis (T=0.45) transforme le plan enrichi du contexte PM en réponse naturelle max 220 mots. Zéro dépendance externe, zéro infra Python.
+
+Traces LLM en production via l'API REST Langfuse intégrée directement dans le Worker (no npm, fetch natif). Chaque appel KRL1 génère une trace avec 2 générations, planner (intent JSON, T=0.2) et synthesis (réponse naturelle, T=0.45), enrichies du token usage Groq et des latences par étape. La route RAG ajoute un span retriever Workers AI. Non-bloquant via ctx.waitUntil, zéro impact sur les temps de réponse. Plan gratuit Langfuse Cloud : 50 000 observations/mois.
+
+KRL1 (POST /orchestrate) : 1 · L'utilisateur envoie un message. 2 · Le JS appelle POST /orchestrate avec {lang, message, history}. 3 · Le planner (T=0.2) analyse l'intention → JSON {intent, confidence, user_goal, steps[], risks[], quick_win}. 4 · Le synthesis (T=0.45) transforme le plan en réponse max 220 mots avec liens outils PM. 5 · La réponse {reply, plan, engine} arrive au client., RAG Explorer (POST /rag-query) : même planner → Workers AI encode la requête + tous les chunks en un appel batch → cosine similarity → top-3 injectés dans synthesis si intent = pm_workflow → {reply, plan, chunks, engine: "worker-rag-semantic"}.
+
+Le double-nœud répond à deux contraintes opposées. Le planner a besoin d'une température basse (T=0.2) pour produire un JSON déterministe et fiable : intent, user_goal, steps actionnables, risks identifiés, quick_win. La synthesis a besoin d'une température plus créative (T=0.45) pour formuler une réponse naturelle et concise (max 220 mots). Pour le RAG Explorer, une troisième étape s'intercale : les embeddings Workers AI calculent la similarité cosinus entre la requête et la base PM, et le contexte récupéré est injecté dans la synthesis. Cette architecture a d'abord été prototypée en Python (FastAPI + LangGraph), mais le free tier Render (512 MB) était insuffisant pour charger sentence-transformers. Solution : porter l'intégralité du pipeline dans le Cloudflare Worker via Workers AI (bge-small-en-v1.5, 384 dimensions). Embeddings batch à l'edge, cosine similarity en JS, zéro dépendance Python.
+
+Pourquoi HTML vanilla plutôt que React ou Next.js ? En bref : Zéro dépendance, zéro toolchain, zéro dette. Un site statique de portfolio et d'outils simples n'a pas besoin d'un framework SPA. HTML vanilla se déploie directement, se lit facilement et ne génère aucune dette technique. Moins de complexité = plus de vélocité.
+
+Pourquoi un proxy Cloudflare Workers plutôt qu'exposer la clé API ? En bref : Sécurité non négociable, plan gratuit généreux. Exposer une clé API dans du code client-side, c'est l'offrir à n'importe qui. Le Worker intercepte les requêtes, injecte la clé côté serveur et valide l'origine. Plan gratuit Cloudflare : 100 000 requêtes/jour, largement suffisant.
+
+Pourquoi Groq plutôt qu'OpenAI ou Anthropic directement ? En bref : Vitesse d'inférence et plan gratuit. Groq tourne les modèles Llama 3 sur du matériel LPU optimisé pour l'inférence. Résultat : des réponses en 1-2 secondes là où d'autres providers prennent 5-10s. Et le plan gratuit couvre amplement un usage personnel.
+
+Pourquoi GitHub Pages plutôt qu'un VPS ou Vercel ? En bref : Gratuit, simple, CI/CD natif. Pour des fichiers statiques, GitHub Pages est imbattable : gratuit, CDN mondial, HTTPS automatique, et le déploiement se déclenche simplement avec un git push. Pas besoin d'une infrastructure plus complexe pour ce cas d'usage.
+
+Pourquoi un hub PM Toolkit plutôt que 6 liens séparés sur le portfolio ? En bref : Chaîner les outils = refléter le vrai workflow PM. Un PM enchaîne discovery → OKR → stories → roadmap. Garder les outils en cartes isolées sur le portfolio forçait l'utilisateur à recoller le contexte à la main d'un outil au suivant. Le hub pm-toolkit.html centralise l'entrée, rend la séquence lisible, et pm-session.js dérive un contexte canonique partagé : chaque sortie (persona, hypothèses, pain points, opportunités, OKR, priorités, stories) est normalisée dans un vocabulaire commun où chaque outil aval pioche tout le savoir amont, pas seulement le précédent, via localStorage, sans backend, sans compte, sans friction.
+
+Pourquoi un export Notion OAuth où le token ne touche jamais le navigateur ? En bref : Sécurité : le secret reste côté serveur. Le Product Brief s'exporte vers Notion en un clic, pour n'importe quel compte visiteur, via OAuth. Le piège classique serait de manipuler le jeton d'accès Notion côté client : il fuiterait dans le localStorage ou les logs. À la place, le flux est entièrement côté Worker : pm-export.js construit les blocs Notion depuis la session puis appelle POST /export/prepare, qui stocke transitoirement le payload en KV (TTL 10 min) et renvoie l'URL d'autorisation. Après consentement, GET /oauth/notion/callback échange le code contre un token, crée la page dans l'espace du visiteur, puis jette le token et notifie la popup par postMessage. Le navigateur ne voit jamais le secret. La même plomberie OAuth resservira pour Jira, Linear ou Confluence.`,
+  'site-product-decisions.md': `# Decisions produit du site cmankotech (17 arbitrages derriere KRL1)
+
+## Decision 1 : Pourquoi un assistant IA sur un portfolio PM ?
+En bref : PLG par le produit, pas par le CV
+Un portfolio PM classique, c'est un PDF ou une page LinkedIn. Pour démontrer des compétences AI PM, le portfolio doit être lui-même un produit AI. KRL1 est la preuve concrète : un PM qui comprend les LLMs ne le dit pas, il le montre. Quand un recruteur interagit avec KRL1, il n'a pas besoin de lire "je comprends les systèmes IA" dans le résumé. Il l'expérimente directement. C'est du Product-Led Growth appliqué à la recherche d'emploi : le produit porte son propre discours commercial. KRL1 qualifie aussi les visiteurs naturellement : quelqu'un qui passe 5 minutes à explorer les outils PM via KRL1 est plus engagé qu'un scanner de CV de 10 secondes. Le message LinkedIn "j'ai testé KRL1 et..." est un signal d'engagement fort. L'assistant existe pour le recruteur, pas pour moi.
+
+## Decision 2 : Pourquoi 6 outils PM et pas plus ?
+En bref : Scope = workflow complet, pas catalogue
+6 outils n'est pas un chiffre arbitraire. Il mappe exactement le workflow PM du quotidien : Discovery → User Interviews → OKRs → Backlog → Stories → Roadmap. Pas un outil de plus, pas un de moins. La contrainte vient d'abord du PM Journey : chaque outil devait avoir un "next step" naturel pour que la séquence guidée fonctionne end-to-end. Un 7ème outil aurait créé un dead end ou une branche sans issue. Le scope est aussi dicté par la maintenance : 6 system prompts, 6 pages HTML, 6 entrées pm-session.js. La contrainte principale a été sémantique : chaque outil devait répondre à une friction réelle vécue en tant que PM. OKR Builder vient de réunions de planning où les KRs étaient flous. Discovery Assistant vient de preps d'interviews mal structurées. 6 frictions réelles = 6 outils.
+
+## Decision 3 : KB fast-path avant le LLM : pourquoi ne pas tout envoyer ?
+En bref : Coût, vitesse, cohérence sans API
+Envoyer chaque message à Groq aurait ajouté ~300-500ms de latence réseau sur 30 à 40% des questions récurrentes ("qui es-tu\\
+
+## Decision 4 : Auto-ouverture KRL1 à 10 secondes : pourquoi ce délai ?
+En bref : Engagement sans friction
+Le timing de l'auto-ouverture est un arbitrage entre engagement et friction. En-dessous de 2 secondes : le visiteur n'a pas encore lu le titre, la popup paraît intrusive et est immédiatement refermée. Au-delà de 15 secondes : la majorité des visiteurs ont déjà formé leur opinion, l'opportunité d'engagement est passée. 10 secondes correspond approximativement au temps de lecture du hero à vitesse normale. À ce moment, le visiteur peut recevoir KRL1 comme une aide contextuelle plutôt qu'une interruption. La logique est calquée sur les patterns mesurés des live chats SaaS B2B qui ont identifié ce window optimal entre engagement et friction. L'auto-ouverture ne se déclenche que si le widget n'a pas été ouvert manuellement entre-temps.
+
+## Decision 5 : PM Journey CTAs injectés dans les résultats : pourquoi ?
+En bref : PLG nudge zéro-friction
+Le PM Journey (Discovery → Interviews → OKRs → Backlog → Stories → Roadmap) est la valeur différenciante du toolkit. Sans guidage actif, un PM qui utilise le Discovery Assistant finit sa session et quitte, sans jamais savoir que le User Interview Analyzer est l'étape logique suivante. Le CTA injecté résout ce problème sans modifier 6 pages séparément. KRL1 observe le div #results via MutationObserver depuis krl1-widget.js. Dès que la class .show apparaît (résultat généré), KRL1 injecte automatiquement le CTA "prochaine étape". C'est du PLG pur : la progression dans le workflow est guidée par le produit, pas par une documentation externe. Le couplage est nul : les pages outils n'ont aucune connaissance de cette injection.
+
+## Decision 6 : Streaming SSE sur la synthesis : pourquoi pas une réponse bloquante ?
+En bref : Latence perçue vs latence réelle
+Sans streaming, une requête KRL1 (planner ~600ms + synthesis ~900ms) implique ~1.5 à 2.5 secondes de spinner sans feedback. Avec le streaming SSE, les premiers tokens de la synthesis s'affichent en ~400ms pendant que la génération continue. La latence perçue est divisée par trois environ, sans que la latence réelle change. Même principe que le skeleton loading en UI. Le rendu mot par mot avec un délai de 22ms entre chaque mot ajoute un effet "typewriter" subtil qui renforce la sensation d'intelligence. Le streaming impose que le planner (appel LLM n°1) reste toujours bloquant car son output JSON est nécessaire avant de lancer la synthesis. Seul l'appel n°2 streame. En cas d'échec, le widget bascule automatiquement sur /orchestrate.
+
+## Decision 7 : Limite 220 mots sur les réponses KRL1 : pourquoi ?
+En bref : Densité > exhaustivité
+220 mots est une contrainte de design délibérée, pas une limitation technique. Sans contrainte, un LLM produit des réponses essay de 500 à 800 mots : pédagogiques, correctes, mais inadaptées au contexte d'un chat de portfolio. Un recruteur cherche une réponse dense et directe, avec un prochain pas concret, pas un article. La limite oblige le modèle à prioriser l'essentiel : l'intent de l'utilisateur, la recommandation claire, le lien vers l'outil approprié. C'est aussi une contrainte économique : max_tokens 450 garde chaque synthesis dans un range de coût prévisible. Le paramètre temperature 0.45 est calibré pour que la réponse reste naturelle et non-robotique dans ce format court. En pratique, la plupart des réponses font 150 à 200 mots.
+
+## Decision 8 : Budget $0 : pourquoi seulement des free tiers ?
+En bref : Contrainte = créativité technique
+La contrainte $0 n'est pas une restriction : c'est un parti pris de conception. Un portfolio qui démontre des compétences AI PM doit montrer qu'on peut construire quelque chose de qualité dans les contraintes réelles d'un side project. Payer pour des serveurs ou des APIs premium aurait été la solution facile. Choisir Groq, Cloudflare Workers, GitHub Pages, Langfuse Cloud, Workers AI, tous sur free tier, a forcé des décisions architecturales créatives. Le RAG edge-native dans le Worker existe parce que le free tier Render était trop limité pour Python. Cette contrainte a produit une architecture plus propre qu'un budget illimité ne l'aurait fait. Pour un recruteur AI PM, un système fonctionnel construit à $0/mois est plus impressionnant qu'une solution identique à $200/mois.
+
+## Decision 9 : Langfuse en production sur un portfolio : pourquoi ?
+En bref : Build → mesure → décide
+Mettre de l'observabilité LLM sur un portfolio personnel peut paraître over-engineered. Ce ne l'est pas. Langfuse permet de fermer la boucle build → mesure → décide, le cycle que je défends comme PM. Sans données de production, impossible de savoir : quels intents sont les plus fréquents, où la confidence du planner est faible (en-dessous de 0.6), quels outils KRL1 recommande le plus, combien de tokens sont consommés par route. Ces métriques permettent d'itérer sur le system prompt, les règles KB, le flow d'orchestration. La décision d'intégrer Langfuse via l'API REST directement dans le Worker (sans SDK) vient de la contrainte zero-npm. Le flush via ctx.waitUntil garantit zéro latence perçue ajoutée. Pour le portfolio, Langfuse démontre qu'on pense "mesure" avant même d'avoir des vrais utilisateurs.
+
+## Decision 10 : Bilingue FR/EN dès le départ : pourquoi pas ajouter EN plus tard ?
+En bref : Audience recruteur internationale
+La décision de supporter FR et EN dès le premier jour vient d'une expérience produit directe : ajouter l'i18n en retard sur une base existante est douloureux et crée de la dette technique. Partir bilingue impose une discipline de code : chaque string de UI passe par un objet de traductions, zéro text hardcodé dans le HTML. Le surcoût initial est d'environ 20% de temps par page. Le bénéfice : aucun refactoring i18n à prévoir, et surtout une audience élargie. Les recruteurs tech opèrent souvent dans des contextes multilingues. KRL1 détecte la langue via localStorage et URL param (?lang=en), ce qui permet de partager des liens dans une langue spécifique. Le choix de l'i18n vanilla évite toute dépendance externe pour seulement deux langues.
+
+## Decision 11 : Pourquoi un hub PM Toolkit plutôt que 6 liens séparés ?
+En bref : Chaîner les outils = refléter le vrai workflow PM
+Un PM n'utilise jamais un outil de façon isolée. Il enchaîne : discovery → interviews → OKRs → backlog → stories → roadmap. Garder les 6 outils comme des cartes indépendantes forçait l'utilisateur à recoller le contexte à la main d'une session à l'autre. Le hub pm-toolkit.html résout deux problèmes : il rend la séquence lisible et centralise l'entrée dans le workflow. Le PM Journey CTA (injecté par KRL1 via MutationObserver) suggère automatiquement l'étape suivante après chaque résultat généré. C'est du PLG au niveau du design d'information : le produit guide naturellement le workflow, sans documentation externe, sans friction. Pour le recruteur, naviguer dans le PM Toolkit est une démonstration concrète de pensée workflow.
+
+## Decision 12 : Pourquoi localStorage pour passer le contexte entre outils PM ?
+En bref : Continuité sans backend, sans compte, sans friction
+Le problème : comment transférer un insight d'un outil PM au suivant sans que l'utilisateur ait à tout recopier. Les solutions naturelles : base de données, sessions serveur : nécessitent un backend et un compte utilisateur. Avec localStorage et pm-session.js, chaque outil sauvegarde ses sorties structurées (problème cadré, persona validé, OKRs générés, top-priorité RICE...) sous des clés communes. L'outil suivant peut les importer en un clic, avec un feedback visuel (bordure colorée). Pas de compte, pas de serveur, pas de RGPD à gérer. La contrainte $0 et l'architecture HTML statique ont rendu cette solution non seulement acceptable mais élégante.
+
+## Decision 13 : Pourquoi HTML/JS vanilla sans framework ?
+En bref : Zéro dépendance, zéro dette, déploiement immédiat
+Le choix de ne pas utiliser React, Vue ou Next.js n'est pas une limitation : c'est une décision explicite. Pour un portfolio de 6 outils PM et quelques pages de documentation, un framework SPA aurait apporté : une étape de build obligatoire, des dépendances npm à maintenir, une complexité d'abstraction sans valeur ajoutée. Chaque page HTML est autonome avec son CSS et son JS inline. Pas de routing, pas de state management global. Le déploiement est un git push en moins de 60 secondes. Le debug se fait directement dans les DevTools sans source maps. La lisibilité du code est maximale. Pour un PM qui vibe code en spare time avec Claude Code, la vélocité prime sur l'architecture.
+
+## Decision 14 : Pourquoi remplacer l'accordéon par des tabs ?
+En bref : Navigation immédiate, zéro friction d'exploration
+L'accordéon avait un défaut fondamental : le contenu était invisible par défaut. Le visiteur devait deviner qu'il y avait quelque chose à déplier, cliquer, puis scroller pour évaluer si ça valait le coup. Les tabs inversent ce rapport : le libellé de l'onglet suffit à savoir ce qu'on va trouver, le switch est instantané, sans reflow ni animation de dépliage. La navigation contextuelle (liens nav qui apparaissent en stagger au scroll via IntersectionObserver) remplace l'accordéon comme affordance de navigation sans dupliquer la barre principale.
+
+## Decision 15 : Pourquoi charger Architecture et Décisions produit en lazy-load ?
+En bref : Index léger, pages autonomes préservées, styles isolés
+Intégrer les pages Architecture (1 779 lignes) et Décisions produit (500 lignes) directement dans index.html aurait créé un fichier monolithique dépassant 4 000 lignes, avec des conflits CSS garantis. Le lazy-load (fetch + DOMParser) charge le contenu à la demande, au premier clic seulement. Chaque page reste une URL autonome et partageable. Le CSS injecté est scopé à l'ID du tab panel (#architecture .decision-card) pour confiner son effet : impossible d'écraser les glows du hero ou les styles des autres sections.
+
+## Decision 16 : Pourquoi un Cron Trigger Cloudflare natif plutôt que Make pour déclencher la veille ?
+En bref : Zéro dépendance externe, le déclencheur vit dans le repo versionné
+Le fetch des 13 flux RSS avait déjà été déplacé dans le Worker (constante VEILLE_SOURCES, parseRSSItems par regex légère, synthèse Groq, archivage KV par semaine ISO) : Make ne servait plus que de minuteur HTTP hebdomadaire. Or un Cron Trigger Cloudflare fait exactement ce déclenchement sans dépendance externe : un handler scheduled() dans le Worker + une ligne crons dans wrangler.toml. Le cron tourne dans le Worker, donc aucun secret à transmettre, et le déclencheur est versionné avec le code. Résultat : la veille s'archive seule chaque lundi 6h UTC et l'historique grossit tout seul, une carte par semaine ISO.
+
+## Decision 17 : Pourquoi un export Notion où le token OAuth ne touche jamais le navigateur ?
+En bref : Sécurité d'abord : le secret reste côté Worker
+Le Product Brief s'exporte vers Notion en un clic, pour n'importe quel compte visiteur, via OAuth. Le réflexe naïf serait de gérer le jeton d'accès Notion côté client : il fuiterait dans le localStorage ou les logs, inacceptable pour le compte d'un tiers. À la place, tout le flux vit dans le Worker : pm-export.js construit les blocs Notion depuis la session puis appelle POST /export/prepare, qui stocke le payload en KV de façon transitoire (TTL 10 min) et renvoie l'URL d'autorisation. Après consentement, GET /oauth/notion/callback échange le code contre un token, crée la page dans l'espace du visiteur, puis jette le token et notifie la popup par postMessage. Le navigateur ne voit jamais le secret. La même plomberie OAuth resservira pour Jira, Linear ou Confluence sans la réécrire.`,
+  'site-tools.md': `# Outils et pages du site cmankotech
+
+Le site est un portfolio d'AI Product Manager. Il regroupe un PM Toolkit de 6 outils IA chaines, un assistant KRL1, un RAG Explorer, une veille hebdo et une demo Co-pilot.
+
+## PM Toolkit (6 outils chaines)
+- OKR Builder : genere des OKRs (objectifs + key results mesurables) a partir d'un produit decrit.
+- Discovery Assistant : reformule le probleme, valide les hypotheses, prepare les questions d'interview.
+- User Interview Analyzer : structure les verbatims d'entretiens, identifie les patterns, persona, pain points.
+- Backlog Prioritizer : score un backlog en RICE ou MoSCoW avec justification par item.
+- Epic to User Stories : decompose un epic en user stories avec criteres d'acceptance INVEST.
+- Roadmap Storyteller : transforme une roadmap en pitch narratif adapte a l'audience (C-level, tech, sales).
+Les 6 outils partagent une session via pm-session.js (localStorage) : chaque insight se transfere automatiquement au suivant. Le hub pm-toolkit.html orchestre la sequence. Le Product Brief (product-brief.html) synthetise toute la session en un livrable exportable en PDF, Markdown ou vers Notion en un clic (OAuth).
+
+## KRL1
+KRL1 est l'assistant IA du portfolio (nom inspire de Carlin + Mark I d'Iron Man). Il route les questions : KB fast-path (reponses instantanees sans API), sinon planner + synthesis via Groq en streaming SSE. Il connait l'architecture, les decisions produit, le profil et les outils du site.
+
+## RAG Explorer
+Demo de RAG semantique edge-native : embeddings Workers AI (bge-small-en-v1.5), cosine similarity dans le Worker, base de 15 documents PM. Montre le pipeline planner -> retrieval -> synthesis etape par etape.
+
+## Veille Product & IA
+Veille hebdomadaire automatisee : un Cron Trigger Cloudflare agrege 13 flux RSS chaque lundi, les synthetise via Groq et les archive par semaine ISO.
+
+## AI PM Co-pilot
+Demo live propulsee par un scenario Make (no-code) : une idee produit en entree, un mini-brief PM et un score RICE generes via webhook + Groq.
+`,
+  'site-profile.md': `# Profil de Carlin Mankoto (parcours, experience, formation, certifications)
+
+Experience chez OAIO, Product Manager · CDI : Pilotage de la stratégie produit pour l’implémentation d’une plateforme LMS et d’outils IA pour 3 500+ collaborateurs. Benchmark de 17 solutions LMS et 44 outils IA avec scoring multicritères. Prototypage en vibe coding (Lovable + Claude Code) pour tester des hypothèses UX. Roadmap en 3 phases alignée aux objectifs business. Stakeholder management jusqu’à la direction.
+
+Experience chez Outlier, AI Trainer / Data Annotator · Freelance : Entraînement de modèles d’IA générative via RLHF. Annotation de données (images, textes, audios) pour créer des datasets structurés. Contrôle qualité rigoureux et classification des données.
+
+Experience chez AXA, AI Product Owner · Alternance : Gestion du backlog SecureGPT (RAG interne) et Microsoft Copilot en environnement SAFe. Priorisation MoSCoW, rédaction d’user stories et animation des cérémonies agiles. Automatisation via Power Automate et AI Builder. Rôle d’AI Evangelist et participation au LACE.
+
+Experience chez Airbus, Product Owner · Alternance : Application mobile de messagerie sécurisée mission critique pour les JO Paris 2024. Transition Waterfall vers SAFe, interopérabilité TETRA/Broadband. Animation des cérémonies agiles et PI Planning.
+
+Experience chez Casino, Chargé de Projet Change Management · Stage : Accompagnement à la transformation agile et implémentation Scrum. Définition de la stratégie de conduite du changement, déploiement du plan de communication et suivi KPI.
+
+Formation : Bootcamp Product Owner / Product Manager ; Master 2 - Économie et Management de l’Innovation Digitale ; Master 1 - Management Stratégique et Conduite du Changement ; Licence Science Politique - Spécialisation Économie Numérique.
+
+Carlin Mankoto est AI Product Manager et builder. Certifications : 13 badges verifiables sur Credly (Scrum, SAFe, IA). Competences : Product Management, IA & Tech (LLM, RAG, prompt engineering, agentic AI, RLHF, vibe coding), Agilite (Scrum, SAFe, PO).`,
+};
+
 // ─── Chunk cache (built once per isolate) ────────────────────────────────────
 let _chunks = null;
+let _siteChunks = null;
 
 // ─── Worker entry point ───────────────────────────────────────────────────────
 
@@ -1771,11 +1917,13 @@ async function handleOrchestrator(body, env, ctx) {
     'Roadmap Storyteller: https://cmankotech.github.io/cmankotech/roadmap-storyteller.html',
   ].join('\n');
 
+  const grounding = await siteGrounding(userMessage, env, safeJsonParse(planText)?.intent, lang);
+
   const synthesisMessages = [
     { role: 'system', content: synthesisPrompt },
     {
       role: 'user',
-      content: `User request:\n${userMessage}\n\nPlan JSON:\n${planText}\n\nTools:\n${toolLinks}`,
+      content: `${grounding}User request:\n${userMessage}\n\nPlan JSON:\n${planText}\n\nTools:\n${toolLinks}`,
     },
   ];
 
@@ -1892,6 +2040,8 @@ async function handleOrchestratorStream(body, env, ctx) {
     'Roadmap Storyteller: https://cmankotech.github.io/cmankotech/roadmap-storyteller.html',
   ].join('\n');
 
+  const grounding = await siteGrounding(userMessage, env, safeJsonParse(planText)?.intent, lang);
+
   const synthesisStart = Date.now();
   const groqRes = await fetch(GROQ_URL, {
     method: 'POST',
@@ -1903,7 +2053,7 @@ async function handleOrchestratorStream(body, env, ctx) {
       model: DEFAULT_MODEL,
       messages: [
         { role: 'system', content: synthesisPrompt },
-        { role: 'user', content: `User request:\n${userMessage}\n\nPlan JSON:\n${planText}\n\nTools:\n${toolLinks}` },
+        { role: 'user', content: `${grounding}User request:\n${userMessage}\n\nPlan JSON:\n${planText}\n\nTools:\n${toolLinks}` },
       ],
       temperature: 0.45,
       max_tokens: 450,
@@ -2110,11 +2260,11 @@ async function handleRagQuery(body, env, ctx) {
 
 // ─── Semantic retrieval helpers ───────────────────────────────────────────────
 
-function buildChunks() {
+function buildChunks(files) {
   const CHUNK_WORDS = 300;
   const OVERLAP = 50;
   const chunks = [];
-  for (const [source, content] of Object.entries(KB_FILES)) {
+  for (const [source, content] of Object.entries(files)) {
     const words = content.split(/\s+/).filter(Boolean);
     let i = 0;
     while (i < words.length) {
@@ -2127,8 +2277,13 @@ function buildChunks() {
 }
 
 function getChunks() {
-  if (!_chunks) _chunks = buildChunks();
+  if (!_chunks) _chunks = buildChunks(KB_FILES);
   return _chunks;
+}
+
+function getSiteChunks() {
+  if (!_siteChunks) _siteChunks = buildChunks(SITE_KB);
+  return _siteChunks;
 }
 
 function cosineSimilarity(a, b) {
@@ -2147,9 +2302,8 @@ function round4(n) {
   return Math.round(n * 10000) / 10000;
 }
 
-async function retrieveSemantic(query, env, topK = 3) {
+async function retrieveSemantic(query, env, topK = 3, allChunks = getChunks()) {
   if (!env.AI) return [];
-  const allChunks = getChunks();
   if (!allChunks.length) return [];
 
   const texts = [query, ...allChunks.map(c => c.text)];
@@ -2173,6 +2327,18 @@ async function retrieveSemantic(query, env, topK = 3) {
   if (!top.length) return [];
   const maxScore = top[0].score;
   return top.map(c => ({ text: c.text, source: c.source, score: round4(c.score / maxScore) }));
+}
+
+// Ground KRL1 answers in the site's own content (architecture, product decisions,
+// tools, Carlin's profile). Skipped for pm_workflow (PM help) and contact.
+async function siteGrounding(query, env, intent, lang) {
+  if (intent === 'pm_workflow' || intent === 'contact') return '';
+  const chunks = await retrieveSemantic(query, env, 6, getSiteChunks());
+  if (!chunks.length) return '';
+  const head = lang === 'en'
+    ? 'Site knowledge base (authoritative facts about THIS website: its architecture, stack, product decisions, tools and Carlin Mankoto\'s background). Use these excerpts as the source of truth for any question about the site; never invent facts about it. If a site-related question is not covered here, say you are not certain rather than guessing.\n\n'
+    : 'Base de connaissances du site (faits de référence sur CE site : architecture, stack, décisions produit, outils, parcours de Carlin Mankoto). Utilise ces extraits comme source de vérité pour toute question sur le site ; n\'invente jamais de fait à son sujet. Si une question liée au site n\'y figure pas, dis que tu n\'es pas certain plutôt que de deviner.\n\n';
+  return head + chunks.map(c => `[${c.source}]\n${c.text}`).join('\n\n---\n\n') + '\n\n';
 }
 
 // ─── Feedback pipeline (Make webhook + Groq fallback) ────────────────────────

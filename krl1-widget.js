@@ -644,19 +644,14 @@
       return;
     }
 
-    // Route: PM workflow → orchestrator (planner+synthesis), everything else → direct LLM
-    var isPM = PM_REGEX.test(userMessage);
+    // Route every non-KB question through the orchestrator (/orchestrate-stream):
+    // the planner classifies intent and the Worker grounds the answer in the site's
+    // own content (architecture, product decisions, tools, profile). Streaming first,
+    // sync /orchestrate as fallback.
     var fullText = null;
-    if (isPM) {
-      try { fullText = await collectStream(userMessage); } catch (_) {}
-      if (!fullText) {
-        try { fullText = await fetchFallback(userMessage); } catch (_) {}
-      }
-    } else {
-      try { fullText = await fetchDirect(userMessage); } catch (_) {}
-      if (!fullText) {
-        try { fullText = await fetchFallback(userMessage); } catch (_) {}
-      }
+    try { fullText = await collectStream(userMessage); } catch (_) {}
+    if (!fullText) {
+      try { fullText = await fetchFallback(userMessage); } catch (_) {}
     }
 
     if (!fullText) {
