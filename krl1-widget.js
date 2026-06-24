@@ -89,8 +89,13 @@
     '#krl1-journey .jrn-dot{width:6px;height:6px;border-radius:50%;background:#22d3ee;flex-shrink:0;}',
     '#krl1-journey .jrn-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#22d3ee;}',
     '#krl1-journey .jrn-reason{font-size:14px;color:rgba(255,255,255,.65);margin:0 0 16px;line-height:1.55;}',
-    '#krl1-journey .jrn-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.28);color:#22d3ee;font-size:14px;font-weight:600;text-decoration:none;transition:background .18s,border-color .18s;}',
-    '#krl1-journey .jrn-btn:hover{background:rgba(34,211,238,.2);border-color:rgba(34,211,238,.5);}',
+    '#krl1-journey .jrn-actions{display:flex;flex-wrap:wrap;gap:10px;}',
+    '#krl1-journey .jrn-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:background .18s,border-color .18s,transform .18s;}',
+    '#krl1-journey .jrn-btn:hover{transform:translateY(-1px);}',
+    '#krl1-journey .jrn-primary{background:rgba(34,211,238,.14);border:1px solid rgba(34,211,238,.32);color:#22d3ee;}',
+    '#krl1-journey .jrn-primary:hover{background:rgba(34,211,238,.24);border-color:rgba(34,211,238,.55);}',
+    '#krl1-journey .jrn-ghost{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.82);}',
+    '#krl1-journey .jrn-ghost:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.28);}',
   ].join('');
   document.head.appendChild(styleEl);
 
@@ -296,6 +301,9 @@
     }
   };
 
+  var BRIEF_URL = 'https://cmankotech.github.io/cmankotech/product-brief.html';
+  function briefLabel(lang) { return lang === 'en' ? '📄 Go to Product Brief' : '📄 Aller au Product Brief'; }
+
   function injectJourneyCTA() {
     if (document.getElementById('krl1-journey')) return;
     var jrn = JOURNEY[TOOL_ID];
@@ -303,15 +311,18 @@
     var resultsEl = document.getElementById('results');
     if (!resultsEl) return;
     var lang = _lang || 'fr';
-    var isEnd = !jrn.nextName;
+    var nextIsBrief = jrn.nextUrl === BRIEF_URL;
+    var btns = '<a class="jrn-btn jrn-primary" href="' + jrn.nextUrl + '">' + jrn.emoji + ' ' + jrn.nextName + ' →</a>';
+    // Shortcut straight to the Product Brief (unless the next step already is it).
+    if (!nextIsBrief) {
+      btns += '<a class="jrn-btn jrn-ghost jrn-brief" href="' + BRIEF_URL + '">' + briefLabel(lang) + '</a>';
+    }
     var div = document.createElement('div');
     div.id = 'krl1-journey';
     div.innerHTML =
       '<div class="jrn-header"><span class="jrn-dot"></span><span class="jrn-label">KRL1 · PM Journey</span></div>' +
       '<p class="jrn-reason">' + (jrn[lang] || jrn['fr']) + '</p>' +
-      '<a class="jrn-btn" href="' + jrn.nextUrl + '">' +
-        jrn.emoji + ' ' + (isEnd ? (lang === 'en' ? 'Back to portfolio' : 'Retour au portfolio') : jrn.nextName + ' →') +
-      '</a>';
+      '<div class="jrn-actions">' + btns + '</div>';
     resultsEl.appendChild(div);
   }
 
@@ -320,10 +331,9 @@
     if (!el) return;
     var jrn = JOURNEY[TOOL_ID];
     if (!jrn) return;
-    var isEnd = !jrn.nextName;
     el.querySelector('.jrn-reason').textContent = jrn[lang] || jrn['fr'];
-    el.querySelector('.jrn-btn').textContent =
-      jrn.emoji + ' ' + (isEnd ? (lang === 'en' ? 'Back to portfolio' : 'Retour au portfolio') : jrn.nextName + ' →');
+    var brief = el.querySelector('.jrn-brief');
+    if (brief) brief.textContent = briefLabel(lang);
   }
 
   // ── SYSTEM PROMPT ──────────────────────────────────────────────────────────
