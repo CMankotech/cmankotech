@@ -37,4 +37,5 @@ binding = "AI"
 # the current ISO week's edition (fetch RSS + Groq synthesis + archive), so the
 # history grows on its own without any external (Make) trigger.
 [triggers]
-crons = ["0 6 * * 1"]
+# Daily 03:00 UTC : re-extract the live site pages into the chatbot KB (site_kb_v1).
+crons = ["0 6 * * 1", "0 3 * * *"]

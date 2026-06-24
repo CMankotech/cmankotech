@@ -1666,6 +1666,16 @@ export default {
       return jsonResponse({ ok: true, ...result });
     }
 
+    // Site KB refresh : re-extract the live pages into the chatbot's KB (KV).
+    if (request.method === 'POST' && url.pathname === '/site-kb-refresh') {
+      const secret = request.headers.get('x-make-secret');
+      if (!env.MAKE_SECRET || secret !== env.MAKE_SECRET) {
+        return new Response('Forbidden', { status: 403 });
+      }
+      const decisions = await refreshSiteKb(env);
+      return jsonResponse({ ok: decisions > 0, decisions });
+    }
+
     // Veille ingest : Make sends raw articles, Worker synthesizes with Groq and stores
     if (request.method === 'POST' && url.pathname === '/veille-ingest') {
       const secret = request.headers.get('x-make-secret');
@@ -1779,6 +1789,12 @@ export default {
   // Weekly cron (see [triggers] in wrangler.toml) : regenerate the veille edition
   // for the current ISO week. Runs inside the Worker, so no MAKE_SECRET needed.
   async scheduled(event, env, ctx) {
+    // Daily 03:00 UTC : re-extract the live site pages into the chatbot's KB.
+    if (event.cron === '0 3 * * *') {
+      ctx.waitUntil(refreshSiteKb(env));
+      return;
+    }
+    // Monday 06:00 UTC : weekly veille edition.
     ctx.waitUntil(runVeilleRefresh(env));
   },
 };
@@ -2281,8 +2297,16 @@ function getChunks() {
   return _chunks;
 }
 
-function getSiteChunks() {
-  if (!_siteChunks) _siteChunks = buildChunks(SITE_KB);
+// Site chunks come from KV when a refresh has run (auto-synced from the live
+// pages), otherwise from the hardcoded SITE_KB baseline. Cached per isolate.
+async function getSiteChunks(env) {
+  if (_siteChunks) return _siteChunks;
+  let kb = SITE_KB;
+  try {
+    const stored = env && env.VEILLE_STORE ? await env.VEILLE_STORE.get('site_kb_v1', { type: 'json' }) : null;
+    if (stored && Object.keys(stored).length) kb = stored;
+  } catch (_) { /* fall back to baseline */ }
+  _siteChunks = buildChunks(kb);
   return _siteChunks;
 }
 
@@ -2333,12 +2357,85 @@ async function retrieveSemantic(query, env, topK = 3, allChunks = getChunks()) {
 // tools, Carlin's profile). Skipped for pm_workflow (PM help) and contact.
 async function siteGrounding(query, env, intent, lang) {
   if (intent === 'pm_workflow' || intent === 'contact') return '';
-  const chunks = await retrieveSemantic(query, env, 6, getSiteChunks());
+  const chunks = await retrieveSemantic(query, env, 6, await getSiteChunks(env));
   if (!chunks.length) return '';
   const head = lang === 'en'
     ? 'Site knowledge base (authoritative facts about THIS website: its architecture, stack, product decisions, tools and Carlin Mankoto\'s background). Use these excerpts as the source of truth for any question about the site; never invent facts about it. If a site-related question is not covered here, say you are not certain rather than guessing.\n\n'
     : 'Base de connaissances du site (faits de référence sur CE site : architecture, stack, décisions produit, outils, parcours de Carlin Mankoto). Utilise ces extraits comme source de vérité pour toute question sur le site ; n\'invente jamais de fait à son sujet. Si une question liée au site n\'y figure pas, dis que tu n\'es pas certain plutôt que de deviner.\n\n';
   return head + chunks.map(c => `[${c.source}]\n${c.text}`).join('\n\n---\n\n') + '\n\n';
+}
+
+// ─── Site KB auto-refresh (re-extract the live pages into KV) ─────────────────
+const SITE_KB_ENTITIES = {
+  '&times;': 'x', '&middot;': '.', '&amp;': '&', '&eacute;': 'é', '&egrave;': 'è',
+  '&agrave;': 'à', '&rsquo;': '’', '&nbsp;': ' ', '&ocirc;': 'ô', '&ecirc;': 'ê',
+  '&ccedil;': 'ç', '&ndash;': '-', '&rarr;': '->', '&hellip;': '…', '&laquo;': '«',
+  '&raquo;': '»', '&deg;': '°', '&euml;': 'ë', '&icirc;': 'î', '&ucirc;': 'û', '&acirc;': 'â',
+};
+function cleanKb(s) {
+  s = s.replace(/<[^>]+>/g, '');
+  s = s.replace(/\\u([0-9a-fA-F]{4})/g, (m, h) => String.fromCharCode(parseInt(h, 16)));
+  for (const [k, v] of Object.entries(SITE_KB_ENTITIES)) s = s.split(k).join(v);
+  s = s.replace(/&#(\d+);/g, (m, n) => String.fromCharCode(parseInt(n, 10)));
+  s = s.replace(/\\'/g, "'").replace(/\\"/g, '"').replace(/\\-/g, '-').replace(/\\n/g, ' ').replace(/\\\\/g, '');
+  return s.replace(/\s+/g, ' ').trim();
+}
+function grabKb(text, key) {
+  const esc = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const m = text.match(new RegExp(esc + "\\s*:\\s*(['\"])([\\s\\S]*?)\\1\\s*[,}\\n]"));
+  return m ? cleanKb(m[2]) : '';
+}
+async function refreshSiteKb(env) {
+  if (!env.VEILLE_STORE) return 0;
+  const BASE = 'https://cmankotech.github.io/cmankotech/';
+  try {
+    const [decH, archH, idxH] = await Promise.all([
+      fetch(BASE + 'product-decisions.html').then(r => r.text()),
+      fetch(BASE + 'how-i-built-this.html').then(r => r.text()),
+      fetch(BASE + 'index.html').then(r => r.text()),
+    ]);
+    const dec = [];
+    for (let i = 1; i <= 20; i++) {
+      const n = String(i).padStart(2, '0');
+      const q = grabKb(decH, 'd' + n + 'q');
+      if (q) dec.push('## Decision ' + i + ' : ' + q + '\nEn bref : ' + grabKb(decH, 'd' + n + 'a') + '\n' + grabKb(decH, 'd' + n + 'why'));
+    }
+    const arch = [];
+    for (const k of ['stack.front.desc', 'stack.deploy.desc', 'stack.proxy.desc', 'stack.llm.desc', 'stack.lg.desc', 'stack.lf.desc', 'lg.flow.desc', 'lg.why.desc']) {
+      const v = grabKb(archH, "'" + k + "'");
+      if (v) arch.push(v);
+    }
+    for (let i = 1; i <= 8; i++) {
+      const q = grabKb(archH, "'d" + i + ".q'");
+      if (q) arch.push(q + ' En bref : ' + grabKb(archH, "'d" + i + ".a'") + '. ' + grabKb(archH, "'d" + i + ".why'"));
+    }
+    const prof = [];
+    for (const [role, who] of [['oaio', 'OAIO'], ['outlier', 'Outlier'], ['axa', 'AXA'], ['airbus', 'Airbus'], ['casino', 'Casino']]) {
+      const d = grabKb(idxH, "'exp." + role + ".desc'");
+      if (d) prof.push('Experience chez ' + who + ', ' + grabKb(idxH, "'exp." + role + ".role'") + ' : ' + d);
+    }
+    const edus = ['bootcamp', 'm2', 'm1', 'licence'].map(e => grabKb(idxH, "'edu." + e + ".degree'")).filter(Boolean);
+    if (edus.length) prof.push('Formation : ' + edus.join(' ; ') + '.');
+
+    // Need at least the decisions + architecture, else the extraction broke : keep baseline.
+    if (dec.length < 5 || arch.length < 5 || !prof.length) return 0;
+
+    // Keep the hand-written certs/skills paragraph from the baseline profile doc.
+    const profTail = SITE_KB['site-profile.md'].split('\n\n').slice(-1)[0];
+
+    const kb = {
+      'site-overview.md': SITE_KB['site-overview.md'],
+      'site-architecture.md': '# Architecture technique et stack du site cmankotech\n\n' + arch.join('\n\n'),
+      'site-product-decisions.md': '# Decisions produit du site cmankotech\n\n' + dec.join('\n\n'),
+      'site-tools.md': SITE_KB['site-tools.md'],
+      'site-profile.md': '# Profil de Carlin Mankoto\n\n' + prof.join('\n\n') + '\n\n' + profTail,
+    };
+    await env.VEILLE_STORE.put('site_kb_v1', JSON.stringify(kb));
+    _siteChunks = null; // invalidate this isolate's cache so the next query rebuilds from KV
+    return dec.length;
+  } catch (_) {
+    return 0;
+  }
 }
 
 // ─── Feedback pipeline (Make webhook + Groq fallback) ────────────────────────
