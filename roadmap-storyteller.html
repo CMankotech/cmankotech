@@ -119,6 +119,16 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400}
 .narrative-text{font-size:0.9rem;color:var(--text);line-height:1.8;font-style:italic;border-left:3px solid rgba(244,114,182,0.4);padding-left:1.25rem}
 
 /* TIMELINE */
+/* Schematic roadmap board : Now / Next / Later columns */
+.rmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0.7rem;margin-bottom:1.5rem}
+.rmap-col{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.rmap-col-h{padding:0.7rem 0.9rem;border-bottom:1px solid var(--line)}
+.rmap-col-label{font-family:'Syne',sans-serif;font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em}
+.rmap-col-theme{font-size:0.74rem;color:var(--text);margin-top:0.2rem;font-weight:500;line-height:1.3}
+.rmap-col-body{padding:0.6rem;display:flex;flex-direction:column;gap:0.45rem;flex:1}
+.rmap-feat{font-size:0.72rem;color:var(--dim);background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:8px;padding:0.5rem 0.65rem;line-height:1.4}
+[data-theme="light"] .rmap-feat{background:rgba(15,23,42,0.025)}
+.rmap-cap{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem}
 .timeline{display:flex;flex-direction:column;gap:1rem;margin-bottom:1.25rem}
 .period-block{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
 .period-header{padding:0.9rem 1.25rem;background:rgba(255,255,255,0.02);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:0.75rem}
@@ -425,7 +435,11 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <button class="btn-copy" id="copyBtn" onclick="copyNarrative()">&#128203; Copier le pitch</button>
     </div>
 
-    <!-- Timeline -->
+    <!-- Schematic roadmap board (Now / Next / Later) -->
+    <div class="rmap-cap" id="rmapCap" style="display:none">🗺️ <span id="rmapCapTxt">Roadmap schématisée</span></div>
+    <div id="roadmap-schema"></div>
+
+    <!-- Timeline (detailed) -->
     <div id="timeline"></div>
 
     <!-- Talking points -->
@@ -567,6 +581,7 @@ function renderResults(d, name, horizon) {
   var periodBorder = {now:'rgba(74,222,128,0.3)', next:'rgba(244,114,182,0.3)', later:'rgba(96,165,250,0.3)'};
   var periodTextColor = {now:'#86efac', next:'#c4b5fd', later:'#93c5fd'};
   var timelineHtml = '';
+  var schemaHtml = '';
   (d.periods||[]).forEach(function(period, pi) {
     if(!period.features || !period.features.length) return;
     var col = periodColors[period.key] || periodColors.later;
@@ -576,7 +591,12 @@ function renderResults(d, name, horizon) {
       return '<div class="feature-item"><div class="feature-dot" style="background:'+txtCol+'"></div><div class="feature-body"><div class="feature-title" data-ep="periods.'+pi+'.features.'+fi+'.title">'+fmt(f.title)+'</div><div class="feature-why" data-ep="periods.'+pi+'.features.'+fi+'.why">'+fmt(f.why)+'</div></div></div>';
     }).join('');
     timelineHtml += '<div class="period-block"><div class="period-header" style="background:'+col+';border-bottom:1px solid '+bord+'"><span class="period-label" style="color:'+txtCol+'">'+esc(period.label)+'</span><span style="color:var(--muted);font-size:0.65rem;margin:0 0.5rem">/</span><span class="period-theme" data-ep="periods.'+pi+'.theme">'+esc(period.theme||'')+'</span></div><div class="period-items">'+featsHtml+'</div></div>';
+    // schematic column (titles only)
+    var schemaFeats = period.features.map(function(f) { return '<div class="rmap-feat">'+esc(f.title||'')+'</div>'; }).join('');
+    schemaHtml += '<div class="rmap-col"><div class="rmap-col-h" style="background:'+col+';border-color:'+bord+'"><div class="rmap-col-label" style="color:'+txtCol+'">'+esc(period.label||'')+'</div>'+(period.theme?'<div class="rmap-col-theme">'+esc(period.theme)+'</div>':'')+'</div><div class="rmap-col-body">'+schemaFeats+'</div></div>';
   });
+  document.getElementById('roadmap-schema').innerHTML = schemaHtml ? '<div class="rmap">'+schemaHtml+'</div>' : '';
+  document.getElementById('rmapCap').style.display = schemaHtml ? 'flex' : 'none';
   document.getElementById('timeline').innerHTML = timelineHtml;
 
   // Talking points
@@ -803,6 +823,7 @@ function applyLangExtras(lang) {
     'lbl_results_title': 'Generated roadmap',
     'lbl_pitch_title': '&#128172; Narrative pitch',
     'lbl_msg_title': '&#127919; Key messages for this audience',
+    'rmapCapTxt': 'Schematic roadmap',
   } : {
     'lbl_ctx_title': 'Contexte produit',
     'lbl_prod_name': 'Nom du produit',
@@ -813,6 +834,7 @@ function applyLangExtras(lang) {
     'lbl_results_title': 'Roadmap g&eacute;n&eacute;r&eacute;e',
     'lbl_pitch_title': '&#128172; Pitch narratif',
     'lbl_msg_title': '&#127919; Messages cl&eacute;s pour cette audience',
+    'rmapCapTxt': 'Roadmap sch&eacute;matis&eacute;e',
   };
   Object.keys(_t).forEach(function(id) {
     var el = document.getElementById(id);

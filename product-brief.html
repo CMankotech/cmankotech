@@ -98,6 +98,16 @@ h1,h2,h3{font-family:'Syne',sans-serif}
 .kr{margin-left:1.1rem;font-size:0.78rem;color:var(--dim);display:flex;align-items:baseline;gap:0.4rem;margin-top:0.3rem}
 .kr::before{content:'→';color:var(--sc);opacity:0.7}
 .kr .base{color:var(--muted);font-size:0.72rem}
+/* Schematic roadmap board (Now / Next / Later) */
+.rmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0.7rem;margin-bottom:1rem}
+.rmap-col{background:rgba(0,0,0,0.18);border:1px solid var(--border);border-radius:11px;overflow:hidden;display:flex;flex-direction:column}
+.rmap-col-h{padding:0.65rem 0.8rem;border-bottom:1px solid var(--line)}
+.rmap-col-label{font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em}
+.rmap-col-theme{font-size:0.72rem;color:var(--text);margin-top:0.18rem;line-height:1.3}
+.rmap-col-body{padding:0.55rem;display:flex;flex-direction:column;gap:0.4rem;flex:1}
+.rmap-feat{font-size:0.72rem;color:var(--dim);background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:7px;padding:0.45rem 0.6rem;line-height:1.4}
+[data-theme="light"] .rmap-col{background:#f8fafc}
+[data-theme="light"] .rmap-feat{background:#fff}
 .period{margin-bottom:0.9rem}
 .period-h{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--sc);margin-bottom:0.4rem}
 .period-h .th{color:var(--text);font-weight:500;text-transform:none;letter-spacing:0;margin-left:0.5rem}
@@ -187,6 +197,10 @@ footer{text-align:center;margin-top:3rem;padding-top:2rem;border-top:1px solid v
   .bc-lead,.bc-gen,.bc-gen b{color:#334155!important}
   .bc-tile,.bc-stat{background:#f8fafc!important;border-color:#e2e8f0!important}
   .bc-tile .v,.bc-stat .n{color:#0f172a!important}
+  .rmap{break-inside:avoid}
+  .rmap-col{background:#fff!important;border-color:#e2e8f0!important}
+  .rmap-col-theme{color:#0f172a!important}
+  .rmap-feat{background:#f8fafc!important;border-color:#e2e8f0!important;color:#334155!important}
   .pain-grp-h{color:#0f172a!important}
   .pain-subs li{color:#334155!important}
   footer{color:#64748b!important}
@@ -466,6 +480,17 @@ function render(){
     var rInner = '';
     if(ctx.roadmap.narrative) rInner += block(T.lbl.narrative, '<div class="bs-text">' + esc(ctx.roadmap.narrative) + '</div>');
     if((ctx.roadmap.periods || []).length){
+      // schematic Now / Next / Later board
+      var rmC = {now:'rgba(74,222,128,0.15)', next:'rgba(244,114,182,0.15)', later:'rgba(96,165,250,0.15)'};
+      var rmB = {now:'rgba(74,222,128,0.3)', next:'rgba(244,114,182,0.3)', later:'rgba(96,165,250,0.3)'};
+      var rmT = {now:'#86efac', next:'#c4b5fd', later:'#93c5fd'};
+      var cols = ctx.roadmap.periods.map(function(pr){
+        if(!(pr.features || []).length) return '';
+        var c = rmC[pr.key] || rmC.later, b = rmB[pr.key] || rmB.later, tc = rmT[pr.key] || rmT.later;
+        var fs = (pr.features || []).map(function(f){ return '<div class="rmap-feat">' + esc(f.title || '') + '</div>'; }).join('');
+        return '<div class="rmap-col"><div class="rmap-col-h" style="background:' + c + ';border-color:' + b + '"><div class="rmap-col-label" style="color:' + tc + '">' + esc(pr.label || pr.key || '') + '</div>' + (pr.theme ? '<div class="rmap-col-theme">' + esc(pr.theme) + '</div>' : '') + '</div><div class="rmap-col-body">' + fs + '</div></div>';
+      }).join('');
+      if(cols) rInner += '<div class="rmap">' + cols + '</div>';
       var per = ctx.roadmap.periods.map(function(pr){
         var feats = (pr.features || []).map(function(f){ return '<div class="feat"><b>' + esc(f.title) + '</b>' + (f.why ? ' — ' + esc(f.why) : '') + '</div>'; }).join('');
         return '<div class="period"><div class="period-h">' + esc(pr.label || pr.key || '') + (pr.theme ? '<span class="th">' + esc(pr.theme) + '</span>' : '') + '</div>' + feats + '</div>';
