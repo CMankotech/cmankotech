@@ -109,7 +109,7 @@ h1{font-family:'DM Sans',sans-serif;font-weight:500;margin:0}
 .pb-demo-select option{background:#0e0e1a;color:var(--text);text-transform:none;letter-spacing:0;font-weight:400}
 .pb-demo-wrap .pb-chev{color:#c4b5fd}
 /* Demo choice modal */
-.demo-modal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:1.25rem;background:rgba(6,6,14,0.72);animation:dmFade 0.2s ease}
+.demo-modal{position:fixed;inset:0;z-index:10050;display:flex;align-items:center;justify-content:center;padding:1.25rem;background:rgba(6,6,14,0.72);animation:dmFade 0.2s ease}
 .demo-modal[hidden]{display:none}
 @keyframes dmFade{from{opacity:0}to{opacity:1}}
 .demo-modal-card{position:relative;width:100%;max-width:460px;background:#13131f;border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:1.75rem 1.6rem 1.6rem;box-shadow:0 24px 60px rgba(0,0,0,0.5);animation:dmRise 0.24s cubic-bezier(0.22,1,0.36,1)}
@@ -372,32 +372,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <div class="pb-select-wrap pb-demo-wrap">
         <select id="demoSelect" class="pb-demo-select" onchange="if(this.value){openDemoChoice(this.value);this.selectedIndex=0;}" aria-label="Démo guidée"></select>
         <svg class="pb-chev" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-    </div>
-  </div>
-
-  <!-- DEMO CHOICE MODAL -->
-  <div class="demo-modal" id="demoModal" role="dialog" aria-modal="true" aria-labelledby="demoModalTitle" hidden>
-    <div class="demo-modal-card">
-      <button class="demo-modal-close" onclick="closeDemoChoice()" aria-label="Fermer">×</button>
-      <span class="demo-modal-eyebrow" id="demoModalEyebrow">✨ Démo</span>
-      <h3 class="demo-modal-title" id="demoModalTitle">Que veux-tu faire&nbsp;?</h3>
-      <p class="demo-modal-sub" id="demoModalSub">Choisis comment découvrir ce scénario.</p>
-      <div class="demo-modal-opts">
-        <button class="demo-opt" id="demoOptBrief" onclick="seedDemoBrief()">
-          <span class="demo-opt-ico">⚡</span>
-          <span class="demo-opt-txt">
-            <span class="demo-opt-h" id="demoOptBriefH">Générer le brief directement</span>
-            <span class="demo-opt-d" id="demoOptBriefD">Saute les étapes et va droit au Product Brief, prérempli avec un exemple complet.</span>
-          </span>
-        </button>
-        <button class="demo-opt" id="demoOptGuided" onclick="startGuidedDemo()">
-          <span class="demo-opt-ico">🧭</span>
-          <span class="demo-opt-txt">
-            <span class="demo-opt-h" id="demoOptGuidedH">Faire le parcours guidé</span>
-            <span class="demo-opt-d" id="demoOptGuidedD">Démarre sur la discovery et enchaîne les 6 outils, préremplis avec ce scénario.</span>
-          </span>
-        </button>
       </div>
     </div>
   </div>
@@ -983,5 +957,32 @@ document.addEventListener('click',function(e){
 });
 document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){applyTTPm(document.documentElement.lang||'fr');},250);});
 </script>
+
+<!-- DEMO CHOICE MODAL (direct child of body so its fixed overlay is not trapped
+     inside .container's stacking context) -->
+<div class="demo-modal" id="demoModal" role="dialog" aria-modal="true" aria-labelledby="demoModalTitle" hidden>
+  <div class="demo-modal-card">
+    <button class="demo-modal-close" onclick="closeDemoChoice()" aria-label="Fermer">×</button>
+    <span class="demo-modal-eyebrow" id="demoModalEyebrow">✨ Démo</span>
+    <h3 class="demo-modal-title" id="demoModalTitle">Que veux-tu faire&nbsp;?</h3>
+    <p class="demo-modal-sub" id="demoModalSub">Choisis comment découvrir ce scénario.</p>
+    <div class="demo-modal-opts">
+      <button class="demo-opt" id="demoOptBrief" onclick="seedDemoBrief()">
+        <span class="demo-opt-ico">⚡</span>
+        <span class="demo-opt-txt">
+          <span class="demo-opt-h" id="demoOptBriefH">Générer le brief directement</span>
+          <span class="demo-opt-d" id="demoOptBriefD">Saute les étapes et va droit au Product Brief, prérempli avec un exemple complet.</span>
+        </span>
+      </button>
+      <button class="demo-opt" id="demoOptGuided" onclick="startGuidedDemo()">
+        <span class="demo-opt-ico">🧭</span>
+        <span class="demo-opt-txt">
+          <span class="demo-opt-h" id="demoOptGuidedH">Faire le parcours guidé</span>
+          <span class="demo-opt-d" id="demoOptGuidedD">Démarre sur la discovery et enchaîne les 6 outils, préremplis avec ce scénario.</span>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
