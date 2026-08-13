@@ -1,6 +1,7 @@
 <html lang="fr" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
+<script>(function(){try{if(localStorage.getItem('theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Portfolio de Carlin Mankoto, AI Product Manager. PM Toolkit : 6 outils IA open-source reliés par un fil rouge d'insights.">
 <meta property="og:title" content="Portfolio Builder Carlin Mankoto">
@@ -20,8 +21,9 @@
 <link rel="stylesheet" href="cursor.css">
 <link rel="stylesheet" href="reveal.css">
 <script>document.documentElement.classList.add('reveal-on');window.__revealFallback=setTimeout(function(){document.documentElement.classList.remove('reveal-on')},2500);</script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 <script src="reveal.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Instrument+Serif:ital@1&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -32,7 +34,7 @@ h1,h2,h3,h4{font-family:'Syne',sans-serif}
 .glow{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0;opacity:0.7;transition:opacity .6s ease;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 body.glows-hidden .glow{opacity:0}
 body.is-scrolling .glow{animation-play-state:paused}
-body.is-scrolling .hero-orb,body.is-scrolling .hero-mesh-rot{animation-play-state:paused}
+body.is-scrolling .hero-orb,body.is-scrolling .hero-mesh-rot,body.is-scrolling #heroBgRing1,body.is-scrolling #heroBgRing2,body.is-scrolling .hmock-track,body.is-scrolling .hmock-live b,body.is-scrolling .hterm-beam{animation-play-state:paused}
 .g1{width:900px;height:700px;top:-15%;left:-10%;background:radial-gradient(ellipse 60% 55%,rgba(59,130,246,0.55),transparent 70%);animation:drift1 22s ease-in-out infinite}
 .g2{width:800px;height:800px;top:30%;right:-12%;background:radial-gradient(ellipse 55% 60%,rgba(167,139,250,0.50),transparent 70%);animation:drift2 26s ease-in-out infinite}
 .g3{width:850px;height:550px;bottom:0;left:10%;background:radial-gradient(ellipse 70% 45%,rgba(34,211,238,0.42),transparent 70%);animation:drift3 30s ease-in-out infinite}
@@ -1423,10 +1425,12 @@ window.setLang=function(lang){
 // 1. PARTICLES
 // ═══════════════════════════════════════════════════════
 var canvas = document.getElementById('heroCanvas');
-if(canvas){
+var _reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(canvas && !_reduceMotion){
   var ctx = canvas.getContext('2d');
   var pts = [];
   var W, H;
+  var particleRaf = null;
 
   function resize(){
     var hero = document.getElementById('hero');
@@ -1471,17 +1475,33 @@ if(canvas){
         }
       }
     }
-    requestAnimationFrame(drawParticles);
+    particleRaf = requestAnimationFrame(drawParticles);
   }
 
   resize();
   for(var i=0;i<55;i++) pts.push(mkPt());
-  drawParticles();
+  particleRaf = requestAnimationFrame(drawParticles);
   window.addEventListener('resize', function(){
     resize();
     pts=[];
     for(var i=0;i<55;i++) pts.push(mkPt());
   });
+
+  // Stop the rAF loop once the hero scrolls out of view instead of
+  // running 55-point pairwise distance checks forever in the background.
+  var _heroEl = document.getElementById('hero');
+  if(_heroEl && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          if(!particleRaf) particleRaf = requestAnimationFrame(drawParticles);
+        } else if(particleRaf){
+          cancelAnimationFrame(particleRaf);
+          particleRaf = null;
+        }
+      });
+    }).observe(_heroEl);
+  }
 }
 
 // ═══════════════════════════════════════════════════════

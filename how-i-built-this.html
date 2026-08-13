@@ -2,12 +2,16 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<script>(function(){try{if(localStorage.getItem('theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+<script>(function(){var t;addEventListener('scroll',function(){var b=document.body;if(!b)return;if(!b.classList.contains('is-scrolling'))b.classList.add('is-scrolling');clearTimeout(t);t=setTimeout(function(){b.classList.remove('is-scrolling')},160)},{passive:true});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comment j'ai construit ce site, Carlin Mankoto</title>
 <meta name="description" content="Stack technique, étapes de création et décisions d'architecture derrière le portfolio de Carlin Mankoto.">
 <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body.is-scrolling .glow{animation-play-state:paused}
+body.is-scrolling *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 :root{
   --bg:#08080f;--surface:#0e0e1a;--glass:rgba(255,255,255,0.03);
   --border:rgba(255,255,255,0.08);--text:#e2e8f0;--dim:#94a3b8;--muted:#64748b;
