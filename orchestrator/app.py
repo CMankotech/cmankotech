@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 
 from rag import build_index, retrieve
 
-DEFAULT_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
+DEFAULT_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 GROQ_BASE_URL = os.getenv("GROQ_BASE_URL", "https://api.groq.com/openai/v1")
 
 
@@ -76,6 +76,8 @@ def get_llm(temperature: float = 0.3):
         model=DEFAULT_MODEL,
         temperature=temperature,
         base_url=GROQ_BASE_URL,
+        # gpt-oss is a reasoning model : keep reasoning short and out of the content.
+        extra_body={"reasoning_effort": "low", "include_reasoning": False},
     )
 
 

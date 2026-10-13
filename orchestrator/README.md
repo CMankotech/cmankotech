@@ -18,7 +18,7 @@ pip install -r requirements.txt
 ## Variables d'environnement
 
 - `GROQ_KEY` (obligatoire)
-- `GROQ_MODEL` (optionnel, défaut: `llama-3.3-70b-versatile`)
+- `GROQ_MODEL` (optionnel, défaut: `gpt-oss-120b`)
 - `GROQ_BASE_URL` (optionnel, défaut: `https://api.groq.com/openai/v1`)
 - `LANGSMITH_API_KEY` (optionnel, recommandé pour traces/observabilité)
 - `LANGCHAIN_TRACING_V2=true` (optionnel, recommandé)

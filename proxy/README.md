@@ -45,7 +45,7 @@ Chaque écriture d'édition passe par un helper commun `storeEdition` qui stocke
 
 `POST /veille` est appelé par Make et nécessite le header `x-make-secret`. Si le payload contient un tableau `categories`, l'édition est archivée via `storeEdition` ; sinon le payload est stocké tel quel sous `veille_latest` (comportement legacy, sans archive).
 
-`POST /veille-ingest` est la route principale utilisée par Make. Elle reçoit les articles bruts par catégorie (format `titre|url` séparé par `\n`), synthétise chaque catégorie via Groq (`llama-3.3-70b-versatile`, 2 phrases en français, temp=0.4), puis archive le résultat structuré (`updated_at`, `week`, `year`, `categories`) via `storeEdition`.
+`POST /veille-ingest` est la route principale utilisée par Make. Elle reçoit les articles bruts par catégorie (format `titre|url` séparé par `\n`), synthétise chaque catégorie via Groq (`gpt-oss-120b`, 2 phrases en français, temp=0.4), puis archive le résultat structuré (`updated_at`, `week`, `year`, `categories`) via `storeEdition`.
 
 ## Feedback
 
@@ -62,7 +62,11 @@ Langfuse est optionnel. Si `LANGFUSE_PUBLIC_KEY` et `LANGFUSE_SECRET_KEY` sont c
 - Clé Groq injectée côté serveur via les secrets Cloudflare
 - `POST /veille` protégé par secret partagé Make
 - **Rate limiting par IP** via `USAGE_COUNTER` (KV) : au-delà de 30 requêtes par fenêtre de 60s, le Worker répond `429`. Échec ouvert si KV indisponible
-- **Validation du passthrough Groq** (`POST /`) : `model` forcé à l'allowlist (`llama-3.3-70b-versatile`), `max_tokens` plafonné à 4000, nombre de messages et taille totale bornés. Une requête hors limites reçoit `400`
+- **Validation du passthrough Groq** (`POST /`) : `model` forcé à l'allowlist (`openai/gpt-oss-120b` ; l'ancien nom `llama-3.3-70b-versatile` est accepté et remappé pour les pages en cache), `max_tokens` plafonné à 4000, nombre de messages et taille totale bornés. Une requête hors limites reçoit `400`
+- **Modèle à raisonnement** : tous les appels Groq passent par `groqFetch()` / `withModelDefaults()` (`reasoning_effort: low`, raisonnement exclu de la réponse, +384 tokens de marge sur `max_tokens`)
+- **Quota Groq gratuit** (8 000 tokens/min par modèle, `max_tokens` compté d'avance) : sur un `429`, l'appel est relancé une fois sur `openai/gpt-oss-20b`, qui a son propre quota
+- **Forward LangGraph** (`/orchestrate`) : timeout de 8s, puis repli sur l'orchestration native du Worker (le service Python dort sur son free tier)
+- **Démo Make Co-pilot** : le scénario Make appelle `POST /` avec l'en-tête `Origin` du site ; la clé Groq ne vit plus dans Make
 
 ## Configuration
 

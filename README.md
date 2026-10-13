@@ -50,7 +50,7 @@ Cloudflare Worker (proxy/)
   /orchestrate, /orchestrate-stream, /rag-query, /rag-chunks, /feedback, /veille, /veille/history, /veille-ingest, /veille-refresh, /stats
   /export/prepare, /oauth/notion/callback (export Notion OAuth), /site-kb-refresh (refresh KB du chatbot)
         │
-        ├── Groq API — llama-3.3-70b-versatile
+        ├── Groq API — gpt-oss-120b
         ├── Workers AI — bge-small-en-v1.5 embeddings pour le RAG
         ├── KV — usage counter + stockage de la veille
         ├── Make — automation veille / feedback optionnel
@@ -64,7 +64,7 @@ Cloudflare Worker (proxy/)
 - **Proxy :** Cloudflare Workers (JavaScript), CORS, secrets serveur, KV pour compteur d'usage et stockage de veille. Protection contre l'abus : rate limit par IP (KV), allowlist de modèle et plafond `max_tokens` sur le passthrough Groq
 - **Frontend PM :** cœur partagé `pm-core.js` (appel proxy, parsing JSON tolérant, erreurs i18n) consommé par les 6 outils ; sessions multi-projets et Product Brief exportable côté client
 - **RAG sémantique :** Workers AI (Cloudflare, bge-small-en-v1.5) — embeddings batch + cosine similarity, natif dans le Worker
-- **LLM :** Groq API (llama-3.3-70b-versatile)
+- **LLM :** Groq API (`openai/gpt-oss-120b`, modèle à raisonnement ; repli automatique sur `gpt-oss-20b` en cas de quota atteint). Remplace `llama-3.3-70b-versatile`, retiré par Groq le 16/08/2026
 - **Automation :** Make pour la veille hebdomadaire et le pipeline feedback optionnel
 - **Observabilité :** Langfuse optionnel, non bloquant côté Worker
 - **Déploiement :** GitHub Pages (front) + Cloudflare Workers (proxy)

@@ -180,7 +180,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
 
   <header data-reveal data-reveal-stagger="0.12">
     <h1>AI PM <span class="grad">Co-pilot</span></h1>
-    <p class="subtitle" id="subtitleEl">Saisis une idée produit. Un scénario Make.com reçoit la requête via webhook, appelle Groq, et renvoie un mini-brief PM plus un score RICE, en direct. Pas de backend codé pour cette brique : tout est orchestré en no-code.</p>
+    <p class="subtitle" id="subtitleEl">Saisis une idée produit. Un scénario Make.com reçoit la requête via webhook, appelle Groq via le proxy Cloudflare du site, et renvoie un mini-brief PM plus un score RICE, en direct. Pas de backend codé pour cette brique : tout est orchestré en no-code.</p>
   </header>
 
   <!-- FLOW : le scénario Make -->
@@ -201,8 +201,8 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
       <span class="flow-arrow">→</span>
       <div class="flow-node fn-groq">
         <div class="flow-icon">🧠</div>
-        <div class="flow-name">HTTP → Groq</div>
-        <div class="flow-sub">llama-3.3-70b</div>
+        <div class="flow-name">HTTP → Worker</div>
+        <div class="flow-sub">Groq · gpt-oss-120b</div>
       </div>
       <span class="flow-arrow">→</span>
       <div class="flow-node fn-make">
@@ -261,7 +261,7 @@ h1 .grad{font-family:'Geist',sans-serif;font-style:italic;font-weight:400;font-s
       </div>
       <div class="exp-card">
         <h4 id="exp2t">🔐 Clé jamais exposée</h4>
-        <p id="exp2p">La clé Groq vit côté serveur dans le module HTTP de Make, jamais dans le navigateur. La page n'appelle que le webhook public, qui renvoie le résultat avec un en-tête CORS.</p>
+        <p id="exp2p">La clé Groq vit uniquement dans le proxy Cloudflare Worker que le module HTTP de Make appelle : ni dans le navigateur, ni dans le scénario. La page n'appelle que le webhook public, qui renvoie le résultat avec un en-tête CORS.</p>
       </div>
       <div class="exp-card">
         <h4 id="exp3t">⚡ Synchrone via Webhook Response</h4>
@@ -289,7 +289,7 @@ const SAMPLES = {
 const I18N = {
   fr: {
     eyebrow: '⚙️ Propulsé par un scénario Make',
-    subtitle: "Saisis une idée produit. Un scénario Make.com reçoit la requête via webhook, appelle Groq, et renvoie un mini-brief PM plus un score RICE, en direct. Pas de backend codé pour cette brique : tout est orchestré en no-code.",
+    subtitle: "Saisis une idée produit. Un scénario Make.com reçoit la requête via webhook, appelle Groq via le proxy Cloudflare du site, et renvoie un mini-brief PM plus un score RICE, en direct. Pas de backend codé pour cette brique : tout est orchestré en no-code.",
     flowLabel: 'Le scénario Make, étape par étape',
     fn1: 'Cette page', fn2: 'Trigger instantané', fn4: 'Webhook Response', fn5: 'Résultat',
     fieldLabel: 'Ton idée produit',
@@ -300,19 +300,19 @@ const I18N = {
     briefTitle: 'Mini-brief PM', riceTitle: 'Score RICE',
     expLabel: 'Pourquoi Make pour cette brique ?',
     exp1t: '🧩 Le bon outil au bon endroit', exp1p: "Le reste du site est codé à la main sur Cloudflare Workers. Cette brique est volontairement en no-code pour montrer la maîtrise de l'orchestration visuelle : webhook, appel HTTP authentifié, réponse synchrone.",
-    exp2t: '🔐 Clé jamais exposée', exp2p: "La clé Groq vit côté serveur dans le module HTTP de Make, jamais dans le navigateur. La page n'appelle que le webhook public, qui renvoie le résultat avec un en-tête CORS.",
+    exp2t: '🔐 Clé jamais exposée', exp2p: "La clé Groq vit uniquement dans le proxy Cloudflare Worker que le module HTTP de Make appelle : ni dans le navigateur, ni dans le scénario. La page n'appelle que le webhook public, qui renvoie le résultat avec un en-tête CORS.",
     exp3t: '⚡ Synchrone via Webhook Response', exp3p: "Le module <code>Webhook Response</code> renvoie le JSON dans la même requête HTTP, ce qui permet un affichage instantané sans polling. L'appel part en <code>x-www-form-urlencoded</code> pour éviter le preflight CORS.",
     exp4t: '🪶 Léger par design', exp4p: "3 modules, environ 3 opérations par exécution. Un throttle côté client espace les requêtes pour préserver le quota du plan gratuit Make (1000 opérations par mois).",
     keys: { probleme: 'Problème', cible: 'Cible', proposition_valeur: 'Proposition de valeur', kpi_principal: 'KPI principal' },
     rice: { reach: 'Reach', impact: 'Impact', confidence: 'Confiance', effort: 'Effort' },
     errEmpty: 'Écris une idée produit (au moins quelques mots).',
     errThrottle: 'Patiente quelques secondes avant la prochaine génération.',
-    errNet: 'Le scénario Make n\'a pas répondu. Il est peut-être inactif ou la clé Groq n\'est pas encore configurée.',
-    errKey: 'Le scénario tourne mais la clé Groq est invalide ou absente. Ajoute-la dans le module HTTP côté Make.'
+    errNet: 'Le scénario Make n\'a pas répondu. Il est peut-être inactif ou le quota est atteint, réessaie dans un instant.',
+    errKey: 'Le scénario tourne mais le modèle n\'a pas renvoyé de résultat. Réessaie dans un instant.'
   },
   en: {
     eyebrow: '⚙️ Powered by a Make scenario',
-    subtitle: "Type a product idea. A Make.com scenario receives the request via webhook, calls Groq, and returns a PM mini-brief plus a RICE score, live. No hand-coded backend for this piece: it is all orchestrated in no-code.",
+    subtitle: "Type a product idea. A Make.com scenario receives the request via webhook, calls Groq through the site Cloudflare proxy, and returns a PM mini-brief plus a RICE score, live. No hand-coded backend for this piece: it is all orchestrated in no-code.",
     flowLabel: 'The Make scenario, step by step',
     fn1: 'This page', fn2: 'Instant trigger', fn4: 'Webhook Response', fn5: 'Result',
     fieldLabel: 'Your product idea',
@@ -323,15 +323,15 @@ const I18N = {
     briefTitle: 'PM mini-brief', riceTitle: 'RICE Score',
     expLabel: 'Why Make for this piece?',
     exp1t: '🧩 The right tool for the job', exp1p: 'The rest of the site is hand-coded on Cloudflare Workers. This piece is deliberately no-code to show mastery of visual orchestration: webhook, authenticated HTTP call, synchronous response.',
-    exp2t: '🔐 Key never exposed', exp2p: 'The Groq key lives server-side in Make\'s HTTP module, never in the browser. The page only calls the public webhook, which returns the result with a CORS header.',
+    exp2t: '🔐 Key never exposed', exp2p: 'The Groq key lives only in the Cloudflare Worker proxy that the Make HTTP module calls: never in the browser, nor in the scenario. The page only calls the public webhook, which returns the result with a CORS header.',
     exp3t: '⚡ Synchronous via Webhook Response', exp3p: 'The <code>Webhook Response</code> module returns the JSON within the same HTTP request, enabling instant display with no polling. The call goes out as <code>x-www-form-urlencoded</code> to avoid the CORS preflight.',
     exp4t: '🪶 Light by design', exp4p: '3 modules, about 3 operations per run. A client-side throttle spaces requests to protect the Make free-plan quota (1000 operations per month).',
     keys: { probleme: 'Problem', cible: 'Target', proposition_valeur: 'Value proposition', kpi_principal: 'Key KPI' },
     rice: { reach: 'Reach', impact: 'Impact', confidence: 'Confidence', effort: 'Effort' },
     errEmpty: 'Write a product idea (at least a few words).',
     errThrottle: 'Wait a few seconds before the next generation.',
-    errNet: 'The Make scenario did not respond. It may be inactive or the Groq key is not configured yet.',
-    errKey: 'The scenario runs but the Groq key is invalid or missing. Add it in the HTTP module on the Make side.'
+    errNet: 'The Make scenario did not respond. It may be inactive or the quota is reached, try again in a moment.',
+    errKey: 'The scenario runs but the model returned no result. Try again in a moment.'
   }
 };
 

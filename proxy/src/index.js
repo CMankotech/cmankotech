@@ -1,6 +1,20 @@
 const ALLOWED_ORIGIN = 'https://cmankotech.github.io';
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
+// llama-3.3-70b-versatile was shut down by Groq on 2026-08-16 ; gpt-oss-120b is the
+// recommended replacement. It is a reasoning model : reasoning tokens count against
+// max_tokens, so every call goes through withModelDefaults() below.
+const DEFAULT_MODEL = 'openai/gpt-oss-120b';
+const FALLBACK_MODEL = 'openai/gpt-oss-20b'; // same family, separate rate-limit bucket (see groqFetch)
+const REASONING_HEADROOM = 384;   // extra tokens so low-effort reasoning never starves the answer (measured max ~160)
+
+// Adapts a Groq payload to the reasoning model : low effort (latency), reasoning kept
+// out of the response (content stays clean, streamed deltas unchanged), and the
+// caller's max_tokens treated as the answer budget, with reasoning headroom on top.
+function withModelDefaults(payload) {
+  const out = { ...payload, reasoning_effort: 'low', include_reasoning: false };
+  if (typeof out.max_tokens === 'number') out.max_tokens += REASONING_HEADROOM;
+  return out;
+}
 
 // ─── Abuse protection ──────────────────────────────────────────────────────────
 // The AI POST endpoints sit behind an Origin check, but Origin is trivially spoofed
@@ -11,6 +25,7 @@ const RATE_LIMIT_WINDOW = 60;     // seconds (also the KV TTL ; KV min is 60s)
 const MAX_TOKENS_CAP = 4000;      // hard ceiling on max_tokens for the raw passthrough
 const MAX_MESSAGES = 20;          // max messages array length
 const MAX_TOTAL_CHARS = 24000;    // max summed length of all message contents
+const LANGGRAPH_TIMEOUT_MS = 8000; // past this, /orchestrate falls back to the native pipeline
 
 // ─── Veille sources ───────────────────────────────────────────────────────────
 
@@ -1478,7 +1493,7 @@ Hébergement statique gratuit avec CI/CD natif : chaque git push sur main décle
 
 Un Worker est une fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes, pas de VPS, cold start quasi-nul. Ici il fait bien plus que proxifier : il orchestre le pipeline planner→synthesis pour KRL1, calcule les embeddings RAG via Workers AI, et trace les appels via Langfuse, la clé API n'est jamais exposée côté client. 7 routes : POST / passthrough direct Groq (6 outils PM) ; POST /orchestrate planner→synthesis sync ; POST /orchestrate-stream synthesis SSE ; POST /rag-query RAG sémantique complet ; POST /feedback analyse feedback (Make webhook ou Groq fallback) ; GET /stats compteur KV usage ; GET|POST /veille données veille tech. Validation d'origine (cmankotech.github.io uniquement), CORS automatique, rate limit par IP (30 req/min via KV) et validation du passthrough Groq (allowlist de modèle, max_tokens plafonné), plan gratuit Cloudflare : 100 000 req/jour.
 
-Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes, 5 à 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).
+Accès au modèle gpt-oss-120b via une API REST compatible OpenAI. L'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes, 5 à 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).
 
 Base de connaissances embarquée dans le Worker (15 documents Markdown : PM, PO/Agile, AI Product). Les embeddings sémantiques sont générés par Workers AI (bge-small-en-v1.5) en un seul appel batch ; la similarité cosinus est calculée à l'edge. Le pipeline handleRagQuery enchaîne : planner (T=0.2) génère un JSON strict avec intent, user_goal, steps actionnables, risks et quick_win ; retriever (conditionnel, uniquement si intent = pm_workflow) récupère les 3 chunks les plus proches par cosine similarity ; synthesis (T=0.45) transforme le plan enrichi du contexte PM en réponse naturelle max 220 mots. Zéro dépendance externe, zéro infra Python.
 
@@ -1523,7 +1538,7 @@ Le PM Journey (Discovery → Interviews → OKRs → Backlog → Stories → Roa
 
 ## Decision 6 : Streaming SSE sur la synthesis : pourquoi pas une réponse bloquante ?
 En bref : Latence perçue vs latence réelle
-Sans streaming, une requête KRL1 (planner ~600ms + synthesis ~900ms) implique ~1.5 à 2.5 secondes de spinner sans feedback. Avec le streaming SSE, les premiers tokens de la synthesis s'affichent en ~400ms pendant que la génération continue. La latence perçue est divisée par trois environ, sans que la latence réelle change. Même principe que le skeleton loading en UI. Le rendu mot par mot avec un délai de 22ms entre chaque mot ajoute un effet "typewriter" subtil qui renforce la sensation d'intelligence. Le streaming impose que le planner (appel LLM n°1) reste toujours bloquant car son output JSON est nécessaire avant de lancer la synthesis. Seul l'appel n°2 streame. En cas d'échec, le widget bascule automatiquement sur /orchestrate.
+Sans streaming, une requête KRL1 (planner ~1.2s + synthesis ~1s) implique ~2 à 3 secondes de spinner sans feedback. Avec le streaming SSE, les premiers tokens de la synthesis s'affichent en ~400ms pendant que la génération continue. La latence perçue est divisée par trois environ, sans que la latence réelle change. Même principe que le skeleton loading en UI. Le rendu mot par mot avec un délai de 22ms entre chaque mot ajoute un effet "typewriter" subtil qui renforce la sensation d'intelligence. Le streaming impose que le planner (appel LLM n°1) reste toujours bloquant car son output JSON est nécessaire avant de lancer la synthesis. Seul l'appel n°2 streame. En cas d'échec, le widget bascule automatiquement sur /orchestrate.
 
 ## Decision 7 : Limite 220 mots sur les réponses KRL1 : pourquoi ?
 En bref : Densité > exhaustivité
@@ -2067,22 +2082,15 @@ async function handleOrchestratorStream(body, env, ctx) {
   const grounding = await siteGrounding(userMessage, env, safeJsonParse(planText)?.intent, lang);
 
   const synthesisStart = Date.now();
-  const groqRes = await fetch(GROQ_URL, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${env.GROQ_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: DEFAULT_MODEL,
-      messages: [
-        { role: 'system', content: synthesisPrompt },
-        { role: 'user', content: `${grounding}User request:\n${userMessage}\n\nPlan JSON:\n${planText}\n\nTools:\n${toolLinks}` },
-      ],
-      temperature: 0.45,
-      max_tokens: 450,
-      stream: true,
-    }),
+  const groqRes = await groqFetch(env, {
+    model: DEFAULT_MODEL,
+    messages: [
+      { role: 'system', content: synthesisPrompt },
+      { role: 'user', content: `${grounding}User request:\n${userMessage}\n\nPlan JSON:\n${planText}\n\nTools:\n${toolLinks}` },
+    ],
+    temperature: 0.45,
+    max_tokens: 450,
+    stream: true,
   });
 
   if (!groqRes.ok) {
@@ -2507,13 +2515,18 @@ async function forwardToLangGraph(body, env) {
     return null;
   }
 
+  // The Python service sleeps on its free tier : a cold start once held KRL1 for
+  // ~100s before the native fallback. Give up fast and let the Worker answer.
   const res = await fetch(endpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
+    signal: AbortSignal.timeout(LANGGRAPH_TIMEOUT_MS),
   });
 
   const text = await res.text();
+  // A 200 without a usable reply (e.g. an upstream model error) counts as a failure.
+  if (res.ok && !safeJsonParse(text)?.reply) return null;
   return new Response(text, {
     status: res.status,
     headers: { 'Content-Type': 'application/json', ...corsHeaders() },
@@ -2542,7 +2555,8 @@ async function rateLimited(request, env) {
 // request must be rejected, or null when it is safe (mutating body in place to clamp).
 function validateGroqBody(body) {
   if (!body || typeof body !== 'object') return 'Invalid request body.';
-  if (body.model && body.model !== DEFAULT_MODEL) return 'Unsupported model.';
+  // Legacy name still sent by pages cached before the model switch : remapped below.
+  if (body.model && body.model !== DEFAULT_MODEL && body.model !== 'llama-3.3-70b-versatile') return 'Unsupported model.';
   body.model = DEFAULT_MODEL;
   if (!Array.isArray(body.messages) || body.messages.length === 0) return 'Missing messages.';
   if (body.messages.length > MAX_MESSAGES) return 'Too many messages.';
@@ -2559,14 +2573,7 @@ async function proxyGroq(body, env, ctx) {
   const invalid = validateGroqBody(body);
   if (invalid) return jsonResponse({ error: { message: invalid } }, 400);
 
-  const groqRes = await fetch(GROQ_URL, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${env.GROQ_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
+  const groqRes = await groqFetch(env, body);
 
   const text = await groqRes.text();
   if (groqRes.ok) ctx?.waitUntil?.(incrementCounter(env));
@@ -2576,15 +2583,25 @@ async function proxyGroq(body, env, ctx) {
   });
 }
 
-async function callGroq(env, payload) {
-  const res = await fetch(GROQ_URL, {
+// Single Groq entry point. The free tier caps gpt-oss-120b at 8K tokens/min and
+// counts max_tokens up front, so two visitors running PM tools at once hit 429.
+// On 429 we retry once on FALLBACK_MODEL, which has its own quota bucket.
+async function groqFetch(env, payload) {
+  const send = (p) => fetch(GROQ_URL, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${env.GROQ_KEY}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(withModelDefaults(p)),
   });
+  const res = await send(payload);
+  if (res.status !== 429) return res;
+  return send({ ...payload, model: FALLBACK_MODEL });
+}
+
+async function callGroq(env, payload) {
+  const res = await groqFetch(env, payload);
 
   const text = await res.text();
   if (!res.ok) {

@@ -6,7 +6,7 @@
   'use strict';
 
   var ENDPOINT = 'https://groq-proxy.cmankotech.workers.dev';
-  var MODEL = 'llama-3.3-70b-versatile';
+  var MODEL = 'openai/gpt-oss-120b';
   var TIMEOUT_MS = 30000;
 
   /* ── language (defers to PMSession, falls back to page globals) ── */

@@ -538,10 +538,10 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
         <div class="stack-desc" data-i18n="stack.proxy.desc">Un Worker est une fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes, pas de VPS, cold start quasi-nul. Ici il fait bien plus que proxifier : il orchestre le pipeline planner→synthesis pour KRL1, calcule les embeddings RAG via Workers AI, et trace les appels via Langfuse, la clé API n'est jamais exposée côté client. 10 routes : POST / passthrough direct Groq (6 outils PM) ; POST /orchestrate planner→synthesis sync ; POST /orchestrate-stream synthesis SSE ; POST /rag-query RAG sémantique complet ; POST /feedback analyse feedback (Make webhook ou Groq fallback) ; GET /stats compteur KV usage ; GET /veille + GET /veille/history lecture des éditions (dernière ou archivée via ?week=&year=) ; POST /veille-refresh fetch natif de 13 flux RSS, synthèse Groq et archivage KV par semaine ISO (déclenché par un Cron Trigger Cloudflare natif, lundi 6h UTC) ; POST /veille-ingest ingestion d'articles bruts (endpoint legacy) ; POST /veille mise à jour directe protégée par x-make-secret. Validation d'origine (cmankotech.github.io uniquement), CORS automatique, rate limit par IP (30 req/min via KV) et validation du passthrough Groq (allowlist de modèle, max_tokens plafonné), plan gratuit Cloudflare : 100 000 req/jour.</div>
       </div>
       <div class="stack-card">
-        <div class="stack-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Groq"><path d="M12.036 2c-3.853-.035-7 3-7.036 6.781-.035 3.782 3.055 6.872 6.908 6.907h2.42v-2.566h-2.292c-2.407.028-4.38-1.866-4.408-4.23-.029-2.362 1.901-4.298 4.308-4.326h.1c2.407 0 4.358 1.915 4.365 4.278v6.305c0 2.342-1.944 4.25-4.323 4.279a4.375 4.375 0 01-3.033-1.252l-1.851 1.818A7 7 0 0012.029 22h.092c3.803-.056 6.858-3.083 6.879-6.816v-6.5C18.907 4.963 15.817 2 12.036 2z"/></svg><img src="https://cdn.simpleicons.org/meta" alt="Meta / Llama" width="28" height="28"></div>
-        <div class="stack-name">Groq · llama-3.3-70b-versatile</div>
+        <div class="stack-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Groq"><path d="M12.036 2c-3.853-.035-7 3-7.036 6.781-.035 3.782 3.055 6.872 6.908 6.907h2.42v-2.566h-2.292c-2.407.028-4.38-1.866-4.408-4.23-.029-2.362 1.901-4.298 4.308-4.326h.1c2.407 0 4.358 1.915 4.365 4.278v6.305c0 2.342-1.944 4.25-4.323 4.279a4.375 4.375 0 01-3.033-1.252l-1.851 1.818A7 7 0 0012.029 22h.092c3.803-.056 6.858-3.083 6.879-6.816v-6.5C18.907 4.963 15.817 2 12.036 2z"/></svg></div>
+        <div class="stack-name">Groq · gpt-oss-120b</div>
         <div class="stack-badge sb-violet" data-i18n="stack.llm.badge">LLM</div>
-        <div class="stack-desc" data-i18n="stack.llm.desc">Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes, 5 à 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).</div>
+        <div class="stack-desc" data-i18n="stack.llm.desc">Accès au modèle gpt-oss-120b via une API REST compatible OpenAI. L'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes, 5 à 10x plus rapide que les providers classiques. Chaque outil PM l'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).</div>
       </div>
       <div class="stack-card" style="grid-column:1/-1">
         <div class="stack-icon"><img src="https://cdn.simpleicons.org/cloudflare" alt="Workers AI" width="28" height="28"></div>
@@ -704,7 +704,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;b
       <div class="decision-card">
         <div class="decision-q" data-i18n="d3.q">Pourquoi Groq plutôt qu'OpenAI ou Anthropic directement ?</div>
         <div class="decision-a" data-i18n="d3.a">Vitesse d'inférence et plan gratuit</div>
-        <div class="decision-why" data-i18n="d3.why">Groq tourne les modèles Llama 3 sur du matériel LPU optimisé pour l'inférence. Résultat : des réponses en 1-2 secondes là où d'autres providers prennent 5-10s. Et le plan gratuit couvre amplement un usage personnel.</div>
+        <div class="decision-why" data-i18n="d3.why">Groq sert des modèles open-weight (ici gpt-oss-120b d'OpenAI) sur du matériel LPU optimisé pour l'inférence. Résultat : des réponses en 1-2 secondes là où d'autres providers prennent 5-10s. Et le plan gratuit couvre amplement un usage personnel. Depuis octobre 2026, le site tourne sur gpt-oss-120b, Groq ayant retiré llama-3.3-70b. Ce modèle à raisonnement passe par un réglage commun (raisonnement court, marge de tokens) et bascule automatiquement sur gpt-oss-20b quand le quota gratuit (8 000 tokens/min) est atteint.</div>
       </div>
       <div class="decision-card">
         <div class="decision-q" data-i18n="d4.q">Pourquoi GitHub Pages plutôt qu'un VPS ou Vercel ?</div>
@@ -1086,11 +1086,11 @@ Réponds UNIQUEMENT avec un JSON valide :
           </tr>
         </thead>
         <tbody>
-          <tr><td class="td-tool">Planner</td><td>llama-3.3-70b</td><td class="td-temp">0.2</td><td class="td-tokens">500</td><td class="td-temp">~600ms</td><td class="td-tokens">~200–400</td></tr>
-          <tr><td class="td-tool">Synthesis</td><td>llama-3.3-70b</td><td class="td-temp">0.45</td><td class="td-tokens">450</td><td class="td-temp">~900ms</td><td class="td-tokens">~300–450</td></tr>
+          <tr><td class="td-tool">Planner</td><td>gpt-oss-120b</td><td class="td-temp">0.2</td><td class="td-tokens">500</td><td class="td-temp">~1.2s</td><td class="td-tokens">~200–400</td></tr>
+          <tr><td class="td-tool">Synthesis</td><td>gpt-oss-120b</td><td class="td-temp">0.45</td><td class="td-tokens">450</td><td class="td-temp">~1s</td><td class="td-tokens">~300–450</td></tr>
           <tr><td class="td-tool">Workers AI (RAG)</td><td>bge-small-en-v1.5</td><td class="td-temp">,</td><td class="td-tokens">,</td><td class="td-temp">~200–400ms</td><td class="td-tokens">384 dims</td></tr>
-          <tr><td class="td-tool">Total /orchestrate-stream</td><td>,</td><td class="td-temp">,</td><td class="td-tokens">,</td><td class="td-temp">~1.5–2.5s</td><td class="td-tokens">~600–900</td></tr>
-          <tr><td class="td-tool">Total /rag-query</td><td>,</td><td class="td-temp">,</td><td class="td-tokens">,</td><td class="td-temp">~2–4s</td><td class="td-tokens">~700–1000</td></tr>
+          <tr><td class="td-tool">Total /orchestrate-stream</td><td>,</td><td class="td-temp">,</td><td class="td-tokens">,</td><td class="td-temp">~2–3s</td><td class="td-tokens">~600–900</td></tr>
+          <tr><td class="td-tool">Total /rag-query</td><td>,</td><td class="td-temp">,</td><td class="td-tokens">,</td><td class="td-temp">~2.5–5s</td><td class="td-tokens">~700–1000</td></tr>
         </tbody>
       </table>
       <div class="decision-why" style="margin-top:0.75rem" data-i18n="note.sse">Le streaming SSE sur <code>/orchestrate-stream</code> divise la latence perçue par ~3 : les premiers tokens s'affichent en ~400ms pendant que la synthesis continue. Pour <code>/rag-query</code>, l'embedding batch Workers AI ajoute ~200-400ms mais permet un retrieval sémantique sans infrastructure externe.</div>
@@ -1109,12 +1109,12 @@ Réponds UNIQUEMENT avec un JSON valide :
           </tr>
         </thead>
         <tbody>
-          <tr><td class="td-tool">KRL1 orchestrate</td><td class="td-tokens">~500</td><td class="td-tokens">~400</td><td class="td-temp">~$0.00061</td><td class="td-temp">~$0.61</td></tr>
-          <tr><td class="td-tool">RAG query</td><td class="td-tokens">~700</td><td class="td-tokens">~450</td><td class="td-temp">~$0.00077</td><td class="td-temp">~$0.77</td></tr>
-          <tr><td class="td-tool" data-i18n="cost.6tools">6 outils PM (avg)</td><td class="td-tokens">~600</td><td class="td-tokens">~1500</td><td class="td-temp">~$0.00154</td><td class="td-temp">~$1.54</td></tr>
+          <tr><td class="td-tool">KRL1 orchestrate</td><td class="td-tokens">~500</td><td class="td-tokens">~400</td><td class="td-temp">~$0.00032</td><td class="td-temp">~$0.32</td></tr>
+          <tr><td class="td-tool">RAG query</td><td class="td-tokens">~700</td><td class="td-tokens">~450</td><td class="td-temp">~$0.00038</td><td class="td-temp">~$0.38</td></tr>
+          <tr><td class="td-tool" data-i18n="cost.6tools">6 outils PM (avg)</td><td class="td-tokens">~600</td><td class="td-tokens">~1500</td><td class="td-temp">~$0.00099</td><td class="td-temp">~$0.99</td></tr>
         </tbody>
       </table>
-      <div class="decision-why" style="margin-top:0.75rem" data-i18n="note.pricing">Tarifs llama-3.3-70b : $0.59/M input tokens, $0.79/M output tokens. Actuellement 100% sur le plan gratuit Groq (30 req/min, 14 400 req/jour). La migration vers le paid tier n'interviendrait qu'en cas de trafic soutenu, à ce volume, le coût mensuel total resterait sous $5.</div>
+      <div class="decision-why" style="margin-top:0.75rem" data-i18n="note.pricing">Tarifs gpt-oss-120b : $0.15/M input tokens, $0.60/M output tokens. Actuellement 100% sur le plan gratuit Groq (30 req/min, 1 000 req/jour, 8 000 tokens/min par modèle, avec bascule automatique sur gpt-oss-20b en cas de dépassement). La migration vers le paid tier n'interviendrait qu'en cas de trafic soutenu, à ce volume, le coût mensuel total resterait sous $5.</div>
     </div>
 
     <div class="decision-card">
@@ -1124,7 +1124,7 @@ Réponds UNIQUEMENT avec un JSON valide :
           <tr><th>Service</th><th data-i18n="tbl.freelimit">Limite gratuite</th><th data-i18n="tbl.currusage">Usage actuel</th></tr>
         </thead>
         <tbody>
-          <tr><td class="td-tool">Groq API</td><td>30 req/min · 14 400 req/jour</td><td class="td-temp">Largement suffisant</td></tr>
+          <tr><td class="td-tool">Groq API</td><td data-i18n="tbl.groq.limit">30 req/min · 1 000 req/jour · 8 000 tokens/min</td><td class="td-temp" data-i18n="tbl.groq.usage">Fallback auto sur gpt-oss-20b si 429</td></tr>
           <tr><td class="td-tool">Cloudflare Workers</td><td>100 000 req/jour</td><td class="td-temp">Largement suffisant</td></tr>
           <tr><td class="td-tool">Workers AI (embeddings)</td><td>10 000 neurons/jour</td><td class="td-temp">~200/req → ~50 appels/jour</td></tr>
           <tr><td class="td-tool">Cloudflare KV</td><td>100 000 reads + 1 000 writes/jour</td><td class="td-temp">&lt; 100 writes/jour</td></tr>
@@ -1199,7 +1199,7 @@ Réponds UNIQUEMENT avec un JSON valide :
           <div class="ragd-node ragd-pill ragd-cyan"  id="decd-a" style="left:640px;top:56px;"><div class="ragd-t"><span data-l="fr">Message reçu</span><span data-l="en">Incoming message</span></div></div>
           <div class="ragd-node ragd-cyan"            id="decd-b" style="left:640px;top:138px;"><div class="ragd-t">01 · Page Context · URL</div></div>
           <div class="ragd-node ragd-pill ragd-cyan"  id="decd-d" style="left:1015px;top:250px;"><div class="ragd-t"><span data-l="fr">Réponse · &lt;10ms · 0 token</span><span data-l="en">Reply · &lt;10ms · 0 token</span></div></div>
-          <div class="ragd-node ragd-violet"          id="decd-e" style="left:640px;top:378px;"><div class="ragd-t">03 · Groq LLM</div><div class="ragd-s">llama-3.3-70b</div></div>
+          <div class="ragd-node ragd-violet"          id="decd-e" style="left:640px;top:378px;"><div class="ragd-t">03 · Groq LLM</div><div class="ragd-s">gpt-oss-120b</div></div>
           <div class="ragd-node ragd-pill ragd-violet" id="decd-f" style="left:640px;top:466px;"><div class="ragd-t"><span data-l="fr">Réponse générée</span><span data-l="en">Generated reply</span></div></div>
           <div class="ragd-node ragd-green"           id="decd-h" style="left:930px;top:548px;"><div class="ragd-t">Inject CTA</div><div class="ragd-s">next step</div></div>
           <div class="ragd-node ragd-pill ragd-cyan"  id="decd-i" style="left:930px;top:660px;"><div class="ragd-t"><span data-l="fr">Affichage</span><span data-l="en">Display</span></div></div>
@@ -1308,10 +1308,10 @@ Réponds UNIQUEMENT avec un JSON valide :
         <span class="layer-num">03</span>
         <div class="layer-body">
           <div class="layer-title" data-i18n="l3t">Appel LLM via Groq + system prompt</div>
-          <div class="layer-desc" data-i18n="l3d">Si aucun pattern KB ne matche, la question est envoyée à l'API Groq (llama-3.3-70b sur LPU) avec le system prompt complet + l'historique de conversation. Un Cloudflare Worker proxy sécurise la clé API côté serveur.</div>
+          <div class="layer-desc" data-i18n="l3d">Si aucun pattern KB ne matche, la question est envoyée à l'API Groq (gpt-oss-120b sur LPU) avec le system prompt complet + l'historique de conversation. Un Cloudflare Worker proxy sécurise la clé API côté serveur.</div>
           <div class="layer-tech">
             <span class="tech-pill">Groq API</span>
-            <span class="tech-pill">llama-3.3-70b</span>
+            <span class="tech-pill">gpt-oss-120b</span>
             <span class="tech-pill">Cloudflare Worker</span>
             <span class="tech-pill">conversation history</span>
           </div>
@@ -1412,7 +1412,7 @@ Réponse actionnable et concise
       <div class="kb-card"><div class="kb-card-keys" data-i18n="kb12k">langfuse · observabilit · traces</div><div class="kb-card-desc" data-i18n="kb12d">Langfuse : 3 routes tracées, spans planner + retriever + synthesis</div></div>
       <div class="kb-card"><div class="kb-card-keys" data-i18n="kb13k">stream · sse · server-sent · progressif</div><div class="kb-card-desc" data-i18n="kb13d">Streaming SSE : getReader(), delta parsing, rendu mot par mot</div></div>
       <div class="kb-card"><div class="kb-card-keys" data-i18n="kb14k">orchestr · planner · synthesis · pipeline</div><div class="kb-card-desc" data-i18n="kb14d">Orchestration : planner JSON T=0.2 → synthesis SSE T=0.45</div></div>
-      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb15k">groq · llama · lpu · latence</div><div class="kb-card-desc" data-i18n="kb15d">Groq llama-3.3-70b : LPU 1-2s, températures adaptées</div></div>
+      <div class="kb-card"><div class="kb-card-keys" data-i18n="kb15k">groq · gpt-oss · lpu · latence</div><div class="kb-card-desc" data-i18n="kb15d">Groq gpt-oss-120b : LPU 1-2s, températures adaptées</div></div>
       <div class="kb-card"><div class="kb-card-keys" data-i18n="kb16k">route · endpoint · /stats · /veille · /feedback</div><div class="kb-card-desc" data-i18n="kb16d">7 routes Worker : proxy, orchestrate, stream, rag-query, feedback, stats, veille</div></div>
       <div class="kb-card"><div class="kb-card-keys" data-i18n="kb17k">product decisions · décisions produit · pourquoi ces choix</div><div class="kb-card-desc" data-i18n="kb17d">Renvoie vers la page Product Decisions avec les décisions derrière le site</div></div>
     </div>
@@ -1455,7 +1455,7 @@ Réponse actionnable et concise
       <div class="gloss-card">
         <span class="gloss-badge gb-ai">AI</span>
         <div class="gloss-term">LLM</div>
-        <div class="gloss-def" data-i18n="gloss.llm">Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : llama-3.3-70b de Meta, servi par Groq sur LPU (Language Processing Unit), inférence en 1-2 secondes.</div>
+        <div class="gloss-def" data-i18n="gloss.llm">Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : gpt-oss-120b (modèle open-weight d'OpenAI), servi par Groq sur LPU (Language Processing Unit), inférence en 1-2 secondes.</div>
       </div>
       <div class="gloss-card">
         <span class="gloss-badge gb-concept">Concept</span>
@@ -1530,9 +1530,9 @@ var T={
     'cost.6tools':'6 outils PM (avg)',
     'tbl.step':'Étape',
     'tbl.freelimit':'Limite gratuite',
-    'tbl.currusage':'Usage actuel',
+    'tbl.currusage':'Usage actuel','tbl.groq.limit':'30 req/min · 1 000 req/jour · 8 000 tokens/min','tbl.groq.usage':'Fallback auto sur gpt-oss-20b si 429',
     'note.sse':'Le streaming SSE sur <code>/orchestrate-stream</code> divise la latence perçue par ~3 : les premiers tokens s\'affichent en ~400ms pendant que la synthesis continue. Pour <code>/rag-query</code>, l\'embedding batch Workers AI ajoute ~200-400ms mais permet un retrieval sémantique sans infrastructure externe.',
-    'note.pricing':'Tarifs llama-3.3-70b : $0.59/M input tokens, $0.79/M output tokens. Actuellement 100% sur le plan gratuit Groq (30 req/min, 14 400 req/jour). La migration vers le paid tier n\'interviendrait qu\'en cas de trafic soutenu, à ce volume, le coût mensuel total resterait sous $5.',
+    'note.pricing':'Tarifs gpt-oss-120b : $0.15/M input tokens, $0.60/M output tokens. Actuellement 100% sur le plan gratuit Groq (30 req/min, 1 000 req/jour, 8 000 tokens/min par modèle, avec bascule automatique sur gpt-oss-20b en cas de dépassement). La migration vers le paid tier n\'interviendrait qu\'en cas de trafic soutenu, à ce volume, le coût mensuel total resterait sous $5.',
     'prompt.caption':'Affiché en français, le prompt de production réel.',
     'back':'Portfolio',
     'h1.line1':'Comment j\'ai',
@@ -1546,7 +1546,7 @@ var T={
     'stack.proxy.badge':'API Proxy',
     'stack.proxy.desc':'Un Worker est une fonction JavaScript serverless déployée sur ~300 data centers Cloudflare, entre le navigateur et les APIs externes, pas de VPS, cold start quasi-nul. Ici il fait bien plus que proxifier : il orchestre le pipeline planner→synthesis pour KRL1, calcule les embeddings RAG via Workers AI, et trace les appels via Langfuse, la clé API n\'est jamais exposée côté client. 7 routes : POST / passthrough direct Groq (6 outils PM) ; POST /orchestrate planner→synthesis sync ; POST /orchestrate-stream synthesis SSE ; POST /rag-query RAG sémantique complet ; POST /feedback analyse feedback (Make webhook ou Groq fallback) ; GET /stats compteur KV usage ; GET|POST /veille données veille tech. Validation d\'origine (cmankotech.github.io uniquement), CORS automatique, rate limit par IP (30 req/min via KV) et validation du passthrough Groq (allowlist de modèle, max_tokens plafonné), plan gratuit Cloudflare : 100 000 req/jour.',
     'stack.llm.badge':'LLM',
-    'stack.llm.desc':'Accès au modèle llama-3.3-70b-versatile via une API REST compatible OpenAI. L\'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes, 5 à 10x plus rapide que les providers classiques. Chaque outil PM l\'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).',
+    'stack.llm.desc':'Accès au modèle gpt-oss-120b via une API REST compatible OpenAI. L\'inférence sur LPU (Language Processing Unit) donne des réponses en 1 à 2 secondes, 5 à 10x plus rapide que les providers classiques. Chaque outil PM l\'appelle avec des paramètres adaptés : températures entre 0.3 et 0.7 selon la tâche, max_tokens entre 2 000 et 4 000, prompts system spécialisés (stratège OKR, analyste discovery, expert priorisation…).',
     'stack.lg.badge':'RAG sémantique',
     'stack.lf.badge':'Observabilité',
     'stack.make.badge':'Planification',
@@ -1592,7 +1592,7 @@ var T={
     'd2.why':'Exposer une clé API dans du code client-side, c\'est l\'offrir à n\'importe qui. Le Worker intercepte les requêtes, injecte la clé côté serveur et valide l\'origine. Plan gratuit Cloudflare : 100 000 requêtes/jour, largement suffisant.',
     'd3.q':'Pourquoi Groq plutôt qu\'OpenAI ou Anthropic directement ?',
     'd3.a':'Vitesse d\'inférence et plan gratuit',
-    'd3.why':'Groq tourne les modèles Llama 3 sur du matériel LPU optimisé pour l\'inférence. Résultat : des réponses en 1-2 secondes là où d\'autres providers prennent 5-10s. Et le plan gratuit couvre amplement un usage personnel.',
+    'd3.why':'Groq sert des modèles open-weight (ici gpt-oss-120b d\'OpenAI) sur du matériel LPU optimisé pour l\'inférence. Résultat : des réponses en 1-2 secondes là où d\'autres providers prennent 5-10s. Et le plan gratuit couvre amplement un usage personnel. Depuis octobre 2026, le site tourne sur gpt-oss-120b, Groq ayant retiré llama-3.3-70b. Ce modèle à raisonnement passe par un réglage commun (raisonnement court, marge de tokens) et bascule automatiquement sur gpt-oss-20b quand le quota gratuit (8 000 tokens/min) est atteint.',
     'd4.q':'Pourquoi GitHub Pages plutôt qu\'un VPS ou Vercel ?',
     'd4.a':'Gratuit, simple, CI/CD natif',
     'd4.why':'Pour des fichiers statiques, GitHub Pages est imbattable : gratuit, CDN mondial, HTTPS automatique, et le déploiement se déclenche simplement avec un git push. Pas besoin d\'une infrastructure plus complexe pour ce cas d\'usage.',
@@ -1649,7 +1649,7 @@ var T={
     'gloss.edge':'Paradigme qui déplace le traitement des requêtes le plus près possible de l\'utilisateur, sur des serveurs distribués mondialement. Réduit la latence en évitant les allers-retours vers un datacenter centralisé.',
     'gloss.rag':'Retrieval-Augmented Generation : enrichir un LLM avec du contexte récupéré dynamiquement au moment de la requête. Permet d\'ancrer les réponses dans une base de connaissances sans retraining.',
     'gloss.embedding':'Représentation vectorielle d\'un texte qui encode son sens sémantique. Deux textes au sens proche ont des vecteurs proches, ce qui permet la recherche par similarité plutôt que par mots-clés exacts.',
-    'gloss.llm':'Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : llama-3.3-70b de Meta, servi par Groq sur LPU, inférence en 1-2 secondes.',
+    'gloss.llm':'Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : gpt-oss-120b (modèle open-weight d\'OpenAI), servi par Groq sur LPU, inférence en 1-2 secondes.',
     'gloss.intent':'Classification de l\'intention derrière un message utilisateur. Le planner de KRL1 détecte 5 intents : pm_workflow, portfolio, tech, contact, other, chaque intent déclenche un chemin de réponse différent.',
     'gloss.planner':'Pattern d\'orchestration en 2 appels LLM séquentiels. Le planner (T=0.2) produit un JSON structuré ; la synthesis (T=0.45) le transforme en réponse naturelle. Séparer les deux permet d\'optimiser chaque étape indépendamment.',
     'gloss.sse':'Server-Sent Events : protocole HTTP de streaming unidirectionnel (serveur → client). Permet d\'afficher la réponse LLM progressivement dès les premiers tokens, sans attendre la réponse complète.',
@@ -1700,7 +1700,7 @@ var T={
     'l2d':"Avant tout appel API, KRL1 cherche un pattern dans sa base de connaissances locale (~17 catégories). Si un mot-clé matche, la réponse est servie instantanément depuis le client, 0 latence réseau, 0 coût LLM.",
     'l2b':'Performance & coût',
     'l3t':'Appel LLM via Groq + system prompt',
-    'l3d':"Si aucun pattern KB ne matche, la question est envoyée à l'API Groq (llama-3.3-70b sur LPU) avec le system prompt complet + l'historique de conversation.",
+    'l3d':"Si aucun pattern KB ne matche, la question est envoyée à l'API Groq (gpt-oss-120b sur LPU) avec le system prompt complet + l'historique de conversation.",
     'l3b':'Intelligence générative',
     'l4t':'PM Journey, injection post-résultat',
     'l4d':"Un MutationObserver surveille l'apparition du div #results sur chaque outil PM. Dès qu'un résultat est généré, KRL1 injecte automatiquement un CTA \"prochaine étape\" dans le flux.",
@@ -1733,7 +1733,7 @@ var T={
     'kb12k':'langfuse · observabilit · traces','kb12d':'Langfuse : 3 routes tracées, spans planner + retriever + synthesis',
     'kb13k':'stream · sse · server-sent · progressif','kb13d':'Streaming SSE : getReader(), delta parsing, rendu mot par mot',
     'kb14k':'orchestr · planner · synthesis · pipeline','kb14d':'Orchestration : planner JSON T=0.2 → synthesis SSE T=0.45',
-    'kb15k':'groq · llama · lpu · latence','kb15d':'Groq llama-3.3-70b : LPU 1-2s, températures adaptées',
+    'kb15k':'groq · gpt-oss · lpu · latence','kb15d':'Groq gpt-oss-120b : LPU 1-2s, températures adaptées',
     'kb16k':'route · endpoint · /stats · /veille · /veille-refresh · /feedback','kb16d':'10 routes Worker : proxy, orchestrate, stream, rag-query, feedback, stats, veille, veille/history, veille-refresh (fetch RSS natif), veille-ingest',
     'kb17k':'product decisions · décisions produit · pourquoi ces choix','kb17d':'Renvoie vers la page Product Decisions avec les décisions derrière le site',
     'toc.card.title':'Sommaire',
@@ -1755,9 +1755,9 @@ var T={
     'cost.6tools':'6 PM tools (avg)',
     'tbl.step':'Step',
     'tbl.freelimit':'Free limit',
-    'tbl.currusage':'Current usage',
+    'tbl.currusage':'Current usage','tbl.groq.limit':'30 req/min · 1,000 req/day · 8,000 tokens/min','tbl.groq.usage':'Auto fallback to gpt-oss-20b on 429',
     'note.sse':'SSE streaming on <code>/orchestrate-stream</code> cuts perceived latency by ~3×: the first tokens appear in ~400ms while the synthesis keeps going. For <code>/rag-query</code>, the Workers AI batch embedding adds ~200-400ms but enables semantic retrieval with no external infrastructure.',
-    'note.pricing':'llama-3.3-70b pricing: $0.59/M input tokens, $0.79/M output tokens. Currently 100% on the Groq free plan (30 req/min, 14,400 req/day). Moving to the paid tier would only happen under sustained traffic; at this volume, the total monthly cost would stay under $5.',
+    'note.pricing':'gpt-oss-120b pricing: $0.15/M input tokens, $0.60/M output tokens. Currently 100% on the Groq free plan (30 req/min, 1,000 req/day, 8,000 tokens/min per model, with automatic fallback to gpt-oss-20b when exceeded). Moving to the paid tier would only happen under sustained traffic; at this volume, the total monthly cost would stay under $5.',
     'prompt.caption':'Shown in French, the actual production prompt.',
     'back':'Portfolio',
     'h1.line1':'How I',
@@ -1771,7 +1771,7 @@ var T={
     'stack.proxy.badge':'API Proxy',
     'stack.proxy.desc':'A Worker is a serverless JavaScript function deployed across ~300 Cloudflare data centers, between the browser and external APIs, no server to manage, near-zero cold start. Here it does far more than proxy: it orchestrates the planner→synthesis pipeline for KRL1, computes RAG embeddings via Workers AI, and traces calls via Langfuse, the API key is never exposed client-side. 10 routes: POST / direct Groq passthrough (6 PM tools); POST /orchestrate planner→synthesis sync; POST /orchestrate-stream synthesis SSE; POST /rag-query full semantic RAG; POST /feedback feedback analysis (Make webhook or Groq fallback); GET /stats KV usage counter; GET /veille + GET /veille/history reading editions (latest or archived via ?week=&year=); POST /veille-refresh native fetch of 13 RSS feeds, Groq synthesis and KV archiving by ISO week (triggered by a native Cloudflare Cron Trigger, Monday 6am UTC); POST /veille-ingest raw article ingestion (legacy endpoint); POST /veille direct update protected by x-make-secret. Origin validation (cmankotech.github.io only), automatic CORS, per-IP rate limiting (30 req/min via KV) and Groq passthrough validation (model allowlist, capped max_tokens), free plan: 100,000 req/day.',
     'stack.llm.badge':'LLM',
-    'stack.llm.desc':'Access to the llama-3.3-70b-versatile model via an OpenAI-compatible REST API. LPU (Language Processing Unit) inference delivers responses in 1–2 seconds, 5 to 10x faster than classic providers. Each PM tool calls it with tailored parameters: temperatures between 0.3 and 0.7 depending on the task, max_tokens between 2,000 and 4,000, specialised system prompts (OKR strategist, discovery analyst, prioritisation expert…).',
+    'stack.llm.desc':'Access to the gpt-oss-120b model via an OpenAI-compatible REST API. LPU (Language Processing Unit) inference delivers responses in 1–2 seconds, 5 to 10x faster than classic providers. Each PM tool calls it with tailored parameters: temperatures between 0.3 and 0.7 depending on the task, max_tokens between 2,000 and 4,000, specialised system prompts (OKR strategist, discovery analyst, prioritisation expert…).',
     'stack.lg.badge':'Semantic RAG',
     'stack.lf.badge':'Observability',
     'stack.make.badge':'Scheduling',
@@ -1817,7 +1817,7 @@ var T={
     'd2.why':'Exposing an API key in client-side code is handing it to anyone. The Worker intercepts requests, injects the key server-side and validates the origin. Cloudflare free plan: 100,000 requests/day, more than enough.',
     'd3.q':'Why Groq instead of OpenAI or Anthropic directly?',
     'd3.a':'Inference speed and free plan',
-    'd3.why':'Groq runs Llama 3 models on LPU hardware optimised for inference. Result: responses in 1-2 seconds where other providers take 5-10s. And the free plan comfortably covers personal use.',
+    'd3.why':'Groq serves open-weight models (here OpenAI\'s gpt-oss-120b) on LPU hardware optimised for inference. Result: responses in 1-2 seconds where other providers take 5-10s. And the free plan comfortably covers personal use. Since October 2026 the site runs on gpt-oss-120b, as Groq retired llama-3.3-70b. This reasoning model goes through one shared setting (short reasoning, token headroom) and automatically falls back to gpt-oss-20b when the free quota (8,000 tokens/min) is reached.',
     'd4.q':'Why GitHub Pages instead of a VPS or Vercel?',
     'd4.a':'Free, simple, native CI/CD',
     'd4.why':'For static files, GitHub Pages is unbeatable: free, global CDN, automatic HTTPS, and deployment triggered simply by a git push. No need for more complex infrastructure for this use case.',
@@ -1874,7 +1874,7 @@ var T={
     'gloss.edge':'Paradigm that moves request processing as close as possible to the user, on globally distributed servers. Reduces latency by avoiding round trips to a central datacenter.',
     'gloss.rag':'Retrieval-Augmented Generation: enriching an LLM with context dynamically retrieved at query time. Grounds responses in a specific knowledge base without retraining.',
     'gloss.embedding':'Vector representation of text that encodes its semantic meaning. Two semantically similar texts have similar vectors, enabling similarity-based search rather than exact keyword matching.',
-    'gloss.llm':'Large Language Model: language model trained on large amounts of text. Here: Meta\'s llama-3.3-70b, served by Groq on LPU (Language Processing Unit), inference in 1-2 seconds.',
+    'gloss.llm':'Large Language Model: language model trained on large amounts of text. Here: OpenAI\'s open-weight gpt-oss-120b, served by Groq on LPU (Language Processing Unit), inference in 1-2 seconds.',
     'gloss.intent':'Classification of the purpose behind a user message. KRL1\'s planner detects 5 intents: pm_workflow, portfolio, tech, contact, other, each triggering a different response path.',
     'gloss.planner':'Orchestration pattern using 2 sequential LLM calls. The planner (T=0.2) produces structured JSON; synthesis (T=0.45) transforms it into a natural response. Separating them enables independent optimization of each step.',
     'gloss.sse':'Server-Sent Events: unidirectional HTTP streaming protocol (server → client). Displays LLM responses progressively as the first tokens arrive, without waiting for the complete response.',
@@ -1925,7 +1925,7 @@ var T={
     'l2d':"Before any API call, KRL1 checks its local knowledge base (~17 categories). If a keyword matches, the answer is served instantly from the client, 0 network latency, 0 LLM cost.",
     'l2b':'Performance & cost',
     'l3t':'LLM call via Groq + system prompt',
-    'l3d':"If no KB pattern matches, the question is sent to the Groq API (llama-3.3-70b on LPU) with the full system prompt + conversation history.",
+    'l3d':"If no KB pattern matches, the question is sent to the Groq API (gpt-oss-120b on LPU) with the full system prompt + conversation history.",
     'l3b':'Generative intelligence',
     'l4t':'PM Journey, post-result injection',
     'l4d':'A MutationObserver watches the #results div on each PM tool. As soon as a result is generated, KRL1 automatically injects a "next step" CTA into the flow.',
@@ -1958,7 +1958,7 @@ var T={
     'kb12k':'langfuse · observability · traces','kb12d':'Langfuse: 3 traced routes, planner + retriever + synthesis spans',
     'kb13k':'stream · sse · server-sent · progressive','kb13d':'SSE streaming: getReader(), delta parsing, word-by-word render',
     'kb14k':'orchestrat · planner · synthesis · pipeline','kb14d':'Orchestration: planner JSON T=0.2 → synthesis SSE T=0.45',
-    'kb15k':'groq · llama · lpu · latency','kb15d':'Groq llama-3.3-70b: LPU 1-2s, tailored temperatures',
+    'kb15k':'groq · gpt-oss · lpu · latency','kb15d':'Groq gpt-oss-120b: LPU 1-2s, tailored temperatures',
     'kb16k':'route · endpoint · /stats · /veille · /veille-refresh · /feedback','kb16d':'10 Worker routes: proxy, orchestrate, stream, rag-query, feedback, stats, veille, veille/history, veille-refresh (native RSS fetch), veille-ingest',
     'kb17k':'product decisions · why these choices · plg decisions','kb17d':'Links to the Product Decisions page with the decisions behind the site',
     'toc.card.title':'Table of Contents',
@@ -2055,7 +2055,7 @@ document.addEventListener('click',function(e){if(e.target.closest&&e.target.clos
 <script>
 var TT_GLOSSARY = {
   rag:{fr:'Retrieval-Augmented Generation : enrichir un LLM avec du contexte récupéré dynamiquement au moment de la requête. Permet d\'ancrer les réponses sans retraining.',en:'Retrieval-Augmented Generation: enriching an LLM with context retrieved at query time. Grounds responses without retraining.'},
-  llm:{fr:'Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : llama-3.3-70b de Meta, servi par Groq sur LPU.',en:'Large Language Model: trained on large amounts of text. Here: Meta\'s llama-3.3-70b, served by Groq on LPU hardware.'},
+  llm:{fr:'Large Language Model : modèle de langage entraîné sur de grandes quantités de texte. Ici : gpt-oss-120b (modèle open-weight d\'OpenAI), servi par Groq sur LPU.',en:'Large Language Model: trained on large amounts of text. Here: OpenAI\'s open-weight gpt-oss-120b, served by Groq on LPU hardware.'},
   embedding:{fr:'Représentation vectorielle d\'un texte encodant son sens sémantique. Deux textes proches en sens ont des vecteurs proches, permet la recherche par similarité.',en:'Vector representation of text encoding its semantic meaning. Similar texts have similar vectors, enables similarity-based search.'},
   sse:{fr:'Server-Sent Events : streaming HTTP unidirectionnel (serveur → client). Affiche la réponse LLM progressivement dès les premiers tokens.',en:'Server-Sent Events: unidirectional HTTP streaming (server → client). Displays LLM responses progressively as the first tokens arrive.'},
   kv:{fr:'Key-Value Store distribué Cloudflare. Stockage ultra-rapide pour données simples. Ici : compteur d\'usage global via /stats.',en:'Cloudflare distributed Key-Value Store. Ultra-fast storage for simple data. Here: global usage counter via /stats.'},

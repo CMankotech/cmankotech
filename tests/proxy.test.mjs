@@ -122,7 +122,32 @@ async function run() {
     });
     const res = await worker.fetch(req, { GROQ_KEY: 'dummy' });
     assert.equal(res.status, 200);
-    assert.equal(forwarded.max_tokens, 4000, 'max_tokens clamped to the cap');
+    // cap (4000) + reasoning headroom (384) ; legacy model name remapped to gpt-oss
+    assert.equal(forwarded.max_tokens, 4384, 'max_tokens clamped to the cap');
+    assert.equal(forwarded.model, 'openai/gpt-oss-120b', 'legacy model remapped');
+    assert.equal(forwarded.reasoning_effort, 'low');
+  }
+
+  // test: a Groq 429 on the main model is retried once on the fallback model
+  {
+    const models = [];
+    global.fetch = async (url, init) => {
+      const m = JSON.parse(init.body).model;
+      models.push(m);
+      if (m === 'openai/gpt-oss-120b') {
+        return new Response(JSON.stringify({ error: { code: 'rate_limit_exceeded' } }), { status: 429 });
+      }
+      return new Response(JSON.stringify({ choices: [{ message: { content: 'fallback ok' } }] }), {
+        status: 200, headers: { 'Content-Type': 'application/json' },
+      });
+    };
+    const req = makeReq('https://groq-proxy.cmankotech.workers.dev/', {
+      messages: [{ role: 'user', content: 'hello' }],
+    });
+    const res = await worker.fetch(req, { GROQ_KEY: 'dummy' });
+    assert.equal(res.status, 200);
+    assert.deepEqual(models, ['openai/gpt-oss-120b', 'openai/gpt-oss-20b']);
+    assert.equal((await res.json()).choices[0].message.content, 'fallback ok');
   }
 
   // test: per-IP rate limit returns 429 once the window count is exhausted
